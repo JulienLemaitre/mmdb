@@ -9,3 +9,141 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Piece {
+  id                String     @id @default(uuid())
+  title             String
+  composer          Composer   @relation(fields: [composerId], references: [id])
+  composerId        String
+  yearOfComposition Int
+  yearOfPublication Int?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  movements         Movement[]
+  sources           Source[]
+}
+
+enum KEY {
+  C
+  D
+  E
+  F
+  G
+  A
+  B
+  C_SHARP
+  D_SHARP
+  F_SHARP
+  G_SHARP
+  A_SHARP
+  C_FLAT
+  D_FLAT
+  E_FLAT
+  F_FLAT
+  G_FLAT
+  A_FLAT
+  B_FLAT
+}
+// ?? Does it need to be a ordered list of terms that could be more than two?
+model TempoIndication {
+  id         String    @id @default(uuid())
+  baseTerm
+  additionalTerm
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+model Movement {
+  id            String   @id @default(uuid())
+  title         String
+  piece         Piece    @relation(fields: [pieceId], references: [id])
+  pieceId       String
+  rank          Int
+  key           KEY
+  timeSignature String
+  // ?? ComposedTimeSignature
+  tempoIndication
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum SOURCE_TYPE {
+  ORIGINAL_SCORE
+  LETTER
+  EDITION
+}
+model Source {
+  id           String        @id @default(uuid())
+  title        String
+  piece        Piece         @relation(fields: [pieceId], references: [id])
+  pieceId      String
+  isComposerMM Boolean
+  type         SOURCE_TYPE
+  link         String?
+  year         Int
+  date         DateTime?
+  contributors Contributor[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+enum CONTRIBUTOR_ROLE {
+  COMPOSER
+  EDITOR
+  TRANSLATOR
+  TRANSCRIBER
+  ARRANGER
+  PUBLISHER
+  OTHER
+}
+model Contributor {
+  id        String           @id @default(uuid())
+  source    Source           @relation(fields: [sourceId], references: [id])
+  sourceId  String
+  person    Person           @relation(fields: [personId], references: [id])
+  personId  String
+  role      CONTRIBUTOR_ROLE
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+model Person {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  birthYear Int
+  deathYear Int?
+  // ?? nationality String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum BEAT_UNIT {
+  WHOLE
+  HALF
+  DOTTED_HALF
+  QUARTER
+  DOTTED_QUARTER
+  EIGHTH
+  DOTTED_EIGHTH
+  SIXTEENTH
+  DOTTED_SIXTEENTH
+  THIRTYSECOND
+  DOTTED_THIRTYSECOND
+  SIXTYFOURTH
+  DOTTED_SIXTYFOURTH
+  HUNDREDTWENTYEIGHTH
+  DOTTED_HUNDREDTWENTYEIGHTH
+}
+
+model MetronomeMark {
+  id         String    @id @default(uuid())
+  source     Source    @relation(fields: [sourceId], references: [id])
+  sourceId   String
+  movement   Movement  @relation(fields: [movementId], references: [id])
+  movementId String
+  beatUnit   BEAT_UNIT
+  bpm        Int
+  // ?? bpmRange String[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
