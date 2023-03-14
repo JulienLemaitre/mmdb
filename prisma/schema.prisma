@@ -13,14 +13,13 @@ datasource db {
 model Piece {
   id                String     @id @default(uuid())
   title             String
-  composer          Composer   @relation(fields: [composerId], references: [id])
+  composer          Person     @relation(fields: [composerId], references: [id]) // A piece have a unique composer ?? Is that ALWAYS the case ? (if not, we need to use a many-to-many relation)
   composerId        String
-  yearOfComposition Int
-  yearOfPublication Int?
+  yearOfComposition SmallInt
   createdAt         DateTime   @default(now())
   updatedAt         DateTime   @updatedAt
-  movements         Movement[]
-  sources           Source[]
+  movements         Movement[] // A piece can have many movements
+  sources           Source[] // A piece can have many sources
 }
 
 enum KEY {
@@ -46,24 +45,29 @@ enum KEY {
 }
 // ?? Does it need to be a ordered list of terms that could be more than two?
 model TempoIndication {
-  id         String    @id @default(uuid())
-  baseTerm
-  additionalTerm
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id             String   @id @default(uuid())
+  baseTerm       String
+  additionalTerm String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 model Movement {
-  id            String   @id @default(uuid())
-  title         String
-  piece         Piece    @relation(fields: [pieceId], references: [id])
-  pieceId       String
-  rank          Int
-  key           KEY
-  timeSignature String
+  id                String          @id @default(uuid())
+  title             String
+  piece             Piece           @relation(fields: [pieceId], references: [id]) // A movement belongs to a single piece
+  pieceId           String
+  rank              Int
+  key               KEY
+  metreNumerator    SmallInt
+  metreDenominator  SmallInt
   // ?? ComposedTimeSignature
-  tempoIndication
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  tempoIndication   TempoIndication @relation(fields: [tempoIndicationId], references: [id])
+  tempoIndicationId String
+  metronomeMarks    MetronomeMark[] // A movement can have many metronome marks
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@unique([pieceId, rank])
 }
 
 enum SOURCE_TYPE {
@@ -72,21 +76,21 @@ enum SOURCE_TYPE {
   EDITION
 }
 model Source {
-  id           String        @id @default(uuid())
-  title        String
-  piece        Piece         @relation(fields: [pieceId], references: [id])
-  pieceId      String
-  isComposerMM Boolean
-  type         SOURCE_TYPE
-  link         String?
-  year         Int
-  date         DateTime?
-  contributors Contributor[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id            String         @id @default(uuid())
+  title         String
+  piece         Piece          @relation(fields: [pieceId], references: [id])
+  pieceId       String
+  isComposerMM  Boolean
+  type          SOURCE_TYPE
+  link          String?
+  year          SmallInt
+  date          DateTime? // ?? Is this usefull ?
+  contributions Contribution[] // A source can have many Contributions
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
-enum CONTRIBUTOR_ROLE {
+enum CONTRIBUTION_ROLE {
   COMPOSER
   EDITOR
   TRANSLATOR
@@ -95,26 +99,26 @@ enum CONTRIBUTOR_ROLE {
   PUBLISHER
   OTHER
 }
-model Contributor {
-  id        String           @id @default(uuid())
-  source    Source           @relation(fields: [sourceId], references: [id])
+model Contribution {
+  id        String            @id @default(uuid())
+  source    Source            @relation(fields: [sourceId], references: [id])
   sourceId  String
-  person    Person           @relation(fields: [personId], references: [id])
+  person    Person            @relation(fields: [personId], references: [id])
   personId  String
-  role      CONTRIBUTOR_ROLE
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
+  role      CONTRIBUTION_ROLE
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
 }
 
 model Person {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   firstName String
   lastName  String
-  birthYear Int
-  deathYear Int?
+  birthYear SmallInt
+  deathYear SmallInt?
   // ?? nationality String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 enum BEAT_UNIT {
