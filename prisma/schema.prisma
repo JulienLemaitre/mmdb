@@ -15,11 +15,11 @@ model Piece {
   title             String
   composer          Person     @relation(fields: [composerId], references: [id]) // A piece have a unique composer ?? Is that ALWAYS the case ? (if not, we need to use a many-to-many relation)
   composerId        String
-  yearOfComposition SmallInt
+  yearOfComposition Int        // ?? Will we NEVER want more precise date ?
   createdAt         DateTime   @default(now())
   updatedAt         DateTime   @updatedAt
   movements         Movement[] // A piece can have many movements
-  sources           Source[] // A piece can have many sources
+  sources           Source[]   // A piece can have many sources
 }
 
 enum KEY {
@@ -45,11 +45,14 @@ enum KEY {
 }
 // ?? Does it need to be a ordered list of terms that could be more than two?
 model TempoIndication {
-  id             String   @id @default(uuid())
+  id             String     @id @default(uuid())
   baseTerm       String
   additionalTerm String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  movements      Movement[] // A tempo indication can be used by many movements
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@unique([baseTerm, additionalTerm])
 }
 model Movement {
   id                String          @id @default(uuid())
@@ -58,8 +61,8 @@ model Movement {
   pieceId           String
   rank              Int
   key               KEY
-  metreNumerator    SmallInt
-  metreDenominator  SmallInt
+  metreNumerator    Int
+  metreDenominator  Int
   // ?? ComposedTimeSignature
   tempoIndication   TempoIndication @relation(fields: [tempoIndicationId], references: [id])
   tempoIndicationId String
@@ -76,18 +79,19 @@ enum SOURCE_TYPE {
   EDITION
 }
 model Source {
-  id            String         @id @default(uuid())
-  title         String
-  piece         Piece          @relation(fields: [pieceId], references: [id])
-  pieceId       String
-  isComposerMM  Boolean
-  type          SOURCE_TYPE
-  link          String?
-  year          SmallInt
-  date          DateTime? // ?? Is this usefull ?
-  contributions Contribution[] // A source can have many Contributions
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id             String          @id @default(uuid())
+  title          String
+  piece          Piece           @relation(fields: [pieceId], references: [id])
+  pieceId        String
+  isComposerMM   Boolean
+  type           SOURCE_TYPE
+  link           String?
+  year           Int
+  date           DateTime?       // ?? Is this usefull ?
+  contributions  Contribution[]  // A source can have many Contributions
+  metronomeMarks MetronomeMark[] // A source can have many metronome marks
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 }
 
 enum CONTRIBUTION_ROLE {
@@ -111,14 +115,16 @@ model Contribution {
 }
 
 model Person {
-  id        String    @id @default(uuid())
-  firstName String
-  lastName  String
-  birthYear SmallInt
-  deathYear SmallInt?
+  id            String         @id @default(uuid())
+  firstName     String
+  lastName      String
+  birthYear     Int
+  deathYear     Int?
+  compositions  Piece[]        // A person can have compose many pieces
+  contributions Contribution[] // A person can have many contributions
   // ?? nationality String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 enum BEAT_UNIT {
