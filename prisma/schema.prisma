@@ -93,13 +93,12 @@ model Section {
   piece                 Piece?          @relation(fields: [pieceId], references: [id]) // A section belongs to a single piece
   pieceId               String?
   rank                  Int
-  fastestStructuralNote BEAT_UNIT
-  fastestStacattoNote   BEAT_UNIT
-  fastestOrnamentalNote BEAT_UNIT
-  notesPerSecond        Json
   metreNumerator        Int
   metreDenominator      Int
-  metreSymbol           String
+  metreString           String
+  fastestStructuralNote BEAT_UNIT?
+  fastestStacattoNote   BEAT_UNIT?
+  fastestOrnamentalNote BEAT_UNIT?
   // ?? ComposedTimeSignature
   tempoIndication       TempoIndication @relation(fields: [tempoIndicationId], references: [id])
   tempoIndicationId     String
@@ -216,14 +215,15 @@ enum BEAT_UNIT {
 }
 
 model MetronomeMark {
-  id        String    @id @default(uuid())
-  source    Source    @relation(fields: [sourceId], references: [id])
-  sourceId  String
-  beatUnit  BEAT_UNIT
-  bpm       Int
+  id             String    @id @default(uuid())
+  source         Source    @relation(fields: [sourceId], references: [id])
+  sourceId       String
+  beatUnit       BEAT_UNIT
+  bpm            Int
   // ?? bpmRange String[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Section   Section   @relation(fields: [sectionId], references: [id])
-  sectionId String
+  notesPerSecond Json?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  Section        Section   @relation(fields: [sectionId], references: [id])
+  sectionId      String
 }
