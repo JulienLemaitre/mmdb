@@ -1,18 +1,36 @@
 // import { hashPassword } from "@/lib/auth";
 import {db} from "@/lib/db";
-import {KEY, SOURCE_TYPE, CONTRIBUTION_ROLE} from "@prisma/client";
+import {BEAT_UNIT, KEY, SOURCE_TYPE, CONTRIBUTION_ROLE} from "@prisma/client";
+import {getNotesFromNotesPerSecond, noteDurationValue} from "@/lib/notesCalculation";
 // import Papa from "papaparse";
 // import { unlinkSync } from 'node:fs';
 
 const fs = require('fs');
 const path = require('path');
 const xlsx = require('xlsx');
+const beatUnitXlsToNorm: {[k: string]: string} = {}
+  Object.keys(BEAT_UNIT).forEach((beatUnit: string, index) => {
+    // console.log(`[] beatUnit :`, beatUnit)
+    let isDotted = beatUnit.startsWith("DOTTED_")
+    if (beatUnit.startsWith("DOTTED_")) {
+      isDotted = true
+    }
+    if (index < 9) {
+      const beatUnitBase = isDotted ? beatUnit.split("_")[1] : beatUnit
+      // console.log(`[] beatUnitBase :`, beatUnitBase)
+      const newKey = `${isDotted ? "Dotted " : ""}${beatUnitBase.substring(0,1)}`
+      // console.log(`[] newKey :`, newKey)
+      beatUnitXlsToNorm[newKey] = beatUnit
+    }
+  })
+console.log(`[] beatUnitXlsToNorm :`, beatUnitXlsToNorm)
 
 const directoryPath = path.join(__dirname, "ArjunData", "20230319_MM_folders", "19th Century Composers", "Beethoven", "Orchestral ");
 // const directoryPath = path.join(__dirname, "ArjunData", "20230319_MM_folders", "19th Century Composers", "Beethoven", "Orchestral");
 // const directoryPath = path.join(__dirname, '/ArjunData/20230319_MM_folders/19th Century Composers/Beethoven/Orchestral');
 console.log(`directoryPath :`, directoryPath)
 
+const noteNotFoundList: any[] = []
 const dataSheetList: any[] = []
 
 function readExcelFile(filePath: string) {
@@ -41,6 +59,7 @@ traverseDirectory(directoryPath);
 console.log(`[] dataSheetList.length :`, dataSheetList.length)
 
 const pieceList: any[] = []
+const metronomeMarkList: any[] = []
 dataSheetList.forEach((dataSheet: any) => {
   // Single Excel file data
   // console.log(`[] dataSheet`, JSON.stringify(dataSheet, null, 2))
@@ -156,15 +175,86 @@ dataSheetList.forEach((dataSheet: any) => {
     }
 
     if (isSectionDescription) {
+      // [ROW] data {
+      //   "Movement of Work": "i",
+      //   "Key": "C major",
+      //   "Tempo Indication": "Adagio",
+      //   "Metre": "C",
+      //   "Metronome Marking": "E = 88",
+      //   "Fastest Structural Notes (notes/s)": 5.86,
+      //   "Fastest Ornamental Notes (notes/s)": 5.86
+      // }
+
+      const fastestStructuralNote = rowData["Fastest Structural Notes (notes/s)"]
+      const fastestStacattoNote = rowData["Fastest Stacatto Notes (notes/s)"]
+      const fastestOrnamentalNote = rowData["Fastest Ornamental Notes (notes/s)"]
+
       // NEW section
       console.log(`[ --- SECTION --- ]`)
       const section = {
         rank: (movement?.sections || []).length + 1,
         tempoIndication: rowData['Tempo Indication'],
-        metreSymbol: rowData["Metre"],
+        metreString: rowData["Metre"],
         metreNumerator: rowData["Metre"] === 'C' ? 4 : Number(rowData.Metre.split('/')[0]),
         metreDenominator: rowData["Metre"] === 'C' ? 4 : Number(rowData.Metre.split('/')[1]),
+        fastestStructuralNote,
+        fastestStacattoNote,
+        fastestOrnamentalNote,
       }
+
+
+      // NEW metronomeMark
+      console.log(`[ -- METROMONE MARK -- ]`)
+      const beatUnitXls = rowData["Metronome Marking"].split('=')[0].trim()
+      console.log(`[] beatUnitXls :`, beatUnitXls)
+      const beatUnitXlsCleanKey = Object.keys(beatUnitXlsToNorm).find((bu) => beatUnitXls.startsWith(bu))
+      console.log(`[] beatUnitXlsCleanKey :`, beatUnitXlsCleanKey)
+      if (!beatUnitXlsCleanKey) {
+        throw new Error(`beatUnitXlsCleanKey not found for ${beatUnitXls}`)
+      }
+      const beatUnit = beatUnitXlsToNorm[beatUnitXlsCleanKey] as BEAT_UNIT
+      const bpmString = rowData["Metronome Marking"].split('=')[1].trim()
+      console.log(`[] bpmString :`, bpmString)
+      const bpm = Number(bpmString)
+      const notes = getNotesFromNotesPerSecond({ metronomeMark: { beatUnit, bpm, notesPerSecond: { fastestStructuralNote, fastestStacattoNote, fastestOrnamentalNote } }, section: { metreDenominator: rowData["Metre"] === 'C' ? 4 : Number(rowData.Metre.split('/')[1]) } })
+      console.log(`[] notes :`, notes)
+      // @ts-ignore
+      if (Object.keys(notes).some((note) => notes[note] === null)) {
+        console.log(`[] Note not found`, notes)
+        noteNotFoundList.push({
+          pieceName: piece.title,
+          movement: {
+            rank: movement?.rank,
+            key: movement?.key,
+          },
+          section: {
+            rank: section?.rank,
+            tempoIndication: section?.tempoIndication,
+            // metreString: section?.metreString,
+            // metreNumerator: section?.metreNumerator,
+            // metreDenominator: section?.metreDenominator,
+          },
+          metronomeMark: {
+            beatUnit,
+            bpm,
+            notes,
+            notesPerSecond: { fastestStructuralNote,
+              fastestStacattoNote,
+              fastestOrnamentalNote },
+          }
+        })
+      }
+      const metronomeMark = {
+        beatUnit,
+        bpm,
+        notes,
+        notesPerSecond: { fastestStructuralNote,
+          fastestStacattoNote,
+          fastestOrnamentalNote },
+      }
+      console.log(`[PUSH] MetronomeMark`, metronomeMark)
+      metronomeMarkList.push(metronomeMark)
+
       console.log(`[PUSH NEW] section`, section)
       movement.sections.push(section)
     }
@@ -183,6 +273,15 @@ dataSheetList.forEach((dataSheet: any) => {
 })
 
 console.log(`[FINAL] pieceList`, JSON.stringify(pieceList, null, 2))
+console.log(`---------------------------------------`)
+console.log(`[FINAL] metronomeMarkList`, JSON.stringify(metronomeMarkList, null, 2))
+if (noteNotFoundList.length > 0) {
+  console.log(`---------------------------------------`)
+  console.log(`[FINAL] noteNotFoundList`, JSON.stringify(noteNotFoundList, null, 2))
+  console.log(`[] noteDurationValue :`, noteDurationValue)
+// console.log(`---------------------------------------`)
+// console.log(`[FINAL] noteNotFoundList`, JSON.stringify(noteNotFoundList, ["piece", "title", "movement", "rank", "key", "section"], 2))
+}
 
 function getKeyEnumFromKeyString(keyString: string) {
   const keyStringArray = keyString.split(' ')

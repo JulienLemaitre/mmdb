@@ -1,22 +1,34 @@
 import {BEAT_UNIT, MetronomeMark, Section} from "@prisma/client";
 
-const noteDurationValue = {
+export const noteDurationValue = {
   WHOLE: 1,
-  HALF: 0.5,
-  DOTTED_HALF: 0.75,
-  QUARTER: 0.25,
-  DOTTED_QUARTER: 0.375,
-  EIGHTH: 0.125,
-  DOTTED_EIGHTH: 0.1875,
-  SIXTEENTH: 0.0625,
-  DOTTED_SIXTEENTH: 0.09375,
-  THIRTYSECOND: 0.03125,
-  DOTTED_THIRTYSECOND: 0.046875,
-  SIXTYFOURTH: 0.015625,
-  DOTTED_SIXTYFOURTH: 0.0234375,
-  HUNDREDTWENTYEIGHTH: 0.0078125,
-  DOTTED_HUNDREDTWENTYEIGHTH: 0.01171875,
+  HALF: 1/2,
+  DOTTED_HALF: 3/8,
+  QUARTER: 1/4,
+  DOTTED_QUARTER: 3/8,
+  EIGHTH: 1/8,
+  DOTTED_EIGHTH: 3/16,
+  SIXTEENTH: 1/16,
+  DOTTED_SIXTEENTH: 3/32,
+  THIRTYSECOND: 1/32,
+  DOTTED_THIRTYSECOND: 3/64,
+  SIXTYFOURTH: 1/64,
+  DOTTED_SIXTYFOURTH: 3/128,
+  HUNDREDTWENTYEIGHTH: 1/128,
+  DOTTED_HUNDREDTWENTYEIGHTH: 3/256,
+  TRIPLET_EIGHTH: 1/12,
+  TRIPLET_SIXTEENTH: 1/24,
+  // TRIPLET_THIRTYSECOND: 1/48,
+  // TRIPLET_SIXTYFOURTH: 1/96,
+  QUADRUPLET_EIGHTH: 3/32,
+  QUINTUPLET_SIXTEENTH: 1/20,
+  QUINTUPLET_THIRTYSECOND: 1/40, // 5 thirtysecond = 1 eighth [Beethoven 4 - 1st movement]
+  SEXTUPLET_SIXTEENTH: 1/24,
+  SEXTUPLET_THIRTYSECOND: 1/48, // 6 sextuplet = 1 eighth [Beethoven 3 - 2nd movement]
+  SEPTUPLET_SIXTEENTH: 1/28,
+//   OCTUPLET_SIXTEENTH: 1/32,
 }
+
 
 type Notes = {
   fastestStructuralNote?: BEAT_UNIT;
@@ -37,7 +49,7 @@ type NotesPerSecond = {
 export function getNotesPerSecondsFromNotes({ metronomeMark, section }:
                                                              { metronomeMark: MetronomeMark, section: Section }): NotesPerSecond {
   const { beatUnit, bpm } = metronomeMark;
-  const { metreDenominator, fastestStructuralNote, fastestStacattoNote, fastestOrnamentalNote } = section;
+  const { fastestStructuralNote, fastestStacattoNote, fastestOrnamentalNote } = section;
 
   if (!fastestStructuralNote && !fastestStacattoNote && !fastestOrnamentalNote) {
     throw new Error("No fastest note property found in given section");
@@ -47,7 +59,7 @@ export function getNotesPerSecondsFromNotes({ metronomeMark, section }:
   // @ts-ignore
   const notesPerSecond: NotesPerSecond = Object.keys(notes).reduce((npsObject: NotesPerSecond, note: keyof typeof notes) => {
     if (notes[note]) {
-      npsObject[note] = getNotesPerSecond({ note: notes[note], beatUnit, bpm, metreDenominator })
+      npsObject[note] = getNotesPerSecond({ note: notes[note], beatUnit, bpm })
     }
     return npsObject;
   }, {} as NotesPerSecond)
@@ -55,10 +67,10 @@ export function getNotesPerSecondsFromNotes({ metronomeMark, section }:
   return notesPerSecond
 }
 
-function getNotesPerSecond({ note, beatUnit, bpm, metreDenominator }: { note: BEAT_UNIT | null, beatUnit: BEAT_UNIT, bpm: number, metreDenominator: number }): number {
+function getNotesPerSecond({ note, beatUnit, bpm }: { note: BEAT_UNIT | null, beatUnit: BEAT_UNIT, bpm: number }): number {
 
   if (!note) {
-    throw new Error("No note given");
+    throw new Error("[getNotesPerSecond] No note given");
   }
   const noteValue = noteDurationValue[note]; // ex: 1/16
 
@@ -68,11 +80,11 @@ function getNotesPerSecond({ note, beatUnit, bpm, metreDenominator }: { note: BE
 //     2 Calculate the duration of a single beat by dividing 60 (the number of seconds in a minute) by the BPM.
   const beatDuration = 60 / bpm; // ex: 0.5
 
-//     3 Determine the amount of structural notes that can fit within a single beat based on the denominator of the meter of the piece. meter = metreNumerator / metreDenominator
-  const numberOfNotesInSingleBeat = beatUnitValue / noteValue ; // ex: 1/4 / 1/16 = 4
+//     3 Determine the amount of structural notes that can fit within a single beat
+  const numberOfNotesPerBeat = beatUnitValue / noteValue ; // ex: 1/4 / 1/16 = 4
 
 //     4 Divide the duration of a single beat by the number of structural notes in a single beat to get the duration of a structural note in seconds.
-  const noteDuration = beatDuration / numberOfNotesInSingleBeat; // ex: 0.5 / 4 = 0.125
+  const noteDuration = beatDuration / numberOfNotesPerBeat; // ex: 0.5 / 4 = 0.125
 
 //     5 Take the reciprocal of the structural note duration in seconds to get the number of structural notes per second that must be executed.
   const notesPerSecond = 1 / noteDuration; // ex: 1 / 0.125 = 8
@@ -81,9 +93,10 @@ function getNotesPerSecond({ note, beatUnit, bpm, metreDenominator }: { note: BE
 }
 
 export function getNotesFromNotesPerSecond({ metronomeMark, section }:
-                                                      { metronomeMark: MetronomeMark, section: Section }): Notes {
+                                                      { metronomeMark: Partial<MetronomeMark>, section: Partial<Section> }): Notes {
   const { beatUnit, bpm, notesPerSecond } = metronomeMark;
   const { metreDenominator } = section;
+  // console.log("getNotesFromNotesPerSecond", { beatUnit, bpm, notesPerSecond, metreDenominator })
 
   if (!notesPerSecond) {
     throw new Error("No notesPerSecond property found in given section");
@@ -98,10 +111,21 @@ export function getNotesFromNotesPerSecond({ metronomeMark, section }:
 
   const notes: Notes = {}
   // @ts-ignore
-  Object.keys(notesPerSecond).forEach((note: keyof typeof notesPerSecond) => {
+  Object.keys(notesPerSecond).filter((note: keyof typeof notesPerSecond) => notesPerSecond[note]).forEach((note: keyof typeof notesPerSecond) => {
     if (notesPerSecond[note]) {
+      const notesPerSecondRawValue = notesPerSecond[note]
+      // Get the value of notesPerSecondRawValue. If it contains "(", keep only what come before it. Convert it to number
+      // ex: 1/16 (staccato) => 1/16
       // @ts-ignore
-      notes[note] = getNote({ notesPerSecond: notesPerSecond[note], beatUnit, bpm, metreDenominator })
+      const notesPerSecondValue = Number(notesPerSecondRawValue.toString().split(" ")[0])
+
+      try {
+      // @ts-ignore
+      notes[note] = getNote({ notesPerSecond: notesPerSecondValue, beatUnit, bpm, metreDenominator })
+      } catch (e) {
+        // @ts-ignore
+        notes[note] = null
+      }
     }
   })
 
@@ -109,13 +133,22 @@ export function getNotesFromNotesPerSecond({ metronomeMark, section }:
 
  }
 
- function getNote({ notesPerSecond, beatUnit, bpm, metreDenominator }: { notesPerSecond: number, beatUnit: BEAT_UNIT, bpm: number, metreDenominator: number }): BEAT_UNIT {
+ function getNote({ notesPerSecond, beatUnit, bpm }: { notesPerSecond: number, beatUnit: BEAT_UNIT, bpm: number }): BEAT_UNIT {
+   if (!notesPerSecond) {
+     throw new Error("[getNote]  notesPerSecond given");
+   }
    const beatUnitValue = noteDurationValue[beatUnit]; // ex: 1/4
    const beatDuration = 60 / bpm; // ex: 0.5
    const noteDuration = 1 / notesPerSecond; // ex: 0.125
-   const numberOfNotesInSingleBeat = beatDuration / noteDuration; // ex: 0.5 / 0.125 = 4
-   const noteValue = beatUnitValue / numberOfNotesInSingleBeat; // ex: 1/4 / 4 = 1/16
+   const numberOfNotesPerBeat = beatDuration / noteDuration; // ex: 0.5 / 0.125 = 4
+   const noteValue = beatUnitValue / numberOfNotesPerBeat; // ex: 1/4 / 4 = 1/16
+  // console.log("getNote :", { beatUnitValue, beatDuration, noteDuration, numberOfNotesInSingleBeat, noteValue })
    // @ts-ignore
-   const note = Object.keys(noteDurationValue).find((note) => noteDurationValue[note] === noteValue) as BEAT_UNIT;
-   return note;
+   const note = Object.keys(noteDurationValue).find((note) => noteDurationValue[note] === noteValue || Math.abs(noteDurationValue[note] - noteValue) < 0.0002) as BEAT_UNIT;
+   if (note) {
+      console.log(`[getNote] noteValue ${noteValue} is same or close to ${note}:`, noteDurationValue[note]);
+     return note;
+   }
+     console.log(`[getNote] No note determined for notesPerSecond ${notesPerSecond} -> noteValue ${noteValue}`)
+      throw new Error(`No note determined for noteValue ${noteValue}`);
  }

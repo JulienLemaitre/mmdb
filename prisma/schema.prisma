@@ -222,6 +222,7 @@ model MetronomeMark {
   bpm            Int
   // ?? bpmRange String[]
   notesPerSecond Json?
+  notes          Json?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   Section        Section   @relation(fields: [sectionId], references: [id])
