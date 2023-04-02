@@ -106,7 +106,7 @@ export function getNotesFromNotesPerSecond({ metronomeMark, section }:
   const { fastestStructuralNote, fastestStacattoNote, fastestOrnamentalNote } = notesPerSecond as NotesPerSecond;
 
   if (!fastestStructuralNote && !fastestStacattoNote && !fastestOrnamentalNote) {
-    throw new Error("No fastest notes per second property found in given section notesPerSecond");
+    throw new Error(`No fastest notes per second property found in given section notesPerSecond ${JSON.stringify(section)}`);
   }
 
   const notes: Notes = {}
