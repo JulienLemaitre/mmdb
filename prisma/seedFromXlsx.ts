@@ -45,10 +45,10 @@ function structuralNoteParsing(value: any) {
   }
   if (typeof value === "string") {
     const notePerSecond = value.split("(")[0].trim()
-    console.log(`[PARSED] notePerSecond as string :`, notePerSecond, `from value :`, value)
+    // console.log(`[PARSED] notePerSecond as string :`, notePerSecond, `from value :`, value)
     return notePerSecond
   }
-  throw new Error(`[UNPARSABLE] notePerSecond ${typeof value} : ${value}`)
+  // throw new Error(`[UNPARSABLE] notePerSecond ${typeof value} : ${value}`)
 }
 
 const schema = {
@@ -92,15 +92,15 @@ const schema = {
     prop: 'metre',
     type: (value: any) => {
       if (typeof value === 'string') {
-        console.log(`[PARSE] Mettre value is string: ${value}`)
+        // console.log(`[PARSE] Mettre value is string: ${value}`)
         return value
       }
       if (value instanceof Date) {
-        console.log(`[PARSE] Mettre value as date: ${value}`)
+        // console.log(`[PARSE] Mettre value as date: ${value}`)
         const day = value.getDate()
         const month = value.getMonth() + 1
         if (day && month) {
-          console.log(`[PARSED] ${month}/${day}`)
+          // console.log(`[PARSED] ${month}/${day}`)
           return `${month}/${day}`
         }
       }
@@ -485,6 +485,9 @@ async function processDataFromXlsx(dataSheetList: any) {
     console.log(`---------------------------------------`)
     console.log(`[FINAL] noteNotFoundList`, JSON.stringify(noteNotFoundList, null, 2))
     console.log(`[] noteDurationValue :`, noteDurationValue)
+    const orderedNoteDurationValue = Object.values(noteDurationValue).sort((a, b) => a - b)
+    console.log(`[] orderedNoteDurationValue :`, orderedNoteDurationValue)
+    console.log(`[] noteDurationValue :`, orderedNoteDurationValue.map((v, index) => `${Object.keys(noteDurationValue).find((k) => noteDurationValue[k] === v)} : ${v} (${v - orderedNoteDurationValue[index - 1]})`))
 // console.log(`---------------------------------------`)
 // console.log(`[FINAL] noteNotFoundList`, JSON.stringify(noteNotFoundList, ["piece", "title", "movement", "rank", "key", "section"], 2))
   }

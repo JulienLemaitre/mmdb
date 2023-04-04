@@ -3,7 +3,7 @@ import {BEAT_UNIT, MetronomeMark, Section} from "@prisma/client";
 export const noteDurationValue = {
   WHOLE: 1,
   HALF: 1/2,
-  DOTTED_HALF: 3/8,
+  DOTTED_HALF: 3/4,
   QUARTER: 1/4,
   DOTTED_QUARTER: 3/8,
   EIGHTH: 1/8,
@@ -26,6 +26,7 @@ export const noteDurationValue = {
   SEXTUPLET_SIXTEENTH: 1/24,
   SEXTUPLET_THIRTYSECOND: 1/48, // 6 sextuplet = 1 eighth [Beethoven 3 - 2nd movement]
   SEPTUPLET_SIXTEENTH: 1/28,
+  SEPTUPLET_HUNDREDTWENTYEIGHTH: 1/112,
 //   OCTUPLET_SIXTEENTH: 1/32,
 }
 
@@ -144,9 +145,14 @@ export function getNotesFromNotesPerSecond({ metronomeMark, section }:
    const noteValue = beatUnitValue / numberOfNotesPerBeat; // ex: 1/4 / 4 = 1/16
   // console.log("getNote :", { beatUnitValue, beatDuration, noteDuration, numberOfNotesInSingleBeat, noteValue })
    // @ts-ignore
-   const note = Object.keys(noteDurationValue).find((note) => noteDurationValue[note] === noteValue || Math.abs(noteDurationValue[note] - noteValue) < 0.0002) as BEAT_UNIT;
+   const noteAttempt1 = Object.keys(noteDurationValue).find((note) => noteDurationValue[note] === noteValue || Math.abs(noteDurationValue[note] - noteValue) < 0.0002) as BEAT_UNIT;
+   const noteAttempt2 = Object.keys(noteDurationValue).find((note) => Math.abs(noteDurationValue[note] - noteValue) < 0.0005) as BEAT_UNIT;
+   const noteAttempt3 = Object.keys(noteDurationValue).find((note) => Math.abs(noteDurationValue[note] - noteValue) < 0.0008) as BEAT_UNIT;
+   const noteAttempt4 = Object.keys(noteDurationValue).find((note) => Math.abs(noteDurationValue[note] - noteValue) < 0.001) as BEAT_UNIT;
+   const note = noteAttempt1 || noteAttempt2 || noteAttempt3 || noteAttempt4;
    if (note) {
-      console.log(`[getNote] noteValue ${noteValue} is same or close to ${note}:`, noteDurationValue[note]);
+     const noteIndex = [noteAttempt1, noteAttempt2, noteAttempt3, noteAttempt4].findIndex((n) => n === note) + 1
+      console.log(`[getNote] noteValue ${noteValue} is same or close (${noteIndex} aprox.) to ${note}:`, noteDurationValue[note]);
      return note;
    }
      console.log(`[getNote] No note determined for notesPerSecond ${notesPerSecond} -> noteValue ${noteValue}`)
