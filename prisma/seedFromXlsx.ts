@@ -1,7 +1,7 @@
 // import { hashPassword } from "@/lib/auth";
 import {db} from "@/lib/db";
-import {BEAT_UNIT, KEY, SOURCE_TYPE, CONTRIBUTION_ROLE} from "@prisma/client";
-import {getNotesFromNotesPerSecond, noteDurationValue} from "@/lib/notesCalculation";
+import {BEAT_UNIT, KEY, SOURCE_TYPE, CONTRIBUTION_ROLE, Piece, MetronomeMark} from "@prisma/client";
+import {getNotesFromNotesPerSecond, noteDurationValue, noteDurationValueKeys} from "@/lib/notesCalculation";
 
 // import Papa from "papaparse";
 // import { unlinkSync } from 'node:fs';
@@ -181,41 +181,7 @@ async function traverseDirectory(directory: string) {
   console.log(`[RETURN] dataSheetList.length :`, dataSheetList.length)
   console.log(`-------- END - traverseDirectory --------`)
   return dataSheetList
-
-  // fs.readdirSync(directory).forEach((file: string) => {
-  //   const filePath = path.join(directory, file);
-  //   if (fs.statSync(filePath).isDirectory()) {
-  //     console.log(`>> directory: ${filePath}`)
-  //     traverseDirectory(filePath);
-  //   } else if (path.extname(filePath) === '.xlsx') {
-  //     console.log(`- file: ${filePath}`)
-  //
-  //     // using async read-excel-file
-  //     readTaskList.push(readExcelFile(filePath).then((singleSheetData: any) => {
-  //       console.log(`[] singleSheetData`, singleSheetData)
-  //       // console.log(`[] singleSheetData`, JSON.stringify(singleSheetData, ["title", "movement", "metre"], 2))
-  //       dataSheetList.push(singleSheetData)
-  //       // return singleSheetData
-  //     }));
-  //
-  //     // using sync SheetJS (xlsx)
-  //     // const singleSheetData = readExcelFile(filePath);
-  //     // console.log(`[] singleSheetData`, singleSheetData)
-  //     // dataSheetList.push(singleSheetData)
-  //   }
-  // });
-  // const resultList = await Promise.all(readTaskList)
-  // console.log(`[traverseDirectory] dataSheetList :`, dataSheetList)
-  // console.log(`[traverseDirectory] resultList :`, resultList)
-  // return resultList
 }
-
-// Promise.all([traverseDirectory(directoryPath)])
-//   .then((taskList) => {
-// console.log(`[] taskList.length :`, taskList.length)
-// const dataSheetList = taskList?.[0]
-// console.log(`[] dataSheetList.length :`, dataSheetList.length)
-//   });
 
 async function getXlsxDatas() {
   console.log(`-------- START - getXlsxDatas --------`)
@@ -247,21 +213,21 @@ async function processDataFromXlsx(dataSheetList: any) {
     let movement: any
     dataSheet.forEach((rowData: any) => {
       // Single row data
-      console.log(``)
-      console.log(`-------------------------------------------`)
-      console.log(`[ROW] data`, JSON.stringify(rowData, null, 2))
+      // console.log(``)
+      // console.log(`-------------------------------------------`)
+      // console.log(`[ROW] data`, JSON.stringify(rowData, null, 2))
       const isPieceDescription = rowData.hasOwnProperty('composer')
       const isMovement = rowData.hasOwnProperty('movement')
       const isSectionDescription = rowData.hasOwnProperty('tempoIndication')
       // const isPieceDescription = rowData.hasOwnProperty('Composer')
       // const isMovement = rowData.hasOwnProperty('Movement of Work')
       // const isSectionDescription = rowData.hasOwnProperty('Tempo Indication') && !rowData.hasOwnProperty('Movement')
-      console.log(`ROW IS, piece: ${isPieceDescription}, movement: ${isMovement}, section: ${isSectionDescription}`)
+      // console.log(`ROW IS, piece: ${isPieceDescription}, movement: ${isMovement}, section: ${isSectionDescription}`)
 
       if (isPieceDescription) {
         // Push remaining movement in precedent piece
         if (movement) {
-          console.log(`[PUSH] movement`, JSON.stringify(movement))
+          // console.log(`[PUSH] movement`, JSON.stringify(movement))
           if (piece?.movements) {
             piece.movements.push(movement)
           } else {
@@ -271,18 +237,19 @@ async function processDataFromXlsx(dataSheetList: any) {
         }
 
         // NEW piece
-        console.log(`[ - PIECE -]`)
+        // console.log(`[ - PIECE -]`)
         if (piece) {
-          console.log(`[PUSH] Piece`, JSON.stringify(piece))
+          // console.log(`[PUSH] Piece`, JSON.stringify(piece))
           pieceList.push(piece)
           piece = null
         }
         piece = {
           title: rowData.title,
+          composer: rowData.composer,
           yearOfComposition: rowData.yearOfComposition,
           // yearOfComposition: rowData['Year of Composition'],
         }
-        console.log(`[NEW] Piece`, JSON.stringify(piece))
+        // console.log(`[NEW] Piece`, JSON.stringify(piece))
 
         // NEW source
         const source = {
@@ -301,7 +268,7 @@ async function processDataFromXlsx(dataSheetList: any) {
               // name: rowData.Publisher,
             }
           }
-          console.log(`[PUSH] publisherContribution`, JSON.stringify(publisherContribution))
+          // console.log(`[PUSH] publisherContribution`, JSON.stringify(publisherContribution))
           source.contributions.push(publisherContribution)
         }
         if (rowData.editor && rowData.editor !== 'N/A') {
@@ -313,16 +280,16 @@ async function processDataFromXlsx(dataSheetList: any) {
               // name: rowData.Editor,
             }
           }
-          console.log(`[PUSH] editorContribution`, JSON.stringify(editorContribution))
+          // console.log(`[PUSH] editorContribution`, JSON.stringify(editorContribution))
           source.contributions.push(editorContribution)
         }
-        console.log(`[NEW] source`, JSON.stringify(source))
+        // console.log(`[NEW] source`, JSON.stringify(source))
         piece.source = source
       }
 
       if (isMovement) {
         // NEW movement
-        console.log(`[ -- MOVEMENT -- ] `)
+        // console.log(`[ -- MOVEMENT -- ] `)
         // {
         //   "Movement of Work": "i",
         //   "Key": "C major",
@@ -336,7 +303,7 @@ async function processDataFromXlsx(dataSheetList: any) {
         if (rowData.movement) {
         // if (rowData.hasOwnProperty('Movement of Work')) {
           if (movement) {
-            console.log(`[PUSH] movement`, JSON.stringify(movement))
+            // console.log(`[PUSH] movement`, JSON.stringify(movement))
             if (piece?.movements) {
               piece.movements.push(movement)
             } else {
@@ -349,7 +316,7 @@ async function processDataFromXlsx(dataSheetList: any) {
             // key: getKeyEnumFromKeyString(rowData.Key),
             sections: [],
           }
-          console.log(`[NEW] movement`, JSON.stringify(movement))
+          // console.log(`[NEW] movement`, JSON.stringify(movement))
         }
       }
 
@@ -372,7 +339,7 @@ async function processDataFromXlsx(dataSheetList: any) {
         // const fastestOrnamentalNote = rowData["Fastest Ornamental Notes (notes/s)"]
 
         // NEW section
-        console.log(`[ --- SECTION --- ]`)
+        // console.log(`[ --- SECTION --- ]`)
         const section = {
           rank: (movement?.sections || []).length + 1,
           tempoIndication: rowData.tempoIndication,
@@ -390,7 +357,7 @@ async function processDataFromXlsx(dataSheetList: any) {
 
 
         // NEW metronomeMark
-        console.log(`[ -- METROMONE MARK -- ]`)
+        // console.log(`[ -- METROMONE MARK -- ]`)
         const beatUnitXls = rowData.metronomeMarking.split('=')[0].trim()
         // const beatUnitXls = rowData["Metronome Marking"].split('=')[0].trim()
         // console.log(`[] beatUnitXls :`, beatUnitXls)
@@ -451,10 +418,10 @@ async function processDataFromXlsx(dataSheetList: any) {
             fastestOrnamentalNote
           },
         }
-        console.log(`[PUSH] MetronomeMark`, JSON.stringify(metronomeMark))
+        // console.log(`[PUSH] MetronomeMark`, JSON.stringify(metronomeMark))
         metronomeMarkList.push(metronomeMark)
 
-        console.log(`[PUSH NEW] section`, JSON.stringify(section))
+        // console.log(`[PUSH NEW] section`, JSON.stringify(section))
         if (movement) {
           movement.sections.push(section)
         } else if (piece.sections) {
@@ -465,7 +432,7 @@ async function processDataFromXlsx(dataSheetList: any) {
       }
     })
     if (movement) {
-      console.log(`[PUSH LAST] movement`, JSON.stringify(movement))
+      // console.log(`[PUSH LAST] movement`, JSON.stringify(movement))
       if (piece?.movements) {
         piece.movements.push(movement)
       } else {
@@ -473,12 +440,12 @@ async function processDataFromXlsx(dataSheetList: any) {
       }
       movement = null
     }
-    console.log(`[PUSH] piece`, JSON.stringify(piece))
+    // console.log(`[PUSH] piece`, JSON.stringify(piece))
     pieceList.push(piece)
   })
 
   // console.log(`[FINAL] pieceList`, JSON.stringify(pieceList, null, 2))
-  console.log(`---------------------------------------`)
+  // console.log(`---------------------------------------`)
   // console.log(`[FINAL] metronomeMarkList`, metronomeMarkList.map((mm) => JSON.stringify(mm, null, 2)))
   // console.log(`[FINAL] metronomeMarkList`, JSON.stringify(metronomeMarkList, null, 2))
   if (noteNotFoundList.length > 0) {
@@ -487,7 +454,7 @@ async function processDataFromXlsx(dataSheetList: any) {
     console.log(`[] noteDurationValue :`, noteDurationValue)
     const orderedNoteDurationValue = Object.values(noteDurationValue).sort((a, b) => a - b)
     console.log(`[] orderedNoteDurationValue :`, orderedNoteDurationValue)
-    console.log(`[] noteDurationValue :`, orderedNoteDurationValue.map((v, index) => `${Object.keys(noteDurationValue).find((k) => noteDurationValue[k] === v)} : ${v} (${v - orderedNoteDurationValue[index - 1]})`))
+    console.log(`[] noteDurationValue :`, orderedNoteDurationValue.map((v, index) => `${noteDurationValueKeys.find((k) => noteDurationValue[k] === v)} : ${v} (${v - orderedNoteDurationValue[index - 1]})`))
 // console.log(`---------------------------------------`)
 // console.log(`[FINAL] noteNotFoundList`, JSON.stringify(noteNotFoundList, ["piece", "title", "movement", "rank", "key", "section"], 2))
   }
@@ -498,7 +465,31 @@ async function processDataFromXlsx(dataSheetList: any) {
 async function main() {
   const datasFromXlsxFiles = await getXlsxDatas()
   const {pieceList, metronomeMarkList, noteNotFoundList} = await processDataFromXlsx(datasFromXlsxFiles)
-  // console.log("[MAIN] results", {pieceList, metronomeMarkList, noteNotFoundList})
+  const sectionList = pieceList.reduce((acc, piece) => {
+    let pieceSections = []
+    let movementSections = []
+    if (piece.sections) {
+      pieceSections = piece.sections
+    }
+    if (piece.movements) {
+     movementSections = piece.movements.reduce((acc, movement) => {
+      return [...acc, ...movement.sections]
+    }, [])
+    }
+    return [...acc, ...pieceSections, ...movementSections]
+  }, [])
+  console.log(`[MAIN] counts :`, {pieceList: pieceList.length, sectionList: sectionList.length, metronomeMarkList: metronomeMarkList.length, noteNotFoundList: noteNotFoundList.length})
+  // console.log("[MAIN] results", {pieceList: pieceList.slice(0, 3), metronomeMarkList: metronomeMarkList.slice(0, 3), noteNotFoundList})
+  await seedDB({pieceList, metronomeMarkList, noteNotFoundList})
+.then(async () => {
+  await db.$disconnect();
+})
+.catch(async (e) => {
+  console.error(e);
+  await db.$disconnect();
+  process.exit(1);
+});
+  // const result = await seedDb({pieceList, metronomeMarkList, noteNotFoundList})
 }
 
 main().then(() => {
@@ -526,6 +517,138 @@ function getKeyEnumFromKeyString(keyString: string) {
   // @ts-ignore
   const keyEnum = KEY[`${key}_${mode}`]
   return keyEnum
+}
+
+async function seedDB({pieceList, metronomeMarkList, noteNotFoundList}: {pieceList: any[], metronomeMarkList: any[], noteNotFoundList: any[]}) {
+  console.log(`-------- START - seedDB --------`)
+  const taskList = pieceList.map(async (piece) => {
+    // console.log(`[TASK] piece`, JSON.stringify(piece, null, 2))
+    const persistedPiece = await db.piece.create({
+      data: {
+        title: piece.title,
+        yearOfComposition: piece.yearOfComposition,
+        composer: {
+          connectOrCreate: {
+            where: {
+              fullName: piece.composer,
+            },
+            create: {
+              fullName: piece.composer,
+              // birthYear: piece.composer.birthYear,
+              // deathYear: piece.composer.deathYear,
+            },
+          },
+        },
+        movements: {
+          create: piece.movements.map((movement) => {
+            return {
+              rank: movement.rank,
+              key: movement.key,
+              sections: {
+                create: movement.sections.map((section) => {
+                  return {
+                    rank: section.rank,
+                    metreNumerator: section.metreNumerator,
+                    metreDenominator: section.metreDenominator,
+                    tempoIndication: {
+                      connectOrCreate: {
+                        where: {
+                          baseTerm_additionalTerm: {
+                            baseTerm: "Adagio",
+                            additionalTerm: "",
+                          }
+                        },
+                        create: {
+                          baseTerm: "Adagio",
+                          additionalTerm: "",
+                        }
+                      }
+                    },
+                  }
+                }),
+              },
+            }
+          }),
+        },
+      },
+      include: {
+        movements: {
+          include: {
+            sections: {
+              include: {
+                tempoIndication: true,
+              }
+            }
+          }
+        }
+      }
+    })
+    console.log(`[] persistedPiece :`, persistedPiece)
+
+    // const pieceToCreate = {
+    //   title: piece.title,
+    //   yearOfComposition: piece.yearOfComposition,
+    //   composer: {
+    //     connectOrCreate: {
+    //       where: {
+    //         fullName: piece.composer.fullName,
+    //       },
+    //       create: {
+    //         fullName: piece.composer.fullName,
+    //         birthYear: piece.composer.birthYear,
+    //         deathYear: piece.composer.deathYear,
+    //       },
+    //     },
+    //   },
+    //   movements: {
+    //     create: piece.movements.map((movement) => {
+    //       return {
+    //         rank: movement.rank,
+    //         key: getKeyEnumFromKeyString(movement.key),
+    //         sections: {
+    //           create: movement.sections.map((section) => {
+    //             return {
+    //               rank: section.rank,
+    //               metreNumerator: section.metreNumerator,
+    //               metreDenominator: section.metreDenominator,
+    //               metronomeMark: {
+    //                 connectOrCreate: {
+    //                   where: {
+    //                     beatUnit: section.metronomeMark.beatUnit,
+    //                     bpm: section.metronomeMark.bpm,
+    //                     notes: section.metronomeMark.notes,
+    //                   },
+    //                   create: {
+    //                     beatUnit: section.metronomeMark.beatUnit,
+    //                     bpm: section.metronomeMark.bpm,
+    //                     notes: section.metronomeMark.notes,
+    //                     notesPerSecond: {
+    //                       create: {
+    //                         fastestStructuralNote: section.metronomeMark.notesPerSecond.fastestStructuralNote,
+    //                         fastestStacattoNote: section.metronomeMark.notesPerSecond.fastestStacattoNote,
+    //                         fastestOrnamentalNote: section.metronomeMark.notesPerSecond.fastestOrnamentalNote,
+    //                       }
+    //                     }
+    //                   },
+    //                 },
+    //               },
+    //             }
+    //           })
+    //         }
+    //       }
+    //     })
+    //   }
+    // }
+    // console.log(`[CREATE] piece`, JSON.stringify(pieceToCreate, null, 2))
+    // const createdPiece = await db.piece.create({
+    //   data: pieceToCreate,
+    // })
+    // console.log(`[CREATED] piece`, JSON.stringify(createdPiece, null, 2))
+  })
+  Promise.all(taskList).then(() => {
+    console.log(`-------- END - seedDB --------`)
+  })
+  console.log(`-------- END - seedDB --------`)
 }
 
 // async function seedDB() {

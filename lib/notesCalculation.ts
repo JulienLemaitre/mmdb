@@ -29,7 +29,7 @@ export const noteDurationValue = {
   SEPTUPLET_HUNDREDTWENTYEIGHTH: 1/112,
 //   OCTUPLET_SIXTEENTH: 1/32,
 }
-
+export const noteDurationValueKeys = Object.keys(noteDurationValue) as BEAT_UNIT[];
 
 type Notes = {
   fastestStructuralNote?: BEAT_UNIT;
@@ -145,10 +145,10 @@ export function getNotesFromNotesPerSecond({ metronomeMark, section }:
    const noteValue = beatUnitValue / numberOfNotesPerBeat; // ex: 1/4 / 4 = 1/16
   // console.log("getNote :", { beatUnitValue, beatDuration, noteDuration, numberOfNotesInSingleBeat, noteValue })
    // @ts-ignore
-   const noteAttempt1 = Object.keys(noteDurationValue).find((note) => noteDurationValue[note] === noteValue || Math.abs(noteDurationValue[note] - noteValue) < 0.0002) as BEAT_UNIT;
-   const noteAttempt2 = Object.keys(noteDurationValue).find((note) => Math.abs(noteDurationValue[note] - noteValue) < 0.0005) as BEAT_UNIT;
-   const noteAttempt3 = Object.keys(noteDurationValue).find((note) => Math.abs(noteDurationValue[note] - noteValue) < 0.0008) as BEAT_UNIT;
-   const noteAttempt4 = Object.keys(noteDurationValue).find((note) => Math.abs(noteDurationValue[note] - noteValue) < 0.001) as BEAT_UNIT;
+   const noteAttempt1 = noteDurationValueKeys.find((note) => noteDurationValue[note] === noteValue || Math.abs(noteDurationValue[note] - noteValue) < 0.0002);
+   const noteAttempt2 = noteDurationValueKeys.find((note) => Math.abs(noteDurationValue[note] - noteValue) < 0.0005);
+   const noteAttempt3 = noteDurationValueKeys.find((note) => Math.abs(noteDurationValue[note] - noteValue) < 0.0008);
+   const noteAttempt4 = noteDurationValueKeys.find((note) => Math.abs(noteDurationValue[note] - noteValue) < 0.001);
    const note = noteAttempt1 || noteAttempt2 || noteAttempt3 || noteAttempt4;
    if (note) {
      const noteIndex = [noteAttempt1, noteAttempt2, noteAttempt3, noteAttempt4].findIndex((n) => n === note) + 1
