@@ -30,6 +30,8 @@ model Piece {
   movements         Movement[] // A piece can have many movements
   sections          Section[] // A piece can have many sections
   sources           Source[] // A piece can have many sources
+
+  @@unique([composerId, title])
 }
 
 enum KEY {
@@ -75,15 +77,13 @@ enum KEY {
 
 // ?? Does it need to be a ordered list of terms that could be more than two?
 model TempoIndication {
-  id                    String    @id @default(uuid())
-  baseTerm              String
-  additionalTermAppend  String?
-  additionalTermPrepend String?
-  sections              Section[] // A tempo indication can be used by many sections
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
-
-  @@unique([baseTerm, additionalTermAppend, additionalTermPrepend])
+  id        String    @id @default(uuid())
+  baseTerm  String    @unique
+  // additionalTermAppend  String?
+  // additionalTermPrepend String?
+  sections  Section[] // A tempo indication can be used by many sections
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Section {

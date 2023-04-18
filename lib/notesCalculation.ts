@@ -152,9 +152,9 @@ export function getNotesFromNotesPerSecond({ metronomeMark, section }:
    const note = noteAttempt1 || noteAttempt2 || noteAttempt3 || noteAttempt4;
    if (note) {
      const noteIndex = [noteAttempt1, noteAttempt2, noteAttempt3, noteAttempt4].findIndex((n) => n === note) + 1
-      console.log(`[getNote] noteValue ${noteValue} is same or close (${noteIndex} aprox.) to ${note}:`, noteDurationValue[note]);
+      // console.log(`[getNote] noteValue ${noteValue} is same or close (${noteIndex} aprox.) to ${note}:`, noteDurationValue[note]);
      return note;
    }
-     console.log(`[getNote] No note determined for notesPerSecond ${notesPerSecond} -> noteValue ${noteValue}`)
+     // console.log(`[getNote] No note determined for notesPerSecond ${notesPerSecond} -> noteValue ${noteValue}`)
       throw new Error(`No note determined for noteValue ${noteValue}`);
  }
