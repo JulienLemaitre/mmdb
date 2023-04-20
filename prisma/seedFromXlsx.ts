@@ -31,14 +31,15 @@ console.log(`directoryPath :`, directoryPath)
 
 const noteNotFoundList: any[] = []
 
-function structuralNoteParsing(value: any) {
+function valueParsingOutingParenthesis(value: any) {
   if (typeof value === "number") {
     return value
   }
   if (typeof value === "string") {
-    const notePerSecond = value.split("(")[0].trim()
-    return notePerSecond
+    const parsedValue = value.split("(")[0].trim()
+    return parsedValue
   }
+  return value
 }
 
 const schema = {
@@ -102,15 +103,15 @@ const schema = {
   },
   'Fastest Structural Notes (notes/s)': {
     prop: 'fastestStructuralNote',
-    type: structuralNoteParsing,
+    type: valueParsingOutingParenthesis,
   },
   'Fastest Stacatto Notes (notes/s)': {
     prop: 'fastestStacattoNote',
-    type: structuralNoteParsing,
+    type: valueParsingOutingParenthesis,
   },
   'Fastest Ornamental Notes (notes/s)': {
     prop: 'fastestOrnamentalNote',
-    type: structuralNoteParsing,
+    type: valueParsingOutingParenthesis,
   },
   'Additional Notes': {
     prop: 'additionalNotes',
@@ -284,14 +285,14 @@ async function processDataFromXlsx(dataSheetList: any) {
 
 
         // NEW metronomeMark
-        const beatUnitXls = rowData.metronomeMarking.split('=')[0].trim()
+        const beatUnitXls = valueParsingOutingParenthesis(rowData.metronomeMarking.split('=')[0].trim())
         const beatUnitXlsCleanKey = Object.keys(beatUnitXlsToNorm).find((bu) => beatUnitXls.startsWith(bu))
         if (!beatUnitXlsCleanKey) {
           throw new Error(`beatUnitXlsCleanKey not found for ${beatUnitXls}`)
         }
         const beatUnit = beatUnitXlsToNorm[beatUnitXlsCleanKey] as BEAT_UNIT
         const bpmString = rowData.metronomeMarking.split('=')[1].trim()
-        const bpm = Number(bpmString)
+        const bpm = Number(valueParsingOutingParenthesis(bpmString))
         const notes = getNotesFromNotesPerSecond({
           metronomeMark: {
             beatUnit,
@@ -324,6 +325,8 @@ async function processDataFromXlsx(dataSheetList: any) {
           })
         }
         const metronomeMark = {
+          movementRank: movement?.rank,
+          sectionRank: section?.rank,
           beatUnit,
           bpm,
           notes,
@@ -333,7 +336,11 @@ async function processDataFromXlsx(dataSheetList: any) {
             fastestOrnamentalNote
           },
         }
-        metronomeMarkList.push(metronomeMark)
+        if (piece.metronomeMarkList) {
+          piece.metronomeMarkList.push(metronomeMark)
+        } else {
+          piece.metronomeMarkList = [metronomeMark]
+        }
 
         if (movement) {
           movement.sections.push(section)
@@ -363,16 +370,17 @@ async function processDataFromXlsx(dataSheetList: any) {
     // console.log(`[] orderedNoteDurationValue :`, orderedNoteDurationValue)
     // console.log(`[] noteDurationValue :`, orderedNoteDurationValue.map((v, index) => `${noteDurationValueKeys.find((k) => noteDurationValue[k] === v)} : ${v} (${v - orderedNoteDurationValue[index - 1]})`))
   }
-  return {pieceList, metronomeMarkList, noteNotFoundList}
+  return {pieceList, noteNotFoundList}
 }
 
 async function main() {
   const datasFromXlsxFiles = await getXlsxDatas()
-  const {pieceList, metronomeMarkList, noteNotFoundList} = await processDataFromXlsx(datasFromXlsxFiles)
+  const {pieceList, noteNotFoundList} = await processDataFromXlsx(datasFromXlsxFiles)
   const sectionList = pieceList.reduce((acc, piece) => {
     let pieceSections = []
     let movementSections = []
     if (piece.sections) {
+      console.log(`[] piece.sections :`, piece.title, piece.sections.length)
       pieceSections = piece.sections
     }
     if (piece.movements) {
@@ -382,8 +390,8 @@ async function main() {
     }
     return [...acc, ...pieceSections, ...movementSections]
   }, [])
-  console.log(`[MAIN] counts :`, {pieceList: pieceList.length, sectionList: sectionList.length, metronomeMarkList: metronomeMarkList.length, noteNotFoundList: noteNotFoundList.length})
-  await seedDB({pieceList, metronomeMarkList, noteNotFoundList})
+  console.log(`[MAIN] counts :`, {pieceList: pieceList.length, sectionList: sectionList.length, noteNotFoundList: noteNotFoundList.length})
+  await seedDB({pieceList, sectionList, noteNotFoundList})
 .then(async () => {
   await db.$disconnect();
 })
@@ -420,9 +428,9 @@ function getKeyEnumFromKeyString(keyString: string) {
   return keyEnum
 }
 
-async function seedDB({pieceList, metronomeMarkList, noteNotFoundList}: {pieceList: any[], metronomeMarkList: any[], noteNotFoundList: any[]}) {
+async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: any[], sectionList: any[], noteNotFoundList: any[]}) {
   console.log(`-------- START - seedDB --------`)
-  const taskList = pieceList.map((piece, index) => {
+  const pieceTaskList = pieceList.map((piece, index) => {
     return async function () {
       // console.log(`[TASK] piece`, JSON.stringify(piece, null, 2))
       if (index === 0) {
@@ -487,17 +495,97 @@ async function seedDB({pieceList, metronomeMarkList, noteNotFoundList}: {pieceLi
         }
       })
       // console.log(`[] persistedPiece`, JSON.stringify(persistedPiece, null, 2))
-      return persistedPiece
+      return {
+        ...persistedPiece,
+        source: piece.source,
+        metronomeMarkList: piece.metronomeMarkList,
+      }
     }
   })
   const persistedPieceList: any[] = []
-  for (const task of taskList) {
+  for (const task of pieceTaskList) {
     persistedPieceList.push(await task())
   }
 
-  persistedPieceList.forEach((piece) => {
-      console.log(`[] persistedPiece`, JSON.stringify(piece, null, 2))
+  const sourceTaskList = persistedPieceList.map((piece, index) => {
+    return async function () {
+      const source = piece.source
+      const metronomeMarkList = piece.metronomeMarkList
+      const movements = piece.movements
+      // if (index === 0) {
+        console.log(`[] source`, source)
+        console.log(`[] movements`, movements)
+      // }
+
+      // Persist source and metronomeMarks
+      const persistedSource = await db.source.create({
+        data: {
+          type: source.type,
+          link: source.link,
+          year: source.year,
+          isComposerMM: true,
+          piece: {
+            connect: {
+              id: piece.id,
+            }
+          },
+          metronomeMarks: {
+            create: metronomeMarkList.map((metronomeMark) => {
+              // test if bpm is float
+              if (metronomeMark.bpm % 1 !== 0) {
+                console.group(`FLOAT BPM`)
+                console.log(`[] metronomeMark.bpm`, metronomeMark.bpm)
+                console.log(`[] piece`, piece)
+                console.groupEnd()
+              }
+              const sectionId = movements[metronomeMark.movementRank - 1].sections[metronomeMark.sectionRank - 1].id
+              return {
+                beatUnit: metronomeMark.beatUnit,
+                bpm: metronomeMark.bpm,
+                notesPerSecond: metronomeMark.notesPerSecond,
+                notes: metronomeMark.notes,
+                section: {
+                  connect: {
+                    id: sectionId,
+                  },
+                },
+              }
+            }),
+          },
+        },
+        include: {
+          metronomeMarks: true,
+        }
+      })
+      console.log(`[] persistedSource`, JSON.stringify(persistedSource, null, 2))
+
+      return persistedSource
+    }
   })
+
+  const persistedSourceList: any[] = []
+  for (const task of sourceTaskList) {
+    persistedSourceList.push(await task())
+  }
+  // console.log(`[] persistedSourceList`, JSON.stringify(persistedSourceList, null, 2))
+
+  const contributionsTaskList = persistedSourceList.map((source, index) => {
+    return async function () {
+      const metronomeMarkList = source.metronomeMarks
+      const contributions = metronomeMarkList.map((metronomeMark) => {
+        return {
+          sourceId: source.id,
+          metronomeMarkId: metronomeMark.id,
+        }
+      })
+      const persistedContributions = await db.contribution.createMany({
+        data: contributions,
+      })
+      console.log(`[] persistedContributions`, JSON.stringify(persistedContributions, null, 2))
+      return persistedContributions
+    }
+  })
+
   console.log(`-------- END - seedDB --------`)
 }
 

@@ -134,7 +134,8 @@ enum SOURCE_TYPE {
 model Source {
   id             String          @id @default(uuid())
   title          String?
-  pieces         Piece[] // A source can contain many pieces [implicit many-to-many relation]
+  piece          Piece           @relation(fields: [pieceId], references: [id]) // A source is linked to a single piece
+  pieceId        String
   isComposerMM   Boolean         @default(false)
   type           SOURCE_TYPE
   link           String?
@@ -170,8 +171,10 @@ model Contribution {
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt
 
-  // Need to add a constraint to ensure that on and only one of personId or organizationId is set
+  // Need to add a constraint to ensure that one and only one of personId or organizationId is set
   // constraint person_org_xor check ((personId IS NOT NULL AND organizationId IS NULL) OR (organizationId IS NOT NULL AND personId IS NULL))
+  @@unique([personId, role])
+  @@unique([organizationId, role])
 }
 
 model Organization {
@@ -225,6 +228,6 @@ model MetronomeMark {
   notes          Json?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
-  Section        Section   @relation(fields: [sectionId], references: [id])
+  section        Section   @relation(fields: [sectionId], references: [id])
   sectionId      String
 }
