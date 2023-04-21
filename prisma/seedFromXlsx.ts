@@ -24,17 +24,13 @@ const beatUnitXlsToNorm: {[k: string]: string} = {}
   })
 console.log(`[] beatUnitXlsToNorm :`, beatUnitXlsToNorm)
 
-const directoryPath = path.join(__dirname, "ArjunData", "20230319_MM_folders", "19th Century Composers", "Beethoven");
-// const directoryPath = path.join(__dirname, "ArjunData", "20230319_MM_folders", "19th Century Composers", "Beethoven", "Orchestral ");
-// const directoryPath = path.join(__dirname, '/ArjunData/20230319_MM_folders/19th Century Composers/Beethoven/Orchestral');
+const directoryPath = path.join(__dirname, "ArjunData", "20230319_MM_folders");
+// const directoryPath = path.join(__dirname, "ArjunData", "20230319_MM_folders", "19th Century Composers", "Beethoven");
 console.log(`directoryPath :`, directoryPath)
 
 const noteNotFoundList: any[] = []
 
 function valueParsingOutingParenthesis(value: any) {
-  if (typeof value === "number") {
-    return value
-  }
   if (typeof value === "string") {
     const parsedValue = value.split("(")[0].trim()
     return parsedValue
@@ -139,6 +135,7 @@ const category: {[key: string]: PIECE_CATEGORY} = {
   Keyboard: PIECE_CATEGORY.KEYBOARD,
   Orchestral: PIECE_CATEGORY.ORCHESTRAL,
   Vocal: PIECE_CATEGORY.VOCAL,
+  Autre: PIECE_CATEGORY.OTHER,
 }
 
 async function traverseDirectory(directory: string) {
@@ -157,10 +154,10 @@ async function traverseDirectory(directory: string) {
     } else if (path.extname(filePath) === '.xlsx') {
       console.log(`- file: ${filePath}`)
       const categoryKey = Object.keys(category).find((key) => filePath.includes(key))
-      if (!categoryKey) {
-        throw new Error(`[ERROR] categoryKey not found for ${filePath}`)
-      }
-      const pieceListCategory = category[categoryKey]
+      // if (!categoryKey) {
+      //   throw new Error(`[ERROR] categoryKey not found for ${filePath}`)
+      // }
+      const pieceListCategory = category[categoryKey || "Autre"]
       // console.log(`[] pieceListCategory :`, pieceListCategory)
       const singleSheetData = await readExcelFile(filePath);
       // console.log(`[traverseDirectory] singleSheetData`, singleSheetData.map((data: any) => JSON.stringify(data)))
@@ -188,9 +185,9 @@ async function processDataFromXlsx(dataSheetList: any) {
     let movement: any
     dataSheet.forEach((rowData: any) => {
       // Single row data
-      const isPieceDescription = rowData.hasOwnProperty('composer')
-      const isMovement = rowData.hasOwnProperty('movement')
-      const isSectionDescription = rowData.hasOwnProperty('tempoIndication')
+      const isPieceDescription = rowData.hasOwnProperty('composer') && rowData.hasOwnProperty('title')
+      const isMovement = rowData.hasOwnProperty('movement') && rowData.hasOwnProperty('key')
+      const isSectionDescription = rowData.hasOwnProperty('metre')
 
       if (isPieceDescription) {
         // Push remaining movement in precedent piece
@@ -257,6 +254,10 @@ async function processDataFromXlsx(dataSheetList: any) {
               piece.movements = [movement]
             }
           }
+          const key = getKeyEnumFromKeyString(rowData.key)
+          if (!key) {
+            console.log(`[ERROR] key not found in piece ${piece.title} (${piece.composer}) for movement ${rowData.movement}`)
+          }
           movement = {
             rank: (piece?.movements || []).length + 1,
             key: getKeyEnumFromKeyString(rowData.key),
@@ -267,17 +268,18 @@ async function processDataFromXlsx(dataSheetList: any) {
 
       if (isSectionDescription) {
 
-        const fastestStructuralNote = rowData.fastestStructuralNote
-        const fastestStacattoNote = rowData.fastestStacattoNote
-        const fastestOrnamentalNote = rowData.fastestOrnamentalNote
+        const fastestStructuralNote = takeFirstOfPotentialRange(rowData.fastestStructuralNote)
+        const fastestStacattoNote = takeFirstOfPotentialRange(rowData.fastestStacattoNote)
+        const fastestOrnamentalNote = takeFirstOfPotentialRange(rowData.fastestOrnamentalNote)
 
         // NEW section
+        const rawMetre = valueParsingOutingParenthesis(rowData.metre)
         const section = {
           rank: (movement?.sections || []).length + 1,
           tempoIndication: rowData.tempoIndication,
           metreString: rowData.metre,
-          metreNumerator: rowData.metre === 'C' ? 4 : Number(rowData.metre.split('/')[0]),
-          metreDenominator: rowData.metre === 'C' ? 4 : Number(rowData.metre.split('/')[1]),
+          metreNumerator: rawMetre === 'C' ? 4 : Number(rawMetre.split('/')[0]),
+          metreDenominator: rawMetre === 'C' ? 4 : Number(rawMetre.split('/')[1]),
           fastestStructuralNote,
           fastestStacattoNote,
           fastestOrnamentalNote,
@@ -291,7 +293,8 @@ async function processDataFromXlsx(dataSheetList: any) {
           throw new Error(`beatUnitXlsCleanKey not found for ${beatUnitXls}`)
         }
         const beatUnit = beatUnitXlsToNorm[beatUnitXlsCleanKey] as BEAT_UNIT
-        const bpmString = rowData.metronomeMarking.split('=')[1].trim()
+        const bpmRawString = rowData.metronomeMarking.split('=')[1].trim()
+        const bpmString = bpmRawString.split('-')[0].trim()
         const bpm = Number(valueParsingOutingParenthesis(bpmString))
         const notes = getNotesFromNotesPerSecond({
           metronomeMark: {
@@ -359,7 +362,9 @@ async function processDataFromXlsx(dataSheetList: any) {
       }
       movement = null
     }
-    pieceList.push(piece)
+    if (piece) {
+      pieceList.push(piece)
+    }
   })
 
   if (noteNotFoundList.length > 0) {
@@ -377,13 +382,17 @@ async function main() {
   const datasFromXlsxFiles = await getXlsxDatas()
   const {pieceList, noteNotFoundList} = await processDataFromXlsx(datasFromXlsxFiles)
   const sectionList = pieceList.reduce((acc, piece) => {
+    if (!piece) {
+      console.log(`[NO] piece`)
+      return acc
+    }
     let pieceSections = []
     let movementSections = []
-    if (piece.sections) {
+    if (piece?.sections) {
       console.log(`[] piece.sections :`, piece.title, piece.sections.length)
       pieceSections = piece.sections
     }
-    if (piece.movements) {
+    if (piece?.movements) {
      movementSections = piece.movements.reduce((acc, movement) => {
       return [...acc, ...movement.sections]
     }, [])
@@ -408,8 +417,15 @@ main().then(() => {
   console.error(e)
 })
 
+function takeFirstOfPotentialRange(value: any) {
+  if (typeof value === 'string' && value.includes('-')) {
+    value.split('-')[0].trim()
+  }
+  return value
+}
 
 function getKeyEnumFromKeyString(keyString: string) {
+  if (!keyString) return null
   const keyStringArray = keyString.split(' ')
   // If keyString is 'C major', keyStringArray = ['C', 'major']
 
@@ -430,12 +446,21 @@ function getKeyEnumFromKeyString(keyString: string) {
 
 async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: any[], sectionList: any[], noteNotFoundList: any[]}) {
   console.log(`-------- START - seedDB --------`)
-  const pieceTaskList = pieceList.map((piece, index) => {
-    return async function () {
-      // console.log(`[TASK] piece`, JSON.stringify(piece, null, 2))
-      if (index === 0) {
-        console.log(`[TASK] piece`, JSON.stringify(piece, null, 2))
+  // console.log(`[] pieceList`, pieceList)
+
+  const pieceTaskList = pieceList
+  .map((piece) => {
+    // Fix for wrongly written Beethoven name
+    if (piece.composer === "Beethoven, Ludwig Van") {
+      return {
+        ...piece,
+        composer: "Beethoven, Ludwig van"
       }
+    }
+    return piece
+  })
+  .map((piece, index) => {
+    return async function () {
       const persistedPiece = await db.piece.create({
         data: {
           title: piece.title,
@@ -465,16 +490,18 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
                       metreString: section.metreString,
                       metreNumerator: section.metreNumerator,
                       metreDenominator: section.metreDenominator,
-                      tempoIndication: {
-                        connectOrCreate: {
-                          where: {
-                            baseTerm: section.tempoIndication,
-                          },
-                          create: {
-                            baseTerm: section.tempoIndication,
+                      ...(section.tempoIndication && {
+                        tempoIndication: {
+                          connectOrCreate: {
+                            where: {
+                              baseTerm: section.tempoIndication,
+                            },
+                            create: {
+                              baseTerm: section.tempoIndication,
+                            }
                           }
-                        }
-                      },
+                        },
+                      })
                     }
                   }),
                 },
@@ -483,6 +510,7 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
           },
         },
         include: {
+          composer: true,
           movements: {
             include: {
               sections: {
@@ -493,6 +521,10 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
             }
           }
         }
+      }).catch((e) => {
+        console.error(`[CREATE ERROR] piece`, piece.title, piece.composer)
+        console.error(`[CREATE ERROR] e.message`, e.message)
+        return null
       })
       // console.log(`[] persistedPiece`, JSON.stringify(persistedPiece, null, 2))
       return {
@@ -511,10 +543,13 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
     return async function () {
       const source = piece.source
       const metronomeMarkList = piece.metronomeMarkList
+      if (!metronomeMarkList) {
+        console.log(`[ERROR] metronomeMarkList is null`, piece.title, piece)
+      }
       const movements = piece.movements
       // if (index === 0) {
-        console.log(`[] source`, source)
-        console.log(`[] movements`, movements)
+      //   console.log(`[] source`, source)
+      //   console.log(`[] movements`, movements)
       // }
 
       // Persist source and metronomeMarks
@@ -523,7 +558,7 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
           type: source.type,
           link: source.link,
           year: source.year,
-          isComposerMM: true,
+          isComposerMM: piece.composer.name !== 'Bach, J.S',
           piece: {
             connect: {
               id: piece.id,
@@ -533,7 +568,7 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
             create: metronomeMarkList.map((metronomeMark) => {
               // test if bpm is float
               if (metronomeMark.bpm % 1 !== 0) {
-                console.group(`FLOAT BPM`)
+                console.group(`[ERROR] FLOAT BPM`)
                 console.log(`[] metronomeMark.bpm`, metronomeMark.bpm)
                 console.log(`[] piece`, piece)
                 console.groupEnd()
@@ -557,9 +592,12 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
           metronomeMarks: true,
         }
       })
-      console.log(`[] persistedSource`, JSON.stringify(persistedSource, null, 2))
+      // console.log(`[] persistedSource`, JSON.stringify(persistedSource, null, 2))
 
-      return persistedSource
+      return {
+        ...persistedSource,
+        piece,
+      }
     }
   })
 
@@ -569,22 +607,45 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
   }
   // console.log(`[] persistedSourceList`, JSON.stringify(persistedSourceList, null, 2))
 
-  const contributionsTaskList = persistedSourceList.map((source, index) => {
-    return async function () {
-      const metronomeMarkList = source.metronomeMarks
-      const contributions = metronomeMarkList.map((metronomeMark) => {
-        return {
-          sourceId: source.id,
-          metronomeMarkId: metronomeMark.id,
-        }
+  // TODO seed contributions to the persisted sources
+  const contributionsTaskList: any[] = []
+  persistedSourceList.forEach((source, index) => {
+    const piece = source.piece
+    
+    piece.source.contributions.forEach((contribution) => {
+      contributionsTaskList.push(async function () {
+        const persistedContribution = await db.contribution.create({
+          data: {
+            role: contribution.role,
+            source: {
+              connect: {
+                id: source.id,
+              },
+            },
+            organization: {
+              connectOrCreate: {
+                where: {
+                  name: contribution.organization.name,
+                },
+                create: {
+                  name: contribution.organization.name,
+                }
+              }
+            },
+          },
+          include: {
+            organization: true,
+          }
+        })
+        // console.log(`[] persistedContributions`, JSON.stringify(persistedContribution, null, 2))
+        return persistedContribution
       })
-      const persistedContributions = await db.contribution.createMany({
-        data: contributions,
-      })
-      console.log(`[] persistedContributions`, JSON.stringify(persistedContributions, null, 2))
-      return persistedContributions
-    }
+    })
   })
+  const persistedContributionsList: any[] = []
+  for (const task of contributionsTaskList) {
+    persistedContributionsList.push(await task())
+  }
 
   console.log(`-------- END - seedDB --------`)
 }

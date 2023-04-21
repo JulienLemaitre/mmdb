@@ -15,6 +15,7 @@ enum PIECE_CATEGORY {
   CHAMBER_INSTRUMENTAL
   ORCHESTRAL
   VOCAL
+  OTHER
 }
 
 model Piece {
@@ -87,10 +88,10 @@ model TempoIndication {
 }
 
 model Section {
-  id                    String          @id @default(uuid())
-  movement              Movement?       @relation(fields: [movementId], references: [id])
+  id                    String           @id @default(uuid())
+  movement              Movement?        @relation(fields: [movementId], references: [id])
   movementId            String?
-  piece                 Piece?          @relation(fields: [pieceId], references: [id]) // A section belongs to a single piece
+  piece                 Piece?           @relation(fields: [pieceId], references: [id]) // A section belongs to a single piece
   pieceId               String?
   rank                  Int
   metreNumerator        Int
@@ -100,11 +101,11 @@ model Section {
   fastestStacattoNote   BEAT_UNIT?
   fastestOrnamentalNote BEAT_UNIT?
   // ?? ComposedTimeSignature
-  tempoIndication       TempoIndication @relation(fields: [tempoIndicationId], references: [id])
-  tempoIndicationId     String
+  tempoIndication       TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
+  tempoIndicationId     String?
   metronomeMarks        MetronomeMark[] // A movement can have many metronome marks
-  createdAt             DateTime        @default(now())
-  updatedAt             DateTime        @updatedAt
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
 
   // Need to add a constraint to ensure that one and only one of pieceId or movementId is set
   // constraint section_piece_or_movement check ((personId IS NOT NULL AND organizationId IS NULL) OR (organizationId IS NOT NULL AND personId IS NULL))
@@ -173,13 +174,11 @@ model Contribution {
 
   // Need to add a constraint to ensure that one and only one of personId or organizationId is set
   // constraint person_org_xor check ((personId IS NOT NULL AND organizationId IS NULL) OR (organizationId IS NOT NULL AND personId IS NULL))
-  @@unique([personId, role])
-  @@unique([organizationId, role])
 }
 
 model Organization {
   id            String         @id @default(uuid())
-  name          String
+  name          String         @unique
   contributions Contribution[] // An organization can have many contributions
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
