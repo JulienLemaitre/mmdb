@@ -29,7 +29,6 @@ model Piece {
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
   movements         Movement[] // A piece can have many movements
-  sections          Section[] // A piece can have many sections
   sources           Source[] // A piece can have many sources
 
   @@unique([composerId, title])
@@ -91,7 +90,6 @@ model Section {
   id                    String           @id @default(uuid())
   movement              Movement?        @relation(fields: [movementId], references: [id])
   movementId            String?
-  piece                 Piece?           @relation(fields: [pieceId], references: [id]) // A section belongs to a single piece
   pieceId               String?
   rank                  Int
   metreNumerator        Int
@@ -110,7 +108,6 @@ model Section {
   // Need to add a constraint to ensure that one and only one of pieceId or movementId is set
   // constraint section_piece_or_movement check ((personId IS NOT NULL AND organizationId IS NULL) OR (organizationId IS NOT NULL AND personId IS NULL))
   @@unique([movementId, rank])
-  @@unique([pieceId, rank])
 }
 
 model Movement {

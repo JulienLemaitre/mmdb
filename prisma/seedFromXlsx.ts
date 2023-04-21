@@ -347,10 +347,8 @@ async function processDataFromXlsx(dataSheetList: any) {
 
         if (movement) {
           movement.sections.push(section)
-        } else if (piece.sections) {
-          piece.sections.push(section)
         } else {
-          piece.sections = [section]
+          throw new Error(`movement not found to push section ${section.rank} of piece ${piece.title} (${piece.composer})`)
         }
       }
     })
@@ -388,14 +386,11 @@ async function main() {
     }
     let pieceSections = []
     let movementSections = []
-    if (piece?.sections) {
-      console.log(`[] piece.sections :`, piece.title, piece.sections.length)
-      pieceSections = piece.sections
-    }
+
     if (piece?.movements) {
-     movementSections = piece.movements.reduce((acc, movement) => {
+      movementSections = piece.movements.reduce((acc, movement) => {
       return [...acc, ...movement.sections]
-    }, [])
+      }, [])
     }
     return [...acc, ...pieceSections, ...movementSections]
   }, [])
@@ -607,11 +602,10 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
   }
   // console.log(`[] persistedSourceList`, JSON.stringify(persistedSourceList, null, 2))
 
-  // TODO seed contributions to the persisted sources
   const contributionsTaskList: any[] = []
   persistedSourceList.forEach((source, index) => {
     const piece = source.piece
-    
+
     piece.source.contributions.forEach((contribution) => {
       contributionsTaskList.push(async function () {
         const persistedContribution = await db.contribution.create({
