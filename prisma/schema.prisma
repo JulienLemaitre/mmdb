@@ -88,9 +88,8 @@ model TempoIndication {
 
 model Section {
   id                    String           @id @default(uuid())
-  movement              Movement?        @relation(fields: [movementId], references: [id])
+  movement              Movement         @relation(fields: [movementId], references: [id])
   movementId            String
-  pieceId               String?
   rank                  Int
   metreNumerator        Int
   metreDenominator      Int
