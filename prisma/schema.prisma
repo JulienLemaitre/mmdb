@@ -137,8 +137,7 @@ model Source {
   type           SOURCE_TYPE
   link           String?
   year           Int
-  // TODO: Maybe a "references" field with a json object would be better, permitting to store different types of references
-  plate_number   String?         @unique
+  references     Json? // Can be plateNumber, ISBN, ISMN, etc.
   // date           DateTime? // ?? Is this usefull ?
   contributions  Contribution[] // A source can have many Contributions
   metronomeMarks MetronomeMark[] // A source can have many metronome marks
