@@ -89,15 +89,15 @@ model TempoIndication {
 model Section {
   id                    String           @id @default(uuid())
   movement              Movement?        @relation(fields: [movementId], references: [id])
-  movementId            String?
+  movementId            String
   pieceId               String?
   rank                  Int
   metreNumerator        Int
   metreDenominator      Int
   metreString           String
-  fastestStructuralNote BEAT_UNIT?
-  fastestStacattoNote   BEAT_UNIT?
-  fastestOrnamentalNote BEAT_UNIT?
+  fastestStructuralNote NOTE_VALUE?
+  fastestStacattoNote   NOTE_VALUE?
+  fastestOrnamentalNote NOTE_VALUE?
   // ?? ComposedTimeSignature
   tempoIndication       TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
   tempoIndicationId     String?
@@ -195,7 +195,7 @@ model Person {
   updatedAt     DateTime       @updatedAt
 }
 
-enum BEAT_UNIT {
+enum NOTE_VALUE {
   WHOLE
   HALF
   DOTTED_HALF
@@ -211,19 +211,28 @@ enum BEAT_UNIT {
   DOTTED_SIXTYFOURTH
   HUNDREDTWENTYEIGHTH
   DOTTED_HUNDREDTWENTYEIGHTH
+  TRIPLET_EIGHTH
+  TRIPLET_SIXTEENTH
+  QUADRUPLET_EIGHTH
+  QUINTUPLET_SIXTEENTH
+  QUINTUPLET_THIRTYSECOND
+  SEXTUPLET_SIXTEENTH
+  SEXTUPLET_THIRTYSECOND
+  SEPTUPLET_SIXTEENTH
+  SEPTUPLET_HUNDREDTWENTYEIGHTH
 }
 
 model MetronomeMark {
-  id             String    @id @default(uuid())
-  source         Source    @relation(fields: [sourceId], references: [id])
+  id             String     @id @default(uuid())
+  source         Source     @relation(fields: [sourceId], references: [id])
   sourceId       String
-  beatUnit       BEAT_UNIT
+  beatUnit       NOTE_VALUE
   bpm            Int
   // ?? bpmRange String[]
   notesPerSecond Json?
   notes          Json?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  section        Section   @relation(fields: [sectionId], references: [id])
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  section        Section    @relation(fields: [sectionId], references: [id])
   sectionId      String
 }

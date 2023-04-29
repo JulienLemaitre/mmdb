@@ -1,4 +1,4 @@
-import {BEAT_UNIT, MetronomeMark, Section} from "@prisma/client";
+import {NOTE_VALUE, MetronomeMark, Section} from "@prisma/client";
 
 export const noteDurationValue = {
   WHOLE: 1,
@@ -29,12 +29,12 @@ export const noteDurationValue = {
   SEPTUPLET_HUNDREDTWENTYEIGHTH: 1/112,
 //   OCTUPLET_SIXTEENTH: 1/32,
 }
-export const noteDurationValueKeys = Object.keys(noteDurationValue) as BEAT_UNIT[];
+export const noteDurationValueKeys = Object.keys(noteDurationValue) as NOTE_VALUE[];
 
 type Notes = {
-  fastestStructuralNote?: BEAT_UNIT;
-  fastestStacattoNote?: BEAT_UNIT;
-  fastestOrnamentalNote?: BEAT_UNIT;
+  fastestStructuralNote?: NOTE_VALUE;
+  fastestStacattoNote?: NOTE_VALUE;
+  fastestOrnamentalNote?: NOTE_VALUE;
 }
 type NotesPerSecond = {
   fastestStructuralNote?: number;
@@ -68,7 +68,7 @@ export function getNotesPerSecondsFromNotes({ metronomeMark, section }:
   return notesPerSecond
 }
 
-function getNotesPerSecond({ note, beatUnit, bpm }: { note: BEAT_UNIT | null, beatUnit: BEAT_UNIT, bpm: number }): number {
+function getNotesPerSecond({ note, beatUnit, bpm }: { note: NOTE_VALUE | null, beatUnit: NOTE_VALUE, bpm: number }): number {
 
   if (!note) {
     throw new Error("[getNotesPerSecond] No note given");
@@ -134,7 +134,7 @@ export function getNotesFromNotesPerSecond({ metronomeMark, section }:
 
  }
 
- function getNote({ notesPerSecond, beatUnit, bpm }: { notesPerSecond: number, beatUnit: BEAT_UNIT, bpm: number }): BEAT_UNIT {
+ function getNote({ notesPerSecond, beatUnit, bpm }: { notesPerSecond: number, beatUnit: NOTE_VALUE, bpm: number }): NOTE_VALUE {
    if (!notesPerSecond) {
      throw new Error("[getNote]  notesPerSecond given");
    }

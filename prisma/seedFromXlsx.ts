@@ -1,5 +1,5 @@
 import {db} from "@/lib/db";
-import {BEAT_UNIT, KEY, SOURCE_TYPE, CONTRIBUTION_ROLE, PIECE_CATEGORY} from "@prisma/client";
+import {NOTE_VALUE, KEY, SOURCE_TYPE, CONTRIBUTION_ROLE, PIECE_CATEGORY} from "@prisma/client";
 import {getNotesFromNotesPerSecond, noteDurationValue, noteDurationValueKeys} from "@/lib/notesCalculation";
 
 const fs = require('fs');
@@ -11,7 +11,7 @@ const readdir = util.promisify(fs.readdir);
 const stat = util.promisify(fs.stat);
 
 const beatUnitXlsToNorm: {[k: string]: string} = {}
-  Object.keys(BEAT_UNIT).forEach((beatUnit: string, index) => {
+  Object.keys(NOTE_VALUE).forEach((beatUnit: string, index) => {
     let isDotted = beatUnit.startsWith("DOTTED_")
     if (beatUnit.startsWith("DOTTED_")) {
       isDotted = true
@@ -272,27 +272,12 @@ async function processDataFromXlsx(dataSheetList: any) {
         const fastestStacattoNote = takeFirstOfPotentialRange(rowData.fastestStacattoNote)
         const fastestOrnamentalNote = takeFirstOfPotentialRange(rowData.fastestOrnamentalNote)
 
-        // NEW section
-        const rawMetre = valueParsingOutingParenthesis(rowData.metre)
-        const section = {
-          rank: (movement?.sections || []).length + 1,
-          tempoIndication: rowData.tempoIndication,
-          metreString: rowData.metre,
-          metreNumerator: rawMetre === 'C' ? 4 : rawMetre === 'C-' ? 2 : Number(rawMetre.split('/')[0]),
-          metreDenominator: rawMetre === 'C' ? 4 : rawMetre === 'C-' ? 2 : Number(rawMetre.split('/')[1]),
-          fastestStructuralNote,
-          fastestStacattoNote,
-          fastestOrnamentalNote,
-        }
-
-
-        // NEW metronomeMark
         const beatUnitXls = valueParsingOutingParenthesis(rowData.metronomeMarking.split('=')[0].trim())
         const beatUnitXlsCleanKey = Object.keys(beatUnitXlsToNorm).find((bu) => beatUnitXls.startsWith(bu))
         if (!beatUnitXlsCleanKey) {
           throw new Error(`beatUnitXlsCleanKey not found for ${beatUnitXls}`)
         }
-        const beatUnit = beatUnitXlsToNorm[beatUnitXlsCleanKey] as BEAT_UNIT
+        const beatUnit = beatUnitXlsToNorm[beatUnitXlsCleanKey] as NOTE_VALUE
         const bpmRawString = rowData.metronomeMarking.split('=')[1].trim()
         const bpmString = bpmRawString.split('-')[0].trim()
         const bpm = Number(valueParsingOutingParenthesis(bpmString))
@@ -303,6 +288,21 @@ async function processDataFromXlsx(dataSheetList: any) {
             notesPerSecond: {fastestStructuralNote, fastestStacattoNote, fastestOrnamentalNote}
           }, section: {metreDenominator: rowData.metre === 'C' ? 4 : Number(rowData.metre.split('/')[1])}
         })
+
+
+        // NEW section
+        const rawMetre = valueParsingOutingParenthesis(rowData.metre)
+        const section = {
+          rank: (movement?.sections || []).length + 1,
+          tempoIndication: rowData.tempoIndication,
+          metreString: rowData.metre,
+          metreNumerator: rawMetre === 'C' ? 4 : rawMetre === 'C-' ? 2 : Number(rawMetre.split('/')[0]),
+          metreDenominator: rawMetre === 'C' ? 4 : rawMetre === 'C-' ? 2 : Number(rawMetre.split('/')[1]),
+          ...notes,
+        }
+
+
+        // NEW metronomeMark
         // @ts-ignore
         if (Object.keys(notes).some((note) => notes[note] === null)) {
           noteNotFoundList.push({
@@ -480,11 +480,23 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
                 key: movement.key,
                 sections: {
                   create: movement.sections.map((section) => {
+                    // console.log(`[] section.fastestStructuralNote :`, section.fastestStructuralNote)
+                    // const beatUnitValue: NOTE_VALUE = section.fastestStructuralNote
+                    // console.log(`[] beatUnitValue :`, beatUnitValue)
+                    const noteValues = {
+                      fastestStructuralNote: section.fastestStructuralNote as NOTE_VALUE,
+                      fastestStacattoNote: section.fastestStacattoNote as NOTE_VALUE,
+                      fastestOrnamentalNote: section.fastestOrnamentalNote as NOTE_VALUE,
+                    }
+                    console.log(`[SECTION] noteValues :`, noteValues)
                     return {
                       rank: section.rank,
                       metreString: section.metreString,
                       metreNumerator: section.metreNumerator,
                       metreDenominator: section.metreDenominator,
+                      fastestStructuralNote: section.fastestStructuralNote as NOTE_VALUE,
+                      fastestStacattoNote: section.fastestStacattoNote as NOTE_VALUE,
+                      fastestOrnamentalNote: section.fastestOrnamentalNote as NOTE_VALUE,
                       ...(section.tempoIndication && {
                         tempoIndication: {
                           connectOrCreate: {
