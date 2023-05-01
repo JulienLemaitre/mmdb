@@ -48,9 +48,9 @@ type NotesPerSecond = {
  * @param section
  */
 export function getNotesPerSecondsFromNotes({ metronomeMark, section }:
-                                                             { metronomeMark: MetronomeMark, section: Section }): NotesPerSecond {
+                                                             { metronomeMark: MetronomeMark, section: Partial<Section> }): NotesPerSecond {
   const { beatUnit, bpm } = metronomeMark;
-  const { fastestStructuralNote, fastestStacattoNote, fastestOrnamentalNote } = section;
+  const { metreDenominator, fastestStructuralNote, fastestStacattoNote, fastestOrnamentalNote } = section;
 
   if (!fastestStructuralNote && !fastestStacattoNote && !fastestOrnamentalNote) {
     throw new Error("No fastest note property found in given section");
@@ -58,9 +58,9 @@ export function getNotesPerSecondsFromNotes({ metronomeMark, section }:
 
   const notes = {fastestStructuralNote, fastestStacattoNote, fastestOrnamentalNote}
   // @ts-ignore
-  const notesPerSecond: NotesPerSecond = Object.keys(notes).reduce((npsObject: NotesPerSecond, note: keyof typeof notes) => {
-    if (notes[note]) {
-      npsObject[note] = getNotesPerSecond({ note: notes[note], beatUnit, bpm })
+  const notesPerSecond: NotesPerSecond = Object.keys(notes).reduce((npsObject: NotesPerSecond, noteType: keyof typeof notes) => {
+    if (notes[noteType]) {
+      npsObject[noteType] = getNotesPerSecond({ noteType: notes[noteType], beatUnit, bpm })
     }
     return npsObject;
   }, {} as NotesPerSecond)
@@ -68,12 +68,12 @@ export function getNotesPerSecondsFromNotes({ metronomeMark, section }:
   return notesPerSecond
 }
 
-function getNotesPerSecond({ note, beatUnit, bpm }: { note: NOTE_VALUE | null, beatUnit: NOTE_VALUE, bpm: number }): number {
+function getNotesPerSecond({ noteType, beatUnit, bpm }: { noteType?: NOTE_VALUE | null, beatUnit: NOTE_VALUE, bpm: number }): number {
 
-  if (!note) {
+  if (!noteType) {
     throw new Error("[getNotesPerSecond] No note given");
   }
-  const noteValue = noteDurationValue[note]; // ex: 1/16
+  const noteValue = noteDurationValue[noteType]; // ex: 1/16
 
 //     1 Get the rhythmic value of a single beat and the given structural note
   const beatUnitValue = noteDurationValue[beatUnit]; // ex: 1/4
@@ -136,7 +136,7 @@ export function getNotesFromNotesPerSecond({ metronomeMark, section }:
 
  function getNote({ notesPerSecond, beatUnit, bpm }: { notesPerSecond: number, beatUnit: NOTE_VALUE, bpm: number }): NOTE_VALUE {
    if (!notesPerSecond) {
-     throw new Error("[getNote]  notesPerSecond given");
+     throw new Error("[getNote] No notesPerSecond given");
    }
    const beatUnitValue = noteDurationValue[beatUnit]; // ex: 1/4
    const beatDuration = 60 / bpm; // ex: 0.5

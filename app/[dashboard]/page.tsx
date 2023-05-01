@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Inter } from 'next/font/google'
 import {db} from "@/lib/db";
+import {getNotesPerSecondsFromNotes} from "@/lib/notesCalculation";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -41,8 +42,8 @@ const getData = async () => {
 }
 
 export default async function Home() {
-const { persons } = await getData()
-console.log(`[] persons :`, persons)
+  const { persons } = await getData()
+
   return (
     <main className="p-8">
       {persons.map((person) => (
@@ -56,18 +57,18 @@ console.log(`[] persons :`, persons)
                 {["yearOfComposition", "category"].map((key, index, array) => (
                   <>
                   <div key={key} className="mr-4">{key}: {piece[key]}</div>
-                {
-                  // Add separator if not last item
-                  index !== Object.keys(array).length - 1 && (
-                    <div className="mr-4">|</div>
-                  )
-                }
+                  {
+                    // Add separator if not last item
+                    index !== Object.keys(array).length - 1 && (
+                      <div className="mr-4">|</div>
+                    )
+                  }
                   </>
                 ))}
               </div>
               {piece.movements.sort((a, b) => a.rank - b.rank).map((movement) => (
                 <div key={movement.id} className="flex">
-                  <h3 className="text-xl my-1 flex-none pr-4">{movement.rank} - {movement.key}</h3>
+                  <h3 className="text-xl my-1 flex-none pr-4">{movement.rank} - {movement.key.replaceAll("_FLAT", "b").replaceAll("_SHARP", "#").split("_").map((w) => w.charAt(0) + w.substring(1).toLowerCase()).join(" ")}</h3>
                   <div className="">
                   {movement.sections.sort((a, b) => a.rank - b.rank).map((section, index, sectionList) => (
                     <div key={section.id}>
@@ -78,26 +79,52 @@ console.log(`[] persons :`, persons)
                       </div>
 
                       {
-                        section.metronomeMarks.map((mm) => (
-                        <>
-                          <div key={mm.id} className="">
-                            <div className="mr-4">{`${mm.beatUnit} = ${mm.bpm}`}</div>
+                        section.metronomeMarks.map((mm) => {
+                          let notesPerSecondComputed
+                          try {
+                            notesPerSecondComputed = getNotesPerSecondsFromNotes({metronomeMark: mm, section})
+                          } catch (e: any) {
+                            notesPerSecondComputed = e?.message
+                          }
 
-                            {["fastestStructuralNote", "fastestStacattoNote", "fastestOrnamentalNote"].map((key, index) => (
-                              <>
-                              {
-                                mm.notesPerSecond?.[key] && (
-                                  <div key={key} className="mr-4">
-                                    {key}: {mm.notesPerSecond[key]} ({mm.notes?.[key]})
-                                  </div>
-                                )
-                              }
-                              </>
-                            ))}
+                          return (
+                            <>
+                              <div key={mm.id} className="">
+                                <div className="mr-4">{`${mm.beatUnit} = ${mm.bpm}`}</div>
 
-                          </div>
-                        </>
-                        ))
+                                {["fastestStructuralNote", "fastestStacattoNote", "fastestOrnamentalNote"].map((key, index) => {
+
+                                  const fastestNote = mm.notesPerSecond?.[key]
+                                  const computedNotesPerSecond = notesPerSecondComputed?.[key] ? Math.round(notesPerSecondComputed[key] * 100) / 100 : null
+                                  const isNotesPerSecondDiff = computedNotesPerSecond && Math.abs(mm.notesPerSecond?.[key] - computedNotesPerSecond) > 0.01
+
+                                  return (
+                                    <>
+                                      {
+                                        mm.notesPerSecond?.[key] && (
+                                          <div key={key} className="mr-4">
+                                            {key}: <span className={`${fastestNote >= 15 ? "bg-red-500" : fastestNote >= 11 ? "bg-orange-400" : fastestNote >= 8 ? "bg-amber-200" : "bg-white"} px-2`}>
+                                            {mm.notesPerSecond[key]}</span> (
+                                            <span className={!mm.notes?.[key] ? "text-red-500" : ""}>{mm.notes?.[key] || "Unable to find note value"}</span>
+                                            {
+                                              computedNotesPerSecond && (
+                                                <span className="ml-1">
+                                                  computed to<span className={`${isNotesPerSecondDiff ? "bg-red-500 text-white px-2" : ""} ml-1`}>{computedNotesPerSecond}</span>
+                                                </span>
+                                              )
+                                            }
+                                            )
+                                          </div>
+                                        )
+                                      }
+                                    </>
+                                  )
+                                })}
+
+                              </div>
+                            </>
+                          )
+                        })
                       }
                     </div>
                   ))}
