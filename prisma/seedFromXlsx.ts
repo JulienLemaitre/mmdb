@@ -480,15 +480,6 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
                 key: movement.key,
                 sections: {
                   create: movement.sections.map((section) => {
-                    // console.log(`[] section.fastestStructuralNote :`, section.fastestStructuralNote)
-                    // const beatUnitValue: NOTE_VALUE = section.fastestStructuralNote
-                    // console.log(`[] beatUnitValue :`, beatUnitValue)
-                    const noteValues = {
-                      fastestStructuralNote: section.fastestStructuralNote as NOTE_VALUE,
-                      fastestStacattoNote: section.fastestStacattoNote as NOTE_VALUE,
-                      fastestOrnamentalNote: section.fastestOrnamentalNote as NOTE_VALUE,
-                    }
-                    console.log(`[SECTION] noteValues :`, noteValues)
                     return {
                       rank: section.rank,
                       metreString: section.metreString,
@@ -655,15 +646,3 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
 
   console.log(`-------- END - seedDB --------`)
 }
-
-
-//
-// seedDB()
-// .then(async () => {
-//   await db.$disconnect();
-// })
-// .catch(async (e) => {
-//   console.error(e);
-//   await db.$disconnect();
-//   process.exit(1);
-// });
