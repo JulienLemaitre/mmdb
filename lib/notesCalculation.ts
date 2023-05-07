@@ -48,9 +48,9 @@ type NotesPerSecond = {
  * @param section
  */
 export function getNotesPerSecondsFromNotes({ metronomeMark, section }:
-                                                             { metronomeMark: MetronomeMark, section: Partial<Section> }): NotesPerSecond {
+                                                             { metronomeMark: Pick<MetronomeMark, "beatUnit" | "bpm">, section: Partial<Pick<Section, "fastestOrnamentalNote" | "fastestStacattoNote" | "fastestStructuralNote">> }): NotesPerSecond {
   const { beatUnit, bpm } = metronomeMark;
-  const { metreDenominator, fastestStructuralNote, fastestStacattoNote, fastestOrnamentalNote } = section;
+  const { fastestStructuralNote, fastestStacattoNote, fastestOrnamentalNote } = section;
 
   if (!fastestStructuralNote && !fastestStacattoNote && !fastestOrnamentalNote) {
     throw new Error("No fastest note property found in given section");
@@ -93,11 +93,9 @@ function getNotesPerSecond({ noteType, beatUnit, bpm }: { noteType?: NOTE_VALUE 
   return notesPerSecond;
 }
 
-export function getNotesFromNotesPerSecond({ metronomeMark, section }:
-                                                      { metronomeMark: Partial<MetronomeMark>, section: Partial<Section> }): Notes {
+export function getNotesFromNotesPerSecond({ metronomeMark, getNoteMock }:
+                                                      { metronomeMark: Pick<MetronomeMark, "beatUnit" | "bpm" | "notesPerSecond">, getNoteMock?: () => any }): Notes {
   const { beatUnit, bpm, notesPerSecond } = metronomeMark;
-  const { metreDenominator } = section;
-  // console.log("getNotesFromNotesPerSecond", { beatUnit, bpm, notesPerSecond, metreDenominator })
 
   if (!notesPerSecond) {
     throw new Error("No notesPerSecond property found in given section");
@@ -107,13 +105,12 @@ export function getNotesFromNotesPerSecond({ metronomeMark, section }:
   const { fastestStructuralNote, fastestStacattoNote, fastestOrnamentalNote } = notesPerSecond as NotesPerSecond;
 
   if (!fastestStructuralNote && !fastestStacattoNote && !fastestOrnamentalNote) {
-    throw new Error(`No fastest notes per second property found in given section notesPerSecond ${JSON.stringify(section)}`);
+    throw new Error(`No fastest notes per second property found in given metronomeMark notesPerSecond ${JSON.stringify(metronomeMark)}`);
   }
 
   const notes: Notes = {}
   // @ts-ignore
   Object.keys(notesPerSecond).filter((note: keyof typeof notesPerSecond) => notesPerSecond[note]).forEach((note: keyof typeof notesPerSecond) => {
-    if (notesPerSecond[note]) {
       const notesPerSecondRawValue = notesPerSecond[note]
       // Get the value of notesPerSecondRawValue. If it contains "(", keep only what come before it. Convert it to number
       // ex: 1/16 (staccato) => 1/16
@@ -121,14 +118,16 @@ export function getNotesFromNotesPerSecond({ metronomeMark, section }:
       const notesPerSecondValue = Number(notesPerSecondRawValue.toString().split(" ")[0])
 
       try {
+        // For testPurpose, we can mock the getNote function
+        const getNoteFunc = getNoteMock || getNote
       // @ts-ignore
-      notes[note] = getNote({ notesPerSecond: notesPerSecondValue, beatUnit, bpm, metreDenominator })
+      notes[note] = getNoteFunc({ notesPerSecond: notesPerSecondValue, beatUnit, bpm })
       } catch (e) {
         // @ts-ignore
         notes[note] = null
       }
     }
-  })
+  )
 
   return notes
 

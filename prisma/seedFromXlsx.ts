@@ -286,7 +286,8 @@ async function processDataFromXlsx(dataSheetList: any) {
             beatUnit,
             bpm,
             notesPerSecond: {fastestStructuralNote, fastestStacattoNote, fastestOrnamentalNote}
-          }, section: {metreDenominator: rowData.metre === 'C' ? 4 : Number(rowData.metre.split('/')[1])}
+          },
+          // section: {metreDenominator: rowData.metre === 'C' ? 4 : Number(rowData.metre.split('/')[1])}
         })
 
 
