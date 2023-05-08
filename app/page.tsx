@@ -1,7 +1,7 @@
 import {FC, Fragment} from "react";
 // import { Inter } from 'next/font/google'
 import {db} from "@/lib/db";
-import {getNotesPerSecondsFromNotes} from "@/lib/notesCalculation";
+import {getNotesPerSecondsFromNoteValues} from "@/lib/notesCalculation";
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -88,10 +88,11 @@ export default async function Page() {
 
                               {
                                 section.metronomeMarks.map((mm) => {
-                                  let notesPerSecondComputed
+                                  let notesPerSecondComputed: any = null
                                   try {
-                                    notesPerSecondComputed = getNotesPerSecondsFromNotes({metronomeMark: mm, section})
+                                    notesPerSecondComputed = getNotesPerSecondsFromNoteValues({ metronomeMark: mm })
                                   } catch (e: any) {
+                                    console.log(`[Error] mm :`, e?.message, JSON.stringify(mm))
                                     notesPerSecondComputed = e?.message
                                   }
 
@@ -99,22 +100,29 @@ export default async function Page() {
                                     <div key={mm.id}>
                                       <div className="mr-4">{`${mm.beatUnit} = ${mm.bpm}`}</div>
 
-                                      {["fastestStructuralNote", "fastestStacattoNote", "fastestOrnamentalNote"].map((key, index) => {
+                                      {["fastestStructuralNote", "fastestStacattoNote", "fastestOrnamentalNote"].map((keyBase, index) => {
 
-                                        const fastestNote = mm.notesPerSecond?.[key]
-                                        const computedNotesPerSecond = notesPerSecondComputed?.[key] ? Math.round(notesPerSecondComputed[key] * 100) / 100 : null
-                                        const isNotesPerSecondDiff = computedNotesPerSecond && Math.abs(mm.notesPerSecond?.[key] - computedNotesPerSecond) > 0.01
+                                        const fastestNote = mm.notesPerSecond?.[keyBase + 'PerSecond']
+                                        const computedNotesPerSecond = notesPerSecondComputed?.[keyBase + 'PerSecond'] ? Math.round(notesPerSecondComputed[keyBase + 'PerSecond'] * 100) / 100 : null
+                                        const isNotesPerSecondDiff = computedNotesPerSecond && Math.abs(mm.notesPerSecond?.[keyBase + 'PerSecond'] - computedNotesPerSecond) > 0.01
+
+                                        if (mm.bpm === 108 || isNotesPerSecondDiff) {
+                                          console.group(`-- ${isNotesPerSecondDiff ? 'isNotesPerSecondDiff' : 'BPM = 108 DEBUG'} --`)
+                                          console.log(`[] mm.notesPerSecond?.[${keyBase + 'PerSecond'}] :`, mm.notesPerSecond?.[keyBase + 'PerSecond'])
+                                          console.log(`[] notesPerSecondComputed?.[${keyBase + 'PerSecond'}] :`, notesPerSecondComputed?.[keyBase + 'PerSecond'])
+                                          console.log(`[] section`, JSON.stringify(section))
+                                          console.groupEnd()
+                                        }
 
                                         return (
                                           <Fragment key={mm.id}>
                                             {
-                                              mm.notesPerSecond?.[key] && (
+                                              mm.notesPerSecond?.[keyBase + 'PerSecond'] && (
                                                 <div className="mr-4">
-                                                  {key}: <span
-                                                  className={`${fastestNote >= 15 ? "bg-red-500" : fastestNote >= 11 ? "bg-orange-400" : fastestNote >= 8 ? "bg-amber-200" : "bg-white"} px-2`}>
-                                            {mm.notesPerSecond[key]}</span> (
-                                                  <span
-                                                    className={!mm.notes?.[key] ? "text-red-500" : ""}>{mm.notes?.[key] || "Unable to find note value"}</span>
+                                                  {keyBase}:
+                                                  <span className={`${fastestNote >= 15 ? "bg-red-500" : fastestNote >= 11 ? "bg-orange-400" : fastestNote >= 8 ? "bg-amber-200" : "bg-white"} px-2`}>{mm.notesPerSecond[keyBase + 'PerSecond']}</span>
+                                                  (
+                                                  <span className={!mm.noteValues?.[keyBase + 'Value'] ? "text-red-500" : ""}>{mm.noteValues?.[keyBase + 'Value'] || "Unable to find note value"}</span>
                                                   {
                                                     computedNotesPerSecond && (
                                                       <span className="ml-1">

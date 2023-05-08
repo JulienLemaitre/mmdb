@@ -87,22 +87,22 @@ model TempoIndication {
 }
 
 model Section {
-  id                    String           @id @default(uuid())
-  movement              Movement         @relation(fields: [movementId], references: [id])
-  movementId            String
-  rank                  Int
-  metreNumerator        Int
-  metreDenominator      Int
-  metreString           String
-  fastestStructuralNote NOTE_VALUE?
-  fastestStacattoNote   NOTE_VALUE?
-  fastestOrnamentalNote NOTE_VALUE?
+  id                         String           @id @default(uuid())
+  movement                   Movement         @relation(fields: [movementId], references: [id])
+  movementId                 String
+  rank                       Int
+  metreNumerator             Int
+  metreDenominator           Int
+  metreString                String
+  fastestStructuralNoteValue NOTE_VALUE?
+  fastestStacattoNoteValue   NOTE_VALUE?
+  fastestOrnamentalNoteValue NOTE_VALUE?
   // ?? ComposedTimeSignature
-  tempoIndication       TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
-  tempoIndicationId     String?
-  metronomeMarks        MetronomeMark[] // A movement can have many metronome marks
-  createdAt             DateTime         @default(now())
-  updatedAt             DateTime         @updatedAt
+  tempoIndication            TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
+  tempoIndicationId          String?
+  metronomeMarks             MetronomeMark[] // A movement can have many metronome marks
+  createdAt                  DateTime         @default(now())
+  updatedAt                  DateTime         @updatedAt
 
   // Need to add a constraint to ensure that one and only one of pieceId or movementId is set
   // constraint section_piece_or_movement check ((personId IS NOT NULL AND organizationId IS NULL) OR (organizationId IS NOT NULL AND personId IS NULL))
@@ -228,7 +228,7 @@ model MetronomeMark {
   bpm            Int
   // ?? bpmRange String[]
   notesPerSecond Json?
-  notes          Json?
+  noteValues     Json?
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   section        Section    @relation(fields: [sectionId], references: [id])

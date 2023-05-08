@@ -12,6 +12,7 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --base-background-color: rgb(var(--background-start-rgb));
 
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,
@@ -49,6 +50,7 @@
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+    --base-background-color: rgb(var(--background-start-rgb));
 
     --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
     --secondary-glow: linear-gradient(
@@ -97,7 +99,8 @@ body {
   /*    rgb(var(--background-end-rgb))*/
   /*  )*/
   /*  rgb(var(--background-start-rgb));*/
-  background: #f1f5f9;
+  background: rgb(var(--base-background-color));
+  /*background: #f1f5f9;*/
 }
 
 a {
