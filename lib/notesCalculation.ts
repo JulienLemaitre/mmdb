@@ -1,4 +1,4 @@
-import {NOTE_VALUE, MetronomeMark, Section} from "@prisma/client";
+import {NOTE_VALUE, MetronomeMark} from "@prisma/client";
 
 export const noteDurationValue = {
   WHOLE: 1,

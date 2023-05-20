@@ -1,18 +1,19 @@
-import './globals.css'
+import { Inter } from 'next/font/google';
 
-export const metadata = {
-  title: 'Metronome Mark Database',
-  description: 'Collection of published metronome marks gathered to statistical analysis on tempo usage.',
-}
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
+                                     children,
+                                   }: {
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className={inter.variable}>
+    {children}
     </html>
-  )
+  );
 }
