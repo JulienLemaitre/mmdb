@@ -101,6 +101,8 @@ model Section {
   tempoIndication            TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
   tempoIndicationId          String?
   metronomeMarks             MetronomeMark[] // A movement can have many metronome marks
+  commentId                  String?          @unique
+  comment                    Comment?         @relation(fields: [commentId], references: [id])
   createdAt                  DateTime         @default(now())
   updatedAt                  DateTime         @updatedAt
 
@@ -141,6 +143,8 @@ model Source {
   // date           DateTime? // ?? Is this usefull ?
   contributions  Contribution[] // A source can have many Contributions
   metronomeMarks MetronomeMark[] // A source can have many metronome marks
+  commentId      String?         @unique
+  comment        Comment?        @relation(fields: [commentId], references: [id])
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
 }
@@ -233,14 +237,29 @@ model MetronomeMark {
   updatedAt      DateTime   @updatedAt
   section        Section    @relation(fields: [sectionId], references: [id])
   sectionId      String
+  commentId      String?    @unique
+  comment        Comment?   @relation(fields: [commentId], references: [id])
 }
 
 model User {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  email     String   @unique
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  email     String    @unique
   password  String
-  firstName String?
-  lastName  String?
+  firstName String
+  lastName  String
+  comments  Comment[] // A user can have many comments
+}
+
+model Comment {
+  id            String         @id @default(uuid())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  text          String
+  user          User?          @relation(fields: [userId], references: [id])
+  userId        String?
+  source        Source?
+  section       Section?
+  metronomeMark MetronomeMark?
 }
