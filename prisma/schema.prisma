@@ -22,9 +22,9 @@ model Piece {
   id                String         @id @default(uuid())
   title             String
   nickName          String?
-  composer          Person         @relation(fields: [composerId], references: [id]) // A piece have a unique composer ?? Is that ALWAYS the case ? (if not, we need to use a many-to-many relation)
+  composer          Person         @relation(fields: [composerId], references: [id]) // A piece have a unique composer
   composerId        String
-  yearOfComposition Int // ?? Will we NEVER want more precise date ?
+  yearOfComposition Int
   category          PIECE_CATEGORY
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
@@ -32,6 +32,173 @@ model Piece {
   sources           Source[] // A piece can have many sources
 
   @@unique([composerId, title])
+}
+
+model Movement {
+  id        String    @id @default(uuid())
+  piece     Piece     @relation(fields: [pieceId], references: [id]) // A movement belongs to a single piece
+  pieceId   String
+  rank      Int
+  key       KEY
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  sections  Section[] // A movement can have many sections
+
+  @@unique([pieceId, rank])
+}
+
+model Section {
+  id                         String           @id @default(uuid())
+  movement                   Movement         @relation(fields: [movementId], references: [id])
+  movementId                 String
+  rank                       Int
+  metreNumerator             Int
+  metreDenominator           Int
+  metreString                String
+  fastestStructuralNoteValue NOTE_VALUE?
+  fastestStacattoNoteValue   NOTE_VALUE?
+  fastestOrnamentalNoteValue NOTE_VALUE?
+  // ?? ComposedTimeSignature
+  tempoIndication            TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
+  tempoIndicationId          String?
+  metronomeMarks             MetronomeMark[] // A movement can have many metronome marks
+  commentId                  String?          @unique
+  comment                    Comment?         @relation(fields: [commentId], references: [id])
+  createdAt                  DateTime         @default(now())
+  updatedAt                  DateTime         @updatedAt
+
+  @@unique([movementId, rank])
+}
+
+model TempoIndication {
+  id        String    @id @default(uuid())
+  baseTerm  String    @unique
+  // additionalTermAppend  String?
+  // additionalTermPrepend String?
+  sections  Section[] // A tempo indication can be used by many sections
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model MetronomeMark {
+  id             String     @id @default(uuid())
+  source         Source     @relation(fields: [sourceId], references: [id])
+  sourceId       String
+  beatUnit       NOTE_VALUE
+  bpm            Int
+  notesPerSecond Json? // Will not be used after data seeding
+  noteValues     Json? // Will not be used after data seeding
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  section        Section    @relation(fields: [sectionId], references: [id])
+  sectionId      String
+  commentId      String?    @unique
+  comment        Comment?   @relation(fields: [commentId], references: [id])
+}
+
+model Source {
+  id             String          @id @default(uuid())
+  title          String? // ?? Is it usefull ?
+  piece          Piece           @relation(fields: [pieceId], references: [id]) // A source is linked to a single piece
+  pieceId        String
+  isComposerMM   Boolean         @default(false)
+  type           SOURCE_TYPE
+  link           String?
+  year           Int
+  references     Json? // Can be plateNumber, ISBN, ISMN, etc.
+  contributions  Contribution[] // A source can have many Contributions
+  metronomeMarks MetronomeMark[] // A source can have many metronome marks
+  commentId      String?         @unique
+  comment        Comment?        @relation(fields: [commentId], references: [id])
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model Contribution {
+  id             String            @id @default(uuid())
+  source         Source            @relation(fields: [sourceId], references: [id])
+  sourceId       String
+  person         Person?           @relation(fields: [personId], references: [id])
+  personId       String?
+  organization   Organization?     @relation(fields: [organizationId], references: [id])
+  organizationId String?
+  role           CONTRIBUTION_ROLE
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  // Need to add a constraint to ensure that one and only one of personId or organizationId is set
+  // constraint person_org_xor check ((personId IS NOT NULL AND organizationId IS NULL) OR (organizationId IS NOT NULL AND personId IS NULL))
+}
+
+model Organization {
+  id            String         @id @default(uuid())
+  name          String         @unique
+  contributions Contribution[] // An organization can have many contributions
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Person {
+  id            String         @id @default(uuid())
+  fullName      String         @unique
+  firstName     String?
+  lastName      String?
+  birthYear     Int?
+  deathYear     Int?
+  compositions  Piece[] // A person can have compose many pieces
+  contributions Contribution[] // A person can have many contributions
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model User {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  email     String    @unique
+  password  String
+  firstName String
+  lastName  String
+  comments  Comment[] // A user can have many comments
+}
+
+model Comment {
+  id            String         @id @default(uuid())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  text          String
+  user          User?          @relation(fields: [userId], references: [id])
+  userId        String?
+  source        Source?
+  section       Section?
+  metronomeMark MetronomeMark?
+}
+
+enum NOTE_VALUE {
+  WHOLE
+  HALF
+  DOTTED_HALF
+  QUARTER
+  DOTTED_QUARTER
+  EIGHTH
+  DOTTED_EIGHTH
+  SIXTEENTH
+  DOTTED_SIXTEENTH
+  THIRTYSECOND
+  DOTTED_THIRTYSECOND
+  SIXTYFOURTH
+  DOTTED_SIXTYFOURTH
+  HUNDREDTWENTYEIGHTH
+  DOTTED_HUNDREDTWENTYEIGHTH
+  TRIPLET_EIGHTH
+  TRIPLET_SIXTEENTH
+  QUADRUPLET_EIGHTH
+  QUINTUPLET_SIXTEENTH
+  QUINTUPLET_THIRTYSECOND
+  SEXTUPLET_SIXTEENTH
+  SEXTUPLET_THIRTYSECOND
+  SEPTUPLET_SIXTEENTH
+  SEPTUPLET_HUNDREDTWENTYEIGHTH
 }
 
 enum KEY {
@@ -75,78 +242,10 @@ enum KEY {
   G_SHARP_MINOR
 }
 
-// ?? Does it need to be a ordered list of terms that could be more than two?
-model TempoIndication {
-  id        String    @id @default(uuid())
-  baseTerm  String    @unique
-  // additionalTermAppend  String?
-  // additionalTermPrepend String?
-  sections  Section[] // A tempo indication can be used by many sections
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-
-model Section {
-  id                         String           @id @default(uuid())
-  movement                   Movement         @relation(fields: [movementId], references: [id])
-  movementId                 String
-  rank                       Int
-  metreNumerator             Int
-  metreDenominator           Int
-  metreString                String
-  fastestStructuralNoteValue NOTE_VALUE?
-  fastestStacattoNoteValue   NOTE_VALUE?
-  fastestOrnamentalNoteValue NOTE_VALUE?
-  // ?? ComposedTimeSignature
-  tempoIndication            TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
-  tempoIndicationId          String?
-  metronomeMarks             MetronomeMark[] // A movement can have many metronome marks
-  commentId                  String?          @unique
-  comment                    Comment?         @relation(fields: [commentId], references: [id])
-  createdAt                  DateTime         @default(now())
-  updatedAt                  DateTime         @updatedAt
-
-  // Need to add a constraint to ensure that one and only one of pieceId or movementId is set
-  // constraint section_piece_or_movement check ((personId IS NOT NULL AND organizationId IS NULL) OR (organizationId IS NOT NULL AND personId IS NULL))
-  @@unique([movementId, rank])
-}
-
-model Movement {
-  id        String    @id @default(uuid())
-  piece     Piece     @relation(fields: [pieceId], references: [id]) // A movement belongs to a single piece
-  pieceId   String
-  rank      Int
-  key       KEY
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  sections  Section[]
-
-  @@unique([pieceId, rank])
-}
-
 enum SOURCE_TYPE {
   ORIGINAL_SCORE
   LETTER
   EDITION
-}
-
-model Source {
-  id             String          @id @default(uuid())
-  title          String?
-  piece          Piece           @relation(fields: [pieceId], references: [id]) // A source is linked to a single piece
-  pieceId        String
-  isComposerMM   Boolean         @default(false)
-  type           SOURCE_TYPE
-  link           String?
-  year           Int
-  references     Json? // Can be plateNumber, ISBN, ISMN, etc.
-  // date           DateTime? // ?? Is this usefull ?
-  contributions  Contribution[] // A source can have many Contributions
-  metronomeMarks MetronomeMark[] // A source can have many metronome marks
-  commentId      String?         @unique
-  comment        Comment?        @relation(fields: [commentId], references: [id])
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
 }
 
 enum CONTRIBUTION_ROLE {
@@ -157,109 +256,4 @@ enum CONTRIBUTION_ROLE {
   ARRANGER
   PUBLISHER
   OTHER
-}
-
-model Contribution {
-  id             String            @id @default(uuid())
-  source         Source            @relation(fields: [sourceId], references: [id])
-  sourceId       String
-  person         Person?           @relation(fields: [personId], references: [id])
-  personId       String?
-  organization   Organization?     @relation(fields: [organizationId], references: [id])
-  organizationId String?
-  role           CONTRIBUTION_ROLE
-  createdAt      DateTime          @default(now())
-  updatedAt      DateTime          @updatedAt
-
-  // Need to add a constraint to ensure that one and only one of personId or organizationId is set
-  // constraint person_org_xor check ((personId IS NOT NULL AND organizationId IS NULL) OR (organizationId IS NOT NULL AND personId IS NULL))
-}
-
-model Organization {
-  id            String         @id @default(uuid())
-  name          String         @unique
-  contributions Contribution[] // An organization can have many contributions
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-}
-
-model Person {
-  id            String         @id @default(uuid())
-  fullName      String         @unique
-  firstName     String?
-  lastName      String?
-  birthYear     Int?
-  deathYear     Int?
-  compositions  Piece[] // A person can have compose many pieces
-  contributions Contribution[] // A person can have many contributions
-  // ?? nationality String
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-}
-
-enum NOTE_VALUE {
-  WHOLE
-  HALF
-  DOTTED_HALF
-  QUARTER
-  DOTTED_QUARTER
-  EIGHTH
-  DOTTED_EIGHTH
-  SIXTEENTH
-  DOTTED_SIXTEENTH
-  THIRTYSECOND
-  DOTTED_THIRTYSECOND
-  SIXTYFOURTH
-  DOTTED_SIXTYFOURTH
-  HUNDREDTWENTYEIGHTH
-  DOTTED_HUNDREDTWENTYEIGHTH
-  TRIPLET_EIGHTH
-  TRIPLET_SIXTEENTH
-  QUADRUPLET_EIGHTH
-  QUINTUPLET_SIXTEENTH
-  QUINTUPLET_THIRTYSECOND
-  SEXTUPLET_SIXTEENTH
-  SEXTUPLET_THIRTYSECOND
-  SEPTUPLET_SIXTEENTH
-  SEPTUPLET_HUNDREDTWENTYEIGHTH
-}
-
-model MetronomeMark {
-  id             String     @id @default(uuid())
-  source         Source     @relation(fields: [sourceId], references: [id])
-  sourceId       String
-  beatUnit       NOTE_VALUE
-  bpm            Int
-  // ?? bpmRange String[]
-  notesPerSecond Json?
-  noteValues     Json?
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
-  section        Section    @relation(fields: [sectionId], references: [id])
-  sectionId      String
-  commentId      String?    @unique
-  comment        Comment?   @relation(fields: [commentId], references: [id])
-}
-
-model User {
-  id        String    @id @default(uuid())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  email     String    @unique
-  password  String
-  firstName String
-  lastName  String
-  comments  Comment[] // A user can have many comments
-}
-
-model Comment {
-  id            String         @id @default(uuid())
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  text          String
-  user          User?          @relation(fields: [userId], references: [id])
-  userId        String?
-  source        Source?
-  section       Section?
-  metronomeMark MetronomeMark?
 }
