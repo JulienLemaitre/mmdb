@@ -14,5 +14,5 @@ ALTER TABLE "Section" DROP COLUMN "metreSymbol",
 DROP COLUMN "notesPerSecond",
 ADD COLUMN     "metreString" TEXT NOT NULL,
 ALTER COLUMN "fastestOrnamentalNote" DROP NOT NULL,
-ALTER COLUMN "fastestStacattoNote" DROP NOT NULL,
+ALTER COLUMN "fastestStaccatoNote" DROP NOT NULL,
 ALTER COLUMN "fastestStructuralNote" DROP NOT NULL;

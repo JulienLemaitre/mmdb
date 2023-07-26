@@ -134,6 +134,7 @@ export default function AuthForm({ mode }: { mode: "register" | "signin" }) {
               </span>
             </div>
             <div>
+              {/* @ts-ignore */}
               <Button type="submit" intent="secondary">
                 {content.buttonText}
               </Button>

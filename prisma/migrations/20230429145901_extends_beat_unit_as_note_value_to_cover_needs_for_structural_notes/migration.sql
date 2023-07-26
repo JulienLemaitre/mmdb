@@ -2,7 +2,7 @@
   Warnings:
 
   - The `fastestOrnamentalNote` column on the `Section` table would be dropped and recreated. This will lead to data loss if there is data in the column.
-  - The `fastestStacattoNote` column on the `Section` table would be dropped and recreated. This will lead to data loss if there is data in the column.
+  - The `fastestStaccatoNote` column on the `Section` table would be dropped and recreated. This will lead to data loss if there is data in the column.
   - The `fastestStructuralNote` column on the `Section` table would be dropped and recreated. This will lead to data loss if there is data in the column.
   - Changed the type of `beatUnit` on the `MetronomeMark` table. No cast exists, the column would be dropped and recreated, which cannot be done if there is data, since the column is required.
 
@@ -17,8 +17,8 @@ ADD COLUMN     "beatUnit" "NOTE_VALUE" NOT NULL;
 -- AlterTable
 ALTER TABLE "Section" DROP COLUMN "fastestOrnamentalNote",
 ADD COLUMN     "fastestOrnamentalNote" "NOTE_VALUE",
-DROP COLUMN "fastestStacattoNote",
-ADD COLUMN     "fastestStacattoNote" "NOTE_VALUE",
+DROP COLUMN "fastestStaccatoNote",
+ADD COLUMN     "fastestStaccatoNote" "NOTE_VALUE",
 DROP COLUMN "fastestStructuralNote",
 ADD COLUMN     "fastestStructuralNote" "NOTE_VALUE";
 

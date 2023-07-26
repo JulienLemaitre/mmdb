@@ -146,11 +146,11 @@ const seedProblems = [
       bpm: 104,
       notes: {
         fastestStructuralNote: "EIGHTH",
-        fastestStacattoNote: null
+        fastestStaccatoNote: null
       },
       notesPerSecond: {
         fastestStructuralNote: 1.73,
-        fastestStacattoNote: 0.86
+        fastestStaccatoNote: 0.86
       }
     }
   },
@@ -169,12 +169,12 @@ const seedProblems = [
       bpm: 100,
       notes: {
         fastestStructuralNote: null,
-        fastestStacattoNote: "QUARTER",
+        fastestStaccatoNote: "QUARTER",
         fastestOrnamentalNote: "SIXTEENTH"
       },
       notesPerSecond: {
         fastestStructuralNote: 5,
-        fastestStacattoNote: 3.33,
+        fastestStaccatoNote: 3.33,
         fastestOrnamentalNote: 13.33
       }
     }
@@ -194,12 +194,12 @@ const seedProblems = [
       bpm: 104,
       notes: {
         fastestStructuralNote: "EIGHTH",
-        fastestStacattoNote: null,
+        fastestStaccatoNote: null,
         fastestOrnamentalNote: "SIXTEENTH"
       },
       notesPerSecond: {
         fastestStructuralNote: 6.93,
-        fastestStacattoNote: 5.2,
+        fastestStaccatoNote: 5.2,
         fastestOrnamentalNote: 13.86
       }
     }
@@ -366,11 +366,11 @@ const seedProblems = [
       bpm: 92,
       notes: {
         fastestStructuralNote: null,
-        fastestStacattoNote: null
+        fastestStaccatoNote: null
       },
       notesPerSecond: {
         fastestStructuralNote: 12.8,
-        fastestStacattoNote: 3.2
+        fastestStaccatoNote: 3.2
       }
     }
   },
@@ -389,12 +389,12 @@ const seedProblems = [
       bpm: 76,
       notes: {
         fastestStructuralNote: "SIXTEENTH",
-        fastestStacattoNote: "SIXTEENTH",
+        fastestStaccatoNote: "SIXTEENTH",
         fastestOrnamentalNote: null
       },
       notesPerSecond: {
         fastestStructuralNote: 7.6,
-        fastestStacattoNote: 7.6,
+        fastestStaccatoNote: 7.6,
         fastestOrnamentalNote: 8.86
       }
     }
@@ -414,11 +414,11 @@ const seedProblems = [
       bpm: 54,
       notes: {
         fastestStructuralNote: null,
-        fastestStacattoNote: null
+        fastestStaccatoNote: null
       },
       notesPerSecond: {
         fastestStructuralNote: 8.1,
-        fastestStacattoNote: 8.1
+        fastestStaccatoNote: 8.1
       }
     }
   },

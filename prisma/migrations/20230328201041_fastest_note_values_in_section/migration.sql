@@ -5,7 +5,7 @@
   - A unique constraint covering the columns `[baseTerm,additionalTermAppend,additionalTermPrepend]` on the table `TempoIndication` will be added. If there are existing duplicate values, this will fail.
   - Added the required column `category` to the `Piece` table without a default value. This is not possible if the table is not empty.
   - Added the required column `fastestOrnamentalNote` to the `Section` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `fastestStacattoNote` to the `Section` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `fastestStaccatoNote` to the `Section` table without a default value. This is not possible if the table is not empty.
   - Added the required column `fastestStructuralNote` to the `Section` table without a default value. This is not possible if the table is not empty.
   - Added the required column `notesPerSecond` to the `Section` table without a default value. This is not possible if the table is not empty.
 
@@ -21,7 +21,7 @@ ALTER TABLE "Piece" ADD COLUMN     "category" "PIECE_CATEGORY" NOT NULL;
 
 -- AlterTable
 ALTER TABLE "Section" ADD COLUMN     "fastestOrnamentalNote" "BEAT_UNIT" NOT NULL,
-ADD COLUMN     "fastestStacattoNote" "BEAT_UNIT" NOT NULL,
+ADD COLUMN     "fastestStaccatoNote" "BEAT_UNIT" NOT NULL,
 ADD COLUMN     "fastestStructuralNote" "BEAT_UNIT" NOT NULL,
 ADD COLUMN     "notesPerSecond" JSONB NOT NULL;
 

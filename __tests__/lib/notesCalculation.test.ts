@@ -88,13 +88,13 @@ describe('getNotesFromNotesPerSecond_function', () => {
       bpm: 120,
       notesPerSecond: {
         fastestStructuralNote: "1/16",
-        fastestStacattoNote: "1/32",
+        fastestStaccatoNote: "1/32",
         fastestOrnamentalNote: "1/64"
       }
     }
     const expectedNotes = {
       fastestStructuralNote: NOTE_VALUE.SIXTEENTH,
-      fastestStacattoNote: NOTE_VALUE.THIRTYSECOND,
+      fastestStaccatoNote: NOTE_VALUE.THIRTYSECOND,
       fastestOrnamentalNote: NOTE_VALUE.SIXTYFOURTH
     }
     expect(getNoteValuesFromNotesPerSecond({metronomeMark})).toEqual(expectedNotes)

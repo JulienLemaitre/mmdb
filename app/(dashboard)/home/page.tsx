@@ -100,7 +100,7 @@ export default async function Page() {
                                     <div key={mm.id}>
                                       <div className="mr-4">{`${mm.beatUnit} = ${mm.bpm}`}</div>
 
-                                      {["fastestStructuralNote", "fastestStacattoNote", "fastestOrnamentalNote"].map((keyBase, index) => {
+                                      {["fastestStructuralNote", "fastestStaccatoNote", "fastestOrnamentalNote"].map((keyBase, index) => {
 
                                         const fastestNote = mm.notesPerSecond?.[keyBase + 'PerSecond']
                                         const computedNotesPerSecond = notesPerSecondComputed?.[keyBase + 'PerSecond'] ? Math.round(notesPerSecondComputed[keyBase + 'PerSecond'] * 100) / 100 : null

@@ -33,12 +33,12 @@ export const noteDurationValueKeys = Object.keys(noteDurationValue) as NOTE_VALU
 
 type NoteValues = {
   fastestStructuralNoteValue?: NOTE_VALUE;
-  fastestStacattoNoteValue?: NOTE_VALUE;
+  fastestStaccatoNoteValue?: NOTE_VALUE;
   fastestOrnamentalNoteValue?: NOTE_VALUE;
 }
 type NotesPerSecond = {
   fastestStructuralNotePerSecond?: number;
-  fastestStacattoNotePerSecond?: number;
+  fastestStaccatoNotePerSecond?: number;
   fastestOrnamentalNotePerSecond?: number;
 }
 
@@ -56,13 +56,13 @@ function logTestError(bpm, ...props) {
 export function getNotesPerSecondsFromNoteValues({ metronomeMark }:
                                                              { metronomeMark: Pick<MetronomeMark, "beatUnit" | "bpm" | "noteValues"> }): NotesPerSecond {
   const { beatUnit, bpm, noteValues: mmNotevalues } = metronomeMark;
-  const { fastestStructuralNoteValue, fastestStacattoNoteValue, fastestOrnamentalNoteValue } = mmNotevalues as any;
+  const { fastestStructuralNoteValue, fastestStaccatoNoteValue, fastestOrnamentalNoteValue } = mmNotevalues as any;
 
-  if (!fastestStructuralNoteValue && !fastestStacattoNoteValue && !fastestOrnamentalNoteValue) {
+  if (!fastestStructuralNoteValue && !fastestStaccatoNoteValue && !fastestOrnamentalNoteValue) {
     throw new Error(`[gNPSFNV] No fastest note property found in given mm.noteValues ${JSON.stringify(mmNotevalues)}}`);
   }
 
-  const noteValues = { fastestStructuralNoteValue, fastestStacattoNoteValue, fastestOrnamentalNoteValue }
+  const noteValues = { fastestStructuralNoteValue, fastestStaccatoNoteValue, fastestOrnamentalNoteValue }
   logTestError(bpm, '[gNPSFNV] ', noteValues)
   // @ts-ignore
   const notesPerSecond: NotesPerSecond = Object.keys(noteValues).reduce((npsObject: NotesPerSecond, noteValueType: keyof typeof noteValues) => {
@@ -115,9 +115,9 @@ export function getNoteValuesFromNotesPerSecond({ metronomeMark, getNoteMock }:
   }
 
   // @ts-ignore
-  const { fastestStructuralNotePerSecond, fastestStacattoNotePerSecond, fastestOrnamentalNotePerSecond } = notesPerSecond as NotesPerSecond;
+  const { fastestStructuralNotePerSecond, fastestStaccatoNotePerSecond, fastestOrnamentalNotePerSecond } = notesPerSecond as NotesPerSecond;
 
-  if (!fastestStructuralNotePerSecond && !fastestStacattoNotePerSecond && !fastestOrnamentalNotePerSecond) {
+  if (!fastestStructuralNotePerSecond && !fastestStaccatoNotePerSecond && !fastestOrnamentalNotePerSecond) {
     throw new Error(`[gNV] No fastest notes per second property found in given metronomeMark notesPerSecond ${JSON.stringify(metronomeMark)}`);
   }
 

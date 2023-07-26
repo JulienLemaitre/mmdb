@@ -1,6 +1,6 @@
 import {db} from "@/lib/db";
-import {NOTE_VALUE, KEY, SOURCE_TYPE, CONTRIBUTION_ROLE, PIECE_CATEGORY} from "@prisma/client";
-import {getNoteValuesFromNotesPerSecond, noteDurationValue, noteDurationValueKeys} from "@/lib/notesCalculation";
+import {CONTRIBUTION_ROLE, KEY, NOTE_VALUE, PIECE_CATEGORY, SOURCE_TYPE} from "@prisma/client";
+import {getNoteValuesFromNotesPerSecond} from "@/lib/notesCalculation";
 
 function logTestError(bpm, ...props) {
   if (bpm === 108) {
@@ -16,18 +16,19 @@ const readXlsxFile = require('read-excel-file/node')
 const readdir = util.promisify(fs.readdir);
 const stat = util.promisify(fs.stat);
 
+// Build a map to convert beatUnit from Arjun's wording in XLSX files to NOTE_VALUE normalized terms
 const beatUnitXlsToNorm: {[k: string]: string} = {}
-  Object.keys(NOTE_VALUE).forEach((beatUnit: string, index) => {
-    let isDotted = beatUnit.startsWith("DOTTED_")
-    if (beatUnit.startsWith("DOTTED_")) {
-      isDotted = true
-    }
-    if (index < 9) {
-      const beatUnitBase = isDotted ? beatUnit.split("_")[1] : beatUnit
-      const newKey = `${isDotted ? "Dotted " : ""}${beatUnitBase.substring(0,1)}`
-      beatUnitXlsToNorm[newKey] = beatUnit
-    }
-  })
+Object.keys(NOTE_VALUE).forEach((beatUnit: string, index) => {
+  let isDotted = beatUnit.startsWith("DOTTED_")
+  if (beatUnit.startsWith("DOTTED_")) {
+    isDotted = true
+  }
+  if (index < 9) {
+    const beatUnitBase = isDotted ? beatUnit.split("_")[1] : beatUnit
+    const newKey = `${isDotted ? "Dotted " : ""}${beatUnitBase.substring(0,1)}`
+    beatUnitXlsToNorm[newKey] = beatUnit
+  }
+})
 console.log(`[] beatUnitXlsToNorm :`, beatUnitXlsToNorm)
 
 const directoryPath = path.join(__dirname, "ArjunData", "20230319_MM_folders");
@@ -36,14 +37,15 @@ console.log(`directoryPath :`, directoryPath)
 
 const noteNotFoundList: any[] = []
 
-function valueParsingOutingParenthesis(value: any) {
+// This make sure we don't keep the parenthesis part of the value string
+function parseValueRemoveParenthesis(value: any) {
   if (typeof value === "string") {
-    const parsedValue = value.split("(")[0].trim()
-    return parsedValue
+    return value.split("(")[0].trim()
   }
   return value
 }
 
+// The schema is used to normalize the names of the xlsx columns in camelCase, and parse some of the values.
 const schema = {
   'Composer': {
     prop: 'composer',
@@ -88,6 +90,7 @@ const schema = {
         // console.log(`[PARSE] Mettre value is string: ${value}`)
         return value
       }
+      // A meter expressed as a fraction, e.g. 4/4, is considered as a date by the library
       if (value instanceof Date) {
         // console.log(`[PARSE] Mettre value as date: ${value}`)
         const day = value.getDate()
@@ -105,15 +108,15 @@ const schema = {
   },
   'Fastest Structural Notes (notes/s)': {
     prop: 'fastestStructuralNote',
-    type: valueParsingOutingParenthesis,
+    type: parseValueRemoveParenthesis,
   },
   'Fastest Stacatto Notes (notes/s)': {
-    prop: 'fastestStacattoNote',
-    type: valueParsingOutingParenthesis,
+    prop: 'fastestStaccatoNote',
+    type: parseValueRemoveParenthesis,
   },
   'Fastest Ornamental Notes (notes/s)': {
     prop: 'fastestOrnamentalNote',
-    type: valueParsingOutingParenthesis,
+    type: parseValueRemoveParenthesis,
   },
   'Additional Notes': {
     prop: 'additionalNotes',
@@ -125,15 +128,17 @@ const schema = {
   }
 }
 
+// Parse the xlsx file with the above schema and return the data as JSON
 async function readExcelFile(filePath: string) {
   // @ts-ignore
-  const workbook = await readXlsxFile(filePath, { schema }).then(({ rows, errors }) => {
+  return await readXlsxFile(filePath, {schema}).then(({rows, errors}) => {
+    // `rows` is an array of rows
+    // each row being an array of cells.
     if (errors?.length > 0) {
       console.log(`[readExcelFile] errors :`, errors)
     }
     return rows
-  });
-return workbook
+  })
 }
 
 const category: {[key: string]: PIECE_CATEGORY} = {
@@ -144,6 +149,7 @@ const category: {[key: string]: PIECE_CATEGORY} = {
   Autre: PIECE_CATEGORY.OTHER,
 }
 
+// Recursively traverse the directory and return a list of dataSheet as an object {pieceListCategory, data: JSON}
 async function traverseDirectory(directory: string) {
   let dataSheetList: any[] = []
   const files = await readdir(directory);
@@ -175,16 +181,11 @@ async function traverseDirectory(directory: string) {
   return dataSheetList
 }
 
-async function getXlsxDatas() {
-  const dataSheetList = await traverseDirectory(directoryPath)
-  // console.log(`[getXlsxDatas] dataSheetList.length :`, dataSheetList.length)
-  return dataSheetList
-}
-
+// This function takes the dataSheetList as an input and return a well-structured pieceList Array of piece object containing movements, sections and metronomeMarkList. It also determines note values from fastest note values, and output a list of pieces with note found notes.
 async function processDataFromXlsx(dataSheetList: any) {
   const pieceList: any[] = []
   const metronomeMarkList: any[] = []
-  dataSheetList.forEach(({pieceListCategory, data}) => {
+  dataSheetList.forEach(({ pieceListCategory, data }) => {
     // Single Excel file data
     const dataSheet = data
     let piece: any
@@ -275,10 +276,10 @@ async function processDataFromXlsx(dataSheetList: any) {
       if (isSectionDescription) {
 
         const fastestStructuralNotePerSecond = takeFirstOfPotentialRange(rowData.fastestStructuralNote)
-        const fastestStacattoNotePerSecond = takeFirstOfPotentialRange(rowData.fastestStacattoNote)
+        const fastestStaccatoNotePerSecond = takeFirstOfPotentialRange(rowData.fastestStaccatoNote)
         const fastestOrnamentalNotePerSecond = takeFirstOfPotentialRange(rowData.fastestOrnamentalNote)
 
-        const beatUnitXls = valueParsingOutingParenthesis(rowData.metronomeMarking.split('=')[0].trim())
+        const beatUnitXls = parseValueRemoveParenthesis(rowData.metronomeMarking.split('=')[0].trim())
         const beatUnitXlsCleanKey = Object.keys(beatUnitXlsToNorm).find((bu) => beatUnitXls.startsWith(bu))
         if (!beatUnitXlsCleanKey) {
           throw new Error(`beatUnitXlsCleanKey not found for ${beatUnitXls}`)
@@ -286,20 +287,20 @@ async function processDataFromXlsx(dataSheetList: any) {
         const beatUnit = beatUnitXlsToNorm[beatUnitXlsCleanKey] as NOTE_VALUE
         const bpmRawString = rowData.metronomeMarking.split('=')[1].trim()
         const bpmString = bpmRawString.split('-')[0].trim()
-        const bpm = Number(valueParsingOutingParenthesis(bpmString))
+        const bpm = Number(parseValueRemoveParenthesis(bpmString))
         const noteValues = getNoteValuesFromNotesPerSecond({
           metronomeMark: {
             beatUnit,
             bpm,
-            notesPerSecond: { fastestStructuralNotePerSecond, fastestStacattoNotePerSecond, fastestOrnamentalNotePerSecond}
+            notesPerSecond: { fastestStructuralNotePerSecond, fastestStaccatoNotePerSecond, fastestOrnamentalNotePerSecond}
           },
           // section: {metreDenominator: rowData.metre === 'C' ? 4 : Number(rowData.metre.split('/')[1])}
         })
 
-        logTestError(bpm, `isSectionDescription`, JSON.stringify({ fastestStructuralNotePerSecond, fastestStacattoNotePerSecond, fastestOrnamentalNotePerSecond}), `noteValues: ${JSON.stringify(noteValues)}`)
+        // logTestError(bpm, `isSectionDescription`, JSON.stringify({ fastestStructuralNotePerSecond, fastestStaccatoNotePerSecond, fastestOrnamentalNotePerSecond}), `noteValues: ${JSON.stringify(noteValues)}`)
 
         // NEW section
-        const rawMetre = valueParsingOutingParenthesis(rowData.metre)
+        const rawMetre = parseValueRemoveParenthesis(rowData.metre)
         const section = {
           rank: (movement?.sections || []).length + 1,
           tempoIndication: rowData.tempoIndication,
@@ -329,7 +330,7 @@ async function processDataFromXlsx(dataSheetList: any) {
               notes: noteValues,
               notesPerSecond: {
                 fastestStructuralNotePerSecond,
-                fastestStacattoNotePerSecond,
+                fastestStaccatoNotePerSecond,
                 fastestOrnamentalNotePerSecond
               },
             }
@@ -343,7 +344,7 @@ async function processDataFromXlsx(dataSheetList: any) {
           noteValues,
           notesPerSecond: {
             fastestStructuralNotePerSecond,
-            fastestStacattoNotePerSecond,
+            fastestStaccatoNotePerSecond,
             fastestOrnamentalNotePerSecond
           },
         }
@@ -385,8 +386,8 @@ async function processDataFromXlsx(dataSheetList: any) {
 }
 
 async function main() {
-  const datasFromXlsxFiles = await getXlsxDatas()
-  const {pieceList, noteNotFoundList} = await processDataFromXlsx(datasFromXlsxFiles)
+  const datasFromXlsxFiles = await traverseDirectory(directoryPath)
+  const { pieceList, noteNotFoundList } = await processDataFromXlsx(datasFromXlsxFiles)
   const sectionList = pieceList.reduce((acc, piece) => {
     if (!piece) {
       console.log(`[NO] piece`)
@@ -403,15 +404,15 @@ async function main() {
     return [...acc, ...pieceSections, ...movementSections]
   }, [])
   console.log(`[MAIN] counts :`, {pieceList: pieceList.length, sectionList: sectionList.length, noteNotFoundList: noteNotFoundList.length})
-  await seedDB({pieceList, sectionList, noteNotFoundList})
-.then(async () => {
-  await db.$disconnect();
-})
-.catch(async (e) => {
-  console.error(e);
-  await db.$disconnect();
-  process.exit(1);
-});
+//   await seedDB({pieceList, sectionList, noteNotFoundList})
+// .then(async () => {
+//   await db.$disconnect();
+// })
+// .catch(async (e) => {
+//   console.error(e);
+//   await db.$disconnect();
+//   process.exit(1);
+// });
 }
 
 main().then(() => {
@@ -494,7 +495,7 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
                       metreNumerator: section.metreNumerator,
                       metreDenominator: section.metreDenominator,
                       fastestStructuralNoteValue: section.fastestStructuralNoteValue,
-                      fastestStacattoNoteValue: section.fastestStacattoNoteValue,
+                      fastestStaccatoNoteValue: section.fastestStaccatoNoteValue,
                       fastestOrnamentalNoteValue: section.fastestOrnamentalNoteValue,
                       ...(section.tempoIndication && {
                         tempoIndication: {
