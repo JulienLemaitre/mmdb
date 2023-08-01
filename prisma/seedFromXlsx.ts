@@ -262,6 +262,7 @@ async function processDataFromXlsx(dataSheetList: any) {
           type: SOURCE_TYPE.EDITION,
           ...(rowData.link && {link: rowData.link}),
           year: typeof rowData.yearOfPublication === 'number' ? rowData.yearOfPublication : parseInt(rowData.yearOfPublication),
+          ...(rowData.additionalNotes && {comment: rowData.additionalNotes}),
           contributions: [],
         }
         if (rowData.publisher && rowData.publisher !== 'N/A') {
@@ -336,6 +337,7 @@ async function processDataFromXlsx(dataSheetList: any) {
 
         // NEW section
         const rawMetre = parseValueRemoveParenthesis(rowData.metre)
+        const sectionComment = rowData.additionalNotes
         const section = {
           rank: (movement?.sections || []).length + 1,
           tempoIndication: rowData.tempoIndication,
@@ -343,6 +345,7 @@ async function processDataFromXlsx(dataSheetList: any) {
           metreNumerator: rawMetre === 'C' ? 4 : rawMetre === 'C-' ? 2 : Number(rawMetre.split('/')[0]),
           metreDenominator: rawMetre === 'C' ? 4 : rawMetre === 'C-' ? 2 : Number(rawMetre.split('/')[1]),
           ...noteValues,
+          ...(sectionComment && {comment: sectionComment}),
         }
 
 
@@ -574,7 +577,19 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
                             }
                           }
                         },
-                      })
+                      }),
+                      ...(section.comment && {
+                        comment: {
+                          create: {
+                            creator: {
+                              connect: {
+                                id: userArjun.id
+                              },
+                            },
+                            text: section.comment,
+                          }
+                        }
+                      }),
                     }
                   }),
                 },
@@ -664,6 +679,18 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
               }
             }),
           },
+          ...(source.comment && {
+            comment: {
+              create: {
+                creator: {
+                  connect: {
+                    id: userArjun.id
+                  },
+                },
+                text: source.comment,
+              }
+            }
+          }),
         },
         include: {
           metronomeMarks: true,
