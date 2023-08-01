@@ -141,7 +141,7 @@ async function readExcelFile(filePath: string) {
   })
 }
 
-const category: {[key: string]: PIECE_CATEGORY} = {
+const pieceCategory: {[key: string]: PIECE_CATEGORY} = {
   Chamber: PIECE_CATEGORY.CHAMBER_INSTRUMENTAL,
   Keyboard: PIECE_CATEGORY.KEYBOARD,
   Orchestral: PIECE_CATEGORY.ORCHESTRAL,
@@ -149,27 +149,62 @@ const category: {[key: string]: PIECE_CATEGORY} = {
   Autre: PIECE_CATEGORY.OTHER,
 }
 
+const composerBirthDeathYear: {[key: string]: [number, number]} = {
+  "Aguado": [1784, 1849],
+  "Albeniz": [1860, 1909],
+  "Bach": [1685, 1750],
+  "Beethoven": [1770, 1827],
+  "Berlioz": [1803, 1869],
+  "Brahms": [1833, 1897],
+  "Chopin": [1810, 1849],
+  "Coste": [1805, 1883],
+  "Czerny": [1791, 1857],
+  "Debussy": [1862, 1918],
+  "Dvorak": [1841, 1904],
+  "Dvořák": [1841, 1904],
+  "Elgar": [1857, 1934],
+  "Fossa": [1775, 1849],
+  "Giuliani": [1781, 1829],
+  "Grieg": [1843, 1907],
+  "Haydn": [1732, 1809],
+  "Liszt": [1811, 1886],
+  "Mendelssohn": [1809, 1847],
+  "Mozart": [1756, 1791],
+  "Reger": [1873, 1916],
+  "Rimsky Korsakov": [1844, 1908],
+  "Rimsky-Korsakov": [1844, 1908],
+  "Rossini": [1792, 1868],
+  "Saint-Saens": [1835, 1921],
+  "Schubert": [1797, 1828],
+  "Schumann": [1810, 1856],
+  "Shostakovich": [1906, 1975],
+  "Stravinsky": [1882, 1971],
+  "Tchaikovsky": [1840, 1893],
+  "Wagner": [1813, 1883],
+  "Webern": [1883, 1945],
+}
+
 // Recursively traverse the directory and return a list of dataSheet as an object {pieceListCategory, data: JSON}
 async function traverseDirectory(directory: string) {
   let dataSheetList: any[] = []
   const files = await readdir(directory);
-  console.log(`[traverseDirectory] files :`, files)
+  // console.log(`[traverseDirectory] files :`, files)
   for (const file of files) {
     const filePath = path.join(directory, file);
     const fileStat = await stat(filePath);
     if (fileStat.isDirectory()) {
-      console.log(`>> directory: ${filePath}`)
+      // console.log(`>> directory: ${filePath}`)
       const subDataSheetList = await traverseDirectory(filePath);
       dataSheetList = [...dataSheetList, ...subDataSheetList]
       // console.log(`[traverseDirectory] subDataSheetList.length :`, subDataSheetList.length)
       // console.log(`[traverseDirectory] dataSheetList.length :`, dataSheetList.length)
     } else if (path.extname(filePath) === '.xlsx') {
-      console.log(`- file: ${filePath}`)
-      const categoryKey = Object.keys(category).find((key) => filePath.includes(key))
+      // console.log(`- file: ${filePath}`)
+      const categoryKey = Object.keys(pieceCategory).find((key) => filePath.includes(key))
       // if (!categoryKey) {
       //   throw new Error(`[ERROR] categoryKey not found for ${filePath}`)
       // }
-      const pieceListCategory = category[categoryKey || "Autre"]
+      const pieceListCategory = pieceCategory[categoryKey || "Autre"]
       // console.log(`[] pieceListCategory :`, pieceListCategory)
       const singleSheetData = await readExcelFile(filePath);
       // console.log(`[traverseDirectory] singleSheetData`, singleSheetData.map((data: any) => JSON.stringify(data)))
@@ -376,7 +411,10 @@ async function processDataFromXlsx(dataSheetList: any) {
 
   if (noteNotFoundList.length > 0) {
     console.log(`---------------------------------------`)
-    console.log(`[FINAL] noteNotFoundList`, JSON.stringify(noteNotFoundList, null, 2))
+    console.log(`[FINAL] noteNotFoundList :`)
+    noteNotFoundList.forEach((noteNotFound) => {
+      console.log(`[FINAL] noteNotFound :`, JSON.stringify(noteNotFound))
+    })
     // console.log(`[] noteDurationValue :`, noteDurationValue)
     // const orderedNoteDurationValue = Object.values(noteDurationValue).sort((a, b) => a - b)
     // console.log(`[] orderedNoteDurationValue :`, orderedNoteDurationValue)
@@ -404,15 +442,15 @@ async function main() {
     return [...acc, ...pieceSections, ...movementSections]
   }, [])
   console.log(`[MAIN] counts :`, {pieceList: pieceList.length, sectionList: sectionList.length, noteNotFoundList: noteNotFoundList.length})
-//   await seedDB({pieceList, sectionList, noteNotFoundList})
-// .then(async () => {
-//   await db.$disconnect();
-// })
-// .catch(async (e) => {
-//   console.error(e);
-//   await db.$disconnect();
-//   process.exit(1);
-// });
+  await seedDB({pieceList, sectionList, noteNotFoundList})
+.then(async () => {
+  await db.$disconnect();
+})
+.catch(async (e) => {
+  console.error(e);
+  await db.$disconnect();
+  process.exit(1);
+});
 }
 
 main().then(() => {
@@ -451,6 +489,14 @@ function getKeyEnumFromKeyString(keyString: string) {
 async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: any[], sectionList: any[], noteNotFoundList: any[]}) {
   console.log(`-------- START - seedDB --------`)
   // console.log(`[] pieceList`, pieceList)
+  const userArjun = await db.user.create({
+    data: {
+      firstName: "Arjun",
+      lastName: "Wasan",
+      email: "arjunwasan@gmail.com",
+      password: "password",
+    }
+  })
 
   const pieceTaskList = pieceList
   .map((piece) => {
@@ -461,24 +507,44 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
         composer: "Beethoven, Ludwig van"
       }
     }
+    // Fix for wrongly written Schumann name
+    if (piece.composer === "Schumann Robert") {
+      return {
+        ...piece,
+        composer: "Schumann, Robert"
+      }
+    }
     return piece
   })
   .map((piece, index) => {
+    const birthDeath: [number, number] = composerBirthDeathYear[piece.composer.split(',')[0].trim()]
+    if (!birthDeath) {
+      console.log(`[SEED ERROR] birthDeath not found for ${piece.composer}`)
+    }
     return async function () {
       const persistedPiece = await db.piece.create({
         data: {
+          creator: {
+            connect: {
+              id: userArjun.id
+            },
+          },
           title: piece.title,
           category: piece.category,
           yearOfComposition: piece.yearOfComposition,
           composer: {
             connectOrCreate: {
               where: {
-                fullName: piece.composer,
+                firstName_lastName: {
+                  firstName: piece.composer.split(',')[1].trim(),
+                  lastName: piece.composer.split(',')[0].trim(),
+                }
               },
               create: {
-                fullName: piece.composer,
-                // birthYear: piece.composer.birthYear,
-                // deathYear: piece.composer.deathYear,
+                firstName: piece.composer.split(',')[1].trim(),
+                lastName: piece.composer.split(',')[0].trim(),
+                birthYear: composerBirthDeathYear[piece.composer.split(',')[0].trim()][0],
+                deathYear: composerBirthDeathYear[piece.composer.split(',')[0].trim()][1],
               },
             },
           },
@@ -501,10 +567,10 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
                         tempoIndication: {
                           connectOrCreate: {
                             where: {
-                              baseTerm: section.tempoIndication,
+                              text: section.tempoIndication,
                             },
                             create: {
-                              baseTerm: section.tempoIndication,
+                              text: section.tempoIndication,
                             }
                           }
                         },
@@ -562,10 +628,14 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
       // Persist source and metronomeMarks
       const persistedSource = await db.source.create({
         data: {
+          creator: {
+            connect: {
+              id: userArjun.id
+            },
+          },
           type: source.type,
           link: source.link,
           year: source.year,
-          isComposerMM: piece.composer.name !== 'Bach, J.S',
           piece: {
             connect: {
               id: piece.id,
