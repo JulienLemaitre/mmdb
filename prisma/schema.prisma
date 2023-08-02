@@ -24,7 +24,7 @@ model Piece {
   nickName          String?
   composer          Person         @relation(fields: [composerId], references: [id]) // A piece have a unique composer
   composerId        String
-  yearOfComposition Int
+  yearOfComposition Int?
   category          PIECE_CATEGORY
   creator           User           @relation(fields: [creatorId], references: [id])
   creatorId         String
