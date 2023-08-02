@@ -99,8 +99,7 @@ model MetronomeMark {
 model Source {
   id             String          @id @default(uuid())
   title          String? // ?? Is it usefull ?
-  piece          Piece           @relation(fields: [pieceId], references: [id]) // A source is linked to a single piece
-  pieceId        String
+  pieces         Piece[] // A source is linked one or more pieces
   type           SOURCE_TYPE
   link           String?
   year           Int
