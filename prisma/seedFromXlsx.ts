@@ -426,9 +426,26 @@ async function processDataFromXlsx(dataSheetList: any) {
   return {pieceList, noteNotFoundList}
 }
 
-async function main() {
+async function getDatas() {
+  // Verify if a parsedDataOutput.js file already exists
+  const parsedDataOutputPath = path.join(__dirname, 'parsedDataOutput.js')
+  const parsedDataOutputExists = fs.existsSync(parsedDataOutputPath)
+  console.log(`[getDatas] parsedDataOutputExists :`, parsedDataOutputExists)
+
+  // If it exists, just import it
+  if (parsedDataOutputExists) {
+    const parsedDataOutput = require(parsedDataOutputPath).default
+    return parsedDataOutput
+  }
+
+  // If it doesn't exist, extract datas from the xlsx files
+  // Extract datas from the xlsx files
   const datasFromXlsxFiles = await traverseDirectory(directoryPath)
+
+  // Process the datas to build a well-structured object list
   const { pieceList, noteNotFoundList } = await processDataFromXlsx(datasFromXlsxFiles)
+
+  // Extract the sections from the pieceList (just to count them ;-) )
   const sectionList = pieceList.reduce((acc, piece) => {
     if (!piece) {
       console.log(`[NO] piece`)
@@ -439,13 +456,30 @@ async function main() {
 
     if (piece?.movements) {
       movementSections = piece.movements.reduce((acc, movement) => {
-      return [...acc, ...movement.sections]
+        return [...acc, ...movement.sections]
       }, [])
     }
     return [...acc, ...pieceSections, ...movementSections]
   }, [])
+
+  // Write the objects to a new file parsedDataOutput.js
+  const data = `const pieceList = ${JSON.stringify(pieceList, null, 2)};
+const sectionList = ${JSON.stringify(sectionList, null, 2)};
+const noteNotFoundList = ${JSON.stringify(noteNotFoundList, null, 2)};
+
+const parsedData = { pieceList, sectionList, noteNotFoundList };
+
+export default parsedData;`;
+
+  fs.writeFileSync(parsedDataOutputPath, data);
+
+  return { pieceList, sectionList, noteNotFoundList }
+}
+
+async function main() {
+  const { pieceList, sectionList, noteNotFoundList } = await getDatas()
   console.log(`[MAIN] counts :`, {pieceList: pieceList.length, sectionList: sectionList.length, noteNotFoundList: noteNotFoundList.length})
-  await seedDB({pieceList, sectionList, noteNotFoundList})
+  await seedDB({pieceList})
 .then(async () => {
   await db.$disconnect();
 })
@@ -489,7 +523,7 @@ function getKeyEnumFromKeyString(keyString: string) {
   return keyEnum
 }
 
-async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: any[], sectionList: any[], noteNotFoundList: any[]}) {
+async function seedDB({pieceList}: {pieceList: any[]}) {
   console.log(`-------- START - seedDB --------`)
   // console.log(`[] pieceList`, pieceList)
   const userArjun = await db.user.create({
@@ -651,7 +685,7 @@ async function seedDB({pieceList, sectionList, noteNotFoundList}: {pieceList: an
           type: source.type,
           link: source.link,
           year: source.year,
-          piece: {
+          pieces: {
             connect: {
               id: piece.id,
             }
