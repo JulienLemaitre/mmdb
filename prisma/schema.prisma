@@ -25,28 +25,37 @@ model Piece {
   composer          Person         @relation(fields: [composerId], references: [id]) // A piece have a unique composer
   composerId        String
   yearOfComposition Int?
-  category          PIECE_CATEGORY
   creator           User           @relation(fields: [creatorId], references: [id])
   creatorId         String
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
-  movements         Movement[] // A piece can have many movements
-  sources           Source[] // A piece can have many sources
+  pieceVersions     PieceVersion[] // A piece can have many versions
 
   @@unique([composerId, title])
 }
 
-model Movement {
-  id        String    @id @default(uuid())
-  piece     Piece     @relation(fields: [pieceId], references: [id]) // A movement belongs to a single piece
+model PieceVersion {
+  id        String         @id @default(uuid())
+  piece     Piece          @relation(fields: [pieceId], references: [id]) // A piece version belongs to a single piece
   pieceId   String
-  rank      Int
-  key       KEY
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  sections  Section[] // A movement can have many sections
+  category  PIECE_CATEGORY
+  movements Movement[] // A pieceVersion can have many movements
+  sources   Source[] // A pieceVersion can have many sources
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
 
-  @@unique([pieceId, rank])
+model Movement {
+  id             String       @id @default(uuid())
+  pieceVersion   PieceVersion @relation(fields: [pieceVersionId], references: [id]) // A movement belongs to a single piece
+  pieceVersionId String
+  rank           Int
+  key            KEY
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  sections       Section[] // A movement can have many sections
+
+  @@unique([pieceVersionId, rank])
 }
 
 model Section {
@@ -99,7 +108,7 @@ model MetronomeMark {
 model Source {
   id             String          @id @default(uuid())
   title          String? // ?? Is it usefull ?
-  pieces         Piece[] // A source is linked one or more pieces
+  pieceVersions  PieceVersion[] // A source is linked one or more pieceVersions
   type           SOURCE_TYPE
   link           String?
   year           Int

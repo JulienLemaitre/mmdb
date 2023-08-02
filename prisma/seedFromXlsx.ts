@@ -567,7 +567,6 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
             },
           },
           title: piece.title,
-          category: piece.category,
           yearOfComposition: piece.yearOfComposition,
           composer: {
             connectOrCreate: {
@@ -585,59 +584,68 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
               },
             },
           },
-          movements: {
-            create: piece.movements.map((movement) => {
-              return {
-                rank: movement.rank,
-                key: movement.key,
-                sections: {
-                  create: movement.sections.map((section) => {
-                    return {
-                      rank: section.rank,
-                      metreString: section.metreString,
-                      metreNumerator: section.metreNumerator,
-                      metreDenominator: section.metreDenominator,
-                      fastestStructuralNoteValue: section.fastestStructuralNoteValue,
-                      fastestStaccatoNoteValue: section.fastestStaccatoNoteValue,
-                      fastestOrnamentalNoteValue: section.fastestOrnamentalNoteValue,
-                      ...(section.tempoIndication && {
-                        tempoIndication: {
-                          connectOrCreate: {
-                            where: {
-                              text: section.tempoIndication,
+          pieceVersions: {
+            create: {
+              category: piece.category,
+              movements: {
+                create: piece.movements.map((movement) => {
+                  return {
+                    rank: movement.rank,
+                    key: movement.key,
+                    sections: {
+                      create: movement.sections.map((section) => {
+                        return {
+                          rank: section.rank,
+                          metreString: section.metreString,
+                          metreNumerator: section.metreNumerator,
+                          metreDenominator: section.metreDenominator,
+                          fastestStructuralNoteValue: section.fastestStructuralNoteValue,
+                          fastestStaccatoNoteValue: section.fastestStaccatoNoteValue,
+                          fastestOrnamentalNoteValue: section.fastestOrnamentalNoteValue,
+                          ...(section.tempoIndication && {
+                            tempoIndication: {
+                              connectOrCreate: {
+                                where: {
+                                  text: section.tempoIndication,
+                                },
+                                create: {
+                                  text: section.tempoIndication,
+                                }
+                              }
                             },
-                            create: {
-                              text: section.tempoIndication,
+                          }),
+                          ...(section.comment && {
+                            comment: {
+                              create: {
+                                creator: {
+                                  connect: {
+                                    id: userArjun.id
+                                  },
+                                },
+                                text: section.comment,
+                              }
                             }
-                          }
-                        },
-                      }),
-                      ...(section.comment && {
-                        comment: {
-                          create: {
-                            creator: {
-                              connect: {
-                                id: userArjun.id
-                              },
-                            },
-                            text: section.comment,
-                          }
+                          }),
                         }
                       }),
-                    }
-                  }),
-                },
-              }
-            }),
+                    },
+                  }
+                }),
+              },
+            },
           },
         },
         include: {
           composer: true,
-          movements: {
+          pieceVersions: {
             include: {
-              sections: {
+              movements: {
                 include: {
-                  tempoIndication: true,
+                  sections: {
+                    include: {
+                      tempoIndication: true,
+                    }
+                  }
                 }
               }
             }
@@ -662,13 +670,18 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
   }
 
   const sourceTaskList = persistedPieceList.map((piece, index) => {
+    console.log(`[] piece.pieceVersions :`, piece.pieceVersions)
+    if (!piece.pieceVersions) {
+      console.log(`[ERROR] piece.pieceVersions is null`, piece.title, JSON.stringify(piece))
+    }
+    const pieceVersion = piece.pieceVersions[0]
     return async function () {
       const source = piece.source
       const metronomeMarkList = piece.metronomeMarkList
       if (!metronomeMarkList) {
         console.log(`[ERROR] metronomeMarkList is null`, piece.title, piece)
       }
-      const movements = piece.movements
+      const movements = pieceVersion.movements
       // if (index === 0) {
       //   console.log(`[] source`, source)
       //   console.log(`[] movements`, movements)
@@ -685,9 +698,9 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
           type: source.type,
           link: source.link,
           year: source.year,
-          pieces: {
+          pieceVersions: {
             connect: {
-              id: piece.id,
+              id: pieceVersion.id,
             }
           },
           metronomeMarks: {
