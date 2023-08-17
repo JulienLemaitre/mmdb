@@ -341,7 +341,8 @@ async function processDataFromXlsx(dataSheetList: any) {
         const section = {
           rank: (movement?.sections || []).length + 1,
           tempoIndication: rowData.tempoIndication,
-          metreString: rowData.metre,
+          isCommonTime: rawMetre === 'C',
+          isCutTime: rawMetre === 'C-',
           metreNumerator: rawMetre === 'C' ? 4 : rawMetre === 'C-' ? 2 : Number(rawMetre.split('/')[0]),
           metreDenominator: rawMetre === 'C' ? 4 : rawMetre === 'C-' ? 2 : Number(rawMetre.split('/')[1]),
           ...noteValues,
@@ -528,10 +529,8 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
   // console.log(`[] pieceList`, pieceList)
   const userArjun = await db.user.create({
     data: {
-      firstName: "Arjun",
-      lastName: "Wasan",
+      name: "Arjun Wasan",
       email: "arjunwasan@gmail.com",
-      password: "password",
     }
   })
 
@@ -596,7 +595,8 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
                       create: movement.sections.map((section) => {
                         return {
                           rank: section.rank,
-                          metreString: section.metreString,
+                          isCommonTime: section.isCommonTime,
+                          isCutTime: section.isCutTime,
                           metreNumerator: section.metreNumerator,
                           metreDenominator: section.metreDenominator,
                           fastestStructuralNoteValue: section.fastestStructuralNoteValue,

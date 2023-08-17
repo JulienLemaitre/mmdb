@@ -59,24 +59,30 @@ model Movement {
 }
 
 model Section {
-  id                         String           @id @default(uuid())
-  movement                   Movement         @relation(fields: [movementId], references: [id])
-  movementId                 String
-  rank                       Int
-  metreNumerator             Int
-  metreDenominator           Int
-  metreString                String
-  fastestStructuralNoteValue NOTE_VALUE?
-  fastestStaccatoNoteValue   NOTE_VALUE?
-  fastestRepeatedNoteValue   NOTE_VALUE?
-  fastestOrnamentalNoteValue NOTE_VALUE?
-  tempoIndication            TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
-  tempoIndicationId          String?
-  metronomeMarks             MetronomeMark[] // A movement can have many metronome marks
-  commentId                  String?          @unique
-  comment                    Comment?         @relation(fields: [commentId], references: [id])
-  createdAt                  DateTime         @default(now())
-  updatedAt                  DateTime         @updatedAt
+  id                              String           @id @default(uuid())
+  movement                        Movement         @relation(fields: [movementId], references: [id])
+  movementId                      String
+  rank                            Int
+  metreNumerator                  Int
+  metreDenominator                Int
+  isCommonTime                    Boolean          @default(false)
+  isCutTime                       Boolean          @default(false)
+  fastestStructuralNoteValue      NOTE_VALUE?
+  fastestStaccatoNoteValue        NOTE_VALUE?
+  fastestRepeatedNoteValue        NOTE_VALUE?
+  fastestOrnamentalNoteValue      NOTE_VALUE?
+  fastestStructuralNotePerBar     Int?
+  fastestStaccatoNotePerBar       Int?
+  fastestRepeatedNotePerBar       Int?
+  fastestOrnamentalNotePerBar     Int?
+  isFastestStructuralNoteBelCanto Boolean          @default(false)
+  tempoIndication                 TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
+  tempoIndicationId               String?
+  metronomeMarks                  MetronomeMark[] // A movement can have many metronome marks
+  commentId                       String?          @unique
+  comment                         Comment?         @relation(fields: [commentId], references: [id])
+  createdAt                       DateTime         @default(now())
+  updatedAt                       DateTime         @updatedAt
 
   @@unique([movementId, rank])
 }
