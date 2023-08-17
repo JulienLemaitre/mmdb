@@ -161,19 +161,6 @@ model Person {
   @@unique([firstName, lastName])
 }
 
-model User {
-  id        String    @id @default(uuid())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  email     String    @unique
-  password  String
-  firstName String
-  lastName  String
-  comments  Comment[] // A user can have created many comments
-  sources   Source[] // A user can have created many sources
-  pieces    Piece[] // A user can have created many pieces
-}
-
 model Comment {
   id            String         @id @default(uuid())
   createdAt     DateTime       @default(now())
@@ -188,6 +175,60 @@ model Comment {
   // add a constraint to ensure that one and only one of sourceId, sectionId or metronomeMarkId is set
   // constraint source_section_metronomeMark_xor check ((sourceId IS NOT NULL AND sectionId IS NULL AND metronomeMarkId IS NULL) OR (sectionId IS NOT NULL AND sourceId IS NULL AND metronomeMarkId IS NULL) OR (metronomeMarkId IS NOT NULL AND sourceId IS NULL AND sectionId IS NULL))
 }
+
+// Next-auth related models
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  comments      Comment[] // A user can have created many comments
+  sources       Source[] // A user can have created many sources
+  pieces        Piece[] // A user can have created many pieces
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Enums
 
 enum NOTE_VALUE {
   WHOLE
