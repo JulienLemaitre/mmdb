@@ -171,3 +171,15 @@ export function getNoteValuesFromNotesPerSecond({ metronomeMark, getNoteMock }:
      // console.log(`[getNoteValues] No note determined for notesPerSecond ${notesPerSecond} -> noteValue ${noteValue}`)
       throw new Error(`No note determined for noteValue ${noteValue}`);
  }
+
+ export function getNotePerBar({ noteValue, metreNumerator, metreDenominator }: { noteValue: NOTE_VALUE, metreNumerator: number, metreDenominator: number }): number {
+  console.log(`[getNotePerBar] INPUT:`, { noteValue, metreNumerator, metreDenominator })
+  if (!noteValue) {
+  throw new Error("[getNotePerBar] No noteValue given");
+  }
+   const noteValueAsNumber = noteDurationValue[noteValue]; // ex: 1/16
+   const barDuration = metreNumerator / metreDenominator; // ex: 3/4 = 0.75
+   const numberOfNotesPerBar = barDuration / noteValueAsNumber; // ex: 0.75 / 1/16 = 12
+   console.log(`[getNotePerBar] numberOfNotesPerBar :`, numberOfNotesPerBar)
+   return numberOfNotesPerBar;
+ }

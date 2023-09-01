@@ -1,6 +1,6 @@
 import {db} from "@/lib/db";
 import {CONTRIBUTION_ROLE, KEY, NOTE_VALUE, PIECE_CATEGORY, SOURCE_TYPE} from "@prisma/client";
-import {getNoteValuesFromNotesPerSecond} from "@/lib/notesCalculation";
+import {getNotePerBar, getNoteValuesFromNotesPerSecond} from "@/lib/notesCalculation";
 
 function logTestError(bpm, ...props) {
   if (bpm === 108) {
@@ -599,9 +599,9 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
                           isCutTime: section.isCutTime,
                           metreNumerator: section.metreNumerator,
                           metreDenominator: section.metreDenominator,
-                          fastestStructuralNoteValue: section.fastestStructuralNoteValue,
-                          fastestStaccatoNoteValue: section.fastestStaccatoNoteValue,
-                          fastestOrnamentalNoteValue: section.fastestOrnamentalNoteValue,
+                          ...(section.fastestStructuralNoteValue && { fastestStructuralNotePerBar: getNotePerBar({ noteValue: section.fastestStructuralNoteValue, metreNumerator: section.metreNumerator, metreDenominator: section.metreDenominator }) }),
+                          ...(section.fastestStaccatoNoteValue && { fastestStaccatoNotePerBar: getNotePerBar({ noteValue: section.fastestStaccatoNoteValue, metreNumerator: section.metreNumerator, metreDenominator: section.metreDenominator }) }),
+                          ...(section.fastestOrnamentalNoteValue && { fastestOrnamentalNotePerBar: getNotePerBar({ noteValue: section.fastestOrnamentalNoteValue, metreNumerator: section.metreNumerator, metreDenominator: section.metreDenominator }) }),
                           ...(section.tempoIndication && {
                             tempoIndication: {
                               connectOrCreate: {
