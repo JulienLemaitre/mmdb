@@ -67,10 +67,6 @@ model Section {
   metreDenominator                Int
   isCommonTime                    Boolean          @default(false)
   isCutTime                       Boolean          @default(false)
-  fastestStructuralNoteValue      NOTE_VALUE?
-  fastestStaccatoNoteValue        NOTE_VALUE?
-  fastestRepeatedNoteValue        NOTE_VALUE?
-  fastestOrnamentalNoteValue      NOTE_VALUE?
   fastestStructuralNotePerBar     Int?
   fastestStaccatoNotePerBar       Int?
   fastestRepeatedNotePerBar       Int?
