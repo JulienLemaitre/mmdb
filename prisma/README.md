@@ -26,7 +26,7 @@ npx prisma migrate dev --create-only
 npx prisma db seed
 ```
 
-### Reset the database
+### Reset the database (delete all tables and data + seed)
 
 ```bash
 npx prisma migrate reset

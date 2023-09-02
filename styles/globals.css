@@ -12,6 +12,10 @@
   box-sizing: border-box;
 }
 
+.common-time {
+  font-size: 2.25rem/* 36px */;
+  line-height: 0.5rem/* 18px */;
+}
 .rainbow-mesh {
   background-color: hsla(0, 100%, 50%, 1);
   background-image: radial-gradient(

@@ -1,4 +1,4 @@
-import {NOTE_VALUE, MetronomeMark} from "@prisma/client";
+import {NOTE_VALUE, MetronomeMark, Section} from "@prisma/client";
 
 export const noteDurationValue = {
   WHOLE: 1,
@@ -63,18 +63,68 @@ export function getNotesPerSecondsFromNoteValues({ metronomeMark }:
   }
 
   const noteValues = { fastestStructuralNoteValue, fastestStaccatoNoteValue, fastestOrnamentalNoteValue }
-  logTestError(bpm, '[gNPSFNV] ', noteValues)
+  // logTestError(bpm, '[gNPSFNV] ', noteValues)
   // @ts-ignore
   const notesPerSecond: NotesPerSecond = Object.keys(noteValues).reduce((npsObject: NotesPerSecond, noteValueType: keyof typeof noteValues) => {
     if (noteValues[noteValueType]) {
       npsObject[noteValueType.replace('Value', 'PerSecond')] = getNotesPerSecond({ noteValueType: noteValues[noteValueType], beatUnit, bpm })
     } else {
-      logTestError(bpm, `[gNPSFNV] No ${noteValueType} found in notes ${JSON.stringify(noteValues)}`)
+      // logTestError(bpm, `[gNPSFNV] No ${noteValueType} found in notes ${JSON.stringify(noteValues)}`)
     }
     return npsObject;
   }, {} as NotesPerSecond)
 
   return notesPerSecond
+}
+
+/**
+ * Calculates the number of notes per second that must be executed, from each of the given section's fastest notes per second values.
+ */
+export function getNotesPerSecondsFromNotesPerBarAndMM({ section, metronomeMark }: { section: Pick<Section, "fastestStructuralNotePerBar" | "fastestRepeatedNotePerBar" | "fastestOrnamentalNotePerBar" | "fastestStaccatoNotePerBar" | "metreNumerator" | "metreDenominator">, metronomeMark: Pick<MetronomeMark, "beatUnit" | "bpm"> }): NotesPerSecond {
+  const { fastestStructuralNotePerBar, fastestRepeatedNotePerBar, fastestStaccatoNotePerBar, fastestOrnamentalNotePerBar } = section
+  const { beatUnit, bpm } = metronomeMark
+
+  if (!fastestStructuralNotePerBar && !fastestRepeatedNotePerBar && !fastestStaccatoNotePerBar && !fastestOrnamentalNotePerBar) {
+    throw new Error(`[gNPSFNPBAMM] No fastest note per bar property found in given section ${JSON.stringify(section)}}`);
+  }
+  const notePerBarValues = { fastestStructuralNotePerBar, fastestRepeatedNotePerBar, fastestStaccatoNotePerBar, fastestOrnamentalNotePerBar }
+  const notesPerSecond: NotesPerSecond = Object.keys(notePerBarValues).reduce((npsObject: NotesPerSecond, notePerBarType: string) => {
+    if (notePerBarValues[notePerBarType]) {
+      npsObject[notePerBarType.replace('PerBar', 'PerSecond')] = getNotesPerSecondFromNotePerBar({ notesPerBar: notePerBarValues[notePerBarType], meterNumerator: section.metreNumerator, meterDenominator: section.metreDenominator, beatUnit, bpm })
+    } else {
+      // logTestError(bpm, `[gNPSFNPBAMM] No ${notePerBarType} found in notes ${JSON.stringify(notePerBarValues)}`)
+    }
+    return npsObject;
+  }, {} as NotesPerSecond)
+
+  return notesPerSecond
+}
+
+/**
+ * Calculates the number of notes per second that must be executed, from the given number of notes per bar, beat unit and bpm.
+ * @param notesPerBar
+ * @param meterNumerator
+ * @param meterDenominator
+ * @param beatUnit
+ * @param bpm
+ */
+export function getNotesPerSecondFromNotePerBar({ notesPerBar, meterNumerator, meterDenominator, bpm, beatUnit }: { notesPerBar: number, meterNumerator: number, meterDenominator: number, bpm: number, beatUnit: NOTE_VALUE }): number {
+  if (!notesPerBar) {
+    throw new Error("[gNPSFNPB] No notesPerBar given");
+  }
+  // Calculate the duration of one beat in seconds
+  const secondsPerBeat = 60 / bpm;
+
+  // Get the rhythmic value of a single beat and the given structural note
+  const beatUnitValue = noteDurationValue[beatUnit]; // ex: 1/4
+
+  // Calculate the duration of one bar in seconds
+  const secondsPerBar = secondsPerBeat * (meterNumerator / meterDenominator) / beatUnitValue;
+
+  // Calculate the notes per second
+  const notesPerSecond = notesPerBar / secondsPerBar;
+
+  return notesPerSecond;
 }
 
 function getNotesPerSecond({ noteValueType, beatUnit, bpm }: { noteValueType?: NOTE_VALUE | null, beatUnit: NOTE_VALUE, bpm: number }): number {
