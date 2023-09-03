@@ -109,33 +109,40 @@ export function getNotesPerSecondsFromNotesPerBarAndMM({ section, metronomeMark 
  * @param bpm
  */
 export function getNotesPerSecondFromNotePerBar({ notesPerBar, meterNumerator, meterDenominator, bpm, beatUnit }: { notesPerBar: number, meterNumerator: number, meterDenominator: number, bpm: number, beatUnit: NOTE_VALUE }): number {
-  if (!notesPerBar) {
-    throw new Error("[gNPSFNPB] No notesPerBar given");
+  if (!notesPerBar || !meterNumerator || !meterDenominator || !bpm || !beatUnit) {
+    throw new Error("[gNPSFNPB] Invalid or missing parameter");
   }
+  // const isTest = notesPerBar === 4 && meterNumerator === 4 && meterDenominator === 4 && bpm === 120 && beatUnit === NOTE_VALUE.QUARTER; // 1/24
+  const isTest = false
   // Calculate the duration of one beat in seconds
-  const secondsPerBeat = 60 / bpm;
+  const beatDuration = 60 / bpm;
+  if (isTest) console.log(`[TEST gNPSFNPB] beatDuration :`, beatDuration)
 
   // Get the rhythmic value of a single beat and the given structural note
   const beatUnitValue = noteDurationValue[beatUnit]; // ex: 1/4
+  if (isTest) console.log(`[TEST gNPSFNPB] beatUnitValue :`, beatUnitValue)
 
   // Calculate the duration of one bar in seconds
-  const secondsPerBar = secondsPerBeat * (meterNumerator / meterDenominator) / beatUnitValue;
+  const secondsPerBar = beatDuration * (meterNumerator / meterDenominator) / beatUnitValue;
+  if (isTest) console.log(`[TEST gNPSFNPB] secondsPerBar :`, secondsPerBar)
 
   // Calculate the notes per second
   const notesPerSecond = notesPerBar / secondsPerBar;
+  if (isTest) console.log(`[TEST gNPSFNPB] notesPerSecond :`, notesPerSecond)
 
+  console.log(`[gNPSFNPB RESULT] notesPerSecond: ${notesPerSecond} |`, JSON.stringify({ notesPerBar, meterNumerator, meterDenominator, bpm, beatUnit }))
   return notesPerSecond;
 }
 
 function getNotesPerSecond({ noteValueType, beatUnit, bpm }: { noteValueType?: NOTE_VALUE | null, beatUnit: NOTE_VALUE, bpm: number }): number {
 
-  logTestError(bpm, { noteValueType, beatUnit, bpm })
+  // logTestError(bpm, { noteValueType, beatUnit, bpm })
 
   if (!noteValueType) {
     throw new Error("[gNPS] No note given");
   }
   const noteValueAsNumber = noteDurationValue[noteValueType]; // ex: 1/16
-  logTestError(bpm, `[gNPS] noteValue :`, noteValueAsNumber)
+  // logTestError(bpm, `[gNPS] noteValue :`, noteValueAsNumber)
 
 //     1 Get the rhythmic value of a single beat and the given structural note
   const beatUnitValue = noteDurationValue[beatUnit]; // ex: 1/4
@@ -151,7 +158,7 @@ function getNotesPerSecond({ noteValueType, beatUnit, bpm }: { noteValueType?: N
 
 //     5 Take the reciprocal of the structural note duration in seconds to get the number of structural notes per second that must be executed.
   const notesPerSecond = 1 / noteDuration; // ex: 1 / 0.125 = 8
-  logTestError(bpm, `[gNPS] notesPerSecond :`, notesPerSecond)
+  // logTestError(bpm, `[gNPS] notesPerSecond :`, notesPerSecond)
 
   return notesPerSecond;
 }
