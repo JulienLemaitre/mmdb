@@ -1,6 +1,10 @@
 import {db} from "@/lib/db";
 import {CONTRIBUTION_ROLE, KEY, NOTE_VALUE, PIECE_CATEGORY, SOURCE_TYPE} from "@prisma/client";
-import {getNotePerBar, getNoteValuesFromNotesPerSecond} from "@/lib/notesCalculation";
+import {getNotesPerBar} from "@/lib/notesCalculation";
+import takeFirstOfPotentialRange from "@/lib/takeFirstOfPotentialRange";
+import parseValueRemoveParenthesis from "@/lib/parseValueRemoveParenthesis";
+import getNotesPerBarCollectionFromNotesPerSecondCollection
+  from "@/lib/getNotesPerBarCollectionFromNotesPerSecondCollection";
 
 function logTestError(bpm, ...props) {
   if (bpm === 108) {
@@ -36,14 +40,6 @@ const directoryPath = path.join(__dirname, "ArjunData", "20230319_MM_folders");
 console.log(`directoryPath :`, directoryPath)
 
 const noteNotFoundList: any[] = []
-
-// This make sure we don't keep the parenthesis part of the value string
-function parseValueRemoveParenthesis(value: any) {
-  if (typeof value === "string") {
-    return value.split("(")[0].trim()
-  }
-  return value
-}
 
 // The schema is used to normalize the names of the xlsx columns in camelCase, and parse some of the values.
 const schema = {
@@ -90,7 +86,7 @@ const schema = {
         // console.log(`[PARSE] Mettre value is string: ${value}`)
         return value
       }
-      // A meter expressed as a fraction, e.g. 4/4, is considered as a date by the library
+      // A metre expressed as a fraction, e.g. 4/4, is considered as a date by the library
       if (value instanceof Date) {
         // console.log(`[PARSE] Mettre value as date: ${value}`)
         const day = value.getDate()
@@ -311,9 +307,9 @@ async function processDataFromXlsx(dataSheetList: any) {
 
       if (isSectionDescription) {
 
-        const fastestStructuralNotePerSecond = takeFirstOfPotentialRange(rowData.fastestStructuralNote)
-        const fastestStaccatoNotePerSecond = takeFirstOfPotentialRange(rowData.fastestStaccatoNote)
-        const fastestOrnamentalNotePerSecond = takeFirstOfPotentialRange(rowData.fastestOrnamentalNote)
+        const fastestStructuralNotesPerSecond = takeFirstOfPotentialRange(rowData.fastestStructuralNote)
+        const fastestStaccatoNotesPerSecond = takeFirstOfPotentialRange(rowData.fastestStaccatoNote)
+        const fastestOrnamentalNotesPerSecond = takeFirstOfPotentialRange(rowData.fastestOrnamentalNote)
 
         const beatUnitXls = parseValueRemoveParenthesis(rowData.metronomeMarking.split('=')[0].trim())
         const beatUnitXlsCleanKey = Object.keys(beatUnitXlsToNorm).find((bu) => beatUnitXls.startsWith(bu))
@@ -324,35 +320,37 @@ async function processDataFromXlsx(dataSheetList: any) {
         const bpmRawString = rowData.metronomeMarking.split('=')[1].trim()
         const bpmString = bpmRawString.split('-')[0].trim()
         const bpm = Number(parseValueRemoveParenthesis(bpmString))
-        const noteValues = getNoteValuesFromNotesPerSecond({
+        const rawMetre = parseValueRemoveParenthesis(rowData.metre)
+        const metreNumerator = rawMetre === 'C' ? 4 : rawMetre === 'C-' ? 2 : Number(rawMetre.split('/')[0])
+        const metreDenominator = rawMetre === 'C' ? 4 : rawMetre === 'C-' ? 2 : Number(rawMetre.split('/')[1])
+        const sectionComment = rowData.additionalNotes
+
+        const notesPerBarObject = getNotesPerBarCollectionFromNotesPerSecondCollection({
           metronomeMark: {
             beatUnit,
             bpm,
-            notesPerSecond: { fastestStructuralNotePerSecond, fastestStaccatoNotePerSecond, fastestOrnamentalNotePerSecond}
+            metreNumerator,
+            metreDenominator,
+            notesPerSecond: { fastestStructuralNotesPerSecond, fastestStaccatoNotesPerSecond, fastestOrnamentalNotesPerSecond}
           },
-          // section: {metreDenominator: rowData.metre === 'C' ? 4 : Number(rowData.metre.split('/')[1])}
         })
 
-        // logTestError(bpm, `isSectionDescription`, JSON.stringify({ fastestStructuralNotePerSecond, fastestStaccatoNotePerSecond, fastestOrnamentalNotePerSecond}), `noteValues: ${JSON.stringify(noteValues)}`)
-
         // NEW section
-        const rawMetre = parseValueRemoveParenthesis(rowData.metre)
-        const sectionComment = rowData.additionalNotes
         const section = {
           rank: (movement?.sections || []).length + 1,
           tempoIndication: rowData.tempoIndication,
           isCommonTime: rawMetre === 'C',
           isCutTime: rawMetre === 'C-',
-          metreNumerator: rawMetre === 'C' ? 4 : rawMetre === 'C-' ? 2 : Number(rawMetre.split('/')[0]),
-          metreDenominator: rawMetre === 'C' ? 4 : rawMetre === 'C-' ? 2 : Number(rawMetre.split('/')[1]),
-          ...noteValues,
+          metreNumerator,
+          metreDenominator,
+          ...notesPerBarObject,
           ...(sectionComment && {comment: sectionComment}),
         }
 
 
         // NEW metronomeMark
         // @ts-ignore
-        if (Object.keys(noteValues).some((note) => noteValues[note] === null)) {
+        if (Object.keys(notesPerBarObject).some((note) => notesPerBarObject[note] === null)) {
           noteNotFoundList.push({
             pieceName: piece.title,
             movement: {
@@ -366,11 +364,11 @@ async function processDataFromXlsx(dataSheetList: any) {
             metronomeMark: {
               beatUnit,
               bpm,
-              notes: noteValues,
+              notesPerBar: notesPerBarObject,
               notesPerSecond: {
-                fastestStructuralNotePerSecond,
-                fastestStaccatoNotePerSecond,
-                fastestOrnamentalNotePerSecond
+                fastestStructuralNotesPerSecond,
+                fastestStaccatoNotesPerSecond,
+                fastestOrnamentalNotesPerSecond
               },
             }
           })
@@ -380,11 +378,11 @@ async function processDataFromXlsx(dataSheetList: any) {
           sectionRank: section?.rank,
           beatUnit,
           bpm,
-          noteValues,
+          notesPerBar: notesPerBarObject,
           notesPerSecond: {
-            fastestStructuralNotePerSecond,
-            fastestStaccatoNotePerSecond,
-            fastestOrnamentalNotePerSecond
+            fastestStructuralNotesPerSecond,
+            fastestStaccatoNotesPerSecond,
+            fastestOrnamentalNotesPerSecond
           },
         }
         if (piece.metronomeMarkList) {
@@ -497,13 +495,6 @@ main().then(() => {
   console.error(e)
 })
 
-function takeFirstOfPotentialRange(value: any) {
-  if (typeof value === 'string' && value.includes('-')) {
-    value.split('-')[0].trim()
-  }
-  return value
-}
-
 function getKeyEnumFromKeyString(keyString: string) {
   if (!keyString) return null
   const keyStringArray = keyString.split(' ')
@@ -599,9 +590,12 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
                           isCutTime: section.isCutTime,
                           metreNumerator: section.metreNumerator,
                           metreDenominator: section.metreDenominator,
-                          ...(section.fastestStructuralNoteValue && { fastestStructuralNotePerBar: getNotePerBar({ noteValue: section.fastestStructuralNoteValue, metreNumerator: section.metreNumerator, metreDenominator: section.metreDenominator }) }),
-                          ...(section.fastestStaccatoNoteValue && { fastestStaccatoNotePerBar: getNotePerBar({ noteValue: section.fastestStaccatoNoteValue, metreNumerator: section.metreNumerator, metreDenominator: section.metreDenominator }) }),
-                          ...(section.fastestOrnamentalNoteValue && { fastestOrnamentalNotePerBar: getNotePerBar({ noteValue: section.fastestOrnamentalNoteValue, metreNumerator: section.metreNumerator, metreDenominator: section.metreDenominator }) }),
+                          // ...(section.fastestStructuralNoteValue && { fastestStructuralNotesPerBar: getNotesPerBar({ noteValue: section.fastestStructuralNoteValue, metreNumerator: section.metreNumerator, metreDenominator: section.metreDenominator }) }),
+                          // ...(section.fastestStaccatoNoteValue && { fastestStaccatoNotesPerBar: getNotesPerBar({ noteValue: section.fastestStaccatoNoteValue, metreNumerator: section.metreNumerator, metreDenominator: section.metreDenominator }) }),
+                          // ...(section.fastestOrnamentalNoteValue && { fastestOrnamentalNotesPerBar: getNotesPerBar({ noteValue: section.fastestOrnamentalNoteValue, metreNumerator: section.metreNumerator, metreDenominator: section.metreDenominator }) }),
+                          ...(section.fastestStructuralNotesPerBar && { fastestStructuralNotesPerBar: section.fastestStructuralNotesPerBar }),
+                          ...(section.fastestStaccatoNotesPerBar && { fastestStaccatoNotesPerBar: section.fastestStaccatoNotesPerBar }),
+                          ...(section.fastestOrnamentalNotesPerBar && { fastestOrnamentalNotesPerBar: section.fastestOrnamentalNotesPerBar }),
                           ...(section.tempoIndication && {
                             tempoIndication: {
                               connectOrCreate: {
@@ -717,7 +711,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
                 beatUnit: metronomeMark.beatUnit,
                 bpm: metronomeMark.bpm,
                 notesPerSecond: metronomeMark.notesPerSecond,
-                noteValues: metronomeMark.noteValues,
+                notesPerBar: metronomeMark.notesPerBar,
                 section: {
                   connect: {
                     id: sectionId,

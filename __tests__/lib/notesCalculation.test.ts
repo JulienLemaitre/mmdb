@@ -29,24 +29,24 @@ describe('getNotesPerSecondsFromNotes', () => {
   test('QUARTER = 60 / QUARTER => 1 nps', () => {
     const res = getNotesPerSecondsFromNoteValues({ metronomeMark: { beatUnit: 'QUARTER', bpm: 60 }, section: { fastestStructuralNote: 'QUARTER' } })
 
-    expect(res.fastestStructuralNotePerSecond).toEqual(1)
+    expect(res.fastestStructuralNotesPerSecond).toEqual(1)
   })
   test('QUARTER = 60 / EIGHTH => 2 nps', () => {
     const res = getNotesPerSecondsFromNoteValues({ metronomeMark: { beatUnit: 'QUARTER', bpm: 60 }, section: { fastestStructuralNote: 'EIGHTH' } })
 
-    expect(res.fastestStructuralNotePerSecond).toEqual(2)
+    expect(res.fastestStructuralNotesPerSecond).toEqual(2)
   })
   test('QUARTER = 60 / TRIPLET_EIGHTH => 3 nps', () => {
     const res = getNotesPerSecondsFromNoteValues({ metronomeMark: { beatUnit: 'QUARTER', bpm: 60 }, section: { fastestStructuralNote: 'TRIPLET_EIGHTH' } })
 
-    expect(res.fastestStructuralNotePerSecond).toEqual(3)
+    expect(res.fastestStructuralNotesPerSecond).toEqual(3)
   })
   // 4 Rondos brillants, Op.2, 3 - D Minor, 1 - Andante
   test('QUARTER = 108 / SIXTYFOURTH => 28.8 nps', () => {
     console.log(`[NEW] TEST: QUARTER = 108 / SIXTYFOURTH => 28.8 nps`)
     const res = getNotesPerSecondsFromNoteValues({ metronomeMark: { beatUnit: 'QUARTER', bpm: 108 }, section: { fastestStructuralNote: 'SIXTYFOURTH' } })
 
-    expect(res.fastestStructuralNotePerSecond).toBe(28.8)
+    expect(res.fastestStructuralNotesPerSecond).toBe(28.8)
   })
 
 })

@@ -50,17 +50,20 @@ export default async function Page() {
 
   return (
     <main className="p-8">
-      {persons.map((person) => (
+      {
+        // Persons
+        persons.map((person) => (
         <div key={person.id} className="my-16">
           <h1 className="text-3xl font-bold">{`${person.firstName} ${person.lastName}`}</h1>
-          {person.compositions.map((piece) => {
-            // console.log(`[Home] piece :`, piece)
+          {
+            // Pieces
+            person.compositions.map((piece) => {
+            // Piece versions
             const pieceVersion = piece.pieceVersions[0]
             const pieceSource = pieceVersion.sources[0]
             return (
               <div key={pieceVersion.id} className="my-8 border-solid border-l-4 border-l-emerald-500 pl-2">
                 <h2 className="text-2xl font-bold">{piece.title}</h2>
-                {/*<pre>{JSON.stringify(piece, null, 2)}</pre>*/}
                 <div className="flex mb-4">
                   {["yearOfComposition", "category"].map((key, index, array) => (
                     <Fragment key={key}>
@@ -76,12 +79,16 @@ export default async function Page() {
                 </div>
                 <div className="flex mb-4">
                   <div className="w-1/2">
-                    {pieceVersion.movements.sort((a, b) => a.rank - b.rank).map((movement, movementIndex) => (
+                    {
+                      // Movements
+                      pieceVersion.movements.sort((a, b) => a.rank - b.rank).map((movement, movementIndex) => (
                       <div key={movement.id} className="flex">
                         <h3
                           className="text-xl my-1 flex-none pr-4">{movement.rank} - {movement.key.replaceAll("_FLAT", "b").replaceAll("_SHARP", "#").split("_").map((w) => w.charAt(0) + w.substring(1).toLowerCase()).join(" ")}</h3>
                         <div className="">
-                          {movement.sections.sort((a, b) => a.rank - b.rank).map((section, sectionIndex, sectionList) => {
+                          {
+                            // sections
+                            movement.sections.sort((a, b) => a.rank - b.rank).map((section, sectionIndex, sectionList) => {
                             const { isCommonTime, isCutTime } = section
                             const isCommonOrCutTime = isCommonTime || isCutTime
                             return (
@@ -93,28 +100,29 @@ export default async function Page() {
                                     : <b>{isCommonOrCutTime ? (<><span className="common-time align-middle">{isCommonTime ? `\u{1D134}` : `\u{1D135}`}</span>{` (${section.metreNumerator}/${section.metreDenominator})`}</>) : `${section.metreNumerator}/${section.metreDenominator}`}</b>
                                   </div>
                                   {
-                                    section.fastestStructuralNotePerBar && (
-                                      <div className="">fastest structural note per bar: <b>{section.fastestStructuralNotePerBar}</b></div>
+                                    section.fastestStructuralNotesPerBar && (
+                                      <div className="">fastest structural note per bar: <b>{section.fastestStructuralNotesPerBar}</b></div>
                                     )
                                   }
                                   {
-                                    section.fastestRepeatedNotePerBar && (
-                                      <div className="">fastest repeated note per bar: <b>{section.fastestRepeatedNotePerBar}</b></div>
+                                    section.fastestRepeatedNotesPerBar && (
+                                      <div className="">fastest repeated note per bar: <b>{section.fastestRepeatedNotesPerBar}</b></div>
                                     )
                                   }
                                   {
-                                    section.fastestStaccatoNotePerBar && (
-                                      <div className="">fastest staccato note per bar: <b>{section.fastestStaccatoNotePerBar}</b></div>
+                                    section.fastestStaccatoNotesPerBar && (
+                                      <div className="">fastest staccato note per bar: <b>{section.fastestStaccatoNotesPerBar}</b></div>
                                     )
                                   }
                                   {
-                                    section.fastestOrnamentalNotePerBar && (
-                                      <div className="">fastest ornamental note per bar: <b>{section.fastestOrnamentalNotePerBar}</b></div>
+                                    section.fastestOrnamentalNotesPerBar && (
+                                      <div className="">fastest ornamental note per bar: <b>{section.fastestOrnamentalNotesPerBar}</b></div>
                                     )
                                   }
                                 </div>
 
                                 {
+                                  // Metronome marks
                                   section.metronomeMarks.map((mm) => {
                                     let notesPerSecondComputedFromNotesPerBar: any = null
                                     let notesPerSecondComputed: any = null
@@ -139,9 +147,9 @@ export default async function Page() {
                                           const computedNotesPerSecond = notesPerSecondComputed?.[keyBase + 'PerSecond'] ? Math.round(notesPerSecondComputed[keyBase + 'PerSecond'] * 100) / 100 : null
                                           const isNotesPerSecondDiff = computedNotesPerSecond && Math.abs(mm.notesPerSecond?.[keyBase + 'PerSecond'] - computedNotesPerSecond) > 0.01
 
-                                          const computedNotesPerSecondFromNotePerBar = notesPerSecondComputedFromNotesPerBar?.[keyBase + 'PerSecond'] ? Math.round(notesPerSecondComputedFromNotesPerBar[keyBase + 'PerSecond'] * 100) / 100 : null
-                                          const isNotesPerSecondFromNotePerBarDiff = computedNotesPerSecond && computedNotesPerSecondFromNotePerBar && Math.abs(computedNotesPerSecondFromNotePerBar - computedNotesPerSecond) > 0.01
-                                          const hasDataInconsistency = (computedNotesPerSecond && !computedNotesPerSecondFromNotePerBar) || (!computedNotesPerSecond && computedNotesPerSecondFromNotePerBar)
+                                          const computedNotesPerSecondFromNotesPerBar = notesPerSecondComputedFromNotesPerBar?.[keyBase + 'PerSecond'] ? Math.round(notesPerSecondComputedFromNotesPerBar[keyBase + 'PerSecond'] * 100) / 100 : null
+                                          const isNotesPerSecondFromNotesPerBarDiff = computedNotesPerSecond && computedNotesPerSecondFromNotesPerBar && Math.abs(computedNotesPerSecondFromNotesPerBar - computedNotesPerSecond) > 0.01
+                                          const hasDataInconsistency = (computedNotesPerSecond && !computedNotesPerSecondFromNotesPerBar) || (!computedNotesPerSecond && computedNotesPerSecondFromNotesPerBar)
 
                                           // if (mm.bpm === 108 || isNotesPerSecondDiff) {
                                           //   console.group(`-- ${isNotesPerSecondDiff ? 'isNotesPerSecondDiff' : 'BPM = 108 DEBUG'} --`)
@@ -154,23 +162,23 @@ export default async function Page() {
                                           return (
                                             <Fragment key={mm.id}>
                                               {
-                                                computedNotesPerSecondFromNotePerBar && (
+                                                computedNotesPerSecondFromNotesPerBar && (
                                                   <div className="mr-4">
                                                     {keyBase}:
                                                     <span
-                                                      // className={`${isNotesPerSecondFromNotePerBarDiff ? "bg-red-500 text-white px-2" : ""} ml-1`}>
-                                                      className={`${computedNotesPerSecondFromNotePerBar >= 15 ? "bg-red-500" : computedNotesPerSecondFromNotePerBar >= 11 ? "bg-orange-400" : computedNotesPerSecondFromNotePerBar >= 8 ? "bg-amber-200" : "bg-white"} px-2`}>
-                                                      {computedNotesPerSecondFromNotePerBar} /s</span>
+                                                      // className={`${isNotesPerSecondFromNotesPerBarDiff ? "bg-red-500 text-white px-2" : ""} ml-1`}>
+                                                      className={`${computedNotesPerSecondFromNotesPerBar >= 15 ? "bg-red-500" : computedNotesPerSecondFromNotesPerBar >= 11 ? "bg-orange-400" : computedNotesPerSecondFromNotesPerBar >= 8 ? "bg-amber-200" : "bg-white"} px-2`}>
+                                                      {computedNotesPerSecondFromNotesPerBar} /s</span>
                                                   </div>
                                                 )
                                               }
                                               {hasDataInconsistency && (
                                                 <div className="mr-4 bg-red-500 py-4">
-                                                  {`${keyBase}: INCONSISTENCY computedNotesPerSecond: ${JSON.stringify(computedNotesPerSecond)} | computedNotesPerSecondFromNotePerBar: ${JSON.stringify(computedNotesPerSecondFromNotePerBar)}`}
+                                                  {`${keyBase}: INCONSISTENCY computedNotesPerSecond: ${JSON.stringify(computedNotesPerSecond)} | computedNotesPerSecondFromNotesPerBar: ${JSON.stringify(computedNotesPerSecondFromNotesPerBar)}`}
                                                 </div>
                                               )}
                                               {
-                                                    hasDataInconsistency || isNotesPerSecondFromNotePerBarDiff ? (
+                                                    hasDataInconsistency || isNotesPerSecondFromNotesPerBarDiff ? (
                                                   <div className="mr-4 text-gray-400">
                                                     OLD:
                                                     <span

@@ -67,10 +67,10 @@ model Section {
   metreDenominator                Int
   isCommonTime                    Boolean          @default(false)
   isCutTime                       Boolean          @default(false)
-  fastestStructuralNotePerBar     Int?
-  fastestStaccatoNotePerBar       Int?
-  fastestRepeatedNotePerBar       Int?
-  fastestOrnamentalNotePerBar     Int?
+  fastestStructuralNotesPerBar    Int?
+  fastestStaccatoNotesPerBar      Int?
+  fastestRepeatedNotesPerBar      Int?
+  fastestOrnamentalNotesPerBar    Int?
   isFastestStructuralNoteBelCanto Boolean          @default(false)
   tempoIndication                 TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
   tempoIndicationId               String?
@@ -98,7 +98,7 @@ model MetronomeMark {
   beatUnit       NOTE_VALUE
   bpm            Int
   notesPerSecond Json? // Will not be used after data seeding
-  noteValues     Json? // Will not be used after data seeding
+  notesPerBar    Json? // Will not be used after data seeding
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   section        Section    @relation(fields: [sectionId], references: [id])

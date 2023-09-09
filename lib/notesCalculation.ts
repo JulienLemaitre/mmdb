@@ -1,4 +1,5 @@
 import {NOTE_VALUE, MetronomeMark, Section} from "@prisma/client";
+import getNotesPerSecondFromNotesPerBar from "@/lib/getNotesPerSecondFromNotesPerBar";
 
 export const noteDurationValue = {
   WHOLE: 1,
@@ -31,15 +32,22 @@ export const noteDurationValue = {
 }
 export const noteDurationValueKeys = Object.keys(noteDurationValue) as NOTE_VALUE[];
 
-type NoteValues = {
+export type NoteValues = {
   fastestStructuralNoteValue?: NOTE_VALUE;
   fastestStaccatoNoteValue?: NOTE_VALUE;
   fastestOrnamentalNoteValue?: NOTE_VALUE;
 }
-type NotesPerSecond = {
-  fastestStructuralNotePerSecond?: number;
-  fastestStaccatoNotePerSecond?: number;
-  fastestOrnamentalNotePerSecond?: number;
+export type NotesPerBarCollection = {
+  fastestStructuralNotesPerBar?: number;
+  fastestStaccatoNotesPerBar?: number;
+  fastestOrnamentalNotesPerBar?: number;
+  fastestRepeatedNotesPerBar?: number;
+}
+export type NotesPerSecondCollection = {
+  fastestStructuralNotesPerSecond?: number;
+  fastestStaccatoNotesPerSecond?: number;
+  fastestOrnamentalNotesPerSecond?: number;
+  fastestRepeatedNotesPerSecond?: number;
 }
 
 function logTestError(bpm, ...props) {
@@ -54,7 +62,7 @@ function logTestError(bpm, ...props) {
  * @param section
  */
 export function getNotesPerSecondsFromNoteValues({ metronomeMark }:
-                                                             { metronomeMark: Pick<MetronomeMark, "beatUnit" | "bpm" | "noteValues"> }): NotesPerSecond {
+                                                             { metronomeMark: Pick<MetronomeMark, "beatUnit" | "bpm" | "noteValues"> }): NotesPerSecondCollection {
   const { beatUnit, bpm, noteValues: mmNotevalues } = metronomeMark;
   const { fastestStructuralNoteValue, fastestStaccatoNoteValue, fastestOrnamentalNoteValue } = mmNotevalues as any;
 
@@ -65,14 +73,14 @@ export function getNotesPerSecondsFromNoteValues({ metronomeMark }:
   const noteValues = { fastestStructuralNoteValue, fastestStaccatoNoteValue, fastestOrnamentalNoteValue }
   // logTestError(bpm, '[gNPSFNV] ', noteValues)
   // @ts-ignore
-  const notesPerSecond: NotesPerSecond = Object.keys(noteValues).reduce((npsObject: NotesPerSecond, noteValueType: keyof typeof noteValues) => {
+  const notesPerSecond: NotesPerSecondCollection = Object.keys(noteValues).reduce((npsObject: NotesPerSecondCollection, noteValueType: keyof typeof noteValues) => {
     if (noteValues[noteValueType]) {
       npsObject[noteValueType.replace('Value', 'PerSecond')] = getNotesPerSecond({ noteValueType: noteValues[noteValueType], beatUnit, bpm })
     } else {
       // logTestError(bpm, `[gNPSFNV] No ${noteValueType} found in notes ${JSON.stringify(noteValues)}`)
     }
     return npsObject;
-  }, {} as NotesPerSecond)
+  }, {} as NotesPerSecondCollection)
 
   return notesPerSecond
 }
@@ -80,58 +88,24 @@ export function getNotesPerSecondsFromNoteValues({ metronomeMark }:
 /**
  * Calculates the number of notes per second that must be executed, from each of the given section's fastest notes per second values.
  */
-export function getNotesPerSecondsFromNotesPerBarAndMM({ section, metronomeMark }: { section: Pick<Section, "fastestStructuralNotePerBar" | "fastestRepeatedNotePerBar" | "fastestOrnamentalNotePerBar" | "fastestStaccatoNotePerBar" | "metreNumerator" | "metreDenominator">, metronomeMark: Pick<MetronomeMark, "beatUnit" | "bpm"> }): NotesPerSecond {
-  const { fastestStructuralNotePerBar, fastestRepeatedNotePerBar, fastestStaccatoNotePerBar, fastestOrnamentalNotePerBar } = section
+export function getNotesPerSecondsFromNotesPerBarAndMM({ section, metronomeMark }: { section: Pick<Section, "fastestStructuralNotesPerBar" | "fastestRepeatedNotesPerBar" | "fastestOrnamentalNotesPerBar" | "fastestStaccatoNotesPerBar" | "metreNumerator" | "metreDenominator">, metronomeMark: Pick<MetronomeMark, "beatUnit" | "bpm"> }): NotesPerSecondCollection {
+  const { fastestStructuralNotesPerBar, fastestRepeatedNotesPerBar, fastestStaccatoNotesPerBar, fastestOrnamentalNotesPerBar } = section
   const { beatUnit, bpm } = metronomeMark
 
-  if (!fastestStructuralNotePerBar && !fastestRepeatedNotePerBar && !fastestStaccatoNotePerBar && !fastestOrnamentalNotePerBar) {
+  if (!fastestStructuralNotesPerBar && !fastestRepeatedNotesPerBar && !fastestStaccatoNotesPerBar && !fastestOrnamentalNotesPerBar) {
     throw new Error(`[gNPSFNPBAMM] No fastest note per bar property found in given section ${JSON.stringify(section)}}`);
   }
-  const notePerBarValues = { fastestStructuralNotePerBar, fastestRepeatedNotePerBar, fastestStaccatoNotePerBar, fastestOrnamentalNotePerBar }
-  const notesPerSecond: NotesPerSecond = Object.keys(notePerBarValues).reduce((npsObject: NotesPerSecond, notePerBarType: string) => {
-    if (notePerBarValues[notePerBarType]) {
-      npsObject[notePerBarType.replace('PerBar', 'PerSecond')] = getNotesPerSecondFromNotePerBar({ notesPerBar: notePerBarValues[notePerBarType], meterNumerator: section.metreNumerator, meterDenominator: section.metreDenominator, beatUnit, bpm })
+  const notesPerBarValues = { fastestStructuralNotesPerBar, fastestRepeatedNotesPerBar, fastestStaccatoNotesPerBar, fastestOrnamentalNotesPerBar }
+  const notesPerSecond: NotesPerSecondCollection = Object.keys(notesPerBarValues).reduce((npsObject: NotesPerSecondCollection, notesPerBarType: string) => {
+    if (notesPerBarValues[notesPerBarType]) {
+      npsObject[notesPerBarType.replace('PerBar', 'PerSecond')] = getNotesPerSecondFromNotesPerBar({ notesPerBar: notesPerBarValues[notesPerBarType], metreNumerator: section.metreNumerator, metreDenominator: section.metreDenominator, beatUnit, bpm })
     } else {
-      // logTestError(bpm, `[gNPSFNPBAMM] No ${notePerBarType} found in notes ${JSON.stringify(notePerBarValues)}`)
+      // logTestError(bpm, `[gNPSFNPBAMM] No ${notesPerBarType} found in notes ${JSON.stringify(notesPerBarValues)}`)
     }
     return npsObject;
-  }, {} as NotesPerSecond)
+  }, {} as NotesPerSecondCollection)
 
   return notesPerSecond
-}
-
-/**
- * Calculates the number of notes per second that must be executed, from the given number of notes per bar, beat unit and bpm.
- * @param notesPerBar
- * @param meterNumerator
- * @param meterDenominator
- * @param beatUnit
- * @param bpm
- */
-export function getNotesPerSecondFromNotePerBar({ notesPerBar, meterNumerator, meterDenominator, bpm, beatUnit }: { notesPerBar: number, meterNumerator: number, meterDenominator: number, bpm: number, beatUnit: NOTE_VALUE }): number {
-  if (!notesPerBar || !meterNumerator || !meterDenominator || !bpm || !beatUnit) {
-    throw new Error("[gNPSFNPB] Invalid or missing parameter");
-  }
-  // const isTest = notesPerBar === 4 && meterNumerator === 4 && meterDenominator === 4 && bpm === 120 && beatUnit === NOTE_VALUE.QUARTER; // 1/24
-  const isTest = false
-  // Calculate the duration of one beat in seconds
-  const beatDuration = 60 / bpm;
-  if (isTest) console.log(`[TEST gNPSFNPB] beatDuration :`, beatDuration)
-
-  // Get the rhythmic value of a single beat and the given structural note
-  const beatUnitValue = noteDurationValue[beatUnit]; // ex: 1/4
-  if (isTest) console.log(`[TEST gNPSFNPB] beatUnitValue :`, beatUnitValue)
-
-  // Calculate the duration of one bar in seconds
-  const secondsPerBar = beatDuration * (meterNumerator / meterDenominator) / beatUnitValue;
-  if (isTest) console.log(`[TEST gNPSFNPB] secondsPerBar :`, secondsPerBar)
-
-  // Calculate the notes per second
-  const notesPerSecond = notesPerBar / secondsPerBar;
-  if (isTest) console.log(`[TEST gNPSFNPB] notesPerSecond :`, notesPerSecond)
-
-  console.log(`[gNPSFNPB RESULT] notesPerSecond: ${notesPerSecond} |`, JSON.stringify({ notesPerBar, meterNumerator, meterDenominator, bpm, beatUnit }))
-  return notesPerSecond;
 }
 
 function getNotesPerSecond({ noteValueType, beatUnit, bpm }: { noteValueType?: NOTE_VALUE | null, beatUnit: NOTE_VALUE, bpm: number }): number {
@@ -163,80 +137,16 @@ function getNotesPerSecond({ noteValueType, beatUnit, bpm }: { noteValueType?: N
   return notesPerSecond;
 }
 
-export function getNoteValuesFromNotesPerSecond({ metronomeMark, getNoteMock }:
-                                                      { metronomeMark: Pick<MetronomeMark, "beatUnit" | "bpm" | "notesPerSecond">, getNoteMock?: () => any }): NoteValues {
-  const { beatUnit, bpm, notesPerSecond } = metronomeMark;
 
-  if (!notesPerSecond) {
-    throw new Error("[gNV] No notesPerSecond property found in given section");
-  }
 
-  // @ts-ignore
-  const { fastestStructuralNotePerSecond, fastestStaccatoNotePerSecond, fastestOrnamentalNotePerSecond } = notesPerSecond as NotesPerSecond;
-
-  if (!fastestStructuralNotePerSecond && !fastestStaccatoNotePerSecond && !fastestOrnamentalNotePerSecond) {
-    throw new Error(`[gNV] No fastest notes per second property found in given metronomeMark notesPerSecond ${JSON.stringify(metronomeMark)}`);
-  }
-
-  const notes: NoteValues = {}
-  // @ts-ignore
-  Object.keys(notesPerSecond).filter((note: keyof typeof notesPerSecond) => notesPerSecond[note]).forEach((note: keyof typeof notesPerSecond) => {
-      const notesPerSecondRawValue = notesPerSecond[note]
-      // Get the value of notesPerSecondRawValue. If it contains "(", keep only what come before it. Convert it to number
-      // ex: 1/16 (staccato) => 1/16
-      // @ts-ignore
-      const notesPerSecondValue = Number(notesPerSecondRawValue.toString().split(" ")[0])
-    // console.log(`[${JSON.stringify({ beatUnit, bpm, notesPerSecond })}] notesPerSecondValue :`, notesPerSecondValue)
-
-      try {
-        // For testPurpose, we can mock the getNoteValues function
-        const getNoteFunc = getNoteMock || getNoteValues
-      // @ts-ignore
-      notes[note.replace('PerSecond', 'Value')] = getNoteFunc({ notesPerSecond: notesPerSecondValue, beatUnit, bpm })
-      } catch (e) {
-        // @ts-ignore
-        notes[note.replace('PerSecond', 'Value')] = null
-      }
-    }
-  )
-
-  return notes
-
- }
-
- function getNoteValues({ notesPerSecond, beatUnit, bpm }: { notesPerSecond: number, beatUnit: NOTE_VALUE, bpm: number }): NOTE_VALUE {
-   if (!notesPerSecond) {
-     throw new Error("[getNoteValues] No notesPerSecond given");
-   }
-   const beatUnitValue = noteDurationValue[beatUnit]; // ex: 1/4
-   const beatDuration = 60 / bpm; // ex: 0.5
-   const noteDuration = 1 / notesPerSecond; // ex: 0.125
-   const numberOfNotesPerBeat = beatDuration / noteDuration; // ex: 0.5 / 0.125 = 4
-   const noteValue = beatUnitValue / numberOfNotesPerBeat; // ex: 1/4 / 4 = 1/16
-  // console.log("getNoteValues :", { beatUnitValue, beatDuration, noteDuration, numberOfNotesInSingleBeat, noteValue })
-   // @ts-ignore
-   const noteAttempt1 = noteDurationValueKeys.find((note) => noteDurationValue[note] === noteValue || Math.abs(noteDurationValue[note] - noteValue) < 0.0002);
-   const noteAttempt2 = noteDurationValueKeys.find((note) => Math.abs(noteDurationValue[note] - noteValue) < 0.0005);
-   const noteAttempt3 = noteDurationValueKeys.find((note) => Math.abs(noteDurationValue[note] - noteValue) < 0.0008);
-   const noteAttempt4 = noteDurationValueKeys.find((note) => Math.abs(noteDurationValue[note] - noteValue) < 0.001);
-   const note = noteAttempt1 || noteAttempt2 || noteAttempt3 || noteAttempt4;
-   if (note) {
-     const noteIndex = [noteAttempt1, noteAttempt2, noteAttempt3, noteAttempt4].findIndex((n) => n === note) + 1
-      // console.log(`[getNoteValues] noteValue ${noteValue} is same or close (${noteIndex} aprox.) to ${note}:`, noteDurationValue[note]);
-     return note;
-   }
-     // console.log(`[getNoteValues] No note determined for notesPerSecond ${notesPerSecond} -> noteValue ${noteValue}`)
-      throw new Error(`No note determined for noteValue ${noteValue}`);
- }
-
- export function getNotePerBar({ noteValue, metreNumerator, metreDenominator }: { noteValue: NOTE_VALUE, metreNumerator: number, metreDenominator: number }): number {
-  console.log(`[getNotePerBar] INPUT:`, { noteValue, metreNumerator, metreDenominator })
+ export function getNotesPerBar({ noteValue, metreNumerator, metreDenominator }: { noteValue: NOTE_VALUE, metreNumerator: number, metreDenominator: number }): number {
+  console.log(`[getNotesPerBar] INPUT:`, { noteValue, metreNumerator, metreDenominator })
   if (!noteValue) {
-  throw new Error("[getNotePerBar] No noteValue given");
+  throw new Error("[getNotesPerBar] No noteValue given");
   }
    const noteValueAsNumber = noteDurationValue[noteValue]; // ex: 1/16
    const barDuration = metreNumerator / metreDenominator; // ex: 3/4 = 0.75
    const numberOfNotesPerBar = barDuration / noteValueAsNumber; // ex: 0.75 / 1/16 = 12
-   console.log(`[getNotePerBar] numberOfNotesPerBar :`, numberOfNotesPerBar)
+   console.log(`[getNotesPerBar] numberOfNotesPerBar :`, numberOfNotesPerBar)
    return numberOfNotesPerBar;
  }

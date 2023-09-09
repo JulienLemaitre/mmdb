@@ -29,13 +29,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.999999999999998,
+          "fastestOrnamentalNotesValue": 31.999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2,
-          "fastestOrnamentalNotePerSecond": 18.4
+          "fastestStructuralNotesPerSecond": 9.2,
+          "fastestOrnamentalNotesPerSecond": 18.4
         }
       }
     ],
@@ -47,13 +47,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro vivace",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.999999999999998,
+            "fastestOrnamentalNotesValue": 31.999999999999996
           }
         ]
       }
@@ -89,13 +88,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 126,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.4,
-          "fastestOrnamentalNotePerSecond": 16.8
+          "fastestStructuralNotesPerSecond": 8.4,
+          "fastestOrnamentalNotesPerSecond": 16.8
         }
       }
     ],
@@ -107,13 +106,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32
           }
         ]
       }
@@ -149,15 +147,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 3,
+          "fastestOrnamentalNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2,
-          "fastestStaccatoNotePerSecond": 4.6,
-          "fastestOrnamentalNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 9.2,
+          "fastestStaccatoNotesPerSecond": 4.6,
+          "fastestOrnamentalNotesPerSecond": 9.2
         }
       }
     ],
@@ -169,14 +167,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro Assai",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 3,
+            "fastestOrnamentalNotesValue": 6
           }
         ]
       }
@@ -212,15 +209,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 3,
+          "fastestOrnamentalNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.4,
-          "fastestStaccatoNotePerSecond": 4.2,
-          "fastestOrnamentalNotePerSecond": 8.4
+          "fastestStructuralNotesPerSecond": 8.4,
+          "fastestStaccatoNotesPerSecond": 4.2,
+          "fastestOrnamentalNotesPerSecond": 8.4
         }
       }
     ],
@@ -232,14 +229,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 3,
+            "fastestOrnamentalNotesValue": 6
           }
         ]
       }
@@ -275,15 +271,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 144,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 8,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.6,
-          "fastestStaccatoNotePerSecond": 4.8,
-          "fastestOrnamentalNotePerSecond": 19.2
+          "fastestStructuralNotesPerSecond": 9.6,
+          "fastestStaccatoNotesPerSecond": 4.8,
+          "fastestOrnamentalNotesPerSecond": 19.2
         }
       }
     ],
@@ -295,14 +291,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro vivace",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 8,
+            "fastestOrnamentalNotesValue": 32
           }
         ]
       }
@@ -338,13 +333,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 160,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.99625,
+          "fastestOrnamentalNotesValue": 11.9925
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.33,
-          "fastestOrnamentalNotePerSecond": 10.66
+          "fastestStructuralNotesPerSecond": 5.33,
+          "fastestOrnamentalNotesPerSecond": 10.66
         }
       }
     ],
@@ -356,13 +351,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto vivace",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 5.99625,
+            "fastestOrnamentalNotesValue": 11.9925
           }
         ]
       }
@@ -398,13 +392,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.999999999999998,
+          "fastestOrnamentalNotesValue": 7.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2,
-          "fastestOrnamentalNotePerSecond": 4.6
+          "fastestStructuralNotesPerSecond": 9.2,
+          "fastestOrnamentalNotesPerSecond": 4.6
         }
       }
     ],
@@ -416,13 +410,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro vivace",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 15.999999999999998,
+            "fastestOrnamentalNotesValue": 7.999999999999999
           }
         ]
       }
@@ -458,13 +451,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 152,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.996052631578948,
+          "fastestStaccatoNotesValue": 5.992105263157894
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.13,
-          "fastestStaccatoNotePerSecond": 5.06
+          "fastestStructuralNotesPerSecond": 10.13,
+          "fastestStaccatoNotesPerSecond": 5.06
         }
       }
     ],
@@ -476,13 +469,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro Molto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 11.996052631578948,
+            "fastestStaccatoNotesValue": 5.992105263157894
           }
         ]
       }
@@ -518,13 +510,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 126,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998,
+          "fastestStaccatoNotesValue": 5.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.4,
-          "fastestStaccatoNotePerSecond": 4.2
+          "fastestStructuralNotesPerSecond": 8.4,
+          "fastestStaccatoNotesPerSecond": 4.2
         }
       }
     ],
@@ -536,13 +528,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro con spirito",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 11.999999999999998,
+            "fastestStaccatoNotesValue": 5.999999999999999
           }
         ]
       }
@@ -578,11 +569,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 160,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 9
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 8
         }
       }
     ],
@@ -594,12 +585,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "9/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 9,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 9
           }
         ]
       }
@@ -635,13 +625,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8,
-          "fastestStaccatoNotePerSecond": 4
+          "fastestStructuralNotesPerSecond": 8,
+          "fastestStaccatoNotesPerSecond": 4
         }
       }
     ],
@@ -653,13 +643,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 8
           }
         ]
       }
@@ -695,13 +684,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24,
+          "fastestStaccatoNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.6,
-          "fastestStaccatoNotePerSecond": 4.8
+          "fastestStructuralNotesPerSecond": 9.6,
+          "fastestStaccatoNotesPerSecond": 4.8
         }
       }
     ],
@@ -713,13 +702,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro vivace e giocoso",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 24,
+            "fastestStaccatoNotesValue": 12
           }
         ]
       }
@@ -755,11 +743,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 126,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.4
+          "fastestStructuralNotesPerSecond": 8.4
         }
       }
     ],
@@ -771,12 +759,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       }
@@ -812,13 +799,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.2,
-          "fastestOrnamentalNotePerSecond": 14.4
+          "fastestStructuralNotesPerSecond": 7.2,
+          "fastestOrnamentalNotesPerSecond": 14.4
         }
       }
     ],
@@ -830,13 +817,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro moderato",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32
           }
         ]
       }
@@ -872,13 +858,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8,
-          "fastestStaccatoNotePerSecond": 4
+          "fastestStructuralNotesPerSecond": 8,
+          "fastestStaccatoNotesPerSecond": 4
         }
       }
     ],
@@ -890,13 +876,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro non troppo",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 8
           }
         ]
       }
@@ -926,11 +911,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.9
+          "fastestStructuralNotesPerSecond": 6.9
         }
       },
       {
@@ -938,11 +923,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 31.999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 9.2
         }
       },
       {
@@ -950,13 +935,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 58,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 16.01379310344828
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.9,
-          "fastestOrnamentalNotePerSecond": 3.87
+          "fastestStructuralNotesPerSecond": 2.9,
+          "fastestOrnamentalNotesPerSecond": 3.87
         }
       },
       {
@@ -964,11 +949,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.3
+          "fastestStructuralNotesPerSecond": 2.3
         }
       },
       {
@@ -976,13 +961,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 50,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18,
+          "fastestOrnamentalNotesValue": 36
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5,
-          "fastestOrnamentalNotePerSecond": 10
+          "fastestStructuralNotesPerSecond": 5,
+          "fastestOrnamentalNotesPerSecond": 10
         }
       },
       {
@@ -990,13 +975,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 48
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.2,
-          "fastestOrnamentalNotePerSecond": 16.8
+          "fastestStructuralNotesPerSecond": 4.2,
+          "fastestOrnamentalNotesPerSecond": 16.8
         }
       },
       {
@@ -1004,11 +989,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8
+          "fastestStructuralNotesPerSecond": 8.8
         }
       },
       {
@@ -1016,13 +1001,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 36,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 64
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.4,
-          "fastestOrnamentalNotePerSecond": 9.6
+          "fastestStructuralNotesPerSecond": 2.4,
+          "fastestOrnamentalNotesPerSecond": 9.6
         }
       },
       {
@@ -1030,13 +1015,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 132,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.2,
-          "fastestOrnamentalNotePerSecond": 8.8
+          "fastestStructuralNotesPerSecond": 2.2,
+          "fastestOrnamentalNotesPerSecond": 8.8
         }
       },
       {
@@ -1044,11 +1029,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.93
+          "fastestStructuralNotesPerSecond": 6.93
         }
       },
       {
@@ -1056,11 +1041,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.93
+          "fastestStructuralNotesPerSecond": 6.93
         }
       },
       {
@@ -1068,13 +1053,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769,
+          "fastestOrnamentalNotesValue": 32.0076923076923
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.93,
-          "fastestOrnamentalNotePerSecond": 13.87
+          "fastestStructuralNotesPerSecond": 6.93,
+          "fastestOrnamentalNotesPerSecond": 13.87
         }
       },
       {
@@ -1082,11 +1067,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": null
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "Considering the amount of mordents, should they be considered structural?"
+          "fastestStructuralNotesPerSecond": "Considering the amount of mordents, should they be considered structural?"
         }
       },
       {
@@ -1094,13 +1079,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.6,
-          "fastestOrnamentalNotePerSecond": 19.2
+          "fastestStructuralNotesPerSecond": 9.6,
+          "fastestOrnamentalNotesPerSecond": 19.2
         }
       },
       {
@@ -1108,11 +1093,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.4
+          "fastestStructuralNotesPerSecond": 8.4
         }
       },
       {
@@ -1120,11 +1105,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 50,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5
+          "fastestStructuralNotesPerSecond": 5
         }
       },
       {
@@ -1132,13 +1117,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24,
+          "fastestOrnamentalNotesValue": 48
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8,
-          "fastestOrnamentalNotePerSecond": 16
+          "fastestStructuralNotesPerSecond": 8,
+          "fastestOrnamentalNotesPerSecond": 16
         }
       },
       {
@@ -1146,13 +1131,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestOrnamentalNotePerSecond": 17.6
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestOrnamentalNotesPerSecond": 17.6
         }
       }
     ],
@@ -1164,12 +1149,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Moderato",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 12
           }
         ]
       },
@@ -1180,12 +1164,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andantino",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 31.999999999999996
           }
         ]
       },
@@ -1196,13 +1179,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 16.01379310344828
           }
         ]
       },
@@ -1213,12 +1195,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 6
           }
         ]
       },
@@ -1229,13 +1210,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+            "fastestStructuralNotesValue": 18,
+            "fastestOrnamentalNotesValue": 36,
             "comment": "Same as Nuevo método de guitarra, xxiv"
           }
         ]
@@ -1247,13 +1227,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": null,
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 48,
             "comment": "Same as Nuevo método de guitarra, ix"
           }
         ]
@@ -1265,12 +1244,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 16,
             "comment": "Same as Nuevo método de guitarra, x"
           }
         ]
@@ -1282,13 +1260,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 64,
             "comment": "Very likely a misprint, see Fossa's publication"
           }
         ]
@@ -1300,13 +1277,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andantino",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 6,
+            "fastestOrnamentalNotesValue": 24
           }
         ]
       },
@@ -1317,12 +1293,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 15.99230769230769,
             "comment": "Same as Nuevo método de guitarra, xii"
           }
         ]
@@ -1334,12 +1309,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 15.99230769230769,
             "comment": "Same as Nuevo método de guitarra, xiii"
           }
         ]
@@ -1351,13 +1325,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 15.99230769230769,
+            "fastestOrnamentalNotesValue": 32.0076923076923,
             "comment": "Same as Nuevo método de guitarra, xiv"
           }
         ]
@@ -1369,12 +1342,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro cómodo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": null,
+            "fastestStructuralNotesValue": null,
             "comment": "Same as Nuevo método de guitarra, xxi"
           }
         ]
@@ -1386,13 +1358,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro moderato",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32,
             "comment": "Same as Nuevo método de guitarra, xxii"
           }
         ]
@@ -1404,12 +1375,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro cómodo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 16,
             "comment": "Same as Nuevo método de guitarra, xx"
           }
         ]
@@ -1421,23 +1391,21 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 24
           },
           {
             "rank": 2,
             "tempoIndication": "Allegretto",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 24,
+            "fastestOrnamentalNotesValue": 48
           }
         ]
       },
@@ -1448,13 +1416,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32,
             "comment": "Same as Nuevo método de guitarra, xxvii"
           }
         ]
@@ -1491,11 +1458,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.9
+          "fastestStructuralNotesPerSecond": 6.9
         }
       },
       {
@@ -1503,11 +1470,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 31.999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 9.2
         }
       },
       {
@@ -1515,13 +1482,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 58,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 16.01379310344828
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.9,
-          "fastestOrnamentalNotePerSecond": 3.87
+          "fastestStructuralNotesPerSecond": 2.9,
+          "fastestOrnamentalNotesPerSecond": 3.87
         }
       },
       {
@@ -1529,11 +1496,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.3
+          "fastestStructuralNotesPerSecond": 2.3
         }
       },
       {
@@ -1541,13 +1508,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 50,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18,
+          "fastestOrnamentalNotesValue": 36
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5,
-          "fastestOrnamentalNotePerSecond": 10
+          "fastestStructuralNotesPerSecond": 5,
+          "fastestOrnamentalNotesPerSecond": 10
         }
       },
       {
@@ -1555,13 +1522,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 48
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.2,
-          "fastestOrnamentalNotePerSecond": 16.8
+          "fastestStructuralNotesPerSecond": 4.2,
+          "fastestOrnamentalNotesPerSecond": 16.8
         }
       },
       {
@@ -1569,11 +1536,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8
+          "fastestStructuralNotesPerSecond": 8.8
         }
       },
       {
@@ -1581,13 +1548,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 64
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.4,
-          "fastestOrnamentalNotePerSecond": 25.6
+          "fastestStructuralNotesPerSecond": 6.4,
+          "fastestOrnamentalNotesPerSecond": 25.6
         }
       },
       {
@@ -1595,13 +1562,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 132,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999,
+          "fastestOrnamentalNotesValue": 23.999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.6,
-          "fastestOrnamentalNotePerSecond": 26.4
+          "fastestStructuralNotesPerSecond": 6.6,
+          "fastestOrnamentalNotesPerSecond": 26.4
         }
       },
       {
@@ -1609,11 +1576,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.93
+          "fastestStructuralNotesPerSecond": 6.93
         }
       },
       {
@@ -1621,11 +1588,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.93
+          "fastestStructuralNotesPerSecond": 6.93
         }
       },
       {
@@ -1633,13 +1600,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769,
+          "fastestOrnamentalNotesValue": 32.0076923076923
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.93,
-          "fastestOrnamentalNotePerSecond": 13.87
+          "fastestStructuralNotesPerSecond": 6.93,
+          "fastestOrnamentalNotesPerSecond": 13.87
         }
       },
       {
@@ -1647,11 +1614,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": null
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "Considering the amount of mordents, should they be considered structural?"
+          "fastestStructuralNotesPerSecond": "Considering the amount of mordents, should they be considered structural?"
         }
       },
       {
@@ -1659,13 +1626,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.6,
-          "fastestOrnamentalNotePerSecond": 19.2
+          "fastestStructuralNotesPerSecond": 9.6,
+          "fastestOrnamentalNotesPerSecond": 19.2
         }
       },
       {
@@ -1673,11 +1640,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.4
+          "fastestStructuralNotesPerSecond": 8.4
         }
       },
       {
@@ -1685,11 +1652,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 50,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5
+          "fastestStructuralNotesPerSecond": 5
         }
       },
       {
@@ -1697,13 +1664,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24,
+          "fastestOrnamentalNotesValue": 48
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8,
-          "fastestOrnamentalNotePerSecond": 16
+          "fastestStructuralNotesPerSecond": 8,
+          "fastestOrnamentalNotesPerSecond": 16
         }
       },
       {
@@ -1711,13 +1678,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestOrnamentalNotePerSecond": 17.6
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestOrnamentalNotesPerSecond": 17.6
         }
       }
     ],
@@ -1729,12 +1696,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Moderato",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 12
           }
         ]
       },
@@ -1745,12 +1711,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andantino",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 31.999999999999996
           }
         ]
       },
@@ -1761,13 +1726,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 16.01379310344828
           }
         ]
       },
@@ -1778,12 +1742,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 6
           }
         ]
       },
@@ -1794,13 +1757,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+            "fastestStructuralNotesValue": 18,
+            "fastestOrnamentalNotesValue": 36,
             "comment": "Same as Nuevo método de guitarra, xxiv"
           }
         ]
@@ -1812,13 +1774,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": null,
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 48,
             "comment": "Same as Nuevo método de guitarra, ix"
           }
         ]
@@ -1830,12 +1791,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 16,
             "comment": "Same as Nuevo método de guitarra, x"
           }
         ]
@@ -1847,13 +1807,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 64
           }
         ]
       },
@@ -1864,13 +1823,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andantino",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 5.999999999999999,
+            "fastestOrnamentalNotesValue": 23.999999999999996,
             "comment": "Very likely a misprint, see first publication"
           }
         ]
@@ -1882,12 +1840,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 15.99230769230769,
             "comment": "Same as Nuevo método de guitarra, xii"
           }
         ]
@@ -1899,12 +1856,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 15.99230769230769,
             "comment": "Same as Nuevo método de guitarra, xiii"
           }
         ]
@@ -1916,13 +1872,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 15.99230769230769,
+            "fastestOrnamentalNotesValue": 32.0076923076923,
             "comment": "Same as Nuevo método de guitarra, xiv"
           }
         ]
@@ -1934,12 +1889,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro comodo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": null,
+            "fastestStructuralNotesValue": null,
             "comment": "Same as Nuevo método de guitarra, xxi"
           }
         ]
@@ -1951,13 +1905,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro moderato",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32,
             "comment": "Same as Nuevo método de guitarra, xxii"
           }
         ]
@@ -1969,12 +1922,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro comodo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 16,
             "comment": "Same as Nuevo método de guitarra, xx"
           }
         ]
@@ -1986,23 +1938,21 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 24
           },
           {
             "rank": 2,
             "tempoIndication": "Allegretto",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 24,
+            "fastestOrnamentalNotesValue": 48
           }
         ]
       },
@@ -2013,13 +1963,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32,
             "comment": "Same as Nuevo método de guitarra, xxvii"
           }
         ]
@@ -2050,13 +1999,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998,
+          "fastestOrnamentalNotesValue": 47.99999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.6,
-          "fastestOrnamentalNotePerSecond": 26.4
+          "fastestStructuralNotesPerSecond": 6.6,
+          "fastestOrnamentalNotesPerSecond": 26.4
         }
       },
       {
@@ -2064,11 +2013,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.6
+          "fastestStructuralNotesPerSecond": 6.6
         }
       },
       {
@@ -2076,11 +2025,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 19.8
+          "fastestStructuralNotesPerSecond": 19.8
         }
       },
       {
@@ -2088,13 +2037,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.2,
-          "fastestOrnamentalNotePerSecond": 5.6
+          "fastestStructuralNotesPerSecond": 4.2,
+          "fastestOrnamentalNotesPerSecond": 5.6
         }
       },
       {
@@ -2102,11 +2051,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8
+          "fastestStructuralNotesPerSecond": 8.8
         }
       },
       {
@@ -2114,11 +2063,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.93
+          "fastestStructuralNotesPerSecond": 6.93
         }
       },
       {
@@ -2126,11 +2075,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.93
+          "fastestStructuralNotesPerSecond": 6.93
         }
       },
       {
@@ -2138,13 +2087,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769,
+          "fastestOrnamentalNotesValue": 32.0076923076923
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.93,
-          "fastestOrnamentalNotePerSecond": 13.87
+          "fastestStructuralNotesPerSecond": 6.93,
+          "fastestOrnamentalNotesPerSecond": 13.87
         }
       },
       {
@@ -2152,13 +2101,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24,
+          "fastestOrnamentalNotesValue": 63.99999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.9,
-          "fastestOrnamentalNotePerSecond": 18.4
+          "fastestStructuralNotesPerSecond": 6.9,
+          "fastestOrnamentalNotesPerSecond": 18.4
         }
       },
       {
@@ -2166,11 +2115,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "QUINTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 30
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 33
+          "fastestStructuralNotesPerSecond": 33
         }
       },
       {
@@ -2178,11 +2127,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.4
+          "fastestStructuralNotesPerSecond": 8.4
         }
       },
       {
@@ -2190,11 +2139,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": null
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "Considering the amount of mordents, should they be considered structural?"
+          "fastestStructuralNotesPerSecond": "Considering the amount of mordents, should they be considered structural?"
         }
       },
       {
@@ -2202,13 +2151,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.6,
-          "fastestOrnamentalNotePerSecond": 19.2
+          "fastestStructuralNotesPerSecond": 9.6,
+          "fastestOrnamentalNotesPerSecond": 19.2
         }
       },
       {
@@ -2216,13 +2165,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 50,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18,
+          "fastestOrnamentalNotesValue": 36
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5,
-          "fastestOrnamentalNotePerSecond": 10
+          "fastestStructuralNotesPerSecond": 5,
+          "fastestOrnamentalNotesPerSecond": 10
         }
       },
       {
@@ -2230,13 +2179,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestOrnamentalNotePerSecond": 17.6
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestOrnamentalNotesPerSecond": 17.6
         }
       },
       {
@@ -2244,13 +2193,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 17.6,
-          "fastestOrnamentalNotePerSecond": 35.2
+          "fastestStructuralNotesPerSecond": 17.6,
+          "fastestOrnamentalNotesPerSecond": 35.2
         }
       }
     ],
@@ -2262,13 +2211,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 11.999999999999998,
+            "fastestOrnamentalNotesValue": 47.99999999999999
           }
         ]
       },
@@ -2279,12 +2227,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 11.999999999999998
           }
         ]
       },
@@ -2295,12 +2242,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
+            "fastestStructuralNotesValue": 18,
             "comment": "Likely a misprint"
           }
         ]
@@ -2312,13 +2258,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 16,
             "comment": "Same as Escuela de guitarra, xv"
           }
         ]
@@ -2330,12 +2275,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 16,
             "comment": "Same as Escuela de guitarra, xvi"
           }
         ]
@@ -2347,12 +2291,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 15.99230769230769,
             "comment": "Same as Escuela de guitarra, xxv"
           }
         ]
@@ -2364,12 +2307,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 15.99230769230769,
             "comment": "Same as Escuela de guitarra, xxiv"
           }
         ]
@@ -2381,13 +2323,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 15.99230769230769,
+            "fastestOrnamentalNotesValue": 32.0076923076923,
             "comment": "Same as Escuela de guitarra, xxv"
           }
         ]
@@ -2399,13 +2340,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+            "fastestStructuralNotesValue": 24,
+            "fastestOrnamentalNotesValue": 63.99999999999999
           }
         ]
       },
@@ -2416,12 +2356,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "QUINTUPLET_THIRTYSECOND",
+            "fastestStructuralNotesValue": 30,
             "comment": "Likely a misprint"
           }
         ]
@@ -2433,12 +2372,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 16,
             "comment": "Same as Escuela de guitarra, xxviii"
           }
         ]
@@ -2450,12 +2388,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro cómodo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": null,
+            "fastestStructuralNotesValue": null,
             "comment": "Same as Escuela de guitarra, xxvi"
           }
         ]
@@ -2467,13 +2404,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32,
             "comment": "Same as Escuela de guitarra, xxvii"
           }
         ]
@@ -2485,13 +2421,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+            "fastestStructuralNotesValue": 18,
+            "fastestOrnamentalNotesValue": 36,
             "comment": "Same as Escuela de guitarra, x"
           }
         ]
@@ -2503,13 +2438,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32
           }
         ]
       },
@@ -2520,13 +2454,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro brillante",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32,
             "comment": "Very likely a misprint, see Escuela de guitarra, xxx"
           }
         ]
@@ -2557,13 +2490,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "HUNDREDTWENTYEIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 35.99999999999999,
+          "fastestOrnamentalNotesValue": 96
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.6,
-          "fastestOrnamentalNotePerSecond": 17.6
+          "fastestStructuralNotesPerSecond": 6.6,
+          "fastestOrnamentalNotesPerSecond": 17.6
         }
       },
       {
@@ -2571,13 +2504,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18,
+          "fastestOrnamentalNotesValue": 48.00535714285714
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestOrnamentalNotePerSecond": 29.87
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestOrnamentalNotesPerSecond": 29.87
         }
       },
       {
@@ -2585,13 +2518,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 32,
+          "fastestOrnamentalNotesValue": 64
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.4,
-          "fastestOrnamentalNotePerSecond": 16.8
+          "fastestStructuralNotesPerSecond": 8.4,
+          "fastestOrnamentalNotesPerSecond": 16.8
         }
       },
       {
@@ -2599,13 +2532,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.8,
-          "fastestOrnamentalNotePerSecond": 25.6
+          "fastestStructuralNotesPerSecond": 12.8,
+          "fastestOrnamentalNotesPerSecond": 25.6
         }
       },
       {
@@ -2613,13 +2546,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 32,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.4,
-          "fastestOrnamentalNotePerSecond": 8.4
+          "fastestStructuralNotesPerSecond": 8.4,
+          "fastestOrnamentalNotesPerSecond": 8.4
         }
       },
       {
@@ -2627,13 +2560,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24,
+          "fastestOrnamentalNotesValue": 48
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 14.4,
-          "fastestOrnamentalNotePerSecond": 28.8
+          "fastestStructuralNotesPerSecond": 14.4,
+          "fastestOrnamentalNotesPerSecond": 28.8
         }
       }
     ],
@@ -2645,23 +2578,21 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "HUNDREDTWENTYEIGHTH"
+            "fastestStructuralNotesValue": 35.99999999999999,
+            "fastestOrnamentalNotesValue": 96
           },
           {
             "rank": 2,
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 18,
+            "fastestOrnamentalNotesValue": 48.00535714285714,
             "comment": "Polonaise"
           }
         ]
@@ -2673,24 +2604,22 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+            "fastestStructuralNotesValue": 32,
+            "fastestOrnamentalNotesValue": 64
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro moderato",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32,
             "comment": "Rondo"
           }
         ]
@@ -2702,24 +2631,22 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 32,
+            "fastestOrnamentalNotesValue": 32
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 24,
+            "fastestOrnamentalNotesValue": 48,
             "comment": "Rondo"
           }
         ]
@@ -2750,13 +2677,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999,
+          "fastestStaccatoNotesValue": 5.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.3,
-          "fastestStaccatoNotePerSecond": 6.3
+          "fastestStructuralNotesPerSecond": 6.3,
+          "fastestStaccatoNotesPerSecond": 6.3
         }
       }
     ],
@@ -2768,13 +2695,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 5.999999999999999,
+            "fastestStaccatoNotesValue": 5.999999999999999,
             "comment": "Fugue"
           }
         ]
@@ -2806,15 +2732,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-          "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 36,
+          "fastestStaccatoNotesValue": 18,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.2,
-          "fastestStaccatoNotePerSecond": 3.6,
-          "fastestOrnamentalNotePerSecond": 4.8
+          "fastestStructuralNotesPerSecond": 7.2,
+          "fastestStaccatoNotesPerSecond": 3.6,
+          "fastestOrnamentalNotesPerSecond": 4.8
         }
       },
       {
@@ -2822,15 +2748,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "HALF",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 12,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.8,
-          "fastestStaccatoNotePerSecond": 9.6,
-          "fastestOrnamentalNotePerSecond": 25.6
+          "fastestStructuralNotesPerSecond": 12.8,
+          "fastestStaccatoNotesPerSecond": 9.6,
+          "fastestOrnamentalNotesPerSecond": 25.6
         }
       },
       {
@@ -2838,15 +2764,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 132,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 36,
+          "fastestStaccatoNotesValue": 36,
+          "fastestOrnamentalNotesValue": 36
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestStaccatoNotePerSecond": 8.8,
-          "fastestOrnamentalNotePerSecond": 8.8
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestStaccatoNotesPerSecond": 8.8,
+          "fastestOrnamentalNotesPerSecond": 8.8
         }
       },
       {
@@ -2854,15 +2780,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 9,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8,
-          "fastestStaccatoNotePerSecond": 6,
-          "fastestOrnamentalNotePerSecond": 16
+          "fastestStructuralNotesPerSecond": 8,
+          "fastestStaccatoNotesPerSecond": 6,
+          "fastestOrnamentalNotesPerSecond": 16
         }
       },
       {
@@ -2870,15 +2796,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 16,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8,
-          "fastestStaccatoNotePerSecond": 8,
-          "fastestOrnamentalNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 8,
+          "fastestStaccatoNotesPerSecond": 8,
+          "fastestOrnamentalNotesPerSecond": 8
         }
       },
       {
@@ -2886,13 +2812,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 126,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999,
+          "fastestStaccatoNotesValue": 2.9999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.6,
-          "fastestStaccatoNotePerSecond": 6.3
+          "fastestStructuralNotesPerSecond": 12.6,
+          "fastestStaccatoNotesPerSecond": 6.3
         }
       },
       {
@@ -2900,13 +2826,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.978947368421052,
+          "fastestStaccatoNotesValue": 15.978947368421052
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.06,
-          "fastestStaccatoNotePerSecond": 5.06
+          "fastestStructuralNotesPerSecond": 5.06,
+          "fastestStaccatoNotesPerSecond": 5.06
         }
       },
       {
@@ -2914,15 +2840,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "HALF",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998,
+          "fastestStaccatoNotesValue": 11.999999999999998,
+          "fastestOrnamentalNotesValue": 31.99285714285714
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestStaccatoNotePerSecond": 11.2,
-          "fastestOrnamentalNotePerSecond": 29.86
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestStaccatoNotesPerSecond": 11.2,
+          "fastestOrnamentalNotesPerSecond": 29.86
         }
       }
     ],
@@ -2934,26 +2860,24 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-            "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 36,
+            "fastestStaccatoNotesValue": 18,
+            "fastestOrnamentalNotesValue": 24
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro con brio",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 12,
+            "fastestOrnamentalNotesValue": 32
           }
         ]
       },
@@ -2964,14 +2888,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio cantabile",
-            "metreString": "9/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 9,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 36,
+            "fastestStaccatoNotesValue": 36,
+            "fastestOrnamentalNotesValue": 36
           }
         ]
       },
@@ -2982,14 +2905,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Tempo di menuetto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 9,
+            "fastestOrnamentalNotesValue": 24,
             "comment": "Minuet and trio"
           }
         ]
@@ -3001,14 +2923,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 16,
+            "fastestOrnamentalNotesValue": 16,
             "comment": "Theme and variations"
           }
         ]
@@ -3020,13 +2941,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto e vivace",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER",
+            "fastestStructuralNotesValue": 5.999999999999999,
+            "fastestStaccatoNotesValue": 2.9999999999999996,
             "comment": "Scherzo"
           }
         ]
@@ -3038,25 +2958,23 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante con moto alla marcia",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.978947368421052,
+            "fastestStaccatoNotesValue": 15.978947368421052
           },
           {
             "rank": 2,
             "tempoIndication": "Presto",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 11.999999999999998,
+            "fastestStaccatoNotesValue": 11.999999999999998,
+            "fastestOrnamentalNotesValue": 31.99285714285714
           }
         ]
       }
@@ -3086,15 +3004,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 54,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12.000000000000002,
+          "fastestStaccatoNotesValue": 12.000000000000002,
+          "fastestOrnamentalNotesValue": 12.000000000000002
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.8,
-          "fastestStaccatoNotePerSecond": 10.8,
-          "fastestOrnamentalNotePerSecond": 10.8
+          "fastestStructuralNotesPerSecond": 10.8,
+          "fastestStaccatoNotesPerSecond": 10.8,
+          "fastestOrnamentalNotesPerSecond": 10.8
         }
       },
       {
@@ -3102,13 +3020,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SEPTUPLET_HUNDREDTWENTYEIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18,
+          "fastestOrnamentalNotesValue": 126.00000000000001
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.6,
-          "fastestOrnamentalNotePerSecond": 32.2
+          "fastestStructuralNotesPerSecond": 4.6,
+          "fastestOrnamentalNotesPerSecond": 32.2
         }
       },
       {
@@ -3116,15 +3034,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999,
+          "fastestStaccatoNotesValue": 2.9999999999999996,
+          "fastestOrnamentalNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestStaccatoNotePerSecond": 5.6,
-          "fastestOrnamentalNotePerSecond": 22.4
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestStaccatoNotesPerSecond": 5.6,
+          "fastestOrnamentalNotesPerSecond": 22.4
         }
       },
       {
@@ -3132,15 +3050,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 4,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12,
-          "fastestStaccatoNotePerSecond": 4,
-          "fastestOrnamentalNotePerSecond": 24
+          "fastestStructuralNotesPerSecond": 12,
+          "fastestStaccatoNotesPerSecond": 4,
+          "fastestOrnamentalNotesPerSecond": 24
         }
       }
     ],
@@ -3152,14 +3070,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro con brio",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12.000000000000002,
+            "fastestStaccatoNotesValue": 12.000000000000002,
+            "fastestOrnamentalNotesValue": 12.000000000000002
           }
         ]
       },
@@ -3170,13 +3087,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio affettuoso ed appassionato",
-            "metreString": "9/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 9,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SEPTUPLET_HUNDREDTWENTYEIGHTH"
+            "fastestStructuralNotesValue": 18,
+            "fastestOrnamentalNotesValue": 126.00000000000001
           }
         ]
       },
@@ -3187,14 +3103,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 5.999999999999999,
+            "fastestStaccatoNotesValue": 2.9999999999999996,
+            "fastestOrnamentalNotesValue": 11.999999999999998,
             "comment": "Scherzo"
           }
         ]
@@ -3206,14 +3121,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 4,
+            "fastestOrnamentalNotesValue": 24
           }
         ]
       }
@@ -3243,15 +3157,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 12,
+          "fastestOrnamentalNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.8,
-          "fastestStaccatoNotePerSecond": 9.6,
-          "fastestOrnamentalNotePerSecond": 6.4
+          "fastestStructuralNotesPerSecond": 12.8,
+          "fastestStaccatoNotesPerSecond": 9.6,
+          "fastestOrnamentalNotesPerSecond": 6.4
         }
       },
       {
@@ -3259,15 +3173,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24,
+          "fastestStaccatoNotesValue": 24,
+          "fastestOrnamentalNotesValue": 48
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.8,
-          "fastestStaccatoNotePerSecond": 4.8,
-          "fastestOrnamentalNotePerSecond": 9.6
+          "fastestStructuralNotesPerSecond": 4.8,
+          "fastestStaccatoNotesPerSecond": 4.8,
+          "fastestOrnamentalNotesPerSecond": 9.6
         }
       },
       {
@@ -3275,13 +3189,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "HALF",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.999999999999999,
+          "fastestStaccatoNotesValue": 7.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2,
-          "fastestStaccatoNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 9.2,
+          "fastestStaccatoNotesPerSecond": 9.2
         }
       },
       {
@@ -3289,15 +3203,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 52,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 8.999999999999998,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.4,
-          "fastestStaccatoNotePerSecond": 7.8,
-          "fastestOrnamentalNotePerSecond": 10.4
+          "fastestStructuralNotesPerSecond": 10.4,
+          "fastestStaccatoNotesPerSecond": 7.8,
+          "fastestOrnamentalNotesPerSecond": 10.4
         }
       },
       {
@@ -3305,15 +3219,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.995652173913044,
+          "fastestStaccatoNotesValue": 3.997826086956522,
+          "fastestOrnamentalNotesValue": 7.995652173913044
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.26,
-          "fastestStaccatoNotePerSecond": 6.13,
-          "fastestOrnamentalNotePerSecond": 12.26
+          "fastestStructuralNotesPerSecond": 12.26,
+          "fastestStaccatoNotesPerSecond": 6.13,
+          "fastestOrnamentalNotesPerSecond": 12.26
         }
       }
     ],
@@ -3325,14 +3239,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 12,
+            "fastestOrnamentalNotesValue": 8
           }
         ]
       },
@@ -3343,25 +3256,23 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio Cantabile",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+            "fastestStructuralNotesValue": 24,
+            "fastestStaccatoNotesValue": 24,
+            "fastestOrnamentalNotesValue": 48
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 7.999999999999999,
+            "fastestStaccatoNotesValue": 7.999999999999999
           }
         ]
       },
@@ -3372,14 +3283,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 8.999999999999998,
+            "fastestOrnamentalNotesValue": 12,
             "comment": "Scherzo"
           }
         ]
@@ -3391,14 +3301,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto quasi Presto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 7.995652173913044,
+            "fastestStaccatoNotesValue": 3.997826086956522,
+            "fastestOrnamentalNotesValue": 7.995652173913044
           }
         ]
       }
@@ -3428,15 +3337,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 8,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12,
-          "fastestStaccatoNotePerSecond": 8,
-          "fastestOrnamentalNotePerSecond": 24
+          "fastestStructuralNotesPerSecond": 12,
+          "fastestStaccatoNotesPerSecond": 8,
+          "fastestOrnamentalNotesPerSecond": 24
         }
       },
       {
@@ -3444,15 +3353,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.991304347826087,
+          "fastestStaccatoNotesValue": 7.982608695652174,
+          "fastestOrnamentalNotesValue": 15.991304347826087
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.13,
-          "fastestStaccatoNotePerSecond": 3.06,
-          "fastestOrnamentalNotePerSecond": 6.13
+          "fastestStructuralNotesPerSecond": 6.13,
+          "fastestStaccatoNotesPerSecond": 3.06,
+          "fastestOrnamentalNotesPerSecond": 6.13
         }
       },
       {
@@ -3460,13 +3369,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 3
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10,
-          "fastestStaccatoNotePerSecond": 5
+          "fastestStructuralNotesPerSecond": 10,
+          "fastestStaccatoNotesPerSecond": 5
         }
       },
       {
@@ -3474,15 +3383,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2,
-          "fastestStaccatoNotePerSecond": 9.2,
-          "fastestOrnamentalNotePerSecond": 18.4
+          "fastestStructuralNotesPerSecond": 9.2,
+          "fastestStaccatoNotesPerSecond": 9.2,
+          "fastestOrnamentalNotesPerSecond": 18.4
         }
       }
     ],
@@ -3494,14 +3403,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 8,
+            "fastestOrnamentalNotesValue": 24
           }
         ]
       },
@@ -3512,14 +3420,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante con moto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.991304347826087,
+            "fastestStaccatoNotesValue": 7.982608695652174,
+            "fastestOrnamentalNotesValue": 15.991304347826087
           }
         ]
       },
@@ -3530,13 +3437,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER"
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 3
           }
         ]
       },
@@ -3547,14 +3453,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12
           }
         ]
       }
@@ -3584,15 +3489,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 8,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestStaccatoNotePerSecond": 5.6,
-          "fastestOrnamentalNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestStaccatoNotesPerSecond": 5.6,
+          "fastestOrnamentalNotesPerSecond": 11.2
         }
       },
       {
@@ -3600,15 +3505,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 56,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999,
+          "fastestStaccatoNotesValue": 5.999999999999999,
+          "fastestOrnamentalNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.6,
-          "fastestStaccatoNotePerSecond": 5.6,
-          "fastestOrnamentalNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 5.6,
+          "fastestStaccatoNotesPerSecond": 5.6,
+          "fastestOrnamentalNotesPerSecond": 11.2
         }
       },
       {
@@ -3616,15 +3521,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 9,
+          "fastestStaccatoNotesValue": 3,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.6,
-          "fastestStaccatoNotePerSecond": 4.2,
-          "fastestOrnamentalNotePerSecond": 16.8
+          "fastestStructuralNotesPerSecond": 12.6,
+          "fastestStaccatoNotesPerSecond": 4.2,
+          "fastestOrnamentalNotesPerSecond": 16.8
         }
       },
       {
@@ -3632,15 +3537,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "WHOLE",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestStaccatoNotesValue": 8,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestStaccatoNotePerSecond": 8.8,
-          "fastestOrnamentalNotePerSecond": 35.2
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestStaccatoNotesPerSecond": 8.8,
+          "fastestOrnamentalNotesPerSecond": 35.2
         }
       },
       {
@@ -3648,15 +3553,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "WHOLE",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestStaccatoNotesValue": 8,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestStaccatoNotePerSecond": 11.2,
-          "fastestOrnamentalNotePerSecond": 33.6
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestStaccatoNotesPerSecond": 11.2,
+          "fastestOrnamentalNotesPerSecond": 33.6
         }
       }
     ],
@@ -3668,14 +3573,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro ma non tanto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 8,
+            "fastestOrnamentalNotesValue": 16
           }
         ]
       },
@@ -3686,14 +3590,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante scherzoso quasi Allegretto",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 5.999999999999999,
+            "fastestStaccatoNotesValue": 5.999999999999999,
+            "fastestOrnamentalNotesValue": 11.999999999999998,
             "comment": "Scherzo"
           }
         ]
@@ -3705,14 +3608,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 9,
+            "fastestStaccatoNotesValue": 3,
+            "fastestOrnamentalNotesValue": 12,
             "comment": "Minuet; piu Allegro at da capo"
           }
         ]
@@ -3724,26 +3626,24 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 8,
+            "fastestStaccatoNotesValue": 8,
+            "fastestOrnamentalNotesValue": 32
           },
           {
             "rank": 2,
             "tempoIndication": "Prestissimo",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 8,
+            "fastestStaccatoNotesValue": 8,
+            "fastestOrnamentalNotesValue": 24
           }
         ]
       }
@@ -3773,15 +3673,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 12,
+          "fastestOrnamentalNotesValue": 17.999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.4,
-          "fastestStaccatoNotePerSecond": 10.4,
-          "fastestOrnamentalNotePerSecond": 15.6
+          "fastestStructuralNotesPerSecond": 10.4,
+          "fastestStaccatoNotesPerSecond": 10.4,
+          "fastestOrnamentalNotesPerSecond": 15.6
         }
       },
       {
@@ -3789,13 +3689,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999,
+          "fastestStaccatoNotesValue": 5.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.6,
-          "fastestStaccatoNotePerSecond": 7.6
+          "fastestStructuralNotesPerSecond": 7.6,
+          "fastestStaccatoNotesPerSecond": 7.6
         }
       },
       {
@@ -3803,15 +3703,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.984,
+          "fastestStaccatoNotesValue": 12,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.66,
-          "fastestStaccatoNotePerSecond": 5,
-          "fastestOrnamentalNotePerSecond": 10
+          "fastestStructuralNotesPerSecond": 6.66,
+          "fastestStaccatoNotesPerSecond": 5,
+          "fastestOrnamentalNotesPerSecond": 10
         }
       },
       {
@@ -3819,13 +3719,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "EIGHTH",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.990909090909091,
+          "fastestOrnamentalNotesValue": 15.981818181818182
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.93,
-          "fastestOrnamentalNotePerSecond": 5.86
+          "fastestStructuralNotesPerSecond": 2.93,
+          "fastestOrnamentalNotesPerSecond": 5.86
         }
       },
       {
@@ -3833,13 +3733,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "WHOLE",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.997368421052633,
+          "fastestStaccatoNotesValue": 7.997368421052633
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.13,
-          "fastestStaccatoNotePerSecond": 10.13
+          "fastestStructuralNotesPerSecond": 10.13,
+          "fastestStaccatoNotesPerSecond": 10.13
         }
       }
     ],
@@ -3851,14 +3751,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 12,
+            "fastestOrnamentalNotesValue": 17.999999999999996
           }
         ]
       },
@@ -3869,13 +3768,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Menuetto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 5.999999999999999,
+            "fastestStaccatoNotesValue": 5.999999999999999,
             "comment": "Minuet"
           }
         ]
@@ -3887,26 +3785,24 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante cantabile",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+            "fastestStructuralNotesValue": 15.984,
+            "fastestStaccatoNotesValue": 12,
+            "fastestOrnamentalNotesValue": 24,
             "comment": "Theme and variations"
           },
           {
             "rank": 2,
             "tempoIndication": "Poco Adagio",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 7.990909090909091,
+            "fastestOrnamentalNotesValue": 15.981818181818182
           }
         ]
       },
@@ -3917,13 +3813,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 7.997368421052633,
+            "fastestStaccatoNotesValue": 7.997368421052633
           }
         ]
       }
@@ -3953,15 +3848,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "WHOLE",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.995,
+          "fastestStaccatoNotesValue": 7.995,
+          "fastestOrnamentalNotesValue": 15.997499999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.66,
-          "fastestStaccatoNotePerSecond": 10.66,
-          "fastestOrnamentalNotePerSecond": 21.33
+          "fastestStructuralNotesPerSecond": 10.66,
+          "fastestStaccatoNotesPerSecond": 10.66,
+          "fastestOrnamentalNotesPerSecond": 21.33
         }
       },
       {
@@ -3969,15 +3864,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "SIXTEENTH",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24,
+          "fastestStaccatoNotesValue": 15.96,
+          "fastestOrnamentalNotesValue": 31.98
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4,
-          "fastestStaccatoNotePerSecond": 2.66,
-          "fastestOrnamentalNotePerSecond": 5.33
+          "fastestStructuralNotesPerSecond": 4,
+          "fastestStaccatoNotesPerSecond": 2.66,
+          "fastestOrnamentalNotesPerSecond": 5.33
         }
       },
       {
@@ -3985,13 +3880,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998,
+          "fastestStaccatoNotesValue": 5.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.6,
-          "fastestStaccatoNotePerSecond": 6.3
+          "fastestStructuralNotesPerSecond": 12.6,
+          "fastestStaccatoNotesPerSecond": 6.3
         }
       },
       {
@@ -3999,13 +3894,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 58,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 3.972413793103448,
+          "fastestOrnamentalNotesValue": 15.972413793103449
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 0.96,
-          "fastestOrnamentalNotePerSecond": 3.86
+          "fastestStructuralNotesPerSecond": 0.96,
+          "fastestOrnamentalNotesPerSecond": 3.86
         }
       },
       {
@@ -4013,13 +3908,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestStaccatoNotePerSecond": 8.8
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestStaccatoNotesPerSecond": 8.8
         }
       },
       {
@@ -4027,13 +3922,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "EIGHTH",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.3,
-          "fastestStaccatoNotePerSecond": 2.3
+          "fastestStructuralNotesPerSecond": 2.3,
+          "fastestStaccatoNotesPerSecond": 2.3
         }
       },
       {
@@ -4041,13 +3936,13 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999,
+          "fastestStaccatoNotesValue": 5.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestStaccatoNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestStaccatoNotesPerSecond": 11.2
         }
       }
     ],
@@ -4059,14 +3954,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro con brio",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 7.995,
+            "fastestStaccatoNotesValue": 7.995,
+            "fastestOrnamentalNotesValue": 15.997499999999999
           }
         ]
       },
@@ -4077,14 +3971,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio ma non troppo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+            "fastestStructuralNotesValue": 24,
+            "fastestStaccatoNotesValue": 15.96,
+            "fastestOrnamentalNotesValue": 31.98
           }
         ]
       },
@@ -4095,13 +3988,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 11.999999999999998,
+            "fastestStaccatoNotesValue": 5.999999999999999,
             "comment": "Scherzo"
           }
         ]
@@ -4113,13 +4005,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 3.972413793103448,
+            "fastestOrnamentalNotesValue": 15.972413793103449,
             "comment": "\"La Malinconia\""
           }
         ]
@@ -4131,35 +4022,32 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto quasi Allegro",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 6
           },
           {
             "rank": 2,
             "tempoIndication": "poco Adagio",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 6
           },
           {
             "rank": 3,
             "tempoIndication": "Prestissimo",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 5.999999999999999,
+            "fastestStaccatoNotesValue": 5.999999999999999
           }
         ]
       }
@@ -4189,15 +4077,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 7.990909090909091,
+          "fastestOrnamentalNotesValue": 15.995454545454544
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestStaccatoNotePerSecond": 5.86,
-          "fastestOrnamentalNotePerSecond": 11.73
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestStaccatoNotesPerSecond": 5.86,
+          "fastestOrnamentalNotesPerSecond": 11.73
         }
       },
       {
@@ -4205,15 +4093,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 56,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999,
+          "fastestStaccatoNotesValue": 5.999999999999999,
+          "fastestOrnamentalNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.6,
-          "fastestStaccatoNotePerSecond": 5.6,
-          "fastestOrnamentalNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 5.6,
+          "fastestStaccatoNotesPerSecond": 5.6,
+          "fastestOrnamentalNotesPerSecond": 11.2
         }
       },
       {
@@ -4221,15 +4109,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "SIXTEENTH",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTYFOURTH",
-          "fastestStaccatoNoteValue": "SIXTYFOURTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 31.963636363636365,
+          "fastestStaccatoNotesValue": 31.963636363636365,
+          "fastestOrnamentalNotesValue": 15.981818181818182
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.86,
-          "fastestStaccatoNotePerSecond": 5.86,
-          "fastestOrnamentalNotePerSecond": 2.93
+          "fastestStructuralNotesPerSecond": 5.86,
+          "fastestStaccatoNotesPerSecond": 5.86,
+          "fastestOrnamentalNotesPerSecond": 2.93
         }
       },
       {
@@ -4237,15 +4125,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 126,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestStaccatoNotesValue": 8,
+          "fastestOrnamentalNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.4,
-          "fastestStaccatoNotePerSecond": 8.4,
-          "fastestOrnamentalNotePerSecond": 8.4
+          "fastestStructuralNotesPerSecond": 8.4,
+          "fastestStaccatoNotesPerSecond": 8.4,
+          "fastestOrnamentalNotesPerSecond": 8.4
         }
       },
       {
@@ -4253,11 +4141,11 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "EIGHTH",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.3
+          "fastestStructuralNotesPerSecond": 2.3
         }
       },
       {
@@ -4265,11 +4153,11 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "QUARTER",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.995652173913044
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "6.13"
+          "fastestStructuralNotesPerSecond": "6.13"
         }
       }
     ],
@@ -4281,14 +4169,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 7.990909090909091,
+            "fastestOrnamentalNotesValue": 15.995454545454544
           }
         ]
       },
@@ -4299,14 +4186,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto vivace e sempre scherzando",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 5.999999999999999,
+            "fastestStaccatoNotesValue": 5.999999999999999,
+            "fastestOrnamentalNotesValue": 11.999999999999998
           }
         ]
       },
@@ -4317,14 +4203,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio molto e mesto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTYFOURTH",
-            "fastestStaccatoNoteValue": "SIXTYFOURTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 31.963636363636365,
+            "fastestStaccatoNotesValue": 31.963636363636365,
+            "fastestOrnamentalNotesValue": 15.981818181818182
           }
         ]
       },
@@ -4335,35 +4220,32 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 8,
+            "fastestStaccatoNotesValue": 8,
+            "fastestOrnamentalNotesValue": 8,
             "comment": "\"Theme russe\""
           },
           {
             "rank": 2,
             "tempoIndication": "Adagio ma non troppo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 7.999999999999999
           },
           {
             "rank": 3,
             "tempoIndication": "Presto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 7.995652173913044,
             "comment": "Identified as misprint; see Noorduin, 2016"
           }
         ]
@@ -4394,15 +4276,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 12,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2,
-          "fastestStaccatoNotePerSecond": 9.2,
-          "fastestOrnamentalNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 9.2,
+          "fastestStaccatoNotesPerSecond": 9.2,
+          "fastestOrnamentalNotesPerSecond": 9.2
         }
       },
       {
@@ -4410,15 +4292,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4,
-          "fastestStaccatoNotePerSecond": 4,
-          "fastestOrnamentalNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 4,
+          "fastestStaccatoNotesPerSecond": 4,
+          "fastestOrnamentalNotesPerSecond": 8
         }
       },
       {
@@ -4426,13 +4308,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 9,
+          "fastestStaccatoNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.35,
-          "fastestStaccatoNotePerSecond": 6.9
+          "fastestStructuralNotesPerSecond": 10.35,
+          "fastestStaccatoNotesPerSecond": 6.9
         }
       },
       {
@@ -4440,13 +4322,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "WHOLE",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.997727272727272,
+          "fastestStaccatoNotesValue": 7.997727272727272
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.73,
-          "fastestStaccatoNotePerSecond": 11.73
+          "fastestStructuralNotesPerSecond": 11.73,
+          "fastestStaccatoNotesPerSecond": 11.73
         }
       },
       {
@@ -4454,13 +4336,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "WHOLE",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.998214285714285,
+          "fastestStaccatoNotesValue": 7.998214285714285
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 14.93,
-          "fastestStaccatoNotePerSecond": 14.93
+          "fastestStructuralNotesPerSecond": 14.93,
+          "fastestStaccatoNotesPerSecond": 14.93
         }
       }
     ],
@@ -4472,14 +4354,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 12,
+            "fastestOrnamentalNotesValue": 12
           }
         ]
       },
@@ -4490,14 +4371,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Adagio",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32,
             "comment": "\"Si tratta questo pezzo con molto di sentimento\""
           }
         ]
@@ -4509,13 +4389,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 9,
+            "fastestStaccatoNotesValue": 6,
             "comment": "\"Theme russe\""
           }
         ]
@@ -4527,25 +4406,23 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 7.997727272727272,
+            "fastestStaccatoNotesValue": 7.997727272727272,
             "comment": "Finale"
           },
           {
             "rank": 2,
             "tempoIndication": "Piu Presto",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 7.998214285714285,
+            "fastestStaccatoNotesValue": 7.998214285714285
           }
         ]
       }
@@ -4575,13 +4452,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 3,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 1.15,
-          "fastestOrnamentalNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 1.15,
+          "fastestOrnamentalNotesPerSecond": 9.2
         }
       },
       {
@@ -4589,15 +4466,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "HALF",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.995454545454544,
+          "fastestStaccatoNotesValue": 7.990909090909091,
+          "fastestOrnamentalNotesValue": 15.995454545454544
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.73,
-          "fastestStaccatoNotePerSecond": 5.86,
-          "fastestOrnamentalNotePerSecond": 11.73
+          "fastestStructuralNotesPerSecond": 11.73,
+          "fastestStaccatoNotesPerSecond": 5.86,
+          "fastestOrnamentalNotesPerSecond": 11.73
         }
       },
       {
@@ -4605,15 +4482,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 56,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998,
+          "fastestStaccatoNotesValue": 11.999999999999998,
+          "fastestOrnamentalNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.6,
-          "fastestStaccatoNotePerSecond": 5.6,
-          "fastestOrnamentalNotePerSecond": 5.6
+          "fastestStructuralNotesPerSecond": 5.6,
+          "fastestStaccatoNotesPerSecond": 5.6,
+          "fastestOrnamentalNotesPerSecond": 5.6
         }
       },
       {
@@ -4621,13 +4498,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 116,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.994827586206899,
+          "fastestStaccatoNotesValue": 5.989655172413793
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.73,
-          "fastestStaccatoNotePerSecond": 3.86
+          "fastestStructuralNotesPerSecond": 7.73,
+          "fastestStaccatoNotesPerSecond": 3.86
         }
       },
       {
@@ -4635,15 +4512,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "WHOLE",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestStaccatoNotesValue": 8,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestStaccatoNotePerSecond": 11.2,
-          "fastestOrnamentalNotePerSecond": 22.4
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestStaccatoNotesPerSecond": 11.2,
+          "fastestOrnamentalNotesPerSecond": 22.4
         }
       }
     ],
@@ -4655,26 +4532,24 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante con moto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 3,
+            "fastestOrnamentalNotesValue": 24,
             "comment": "Introduzione"
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro vivace",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.995454545454544,
+            "fastestStaccatoNotesValue": 7.990909090909091,
+            "fastestOrnamentalNotesValue": 15.995454545454544
           }
         ]
       },
@@ -4685,14 +4560,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante con moto quasi Allegretto",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 11.999999999999998,
+            "fastestStaccatoNotesValue": 11.999999999999998,
+            "fastestOrnamentalNotesValue": 11.999999999999998
           }
         ]
       },
@@ -4703,13 +4577,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Grazioso",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 11.994827586206899,
+            "fastestStaccatoNotesValue": 5.989655172413793,
             "comment": "Minuet"
           }
         ]
@@ -4721,14 +4594,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 8,
+            "fastestStaccatoNotesValue": 8,
+            "fastestOrnamentalNotesValue": 16
           }
         ]
       }
@@ -4759,13 +4631,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4,
-          "fastestOrnamentalNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 4,
+          "fastestOrnamentalNotesPerSecond": 8
         }
       },
       {
@@ -4773,15 +4645,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "HALF",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 16,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestStaccatoNotePerSecond": 11.2,
-          "fastestOrnamentalNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestStaccatoNotesPerSecond": 11.2,
+          "fastestOrnamentalNotesPerSecond": 11.2
         }
       },
       {
@@ -4789,15 +4661,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 12,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.8,
-          "fastestStaccatoNotePerSecond": 4.8,
-          "fastestOrnamentalNotePerSecond": 9.6
+          "fastestStructuralNotesPerSecond": 4.8,
+          "fastestStaccatoNotesPerSecond": 4.8,
+          "fastestOrnamentalNotesPerSecond": 9.6
         }
       },
       {
@@ -4805,13 +4677,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10,
-          "fastestStaccatoNotePerSecond": 10
+          "fastestStructuralNotesPerSecond": 10,
+          "fastestStaccatoNotesPerSecond": 10
         }
       },
       {
@@ -4819,11 +4691,11 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "WHOLE",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "QUARTER"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 2.997
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.66
+          "fastestStructuralNotesPerSecond": 6.66
         }
       },
       {
@@ -4831,13 +4703,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.992,
+          "fastestStaccatoNotesValue": 3.996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.66,
-          "fastestStaccatoNotePerSecond": 3.33
+          "fastestStructuralNotesPerSecond": 6.66,
+          "fastestStaccatoNotesPerSecond": 3.33
         }
       },
       {
@@ -4845,15 +4717,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "HALF",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.997368421052633,
+          "fastestStaccatoNotesValue": 6,
+          "fastestOrnamentalNotesValue": 7.997368421052633
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.13,
-          "fastestStaccatoNotePerSecond": 7.6,
-          "fastestOrnamentalNotePerSecond": 10.13
+          "fastestStructuralNotesPerSecond": 10.13,
+          "fastestStaccatoNotesPerSecond": 7.6,
+          "fastestOrnamentalNotesPerSecond": 10.13
         }
       },
       {
@@ -4861,11 +4733,11 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "HALF",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 11.2
         }
       }
     ],
@@ -4877,25 +4749,23 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Poco Adagio",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 16,
+            "fastestOrnamentalNotesValue": 16
           }
         ]
       },
@@ -4906,14 +4776,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio ma non troppo",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 12,
+            "fastestOrnamentalNotesValue": 24
           }
         ]
       },
@@ -4924,23 +4793,21 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 6
           },
           {
             "rank": 2,
             "tempoIndication": "Piu Presto quasi prestissimo",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "QUARTER"
+            "fastestStructuralNotesValue": 2.997
           }
         ]
       },
@@ -4951,35 +4818,32 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto con variazioni",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 7.992,
+            "fastestStaccatoNotesValue": 3.996
           },
           {
             "rank": 2,
             "tempoIndication": "un poco piu vivace",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 7.997368421052633,
+            "fastestStaccatoNotesValue": 6,
+            "fastestOrnamentalNotesValue": 7.997368421052633
           },
           {
             "rank": 3,
             "tempoIndication": "Allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 8
           }
         ]
       }
@@ -5010,13 +4874,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.991304347826087,
+          "fastestStaccatoNotesValue": 7.995652173913044
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.26,
-          "fastestStaccatoNotePerSecond": 6.13
+          "fastestStructuralNotesPerSecond": 12.26,
+          "fastestStaccatoNotesPerSecond": 6.13
         }
       },
       {
@@ -5024,15 +4888,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998,
+          "fastestStaccatoNotesValue": 8,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.6,
-          "fastestStaccatoNotePerSecond": 4.4,
-          "fastestOrnamentalNotePerSecond": 8.8
+          "fastestStructuralNotesPerSecond": 6.6,
+          "fastestStaccatoNotesPerSecond": 4.4,
+          "fastestOrnamentalNotesPerSecond": 8.8
         }
       },
       {
@@ -5040,15 +4904,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 12,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.9,
-          "fastestStaccatoNotePerSecond": 13.8,
-          "fastestOrnamentalNotePerSecond": 13.8
+          "fastestStructuralNotesPerSecond": 6.9,
+          "fastestStaccatoNotesPerSecond": 13.8,
+          "fastestOrnamentalNotesPerSecond": 13.8
         }
       },
       {
@@ -5056,15 +4920,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "DOTTED_HALF",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 12,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8,
-          "fastestStaccatoNotePerSecond": 16,
-          "fastestOrnamentalNotePerSecond": 16
+          "fastestStructuralNotesPerSecond": 8,
+          "fastestStaccatoNotesPerSecond": 16,
+          "fastestOrnamentalNotesPerSecond": 16
         }
       },
       {
@@ -5072,13 +4936,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 56,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.985714285714286,
+          "fastestOrnamentalNotesValue": 15.985714285714286
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.73,
-          "fastestOrnamentalNotePerSecond": 3.73
+          "fastestStructuralNotesPerSecond": 3.73,
+          "fastestOrnamentalNotesPerSecond": 3.73
         }
       },
       {
@@ -5086,15 +4950,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2,
-          "fastestStaccatoNotePerSecond": 4.6,
-          "fastestOrnamentalNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 9.2,
+          "fastestStaccatoNotesPerSecond": 4.6,
+          "fastestOrnamentalNotesPerSecond": 9.2
         }
       },
       {
@@ -5102,13 +4966,13 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "WHOLE",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.995652173913044,
+          "fastestStaccatoNotesValue": 3.997826086956522
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.26,
-          "fastestStaccatoNotePerSecond": 6.13
+          "fastestStructuralNotesPerSecond": 12.26,
+          "fastestStaccatoNotesPerSecond": 6.13
         }
       }
     ],
@@ -5120,13 +4984,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro con brio",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 15.991304347826087,
+            "fastestStaccatoNotesValue": 7.995652173913044
           }
         ]
       },
@@ -5137,14 +5000,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto ma non troppo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 11.999999999999998,
+            "fastestStaccatoNotesValue": 8,
+            "fastestOrnamentalNotesValue": 16
           }
         ]
       },
@@ -5155,26 +5017,24 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro assai vivace ma serioso",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 12,
+            "fastestOrnamentalNotesValue": 12
           },
           {
             "rank": 2,
             "tempoIndication": "Piu Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 12,
+            "fastestOrnamentalNotesValue": 12
           }
         ]
       },
@@ -5185,36 +5045,33 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Larghetto espressivo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.985714285714286,
+            "fastestOrnamentalNotesValue": 15.985714285714286
           },
           {
             "rank": 2,
             "tempoIndication": "Allegretto agitato",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12
           },
           {
             "rank": 3,
             "tempoIndication": "Allegro",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER"
+            "fastestStructuralNotesValue": 7.995652173913044,
+            "fastestStaccatoNotesValue": 3.997826086956522
           }
         ]
       }
@@ -5245,13 +5102,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.999999999999999,
+          "fastestStaccatoNotesValue": 7.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2,
-          "fastestStaccatoNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 9.2,
+          "fastestStaccatoNotesPerSecond": 9.2
         }
       },
       {
@@ -5259,15 +5116,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 9,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 16,
-          "fastestStaccatoNotePerSecond": 12,
-          "fastestOrnamentalNotePerSecond": 16
+          "fastestStructuralNotesPerSecond": 16,
+          "fastestStaccatoNotesPerSecond": 12,
+          "fastestOrnamentalNotesPerSecond": 16
         }
       },
       {
@@ -5275,13 +5132,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 36,
+          "fastestOrnamentalNotesValue": 23.98695652173913
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2,
-          "fastestOrnamentalNotePerSecond": 6.13
+          "fastestStructuralNotesPerSecond": 9.2,
+          "fastestOrnamentalNotesPerSecond": 6.13
         }
       },
       {
@@ -5289,11 +5146,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "SIXTEENTH",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 63.91578947368421
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.06
+          "fastestStructuralNotesPerSecond": 5.06
         }
       },
       {
@@ -5301,15 +5158,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 144,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 12,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.6,
-          "fastestStaccatoNotePerSecond": 9.6,
-          "fastestOrnamentalNotePerSecond": 9.6
+          "fastestStructuralNotesPerSecond": 9.6,
+          "fastestStaccatoNotesPerSecond": 9.6,
+          "fastestOrnamentalNotesPerSecond": 9.6
         }
       }
     ],
@@ -5321,13 +5178,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 7.999999999999999,
+            "fastestStaccatoNotesValue": 7.999999999999999
           }
         ]
       },
@@ -5338,14 +5194,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Assai vivace",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 9,
+            "fastestOrnamentalNotesValue": 12,
             "comment": "Scherzo"
           }
         ]
@@ -5357,13 +5212,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio sostenuto",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 36,
+            "fastestOrnamentalNotesValue": 23.98695652173913
           }
         ]
       },
@@ -5374,24 +5228,22 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Largo",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTYFOURTH"
+            "fastestStructuralNotesValue": 63.91578947368421
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro risoluto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 12,
+            "fastestOrnamentalNotesValue": 12,
             "comment": "Fugue"
           }
         ]
@@ -5422,13 +5274,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 31.963636363636365,
+          "fastestOrnamentalNotesValue": 31.963636363636365
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.86,
-          "fastestOrnamentalNotePerSecond": 5.86
+          "fastestStructuralNotesPerSecond": 5.86,
+          "fastestOrnamentalNotesPerSecond": 5.86
         }
       },
       {
@@ -5436,13 +5288,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "HALF",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.964285714285714,
+          "fastestStaccatoNotesValue": 7.992857142857143
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 14.9,
-          "fastestStaccatoNotePerSecond": 7.46
+          "fastestStructuralNotesPerSecond": 14.9,
+          "fastestStaccatoNotesPerSecond": 7.46
         }
       },
       {
@@ -5450,15 +5302,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 12,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8,
-          "fastestStaccatoNotePerSecond": 8,
-          "fastestOrnamentalNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 8,
+          "fastestStaccatoNotesPerSecond": 8,
+          "fastestOrnamentalNotesPerSecond": 8
         }
       },
       {
@@ -5466,13 +5318,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6.000000000000001,
+          "fastestStaccatoNotesValue": 6.000000000000001
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.8,
-          "fastestStaccatoNotePerSecond": 10.8
+          "fastestStructuralNotesPerSecond": 10.8,
+          "fastestStaccatoNotesPerSecond": 10.8
         }
       },
       {
@@ -5480,13 +5332,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.2,
-          "fastestStaccatoNotePerSecond": 4.2
+          "fastestStructuralNotesPerSecond": 4.2,
+          "fastestStaccatoNotesPerSecond": 4.2
         }
       },
       {
@@ -5494,13 +5346,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "HALF",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.977272727272727,
+          "fastestStaccatoNotesValue": 7.977272727272727
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.7,
-          "fastestStaccatoNotePerSecond": 11.7
+          "fastestStructuralNotesPerSecond": 11.7,
+          "fastestStaccatoNotesPerSecond": 11.7
         }
       }
     ],
@@ -5512,24 +5364,22 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 31.963636363636365,
+            "fastestOrnamentalNotesValue": 31.963636363636365
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro con brio",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 15.964285714285714,
+            "fastestStaccatoNotesValue": 7.992857142857143
           }
         ]
       },
@@ -5540,14 +5390,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante cantabile con moto",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 12,
+            "fastestOrnamentalNotesValue": 12
           }
         ]
       },
@@ -5558,13 +5407,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto e vivace",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 6.000000000000001,
+            "fastestStaccatoNotesValue": 6.000000000000001,
             "comment": "Minuet and trio"
           }
         ]
@@ -5576,24 +5424,22 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 16
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro molto e vivace",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 7.977272727272727,
+            "fastestStaccatoNotesValue": 7.977272727272727
           }
         ]
       }
@@ -5623,15 +5469,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTYFOURTH",
-          "fastestStaccatoNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 47.99999999999999,
+          "fastestStaccatoNotesValue": 23.999999999999996,
+          "fastestOrnamentalNotesValue": 23.999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestStaccatoNotePerSecond": 5.6,
-          "fastestOrnamentalNotePerSecond": 5.6
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestStaccatoNotesPerSecond": 5.6,
+          "fastestOrnamentalNotesPerSecond": 5.6
         }
       },
       {
@@ -5639,15 +5485,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24,
+          "fastestStaccatoNotesValue": 15.995999999999999,
+          "fastestOrnamentalNotesValue": 31.991999999999997
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 20,
-          "fastestStaccatoNotePerSecond": 13.33,
-          "fastestOrnamentalNotePerSecond": 26.66
+          "fastestStructuralNotesPerSecond": 20,
+          "fastestStaccatoNotesPerSecond": 13.33,
+          "fastestOrnamentalNotesPerSecond": 26.66
         }
       },
       {
@@ -5655,13 +5501,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.993478260869566,
+          "fastestStaccatoNotesValue": 11.993478260869566
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.13,
-          "fastestStaccatoNotePerSecond": 6.13
+          "fastestStructuralNotesPerSecond": 6.13,
+          "fastestStaccatoNotesPerSecond": 6.13
         }
       },
       {
@@ -5669,13 +5515,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10,
-          "fastestStaccatoNotePerSecond": 10
+          "fastestStructuralNotesPerSecond": 10,
+          "fastestStaccatoNotesPerSecond": 10
         }
       },
       {
@@ -5683,15 +5529,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 152,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.997368421052633,
+          "fastestStaccatoNotesValue": 7.997368421052633,
+          "fastestOrnamentalNotesValue": 15.994736842105265
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.13,
-          "fastestStaccatoNotePerSecond": 10.13,
-          "fastestOrnamentalNotePerSecond": 20.26
+          "fastestStructuralNotesPerSecond": 10.13,
+          "fastestStaccatoNotesPerSecond": 10.13,
+          "fastestOrnamentalNotesPerSecond": 20.26
         }
       }
     ],
@@ -5703,26 +5549,24 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio molto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTYFOURTH",
-            "fastestStaccatoNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 47.99999999999999,
+            "fastestStaccatoNotesValue": 23.999999999999996,
+            "fastestOrnamentalNotesValue": 23.999999999999996
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro con brio",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 24,
+            "fastestStaccatoNotesValue": 15.995999999999999,
+            "fastestOrnamentalNotesValue": 31.991999999999997
           }
         ]
       },
@@ -5733,13 +5577,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Larghetto",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 11.993478260869566,
+            "fastestStaccatoNotesValue": 11.993478260869566
           }
         ]
       },
@@ -5750,13 +5593,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 6,
             "comment": "Scherzo"
           }
         ]
@@ -5768,14 +5610,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 7.997368421052633,
+            "fastestStaccatoNotesValue": 7.997368421052633,
+            "fastestOrnamentalNotesValue": 15.994736842105265
           }
         ]
       }
@@ -5806,13 +5647,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12,
-          "fastestStaccatoNotePerSecond": 6
+          "fastestStructuralNotesPerSecond": 12,
+          "fastestStaccatoNotesPerSecond": 6
         }
       },
       {
@@ -5820,15 +5661,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24,
+          "fastestStaccatoNotesValue": 15.99,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8,
-          "fastestStaccatoNotePerSecond": 5.33,
-          "fastestOrnamentalNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 8,
+          "fastestStaccatoNotesPerSecond": 5.33,
+          "fastestOrnamentalNotesPerSecond": 8
         }
       },
       {
@@ -5836,15 +5677,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 116,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "QUARTER"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 3,
+          "fastestOrnamentalNotesValue": 3
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.6,
-          "fastestStaccatoNotePerSecond": 5.8,
-          "fastestOrnamentalNotePerSecond": 5.8
+          "fastestStructuralNotesPerSecond": 11.6,
+          "fastestStaccatoNotesPerSecond": 5.8,
+          "fastestOrnamentalNotesPerSecond": 5.8
         }
       },
       {
@@ -5852,13 +5693,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "WHOLE",
         "bpm": 116,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.996551724137932,
+          "fastestStaccatoNotesValue": 3.998275862068966
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 15.46,
-          "fastestStaccatoNotePerSecond": 7.73
+          "fastestStructuralNotesPerSecond": 15.46,
+          "fastestStaccatoNotesPerSecond": 7.73
         }
       },
       {
@@ -5866,13 +5707,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.997368421052633,
+          "fastestStaccatoNotesValue": 7.997368421052633
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.13,
-          "fastestStaccatoNotePerSecond": 10.13
+          "fastestStructuralNotesPerSecond": 10.13,
+          "fastestStaccatoNotesPerSecond": 10.13
         }
       },
       {
@@ -5880,13 +5721,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "EIGHTH",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.2,
-          "fastestStaccatoNotePerSecond": 7.2
+          "fastestStructuralNotesPerSecond": 7.2,
+          "fastestStaccatoNotesPerSecond": 7.2
         }
       },
       {
@@ -5894,13 +5735,13 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "EIGHTH",
         "bpm": 116,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.993103448275864,
+          "fastestStaccatoNotesValue": 7.9862068965517246
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "7.73",
-          "fastestStaccatoNotePerSecond": "3.86"
+          "fastestStructuralNotesPerSecond": "7.73",
+          "fastestStaccatoNotesPerSecond": "3.86"
         }
       }
     ],
@@ -5912,13 +5753,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro con brio",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 6
           }
         ]
       },
@@ -5929,14 +5769,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio assai",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+            "fastestStructuralNotesValue": 24,
+            "fastestStaccatoNotesValue": 15.99,
+            "fastestOrnamentalNotesValue": 24,
             "comment": "Funeral march"
           }
         ]
@@ -5948,26 +5787,24 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro vivace",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "QUARTER",
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 3,
+            "fastestOrnamentalNotesValue": 3,
             "comment": "Scherzo"
           },
           {
             "rank": 2,
             "tempoIndication": "Alla breve",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER"
+            "fastestStructuralNotesValue": 7.996551724137932,
+            "fastestStaccatoNotesValue": 3.998275862068966
           }
         ]
       },
@@ -5978,35 +5815,32 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 7.997368421052633,
+            "fastestStaccatoNotesValue": 7.997368421052633
           },
           {
             "rank": 2,
             "tempoIndication": "Poco Andante",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 16
           },
           {
             "rank": 3,
             "tempoIndication": "Presto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 15.993103448275864,
+            "fastestStaccatoNotesValue": 7.9862068965517246,
             "comment": "Identified as misprint; see Noorduin, 2016"
           }
         ]
@@ -6037,13 +5871,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "QUINTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 40
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.4,
-          "fastestOrnamentalNotePerSecond": 11
+          "fastestStructuralNotesPerSecond": 4.4,
+          "fastestOrnamentalNotesPerSecond": 11
         }
       },
       {
@@ -6051,15 +5885,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "WHOLE",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.997499999999999,
+          "fastestStaccatoNotesValue": 3.9975,
+          "fastestOrnamentalNotesValue": 31.994999999999997
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 21.33,
-          "fastestStaccatoNotePerSecond": 5.33,
-          "fastestOrnamentalNotePerSecond": 42.66
+          "fastestStructuralNotesPerSecond": 21.33,
+          "fastestStaccatoNotesPerSecond": 5.33,
+          "fastestOrnamentalNotesPerSecond": 42.66
         }
       },
       {
@@ -6067,15 +5901,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 23.999999999999996,
+          "fastestStaccatoNotesValue": 23.999999999999996,
+          "fastestOrnamentalNotesValue": 47.99999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.6,
-          "fastestStaccatoNotePerSecond": 5.6,
-          "fastestOrnamentalNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 5.6,
+          "fastestStaccatoNotesPerSecond": 5.6,
+          "fastestOrnamentalNotesPerSecond": 11.2
         }
       },
       {
@@ -6083,13 +5917,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "QUARTER",
-          "fastestStaccatoNoteValue": "QUARTER"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 3,
+          "fastestStaccatoNotesValue": 3
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5,
-          "fastestStaccatoNotePerSecond": 5
+          "fastestStructuralNotesPerSecond": 5,
+          "fastestStaccatoNotesPerSecond": 5
         }
       },
       {
@@ -6097,15 +5931,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "DOTTED_HALF",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestStaccatoNotePerSecond": 8.8,
-          "fastestOrnamentalNotePerSecond": 17.6
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestStaccatoNotesPerSecond": 8.8,
+          "fastestOrnamentalNotesPerSecond": 17.6
         }
       },
       {
@@ -6113,15 +5947,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.995,
+          "fastestStaccatoNotesValue": 7.995,
+          "fastestOrnamentalNotesValue": 15.997499999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.66,
-          "fastestStaccatoNotePerSecond": 10.66,
-          "fastestOrnamentalNotePerSecond": 21.33
+          "fastestStructuralNotesPerSecond": 10.66,
+          "fastestStaccatoNotesPerSecond": 10.66,
+          "fastestOrnamentalNotesPerSecond": 21.33
         }
       }
     ],
@@ -6133,25 +5967,23 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "QUINTUPLET_THIRTYSECOND"
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 40
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro vivace",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.997499999999999,
+            "fastestStaccatoNotesValue": 3.9975,
+            "fastestOrnamentalNotesValue": 31.994999999999997
           }
         ]
       },
@@ -6162,14 +5994,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 23.999999999999996,
+            "fastestStaccatoNotesValue": 23.999999999999996,
+            "fastestOrnamentalNotesValue": 47.99999999999999,
             "comment": "Ornamented notes are tremolo"
           }
         ]
@@ -6181,26 +6012,24 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto e vivace",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "QUARTER",
-            "fastestStaccatoNoteValue": "QUARTER",
+            "fastestStructuralNotesValue": 3,
+            "fastestStaccatoNotesValue": 3,
             "comment": "Scherzo"
           },
           {
             "rank": 2,
             "tempoIndication": "Un poco meno allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12,
             "comment": "Trio"
           }
         ]
@@ -6212,14 +6041,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro ma non troppo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 7.995,
+            "fastestStaccatoNotesValue": 7.995,
+            "fastestOrnamentalNotesValue": 15.997499999999999
           }
         ]
       }
@@ -6249,13 +6077,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 4,
+          "fastestStaccatoNotesValue": 4
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.2,
-          "fastestStaccatoNotePerSecond": 7.2
+          "fastestStructuralNotesPerSecond": 7.2,
+          "fastestStaccatoNotesPerSecond": 7.2
         }
       },
       {
@@ -6263,15 +6091,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.993478260869566,
+          "fastestStaccatoNotesValue": 9,
+          "fastestOrnamentalNotesValue": 23.98695652173913
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.13,
-          "fastestStaccatoNotePerSecond": 4.6,
-          "fastestOrnamentalNotePerSecond": 12.26
+          "fastestStructuralNotesPerSecond": 6.13,
+          "fastestStaccatoNotesPerSecond": 4.6,
+          "fastestOrnamentalNotesPerSecond": 12.26
         }
       },
       {
@@ -6279,13 +6107,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "EIGHTH",
         "bpm": 116,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.994827586206899,
+          "fastestStaccatoNotesValue": 9.000000000000002
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.73,
-          "fastestStaccatoNotePerSecond": 5.8
+          "fastestStructuralNotesPerSecond": 7.73,
+          "fastestStaccatoNotesPerSecond": 5.8
         }
       },
       {
@@ -6293,15 +6121,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.6,
-          "fastestStaccatoNotePerSecond": 9.6,
-          "fastestOrnamentalNotePerSecond": 19.2
+          "fastestStructuralNotesPerSecond": 9.6,
+          "fastestStaccatoNotesPerSecond": 9.6,
+          "fastestOrnamentalNotesPerSecond": 19.2
         }
       },
       {
@@ -6309,15 +6137,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 8,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestStaccatoNotePerSecond": 5.6,
-          "fastestOrnamentalNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestStaccatoNotesPerSecond": 5.6,
+          "fastestOrnamentalNotesPerSecond": 11.2
         }
       },
       {
@@ -6325,13 +6153,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "DOTTED_HALF",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 3
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.6,
-          "fastestStaccatoNotePerSecond": 4.8
+          "fastestStructuralNotesPerSecond": 9.6,
+          "fastestStaccatoNotesPerSecond": 4.8
         }
       },
       {
@@ -6339,15 +6167,15 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "HALF",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 8,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestStaccatoNotePerSecond": 5.6,
-          "fastestOrnamentalNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestStaccatoNotesPerSecond": 5.6,
+          "fastestOrnamentalNotesPerSecond": 11.2
         }
       },
       {
@@ -6355,13 +6183,13 @@ const pieceList = [
         "sectionRank": 4,
         "beatUnit": "WHOLE",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.998214285714285,
+          "fastestOrnamentalNotesValue": 15.99642857142857
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 14.93,
-          "fastestOrnamentalNotePerSecond": 29.86
+          "fastestStructuralNotesPerSecond": 14.93,
+          "fastestOrnamentalNotesPerSecond": 29.86
         }
       }
     ],
@@ -6373,13 +6201,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro con brio",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 4,
+            "fastestStaccatoNotesValue": 4
           }
         ]
       },
@@ -6390,25 +6217,23 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante con moto",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+            "fastestStructuralNotesValue": 11.993478260869566,
+            "fastestStaccatoNotesValue": 9,
+            "fastestOrnamentalNotesValue": 23.98695652173913
           },
           {
             "rank": 2,
             "tempoIndication": "Piu moto",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 11.994827586206899,
+            "fastestStaccatoNotesValue": 9.000000000000002
           }
         ]
       },
@@ -6419,14 +6244,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12,
             "comment": "Scherzo; fugue in movement"
           }
         ]
@@ -6438,48 +6262,44 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 8,
+            "fastestOrnamentalNotesValue": 16
           },
           {
             "rank": 2,
             "tempoIndication": "Tempo I",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER"
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 3
           },
           {
             "rank": 3,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 8,
+            "fastestOrnamentalNotesValue": 16
           },
           {
             "rank": 4,
             "tempoIndication": "Presto",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 7.998214285714285,
+            "fastestOrnamentalNotesValue": 15.99642857142857,
             "comment": "Ornamented notes are tremolo"
           }
         ]
@@ -6511,15 +6331,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestStaccatoNotesValue": 4,
+          "fastestOrnamentalNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestStaccatoNotePerSecond": 4.4,
-          "fastestOrnamentalNotePerSecond": 13.2
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestStaccatoNotesPerSecond": 4.4,
+          "fastestOrnamentalNotesPerSecond": 13.2
         }
       },
       {
@@ -6527,15 +6347,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 50,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 48,
+          "fastestStaccatoNotesValue": 24,
+          "fastestOrnamentalNotesValue": 48
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10,
-          "fastestStaccatoNotePerSecond": 5,
-          "fastestOrnamentalNotePerSecond": 10
+          "fastestStructuralNotesPerSecond": 10,
+          "fastestStaccatoNotesPerSecond": 5,
+          "fastestOrnamentalNotesPerSecond": 10
         }
       },
       {
@@ -6543,15 +6363,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6.000000000000001,
+          "fastestStaccatoNotesValue": 3.0000000000000004,
+          "fastestOrnamentalNotesValue": 12.000000000000002
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.8,
-          "fastestStaccatoNotePerSecond": 5.4,
-          "fastestOrnamentalNotePerSecond": 21.6
+          "fastestStructuralNotesPerSecond": 10.8,
+          "fastestStaccatoNotesPerSecond": 5.4,
+          "fastestOrnamentalNotesPerSecond": 21.6
         }
       },
       {
@@ -6559,13 +6379,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 132,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestOrnamentalNotePerSecond": 17.6
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestOrnamentalNotesPerSecond": 17.6
         }
       },
       {
@@ -6573,15 +6393,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "QUINTUPLET_SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 19.995,
+          "fastestStaccatoNotesValue": 7.995,
+          "fastestOrnamentalNotesValue": 15.99
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.33,
-          "fastestStaccatoNotePerSecond": 5.33,
-          "fastestOrnamentalNotePerSecond": 10.66
+          "fastestStructuralNotesPerSecond": 13.33,
+          "fastestStaccatoNotesPerSecond": 5.33,
+          "fastestOrnamentalNotesPerSecond": 10.66
         }
       },
       {
@@ -6589,13 +6409,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18,
+          "fastestStaccatoNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9,
-          "fastestStaccatoNotePerSecond": 6
+          "fastestStructuralNotesPerSecond": 9,
+          "fastestStaccatoNotesPerSecond": 6
         }
       }
     ],
@@ -6607,14 +6427,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro ma non troppo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 8,
+            "fastestStaccatoNotesValue": 4,
+            "fastestOrnamentalNotesValue": 11.999999999999998
           }
         ]
       },
@@ -6625,14 +6444,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante molto moto",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 48,
+            "fastestStaccatoNotesValue": 24,
+            "fastestOrnamentalNotesValue": 48
           }
         ]
       },
@@ -6643,25 +6461,23 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 6.000000000000001,
+            "fastestStaccatoNotesValue": 3.0000000000000004,
+            "fastestOrnamentalNotesValue": 12.000000000000002
           },
           {
             "rank": 2,
             "tempoIndication": "A tempo allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 8,
+            "fastestOrnamentalNotesValue": 16
           }
         ]
       },
@@ -6672,14 +6488,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "QUINTUPLET_SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 19.995,
+            "fastestStaccatoNotesValue": 7.995,
+            "fastestOrnamentalNotesValue": 15.99
           }
         ]
       },
@@ -6690,13 +6505,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 18,
+            "fastestStaccatoNotesValue": 12
           }
         ]
       }
@@ -6726,15 +6540,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.999999999999998,
+          "fastestStaccatoNotesValue": 15.999999999999998,
+          "fastestOrnamentalNotesValue": 31.999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.6,
-          "fastestStaccatoNotePerSecond": 4.6,
-          "fastestOrnamentalNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 4.6,
+          "fastestStaccatoNotesPerSecond": 4.6,
+          "fastestOrnamentalNotesPerSecond": 9.2
         }
       },
       {
@@ -6742,15 +6556,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 17.999999999999996,
+          "fastestStaccatoNotesValue": 12,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 15.6,
-          "fastestStaccatoNotePerSecond": 10.4,
-          "fastestOrnamentalNotePerSecond": 20.8
+          "fastestStructuralNotesPerSecond": 15.6,
+          "fastestStaccatoNotesPerSecond": 10.4,
+          "fastestOrnamentalNotesPerSecond": 20.8
         }
       },
       {
@@ -6758,15 +6572,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.989473684210526,
+          "fastestStaccatoNotesValue": 7.989473684210526,
+          "fastestOrnamentalNotesValue": 7.989473684210526
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.06,
-          "fastestStaccatoNotePerSecond": 5.06,
-          "fastestOrnamentalNotePerSecond": 5.06
+          "fastestStructuralNotesPerSecond": 5.06,
+          "fastestStaccatoNotesPerSecond": 5.06,
+          "fastestOrnamentalNotesPerSecond": 5.06
         }
       },
       {
@@ -6774,15 +6588,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 132,
-        "noteValues": {
-          "fastestStructuralNoteValue": "QUARTER",
-          "fastestStaccatoNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 2.9999999999999996,
+          "fastestStaccatoNotesValue": 2.9999999999999996,
+          "fastestOrnamentalNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.6,
-          "fastestStaccatoNotePerSecond": 6.6,
-          "fastestOrnamentalNotePerSecond": 26.4
+          "fastestStructuralNotesPerSecond": 6.6,
+          "fastestStaccatoNotesPerSecond": 6.6,
+          "fastestOrnamentalNotesPerSecond": 26.4
         }
       },
       {
@@ -6790,15 +6604,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "DOTTED_HALF",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 3,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.4,
-          "fastestStaccatoNotePerSecond": 4.2,
-          "fastestOrnamentalNotePerSecond": 16.8
+          "fastestStructuralNotesPerSecond": 8.4,
+          "fastestStaccatoNotesPerSecond": 4.2,
+          "fastestOrnamentalNotesPerSecond": 16.8
         }
       },
       {
@@ -6806,13 +6620,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.6,
-          "fastestOrnamentalNotePerSecond": 14.4
+          "fastestStructuralNotesPerSecond": 9.6,
+          "fastestOrnamentalNotesPerSecond": 14.4
         }
       }
     ],
@@ -6824,26 +6638,24 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Poco sostenuto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.999999999999998,
+            "fastestStaccatoNotesValue": 15.999999999999998,
+            "fastestOrnamentalNotesValue": 31.999999999999996
           },
           {
             "rank": 2,
             "tempoIndication": "Vivace",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 17.999999999999996,
+            "fastestStaccatoNotesValue": 12,
+            "fastestOrnamentalNotesValue": 24
           }
         ]
       },
@@ -6854,14 +6666,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 7.989473684210526,
+            "fastestStaccatoNotesValue": 7.989473684210526,
+            "fastestOrnamentalNotesValue": 7.989473684210526
           }
         ]
       },
@@ -6872,26 +6683,24 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "QUARTER",
-            "fastestStaccatoNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 2.9999999999999996,
+            "fastestStaccatoNotesValue": 2.9999999999999996,
+            "fastestOrnamentalNotesValue": 11.999999999999998
           },
           {
             "rank": 2,
             "tempoIndication": "Assai meno presto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 3,
+            "fastestOrnamentalNotesValue": 12
           }
         ]
       },
@@ -6902,13 +6711,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro con brio",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 8,
+            "fastestOrnamentalNotesValue": 12
           }
         ]
       }
@@ -6938,15 +6746,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.8,
-          "fastestStaccatoNotePerSecond": 6.9,
-          "fastestOrnamentalNotePerSecond": 13.8
+          "fastestStructuralNotesPerSecond": 13.8,
+          "fastestStaccatoNotesPerSecond": 6.9,
+          "fastestOrnamentalNotesPerSecond": 13.8
         }
       },
       {
@@ -6954,15 +6762,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTYFOURTH",
-          "fastestStaccatoNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 31.99090909090909,
+          "fastestStaccatoNotesValue": 15.981818181818182,
+          "fastestOrnamentalNotesValue": 31.99090909090909
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.73,
-          "fastestStaccatoNotePerSecond": 5.86,
-          "fastestOrnamentalNotePerSecond": 11.73
+          "fastestStructuralNotesPerSecond": 11.73,
+          "fastestStaccatoNotesPerSecond": 5.86,
+          "fastestOrnamentalNotesPerSecond": 11.73
         }
       },
       {
@@ -6970,15 +6778,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 126,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8.999999999999998,
+          "fastestStaccatoNotesValue": 8.999999999999998,
+          "fastestOrnamentalNotesValue": 17.999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.3,
-          "fastestStaccatoNotePerSecond": 6.3,
-          "fastestOrnamentalNotePerSecond": 12.6
+          "fastestStructuralNotesPerSecond": 6.3,
+          "fastestStaccatoNotesPerSecond": 6.3,
+          "fastestOrnamentalNotesPerSecond": 12.6
         }
       },
       {
@@ -6986,15 +6794,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "WHOLE",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "TRIPLET_EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 4,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 16.8,
-          "fastestStaccatoNotePerSecond": 5.6,
-          "fastestOrnamentalNotePerSecond": 16.8
+          "fastestStructuralNotesPerSecond": 16.8,
+          "fastestStaccatoNotesPerSecond": 5.6,
+          "fastestOrnamentalNotesPerSecond": 16.8
         }
       }
     ],
@@ -7006,14 +6814,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro vivace e con brio",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12
           }
         ]
       },
@@ -7024,14 +6831,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto scherzando",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTYFOURTH",
-            "fastestStaccatoNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 31.99090909090909,
+            "fastestStaccatoNotesValue": 15.981818181818182,
+            "fastestOrnamentalNotesValue": 31.99090909090909,
             "comment": "Based on the \"Maezel\" Canon"
           }
         ]
@@ -7043,14 +6849,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Tempo di Menuetto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH",
+            "fastestStructuralNotesValue": 8.999999999999998,
+            "fastestStaccatoNotesValue": 8.999999999999998,
+            "fastestOrnamentalNotesValue": 17.999999999999996,
             "comment": "Minuetto and trio"
           }
         ]
@@ -7062,14 +6867,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro vivace",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "TRIPLET_EIGHTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 4,
+            "fastestOrnamentalNotesValue": 12
           }
         ]
       }
@@ -7099,11 +6903,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 126,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.2
+          "fastestStructuralNotesPerSecond": 4.2
         }
       }
     ],
@@ -7115,12 +6919,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Ziemlich langsam",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       }
@@ -7150,11 +6953,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.8
+          "fastestStructuralNotesPerSecond": 2.8
         }
       },
       {
@@ -7162,15 +6965,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 6,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.8,
-          "fastestStaccatoNotePerSecond": 6.9,
-          "fastestOrnamentalNotePerSecond": 27.6
+          "fastestStructuralNotesPerSecond": 13.8,
+          "fastestStaccatoNotesPerSecond": 6.9,
+          "fastestOrnamentalNotesPerSecond": 27.6
         }
       }
     ],
@@ -7182,12 +6985,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Sostenuto",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 8,
             "comment": "\"Meeresstille\""
           }
         ]
@@ -7199,14 +7001,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro vivace",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 6,
+            "fastestOrnamentalNotesValue": 24,
             "comment": "\"Glückliche Fahrt\""
           }
         ]
@@ -7238,15 +7039,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.954545454545453,
+          "fastestStaccatoNotesValue": 15.954545454545453,
+          "fastestOrnamentalNotesValue": 15.954545454545453
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.7,
-          "fastestStaccatoNotePerSecond": 11.7,
-          "fastestOrnamentalNotePerSecond": 11.7
+          "fastestStructuralNotesPerSecond": 11.7,
+          "fastestStaccatoNotesPerSecond": 11.7,
+          "fastestOrnamentalNotesPerSecond": 11.7
         }
       },
       {
@@ -7254,13 +7055,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 116,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 3
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.6,
-          "fastestStaccatoNotePerSecond": 5.8
+          "fastestStructuralNotesPerSecond": 11.6,
+          "fastestStaccatoNotesPerSecond": 5.8
         }
       },
       {
@@ -7268,15 +7069,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "WHOLE",
         "bpm": 116,
-        "noteValues": {
-          "fastestStructuralNoteValue": "QUARTER",
-          "fastestStaccatoNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 3.998275862068966,
+          "fastestStaccatoNotesValue": 3.998275862068966,
+          "fastestOrnamentalNotesValue": 7.996551724137932
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "7.73",
-          "fastestStaccatoNotePerSecond": "7.73",
-          "fastestOrnamentalNotePerSecond": "15.46"
+          "fastestStructuralNotesPerSecond": "7.73",
+          "fastestStaccatoNotesPerSecond": "7.73",
+          "fastestOrnamentalNotesPerSecond": "15.46"
         }
       },
       {
@@ -7284,15 +7085,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 8,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4,
-          "fastestStaccatoNotePerSecond": 2,
-          "fastestOrnamentalNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 4,
+          "fastestStaccatoNotesPerSecond": 2,
+          "fastestOrnamentalNotesPerSecond": 8
         }
       },
       {
@@ -7300,13 +7101,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998,
+          "fastestStaccatoNotesValue": 5.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.2,
-          "fastestStaccatoNotePerSecond": 2.1
+          "fastestStructuralNotesPerSecond": 4.2,
+          "fastestStaccatoNotesPerSecond": 2.1
         }
       },
       {
@@ -7314,13 +7115,13 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 36,
+          "fastestOrnamentalNotesValue": 48
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6,
-          "fastestOrnamentalNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 6,
+          "fastestOrnamentalNotesPerSecond": 8
         }
       },
       {
@@ -7328,15 +7129,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "9.6",
-          "fastestStaccatoNotePerSecond": "9.6",
-          "fastestOrnamentalNotePerSecond": "19.2"
+          "fastestStructuralNotesPerSecond": "9.6",
+          "fastestStaccatoNotesPerSecond": "9.6",
+          "fastestOrnamentalNotesPerSecond": "19.2"
         }
       },
       {
@@ -7344,13 +7145,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 15.954545454545453
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestOrnamentalNotePerSecond": 11.7
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestOrnamentalNotesPerSecond": 11.7
         }
       },
       {
@@ -7358,15 +7159,15 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "HALF",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99,
+          "fastestStaccatoNotesValue": 7.995,
+          "fastestOrnamentalNotesValue": 31.994999999999997
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.66,
-          "fastestStaccatoNotePerSecond": 5.33,
-          "fastestOrnamentalNotePerSecond": 21.33
+          "fastestStructuralNotesPerSecond": 10.66,
+          "fastestStaccatoNotesPerSecond": 5.33,
+          "fastestOrnamentalNotesPerSecond": 21.33
         }
       },
       {
@@ -7374,13 +7175,13 @@ const pieceList = [
         "sectionRank": 4,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "4.2",
-          "fastestStaccatoNotePerSecond": "4.2"
+          "fastestStructuralNotesPerSecond": "4.2",
+          "fastestStaccatoNotesPerSecond": "4.2"
         }
       },
       {
@@ -7388,13 +7189,13 @@ const pieceList = [
         "sectionRank": 5,
         "beatUnit": "HALF",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.8,
-          "fastestStaccatoNotePerSecond": 2.4
+          "fastestStructuralNotesPerSecond": 4.8,
+          "fastestStaccatoNotesPerSecond": 2.4
         }
       },
       {
@@ -7402,13 +7203,13 @@ const pieceList = [
         "sectionRank": 6,
         "beatUnit": "HALF",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": null,
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 9,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3,
-          "fastestOrnamentalNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 3,
+          "fastestOrnamentalNotesPerSecond": 8
         }
       },
       {
@@ -7416,11 +7217,11 @@ const pieceList = [
         "sectionRank": 7,
         "beatUnit": "DOTTED_HALF",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.4
+          "fastestStructuralNotesPerSecond": 8.4
         }
       },
       {
@@ -7428,11 +7229,11 @@ const pieceList = [
         "sectionRank": 8,
         "beatUnit": "HALF",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 8
         }
       },
       {
@@ -7440,13 +7241,13 @@ const pieceList = [
         "sectionRank": 9,
         "beatUnit": "HALF",
         "bpm": 132,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestStaccatoNotesValue": 4
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestStaccatoNotePerSecond": 4.4
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestStaccatoNotesPerSecond": 4.4
         }
       },
       {
@@ -7454,11 +7255,11 @@ const pieceList = [
         "sectionRank": 10,
         "beatUnit": "QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 8
         }
       }
     ],
@@ -7470,14 +7271,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro ma non troppo e un poco maestoso",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.954545454545453,
+            "fastestStaccatoNotesValue": 15.954545454545453,
+            "fastestOrnamentalNotesValue": 15.954545454545453
           }
         ]
       },
@@ -7488,26 +7288,24 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto vivace",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER",
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 3,
             "comment": "Scherzo"
           },
           {
             "rank": 2,
             "tempoIndication": "Presto",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "QUARTER",
-            "fastestStaccatoNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 3.998275862068966,
+            "fastestStaccatoNotesValue": 3.998275862068966,
+            "fastestOrnamentalNotesValue": 7.996551724137932,
             "comment": "Disputed; see Noorduin, 2016"
           }
         ]
@@ -7519,36 +7317,33 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio molto e cantabile",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 8,
+            "fastestOrnamentalNotesValue": 32
           },
           {
             "rank": 2,
             "tempoIndication": "Andante moderato",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 11.999999999999998,
+            "fastestStaccatoNotesValue": 5.999999999999999
           },
           {
             "rank": 3,
             "tempoIndication": "L'istesso tempo",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 36,
+            "fastestOrnamentalNotesValue": 48
           }
         ]
       },
@@ -7559,114 +7354,104 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12,
             "comment": "Disputed; see Noorduin, 2016; Ornamented notes are timpani tremolo"
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro ma non troppo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 15.954545454545453
           },
           {
             "rank": 3,
             "tempoIndication": "Allegro assai",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.99,
+            "fastestStaccatoNotesValue": 7.995,
+            "fastestOrnamentalNotesValue": 31.994999999999997
           },
           {
             "rank": 4,
             "tempoIndication": "Allegro assai vivace",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 6,
             "comment": "Alla marcia; Identified as misprint; see Noorduin, 2016"
           },
           {
             "rank": 5,
             "tempoIndication": "Andante maestoso",
-            "metreString": "3/2",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 6
           },
           {
             "rank": 6,
             "tempoIndication": "Adagio ma non troppo ma divoto",
-            "metreString": "3/2",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": null,
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 9,
+            "fastestOrnamentalNotesValue": 24,
             "comment": "Ornamented notes are tremolo"
           },
           {
             "rank": 7,
             "tempoIndication": "Allergro energico e sempre ben marcato",
-            "metreString": "6/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 12
           },
           {
             "rank": 8,
             "tempoIndication": "Allegro ma non tanto",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 8
           },
           {
             "rank": 9,
             "tempoIndication": "Prestissimo",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER"
+            "fastestStructuralNotesValue": 8,
+            "fastestStaccatoNotesValue": 4
           },
           {
             "rank": 10,
             "tempoIndication": "Maestoso",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 24
           }
         ]
       }
@@ -7696,13 +7481,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5,
-          "fastestOrnamentalNotePerSecond": 10
+          "fastestStructuralNotesPerSecond": 5,
+          "fastestOrnamentalNotesPerSecond": 10
         }
       }
     ],
@@ -7714,13 +7499,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Ziemlich lebhaft und entschlossen",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12
           }
         ]
       }
@@ -7750,11 +7534,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.984210526315788
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.06
+          "fastestStructuralNotesPerSecond": 5.06
         }
       }
     ],
@@ -7766,12 +7550,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "In gehender Bewegung",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 11.984210526315788
           }
         ]
       }
@@ -7800,13 +7583,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.978947368421052,
+          "fastestOrnamentalNotesValue": 31.98947368421053
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.06,
-          "fastestOrnamentalNotePerSecond": 10.13
+          "fastestStructuralNotesPerSecond": 5.06,
+          "fastestOrnamentalNotesPerSecond": 10.13
         }
       }
     ],
@@ -7818,13 +7601,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Ziemlich anhaltend",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.978947368421052,
+            "fastestOrnamentalNotesValue": 31.98947368421053
           }
         ]
       }
@@ -7855,15 +7637,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 12,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.2,
-          "fastestStaccatoNotePerSecond": 7.2,
-          "fastestOrnamentalNotePerSecond": 9.6
+          "fastestStructuralNotesPerSecond": 7.2,
+          "fastestStaccatoNotesPerSecond": 7.2,
+          "fastestOrnamentalNotesPerSecond": 9.6
         }
       },
       {
@@ -7871,13 +7653,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "DOTTED_SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.997999999999999,
+          "fastestStaccatoNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.33,
-          "fastestStaccatoNotePerSecond": 10
+          "fastestStructuralNotesPerSecond": 13.33,
+          "fastestStaccatoNotesPerSecond": 10
         }
       },
       {
@@ -7885,15 +7667,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "DOTTED_HALF",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "DOTTED_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 6,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.2,
-          "fastestStaccatoNotePerSecond": 7.2,
-          "fastestOrnamentalNotePerSecond": 19.2
+          "fastestStructuralNotesPerSecond": 7.2,
+          "fastestStaccatoNotesPerSecond": 7.2,
+          "fastestOrnamentalNotesPerSecond": 19.2
         }
       },
       {
@@ -7901,15 +7683,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998,
+          "fastestStaccatoNotesValue": 11.999999999999998,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.15,
-          "fastestStaccatoNotePerSecond": 3.15,
-          "fastestOrnamentalNotePerSecond": 4.2
+          "fastestStructuralNotesPerSecond": 3.15,
+          "fastestStaccatoNotesPerSecond": 3.15,
+          "fastestOrnamentalNotesPerSecond": 4.2
         }
       },
       {
@@ -7917,13 +7699,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "HALF",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998,
+          "fastestStaccatoNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.3,
-          "fastestStaccatoNotePerSecond": 4.2
+          "fastestStructuralNotesPerSecond": 6.3,
+          "fastestStaccatoNotesPerSecond": 4.2
         }
       },
       {
@@ -7931,15 +7713,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 9,
+          "fastestStaccatoNotesValue": 11.999999999999998,
+          "fastestOrnamentalNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.9,
-          "fastestStaccatoNotePerSecond": 13.2,
-          "fastestOrnamentalNotePerSecond": 13.2
+          "fastestStructuralNotesPerSecond": 9.9,
+          "fastestStaccatoNotesPerSecond": 13.2,
+          "fastestOrnamentalNotesPerSecond": 13.2
         }
       }
     ],
@@ -7951,14 +7733,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro con moto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 12,
+            "fastestOrnamentalNotesValue": 16
           }
         ]
       },
@@ -7969,26 +7750,24 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "DOTTED_SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 7.997999999999999,
+            "fastestStaccatoNotesValue": 6,
             "comment": "Scherzo"
           },
           {
             "rank": 2,
             "tempoIndication": "Piu lento",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "DOTTED_THIRTYSECOND",
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 6,
+            "fastestOrnamentalNotesValue": 16,
             "comment": "Trio; Ornamented notes are tremolo"
           }
         ]
@@ -8000,25 +7779,23 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio non troppo",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 11.999999999999998,
+            "fastestStaccatoNotesValue": 11.999999999999998,
+            "fastestOrnamentalNotesValue": 16
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 11.999999999999998,
+            "fastestStaccatoNotesValue": 8,
             "comment": "Doppio movimento"
           }
         ]
@@ -8030,14 +7807,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto agitato",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 9,
+            "fastestStaccatoNotesValue": 11.999999999999998,
+            "fastestOrnamentalNotesValue": 11.999999999999998,
             "comment": "Finale"
           }
         ]
@@ -8068,15 +7844,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 9,
+          "fastestStaccatoNotesValue": 12,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.9,
-          "fastestStaccatoNotePerSecond": 9.2,
-          "fastestOrnamentalNotePerSecond": 18.4
+          "fastestStructuralNotesPerSecond": 6.9,
+          "fastestStaccatoNotesPerSecond": 9.2,
+          "fastestOrnamentalNotesPerSecond": 18.4
         }
       }
     ],
@@ -8088,14 +7864,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 9,
+            "fastestStaccatoNotesValue": 12,
+            "fastestOrnamentalNotesValue": 24
           }
         ]
       }
@@ -8125,15 +7900,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 58,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24,
+          "fastestStaccatoNotesValue": 24,
+          "fastestOrnamentalNotesValue": 48
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.6,
-          "fastestStaccatoNotePerSecond": 11.6,
-          "fastestOrnamentalNotePerSecond": 23.2
+          "fastestStructuralNotesPerSecond": 11.6,
+          "fastestStaccatoNotesPerSecond": 11.6,
+          "fastestOrnamentalNotesPerSecond": 23.2
         }
       }
     ],
@@ -8145,14 +7920,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Maestoso",
-            "metreString": "6/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 24,
+            "fastestStaccatoNotesValue": 24,
+            "fastestOrnamentalNotesValue": 48,
             "comment": "MM not published; see Sherman, 1997"
           }
         ]
@@ -8183,15 +7957,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 31.982608695652175,
+          "fastestStaccatoNotesValue": 31.982608695652175,
+          "fastestOrnamentalNotesValue": 15.991304347826087
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.26,
-          "fastestStaccatoNotePerSecond": 12.26,
-          "fastestOrnamentalNotePerSecond": 6.13
+          "fastestStructuralNotesPerSecond": 12.26,
+          "fastestStaccatoNotesPerSecond": 12.26,
+          "fastestOrnamentalNotesPerSecond": 6.13
         }
       },
       {
@@ -8199,13 +7973,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999,
+          "fastestStaccatoNotesValue": 2.9999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.6,
-          "fastestStaccatoNotePerSecond": 3.8
+          "fastestStructuralNotesPerSecond": 7.6,
+          "fastestStaccatoNotesPerSecond": 3.8
         }
       },
       {
@@ -8213,13 +7987,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 47.99999999999999,
+          "fastestOrnamentalNotesValue": 47.99999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestOrnamentalNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestOrnamentalNotesPerSecond": 11.2
         }
       },
       {
@@ -8227,15 +8001,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 7.996153846153845,
+          "fastestOrnamentalNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.4,
-          "fastestStaccatoNotePerSecond": 6.93,
-          "fastestOrnamentalNotePerSecond": 13.86
+          "fastestStructuralNotesPerSecond": 10.4,
+          "fastestStaccatoNotesPerSecond": 6.93,
+          "fastestOrnamentalNotesPerSecond": 13.86
         }
       },
       {
@@ -8243,15 +8017,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.999999999999999,
+          "fastestStaccatoNotesValue": 6,
+          "fastestOrnamentalNotesValue": 15.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2,
-          "fastestStaccatoNotePerSecond": 6.9,
-          "fastestOrnamentalNotePerSecond": 18.4
+          "fastestStructuralNotesPerSecond": 9.2,
+          "fastestStaccatoNotesPerSecond": 6.9,
+          "fastestOrnamentalNotesPerSecond": 18.4
         }
       }
     ],
@@ -8263,14 +8037,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro non troppo",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 31.982608695652175,
+            "fastestStaccatoNotesValue": 31.982608695652175,
+            "fastestOrnamentalNotesValue": 15.991304347826087
           }
         ]
       },
@@ -8281,13 +8054,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro appassionato",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER"
+            "fastestStructuralNotesValue": 5.999999999999999,
+            "fastestStaccatoNotesValue": 2.9999999999999996
           }
         ]
       },
@@ -8298,13 +8070,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "6/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 47.99999999999999,
+            "fastestOrnamentalNotesValue": 47.99999999999999
           }
         ]
       },
@@ -8315,26 +8086,24 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto grazioso",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 7.996153846153845,
+            "fastestOrnamentalNotesValue": 15.99230769230769
           },
           {
             "rank": 2,
             "tempoIndication": "Un poco piu presto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 7.999999999999999,
+            "fastestStaccatoNotesValue": 6,
+            "fastestOrnamentalNotesValue": 15.999999999999998
           }
         ]
       }
@@ -8364,13 +8133,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 15.99
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4,
-          "fastestOrnamentalNotePerSecond": 5.33
+          "fastestStructuralNotesPerSecond": 4,
+          "fastestOrnamentalNotesPerSecond": 5.33
         }
       },
       {
@@ -8378,13 +8147,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2,
-          "fastestOrnamentalNotePerSecond": 4
+          "fastestStructuralNotesPerSecond": 2,
+          "fastestOrnamentalNotesPerSecond": 4
         }
       },
       {
@@ -8392,13 +8161,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.985,
+          "fastestStaccatoNotesValue": 5.985
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.66,
-          "fastestStaccatoNotePerSecond": 2.66
+          "fastestStructuralNotesPerSecond": 2.66,
+          "fastestStaccatoNotesPerSecond": 2.66
         }
       },
       {
@@ -8406,13 +8175,13 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "QUARTER",
         "bpm": 56,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.989285714285714,
+          "fastestStaccatoNotesValue": 11.989285714285714
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.73,
-          "fastestStaccatoNotePerSecond": 3.73
+          "fastestStructuralNotesPerSecond": 3.73,
+          "fastestStaccatoNotesPerSecond": 3.73
         }
       },
       {
@@ -8420,13 +8189,13 @@ const pieceList = [
         "sectionRank": 4,
         "beatUnit": "QUARTER",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12.000000000000002,
+          "fastestStaccatoNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.4,
-          "fastestStaccatoNotePerSecond": 3.6
+          "fastestStructuralNotesPerSecond": 5.4,
+          "fastestStaccatoNotesPerSecond": 3.6
         }
       },
       {
@@ -8434,15 +8203,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 52,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.984615384615384,
+          "fastestStaccatoNotesValue": 3.992307692307692,
+          "fastestOrnamentalNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.46,
-          "fastestStaccatoNotePerSecond": 1.73,
-          "fastestOrnamentalNotePerSecond": 6.93
+          "fastestStructuralNotesPerSecond": 3.46,
+          "fastestStaccatoNotesPerSecond": 1.73,
+          "fastestOrnamentalNotesPerSecond": 6.93
         }
       },
       {
@@ -8450,13 +8219,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "HALF",
         "bpm": 54,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestOrnamentalNotesValue": 12.000000000000002
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.6,
-          "fastestOrnamentalNotePerSecond": 5.4
+          "fastestStructuralNotesPerSecond": 3.6,
+          "fastestOrnamentalNotesPerSecond": 5.4
         }
       },
       {
@@ -8464,13 +8233,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.98695652173913,
+          "fastestOrnamentalNotesValue": 9
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.06,
-          "fastestOrnamentalNotePerSecond": 4.6
+          "fastestStructuralNotesPerSecond": 3.06,
+          "fastestOrnamentalNotesPerSecond": 4.6
         }
       },
       {
@@ -8478,13 +8247,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.984615384615384,
+          "fastestStaccatoNotesValue": 3.969230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 1.73,
-          "fastestStaccatoNotePerSecond": 0.86
+          "fastestStructuralNotesPerSecond": 1.73,
+          "fastestStaccatoNotesPerSecond": 0.86
         }
       },
       {
@@ -8492,15 +8261,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.982608695652174,
+          "fastestStaccatoNotesValue": 7.982608695652174,
+          "fastestOrnamentalNotesValue": 15.991304347826087
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.06,
-          "fastestStaccatoNotePerSecond": 3.06,
-          "fastestOrnamentalNotePerSecond": 6.13
+          "fastestStructuralNotesPerSecond": 3.06,
+          "fastestStaccatoNotesPerSecond": 3.06,
+          "fastestOrnamentalNotesPerSecond": 6.13
         }
       },
       {
@@ -8508,15 +8277,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 9,
+          "fastestStaccatoNotesValue": 5.994642857142857,
+          "fastestOrnamentalNotesValue": 11.989285714285714
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.6,
-          "fastestStaccatoNotePerSecond": 3.73,
-          "fastestOrnamentalNotePerSecond": 7.46
+          "fastestStructuralNotesPerSecond": 5.6,
+          "fastestStaccatoNotesPerSecond": 3.73,
+          "fastestOrnamentalNotesPerSecond": 7.46
         }
       },
       {
@@ -8524,15 +8293,15 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": null,
-          "fastestStaccatoNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 3.996,
+          "fastestOrnamentalNotesValue": 15.995999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5,
-          "fastestStaccatoNotePerSecond": 3.33,
-          "fastestOrnamentalNotePerSecond": 13.33
+          "fastestStructuralNotesPerSecond": 5,
+          "fastestStaccatoNotesPerSecond": 3.33,
+          "fastestOrnamentalNotesPerSecond": 13.33
         }
       },
       {
@@ -8540,13 +8309,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 15.99
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4,
-          "fastestOrnamentalNotePerSecond": 5.33
+          "fastestStructuralNotesPerSecond": 4,
+          "fastestOrnamentalNotesPerSecond": 5.33
         }
       }
     ],
@@ -8558,13 +8327,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Ziemlich langsam und mit Ausdruck",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 15.99
           }
         ]
       },
@@ -8575,46 +8343,42 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Langsam, marschmäßig",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12
           },
           {
             "rank": 2,
             "tempoIndication": "Etwas bewegter",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 5.985,
+            "fastestStaccatoNotesValue": 5.985
           },
           {
             "rank": 3,
             "tempoIndication": "Un poco sostenuto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 11.989285714285714,
+            "fastestStaccatoNotesValue": 11.989285714285714
           },
           {
             "rank": 4,
             "tempoIndication": "Allegro non troppo",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 12.000000000000002,
+            "fastestStaccatoNotesValue": 8
           }
         ]
       },
@@ -8625,24 +8389,22 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante moderato",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 7.984615384615384,
+            "fastestStaccatoNotesValue": 3.992307692307692,
+            "fastestOrnamentalNotesValue": 15.99230769230769
           },
           {
             "rank": 2,
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_EIGHTH",
+            "fastestStructuralNotesValue": 8,
+            "fastestOrnamentalNotesValue": 12.000000000000002,
             "comment": "Fugue"
           }
         ]
@@ -8654,13 +8416,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Mäßig bewegt",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_EIGHTH"
+            "fastestStructuralNotesValue": 5.98695652173913,
+            "fastestOrnamentalNotesValue": 9
           }
         ]
       },
@@ -8671,13 +8432,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Langsam",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": null
+            "fastestStructuralNotesValue": 7.984615384615384,
+            "fastestStaccatoNotesValue": 3.969230769230769
           }
         ]
       },
@@ -8688,40 +8448,37 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 7.982608695652174,
+            "fastestStaccatoNotesValue": 7.982608695652174,
+            "fastestOrnamentalNotesValue": 15.991304347826087,
             "comment": "Ornamented notes are tremolo"
           },
           {
             "rank": 2,
             "tempoIndication": "Vivace",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 9,
+            "fastestStaccatoNotesValue": 5.994642857142857,
+            "fastestOrnamentalNotesValue": 11.989285714285714,
             "comment": "Ornamented notes are tremolo"
           },
           {
             "rank": 3,
             "tempoIndication": "Allegro",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": null,
-            "fastestStaccatoNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 3.996,
+            "fastestOrnamentalNotesValue": 15.995999999999999,
             "comment": "Fugue"
           }
         ]
@@ -8733,13 +8490,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Feierlich",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 15.99
           }
         ]
       }
@@ -8769,15 +8525,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.992,
+          "fastestStaccatoNotesValue": 3.996,
+          "fastestOrnamentalNotesValue": 15.995999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.66,
-          "fastestStaccatoNotePerSecond": 3.33,
-          "fastestOrnamentalNotePerSecond": 13.33
+          "fastestStructuralNotesPerSecond": 6.66,
+          "fastestStaccatoNotesPerSecond": 3.33,
+          "fastestOrnamentalNotesPerSecond": 13.33
         }
       },
       {
@@ -8785,13 +8541,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.2,
-          "fastestOrnamentalNotePerSecond": 4.4
+          "fastestStructuralNotesPerSecond": 2.2,
+          "fastestOrnamentalNotesPerSecond": 4.4
         }
       },
       {
@@ -8799,11 +8555,11 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 3.9954545454545456
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.93
+          "fastestStructuralNotesPerSecond": 2.93
         }
       },
       {
@@ -8811,13 +8567,13 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "HALF",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestStaccatoNotesValue": 4
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.4,
-          "fastestStaccatoNotePerSecond": 3.2
+          "fastestStructuralNotesPerSecond": 6.4,
+          "fastestStaccatoNotesPerSecond": 3.2
         }
       },
       {
@@ -8825,13 +8581,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.984210526315788,
+          "fastestStaccatoNotesValue": 11.984210526315788
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.06,
-          "fastestStaccatoNotePerSecond": 5.06
+          "fastestStructuralNotesPerSecond": 5.06,
+          "fastestStaccatoNotesPerSecond": 5.06
         }
       },
       {
@@ -8839,13 +8595,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.2,
-          "fastestOrnamentalNotePerSecond": 6.4
+          "fastestStructuralNotesPerSecond": 3.2,
+          "fastestOrnamentalNotesPerSecond": 6.4
         }
       },
       {
@@ -8853,15 +8609,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestStaccatoNotesValue": 3.9954545454545456,
+          "fastestOrnamentalNotesValue": 15.995454545454544
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.4,
-          "fastestStaccatoNotePerSecond": 2.93,
-          "fastestOrnamentalNotePerSecond": 11.73
+          "fastestStructuralNotesPerSecond": 4.4,
+          "fastestStaccatoNotesPerSecond": 2.93,
+          "fastestOrnamentalNotesPerSecond": 11.73
         }
       },
       {
@@ -8869,11 +8625,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.8
+          "fastestStructuralNotesPerSecond": 3.8
         }
       },
       {
@@ -8881,15 +8637,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "HALF",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestStaccatoNotesValue": 4,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.4,
-          "fastestStaccatoNotePerSecond": 3.2,
-          "fastestOrnamentalNotePerSecond": 12.8
+          "fastestStructuralNotesPerSecond": 6.4,
+          "fastestStaccatoNotesPerSecond": 3.2,
+          "fastestOrnamentalNotesPerSecond": 12.8
         }
       },
       {
@@ -8897,13 +8653,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.999999999999999,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.3,
-          "fastestOrnamentalNotePerSecond": 6.9
+          "fastestStructuralNotesPerSecond": 2.3,
+          "fastestOrnamentalNotesPerSecond": 6.9
         }
       },
       {
@@ -8911,15 +8667,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": null,
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.996153846153845,
+          "fastestStaccatoNotesValue": 6,
+          "fastestOrnamentalNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.93,
-          "fastestStaccatoNotePerSecond": 5.2,
-          "fastestOrnamentalNotePerSecond": 13.86
+          "fastestStructuralNotesPerSecond": 6.93,
+          "fastestStaccatoNotesPerSecond": 5.2,
+          "fastestOrnamentalNotesPerSecond": 13.86
         }
       }
     ],
@@ -8931,14 +8687,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 7.992,
+            "fastestStaccatoNotesValue": 3.996,
+            "fastestOrnamentalNotesValue": 15.995999999999999,
             "comment": "Ornamented notes are tremolo"
           }
         ]
@@ -8950,34 +8705,31 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Poco Adagio",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 24
           },
           {
             "rank": 2,
             "tempoIndication": "Un poco Allegretto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 3.9954545454545456
           },
           {
             "rank": 3,
             "tempoIndication": "Allegro",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER"
+            "fastestStructuralNotesValue": 8,
+            "fastestStaccatoNotesValue": 4
           }
         ]
       },
@@ -8988,24 +8740,22 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro non troppo",
-            "metreString": "3/2",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 11.984210526315788,
+            "fastestStaccatoNotesValue": 11.984210526315788
           },
           {
             "rank": 2,
             "tempoIndication": "Poco sostenuto",
-            "metreString": "3/2",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 24
           }
         ]
       },
@@ -9016,14 +8766,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto non troppo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 6,
+            "fastestStaccatoNotesValue": 3.9954545454545456,
+            "fastestOrnamentalNotesValue": 15.995454545454544
           }
         ]
       },
@@ -9034,24 +8783,22 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante con moto e poco agitato",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 5.999999999999999
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro con fuoco",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 8,
+            "fastestStaccatoNotesValue": 4,
+            "fastestOrnamentalNotesValue": 16,
             "comment": "Ornamented notes are tremolo"
           }
         ]
@@ -9063,13 +8810,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH",
+            "fastestStructuralNotesValue": 7.999999999999999,
+            "fastestOrnamentalNotesValue": 24,
             "comment": "Ornamented notes are tremolo; ornamented notes occur when the word \"Geschwind\" is being sung."
           }
         ]
@@ -9081,14 +8827,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": null,
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 7.996153846153845,
+            "fastestStaccatoNotesValue": 6,
+            "fastestOrnamentalNotesValue": 15.99230769230769
           }
         ]
       }
@@ -9118,11 +8863,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.988
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.33
+          "fastestStructuralNotesPerSecond": 3.33
         }
       },
       {
@@ -9130,11 +8875,11 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.8
+          "fastestStructuralNotesPerSecond": 3.8
         }
       }
     ],
@@ -9146,22 +8891,20 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "6/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 11.988
           },
           {
             "rank": 2,
             "tempoIndication": "Piu sostenuto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH"
+            "fastestStructuralNotesValue": 12
           }
         ]
       }
@@ -9197,11 +8940,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8.003571428571428
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.47
+          "fastestStructuralNotesPerSecond": 7.47
         }
       },
       {
@@ -9209,13 +8952,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.3,
-          "fastestOrnamentalNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 2.3,
+          "fastestOrnamentalNotesPerSecond": 9.2
         }
       },
       {
@@ -9223,11 +8966,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.8
+          "fastestStructuralNotesPerSecond": 4.8
         }
       },
       {
@@ -9235,13 +8978,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.4,
-          "fastestOrnamentalNotePerSecond": 8.8
+          "fastestStructuralNotesPerSecond": 4.4,
+          "fastestOrnamentalNotesPerSecond": 8.8
         }
       },
       {
@@ -9249,11 +8992,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.93
+          "fastestStructuralNotesPerSecond": 6.93
         }
       },
       {
@@ -9261,13 +9004,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.8,
-          "fastestOrnamentalNotePerSecond": 5.6
+          "fastestStructuralNotesPerSecond": 2.8,
+          "fastestOrnamentalNotesPerSecond": 5.6
         }
       },
       {
@@ -9275,13 +9018,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8.007692307692308,
+          "fastestOrnamentalNotesValue": 22.915384615384614
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.47,
-          "fastestOrnamentalNotePerSecond": 9.93
+          "fastestStructuralNotesPerSecond": 3.47,
+          "fastestOrnamentalNotesPerSecond": 9.93
         }
       },
       {
@@ -9289,13 +9032,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 116,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6.005172413793105,
+          "fastestOrnamentalNotesValue": 11.994827586206899
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.87,
-          "fastestOrnamentalNotePerSecond": 7.73
+          "fastestStructuralNotesPerSecond": 3.87,
+          "fastestOrnamentalNotesPerSecond": 7.73
         }
       },
       {
@@ -9303,13 +9046,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.991304347826087,
+          "fastestOrnamentalNotesValue": 32.00869565217391
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.13,
-          "fastestOrnamentalNotePerSecond": 12.27
+          "fastestStructuralNotesPerSecond": 6.13,
+          "fastestOrnamentalNotesPerSecond": 12.27
         }
       },
       {
@@ -9317,13 +9060,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 9,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6,
-          "fastestOrnamentalNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 6,
+          "fastestOrnamentalNotesPerSecond": 8
         }
       },
       {
@@ -9331,13 +9074,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 132,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8.999999999999998,
+          "fastestOrnamentalNotesValue": 35.99999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.6,
-          "fastestOrnamentalNotePerSecond": 26.4
+          "fastestStructuralNotesPerSecond": 6.6,
+          "fastestOrnamentalNotesPerSecond": 26.4
         }
       },
       {
@@ -9345,13 +9088,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 144,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.8,
-          "fastestOrnamentalNotePerSecond": 9.6
+          "fastestStructuralNotesPerSecond": 4.8,
+          "fastestOrnamentalNotesPerSecond": 9.6
         }
       },
       {
@@ -9359,13 +9102,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 144,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.8,
-          "fastestOrnamentalNotePerSecond": 9.6
+          "fastestStructuralNotesPerSecond": 4.8,
+          "fastestOrnamentalNotesPerSecond": 9.6
         }
       },
       {
@@ -9373,11 +9116,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.995454545454544
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.73
+          "fastestStructuralNotesPerSecond": 11.73
         }
       },
       {
@@ -9385,13 +9128,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 9,
+          "fastestOrnamentalNotesValue": 36
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6,
-          "fastestOrnamentalNotePerSecond": 24
+          "fastestStructuralNotesPerSecond": 6,
+          "fastestOrnamentalNotesPerSecond": 24
         }
       },
       {
@@ -9399,11 +9142,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.2
+          "fastestStructuralNotesPerSecond": 4.2
         }
       },
       {
@@ -9411,11 +9154,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 144,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.2
+          "fastestStructuralNotesPerSecond": 7.2
         }
       },
       {
@@ -9423,13 +9166,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8.007692307692308,
+          "fastestOrnamentalNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.47,
-          "fastestOrnamentalNotePerSecond": 6.93
+          "fastestStructuralNotesPerSecond": 3.47,
+          "fastestOrnamentalNotesPerSecond": 6.93
         }
       },
       {
@@ -9437,13 +9180,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 160,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 16,
-          "fastestOrnamentalNotePerSecond": 32
+          "fastestStructuralNotesPerSecond": 16,
+          "fastestOrnamentalNotesPerSecond": 32
         }
       },
       {
@@ -9451,11 +9194,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.2
+          "fastestStructuralNotesPerSecond": 5.2
         }
       },
       {
@@ -9463,11 +9206,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6
+          "fastestStructuralNotesPerSecond": 6
         }
       },
       {
@@ -9475,11 +9218,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.93
+          "fastestStructuralNotesPerSecond": 6.93
         }
       },
       {
@@ -9487,13 +9230,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12.006818181818181,
+          "fastestOrnamentalNotesValue": 23.993181818181817
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.87,
-          "fastestOrnamentalNotePerSecond": 11.73
+          "fastestStructuralNotesPerSecond": 5.87,
+          "fastestOrnamentalNotesPerSecond": 11.73
         }
       },
       {
@@ -9501,13 +9244,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 36,
+          "fastestOrnamentalNotesValue": 54
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12,
-          "fastestOrnamentalNotePerSecond": 18
+          "fastestStructuralNotesPerSecond": 12,
+          "fastestOrnamentalNotesPerSecond": 18
         }
       }
     ],
@@ -9519,12 +9262,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 8.003571428571428
           }
         ]
       },
@@ -9535,13 +9277,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Scherzando",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 6,
+            "fastestOrnamentalNotesValue": 24,
             "comment": "Is \"scherzando\" a tempo indication?"
           }
         ]
@@ -9553,12 +9294,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "[Andantino]",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 16,
             "comment": "Prélude; the \"Andantino\" tempo indication comes from an earlier edition, but which doesn't have any MM."
           }
         ]
@@ -9570,13 +9310,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andantino",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 8,
+            "fastestOrnamentalNotesValue": 16
           }
         ]
       },
@@ -9587,12 +9326,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.99230769230769
           }
         ]
       },
@@ -9603,13 +9341,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andantino",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 8,
+            "fastestOrnamentalNotesValue": 16
           }
         ]
       },
@@ -9620,13 +9357,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Agitato",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+            "fastestStructuralNotesValue": 8.007692307692308,
+            "fastestOrnamentalNotesValue": 22.915384615384614
           }
         ]
       },
@@ -9637,13 +9373,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Scherzando",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 6.005172413793105,
+            "fastestOrnamentalNotesValue": 11.994827586206899,
             "comment": "Is \"scherzando\" a tempo indication?"
           }
         ]
@@ -9655,13 +9390,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andantino",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+            "fastestStructuralNotesValue": 15.991304347826087,
+            "fastestOrnamentalNotesValue": 32.00869565217391
           }
         ]
       },
@@ -9672,13 +9406,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 9,
+            "fastestOrnamentalNotesValue": 12
           }
         ]
       },
@@ -9689,13 +9422,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "[Allegretto]",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+            "fastestStructuralNotesValue": 8.999999999999998,
+            "fastestOrnamentalNotesValue": 35.99999999999999,
             "comment": "The \"Allegretto\" tempo indication comes from an earlier edition, but which doesn't have any MM."
           }
         ]
@@ -9707,13 +9439,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32,
             "comment": "Prélude; ornamental arpeggio in \"Piu moderato\" section"
           }
         ]
@@ -9725,13 +9456,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12
           }
         ]
       },
@@ -9742,12 +9472,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Moderato",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.995454545454544
           }
         ]
       },
@@ -9758,13 +9487,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+            "fastestStructuralNotesValue": 9,
+            "fastestOrnamentalNotesValue": 36
           }
         ]
       },
@@ -9775,12 +9503,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Moderato",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 8
           }
         ]
       },
@@ -9791,12 +9518,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 24
           }
         ]
       },
@@ -9807,13 +9533,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 8.007692307692308,
+            "fastestOrnamentalNotesValue": 15.99230769230769,
             "comment": "\"à Trois Parties réelles\""
           }
         ]
@@ -9825,13 +9550,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12,
             "comment": "Likely a misprint"
           }
         ]
@@ -9843,12 +9567,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Cantabile",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 18
           }
         ]
       },
@@ -9859,12 +9582,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 6,
             "comment": "Tarantelle"
           }
         ]
@@ -9876,12 +9598,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro moderato",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.99230769230769
           }
         ]
       },
@@ -9892,13 +9613,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andantino",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+            "fastestStructuralNotesValue": 12.006818181818181,
+            "fastestOrnamentalNotesValue": 23.993181818181817
           }
         ]
       },
@@ -9909,13 +9629,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Cantabile",
-            "metreString": "9/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 9,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+            "fastestStructuralNotesValue": 36,
+            "fastestOrnamentalNotesValue": 54
           }
         ]
       }
@@ -9946,13 +9665,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 42,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 32,
+          "fastestOrnamentalNotesValue": 64
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.6,
-          "fastestOrnamentalNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 5.6,
+          "fastestOrnamentalNotesPerSecond": 11.2
         }
       },
       {
@@ -9960,11 +9679,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 152,
-        "noteValues": {
-          "fastestStructuralNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": null
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "16th as fastest?"
+          "fastestStructuralNotesPerSecond": "16th as fastest?"
         }
       },
       {
@@ -9972,11 +9691,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.993478260869566
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.13
+          "fastestStructuralNotesPerSecond": 6.13
         }
       },
       {
@@ -9984,11 +9703,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": null
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "16th as fastest?"
+          "fastestStructuralNotesPerSecond": "16th as fastest?"
         }
       },
       {
@@ -9996,13 +9715,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 144,
-        "noteValues": {
-          "fastestStructuralNoteValue": null,
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": null,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "16th as fastest?",
-          "fastestOrnamentalNotePerSecond": 9.6
+          "fastestStructuralNotesPerSecond": "16th as fastest?",
+          "fastestOrnamentalNotesPerSecond": 9.6
         }
       }
     ],
@@ -10014,13 +9733,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+            "fastestStructuralNotesValue": 32,
+            "fastestOrnamentalNotesValue": 64
           }
         ]
       },
@@ -10030,12 +9748,11 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": null,
+            "fastestStructuralNotesValue": null,
             "comment": "Scherzo and trio"
           }
         ]
@@ -10046,12 +9763,11 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 11.993478260869566,
             "comment": "Minuet and trio"
           }
         ]
@@ -10063,22 +9779,20 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andantino",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": null
+            "fastestStructuralNotesValue": null
           },
           {
             "rank": 2,
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": null,
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": null,
+            "fastestOrnamentalNotesValue": 12,
             "comment": "Minuet alla mazurka"
           }
         ]
@@ -10110,13 +9824,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999,
+          "fastestOrnamentalNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestOrnamentalNotePerSecond": 22.4
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestOrnamentalNotesPerSecond": 22.4
         }
       },
       {
@@ -10124,11 +9838,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 116,
-        "noteValues": {
-          "fastestStructuralNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": null
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "16th as fastest?"
+          "fastestStructuralNotesPerSecond": "16th as fastest?"
         }
       },
       {
@@ -10136,11 +9850,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.3
+          "fastestStructuralNotesPerSecond": 6.3
         }
       },
       {
@@ -10148,13 +9862,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6.006521739130434,
+          "fastestOrnamentalNotesValue": 11.993478260869566
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.07,
-          "fastestOrnamentalNotePerSecond": 6.13
+          "fastestStructuralNotesPerSecond": 3.07,
+          "fastestOrnamentalNotesPerSecond": 6.13
         }
       },
       {
@@ -10162,13 +9876,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4,
-          "fastestOrnamentalNotePerSecond": 16
+          "fastestStructuralNotesPerSecond": 4,
+          "fastestOrnamentalNotesPerSecond": 16
         }
       },
       {
@@ -10176,11 +9890,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 3.9964285714285714
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.73
+          "fastestStructuralNotesPerSecond": 3.73
         }
       },
       {
@@ -10188,11 +9902,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12.006818181818181
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.87
+          "fastestStructuralNotesPerSecond": 5.87
         }
       },
       {
@@ -10200,13 +9914,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 144,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 14.4,
-          "fastestOrnamentalNotePerSecond": 57.6
+          "fastestStructuralNotesPerSecond": 14.4,
+          "fastestOrnamentalNotesPerSecond": 57.6
         }
       },
       {
@@ -10214,13 +9928,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.6,
-          "fastestOrnamentalNotePerSecond": 18.4
+          "fastestStructuralNotesPerSecond": 4.6,
+          "fastestOrnamentalNotesPerSecond": 18.4
         }
       },
       {
@@ -10228,13 +9942,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 48,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.2,
-          "fastestOrnamentalNotePerSecond": 6.4
+          "fastestStructuralNotesPerSecond": 3.2,
+          "fastestOrnamentalNotesPerSecond": 6.4
         }
       },
       {
@@ -10242,11 +9956,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": null
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "16th as fastest?"
+          "fastestStructuralNotesPerSecond": "16th as fastest?"
         }
       },
       {
@@ -10254,13 +9968,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 48
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4,
-          "fastestOrnamentalNotePerSecond": 16
+          "fastestStructuralNotesPerSecond": 4,
+          "fastestOrnamentalNotesPerSecond": 16
         }
       },
       {
@@ -10268,11 +9982,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6.000000000000001
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.4
+          "fastestStructuralNotesPerSecond": 5.4
         }
       },
       {
@@ -10280,11 +9994,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 132,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.2
+          "fastestStructuralNotesPerSecond": 13.2
         }
       }
     ],
@@ -10295,13 +10009,12 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 5.999999999999999,
+            "fastestOrnamentalNotesValue": 11.999999999999998,
             "comment": "Barcarolle; likely a misprint"
           }
         ]
@@ -10312,12 +10025,11 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": null,
+            "fastestStructuralNotesValue": null,
             "comment": "March"
           }
         ]
@@ -10329,12 +10041,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
+            "fastestStructuralNotesValue": 11.999999999999998,
             "comment": "Rondoletto"
           }
         ]
@@ -10346,13 +10057,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andantino",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 6.006521739130434,
+            "fastestOrnamentalNotesValue": 11.993478260869566
           }
         ]
       },
@@ -10362,13 +10072,12 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 6,
+            "fastestOrnamentalNotesValue": 24,
             "comment": "Waltz"
           }
         ]
@@ -10380,12 +10089,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 3.9964285714285714,
             "comment": "Rondo"
           }
         ]
@@ -10397,12 +10105,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 12.006818181818181,
             "comment": "Minuet"
           }
         ]
@@ -10413,13 +10120,12 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 6,
+            "fastestOrnamentalNotesValue": 24,
             "comment": "Waltz; ornament with ritenuto; likely a misprint"
           }
         ]
@@ -10431,13 +10137,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 6,
+            "fastestOrnamentalNotesValue": 24,
             "comment": "Chasse"
           }
         ]
@@ -10449,13 +10154,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andantino",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 8,
+            "fastestOrnamentalNotesValue": 16,
             "comment": "\"Mélancolie\""
           }
         ]
@@ -10466,12 +10170,11 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": null,
+            "fastestStructuralNotesValue": null,
             "comment": "Rondo"
           }
         ]
@@ -10483,13 +10186,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 48
           }
         ]
       },
@@ -10499,12 +10201,11 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 6.000000000000001,
             "comment": "Pas redoublé"
           }
         ]
@@ -10515,12 +10216,11 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 5.999999999999999,
             "comment": "Barcarolle; likely a misprint"
           }
         ]
@@ -10552,13 +10252,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 36,
+          "fastestOrnamentalNotesValue": 48
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 24,
-          "fastestOrnamentalNotePerSecond": 32
+          "fastestStructuralNotesPerSecond": 24,
+          "fastestOrnamentalNotesPerSecond": 32
         }
       },
       {
@@ -10566,11 +10266,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.8
+          "fastestStructuralNotesPerSecond": 4.8
         }
       },
       {
@@ -10578,13 +10278,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.994642857142857,
+          "fastestOrnamentalNotesValue": 23.994642857142857
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.73,
-          "fastestOrnamentalNotePerSecond": 14.93
+          "fastestStructuralNotesPerSecond": 3.73,
+          "fastestOrnamentalNotesPerSecond": 14.93
         }
       },
       {
@@ -10592,13 +10292,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 48
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5,
-          "fastestOrnamentalNotePerSecond": 20
+          "fastestStructuralNotesPerSecond": 5,
+          "fastestOrnamentalNotesPerSecond": 20
         }
       },
       {
@@ -10606,13 +10306,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 48
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.4,
-          "fastestOrnamentalNotePerSecond": 17.6
+          "fastestStructuralNotesPerSecond": 4.4,
+          "fastestOrnamentalNotesPerSecond": 17.6
         }
       }
     ],
@@ -10624,13 +10324,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante sostenuto",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 36,
+            "fastestOrnamentalNotesValue": 48,
             "comment": "\"Rêverie\""
           }
         ]
@@ -10641,12 +10340,11 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 8,
             "comment": "Rondo"
           }
         ]
@@ -10663,13 +10361,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 5.994642857142857,
+            "fastestOrnamentalNotesValue": 23.994642857142857,
             "comment": "Scherzo and trio"
           }
         ]
@@ -10680,13 +10377,12 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 48,
             "comment": "Étude"
           }
         ]
@@ -10698,13 +10394,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andantino",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 48,
             "comment": "Minuet; ornament with ritar."
           }
         ]
@@ -10735,11 +10430,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 14.4
+          "fastestStructuralNotesPerSecond": 14.4
         }
       },
       {
@@ -10747,11 +10442,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.86
+          "fastestStructuralNotesPerSecond": 13.86
         }
       },
       {
@@ -10759,11 +10454,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 14.4
+          "fastestStructuralNotesPerSecond": 14.4
         }
       },
       {
@@ -10771,11 +10466,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 16
+          "fastestStructuralNotesPerSecond": 16
         }
       },
       {
@@ -10783,11 +10478,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 14.4
+          "fastestStructuralNotesPerSecond": 14.4
         }
       },
       {
@@ -10795,11 +10490,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.86
+          "fastestStructuralNotesPerSecond": 13.86
         }
       },
       {
@@ -10807,11 +10502,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.86
+          "fastestStructuralNotesPerSecond": 13.86
         }
       },
       {
@@ -10819,11 +10514,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.86
+          "fastestStructuralNotesPerSecond": 13.86
         }
       },
       {
@@ -10831,11 +10526,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 14.4
+          "fastestStructuralNotesPerSecond": 14.4
         }
       },
       {
@@ -10843,11 +10538,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 23.999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.2
+          "fastestStructuralNotesPerSecond": 13.2
         }
       },
       {
@@ -10855,11 +10550,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 132,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 23.999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.2
+          "fastestStructuralNotesPerSecond": 13.2
         }
       },
       {
@@ -10867,11 +10562,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.991304347826087
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.26
+          "fastestStructuralNotesPerSecond": 12.26
         }
       },
       {
@@ -10879,11 +10574,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 14.4
+          "fastestStructuralNotesPerSecond": 14.4
         }
       },
       {
@@ -10891,11 +10586,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 116,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.993103448275864
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 15.46
+          "fastestStructuralNotesPerSecond": 15.46
         }
       },
       {
@@ -10903,11 +10598,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99642857142857
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 14.93
+          "fastestStructuralNotesPerSecond": 14.93
         }
       },
       {
@@ -10915,11 +10610,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 36
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.8
+          "fastestStructuralNotesPerSecond": 13.8
         }
       },
       {
@@ -10927,11 +10622,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.8
+          "fastestStructuralNotesPerSecond": 12.8
         }
       },
       {
@@ -10939,11 +10634,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12
+          "fastestStructuralNotesPerSecond": 12
         }
       },
       {
@@ -10951,11 +10646,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.995999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.33
+          "fastestStructuralNotesPerSecond": 13.33
         }
       },
       {
@@ -10963,11 +10658,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.6
+          "fastestStructuralNotesPerSecond": 12.6
         }
       },
       {
@@ -10975,11 +10670,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99230769230769
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.86
+          "fastestStructuralNotesPerSecond": 13.86
         }
       },
       {
@@ -10987,11 +10682,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.8
+          "fastestStructuralNotesPerSecond": 12.8
         }
       },
       {
@@ -10999,11 +10694,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.6
+          "fastestStructuralNotesPerSecond": 12.6
         }
       },
       {
@@ -11011,11 +10706,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 14.4
+          "fastestStructuralNotesPerSecond": 14.4
         }
       },
       {
@@ -11023,11 +10718,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.8
+          "fastestStructuralNotesPerSecond": 12.8
         }
       },
       {
@@ -11035,13 +10730,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": null,
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 25.99090909090909,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 19.06,
-          "fastestOrnamentalNotePerSecond": 8.8
+          "fastestStructuralNotesPerSecond": 19.06,
+          "fastestOrnamentalNotesPerSecond": 8.8
         }
       },
       {
@@ -11049,11 +10744,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.991304347826087
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.26
+          "fastestStructuralNotesPerSecond": 12.26
         }
       },
       {
@@ -11061,11 +10756,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 15.2
+          "fastestStructuralNotesPerSecond": 15.2
         }
       },
       {
@@ -11073,11 +10768,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.995999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.33
+          "fastestStructuralNotesPerSecond": 13.33
         }
       },
       {
@@ -11085,11 +10780,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.8
+          "fastestStructuralNotesPerSecond": 13.8
         }
       },
       {
@@ -11097,11 +10792,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12
+          "fastestStructuralNotesPerSecond": 12
         }
       },
       {
@@ -11109,11 +10804,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.995999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.33
+          "fastestStructuralNotesPerSecond": 13.33
         }
       },
       {
@@ -11121,11 +10816,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.8
+          "fastestStructuralNotesPerSecond": 13.8
         }
       },
       {
@@ -11133,11 +10828,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.954545454545453
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.7
+          "fastestStructuralNotesPerSecond": 11.7
         }
       },
       {
@@ -11145,11 +10840,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12.000000000000002
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.8
+          "fastestStructuralNotesPerSecond": 10.8
         }
       },
       {
@@ -11157,11 +10852,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.954545454545453
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.7
+          "fastestStructuralNotesPerSecond": 11.7
         }
       },
       {
@@ -11169,11 +10864,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.8
+          "fastestStructuralNotesPerSecond": 12.8
         }
       },
       {
@@ -11181,11 +10876,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 11.2
         }
       },
       {
@@ -11193,11 +10888,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.996153846153845
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.86
+          "fastestStructuralNotesPerSecond": 13.86
         }
       },
       {
@@ -11205,11 +10900,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12
+          "fastestStructuralNotesPerSecond": 12
         }
       }
     ],
@@ -11221,12 +10916,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -11237,12 +10931,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.99230769230769
           }
         ]
       },
@@ -11253,12 +10946,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -11269,12 +10961,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12
           }
         ]
       },
@@ -11285,12 +10976,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -11301,12 +10991,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.99230769230769
           }
         ]
       },
@@ -11317,12 +11006,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.99230769230769
           }
         ]
       },
@@ -11333,12 +11021,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.99230769230769
           }
         ]
       },
@@ -11349,12 +11036,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -11365,12 +11051,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 23.999999999999996
           }
         ]
       },
@@ -11381,12 +11066,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 23.999999999999996
           }
         ]
       },
@@ -11397,12 +11081,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.991304347826087
           }
         ]
       },
@@ -11413,12 +11096,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 12
           }
         ]
       },
@@ -11429,12 +11111,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto vivo e velocissimo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.993103448275864
           }
         ]
       },
@@ -11445,12 +11126,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.99642857142857
           }
         ]
       },
@@ -11461,12 +11141,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 36
           }
         ]
       },
@@ -11477,12 +11156,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -11493,12 +11171,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 12
           }
         ]
       },
@@ -11509,12 +11186,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.995999999999999
           }
         ]
       },
@@ -11525,12 +11201,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto vivace",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 11.999999999999998
           }
         ]
       },
@@ -11541,12 +11216,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.99230769230769
           }
         ]
       },
@@ -11557,12 +11231,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 16,
             "comment": "Repeated notes etude"
           }
         ]
@@ -11574,12 +11247,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 11.999999999999998
           }
         ]
       },
@@ -11590,12 +11262,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -11606,12 +11277,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -11622,13 +11292,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": null,
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 25.99090909090909,
+            "fastestOrnamentalNotesValue": 12
           }
         ]
       },
@@ -11639,12 +11308,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.991304347826087
           }
         ]
       },
@@ -11655,12 +11323,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 12
           }
         ]
       },
@@ -11671,12 +11338,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.995999999999999
           }
         ]
       },
@@ -11687,12 +11353,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto volante",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12
           }
         ]
       },
@@ -11703,12 +11368,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 12,
             "comment": "Chromatic etude"
           }
         ]
@@ -11720,12 +11384,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto volante",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.995999999999999
           }
         ]
       },
@@ -11736,12 +11399,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro e veloce",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 18
           }
         ]
       },
@@ -11752,12 +11414,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto vivo ed energico",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.954545454545453
           }
         ]
       },
@@ -11768,12 +11429,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro vivacissimo",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12.000000000000002
           }
         ]
       },
@@ -11784,12 +11444,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.954545454545453
           }
         ]
       },
@@ -11800,12 +11459,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro e giocoso",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -11816,12 +11474,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro, quasi presto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -11832,12 +11489,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "2/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 7.996153846153845,
             "comment": "\"a la Galopade\""
           }
         ]
@@ -11849,12 +11505,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegrissimo, quasi presto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 12
           }
         ]
       }
@@ -11884,11 +11539,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.991304347826087
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "6.13"
+          "fastestStructuralNotesPerSecond": "6.13"
         }
       },
       {
@@ -11896,11 +11551,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.2
+          "fastestStructuralNotesPerSecond": 13.2
         }
       },
       {
@@ -11908,11 +11563,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 11.2
         }
       },
       {
@@ -11920,11 +11575,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12
+          "fastestStructuralNotesPerSecond": 12
         }
       },
       {
@@ -11932,11 +11587,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.66
+          "fastestStructuralNotesPerSecond": 10.66
         }
       },
       {
@@ -11944,11 +11599,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 11.2
         }
       },
       {
@@ -11956,11 +11611,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12
+          "fastestStructuralNotesPerSecond": 12
         }
       },
       {
@@ -11968,11 +11623,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 144,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.6
+          "fastestStructuralNotesPerSecond": 9.6
         }
       },
       {
@@ -11980,11 +11635,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12
+          "fastestStructuralNotesPerSecond": 12
         }
       },
       {
@@ -11992,11 +11647,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12
+          "fastestStructuralNotesPerSecond": 12
         }
       },
       {
@@ -12004,11 +11659,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 152,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.996052631578948
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.13
+          "fastestStructuralNotesPerSecond": 10.13
         }
       },
       {
@@ -12016,13 +11671,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 126,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.4,
-          "fastestStaccatoNotePerSecond": 8.4
+          "fastestStructuralNotesPerSecond": 8.4,
+          "fastestStaccatoNotesPerSecond": 8.4
         }
       },
       {
@@ -12030,11 +11685,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SEPTUPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 28
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 16.1
+          "fastestStructuralNotesPerSecond": 16.1
         }
       },
       {
@@ -12042,13 +11697,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 116,
-        "noteValues": {
-          "fastestStructuralNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.989655172413793,
+          "fastestOrnamentalNotesValue": 23.989655172413798
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 1.93,
-          "fastestOrnamentalNotePerSecond": 7.73
+          "fastestStructuralNotesPerSecond": 1.93,
+          "fastestOrnamentalNotesPerSecond": 7.73
         }
       },
       {
@@ -12056,11 +11711,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.8
+          "fastestStructuralNotesPerSecond": 12.8
         }
       },
       {
@@ -12068,13 +11723,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "QUINTUPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 19.995652173913044,
+          "fastestOrnamentalNotesValue": 31.995652173913044
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 15.33,
-          "fastestOrnamentalNotePerSecond": 24.53
+          "fastestStructuralNotesPerSecond": 15.33,
+          "fastestOrnamentalNotesPerSecond": 24.53
         }
       },
       {
@@ -12082,13 +11737,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8,
-          "fastestStaccatoNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 8,
+          "fastestStaccatoNotesPerSecond": 8
         }
       },
       {
@@ -12096,11 +11751,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "16"
+          "fastestStructuralNotesPerSecond": "16"
         }
       },
       {
@@ -12108,11 +11763,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.985714285714286
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.46
+          "fastestStructuralNotesPerSecond": 7.46
         }
       },
       {
@@ -12120,15 +11775,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.994736842105265,
+          "fastestStaccatoNotesValue": 7.989473684210526,
+          "fastestOrnamentalNotesValue": 15.994736842105265
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.13,
-          "fastestStaccatoNotePerSecond": 5.06,
-          "fastestOrnamentalNotePerSecond": 10.13
+          "fastestStructuralNotesPerSecond": 10.13,
+          "fastestStaccatoNotesPerSecond": 5.06,
+          "fastestOrnamentalNotesPerSecond": 10.13
         }
       },
       {
@@ -12136,11 +11791,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.995999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.33
+          "fastestStructuralNotesPerSecond": 13.33
         }
       },
       {
@@ -12148,11 +11803,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 9.2
         }
       },
       {
@@ -12160,11 +11815,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.66
+          "fastestStructuralNotesPerSecond": 10.66
         }
       },
       {
@@ -12172,11 +11827,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.66
+          "fastestStructuralNotesPerSecond": 10.66
         }
       },
       {
@@ -12184,11 +11839,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 84,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.6
+          "fastestStructuralNotesPerSecond": 12.6
         }
       },
       {
@@ -12196,11 +11851,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 8
         }
       },
       {
@@ -12208,13 +11863,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 126,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.4,
-          "fastestOrnamentalNotePerSecond": 16.8
+          "fastestStructuralNotesPerSecond": 8.4,
+          "fastestOrnamentalNotesPerSecond": 16.8
         }
       },
       {
@@ -12222,11 +11877,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.66
+          "fastestStructuralNotesPerSecond": 10.66
         }
       },
       {
@@ -12234,13 +11889,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 152,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.989473684210526,
+          "fastestStaccatoNotesValue": 7.989473684210526
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.06,
-          "fastestStaccatoNotePerSecond": 5.06
+          "fastestStructuralNotesPerSecond": 5.06,
+          "fastestStaccatoNotesPerSecond": 5.06
         }
       },
       {
@@ -12248,13 +11903,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 148,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 23.995945945945948,
+          "fastestStaccatoNotesValue": 5.995945945945945
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 19.73,
-          "fastestStaccatoNotePerSecond": 4.93
+          "fastestStructuralNotesPerSecond": 19.73,
+          "fastestStaccatoNotesPerSecond": 4.93
         }
       },
       {
@@ -12262,11 +11917,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 18.4
+          "fastestStructuralNotesPerSecond": 18.4
         }
       },
       {
@@ -12274,11 +11929,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 36
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 18
+          "fastestStructuralNotesPerSecond": 18
         }
       },
       {
@@ -12286,13 +11941,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": null,
-          "fastestStaccatoNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 33.391304347826086,
+          "fastestStaccatoNotesValue": 8.347826086956522
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.8,
-          "fastestStaccatoNotePerSecond": 3.2
+          "fastestStructuralNotesPerSecond": 12.8,
+          "fastestStaccatoNotesPerSecond": 3.2
         }
       },
       {
@@ -12300,13 +11955,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24,
+          "fastestOrnamentalNotesValue": 31.99090909090909
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestOrnamentalNotePerSecond": 11.73
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestOrnamentalNotesPerSecond": 11.73
         }
       },
       {
@@ -12314,11 +11969,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.995999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.33
+          "fastestStructuralNotesPerSecond": 13.33
         }
       },
       {
@@ -12326,13 +11981,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 31.991999999999997,
+          "fastestStaccatoNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.33,
-          "fastestStaccatoNotePerSecond": 10
+          "fastestStructuralNotesPerSecond": 13.33,
+          "fastestStaccatoNotesPerSecond": 10
         }
       },
       {
@@ -12340,13 +11995,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18,
+          "fastestOrnamentalNotesValue": 23.988461538461536
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.4,
-          "fastestOrnamentalNotePerSecond": 13.86
+          "fastestStructuralNotesPerSecond": 10.4,
+          "fastestOrnamentalNotesPerSecond": 13.86
         }
       },
       {
@@ -12354,11 +12009,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 116,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.8
+          "fastestStructuralNotesPerSecond": 5.8
         }
       },
       {
@@ -12366,13 +12021,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.996153846153845,
+          "fastestStaccatoNotesValue": 7.996153846153845
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.93,
-          "fastestStaccatoNotePerSecond": 6.93
+          "fastestStructuralNotesPerSecond": 6.93,
+          "fastestStaccatoNotesPerSecond": 6.93
         }
       },
       {
@@ -12380,13 +12035,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 160,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "TRIPLET_EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8,
-          "fastestStaccatoNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 8,
+          "fastestStaccatoNotesPerSecond": 8
         }
       }
     ],
@@ -12398,12 +12053,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 15.991304347826087,
             "comment": "Identified as misprint"
           }
         ]
@@ -12415,12 +12069,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 11.999999999999998
           }
         ]
       },
@@ -12431,12 +12084,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -12447,12 +12099,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 24
           }
         ]
       },
@@ -12463,12 +12114,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.99
           }
         ]
       },
@@ -12479,12 +12129,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -12495,12 +12144,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 24
           }
         ]
       },
@@ -12511,12 +12159,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro vivace",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12
           }
         ]
       },
@@ -12527,12 +12174,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12
           }
         ]
       },
@@ -12543,12 +12189,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 12
           }
         ]
       },
@@ -12559,12 +12204,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 11.996052631578948,
             "comment": "Repeated notes etude"
           }
         ]
@@ -12576,13 +12220,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 16
           }
         ]
       },
@@ -12593,12 +12236,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro velocessimo",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SEPTUPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 28
           }
         ]
       },
@@ -12609,13 +12251,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Lento",
-            "metreString": "3/2",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 5.989655172413793,
+            "fastestOrnamentalNotesValue": 23.989655172413798,
             "comment": "Trills etude"
           }
         ]
@@ -12627,12 +12268,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -12643,13 +12283,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "QUINTUPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 19.995652173913044,
+            "fastestOrnamentalNotesValue": 31.995652173913044
           }
         ]
       },
@@ -12660,13 +12299,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 12
           }
         ]
       },
@@ -12677,12 +12315,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 12,
             "comment": "Identified as misprint"
           }
         ]
@@ -12694,12 +12331,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro moderato",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.985714285714286
           }
         ]
       },
@@ -12710,14 +12346,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.994736842105265,
+            "fastestStaccatoNotesValue": 7.989473684210526,
+            "fastestOrnamentalNotesValue": 15.994736842105265
           }
         ]
       },
@@ -12728,12 +12363,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Presto",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.995999999999999
           }
         ]
       },
@@ -12744,12 +12378,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12
           }
         ]
       },
@@ -12760,12 +12393,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro vivace",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.99
           }
         ]
       },
@@ -12776,12 +12408,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.99
           }
         ]
       },
@@ -12792,12 +12423,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 18
           }
         ]
       },
@@ -12808,12 +12438,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -12824,13 +12453,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 8,
+            "fastestOrnamentalNotesValue": 16
           }
         ]
       },
@@ -12841,12 +12469,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.99
           }
         ]
       },
@@ -12857,13 +12484,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro vivo",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 7.989473684210526,
+            "fastestStaccatoNotesValue": 7.989473684210526
           }
         ]
       },
@@ -12874,13 +12500,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Velocissimo",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 23.995945945945948,
+            "fastestStaccatoNotesValue": 5.995945945945945
           }
         ]
       },
@@ -12891,12 +12516,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 24
           }
         ]
       },
@@ -12907,12 +12531,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto veloce",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": null
+            "fastestStructuralNotesValue": 36
           }
         ]
       },
@@ -12923,13 +12546,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": null,
-            "fastestStaccatoNoteValue": null
+            "fastestStructuralNotesValue": 33.391304347826086,
+            "fastestStaccatoNotesValue": 8.347826086956522
           }
         ]
       },
@@ -12940,13 +12562,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 24,
+            "fastestOrnamentalNotesValue": 31.99090909090909
           }
         ]
       },
@@ -12957,12 +12578,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.995999999999999
           }
         ]
       },
@@ -12973,13 +12593,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Tempo moderato",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 31.991999999999997,
+            "fastestStaccatoNotesValue": 24
           }
         ]
       },
@@ -12990,13 +12609,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Lento",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 18,
+            "fastestOrnamentalNotesValue": 23.988461538461536
           }
         ]
       },
@@ -13007,12 +12625,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro moderato",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH"
+            "fastestStructuralNotesValue": 12
           }
         ]
       },
@@ -13023,13 +12640,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegretto vivace",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 7.996153846153845,
+            "fastestStaccatoNotesValue": 7.996153846153845
           }
         ]
       },
@@ -13040,13 +12656,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "TRIPLET_EIGHTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 12
           }
         ]
       }
@@ -13076,11 +12691,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.995999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.33
+          "fastestStructuralNotesPerSecond": 13.33
         }
       },
       {
@@ -13088,11 +12703,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.991304347826087
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.26
+          "fastestStructuralNotesPerSecond": 12.26
         }
       },
       {
@@ -13100,11 +12715,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.8
+          "fastestStructuralNotesPerSecond": 12.8
         }
       },
       {
@@ -13112,11 +12727,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 14.4
+          "fastestStructuralNotesPerSecond": 14.4
         }
       },
       {
@@ -13124,13 +12739,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTYFOURTH",
-          "fastestOrnamentalNoteValue": "DOTTED_HUNDREDTWENTYEIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 63.99999999999999,
+          "fastestOrnamentalNotesValue": 80
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 18.4,
-          "fastestOrnamentalNotePerSecond": 23
+          "fastestStructuralNotesPerSecond": 18.4,
+          "fastestOrnamentalNotesPerSecond": 23
         }
       },
       {
@@ -13138,11 +12753,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 31.999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 18.4
+          "fastestStructuralNotesPerSecond": 18.4
         }
       }
     ],
@@ -13154,12 +12769,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.995999999999999
           }
         ]
       },
@@ -13170,12 +12784,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.991304347826087
           }
         ]
       },
@@ -13186,12 +12799,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -13202,12 +12814,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -13218,13 +12829,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andantino con moto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTYFOURTH",
-            "fastestOrnamentalNoteValue": "DOTTED_HUNDREDTWENTYEIGHTH"
+            "fastestStructuralNotesValue": 63.99999999999999,
+            "fastestOrnamentalNotesValue": 80
           }
         ]
       },
@@ -13235,12 +12845,11 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto allegro velocissimo",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 31.999999999999996
           }
         ]
       }
@@ -13270,15 +12879,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 12,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.9,
-          "fastestStaccatoNotePerSecond": 6.9,
-          "fastestOrnamentalNotePerSecond": 13.8
+          "fastestStructuralNotesPerSecond": 6.9,
+          "fastestStaccatoNotesPerSecond": 6.9,
+          "fastestOrnamentalNotesPerSecond": 13.8
         }
       },
       {
@@ -13286,15 +12895,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.981818181818182,
+          "fastestStaccatoNotesValue": 15.981818181818182,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.86,
-          "fastestStaccatoNotePerSecond": 5.86,
-          "fastestOrnamentalNotePerSecond": 8.8
+          "fastestStructuralNotesPerSecond": 5.86,
+          "fastestStaccatoNotesPerSecond": 5.86,
+          "fastestOrnamentalNotesPerSecond": 8.8
         }
       }
     ],
@@ -13306,14 +12915,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro moderato",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 12,
+            "fastestOrnamentalNotesValue": 24
           }
         ]
       },
@@ -13324,14 +12932,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio molto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+            "fastestStructuralNotesValue": 15.981818181818182,
+            "fastestStaccatoNotesValue": 15.981818181818182,
+            "fastestOrnamentalNotesValue": 24,
             "comment": "Tempo di Marcia"
           }
         ]
@@ -13362,15 +12969,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 152,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.996052631578948,
+          "fastestStaccatoNotesValue": 11.996052631578948,
+          "fastestOrnamentalNotesValue": 23.992105263157896
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.13,
-          "fastestStaccatoNotePerSecond": 10.13,
-          "fastestOrnamentalNotePerSecond": 20.26
+          "fastestStructuralNotesPerSecond": 10.13,
+          "fastestStaccatoNotesPerSecond": 10.13,
+          "fastestOrnamentalNotesPerSecond": 20.26
         }
       },
       {
@@ -13378,15 +12985,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 63,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "4.2 - 4.6",
-          "fastestStaccatoNotePerSecond": "4.2 - 4.6",
-          "fastestOrnamentalNotePerSecond": "8.4 - 9.2"
+          "fastestStructuralNotesPerSecond": "4.2",
+          "fastestStaccatoNotesPerSecond": "4.2",
+          "fastestOrnamentalNotesPerSecond": "8.4"
         }
       },
       {
@@ -13394,15 +13001,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 152,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.997368421052633,
+          "fastestStaccatoNotesValue": 3.994736842105263,
+          "fastestOrnamentalNotesValue": 15.994736842105265
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.13,
-          "fastestStaccatoNotePerSecond": 5.06,
-          "fastestOrnamentalNotePerSecond": 20.26
+          "fastestStructuralNotesPerSecond": 10.13,
+          "fastestStaccatoNotesPerSecond": 5.06,
+          "fastestOrnamentalNotesPerSecond": 20.26
         }
       }
     ],
@@ -13414,14 +13021,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 11.996052631578948,
+            "fastestStaccatoNotesValue": 11.996052631578948,
+            "fastestOrnamentalNotesValue": 23.992105263157896
           }
         ]
       },
@@ -13432,14 +13038,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante e molto cantabile",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32
           }
         ]
       },
@@ -13450,14 +13055,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro con brio",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 7.997368421052633,
+            "fastestStaccatoNotesValue": 3.994736842105263,
+            "fastestOrnamentalNotesValue": 15.994736842105265,
             "comment": "Ornamented notes are tremolo"
           }
         ]
@@ -13488,15 +13092,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.992857142857143,
+          "fastestStaccatoNotesValue": 7.992857142857143,
+          "fastestOrnamentalNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.46,
-          "fastestStaccatoNotePerSecond": 7.46,
-          "fastestOrnamentalNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 7.46,
+          "fastestStaccatoNotesPerSecond": 7.46,
+          "fastestOrnamentalNotesPerSecond": 11.2
         }
       },
       {
@@ -13504,15 +13108,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.984210526315788,
+          "fastestStaccatoNotesValue": 11.984210526315788,
+          "fastestOrnamentalNotesValue": 23.992105263157896
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.06,
-          "fastestStaccatoNotePerSecond": 5.06,
-          "fastestOrnamentalNotePerSecond": 10.13
+          "fastestStructuralNotesPerSecond": 5.06,
+          "fastestStaccatoNotesPerSecond": 5.06,
+          "fastestOrnamentalNotesPerSecond": 10.13
         }
       },
       {
@@ -13520,15 +13124,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999,
+          "fastestStaccatoNotesValue": 5.999999999999999,
+          "fastestOrnamentalNotesValue": 6.994736842105262
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.6,
-          "fastestStaccatoNotePerSecond": 7.6,
-          "fastestOrnamentalNotePerSecond": 8.86
+          "fastestStructuralNotesPerSecond": 7.6,
+          "fastestStaccatoNotesPerSecond": 7.6,
+          "fastestOrnamentalNotesPerSecond": 8.86
         }
       },
       {
@@ -13536,15 +13140,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 122,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.993442622950822,
+          "fastestStaccatoNotesValue": 15.993442622950822,
+          "fastestOrnamentalNotesValue": 31.986885245901643
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.13,
-          "fastestStaccatoNotePerSecond": 8.13,
-          "fastestOrnamentalNotePerSecond": 16.26
+          "fastestStructuralNotesPerSecond": 8.13,
+          "fastestStaccatoNotesPerSecond": 8.13,
+          "fastestOrnamentalNotesPerSecond": 16.26
         }
       }
     ],
@@ -13556,14 +13160,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro ma non troppo",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 7.992857142857143,
+            "fastestStaccatoNotesValue": 7.992857142857143,
+            "fastestOrnamentalNotesValue": 11.999999999999998
           }
         ]
       },
@@ -13574,14 +13177,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante con moto",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+            "fastestStructuralNotesValue": 11.984210526315788,
+            "fastestStaccatoNotesValue": 11.984210526315788,
+            "fastestOrnamentalNotesValue": 23.992105263157896
           }
         ]
       },
@@ -13592,14 +13194,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro scherzando",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": null
+            "fastestStructuralNotesValue": 5.999999999999999,
+            "fastestStaccatoNotesValue": 5.999999999999999,
+            "fastestOrnamentalNotesValue": 6.994736842105262
           }
         ]
       },
@@ -13610,14 +13211,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.993442622950822,
+            "fastestStaccatoNotesValue": 15.993442622950822,
+            "fastestOrnamentalNotesValue": 31.986885245901643
           }
         ]
       }
@@ -13648,15 +13248,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.997727272727272,
+          "fastestStaccatoNotesValue": 7.997727272727272,
+          "fastestOrnamentalNotesValue": 31.99772727272727
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": "11.73",
-          "fastestStaccatoNotePerSecond": "11.73",
-          "fastestOrnamentalNotePerSecond": "46.93"
+          "fastestStructuralNotesPerSecond": "11.73",
+          "fastestStaccatoNotesPerSecond": "11.73",
+          "fastestOrnamentalNotesPerSecond": "46.93"
         }
       }
     ],
@@ -13668,14 +13268,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andantino",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 7.997727272727272,
+            "fastestStaccatoNotesValue": 7.997727272727272,
+            "fastestOrnamentalNotesValue": 31.99772727272727,
             "comment": "Very likely a misprint"
           }
         ]
@@ -13706,13 +13305,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 54,
-        "noteValues": {
-          "fastestStructuralNoteValue": null,
-          "fastestStaccatoNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 36,
+          "fastestStaccatoNotesValue": 36
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.1,
-          "fastestStaccatoNotePerSecond": 8.1
+          "fastestStructuralNotesPerSecond": 8.1,
+          "fastestStaccatoNotesPerSecond": 8.1
         }
       },
       {
@@ -13720,15 +13319,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 54,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24.000000000000004,
+          "fastestStaccatoNotesValue": 24.000000000000004,
+          "fastestOrnamentalNotesValue": 64
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.8,
-          "fastestStaccatoNotePerSecond": 10.8,
-          "fastestOrnamentalNotePerSecond": 28.8
+          "fastestStructuralNotesPerSecond": 10.8,
+          "fastestStaccatoNotesPerSecond": 10.8,
+          "fastestOrnamentalNotesPerSecond": 28.8
         }
       }
     ],
@@ -13740,13 +13339,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante sostenuto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": null,
-            "fastestStaccatoNoteValue": null
+            "fastestStructuralNotesValue": 36,
+            "fastestStaccatoNotesValue": 36
           }
         ]
       },
@@ -13757,14 +13355,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Maestoso",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+            "fastestStructuralNotesValue": 24.000000000000004,
+            "fastestStaccatoNotesValue": 24.000000000000004,
+            "fastestOrnamentalNotesValue": 64
           }
         ]
       }
@@ -13794,15 +13391,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 9.000000000000002,
+          "fastestStaccatoNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.8,
-          "fastestStaccatoNotePerSecond": 7.2,
-          "fastestOrnamentalNotePerSecond": 14.4
+          "fastestStructuralNotesPerSecond": 10.8,
+          "fastestStaccatoNotesPerSecond": 7.2,
+          "fastestOrnamentalNotesPerSecond": 14.4
         }
       },
       {
@@ -13810,13 +13407,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "DOTTED_HALF",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999,
+          "fastestStaccatoNotesValue": 5.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestStaccatoNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestStaccatoNotesPerSecond": 11.2
         }
       },
       {
@@ -13824,13 +13421,13 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "DOTTED_HALF",
         "bpm": 126,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999,
+          "fastestOrnamentalNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.6,
-          "fastestOrnamentalNotePerSecond": 25.2
+          "fastestStructuralNotesPerSecond": 12.6,
+          "fastestOrnamentalNotesPerSecond": 25.2
         }
       },
       {
@@ -13838,13 +13435,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "THIRTYSECOND",
-          "fastestStaccatoNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 32,
+          "fastestStaccatoNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.2,
-          "fastestStaccatoNotePerSecond": 7.2
+          "fastestStructuralNotesPerSecond": 7.2,
+          "fastestStaccatoNotesPerSecond": 7.2
         }
       },
       {
@@ -13852,15 +13449,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 126,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.999999999999999,
+          "fastestStaccatoNotesValue": 2.9999999999999996,
+          "fastestOrnamentalNotesValue": 11.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.6,
-          "fastestStaccatoNotePerSecond": 6.3,
-          "fastestOrnamentalNotePerSecond": 25.2
+          "fastestStructuralNotesPerSecond": 12.6,
+          "fastestStaccatoNotesPerSecond": 6.3,
+          "fastestOrnamentalNotesPerSecond": 25.2
         }
       },
       {
@@ -13868,15 +13465,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 11.999999999999998,
+          "fastestStaccatoNotesValue": 7.992857142857143,
+          "fastestOrnamentalNotesValue": 23.999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.2,
-          "fastestStaccatoNotePerSecond": 7.46,
-          "fastestOrnamentalNotePerSecond": 22.4
+          "fastestStructuralNotesPerSecond": 11.2,
+          "fastestStaccatoNotesPerSecond": 7.46,
+          "fastestOrnamentalNotesPerSecond": 22.4
         }
       }
     ],
@@ -13888,36 +13485,33 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 9.000000000000002,
+            "fastestStaccatoNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12
           },
           {
             "rank": 2,
             "tempoIndication": "Più Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 5.999999999999999,
+            "fastestStaccatoNotesValue": 5.999999999999999
           },
           {
             "rank": 3,
             "tempoIndication": "Più Allegro",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 5.999999999999999,
+            "fastestOrnamentalNotesValue": 11.999999999999998
           }
         ]
       },
@@ -13928,13 +13522,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "THIRTYSECOND",
-            "fastestStaccatoNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 32,
+            "fastestStaccatoNotesValue": 32
           }
         ]
       },
@@ -13945,14 +13538,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto",
-            "metreString": "3/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 5.999999999999999,
+            "fastestStaccatoNotesValue": 2.9999999999999996,
+            "fastestOrnamentalNotesValue": 11.999999999999998
           }
         ]
       },
@@ -13963,14 +13555,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro vivace",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 11.999999999999998,
+            "fastestStaccatoNotesValue": 7.992857142857143,
+            "fastestOrnamentalNotesValue": 23.999999999999996
           }
         ]
       }
@@ -14000,15 +13591,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 3,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 16,
-          "fastestStaccatoNotePerSecond": 4,
-          "fastestOrnamentalNotePerSecond": 32
+          "fastestStructuralNotesPerSecond": 16,
+          "fastestStaccatoNotesPerSecond": 4,
+          "fastestOrnamentalNotesPerSecond": 32
         }
       },
       {
@@ -14016,13 +13607,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.8,
-          "fastestOrnamentalNotePerSecond": 9.6
+          "fastestStructuralNotesPerSecond": 4.8,
+          "fastestOrnamentalNotesPerSecond": 9.6
         }
       },
       {
@@ -14030,15 +13621,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 6,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12,
-          "fastestStaccatoNotePerSecond": 6,
-          "fastestOrnamentalNotePerSecond": 24
+          "fastestStructuralNotesPerSecond": 12,
+          "fastestStaccatoNotesPerSecond": 6,
+          "fastestOrnamentalNotesPerSecond": 24
         }
       },
       {
@@ -14046,15 +13637,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.995999999999999,
+          "fastestStaccatoNotesValue": 7.992,
+          "fastestOrnamentalNotesValue": 31.991999999999997
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 13.33,
-          "fastestStaccatoNotePerSecond": 6.66,
-          "fastestOrnamentalNotePerSecond": 26.66
+          "fastestStructuralNotesPerSecond": 13.33,
+          "fastestStaccatoNotesPerSecond": 6.66,
+          "fastestOrnamentalNotesPerSecond": 26.66
         }
       }
     ],
@@ -14066,14 +13657,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro agitato",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 3,
+            "fastestOrnamentalNotesValue": 24
           }
         ]
       },
@@ -14084,13 +13674,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante con moto tranquillo",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32
           }
         ]
       },
@@ -14101,14 +13690,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Leggiero e vivace",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 6,
+            "fastestOrnamentalNotesValue": 24,
             "comment": "Scherzo"
           }
         ]
@@ -14120,14 +13708,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro assai appassionato",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.995999999999999,
+            "fastestStaccatoNotesValue": 7.992,
+            "fastestOrnamentalNotesValue": 31.991999999999997
           }
         ]
       }
@@ -14157,13 +13744,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.991304347826087,
+          "fastestStaccatoNotesValue": 7.995652173913044
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12.26,
-          "fastestStaccatoNotePerSecond": 6.13
+          "fastestStructuralNotesPerSecond": 12.26,
+          "fastestStaccatoNotesPerSecond": 6.13
         }
       },
       {
@@ -14171,15 +13758,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 54,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18.000000000000004,
+          "fastestStaccatoNotesValue": 9.000000000000002,
+          "fastestOrnamentalNotesValue": 36.00000000000001
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.4,
-          "fastestStaccatoNotePerSecond": 2.7,
-          "fastestOrnamentalNotePerSecond": 10.8
+          "fastestStructuralNotesPerSecond": 5.4,
+          "fastestStaccatoNotesPerSecond": 2.7,
+          "fastestOrnamentalNotesPerSecond": 10.8
         }
       },
       {
@@ -14187,15 +13774,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "HALF",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.997727272727272,
+          "fastestStaccatoNotesValue": 3.9954545454545456,
+          "fastestOrnamentalNotesValue": 15.995454545454544
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.73,
-          "fastestStaccatoNotePerSecond": 5.86,
-          "fastestOrnamentalNotePerSecond": 23.46
+          "fastestStructuralNotesPerSecond": 11.73,
+          "fastestStaccatoNotesPerSecond": 5.86,
+          "fastestOrnamentalNotesPerSecond": 23.46
         }
       },
       {
@@ -14203,15 +13790,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18,
+          "fastestStaccatoNotesValue": 5.999999999999999,
+          "fastestOrnamentalNotesValue": 47.99999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 16.8,
-          "fastestStaccatoNotePerSecond": 5.6,
-          "fastestOrnamentalNotePerSecond": 44.8
+          "fastestStructuralNotesPerSecond": 16.8,
+          "fastestStaccatoNotesPerSecond": 5.6,
+          "fastestOrnamentalNotesPerSecond": 44.8
         }
       }
     ],
@@ -14223,13 +13810,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro energico e fuoco",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 15.991304347826087,
+            "fastestStaccatoNotesValue": 7.995652173913044
           }
         ]
       },
@@ -14240,14 +13826,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante espressivo",
-            "metreString": "9/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 9,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 18.000000000000004,
+            "fastestStaccatoNotesValue": 9.000000000000002,
+            "fastestOrnamentalNotesValue": 36.00000000000001
           }
         ]
       },
@@ -14258,14 +13843,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Molto Allegro quasi Presto",
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 7.997727272727272,
+            "fastestStaccatoNotesValue": 3.9954545454545456,
+            "fastestOrnamentalNotesValue": 15.995454545454544,
             "comment": "Scherzo"
           }
         ]
@@ -14277,14 +13861,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro appassionato",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+            "fastestStructuralNotesValue": 18,
+            "fastestStaccatoNotesValue": 5.999999999999999,
+            "fastestOrnamentalNotesValue": 47.99999999999999,
             "comment": "Finale"
           }
         ]
@@ -14315,13 +13898,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 108,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6.000000000000001,
+          "fastestOrnamentalNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.4,
-          "fastestOrnamentalNotePerSecond": 7.2
+          "fastestStructuralNotesPerSecond": 5.4,
+          "fastestOrnamentalNotesPerSecond": 7.2
         }
       },
       {
@@ -14329,13 +13912,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.9785714285714295,
+          "fastestOrnamentalNotesValue": 11.989285714285714
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.72,
-          "fastestOrnamentalNotePerSecond": 7.46
+          "fastestStructuralNotesPerSecond": 3.72,
+          "fastestOrnamentalNotesPerSecond": 7.46
         }
       },
       {
@@ -14343,13 +13926,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.999999999999999,
+          "fastestStaccatoNotesValue": 7.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2,
-          "fastestStaccatoNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 9.2,
+          "fastestStaccatoNotesPerSecond": 9.2
         }
       },
       {
@@ -14357,11 +13940,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.6
+          "fastestStructuralNotesPerSecond": 4.6
         }
       },
       {
@@ -14369,11 +13952,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 132,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.4
+          "fastestStructuralNotesPerSecond": 4.4
         }
       },
       {
@@ -14381,13 +13964,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.6,
-          "fastestOrnamentalNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 4.6,
+          "fastestOrnamentalNotesPerSecond": 9.2
         }
       },
       {
@@ -14395,13 +13978,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.992,
+          "fastestOrnamentalNotesValue": 15.984
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.33,
-          "fastestOrnamentalNotePerSecond": 6.66
+          "fastestStructuralNotesPerSecond": 3.33,
+          "fastestOrnamentalNotesPerSecond": 6.66
         }
       },
       {
@@ -14409,11 +13992,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 3.9999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.6
+          "fastestStructuralNotesPerSecond": 4.6
         }
       },
       {
@@ -14421,11 +14004,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_HALF",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 8
         }
       },
       {
@@ -14433,11 +14016,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 3.9999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.6
+          "fastestStructuralNotesPerSecond": 4.6
         }
       },
       {
@@ -14445,13 +14028,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestStaccatoNotesValue": 4
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.4,
-          "fastestStaccatoNotePerSecond": 3.2
+          "fastestStructuralNotesPerSecond": 6.4,
+          "fastestStaccatoNotesPerSecond": 3.2
         }
       },
       {
@@ -14459,11 +14042,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "EIGHTH",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.982608695652174
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.06
+          "fastestStructuralNotesPerSecond": 3.06
         }
       },
       {
@@ -14471,13 +14054,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 112,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.992857142857143,
+          "fastestOrnamentalNotesValue": 15.985714285714286
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.73,
-          "fastestOrnamentalNotePerSecond": 7.46
+          "fastestStructuralNotesPerSecond": 3.73,
+          "fastestOrnamentalNotesPerSecond": 7.46
         }
       }
     ],
@@ -14488,13 +14071,12 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 6.000000000000001,
+            "fastestOrnamentalNotesValue": 8,
             "comment": "\"Von fremden Ländern und Menschen\""
           }
         ]
@@ -14505,13 +14087,12 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 5.9785714285714295,
+            "fastestOrnamentalNotesValue": 11.989285714285714,
             "comment": "\"Curiose Geschichte\""
           }
         ]
@@ -14522,13 +14103,12 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 7.999999999999999,
+            "fastestStaccatoNotesValue": 7.999999999999999,
             "comment": "\"Hasche-Mann\""
           }
         ]
@@ -14539,12 +14119,11 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 7.999999999999999,
             "comment": "\"Bittendes Kind\""
           }
         ]
@@ -14555,12 +14134,11 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 8,
             "comment": "\"Glückes genug\""
           }
         ]
@@ -14571,13 +14149,12 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12,
             "comment": "\"Wichtige Begebenheit\""
           }
         ]
@@ -14588,13 +14165,12 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 7.992,
+            "fastestOrnamentalNotesValue": 15.984,
             "comment": "\"Träumerei\""
           }
         ]
@@ -14605,12 +14181,11 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 3.9999999999999996,
             "comment": "\"Am Camin\""
           }
         ]
@@ -14621,12 +14196,11 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 6,
             "comment": "\"Ritter vom Steckenpferd\""
           }
         ]
@@ -14637,12 +14211,11 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "2/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 3.9999999999999996,
             "comment": "\"Fast zu ernst\""
           }
         ]
@@ -14653,13 +14226,12 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 8,
+            "fastestStaccatoNotesValue": 4,
             "comment": "\"Fürchtenmachen\""
           }
         ]
@@ -14670,12 +14242,11 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "2/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 7.982608695652174,
             "comment": "\"Kind im Einschlummern\""
           }
         ]
@@ -14686,13 +14257,12 @@ const pieceList = [
         "sections": [
           {
             "rank": 1,
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 7.992857142857143,
+            "fastestOrnamentalNotesValue": 15.985714285714286,
             "comment": "\"Der Dichter spricht\""
           }
         ]
@@ -14723,13 +14293,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4,
-          "fastestOrnamentalNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 4,
+          "fastestOrnamentalNotesPerSecond": 8
         }
       },
       {
@@ -14737,15 +14307,15 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.99,
+          "fastestStaccatoNotesValue": 7.98,
+          "fastestOrnamentalNotesValue": 31.98
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.33,
-          "fastestStaccatoNotePerSecond": 2.66,
-          "fastestOrnamentalNotePerSecond": 10.66
+          "fastestStructuralNotesPerSecond": 5.33,
+          "fastestStaccatoNotesPerSecond": 2.66,
+          "fastestOrnamentalNotesPerSecond": 10.66
         }
       },
       {
@@ -14753,15 +14323,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.999999999999998,
+          "fastestStaccatoNotesValue": 15.999999999999998,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2,
-          "fastestStaccatoNotePerSecond": 9.2,
-          "fastestOrnamentalNotePerSecond": 13.8
+          "fastestStructuralNotesPerSecond": 9.2,
+          "fastestStaccatoNotesPerSecond": 9.2,
+          "fastestOrnamentalNotesPerSecond": 13.8
         }
       },
       {
@@ -14769,13 +14339,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6,
-          "fastestOrnamentalNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 6,
+          "fastestOrnamentalNotesPerSecond": 8
         }
       },
       {
@@ -14783,15 +14353,15 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "QUARTER",
         "bpm": 176,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SEPTUPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.995454545454544,
+          "fastestStaccatoNotesValue": 15.995454545454544,
+          "fastestOrnamentalNotesValue": 27.995454545454546
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 11.73,
-          "fastestStaccatoNotePerSecond": 11.73,
-          "fastestOrnamentalNotePerSecond": 20.53
+          "fastestStructuralNotesPerSecond": 11.73,
+          "fastestStaccatoNotesPerSecond": 11.73,
+          "fastestOrnamentalNotesPerSecond": 20.53
         }
       }
     ],
@@ -14803,25 +14373,23 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Largo",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 24
           },
           {
             "rank": 2,
             "tempoIndication": "Andante",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.99,
+            "fastestStaccatoNotesValue": 7.98,
+            "fastestOrnamentalNotesValue": 31.98
           }
         ]
       },
@@ -14832,37 +14400,34 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro giusto",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 15.999999999999998,
+            "fastestStaccatoNotesValue": 15.999999999999998,
+            "fastestOrnamentalNotesValue": 24
           },
           {
             "rank": 2,
             "tempoIndication": "Largo",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 18,
+            "fastestOrnamentalNotesValue": 24
           },
           {
             "rank": 3,
             "tempoIndication": "Allegro vivace",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SEPTUPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 15.995454545454544,
+            "fastestStaccatoNotesValue": 15.995454545454544,
+            "fastestOrnamentalNotesValue": 27.995454545454546
           }
         ]
       }
@@ -14892,13 +14457,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 3.99,
+          "fastestOrnamentalNotesValue": 15.99
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 1.33,
-          "fastestOrnamentalNotePerSecond": 5.33
+          "fastestStructuralNotesPerSecond": 1.33,
+          "fastestOrnamentalNotesPerSecond": 5.33
         }
       },
       {
@@ -14906,13 +14471,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 104,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.4,
-          "fastestStaccatoNotePerSecond": 5.2
+          "fastestStructuralNotesPerSecond": 10.4,
+          "fastestStaccatoNotesPerSecond": 5.2
         }
       },
       {
@@ -14920,11 +14485,11 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 92,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.6
+          "fastestStructuralNotesPerSecond": 4.6
         }
       },
       {
@@ -14932,11 +14497,11 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 54,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12.000000000000002
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.7
+          "fastestStructuralNotesPerSecond": 2.7
         }
       },
       {
@@ -14944,11 +14509,11 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3
+          "fastestStructuralNotesPerSecond": 3
         }
       },
       {
@@ -14956,13 +14521,13 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 50,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.5,
-          "fastestOrnamentalNotePerSecond": 5
+          "fastestStructuralNotesPerSecond": 2.5,
+          "fastestOrnamentalNotesPerSecond": 5
         }
       },
       {
@@ -14970,11 +14535,11 @@ const pieceList = [
         "sectionRank": 4,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 72,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.6
+          "fastestStructuralNotesPerSecond": 3.6
         }
       },
       {
@@ -14982,11 +14547,11 @@ const pieceList = [
         "sectionRank": 5,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3
+          "fastestStructuralNotesPerSecond": 3
         }
       },
       {
@@ -14994,13 +14559,13 @@ const pieceList = [
         "sectionRank": 6,
         "beatUnit": "QUARTER",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": null
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.984,
+          "fastestOrnamentalNotesValue": 36
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.66,
-          "fastestOrnamentalNotePerSecond": 15
+          "fastestStructuralNotesPerSecond": 6.66,
+          "fastestOrnamentalNotesPerSecond": 15
         }
       },
       {
@@ -15008,13 +14573,13 @@ const pieceList = [
         "sectionRank": 7,
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 54,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 24.000000000000004,
+          "fastestOrnamentalNotesValue": 36
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 5.4,
-          "fastestOrnamentalNotePerSecond": 8.1
+          "fastestStructuralNotesPerSecond": 5.4,
+          "fastestOrnamentalNotesPerSecond": 8.1
         }
       },
       {
@@ -15022,11 +14587,11 @@ const pieceList = [
         "sectionRank": 8,
         "beatUnit": "QUARTER",
         "bpm": 66,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.4
+          "fastestStructuralNotesPerSecond": 4.4
         }
       },
       {
@@ -15034,13 +14599,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 138,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.2,
-          "fastestStaccatoNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 9.2,
+          "fastestStaccatoNotesPerSecond": 9.2
         }
       },
       {
@@ -15048,13 +14613,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4,
-          "fastestOrnamentalNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 4,
+          "fastestOrnamentalNotesPerSecond": 8
         }
       },
       {
@@ -15062,13 +14627,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "HALF",
         "bpm": 120,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestStaccatoNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 12,
-          "fastestStaccatoNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 12,
+          "fastestStaccatoNotesPerSecond": 8
         }
       },
       {
@@ -15076,11 +14641,11 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "HALF",
         "bpm": 144,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.6
+          "fastestStructuralNotesPerSecond": 9.6
         }
       },
       {
@@ -15088,13 +14653,13 @@ const pieceList = [
         "sectionRank": 4,
         "beatUnit": "DOTTED_HALF",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "QUARTER",
-          "fastestOrnamentalNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.8,
-          "fastestOrnamentalNotePerSecond": 9.6
+          "fastestStructuralNotesPerSecond": 4.8,
+          "fastestOrnamentalNotesPerSecond": 9.6
         }
       }
     ],
@@ -15106,34 +14671,31 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 3.99,
+            "fastestOrnamentalNotesValue": 15.99
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro con anima",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 6
           },
           {
             "rank": 3,
             "tempoIndication": "Molto piu tranquillo",
-            "metreString": "6/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 6
           }
         ]
       },
@@ -15144,85 +14706,77 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante cantabile, con alcuna licenza",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 12.000000000000002
           },
           {
             "rank": 2,
             "tempoIndication": "Con moto",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 12
           },
           {
             "rank": 3,
             "tempoIndication": "sostenuto",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 24
           },
           {
             "rank": 4,
             "tempoIndication": "Piu animato",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 12
           },
           {
             "rank": 5,
             "tempoIndication": "Poco meno",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 12
           },
           {
             "rank": 6,
             "tempoIndication": "Moderato con anima",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": null
+            "fastestStructuralNotesValue": 15.984,
+            "fastestOrnamentalNotesValue": 36
           },
           {
             "rank": 7,
             "tempoIndication": "Tempo I.",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 24.000000000000004,
+            "fastestOrnamentalNotesValue": 36
           },
           {
             "rank": 8,
             "tempoIndication": "Andante mosso",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16
           }
         ]
       },
@@ -15233,13 +14787,12 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro moderato",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 12,
             "comment": "Waltz"
           }
         ]
@@ -15251,46 +14804,42 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Andante maestoso",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 24
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro vivace",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
+            "fastestStructuralNotesValue": 12,
+            "fastestStaccatoNotesValue": 8,
             "comment": "Alla breve"
           },
           {
             "rank": 3,
             "tempoIndication": "Presto",
-            "metreString": "C-",
             "isCommonTime": false,
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 8
           },
           {
             "rank": 4,
             "tempoIndication": "Molto meno mosso",
-            "metreString": "6/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "QUARTER",
-            "fastestOrnamentalNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12
           }
         ]
       }
@@ -15320,13 +14869,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 54,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 1.8,
-          "fastestOrnamentalNotePerSecond": 3.6
+          "fastestStructuralNotesPerSecond": 1.8,
+          "fastestOrnamentalNotesPerSecond": 3.6
         }
       },
       {
@@ -15334,13 +14883,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 116,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.993103448275864,
+          "fastestStaccatoNotesValue": 15.993103448275864
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 7.73,
-          "fastestStaccatoNotePerSecond": 7.73
+          "fastestStructuralNotesPerSecond": 7.73,
+          "fastestStaccatoNotesPerSecond": 7.73
         }
       },
       {
@@ -15348,13 +14897,13 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "QUARTER",
         "bpm": 132,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestStaccatoNotePerSecond": 8.8
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestStaccatoNotesPerSecond": 8.8
         }
       },
       {
@@ -15362,11 +14911,11 @@ const pieceList = [
         "sectionRank": 4,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.999999999999999
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.3
+          "fastestStructuralNotesPerSecond": 2.3
         }
       },
       {
@@ -15374,13 +14923,13 @@ const pieceList = [
         "sectionRank": 5,
         "beatUnit": "QUARTER",
         "bpm": 100,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "QUINTUPLET_THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.984,
+          "fastestOrnamentalNotesValue": 39.984
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6.66,
-          "fastestOrnamentalNotePerSecond": 16.66
+          "fastestStructuralNotesPerSecond": 6.66,
+          "fastestOrnamentalNotesPerSecond": 16.66
         }
       },
       {
@@ -15388,13 +14937,13 @@ const pieceList = [
         "sectionRank": 6,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 48
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.3,
-          "fastestOrnamentalNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 2.3,
+          "fastestOrnamentalNotesPerSecond": 9.2
         }
       },
       {
@@ -15402,11 +14951,11 @@ const pieceList = [
         "sectionRank": 7,
         "beatUnit": "QUARTER",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.990909090909091
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.93
+          "fastestStructuralNotesPerSecond": 2.93
         }
       },
       {
@@ -15414,13 +14963,13 @@ const pieceList = [
         "sectionRank": 8,
         "beatUnit": "QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2,
-          "fastestOrnamentalNotePerSecond": 4
+          "fastestStructuralNotesPerSecond": 2,
+          "fastestOrnamentalNotesPerSecond": 4
         }
       },
       {
@@ -15428,15 +14977,15 @@ const pieceList = [
         "sectionRank": 9,
         "beatUnit": "QUARTER",
         "bpm": 144,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 16,
+          "fastestStaccatoNotesValue": 16,
+          "fastestOrnamentalNotesValue": 32
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 9.6,
-          "fastestStaccatoNotePerSecond": 9.6,
-          "fastestOrnamentalNotePerSecond": 19.2
+          "fastestStructuralNotesPerSecond": 9.6,
+          "fastestStaccatoNotesPerSecond": 9.6,
+          "fastestOrnamentalNotesPerSecond": 19.2
         }
       },
       {
@@ -15444,13 +14993,13 @@ const pieceList = [
         "sectionRank": 10,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.999999999999999,
+          "fastestOrnamentalNotesValue": 31.999999999999996
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.3,
-          "fastestOrnamentalNotePerSecond": 9.2
+          "fastestStructuralNotesPerSecond": 2.3,
+          "fastestOrnamentalNotesPerSecond": 9.2
         }
       },
       {
@@ -15458,13 +15007,13 @@ const pieceList = [
         "sectionRank": 11,
         "beatUnit": "QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8,
+          "fastestOrnamentalNotesValue": 16
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2,
-          "fastestOrnamentalNotePerSecond": 4
+          "fastestStructuralNotesPerSecond": 2,
+          "fastestOrnamentalNotesPerSecond": 4
         }
       },
       {
@@ -15472,11 +15021,11 @@ const pieceList = [
         "sectionRank": 12,
         "beatUnit": "QUARTER",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 7.98
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.66
+          "fastestStructuralNotesPerSecond": 2.66
         }
       },
       {
@@ -15484,15 +15033,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 144,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestStaccatoNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "TRIPLET_EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 10,
+          "fastestStaccatoNotesValue": 10,
+          "fastestOrnamentalNotesValue": 15.000000000000002
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.8,
-          "fastestStaccatoNotePerSecond": 4.8,
-          "fastestOrnamentalNotePerSecond": 7.2
+          "fastestStructuralNotesPerSecond": 4.8,
+          "fastestStaccatoNotesPerSecond": 4.8,
+          "fastestOrnamentalNotesPerSecond": 7.2
         }
       },
       {
@@ -15500,15 +15049,15 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 152,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestStaccatoNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 15.994736842105265,
+          "fastestStaccatoNotesValue": 15.994736842105265,
+          "fastestOrnamentalNotesValue": 31.98947368421053
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 10.13,
-          "fastestStaccatoNotePerSecond": 10.13,
-          "fastestOrnamentalNotePerSecond": 20.26
+          "fastestStructuralNotesPerSecond": 10.13,
+          "fastestStaccatoNotesPerSecond": 10.13,
+          "fastestOrnamentalNotesPerSecond": 20.26
         }
       },
       {
@@ -15516,13 +15065,13 @@ const pieceList = [
         "sectionRank": 1,
         "beatUnit": "QUARTER",
         "bpm": 54,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 1.8,
-          "fastestOrnamentalNotePerSecond": 3.6
+          "fastestStructuralNotesPerSecond": 1.8,
+          "fastestOrnamentalNotesPerSecond": 3.6
         }
       },
       {
@@ -15530,13 +15079,13 @@ const pieceList = [
         "sectionRank": 2,
         "beatUnit": "QUARTER",
         "bpm": 69,
-        "noteValues": {
-          "fastestStructuralNoteValue": "SIXTEENTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 12,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.6,
-          "fastestOrnamentalNotePerSecond": 4.6
+          "fastestStructuralNotesPerSecond": 4.6,
+          "fastestOrnamentalNotesPerSecond": 4.6
         }
       },
       {
@@ -15544,13 +15093,13 @@ const pieceList = [
         "sectionRank": 3,
         "beatUnit": "QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 6,
+          "fastestOrnamentalNotesValue": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2,
-          "fastestOrnamentalNotePerSecond": 4
+          "fastestStructuralNotesPerSecond": 2,
+          "fastestOrnamentalNotesPerSecond": 4
         }
       },
       {
@@ -15558,11 +15107,11 @@ const pieceList = [
         "sectionRank": 4,
         "beatUnit": "QUARTER",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.8
+          "fastestStructuralNotesPerSecond": 3.8
         }
       },
       {
@@ -15570,13 +15119,13 @@ const pieceList = [
         "sectionRank": 5,
         "beatUnit": "QUARTER",
         "bpm": 96,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-          "fastestOrnamentalNoteValue": "SEPTUPLET_SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 9,
+          "fastestOrnamentalNotesValue": 21
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 4.8,
-          "fastestOrnamentalNotePerSecond": 11.2
+          "fastestStructuralNotesPerSecond": 4.8,
+          "fastestOrnamentalNotesPerSecond": 11.2
         }
       },
       {
@@ -15584,13 +15133,13 @@ const pieceList = [
         "sectionRank": 6,
         "beatUnit": "QUARTER",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "SIXTEENTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.992105263157894,
+          "fastestOrnamentalNotesValue": 11.984210526315788
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.53,
-          "fastestOrnamentalNotePerSecond": 5.06
+          "fastestStructuralNotesPerSecond": 2.53,
+          "fastestOrnamentalNotesPerSecond": 5.06
         }
       },
       {
@@ -15598,13 +15147,13 @@ const pieceList = [
         "sectionRank": 7,
         "beatUnit": "QUARTER",
         "bpm": 60,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18,
+          "fastestOrnamentalNotesValue": 24
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 6,
-          "fastestOrnamentalNotePerSecond": 8
+          "fastestStructuralNotesPerSecond": 6,
+          "fastestOrnamentalNotesPerSecond": 8
         }
       },
       {
@@ -15612,13 +15161,13 @@ const pieceList = [
         "sectionRank": 8,
         "beatUnit": "QUARTER",
         "bpm": 88,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 18,
+          "fastestOrnamentalNotesValue": 23.93181818181818
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 8.8,
-          "fastestOrnamentalNotePerSecond": 11.7
+          "fastestStructuralNotesPerSecond": 8.8,
+          "fastestOrnamentalNotesPerSecond": 11.7
         }
       },
       {
@@ -15626,13 +15175,13 @@ const pieceList = [
         "sectionRank": 9,
         "beatUnit": "QUARTER",
         "bpm": 80,
-        "noteValues": {
-          "fastestStructuralNoteValue": "EIGHTH",
-          "fastestOrnamentalNoteValue": "THIRTYSECOND"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 5.985,
+          "fastestOrnamentalNotesValue": 23.985
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 2.66,
-          "fastestOrnamentalNotePerSecond": 10.66
+          "fastestStructuralNotesPerSecond": 2.66,
+          "fastestOrnamentalNotesPerSecond": 10.66
         }
       },
       {
@@ -15640,11 +15189,11 @@ const pieceList = [
         "sectionRank": 10,
         "beatUnit": "QUARTER",
         "bpm": 76,
-        "noteValues": {
-          "fastestStructuralNoteValue": "TRIPLET_EIGHTH"
+        "notesPerBar": {
+          "fastestStructuralNotesValue": 8.999999999999998
         },
         "notesPerSecond": {
-          "fastestStructuralNotePerSecond": 3.8
+          "fastestStructuralNotesPerSecond": 3.8
         }
       }
     ],
@@ -15656,132 +15205,120 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 8,
+            "fastestOrnamentalNotesValue": 16
           },
           {
             "rank": 2,
             "tempoIndication": "Allegro non troppo",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 15.993103448275864,
+            "fastestStaccatoNotesValue": 15.993103448275864
           },
           {
             "rank": 3,
             "tempoIndication": "Un poco piu animato",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 16
           },
           {
             "rank": 4,
             "tempoIndication": "Andante",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 7.999999999999999
           },
           {
             "rank": 5,
             "tempoIndication": "Moderato mosso",
-            "metreString": "C",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "QUINTUPLET_THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.984,
+            "fastestOrnamentalNotesValue": 39.984
           },
           {
             "rank": 6,
             "tempoIndication": "Andante",
-            "metreString": "12/8",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 48
           },
           {
             "rank": 7,
             "tempoIndication": "Moderato assai",
-            "metreString": "4/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 7.990909090909091
           },
           {
             "rank": 8,
             "tempoIndication": "Adagio mosso",
-            "metreString": "4/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 8,
+            "fastestOrnamentalNotesValue": 16
           },
           {
             "rank": 9,
             "tempoIndication": "Allegro vivo",
-            "metreString": "4/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 16,
+            "fastestStaccatoNotesValue": 16,
+            "fastestOrnamentalNotesValue": 32
           },
           {
             "rank": 10,
             "tempoIndication": "Andante come prima",
-            "metreString": "4/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 7.999999999999999,
+            "fastestOrnamentalNotesValue": 31.999999999999996
           },
           {
             "rank": 11,
             "tempoIndication": "Meno",
-            "metreString": "4/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 8,
+            "fastestOrnamentalNotesValue": 16
           },
           {
             "rank": 12,
             "tempoIndication": "Andante mosso",
-            "metreString": "4/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH"
+            "fastestStructuralNotesValue": 7.98
           }
         ]
       },
@@ -15792,14 +15329,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro con grazia",
-            "metreString": "5/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 5,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestStaccatoNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "TRIPLET_EIGHTH"
+            "fastestStructuralNotesValue": 10,
+            "fastestStaccatoNotesValue": 10,
+            "fastestOrnamentalNotesValue": 15.000000000000002
           }
         ]
       },
@@ -15810,14 +15346,13 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Allegro molto vivace",
-            "metreString": "C (12/8)",
             "isCommonTime": true,
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestStaccatoNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 15.994736842105265,
+            "fastestStaccatoNotesValue": 15.994736842105265,
+            "fastestOrnamentalNotesValue": 31.98947368421053
           }
         ]
       },
@@ -15828,113 +15363,103 @@ const pieceList = [
           {
             "rank": 1,
             "tempoIndication": "Adagio lamentoso",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH",
+            "fastestStructuralNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12,
             "comment": "Finale"
           },
           {
             "rank": 2,
             "tempoIndication": "Andante",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "SIXTEENTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 12,
+            "fastestOrnamentalNotesValue": 12
           },
           {
             "rank": 3,
             "tempoIndication": "no che prima",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 6,
+            "fastestOrnamentalNotesValue": 12
           },
           {
             "rank": 4,
             "tempoIndication": "Andante",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH"
+            "fastestStructuralNotesValue": 8.999999999999998
           },
           {
             "rank": 5,
             "tempoIndication": "Piu mosso",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-            "fastestOrnamentalNoteValue": "SEPTUPLET_SIXTEENTH",
+            "fastestStructuralNotesValue": 9,
+            "fastestOrnamentalNotesValue": 21,
             "comment": "Fastest notes following 'Vivace'"
           },
           {
             "rank": 6,
             "tempoIndication": "Andante",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "SIXTEENTH"
+            "fastestStructuralNotesValue": 5.992105263157894,
+            "fastestOrnamentalNotesValue": 11.984210526315788
           },
           {
             "rank": 7,
             "tempoIndication": "Andante non tanto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND",
+            "fastestStructuralNotesValue": 18,
+            "fastestOrnamentalNotesValue": 24,
             "comment": "Fastest notes following 'stringendo molto'"
           },
           {
             "rank": 8,
             "tempoIndication": "Moderato assai",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 18,
+            "fastestOrnamentalNotesValue": 23.93181818181818
           },
           {
             "rank": 9,
             "tempoIndication": "Andante",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "EIGHTH",
-            "fastestOrnamentalNoteValue": "THIRTYSECOND"
+            "fastestStructuralNotesValue": 5.985,
+            "fastestOrnamentalNotesValue": 23.985
           },
           {
             "rank": 10,
             "tempoIndication": "Andante guisto",
-            "metreString": "3/4",
             "isCommonTime": false,
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNoteValue": "TRIPLET_EIGHTH"
+            "fastestStructuralNotesValue": 8.999999999999998
           }
         ]
       }
@@ -15945,5346 +15470,4848 @@ const sectionList = [
   {
     "rank": 1,
     "tempoIndication": "Allegro vivace",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.999999999999998,
+    "fastestOrnamentalNotesValue": 31.999999999999996
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro Assai",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 3,
+    "fastestOrnamentalNotesValue": 6
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 3,
+    "fastestOrnamentalNotesValue": 6
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro vivace",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 8,
+    "fastestOrnamentalNotesValue": 32
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto vivace",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 5.99625,
+    "fastestOrnamentalNotesValue": 11.9925
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro vivace",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 15.999999999999998,
+    "fastestOrnamentalNotesValue": 7.999999999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro Molto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 11.996052631578948,
+    "fastestStaccatoNotesValue": 5.992105263157894
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro con spirito",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 11.999999999999998,
+    "fastestStaccatoNotesValue": 5.999999999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "9/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 9,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 9
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 8
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro vivace e giocoso",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 24,
+    "fastestStaccatoNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro moderato",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro non troppo",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 8
   },
   {
     "rank": 1,
     "tempoIndication": "Moderato",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Andantino",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 31.999999999999996
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 16.01379310344828
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 6
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+    "fastestStructuralNotesValue": 18,
+    "fastestOrnamentalNotesValue": 36,
     "comment": "Same as Nuevo método de guitarra, xxiv"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": null,
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 48,
     "comment": "Same as Nuevo método de guitarra, ix"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 16,
     "comment": "Same as Nuevo método de guitarra, x"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 64,
     "comment": "Very likely a misprint, see Fossa's publication"
   },
   {
     "rank": 1,
     "tempoIndication": "Andantino",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 6,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 15.99230769230769,
     "comment": "Same as Nuevo método de guitarra, xii"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 15.99230769230769,
     "comment": "Same as Nuevo método de guitarra, xiii"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 15.99230769230769,
+    "fastestOrnamentalNotesValue": 32.0076923076923,
     "comment": "Same as Nuevo método de guitarra, xiv"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro cómodo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": null,
+    "fastestStructuralNotesValue": null,
     "comment": "Same as Nuevo método de guitarra, xxi"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro moderato",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32,
     "comment": "Same as Nuevo método de guitarra, xxii"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro cómodo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 16,
     "comment": "Same as Nuevo método de guitarra, xx"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 24
   },
   {
     "rank": 2,
     "tempoIndication": "Allegretto",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 24,
+    "fastestOrnamentalNotesValue": 48
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32,
     "comment": "Same as Nuevo método de guitarra, xxvii"
   },
   {
     "rank": 1,
     "tempoIndication": "Moderato",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Andantino",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 31.999999999999996
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 16.01379310344828
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 6
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+    "fastestStructuralNotesValue": 18,
+    "fastestOrnamentalNotesValue": 36,
     "comment": "Same as Nuevo método de guitarra, xxiv"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": null,
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 48,
     "comment": "Same as Nuevo método de guitarra, ix"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 16,
     "comment": "Same as Nuevo método de guitarra, x"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 64
   },
   {
     "rank": 1,
     "tempoIndication": "Andantino",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 5.999999999999999,
+    "fastestOrnamentalNotesValue": 23.999999999999996,
     "comment": "Very likely a misprint, see first publication"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 15.99230769230769,
     "comment": "Same as Nuevo método de guitarra, xii"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 15.99230769230769,
     "comment": "Same as Nuevo método de guitarra, xiii"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 15.99230769230769,
+    "fastestOrnamentalNotesValue": 32.0076923076923,
     "comment": "Same as Nuevo método de guitarra, xiv"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro comodo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": null,
+    "fastestStructuralNotesValue": null,
     "comment": "Same as Nuevo método de guitarra, xxi"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro moderato",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32,
     "comment": "Same as Nuevo método de guitarra, xxii"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro comodo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 16,
     "comment": "Same as Nuevo método de guitarra, xx"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 24
   },
   {
     "rank": 2,
     "tempoIndication": "Allegretto",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 24,
+    "fastestOrnamentalNotesValue": 48
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32,
     "comment": "Same as Nuevo método de guitarra, xxvii"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 11.999999999999998,
+    "fastestOrnamentalNotesValue": 47.99999999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 11.999999999999998
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
+    "fastestStructuralNotesValue": 18,
     "comment": "Likely a misprint"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 16,
     "comment": "Same as Escuela de guitarra, xv"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 16,
     "comment": "Same as Escuela de guitarra, xvi"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 15.99230769230769,
     "comment": "Same as Escuela de guitarra, xxv"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 15.99230769230769,
     "comment": "Same as Escuela de guitarra, xxiv"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 15.99230769230769,
+    "fastestOrnamentalNotesValue": 32.0076923076923,
     "comment": "Same as Escuela de guitarra, xxv"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+    "fastestStructuralNotesValue": 24,
+    "fastestOrnamentalNotesValue": 63.99999999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "QUINTUPLET_THIRTYSECOND",
+    "fastestStructuralNotesValue": 30,
     "comment": "Likely a misprint"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 16,
     "comment": "Same as Escuela de guitarra, xxviii"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro cómodo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": null,
+    "fastestStructuralNotesValue": null,
     "comment": "Same as Escuela de guitarra, xxvi"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32,
     "comment": "Same as Escuela de guitarra, xxvii"
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+    "fastestStructuralNotesValue": 18,
+    "fastestOrnamentalNotesValue": 36,
     "comment": "Same as Escuela de guitarra, x"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro brillante",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32,
     "comment": "Very likely a misprint, see Escuela de guitarra, xxx"
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "HUNDREDTWENTYEIGHTH"
+    "fastestStructuralNotesValue": 35.99999999999999,
+    "fastestOrnamentalNotesValue": 96
   },
   {
     "rank": 2,
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 18,
+    "fastestOrnamentalNotesValue": 48.00535714285714,
     "comment": "Polonaise"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+    "fastestStructuralNotesValue": 32,
+    "fastestOrnamentalNotesValue": 64
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro moderato",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32,
     "comment": "Rondo"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 32,
+    "fastestOrnamentalNotesValue": 32
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 24,
+    "fastestOrnamentalNotesValue": 48,
     "comment": "Rondo"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 5.999999999999999,
+    "fastestStaccatoNotesValue": 5.999999999999999,
     "comment": "Fugue"
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-    "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 36,
+    "fastestStaccatoNotesValue": 18,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro con brio",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 12,
+    "fastestOrnamentalNotesValue": 32
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio cantabile",
-    "metreString": "9/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 9,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 36,
+    "fastestStaccatoNotesValue": 36,
+    "fastestOrnamentalNotesValue": 36
   },
   {
     "rank": 1,
     "tempoIndication": "Tempo di menuetto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 9,
+    "fastestOrnamentalNotesValue": 24,
     "comment": "Minuet and trio"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 16,
+    "fastestOrnamentalNotesValue": 16,
     "comment": "Theme and variations"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto e vivace",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER",
+    "fastestStructuralNotesValue": 5.999999999999999,
+    "fastestStaccatoNotesValue": 2.9999999999999996,
     "comment": "Scherzo"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante con moto alla marcia",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.978947368421052,
+    "fastestStaccatoNotesValue": 15.978947368421052
   },
   {
     "rank": 2,
     "tempoIndication": "Presto",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 11.999999999999998,
+    "fastestStaccatoNotesValue": 11.999999999999998,
+    "fastestOrnamentalNotesValue": 31.99285714285714
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro con brio",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12.000000000000002,
+    "fastestStaccatoNotesValue": 12.000000000000002,
+    "fastestOrnamentalNotesValue": 12.000000000000002
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio affettuoso ed appassionato",
-    "metreString": "9/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 9,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SEPTUPLET_HUNDREDTWENTYEIGHTH"
+    "fastestStructuralNotesValue": 18,
+    "fastestOrnamentalNotesValue": 126.00000000000001
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 5.999999999999999,
+    "fastestStaccatoNotesValue": 2.9999999999999996,
+    "fastestOrnamentalNotesValue": 11.999999999999998,
     "comment": "Scherzo"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 4,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 12,
+    "fastestOrnamentalNotesValue": 8
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio Cantabile",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+    "fastestStructuralNotesValue": 24,
+    "fastestStaccatoNotesValue": 24,
+    "fastestOrnamentalNotesValue": 48
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 7.999999999999999,
+    "fastestStaccatoNotesValue": 7.999999999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 8.999999999999998,
+    "fastestOrnamentalNotesValue": 12,
     "comment": "Scherzo"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto quasi Presto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 7.995652173913044,
+    "fastestStaccatoNotesValue": 3.997826086956522,
+    "fastestOrnamentalNotesValue": 7.995652173913044
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 8,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Andante con moto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.991304347826087,
+    "fastestStaccatoNotesValue": 7.982608695652174,
+    "fastestOrnamentalNotesValue": 15.991304347826087
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER"
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 3
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro ma non tanto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 8,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Andante scherzoso quasi Allegretto",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 5.999999999999999,
+    "fastestStaccatoNotesValue": 5.999999999999999,
+    "fastestOrnamentalNotesValue": 11.999999999999998,
     "comment": "Scherzo"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 9,
+    "fastestStaccatoNotesValue": 3,
+    "fastestOrnamentalNotesValue": 12,
     "comment": "Minuet; piu Allegro at da capo"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 8,
+    "fastestStaccatoNotesValue": 8,
+    "fastestOrnamentalNotesValue": 32
   },
   {
     "rank": 2,
     "tempoIndication": "Prestissimo",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 8,
+    "fastestStaccatoNotesValue": 8,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 12,
+    "fastestOrnamentalNotesValue": 17.999999999999996
   },
   {
     "rank": 1,
     "tempoIndication": "Menuetto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 5.999999999999999,
+    "fastestStaccatoNotesValue": 5.999999999999999,
     "comment": "Minuet"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante cantabile",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+    "fastestStructuralNotesValue": 15.984,
+    "fastestStaccatoNotesValue": 12,
+    "fastestOrnamentalNotesValue": 24,
     "comment": "Theme and variations"
   },
   {
     "rank": 2,
     "tempoIndication": "Poco Adagio",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 7.990909090909091,
+    "fastestOrnamentalNotesValue": 15.981818181818182
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 7.997368421052633,
+    "fastestStaccatoNotesValue": 7.997368421052633
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro con brio",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 7.995,
+    "fastestStaccatoNotesValue": 7.995,
+    "fastestOrnamentalNotesValue": 15.997499999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio ma non troppo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+    "fastestStructuralNotesValue": 24,
+    "fastestStaccatoNotesValue": 15.96,
+    "fastestOrnamentalNotesValue": 31.98
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 11.999999999999998,
+    "fastestStaccatoNotesValue": 5.999999999999999,
     "comment": "Scherzo"
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 3.972413793103448,
+    "fastestOrnamentalNotesValue": 15.972413793103449,
     "comment": "\"La Malinconia\""
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto quasi Allegro",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 6
   },
   {
     "rank": 2,
     "tempoIndication": "poco Adagio",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 6
   },
   {
     "rank": 3,
     "tempoIndication": "Prestissimo",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 5.999999999999999,
+    "fastestStaccatoNotesValue": 5.999999999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 7.990909090909091,
+    "fastestOrnamentalNotesValue": 15.995454545454544
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto vivace e sempre scherzando",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 5.999999999999999,
+    "fastestStaccatoNotesValue": 5.999999999999999,
+    "fastestOrnamentalNotesValue": 11.999999999999998
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio molto e mesto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTYFOURTH",
-    "fastestStaccatoNoteValue": "SIXTYFOURTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 31.963636363636365,
+    "fastestStaccatoNotesValue": 31.963636363636365,
+    "fastestOrnamentalNotesValue": 15.981818181818182
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 8,
+    "fastestStaccatoNotesValue": 8,
+    "fastestOrnamentalNotesValue": 8,
     "comment": "\"Theme russe\""
   },
   {
     "rank": 2,
     "tempoIndication": "Adagio ma non troppo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 7.999999999999999
   },
   {
     "rank": 3,
     "tempoIndication": "Presto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 7.995652173913044,
     "comment": "Identified as misprint; see Noorduin, 2016"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 12,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Adagio",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32,
     "comment": "\"Si tratta questo pezzo con molto di sentimento\""
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 9,
+    "fastestStaccatoNotesValue": 6,
     "comment": "\"Theme russe\""
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 7.997727272727272,
+    "fastestStaccatoNotesValue": 7.997727272727272,
     "comment": "Finale"
   },
   {
     "rank": 2,
     "tempoIndication": "Piu Presto",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 7.998214285714285,
+    "fastestStaccatoNotesValue": 7.998214285714285
   },
   {
     "rank": 1,
     "tempoIndication": "Andante con moto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 3,
+    "fastestOrnamentalNotesValue": 24,
     "comment": "Introduzione"
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro vivace",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.995454545454544,
+    "fastestStaccatoNotesValue": 7.990909090909091,
+    "fastestOrnamentalNotesValue": 15.995454545454544
   },
   {
     "rank": 1,
     "tempoIndication": "Andante con moto quasi Allegretto",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 11.999999999999998,
+    "fastestStaccatoNotesValue": 11.999999999999998,
+    "fastestOrnamentalNotesValue": 11.999999999999998
   },
   {
     "rank": 1,
     "tempoIndication": "Grazioso",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 11.994827586206899,
+    "fastestStaccatoNotesValue": 5.989655172413793,
     "comment": "Minuet"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 8,
+    "fastestStaccatoNotesValue": 8,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Poco Adagio",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 16,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio ma non troppo",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 12,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 6
   },
   {
     "rank": 2,
     "tempoIndication": "Piu Presto quasi prestissimo",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "QUARTER"
+    "fastestStructuralNotesValue": 2.997
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto con variazioni",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 7.992,
+    "fastestStaccatoNotesValue": 3.996
   },
   {
     "rank": 2,
     "tempoIndication": "un poco piu vivace",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 7.997368421052633,
+    "fastestStaccatoNotesValue": 6,
+    "fastestOrnamentalNotesValue": 7.997368421052633
   },
   {
     "rank": 3,
     "tempoIndication": "Allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 8
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro con brio",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 15.991304347826087,
+    "fastestStaccatoNotesValue": 7.995652173913044
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto ma non troppo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 11.999999999999998,
+    "fastestStaccatoNotesValue": 8,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro assai vivace ma serioso",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 12,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 2,
     "tempoIndication": "Piu Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 12,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Larghetto espressivo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.985714285714286,
+    "fastestOrnamentalNotesValue": 15.985714285714286
   },
   {
     "rank": 2,
     "tempoIndication": "Allegretto agitato",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 3,
     "tempoIndication": "Allegro",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER"
+    "fastestStructuralNotesValue": 7.995652173913044,
+    "fastestStaccatoNotesValue": 3.997826086956522
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 7.999999999999999,
+    "fastestStaccatoNotesValue": 7.999999999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Assai vivace",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 9,
+    "fastestOrnamentalNotesValue": 12,
     "comment": "Scherzo"
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio sostenuto",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 36,
+    "fastestOrnamentalNotesValue": 23.98695652173913
   },
   {
     "rank": 1,
     "tempoIndication": "Largo",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTYFOURTH"
+    "fastestStructuralNotesValue": 63.91578947368421
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro risoluto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 12,
+    "fastestOrnamentalNotesValue": 12,
     "comment": "Fugue"
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 31.963636363636365,
+    "fastestOrnamentalNotesValue": 31.963636363636365
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro con brio",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 15.964285714285714,
+    "fastestStaccatoNotesValue": 7.992857142857143
   },
   {
     "rank": 1,
     "tempoIndication": "Andante cantabile con moto",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 12,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto e vivace",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 6.000000000000001,
+    "fastestStaccatoNotesValue": 6.000000000000001,
     "comment": "Minuet and trio"
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 16
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro molto e vivace",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 7.977272727272727,
+    "fastestStaccatoNotesValue": 7.977272727272727
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio molto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTYFOURTH",
-    "fastestStaccatoNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 47.99999999999999,
+    "fastestStaccatoNotesValue": 23.999999999999996,
+    "fastestOrnamentalNotesValue": 23.999999999999996
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro con brio",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 24,
+    "fastestStaccatoNotesValue": 15.995999999999999,
+    "fastestOrnamentalNotesValue": 31.991999999999997
   },
   {
     "rank": 1,
     "tempoIndication": "Larghetto",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 11.993478260869566,
+    "fastestStaccatoNotesValue": 11.993478260869566
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 6,
     "comment": "Scherzo"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 7.997368421052633,
+    "fastestStaccatoNotesValue": 7.997368421052633,
+    "fastestOrnamentalNotesValue": 15.994736842105265
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro con brio",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 6
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio assai",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+    "fastestStructuralNotesValue": 24,
+    "fastestStaccatoNotesValue": 15.99,
+    "fastestOrnamentalNotesValue": 24,
     "comment": "Funeral march"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro vivace",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "QUARTER",
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 3,
+    "fastestOrnamentalNotesValue": 3,
     "comment": "Scherzo"
   },
   {
     "rank": 2,
     "tempoIndication": "Alla breve",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER"
+    "fastestStructuralNotesValue": 7.996551724137932,
+    "fastestStaccatoNotesValue": 3.998275862068966
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 7.997368421052633,
+    "fastestStaccatoNotesValue": 7.997368421052633
   },
   {
     "rank": 2,
     "tempoIndication": "Poco Andante",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 16
   },
   {
     "rank": 3,
     "tempoIndication": "Presto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 15.993103448275864,
+    "fastestStaccatoNotesValue": 7.9862068965517246,
     "comment": "Identified as misprint; see Noorduin, 2016"
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "QUINTUPLET_THIRTYSECOND"
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 40
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro vivace",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.997499999999999,
+    "fastestStaccatoNotesValue": 3.9975,
+    "fastestOrnamentalNotesValue": 31.994999999999997
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 23.999999999999996,
+    "fastestStaccatoNotesValue": 23.999999999999996,
+    "fastestOrnamentalNotesValue": 47.99999999999999,
     "comment": "Ornamented notes are tremolo"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto e vivace",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "QUARTER",
-    "fastestStaccatoNoteValue": "QUARTER",
+    "fastestStructuralNotesValue": 3,
+    "fastestStaccatoNotesValue": 3,
     "comment": "Scherzo"
   },
   {
     "rank": 2,
     "tempoIndication": "Un poco meno allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12,
     "comment": "Trio"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro ma non troppo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 7.995,
+    "fastestStaccatoNotesValue": 7.995,
+    "fastestOrnamentalNotesValue": 15.997499999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro con brio",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 4,
+    "fastestStaccatoNotesValue": 4
   },
   {
     "rank": 1,
     "tempoIndication": "Andante con moto",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+    "fastestStructuralNotesValue": 11.993478260869566,
+    "fastestStaccatoNotesValue": 9,
+    "fastestOrnamentalNotesValue": 23.98695652173913
   },
   {
     "rank": 2,
     "tempoIndication": "Piu moto",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 11.994827586206899,
+    "fastestStaccatoNotesValue": 9.000000000000002
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12,
     "comment": "Scherzo; fugue in movement"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 8,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 2,
     "tempoIndication": "Tempo I",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER"
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 3
   },
   {
     "rank": 3,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 8,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 4,
     "tempoIndication": "Presto",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 7.998214285714285,
+    "fastestOrnamentalNotesValue": 15.99642857142857,
     "comment": "Ornamented notes are tremolo"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro ma non troppo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 8,
+    "fastestStaccatoNotesValue": 4,
+    "fastestOrnamentalNotesValue": 11.999999999999998
   },
   {
     "rank": 1,
     "tempoIndication": "Andante molto moto",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 48,
+    "fastestStaccatoNotesValue": 24,
+    "fastestOrnamentalNotesValue": 48
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 6.000000000000001,
+    "fastestStaccatoNotesValue": 3.0000000000000004,
+    "fastestOrnamentalNotesValue": 12.000000000000002
   },
   {
     "rank": 2,
     "tempoIndication": "A tempo allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 8,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "QUINTUPLET_SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 19.995,
+    "fastestStaccatoNotesValue": 7.995,
+    "fastestOrnamentalNotesValue": 15.99
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 18,
+    "fastestStaccatoNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Poco sostenuto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.999999999999998,
+    "fastestStaccatoNotesValue": 15.999999999999998,
+    "fastestOrnamentalNotesValue": 31.999999999999996
   },
   {
     "rank": 2,
     "tempoIndication": "Vivace",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 17.999999999999996,
+    "fastestStaccatoNotesValue": 12,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 7.989473684210526,
+    "fastestStaccatoNotesValue": 7.989473684210526,
+    "fastestOrnamentalNotesValue": 7.989473684210526
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "QUARTER",
-    "fastestStaccatoNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 2.9999999999999996,
+    "fastestStaccatoNotesValue": 2.9999999999999996,
+    "fastestOrnamentalNotesValue": 11.999999999999998
   },
   {
     "rank": 2,
     "tempoIndication": "Assai meno presto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 3,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro con brio",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 8,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro vivace e con brio",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto scherzando",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTYFOURTH",
-    "fastestStaccatoNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 31.99090909090909,
+    "fastestStaccatoNotesValue": 15.981818181818182,
+    "fastestOrnamentalNotesValue": 31.99090909090909,
     "comment": "Based on the \"Maezel\" Canon"
   },
   {
     "rank": 1,
     "tempoIndication": "Tempo di Menuetto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH",
+    "fastestStructuralNotesValue": 8.999999999999998,
+    "fastestStaccatoNotesValue": 8.999999999999998,
+    "fastestOrnamentalNotesValue": 17.999999999999996,
     "comment": "Minuetto and trio"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro vivace",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "TRIPLET_EIGHTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 4,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Ziemlich langsam",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Sostenuto",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 8,
     "comment": "\"Meeresstille\""
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro vivace",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 6,
+    "fastestOrnamentalNotesValue": 24,
     "comment": "\"Glückliche Fahrt\""
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro ma non troppo e un poco maestoso",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.954545454545453,
+    "fastestStaccatoNotesValue": 15.954545454545453,
+    "fastestOrnamentalNotesValue": 15.954545454545453
   },
   {
     "rank": 1,
     "tempoIndication": "Molto vivace",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER",
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 3,
     "comment": "Scherzo"
   },
   {
     "rank": 2,
     "tempoIndication": "Presto",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "QUARTER",
-    "fastestStaccatoNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 3.998275862068966,
+    "fastestStaccatoNotesValue": 3.998275862068966,
+    "fastestOrnamentalNotesValue": 7.996551724137932,
     "comment": "Disputed; see Noorduin, 2016"
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio molto e cantabile",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 8,
+    "fastestOrnamentalNotesValue": 32
   },
   {
     "rank": 2,
     "tempoIndication": "Andante moderato",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 11.999999999999998,
+    "fastestStaccatoNotesValue": 5.999999999999999
   },
   {
     "rank": 3,
     "tempoIndication": "L'istesso tempo",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 36,
+    "fastestOrnamentalNotesValue": 48
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12,
     "comment": "Disputed; see Noorduin, 2016; Ornamented notes are timpani tremolo"
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro ma non troppo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 15.954545454545453
   },
   {
     "rank": 3,
     "tempoIndication": "Allegro assai",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.99,
+    "fastestStaccatoNotesValue": 7.995,
+    "fastestOrnamentalNotesValue": 31.994999999999997
   },
   {
     "rank": 4,
     "tempoIndication": "Allegro assai vivace",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 6,
     "comment": "Alla marcia; Identified as misprint; see Noorduin, 2016"
   },
   {
     "rank": 5,
     "tempoIndication": "Andante maestoso",
-    "metreString": "3/2",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 6
   },
   {
     "rank": 6,
     "tempoIndication": "Adagio ma non troppo ma divoto",
-    "metreString": "3/2",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": null,
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 9,
+    "fastestOrnamentalNotesValue": 24,
     "comment": "Ornamented notes are tremolo"
   },
   {
     "rank": 7,
     "tempoIndication": "Allergro energico e sempre ben marcato",
-    "metreString": "6/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 8,
     "tempoIndication": "Allegro ma non tanto",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 8
   },
   {
     "rank": 9,
     "tempoIndication": "Prestissimo",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER"
+    "fastestStructuralNotesValue": 8,
+    "fastestStaccatoNotesValue": 4
   },
   {
     "rank": 10,
     "tempoIndication": "Maestoso",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Ziemlich lebhaft und entschlossen",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "In gehender Bewegung",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 11.984210526315788
   },
   {
     "rank": 1,
     "tempoIndication": "Ziemlich anhaltend",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.978947368421052,
+    "fastestOrnamentalNotesValue": 31.98947368421053
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro con moto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 12,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "DOTTED_SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 7.997999999999999,
+    "fastestStaccatoNotesValue": 6,
     "comment": "Scherzo"
   },
   {
     "rank": 2,
     "tempoIndication": "Piu lento",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "DOTTED_THIRTYSECOND",
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 6,
+    "fastestOrnamentalNotesValue": 16,
     "comment": "Trio; Ornamented notes are tremolo"
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio non troppo",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 11.999999999999998,
+    "fastestStaccatoNotesValue": 11.999999999999998,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 11.999999999999998,
+    "fastestStaccatoNotesValue": 8,
     "comment": "Doppio movimento"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto agitato",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 9,
+    "fastestStaccatoNotesValue": 11.999999999999998,
+    "fastestOrnamentalNotesValue": 11.999999999999998,
     "comment": "Finale"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 9,
+    "fastestStaccatoNotesValue": 12,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Maestoso",
-    "metreString": "6/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 24,
+    "fastestStaccatoNotesValue": 24,
+    "fastestOrnamentalNotesValue": 48,
     "comment": "MM not published; see Sherman, 1997"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro non troppo",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 31.982608695652175,
+    "fastestStaccatoNotesValue": 31.982608695652175,
+    "fastestOrnamentalNotesValue": 15.991304347826087
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro appassionato",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER"
+    "fastestStructuralNotesValue": 5.999999999999999,
+    "fastestStaccatoNotesValue": 2.9999999999999996
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "6/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 47.99999999999999,
+    "fastestOrnamentalNotesValue": 47.99999999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto grazioso",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 7.996153846153845,
+    "fastestOrnamentalNotesValue": 15.99230769230769
   },
   {
     "rank": 2,
     "tempoIndication": "Un poco piu presto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 7.999999999999999,
+    "fastestStaccatoNotesValue": 6,
+    "fastestOrnamentalNotesValue": 15.999999999999998
   },
   {
     "rank": 1,
     "tempoIndication": "Ziemlich langsam und mit Ausdruck",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 15.99
   },
   {
     "rank": 1,
     "tempoIndication": "Langsam, marschmäßig",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 2,
     "tempoIndication": "Etwas bewegter",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 5.985,
+    "fastestStaccatoNotesValue": 5.985
   },
   {
     "rank": 3,
     "tempoIndication": "Un poco sostenuto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 11.989285714285714,
+    "fastestStaccatoNotesValue": 11.989285714285714
   },
   {
     "rank": 4,
     "tempoIndication": "Allegro non troppo",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 12.000000000000002,
+    "fastestStaccatoNotesValue": 8
   },
   {
     "rank": 1,
     "tempoIndication": "Andante moderato",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 7.984615384615384,
+    "fastestStaccatoNotesValue": 3.992307692307692,
+    "fastestOrnamentalNotesValue": 15.99230769230769
   },
   {
     "rank": 2,
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_EIGHTH",
+    "fastestStructuralNotesValue": 8,
+    "fastestOrnamentalNotesValue": 12.000000000000002,
     "comment": "Fugue"
   },
   {
     "rank": 1,
     "tempoIndication": "Mäßig bewegt",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_EIGHTH"
+    "fastestStructuralNotesValue": 5.98695652173913,
+    "fastestOrnamentalNotesValue": 9
   },
   {
     "rank": 1,
     "tempoIndication": "Langsam",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": null
+    "fastestStructuralNotesValue": 7.984615384615384,
+    "fastestStaccatoNotesValue": 3.969230769230769
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 7.982608695652174,
+    "fastestStaccatoNotesValue": 7.982608695652174,
+    "fastestOrnamentalNotesValue": 15.991304347826087,
     "comment": "Ornamented notes are tremolo"
   },
   {
     "rank": 2,
     "tempoIndication": "Vivace",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 9,
+    "fastestStaccatoNotesValue": 5.994642857142857,
+    "fastestOrnamentalNotesValue": 11.989285714285714,
     "comment": "Ornamented notes are tremolo"
   },
   {
     "rank": 3,
     "tempoIndication": "Allegro",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": null,
-    "fastestStaccatoNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 3.996,
+    "fastestOrnamentalNotesValue": 15.995999999999999,
     "comment": "Fugue"
   },
   {
     "rank": 1,
     "tempoIndication": "Feierlich",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 15.99
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 7.992,
+    "fastestStaccatoNotesValue": 3.996,
+    "fastestOrnamentalNotesValue": 15.995999999999999,
     "comment": "Ornamented notes are tremolo"
   },
   {
     "rank": 1,
     "tempoIndication": "Poco Adagio",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 2,
     "tempoIndication": "Un poco Allegretto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 3.9954545454545456
   },
   {
     "rank": 3,
     "tempoIndication": "Allegro",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER"
+    "fastestStructuralNotesValue": 8,
+    "fastestStaccatoNotesValue": 4
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro non troppo",
-    "metreString": "3/2",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 11.984210526315788,
+    "fastestStaccatoNotesValue": 11.984210526315788
   },
   {
     "rank": 2,
     "tempoIndication": "Poco sostenuto",
-    "metreString": "3/2",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto non troppo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 6,
+    "fastestStaccatoNotesValue": 3.9954545454545456,
+    "fastestOrnamentalNotesValue": 15.995454545454544
   },
   {
     "rank": 1,
     "tempoIndication": "Andante con moto e poco agitato",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 5.999999999999999
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro con fuoco",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 8,
+    "fastestStaccatoNotesValue": 4,
+    "fastestOrnamentalNotesValue": 16,
     "comment": "Ornamented notes are tremolo"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH",
+    "fastestStructuralNotesValue": 7.999999999999999,
+    "fastestOrnamentalNotesValue": 24,
     "comment": "Ornamented notes are tremolo; ornamented notes occur when the word \"Geschwind\" is being sung."
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": null,
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 7.996153846153845,
+    "fastestStaccatoNotesValue": 6,
+    "fastestOrnamentalNotesValue": 15.99230769230769
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "6/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 11.988
   },
   {
     "rank": 2,
     "tempoIndication": "Piu sostenuto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 8.003571428571428
   },
   {
     "rank": 1,
     "tempoIndication": "Scherzando",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 6,
+    "fastestOrnamentalNotesValue": 24,
     "comment": "Is \"scherzando\" a tempo indication?"
   },
   {
     "rank": 1,
     "tempoIndication": "[Andantino]",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 16,
     "comment": "Prélude; the \"Andantino\" tempo indication comes from an earlier edition, but which doesn't have any MM."
   },
   {
     "rank": 1,
     "tempoIndication": "Andantino",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 8,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.99230769230769
   },
   {
     "rank": 1,
     "tempoIndication": "Andantino",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 8,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Agitato",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+    "fastestStructuralNotesValue": 8.007692307692308,
+    "fastestOrnamentalNotesValue": 22.915384615384614
   },
   {
     "rank": 1,
     "tempoIndication": "Scherzando",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 6.005172413793105,
+    "fastestOrnamentalNotesValue": 11.994827586206899,
     "comment": "Is \"scherzando\" a tempo indication?"
   },
   {
     "rank": 1,
     "tempoIndication": "Andantino",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+    "fastestStructuralNotesValue": 15.991304347826087,
+    "fastestOrnamentalNotesValue": 32.00869565217391
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 9,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "[Allegretto]",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+    "fastestStructuralNotesValue": 8.999999999999998,
+    "fastestOrnamentalNotesValue": 35.99999999999999,
     "comment": "The \"Allegretto\" tempo indication comes from an earlier edition, but which doesn't have any MM."
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32,
     "comment": "Prélude; ornamental arpeggio in \"Piu moderato\" section"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Moderato",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.995454545454544
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+    "fastestStructuralNotesValue": 9,
+    "fastestOrnamentalNotesValue": 36
   },
   {
     "rank": 1,
     "tempoIndication": "Moderato",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 8
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 8.007692307692308,
+    "fastestOrnamentalNotesValue": 15.99230769230769,
     "comment": "\"à Trois Parties réelles\""
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12,
     "comment": "Likely a misprint"
   },
   {
     "rank": 1,
     "tempoIndication": "Cantabile",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 18
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 6,
     "comment": "Tarantelle"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro moderato",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.99230769230769
   },
   {
     "rank": 1,
     "tempoIndication": "Andantino",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+    "fastestStructuralNotesValue": 12.006818181818181,
+    "fastestOrnamentalNotesValue": 23.993181818181817
   },
   {
     "rank": 1,
     "tempoIndication": "Cantabile",
-    "metreString": "9/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 9,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND"
+    "fastestStructuralNotesValue": 36,
+    "fastestOrnamentalNotesValue": 54
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+    "fastestStructuralNotesValue": 32,
+    "fastestOrnamentalNotesValue": 64
   },
   {
     "rank": 1,
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": null,
+    "fastestStructuralNotesValue": null,
     "comment": "Scherzo and trio"
   },
   {
     "rank": 1,
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 11.993478260869566,
     "comment": "Minuet and trio"
   },
   {
     "rank": 1,
     "tempoIndication": "Andantino",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": null
+    "fastestStructuralNotesValue": null
   },
   {
     "rank": 2,
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": null,
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": null,
+    "fastestOrnamentalNotesValue": 12,
     "comment": "Minuet alla mazurka"
   },
   {
     "rank": 1,
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 5.999999999999999,
+    "fastestOrnamentalNotesValue": 11.999999999999998,
     "comment": "Barcarolle; likely a misprint"
   },
   {
     "rank": 1,
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": null,
+    "fastestStructuralNotesValue": null,
     "comment": "March"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
+    "fastestStructuralNotesValue": 11.999999999999998,
     "comment": "Rondoletto"
   },
   {
     "rank": 1,
     "tempoIndication": "Andantino",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 6.006521739130434,
+    "fastestOrnamentalNotesValue": 11.993478260869566
   },
   {
     "rank": 1,
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 6,
+    "fastestOrnamentalNotesValue": 24,
     "comment": "Waltz"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 3.9964285714285714,
     "comment": "Rondo"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 12.006818181818181,
     "comment": "Minuet"
   },
   {
     "rank": 1,
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 6,
+    "fastestOrnamentalNotesValue": 24,
     "comment": "Waltz; ornament with ritenuto; likely a misprint"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 6,
+    "fastestOrnamentalNotesValue": 24,
     "comment": "Chasse"
   },
   {
     "rank": 1,
     "tempoIndication": "Andantino",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 8,
+    "fastestOrnamentalNotesValue": 16,
     "comment": "\"Mélancolie\""
   },
   {
     "rank": 1,
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": null,
+    "fastestStructuralNotesValue": null,
     "comment": "Rondo"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 48
   },
   {
     "rank": 1,
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 6.000000000000001,
     "comment": "Pas redoublé"
   },
   {
     "rank": 1,
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 5.999999999999999,
     "comment": "Barcarolle; likely a misprint"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante sostenuto",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SEXTUPLET_THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 36,
+    "fastestOrnamentalNotesValue": 48,
     "comment": "\"Rêverie\""
   },
   {
     "rank": 1,
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 8,
     "comment": "Rondo"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 5.994642857142857,
+    "fastestOrnamentalNotesValue": 23.994642857142857,
     "comment": "Scherzo and trio"
   },
   {
     "rank": 1,
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 48,
     "comment": "Étude"
   },
   {
     "rank": 1,
     "tempoIndication": "Andantino",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 48,
     "comment": "Minuet; ornament with ritar."
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.99230769230769
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.99230769230769
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.99230769230769
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.99230769230769
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 23.999999999999996
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 23.999999999999996
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.991304347826087
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Molto vivo e velocissimo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.993103448275864
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.99642857142857
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 36
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.995999999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Molto vivace",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 11.999999999999998
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.99230769230769
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 16,
     "comment": "Repeated notes etude"
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 11.999999999999998
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": null,
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 25.99090909090909,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.991304347826087
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.995999999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Presto volante",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 12,
     "comment": "Chromatic etude"
   },
   {
     "rank": 1,
     "tempoIndication": "Presto volante",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.995999999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro e veloce",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 18
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto vivo ed energico",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.954545454545453
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro vivacissimo",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12.000000000000002
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.954545454545453
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro e giocoso",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro, quasi presto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "2/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 7.996153846153845,
     "comment": "\"a la Galopade\""
   },
   {
     "rank": 1,
     "tempoIndication": "Allegrissimo, quasi presto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 15.991304347826087,
     "comment": "Identified as misprint"
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 11.999999999999998
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.99
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro vivace",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 11.996052631578948,
     "comment": "Repeated notes etude"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro velocessimo",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SEPTUPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 28
   },
   {
     "rank": 1,
     "tempoIndication": "Lento",
-    "metreString": "3/2",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 5.989655172413793,
+    "fastestOrnamentalNotesValue": 23.989655172413798,
     "comment": "Trills etude"
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "QUINTUPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 19.995652173913044,
+    "fastestOrnamentalNotesValue": 31.995652173913044
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 12,
     "comment": "Identified as misprint"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro moderato",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.985714285714286
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.994736842105265,
+    "fastestStaccatoNotesValue": 7.989473684210526,
+    "fastestOrnamentalNotesValue": 15.994736842105265
   },
   {
     "rank": 1,
     "tempoIndication": "Presto",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.995999999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro vivace",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.99
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.99
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 18
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 8,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.99
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro vivo",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 7.989473684210526,
+    "fastestStaccatoNotesValue": 7.989473684210526
   },
   {
     "rank": 1,
     "tempoIndication": "Velocissimo",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 23.995945945945948,
+    "fastestStaccatoNotesValue": 5.995945945945945
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto veloce",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": null
+    "fastestStructuralNotesValue": 36
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": null,
-    "fastestStaccatoNoteValue": null
+    "fastestStructuralNotesValue": 33.391304347826086,
+    "fastestStaccatoNotesValue": 8.347826086956522
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 24,
+    "fastestOrnamentalNotesValue": 31.99090909090909
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.995999999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Tempo moderato",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 31.991999999999997,
+    "fastestStaccatoNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Lento",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 18,
+    "fastestOrnamentalNotesValue": 23.988461538461536
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro moderato",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Allegretto vivace",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 7.996153846153845,
+    "fastestStaccatoNotesValue": 7.996153846153845
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "TRIPLET_EIGHTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.995999999999999
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.991304347826087
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Andantino con moto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTYFOURTH",
-    "fastestOrnamentalNoteValue": "DOTTED_HUNDREDTWENTYEIGHTH"
+    "fastestStructuralNotesValue": 63.99999999999999,
+    "fastestOrnamentalNotesValue": 80
   },
   {
     "rank": 1,
     "tempoIndication": "Molto allegro velocissimo",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 31.999999999999996
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro moderato",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 12,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio molto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SEXTUPLET_THIRTYSECOND",
+    "fastestStructuralNotesValue": 15.981818181818182,
+    "fastestStaccatoNotesValue": 15.981818181818182,
+    "fastestOrnamentalNotesValue": 24,
     "comment": "Tempo di Marcia"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 11.996052631578948,
+    "fastestStaccatoNotesValue": 11.996052631578948,
+    "fastestOrnamentalNotesValue": 23.992105263157896
   },
   {
     "rank": 1,
     "tempoIndication": "Andante e molto cantabile",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro con brio",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 7.997368421052633,
+    "fastestStaccatoNotesValue": 3.994736842105263,
+    "fastestOrnamentalNotesValue": 15.994736842105265,
     "comment": "Ornamented notes are tremolo"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro ma non troppo",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 7.992857142857143,
+    "fastestStaccatoNotesValue": 7.992857142857143,
+    "fastestOrnamentalNotesValue": 11.999999999999998
   },
   {
     "rank": 1,
     "tempoIndication": "Andante con moto",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+    "fastestStructuralNotesValue": 11.984210526315788,
+    "fastestStaccatoNotesValue": 11.984210526315788,
+    "fastestOrnamentalNotesValue": 23.992105263157896
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro scherzando",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": null
+    "fastestStructuralNotesValue": 5.999999999999999,
+    "fastestStaccatoNotesValue": 5.999999999999999,
+    "fastestOrnamentalNotesValue": 6.994736842105262
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.993442622950822,
+    "fastestStaccatoNotesValue": 15.993442622950822,
+    "fastestOrnamentalNotesValue": 31.986885245901643
   },
   {
     "rank": 1,
     "tempoIndication": "Andantino",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 7.997727272727272,
+    "fastestStaccatoNotesValue": 7.997727272727272,
+    "fastestOrnamentalNotesValue": 31.99772727272727,
     "comment": "Very likely a misprint"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante sostenuto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": null,
-    "fastestStaccatoNoteValue": null
+    "fastestStructuralNotesValue": 36,
+    "fastestStaccatoNotesValue": 36
   },
   {
     "rank": 1,
     "tempoIndication": "Maestoso",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestStaccatoNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH"
+    "fastestStructuralNotesValue": 24.000000000000004,
+    "fastestStaccatoNotesValue": 24.000000000000004,
+    "fastestOrnamentalNotesValue": 64
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 9.000000000000002,
+    "fastestStaccatoNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 2,
     "tempoIndication": "Più Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 5.999999999999999,
+    "fastestStaccatoNotesValue": 5.999999999999999
   },
   {
     "rank": 3,
     "tempoIndication": "Più Allegro",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 5.999999999999999,
+    "fastestOrnamentalNotesValue": 11.999999999999998
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "THIRTYSECOND",
-    "fastestStaccatoNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 32,
+    "fastestStaccatoNotesValue": 32
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto",
-    "metreString": "3/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 5.999999999999999,
+    "fastestStaccatoNotesValue": 2.9999999999999996,
+    "fastestOrnamentalNotesValue": 11.999999999999998
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro vivace",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 11.999999999999998,
+    "fastestStaccatoNotesValue": 7.992857142857143,
+    "fastestOrnamentalNotesValue": 23.999999999999996
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro agitato",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 3,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 1,
     "tempoIndication": "Andante con moto tranquillo",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32
   },
   {
     "rank": 1,
     "tempoIndication": "Leggiero e vivace",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 6,
+    "fastestOrnamentalNotesValue": 24,
     "comment": "Scherzo"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro assai appassionato",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.995999999999999,
+    "fastestStaccatoNotesValue": 7.992,
+    "fastestOrnamentalNotesValue": 31.991999999999997
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro energico e fuoco",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 15.991304347826087,
+    "fastestStaccatoNotesValue": 7.995652173913044
   },
   {
     "rank": 1,
     "tempoIndication": "Andante espressivo",
-    "metreString": "9/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 9,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 18.000000000000004,
+    "fastestStaccatoNotesValue": 9.000000000000002,
+    "fastestOrnamentalNotesValue": 36.00000000000001
   },
   {
     "rank": 1,
     "tempoIndication": "Molto Allegro quasi Presto",
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 7.997727272727272,
+    "fastestStaccatoNotesValue": 3.9954545454545456,
+    "fastestOrnamentalNotesValue": 15.995454545454544,
     "comment": "Scherzo"
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro appassionato",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTYFOURTH",
+    "fastestStructuralNotesValue": 18,
+    "fastestStaccatoNotesValue": 5.999999999999999,
+    "fastestOrnamentalNotesValue": 47.99999999999999,
     "comment": "Finale"
   },
   {
     "rank": 1,
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 6.000000000000001,
+    "fastestOrnamentalNotesValue": 8,
     "comment": "\"Von fremden Ländern und Menschen\""
   },
   {
     "rank": 1,
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 5.9785714285714295,
+    "fastestOrnamentalNotesValue": 11.989285714285714,
     "comment": "\"Curiose Geschichte\""
   },
   {
     "rank": 1,
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 7.999999999999999,
+    "fastestStaccatoNotesValue": 7.999999999999999,
     "comment": "\"Hasche-Mann\""
   },
   {
     "rank": 1,
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 7.999999999999999,
     "comment": "\"Bittendes Kind\""
   },
   {
     "rank": 1,
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 8,
     "comment": "\"Glückes genug\""
   },
   {
     "rank": 1,
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12,
     "comment": "\"Wichtige Begebenheit\""
   },
   {
     "rank": 1,
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 7.992,
+    "fastestOrnamentalNotesValue": 15.984,
     "comment": "\"Träumerei\""
   },
   {
     "rank": 1,
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 3.9999999999999996,
     "comment": "\"Am Camin\""
   },
   {
     "rank": 1,
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 6,
     "comment": "\"Ritter vom Steckenpferd\""
   },
   {
     "rank": 1,
-    "metreString": "2/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 3.9999999999999996,
     "comment": "\"Fast zu ernst\""
   },
   {
     "rank": 1,
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 8,
+    "fastestStaccatoNotesValue": 4,
     "comment": "\"Fürchtenmachen\""
   },
   {
     "rank": 1,
-    "metreString": "2/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 7.982608695652174,
     "comment": "\"Kind im Einschlummern\""
   },
   {
     "rank": 1,
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 7.992857142857143,
+    "fastestOrnamentalNotesValue": 15.985714285714286,
     "comment": "\"Der Dichter spricht\""
   },
   {
     "rank": 1,
     "tempoIndication": "Largo",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 2,
     "tempoIndication": "Andante",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.99,
+    "fastestStaccatoNotesValue": 7.98,
+    "fastestOrnamentalNotesValue": 31.98
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro giusto",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 15.999999999999998,
+    "fastestStaccatoNotesValue": 15.999999999999998,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 2,
     "tempoIndication": "Largo",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 18,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 3,
     "tempoIndication": "Allegro vivace",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SEPTUPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 15.995454545454544,
+    "fastestStaccatoNotesValue": 15.995454545454544,
+    "fastestOrnamentalNotesValue": 27.995454545454546
   },
   {
     "rank": 1,
     "tempoIndication": "Andante",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 3.99,
+    "fastestOrnamentalNotesValue": 15.99
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro con anima",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 6
   },
   {
     "rank": 3,
     "tempoIndication": "Molto piu tranquillo",
-    "metreString": "6/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 6
   },
   {
     "rank": 1,
     "tempoIndication": "Andante cantabile, con alcuna licenza",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 12.000000000000002
   },
   {
     "rank": 2,
     "tempoIndication": "Con moto",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 3,
     "tempoIndication": "sostenuto",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 4,
     "tempoIndication": "Piu animato",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 5,
     "tempoIndication": "Poco meno",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 12
   },
   {
     "rank": 6,
     "tempoIndication": "Moderato con anima",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": null
+    "fastestStructuralNotesValue": 15.984,
+    "fastestOrnamentalNotesValue": 36
   },
   {
     "rank": 7,
     "tempoIndication": "Tempo I.",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 24.000000000000004,
+    "fastestOrnamentalNotesValue": 36
   },
   {
     "rank": 8,
     "tempoIndication": "Andante mosso",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro moderato",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 12,
     "comment": "Waltz"
   },
   {
     "rank": 1,
     "tempoIndication": "Andante maestoso",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 24
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro vivace",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
+    "fastestStructuralNotesValue": 12,
+    "fastestStaccatoNotesValue": 8,
     "comment": "Alla breve"
   },
   {
     "rank": 3,
     "tempoIndication": "Presto",
-    "metreString": "C-",
     "isCommonTime": false,
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 8
   },
   {
     "rank": 4,
     "tempoIndication": "Molto meno mosso",
-    "metreString": "6/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "QUARTER",
-    "fastestOrnamentalNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 8,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 2,
     "tempoIndication": "Allegro non troppo",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 15.993103448275864,
+    "fastestStaccatoNotesValue": 15.993103448275864
   },
   {
     "rank": 3,
     "tempoIndication": "Un poco piu animato",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 16
   },
   {
     "rank": 4,
     "tempoIndication": "Andante",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 7.999999999999999
   },
   {
     "rank": 5,
     "tempoIndication": "Moderato mosso",
-    "metreString": "C",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "QUINTUPLET_THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.984,
+    "fastestOrnamentalNotesValue": 39.984
   },
   {
     "rank": 6,
     "tempoIndication": "Andante",
-    "metreString": "12/8",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 48
   },
   {
     "rank": 7,
     "tempoIndication": "Moderato assai",
-    "metreString": "4/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 7.990909090909091
   },
   {
     "rank": 8,
     "tempoIndication": "Adagio mosso",
-    "metreString": "4/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 8,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 9,
     "tempoIndication": "Allegro vivo",
-    "metreString": "4/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 16,
+    "fastestStaccatoNotesValue": 16,
+    "fastestOrnamentalNotesValue": 32
   },
   {
     "rank": 10,
     "tempoIndication": "Andante come prima",
-    "metreString": "4/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 7.999999999999999,
+    "fastestOrnamentalNotesValue": 31.999999999999996
   },
   {
     "rank": 11,
     "tempoIndication": "Meno",
-    "metreString": "4/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 8,
+    "fastestOrnamentalNotesValue": 16
   },
   {
     "rank": 12,
     "tempoIndication": "Andante mosso",
-    "metreString": "4/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH"
+    "fastestStructuralNotesValue": 7.98
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro con grazia",
-    "metreString": "5/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 5,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestStaccatoNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "TRIPLET_EIGHTH"
+    "fastestStructuralNotesValue": 10,
+    "fastestStaccatoNotesValue": 10,
+    "fastestOrnamentalNotesValue": 15.000000000000002
   },
   {
     "rank": 1,
     "tempoIndication": "Allegro molto vivace",
-    "metreString": "C (12/8)",
     "isCommonTime": true,
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestStaccatoNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 15.994736842105265,
+    "fastestStaccatoNotesValue": 15.994736842105265,
+    "fastestOrnamentalNotesValue": 31.98947368421053
   },
   {
     "rank": 1,
     "tempoIndication": "Adagio lamentoso",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH",
+    "fastestStructuralNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12,
     "comment": "Finale"
   },
   {
     "rank": 2,
     "tempoIndication": "Andante",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "SIXTEENTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 12,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 3,
     "tempoIndication": "no che prima",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 6,
+    "fastestOrnamentalNotesValue": 12
   },
   {
     "rank": 4,
     "tempoIndication": "Andante",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH"
+    "fastestStructuralNotesValue": 8.999999999999998
   },
   {
     "rank": 5,
     "tempoIndication": "Piu mosso",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH",
-    "fastestOrnamentalNoteValue": "SEPTUPLET_SIXTEENTH",
+    "fastestStructuralNotesValue": 9,
+    "fastestOrnamentalNotesValue": 21,
     "comment": "Fastest notes following 'Vivace'"
   },
   {
     "rank": 6,
     "tempoIndication": "Andante",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "SIXTEENTH"
+    "fastestStructuralNotesValue": 5.992105263157894,
+    "fastestOrnamentalNotesValue": 11.984210526315788
   },
   {
     "rank": 7,
     "tempoIndication": "Andante non tanto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND",
+    "fastestStructuralNotesValue": 18,
+    "fastestOrnamentalNotesValue": 24,
     "comment": "Fastest notes following 'stringendo molto'"
   },
   {
     "rank": 8,
     "tempoIndication": "Moderato assai",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 18,
+    "fastestOrnamentalNotesValue": 23.93181818181818
   },
   {
     "rank": 9,
     "tempoIndication": "Andante",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "EIGHTH",
-    "fastestOrnamentalNoteValue": "THIRTYSECOND"
+    "fastestStructuralNotesValue": 5.985,
+    "fastestOrnamentalNotesValue": 23.985
   },
   {
     "rank": 10,
     "tempoIndication": "Andante guisto",
-    "metreString": "3/4",
     "isCommonTime": false,
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNoteValue": "TRIPLET_EIGHTH"
+    "fastestStructuralNotesValue": 8.999999999999998
   }
 ];
 const noteNotFoundList = [
-  {
-    "pieceName": "Escuela de guitarra, 1st ed.",
-    "movement": {
-      "rank": 6,
-      "key": "A_MAJOR"
-    },
-    "section": {
-      "rank": 1,
-      "tempoIndication": "Andante"
-    },
-    "metronomeMark": {
-      "beatUnit": "EIGHTH",
-      "bpm": 84,
-      "notes": {
-        "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-        "fastestOrnamentalNoteValue": null
-      },
-      "notesPerSecond": {
-        "fastestStructuralNotePerSecond": 4.2,
-        "fastestOrnamentalNotePerSecond": 16.8
-      }
-    }
-  },
   {
     "pieceName": "Escuela de guitarra, 1st ed.",
     "movement": {
@@ -21298,34 +20325,11 @@ const noteNotFoundList = [
     "metronomeMark": {
       "beatUnit": "QUARTER",
       "bpm": 63,
-      "notes": {
-        "fastestStructuralNoteValue": null
+      "notesPerBar": {
+        "fastestStructuralNotesValue": null
       },
       "notesPerSecond": {
-        "fastestStructuralNotePerSecond": "Considering the amount of mordents, should they be considered structural?"
-      }
-    }
-  },
-  {
-    "pieceName": "Escuela de guitarra, 2nd ed.",
-    "movement": {
-      "rank": 6,
-      "key": "A_MAJOR"
-    },
-    "section": {
-      "rank": 1,
-      "tempoIndication": "Andante"
-    },
-    "metronomeMark": {
-      "beatUnit": "EIGHTH",
-      "bpm": 84,
-      "notes": {
-        "fastestStructuralNoteValue": "TRIPLET_SIXTEENTH",
-        "fastestOrnamentalNoteValue": null
-      },
-      "notesPerSecond": {
-        "fastestStructuralNotePerSecond": 4.2,
-        "fastestOrnamentalNotePerSecond": 16.8
+        "fastestStructuralNotesPerSecond": "Considering the amount of mordents, should they be considered structural?"
       }
     }
   },
@@ -21342,11 +20346,11 @@ const noteNotFoundList = [
     "metronomeMark": {
       "beatUnit": "QUARTER",
       "bpm": 63,
-      "notes": {
-        "fastestStructuralNoteValue": null
+      "notesPerBar": {
+        "fastestStructuralNotesValue": null
       },
       "notesPerSecond": {
-        "fastestStructuralNotePerSecond": "Considering the amount of mordents, should they be considered structural?"
+        "fastestStructuralNotesPerSecond": "Considering the amount of mordents, should they be considered structural?"
       }
     }
   },
@@ -21363,107 +20367,11 @@ const noteNotFoundList = [
     "metronomeMark": {
       "beatUnit": "QUARTER",
       "bpm": 63,
-      "notes": {
-        "fastestStructuralNoteValue": null
+      "notesPerBar": {
+        "fastestStructuralNotesValue": null
       },
       "notesPerSecond": {
-        "fastestStructuralNotePerSecond": "Considering the amount of mordents, should they be considered structural?"
-      }
-    }
-  },
-  {
-    "pieceName": "Symphony No.9, Op. 125",
-    "movement": {
-      "rank": 4,
-      "key": "D_MINOR"
-    },
-    "section": {
-      "rank": 6,
-      "tempoIndication": "Adagio ma non troppo ma divoto"
-    },
-    "metronomeMark": {
-      "beatUnit": "HALF",
-      "bpm": 60,
-      "notes": {
-        "fastestStructuralNoteValue": null,
-        "fastestOrnamentalNoteValue": "SIXTEENTH"
-      },
-      "notesPerSecond": {
-        "fastestStructuralNotePerSecond": 3,
-        "fastestOrnamentalNotePerSecond": 8
-      }
-    }
-  },
-  {
-    "pieceName": "Ein deutsches Requiem, Op.45",
-    "movement": {
-      "rank": 5,
-      "key": "G_MAJOR"
-    },
-    "section": {
-      "rank": 1,
-      "tempoIndication": "Langsam"
-    },
-    "metronomeMark": {
-      "beatUnit": "EIGHTH",
-      "bpm": 104,
-      "notes": {
-        "fastestStructuralNoteValue": "EIGHTH",
-        "fastestStaccatoNoteValue": null
-      },
-      "notesPerSecond": {
-        "fastestStructuralNotePerSecond": 1.73,
-        "fastestStaccatoNotePerSecond": 0.86
-      }
-    }
-  },
-  {
-    "pieceName": "Ein deutsches Requiem, Op.45",
-    "movement": {
-      "rank": 6,
-      "key": "C_MINOR"
-    },
-    "section": {
-      "rank": 3,
-      "tempoIndication": "Allegro"
-    },
-    "metronomeMark": {
-      "beatUnit": "HALF",
-      "bpm": 100,
-      "notes": {
-        "fastestStructuralNoteValue": null,
-        "fastestStaccatoNoteValue": "QUARTER",
-        "fastestOrnamentalNoteValue": "SIXTEENTH"
-      },
-      "notesPerSecond": {
-        "fastestStructuralNotePerSecond": 5,
-        "fastestStaccatoNotePerSecond": 3.33,
-        "fastestOrnamentalNotePerSecond": 13.33
-      }
-    }
-  },
-  {
-    "pieceName": "Rinaldo, Op.50",
-    "movement": {
-      "rank": 7,
-      "key": "C_MINOR"
-    },
-    "section": {
-      "rank": 1,
-      "tempoIndication": "Allegro"
-    },
-    "metronomeMark": {
-      "beatUnit": "HALF",
-      "bpm": 104,
-      "notes": {
-        "fastestStructuralNoteValue": "EIGHTH",
-        "fastestStaccatoNoteValue": null,
-        "fastestOrnamentalNoteValue": "SIXTEENTH"
-      },
-      "notesPerSecond": {
-        "fastestStructuralNotePerSecond": 6.93,
-        "fastestStaccatoNotePerSecond": 5.2,
-        "fastestOrnamentalNotePerSecond": 13.86
+        "fastestStructuralNotesPerSecond": "Considering the amount of mordents, should they be considered structural?"
       }
     }
   },
@@ -21479,11 +20387,11 @@ const noteNotFoundList = [
     "metronomeMark": {
       "beatUnit": "QUARTER",
       "bpm": 152,
-      "notes": {
-        "fastestStructuralNoteValue": null
+      "notesPerBar": {
+        "fastestStructuralNotesValue": null
       },
       "notesPerSecond": {
-        "fastestStructuralNotePerSecond": "16th as fastest?"
+        "fastestStructuralNotesPerSecond": "16th as fastest?"
       }
     }
   },
@@ -21500,11 +20408,11 @@ const noteNotFoundList = [
     "metronomeMark": {
       "beatUnit": "QUARTER",
       "bpm": 66,
-      "notes": {
-        "fastestStructuralNoteValue": null
+      "notesPerBar": {
+        "fastestStructuralNotesValue": null
       },
       "notesPerSecond": {
-        "fastestStructuralNotePerSecond": "16th as fastest?"
+        "fastestStructuralNotesPerSecond": "16th as fastest?"
       }
     }
   },
@@ -21520,13 +20428,13 @@ const noteNotFoundList = [
     "metronomeMark": {
       "beatUnit": "QUARTER",
       "bpm": 144,
-      "notes": {
-        "fastestStructuralNoteValue": null,
-        "fastestOrnamentalNoteValue": "SIXTEENTH"
+      "notesPerBar": {
+        "fastestStructuralNotesValue": null,
+        "fastestOrnamentalNotesValue": 12
       },
       "notesPerSecond": {
-        "fastestStructuralNotePerSecond": "16th as fastest?",
-        "fastestOrnamentalNotePerSecond": 9.6
+        "fastestStructuralNotesPerSecond": "16th as fastest?",
+        "fastestOrnamentalNotesPerSecond": 9.6
       }
     }
   },
@@ -21542,11 +20450,11 @@ const noteNotFoundList = [
     "metronomeMark": {
       "beatUnit": "QUARTER",
       "bpm": 116,
-      "notes": {
-        "fastestStructuralNoteValue": null
+      "notesPerBar": {
+        "fastestStructuralNotesValue": null
       },
       "notesPerSecond": {
-        "fastestStructuralNotePerSecond": "16th as fastest?"
+        "fastestStructuralNotesPerSecond": "16th as fastest?"
       }
     }
   },
@@ -21562,149 +20470,11 @@ const noteNotFoundList = [
     "metronomeMark": {
       "beatUnit": "QUARTER",
       "bpm": 112,
-      "notes": {
-        "fastestStructuralNoteValue": null
+      "notesPerBar": {
+        "fastestStructuralNotesValue": null
       },
       "notesPerSecond": {
-        "fastestStructuralNotePerSecond": "16th as fastest?"
-      }
-    }
-  },
-  {
-    "pieceName": "The School of Velocity, Op.299",
-    "movement": {
-      "rank": 26,
-      "key": "A_MAJOR"
-    },
-    "section": {
-      "rank": 1,
-      "tempoIndication": "Allegro"
-    },
-    "metronomeMark": {
-      "beatUnit": "DOTTED_QUARTER",
-      "bpm": 88,
-      "notes": {
-        "fastestStructuralNoteValue": null,
-        "fastestOrnamentalNoteValue": "SIXTEENTH"
-      },
-      "notesPerSecond": {
-        "fastestStructuralNotePerSecond": 19.06,
-        "fastestOrnamentalNotePerSecond": 8.8
-      }
-    }
-  },
-  {
-    "pieceName": "40 Daily Exercises, Op.337",
-    "movement": {
-      "rank": 32,
-      "key": "C_MAJOR"
-    },
-    "section": {
-      "rank": 1,
-      "tempoIndication": "Allegro molto veloce"
-    },
-    "metronomeMark": {
-      "beatUnit": "QUARTER",
-      "bpm": 120,
-      "notes": {
-        "fastestStructuralNoteValue": null
-      },
-      "notesPerSecond": {
-        "fastestStructuralNotePerSecond": 18
-      }
-    }
-  },
-  {
-    "pieceName": "40 Daily Exercises, Op.337",
-    "movement": {
-      "rank": 33,
-      "key": "E_FLAT_MAJOR"
-    },
-    "section": {
-      "rank": 1,
-      "tempoIndication": "Allegro"
-    },
-    "metronomeMark": {
-      "beatUnit": "QUARTER",
-      "bpm": 92,
-      "notes": {
-        "fastestStructuralNoteValue": null,
-        "fastestStaccatoNoteValue": null
-      },
-      "notesPerSecond": {
-        "fastestStructuralNotePerSecond": 12.8,
-        "fastestStaccatoNotePerSecond": 3.2
-      }
-    }
-  },
-  {
-    "pieceName": "Symphony No.5, Op.76",
-    "movement": {
-      "rank": 3,
-      "key": "B_FLAT_MAJOR"
-    },
-    "section": {
-      "rank": 1,
-      "tempoIndication": "Allegro scherzando"
-    },
-    "metronomeMark": {
-      "beatUnit": "DOTTED_QUARTER",
-      "bpm": 76,
-      "notes": {
-        "fastestStructuralNoteValue": "SIXTEENTH",
-        "fastestStaccatoNoteValue": "SIXTEENTH",
-        "fastestOrnamentalNoteValue": null
-      },
-      "notesPerSecond": {
-        "fastestStructuralNotePerSecond": 7.6,
-        "fastestStaccatoNotePerSecond": 7.6,
-        "fastestOrnamentalNotePerSecond": 8.86
-      }
-    }
-  },
-  {
-    "pieceName": "Variations on a Theme by Carafa, Op. 114",
-    "movement": {
-      "rank": 1,
-      "key": "A_MINOR"
-    },
-    "section": {
-      "rank": 1,
-      "tempoIndication": "Andante sostenuto"
-    },
-    "metronomeMark": {
-      "beatUnit": "QUARTER",
-      "bpm": 54,
-      "notes": {
-        "fastestStructuralNoteValue": null,
-        "fastestStaccatoNoteValue": null
-      },
-      "notesPerSecond": {
-        "fastestStructuralNotePerSecond": 8.1,
-        "fastestStaccatoNotePerSecond": 8.1
-      }
-    }
-  },
-  {
-    "pieceName": "Symphony No.5, Op.64",
-    "movement": {
-      "rank": 2,
-      "key": "D_MAJOR"
-    },
-    "section": {
-      "rank": 6,
-      "tempoIndication": "Moderato con anima"
-    },
-    "metronomeMark": {
-      "beatUnit": "QUARTER",
-      "bpm": 100,
-      "notes": {
-        "fastestStructuralNoteValue": "SIXTEENTH",
-        "fastestOrnamentalNoteValue": null
-      },
-      "notesPerSecond": {
-        "fastestStructuralNotePerSecond": 6.66,
-        "fastestOrnamentalNotePerSecond": 15
+        "fastestStructuralNotesPerSecond": "16th as fastest?"
       }
     }
   }
