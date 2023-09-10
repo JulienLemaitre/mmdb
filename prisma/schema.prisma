@@ -67,10 +67,10 @@ model Section {
   metreDenominator                Int
   isCommonTime                    Boolean          @default(false)
   isCutTime                       Boolean          @default(false)
-  fastestStructuralNotesPerBar    Int?
-  fastestStaccatoNotesPerBar      Int?
-  fastestRepeatedNotesPerBar      Int?
-  fastestOrnamentalNotesPerBar    Int?
+  fastestStructuralNotesPerBar    Float?
+  fastestStaccatoNotesPerBar      Float?
+  fastestRepeatedNotesPerBar      Float?
+  fastestOrnamentalNotesPerBar    Float?
   isFastestStructuralNoteBelCanto Boolean          @default(false)
   tempoIndication                 TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
   tempoIndicationId               String?
