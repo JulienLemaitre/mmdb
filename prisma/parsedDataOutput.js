@@ -30,8 +30,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 138,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.999999999999998,
-          "fastestOrnamentalNotesPerBar": 31.999999999999996
+          "fastestStructuralNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 9.2,
@@ -51,8 +51,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.999999999999998,
-            "fastestOrnamentalNotesPerBar": 31.999999999999996
+            "fastestStructuralNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 32
           }
         ]
       }
@@ -334,8 +334,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 160,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.99625,
-          "fastestOrnamentalNotesPerBar": 11.9925
+          "fastestStructuralNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.33,
@@ -355,8 +355,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 5.99625,
-            "fastestOrnamentalNotesPerBar": 11.9925
+            "fastestStructuralNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 12
           }
         ]
       }
@@ -393,8 +393,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 138,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.999999999999998,
-          "fastestOrnamentalNotesPerBar": 7.999999999999999
+          "fastestStructuralNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 9.2,
@@ -414,8 +414,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.999999999999998,
-            "fastestOrnamentalNotesPerBar": 7.999999999999999
+            "fastestStructuralNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 8
           }
         ]
       }
@@ -452,8 +452,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 152,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.996052631578948,
-          "fastestStaccatoNotesPerBar": 5.992105263157894
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.13,
@@ -473,8 +473,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.996052631578948,
-            "fastestStaccatoNotesPerBar": 5.992105263157894
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 6
           }
         ]
       }
@@ -511,8 +511,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 126,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998,
-          "fastestStaccatoNotesPerBar": 5.999999999999999
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 8.4,
@@ -532,8 +532,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.999999999999998,
-            "fastestStaccatoNotesPerBar": 5.999999999999999
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 6
           }
         ]
       }
@@ -924,7 +924,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 69,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 31.999999999999996
+          "fastestStructuralNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 9.2
@@ -937,7 +937,7 @@ const pieceList = [
         "bpm": 58,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 12,
-          "fastestOrnamentalNotesPerBar": 16.01379310344828
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 2.9,
@@ -1030,7 +1030,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.93
@@ -1042,7 +1042,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.93
@@ -1054,8 +1054,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769,
-          "fastestOrnamentalNotesPerBar": 32.0076923076923
+          "fastestStructuralNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.93,
@@ -1166,7 +1166,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 31.999999999999996
+            "fastestStructuralNotesPerBar": 32
           }
         ]
       },
@@ -1182,7 +1182,7 @@ const pieceList = [
             "metreNumerator": 4,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 12,
-            "fastestOrnamentalNotesPerBar": 16.01379310344828
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       },
@@ -1295,7 +1295,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769,
+            "fastestStructuralNotesPerBar": 16,
             "comment": "Same as Nuevo método de guitarra, xii"
           }
         ]
@@ -1311,7 +1311,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769,
+            "fastestStructuralNotesPerBar": 16,
             "comment": "Same as Nuevo método de guitarra, xiii"
           }
         ]
@@ -1327,8 +1327,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769,
-            "fastestOrnamentalNotesPerBar": 32.0076923076923,
+            "fastestStructuralNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 32,
             "comment": "Same as Nuevo método de guitarra, xiv"
           }
         ]
@@ -1468,7 +1468,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 69,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 31.999999999999996
+          "fastestStructuralNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 9.2
@@ -1481,7 +1481,7 @@ const pieceList = [
         "bpm": 58,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 12,
-          "fastestOrnamentalNotesPerBar": 16.01379310344828
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 2.9,
@@ -1560,8 +1560,8 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 132,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999,
-          "fastestOrnamentalNotesPerBar": 23.999999999999996
+          "fastestStructuralNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.6,
@@ -1574,7 +1574,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.93
@@ -1586,7 +1586,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.93
@@ -1598,8 +1598,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769,
-          "fastestOrnamentalNotesPerBar": 32.0076923076923
+          "fastestStructuralNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.93,
@@ -1710,7 +1710,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 31.999999999999996
+            "fastestStructuralNotesPerBar": 32
           }
         ]
       },
@@ -1726,7 +1726,7 @@ const pieceList = [
             "metreNumerator": 4,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 12,
-            "fastestOrnamentalNotesPerBar": 16.01379310344828
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       },
@@ -1822,8 +1822,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
-            "fastestOrnamentalNotesPerBar": 23.999999999999996,
+            "fastestStructuralNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 24,
             "comment": "Very likely a misprint, see first publication"
           }
         ]
@@ -1839,7 +1839,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769,
+            "fastestStructuralNotesPerBar": 16,
             "comment": "Same as Nuevo método de guitarra, xii"
           }
         ]
@@ -1855,7 +1855,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769,
+            "fastestStructuralNotesPerBar": 16,
             "comment": "Same as Nuevo método de guitarra, xiii"
           }
         ]
@@ -1871,8 +1871,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769,
-            "fastestOrnamentalNotesPerBar": 32.0076923076923,
+            "fastestStructuralNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 32,
             "comment": "Same as Nuevo método de guitarra, xiv"
           }
         ]
@@ -1994,8 +1994,8 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 66,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998,
-          "fastestOrnamentalNotesPerBar": 47.99999999999999
+          "fastestStructuralNotesPerBar": 12,
+          "fastestOrnamentalNotesPerBar": 48
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.6,
@@ -2008,7 +2008,7 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 66,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998
+          "fastestStructuralNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.6
@@ -2058,7 +2058,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.93
@@ -2070,7 +2070,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.93
@@ -2082,8 +2082,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769,
-          "fastestOrnamentalNotesPerBar": 32.0076923076923
+          "fastestStructuralNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.93,
@@ -2097,7 +2097,7 @@ const pieceList = [
         "bpm": 69,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 24,
-          "fastestOrnamentalNotesPerBar": 63.99999999999999
+          "fastestOrnamentalNotesPerBar": 64
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.9,
@@ -2207,8 +2207,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 11.999999999999998,
-            "fastestOrnamentalNotesPerBar": 47.99999999999999
+            "fastestStructuralNotesPerBar": 12,
+            "fastestOrnamentalNotesPerBar": 48
           }
         ]
       },
@@ -2223,7 +2223,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 11.999999999999998
+            "fastestStructuralNotesPerBar": 12
           }
         ]
       },
@@ -2287,7 +2287,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769,
+            "fastestStructuralNotesPerBar": 16,
             "comment": "Same as Escuela de guitarra, xxv"
           }
         ]
@@ -2303,7 +2303,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769,
+            "fastestStructuralNotesPerBar": 16,
             "comment": "Same as Escuela de guitarra, xxiv"
           }
         ]
@@ -2319,8 +2319,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769,
-            "fastestOrnamentalNotesPerBar": 32.0076923076923,
+            "fastestStructuralNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 32,
             "comment": "Same as Escuela de guitarra, xxv"
           }
         ]
@@ -2337,7 +2337,7 @@ const pieceList = [
             "metreNumerator": 4,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 24,
-            "fastestOrnamentalNotesPerBar": 63.99999999999999
+            "fastestOrnamentalNotesPerBar": 64
           }
         ]
       },
@@ -2482,7 +2482,7 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 66,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 35.99999999999999,
+          "fastestStructuralNotesPerBar": 36,
           "fastestOrnamentalNotesPerBar": 96
         },
         "notesPerSecond": {
@@ -2497,7 +2497,7 @@ const pieceList = [
         "bpm": 112,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 18,
-          "fastestOrnamentalNotesPerBar": 48.00535714285714
+          "fastestOrnamentalNotesPerBar": 48
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.2,
@@ -2573,7 +2573,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 35.99999999999999,
+            "fastestStructuralNotesPerBar": 36,
             "fastestOrnamentalNotesPerBar": 96
           },
           {
@@ -2583,7 +2583,7 @@ const pieceList = [
             "metreNumerator": 3,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 18,
-            "fastestOrnamentalNotesPerBar": 48.00535714285714,
+            "fastestOrnamentalNotesPerBar": 48,
             "comment": "Polonaise"
           }
         ]
@@ -2669,8 +2669,8 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 63,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999,
-          "fastestStaccatoNotesPerBar": 5.999999999999999
+          "fastestStructuralNotesPerBar": 6,
+          "fastestStaccatoNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.3,
@@ -2690,8 +2690,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
-            "fastestStaccatoNotesPerBar": 5.999999999999999,
+            "fastestStructuralNotesPerBar": 6,
+            "fastestStaccatoNotesPerBar": 6,
             "comment": "Fugue"
           }
         ]
@@ -2804,8 +2804,8 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 126,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999,
-          "fastestStaccatoNotesPerBar": 2.9999999999999996
+          "fastestStructuralNotesPerBar": 6,
+          "fastestStaccatoNotesPerBar": 3
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.6,
@@ -2818,8 +2818,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.978947368421052,
-          "fastestStaccatoNotesPerBar": 15.978947368421052
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.06,
@@ -2832,9 +2832,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998,
-          "fastestStaccatoNotesPerBar": 11.999999999999998,
-          "fastestOrnamentalNotesPerBar": 31.99285714285714
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 12,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.2,
@@ -2936,8 +2936,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
-            "fastestStaccatoNotesPerBar": 2.9999999999999996,
+            "fastestStructuralNotesPerBar": 6,
+            "fastestStaccatoNotesPerBar": 3,
             "comment": "Scherzo"
           }
         ]
@@ -2953,8 +2953,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.978947368421052,
-            "fastestStaccatoNotesPerBar": 15.978947368421052
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 16
           },
           {
             "rank": 2,
@@ -2963,9 +2963,9 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 11.999999999999998,
-            "fastestStaccatoNotesPerBar": 11.999999999999998,
-            "fastestOrnamentalNotesPerBar": 31.99285714285714
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 12,
+            "fastestOrnamentalNotesPerBar": 32
           }
         ]
       }
@@ -2996,9 +2996,9 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 54,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12.000000000000002,
-          "fastestStaccatoNotesPerBar": 12.000000000000002,
-          "fastestOrnamentalNotesPerBar": 12.000000000000002
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 12,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.8,
@@ -3013,7 +3013,7 @@ const pieceList = [
         "bpm": 138,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 18,
-          "fastestOrnamentalNotesPerBar": 126.00000000000001
+          "fastestOrnamentalNotesPerBar": 126
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 4.6,
@@ -3026,9 +3026,9 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999,
-          "fastestStaccatoNotesPerBar": 2.9999999999999996,
-          "fastestOrnamentalNotesPerBar": 11.999999999999998
+          "fastestStructuralNotesPerBar": 6,
+          "fastestStaccatoNotesPerBar": 3,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.2,
@@ -3065,9 +3065,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 12.000000000000002,
-            "fastestStaccatoNotesPerBar": 12.000000000000002,
-            "fastestOrnamentalNotesPerBar": 12.000000000000002
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 12,
+            "fastestOrnamentalNotesPerBar": 12
           }
         ]
       },
@@ -3083,7 +3083,7 @@ const pieceList = [
             "metreNumerator": 9,
             "metreDenominator": 8,
             "fastestStructuralNotesPerBar": 18,
-            "fastestOrnamentalNotesPerBar": 126.00000000000001
+            "fastestOrnamentalNotesPerBar": 126
           }
         ]
       },
@@ -3098,9 +3098,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
-            "fastestStaccatoNotesPerBar": 2.9999999999999996,
-            "fastestOrnamentalNotesPerBar": 11.999999999999998,
+            "fastestStructuralNotesPerBar": 6,
+            "fastestStaccatoNotesPerBar": 3,
+            "fastestOrnamentalNotesPerBar": 12,
             "comment": "Scherzo"
           }
         ]
@@ -3181,8 +3181,8 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 69,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.999999999999999,
-          "fastestStaccatoNotesPerBar": 7.999999999999999
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 9.2,
@@ -3196,7 +3196,7 @@ const pieceList = [
         "bpm": 52,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 12,
-          "fastestStaccatoNotesPerBar": 8.999999999999998,
+          "fastestStaccatoNotesPerBar": 9,
           "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
@@ -3211,9 +3211,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.995652173913044,
-          "fastestStaccatoNotesPerBar": 3.997826086956522,
-          "fastestOrnamentalNotesPerBar": 7.995652173913044
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 4,
+          "fastestOrnamentalNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.26,
@@ -3262,8 +3262,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.999999999999999,
-            "fastestStaccatoNotesPerBar": 7.999999999999999
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8
           }
         ]
       },
@@ -3279,7 +3279,7 @@ const pieceList = [
             "metreNumerator": 3,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 12,
-            "fastestStaccatoNotesPerBar": 8.999999999999998,
+            "fastestStaccatoNotesPerBar": 9,
             "fastestOrnamentalNotesPerBar": 12,
             "comment": "Scherzo"
           }
@@ -3296,9 +3296,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.995652173913044,
-            "fastestStaccatoNotesPerBar": 3.997826086956522,
-            "fastestOrnamentalNotesPerBar": 7.995652173913044
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 4,
+            "fastestOrnamentalNotesPerBar": 8
           }
         ]
       }
@@ -3345,9 +3345,9 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.991304347826087,
-          "fastestStaccatoNotesPerBar": 7.982608695652174,
-          "fastestOrnamentalNotesPerBar": 15.991304347826087
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.13,
@@ -3415,9 +3415,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.991304347826087,
-            "fastestStaccatoNotesPerBar": 7.982608695652174,
-            "fastestOrnamentalNotesPerBar": 15.991304347826087
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       },
@@ -3497,9 +3497,9 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 56,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999,
-          "fastestStaccatoNotesPerBar": 5.999999999999999,
-          "fastestOrnamentalNotesPerBar": 11.999999999999998
+          "fastestStructuralNotesPerBar": 6,
+          "fastestStaccatoNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.6,
@@ -3585,9 +3585,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
-            "fastestStaccatoNotesPerBar": 5.999999999999999,
-            "fastestOrnamentalNotesPerBar": 11.999999999999998,
+            "fastestStructuralNotesPerBar": 6,
+            "fastestStaccatoNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 12,
             "comment": "Scherzo"
           }
         ]
@@ -3667,7 +3667,7 @@ const pieceList = [
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 12,
           "fastestStaccatoNotesPerBar": 12,
-          "fastestOrnamentalNotesPerBar": 17.999999999999996
+          "fastestOrnamentalNotesPerBar": 18
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.4,
@@ -3681,8 +3681,8 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999,
-          "fastestStaccatoNotesPerBar": 5.999999999999999
+          "fastestStructuralNotesPerBar": 6,
+          "fastestStaccatoNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 7.6,
@@ -3695,7 +3695,7 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.984,
+          "fastestStructuralNotesPerBar": 16,
           "fastestStaccatoNotesPerBar": 12,
           "fastestOrnamentalNotesPerBar": 24
         },
@@ -3711,8 +3711,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.990909090909091,
-          "fastestOrnamentalNotesPerBar": 15.981818181818182
+          "fastestStructuralNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 2.93,
@@ -3725,8 +3725,8 @@ const pieceList = [
         "beatUnit": "WHOLE",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.997368421052633,
-          "fastestStaccatoNotesPerBar": 7.997368421052633
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.13,
@@ -3748,7 +3748,7 @@ const pieceList = [
             "metreDenominator": 8,
             "fastestStructuralNotesPerBar": 12,
             "fastestStaccatoNotesPerBar": 12,
-            "fastestOrnamentalNotesPerBar": 17.999999999999996
+            "fastestOrnamentalNotesPerBar": 18
           }
         ]
       },
@@ -3763,8 +3763,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
-            "fastestStaccatoNotesPerBar": 5.999999999999999,
+            "fastestStructuralNotesPerBar": 6,
+            "fastestStaccatoNotesPerBar": 6,
             "comment": "Minuet"
           }
         ]
@@ -3780,7 +3780,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.984,
+            "fastestStructuralNotesPerBar": 16,
             "fastestStaccatoNotesPerBar": 12,
             "fastestOrnamentalNotesPerBar": 24,
             "comment": "Theme and variations"
@@ -3792,8 +3792,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.990909090909091,
-            "fastestOrnamentalNotesPerBar": 15.981818181818182
+            "fastestStructuralNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       },
@@ -3808,8 +3808,8 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 7.997368421052633,
-            "fastestStaccatoNotesPerBar": 7.997368421052633
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8
           }
         ]
       }
@@ -3840,9 +3840,9 @@ const pieceList = [
         "beatUnit": "WHOLE",
         "bpm": 80,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.995,
-          "fastestStaccatoNotesPerBar": 7.995,
-          "fastestOrnamentalNotesPerBar": 15.997499999999999
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.66,
@@ -3857,8 +3857,8 @@ const pieceList = [
         "bpm": 80,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 24,
-          "fastestStaccatoNotesPerBar": 15.96,
-          "fastestOrnamentalNotesPerBar": 31.98
+          "fastestStaccatoNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 4,
@@ -3872,8 +3872,8 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 63,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998,
-          "fastestStaccatoNotesPerBar": 5.999999999999999
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.6,
@@ -3886,8 +3886,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 58,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 3.972413793103448,
-          "fastestOrnamentalNotesPerBar": 15.972413793103449
+          "fastestStructuralNotesPerBar": 4,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 0.96,
@@ -3928,8 +3928,8 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999,
-          "fastestStaccatoNotesPerBar": 5.999999999999999
+          "fastestStructuralNotesPerBar": 6,
+          "fastestStaccatoNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.2,
@@ -3949,9 +3949,9 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 7.995,
-            "fastestStaccatoNotesPerBar": 7.995,
-            "fastestOrnamentalNotesPerBar": 15.997499999999999
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       },
@@ -3967,8 +3967,8 @@ const pieceList = [
             "metreNumerator": 2,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 24,
-            "fastestStaccatoNotesPerBar": 15.96,
-            "fastestOrnamentalNotesPerBar": 31.98
+            "fastestStaccatoNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 32
           }
         ]
       },
@@ -3983,8 +3983,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.999999999999998,
-            "fastestStaccatoNotesPerBar": 5.999999999999999,
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 6,
             "comment": "Scherzo"
           }
         ]
@@ -4000,8 +4000,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 3.972413793103448,
-            "fastestOrnamentalNotesPerBar": 15.972413793103449,
+            "fastestStructuralNotesPerBar": 4,
+            "fastestOrnamentalNotesPerBar": 16,
             "comment": "\"La Malinconia\""
           }
         ]
@@ -4037,8 +4037,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
-            "fastestStaccatoNotesPerBar": 5.999999999999999
+            "fastestStructuralNotesPerBar": 6,
+            "fastestStaccatoNotesPerBar": 6
           }
         ]
       }
@@ -4070,8 +4070,8 @@ const pieceList = [
         "bpm": 88,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 12,
-          "fastestStaccatoNotesPerBar": 7.990909090909091,
-          "fastestOrnamentalNotesPerBar": 15.995454545454544
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 8.8,
@@ -4085,9 +4085,9 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 56,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999,
-          "fastestStaccatoNotesPerBar": 5.999999999999999,
-          "fastestOrnamentalNotesPerBar": 11.999999999999998
+          "fastestStructuralNotesPerBar": 6,
+          "fastestStaccatoNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.6,
@@ -4101,9 +4101,9 @@ const pieceList = [
         "beatUnit": "SIXTEENTH",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 31.963636363636365,
-          "fastestStaccatoNotesPerBar": 31.963636363636365,
-          "fastestOrnamentalNotesPerBar": 15.981818181818182
+          "fastestStructuralNotesPerBar": 32,
+          "fastestStaccatoNotesPerBar": 32,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.86,
@@ -4133,7 +4133,7 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 69,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.999999999999999
+          "fastestStructuralNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 2.3
@@ -4145,7 +4145,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.995652173913044
+          "fastestStructuralNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": "6.13"
@@ -4165,8 +4165,8 @@ const pieceList = [
             "metreNumerator": 4,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 12,
-            "fastestStaccatoNotesPerBar": 7.990909090909091,
-            "fastestOrnamentalNotesPerBar": 15.995454545454544
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       },
@@ -4181,9 +4181,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
-            "fastestStaccatoNotesPerBar": 5.999999999999999,
-            "fastestOrnamentalNotesPerBar": 11.999999999999998
+            "fastestStructuralNotesPerBar": 6,
+            "fastestStaccatoNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 12
           }
         ]
       },
@@ -4198,9 +4198,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 31.963636363636365,
-            "fastestStaccatoNotesPerBar": 31.963636363636365,
-            "fastestOrnamentalNotesPerBar": 15.981818181818182
+            "fastestStructuralNotesPerBar": 32,
+            "fastestStaccatoNotesPerBar": 32,
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       },
@@ -4227,7 +4227,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.999999999999999
+            "fastestStructuralNotesPerBar": 8
           },
           {
             "rank": 3,
@@ -4236,7 +4236,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.995652173913044,
+            "fastestStructuralNotesPerBar": 8,
             "comment": "Identified as misprint; see Noorduin, 2016"
           }
         ]
@@ -4314,8 +4314,8 @@ const pieceList = [
         "beatUnit": "WHOLE",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.997727272727272,
-          "fastestStaccatoNotesPerBar": 7.997727272727272
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.73,
@@ -4328,8 +4328,8 @@ const pieceList = [
         "beatUnit": "WHOLE",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.998214285714285,
-          "fastestStaccatoNotesPerBar": 7.998214285714285
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 14.93,
@@ -4401,8 +4401,8 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 7.997727272727272,
-            "fastestStaccatoNotesPerBar": 7.997727272727272,
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8,
             "comment": "Finale"
           },
           {
@@ -4412,8 +4412,8 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 7.998214285714285,
-            "fastestStaccatoNotesPerBar": 7.998214285714285
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8
           }
         ]
       }
@@ -4458,9 +4458,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.995454545454544,
-          "fastestStaccatoNotesPerBar": 7.990909090909091,
-          "fastestOrnamentalNotesPerBar": 15.995454545454544
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.73,
@@ -4474,9 +4474,9 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 56,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998,
-          "fastestStaccatoNotesPerBar": 11.999999999999998,
-          "fastestOrnamentalNotesPerBar": 11.999999999999998
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 12,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.6,
@@ -4490,8 +4490,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 116,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.994827586206899,
-          "fastestStaccatoNotesPerBar": 5.989655172413793
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 7.73,
@@ -4538,9 +4538,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.995454545454544,
-            "fastestStaccatoNotesPerBar": 7.990909090909091,
-            "fastestOrnamentalNotesPerBar": 15.995454545454544
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       },
@@ -4555,9 +4555,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 11.999999999999998,
-            "fastestStaccatoNotesPerBar": 11.999999999999998,
-            "fastestOrnamentalNotesPerBar": 11.999999999999998
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 12,
+            "fastestOrnamentalNotesPerBar": 12
           }
         ]
       },
@@ -4572,8 +4572,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.994827586206899,
-            "fastestStaccatoNotesPerBar": 5.989655172413793,
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 6,
             "comment": "Minuet"
           }
         ]
@@ -4683,7 +4683,7 @@ const pieceList = [
         "beatUnit": "WHOLE",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 2.997
+          "fastestStructuralNotesPerBar": 3
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.66
@@ -4695,8 +4695,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.992,
-          "fastestStaccatoNotesPerBar": 3.996
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 4
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.66,
@@ -4709,9 +4709,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.997368421052633,
+          "fastestStructuralNotesPerBar": 8,
           "fastestStaccatoNotesPerBar": 6,
-          "fastestOrnamentalNotesPerBar": 7.997368421052633
+          "fastestOrnamentalNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.13,
@@ -4798,7 +4798,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 2.997
+            "fastestStructuralNotesPerBar": 3
           }
         ]
       },
@@ -4813,8 +4813,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.992,
-            "fastestStaccatoNotesPerBar": 3.996
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 4
           },
           {
             "rank": 2,
@@ -4823,9 +4823,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.997368421052633,
+            "fastestStructuralNotesPerBar": 8,
             "fastestStaccatoNotesPerBar": 6,
-            "fastestOrnamentalNotesPerBar": 7.997368421052633
+            "fastestOrnamentalNotesPerBar": 8
           },
           {
             "rank": 3,
@@ -4866,8 +4866,8 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.991304347826087,
-          "fastestStaccatoNotesPerBar": 7.995652173913044
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.26,
@@ -4880,7 +4880,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 66,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998,
+          "fastestStructuralNotesPerBar": 12,
           "fastestStaccatoNotesPerBar": 8,
           "fastestOrnamentalNotesPerBar": 16
         },
@@ -4928,8 +4928,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 56,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.985714285714286,
-          "fastestOrnamentalNotesPerBar": 15.985714285714286
+          "fastestStructuralNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.73,
@@ -4958,8 +4958,8 @@ const pieceList = [
         "beatUnit": "WHOLE",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.995652173913044,
-          "fastestStaccatoNotesPerBar": 3.997826086956522
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 4
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.26,
@@ -4979,8 +4979,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.991304347826087,
-            "fastestStaccatoNotesPerBar": 7.995652173913044
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 8
           }
         ]
       },
@@ -4995,7 +4995,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.999999999999998,
+            "fastestStructuralNotesPerBar": 12,
             "fastestStaccatoNotesPerBar": 8,
             "fastestOrnamentalNotesPerBar": 16
           }
@@ -5040,8 +5040,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.985714285714286,
-            "fastestOrnamentalNotesPerBar": 15.985714285714286
+            "fastestStructuralNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 16
           },
           {
             "rank": 2,
@@ -5061,8 +5061,8 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 7.995652173913044,
-            "fastestStaccatoNotesPerBar": 3.997826086956522
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 4
           }
         ]
       }
@@ -5094,8 +5094,8 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 138,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.999999999999999,
-          "fastestStaccatoNotesPerBar": 7.999999999999999
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 9.2,
@@ -5125,7 +5125,7 @@ const pieceList = [
         "bpm": 92,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 36,
-          "fastestOrnamentalNotesPerBar": 23.98695652173913
+          "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 9.2,
@@ -5138,7 +5138,7 @@ const pieceList = [
         "beatUnit": "SIXTEENTH",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 63.91578947368421
+          "fastestStructuralNotesPerBar": 64
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.06
@@ -5173,8 +5173,8 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 7.999999999999999,
-            "fastestStaccatoNotesPerBar": 7.999999999999999
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8
           }
         ]
       },
@@ -5208,7 +5208,7 @@ const pieceList = [
             "metreNumerator": 6,
             "metreDenominator": 8,
             "fastestStructuralNotesPerBar": 36,
-            "fastestOrnamentalNotesPerBar": 23.98695652173913
+            "fastestOrnamentalNotesPerBar": 24
           }
         ]
       },
@@ -5223,7 +5223,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 63.91578947368421
+            "fastestStructuralNotesPerBar": 64
           },
           {
             "rank": 2,
@@ -5266,8 +5266,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 31.963636363636365,
-          "fastestOrnamentalNotesPerBar": 31.963636363636365
+          "fastestStructuralNotesPerBar": 32,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.86,
@@ -5280,8 +5280,8 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.964285714285714,
-          "fastestStaccatoNotesPerBar": 7.992857142857143
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 14.9,
@@ -5310,8 +5310,8 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 108,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6.000000000000001,
-          "fastestStaccatoNotesPerBar": 6.000000000000001
+          "fastestStructuralNotesPerBar": 6,
+          "fastestStaccatoNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.8,
@@ -5338,8 +5338,8 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.977272727272727,
-          "fastestStaccatoNotesPerBar": 7.977272727272727
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.7,
@@ -5359,8 +5359,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 31.963636363636365,
-            "fastestOrnamentalNotesPerBar": 31.963636363636365
+            "fastestStructuralNotesPerBar": 32,
+            "fastestOrnamentalNotesPerBar": 32
           },
           {
             "rank": 2,
@@ -5369,8 +5369,8 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 15.964285714285714,
-            "fastestStaccatoNotesPerBar": 7.992857142857143
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 8
           }
         ]
       },
@@ -5402,8 +5402,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 6.000000000000001,
-            "fastestStaccatoNotesPerBar": 6.000000000000001,
+            "fastestStructuralNotesPerBar": 6,
+            "fastestStaccatoNotesPerBar": 6,
             "comment": "Minuet and trio"
           }
         ]
@@ -5429,8 +5429,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.977272727272727,
-            "fastestStaccatoNotesPerBar": 7.977272727272727
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8
           }
         ]
       }
@@ -5461,9 +5461,9 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 84,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 47.99999999999999,
-          "fastestStaccatoNotesPerBar": 23.999999999999996,
-          "fastestOrnamentalNotesPerBar": 23.999999999999996
+          "fastestStructuralNotesPerBar": 48,
+          "fastestStaccatoNotesPerBar": 24,
+          "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.2,
@@ -5478,8 +5478,8 @@ const pieceList = [
         "bpm": 100,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 24,
-          "fastestStaccatoNotesPerBar": 15.995999999999999,
-          "fastestOrnamentalNotesPerBar": 31.991999999999997
+          "fastestStaccatoNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 20,
@@ -5493,8 +5493,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.993478260869566,
-          "fastestStaccatoNotesPerBar": 11.993478260869566
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.13,
@@ -5521,9 +5521,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 152,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.997368421052633,
-          "fastestStaccatoNotesPerBar": 7.997368421052633,
-          "fastestOrnamentalNotesPerBar": 15.994736842105265
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.13,
@@ -5544,9 +5544,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 47.99999999999999,
-            "fastestStaccatoNotesPerBar": 23.999999999999996,
-            "fastestOrnamentalNotesPerBar": 23.999999999999996
+            "fastestStructuralNotesPerBar": 48,
+            "fastestStaccatoNotesPerBar": 24,
+            "fastestOrnamentalNotesPerBar": 24
           },
           {
             "rank": 2,
@@ -5556,8 +5556,8 @@ const pieceList = [
             "metreNumerator": 4,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 24,
-            "fastestStaccatoNotesPerBar": 15.995999999999999,
-            "fastestOrnamentalNotesPerBar": 31.991999999999997
+            "fastestStaccatoNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 32
           }
         ]
       },
@@ -5572,8 +5572,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 11.993478260869566,
-            "fastestStaccatoNotesPerBar": 11.993478260869566
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 12
           }
         ]
       },
@@ -5605,9 +5605,9 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 7.997368421052633,
-            "fastestStaccatoNotesPerBar": 7.997368421052633,
-            "fastestOrnamentalNotesPerBar": 15.994736842105265
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       }
@@ -5654,7 +5654,7 @@ const pieceList = [
         "bpm": 80,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 24,
-          "fastestStaccatoNotesPerBar": 15.99,
+          "fastestStaccatoNotesPerBar": 16,
           "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
@@ -5685,8 +5685,8 @@ const pieceList = [
         "beatUnit": "WHOLE",
         "bpm": 116,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.996551724137932,
-          "fastestStaccatoNotesPerBar": 3.998275862068966
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 4
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 15.46,
@@ -5699,8 +5699,8 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.997368421052633,
-          "fastestStaccatoNotesPerBar": 7.997368421052633
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.13,
@@ -5727,8 +5727,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 116,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.993103448275864,
-          "fastestStaccatoNotesPerBar": 7.9862068965517246
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": "7.73",
@@ -5765,7 +5765,7 @@ const pieceList = [
             "metreNumerator": 2,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 24,
-            "fastestStaccatoNotesPerBar": 15.99,
+            "fastestStaccatoNotesPerBar": 16,
             "fastestOrnamentalNotesPerBar": 24,
             "comment": "Funeral march"
           }
@@ -5794,8 +5794,8 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 7.996551724137932,
-            "fastestStaccatoNotesPerBar": 3.998275862068966
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 4
           }
         ]
       },
@@ -5810,8 +5810,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.997368421052633,
-            "fastestStaccatoNotesPerBar": 7.997368421052633
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8
           },
           {
             "rank": 2,
@@ -5830,8 +5830,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.993103448275864,
-            "fastestStaccatoNotesPerBar": 7.9862068965517246,
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 8,
             "comment": "Identified as misprint; see Noorduin, 2016"
           }
         ]
@@ -5877,9 +5877,9 @@ const pieceList = [
         "beatUnit": "WHOLE",
         "bpm": 80,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.997499999999999,
-          "fastestStaccatoNotesPerBar": 3.9975,
-          "fastestOrnamentalNotesPerBar": 31.994999999999997
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 4,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 21.33,
@@ -5893,9 +5893,9 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 84,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 23.999999999999996,
-          "fastestStaccatoNotesPerBar": 23.999999999999996,
-          "fastestOrnamentalNotesPerBar": 47.99999999999999
+          "fastestStructuralNotesPerBar": 24,
+          "fastestStaccatoNotesPerBar": 24,
+          "fastestOrnamentalNotesPerBar": 48
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.6,
@@ -5939,9 +5939,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 80,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.995,
-          "fastestStaccatoNotesPerBar": 7.995,
-          "fastestOrnamentalNotesPerBar": 15.997499999999999
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.66,
@@ -5972,9 +5972,9 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 15.997499999999999,
-            "fastestStaccatoNotesPerBar": 3.9975,
-            "fastestOrnamentalNotesPerBar": 31.994999999999997
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 4,
+            "fastestOrnamentalNotesPerBar": 32
           }
         ]
       },
@@ -5989,9 +5989,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 23.999999999999996,
-            "fastestStaccatoNotesPerBar": 23.999999999999996,
-            "fastestOrnamentalNotesPerBar": 47.99999999999999,
+            "fastestStructuralNotesPerBar": 24,
+            "fastestStaccatoNotesPerBar": 24,
+            "fastestOrnamentalNotesPerBar": 48,
             "comment": "Ornamented notes are tremolo"
           }
         ]
@@ -6036,9 +6036,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.995,
-            "fastestStaccatoNotesPerBar": 7.995,
-            "fastestOrnamentalNotesPerBar": 15.997499999999999
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       }
@@ -6083,9 +6083,9 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.993478260869566,
+          "fastestStructuralNotesPerBar": 12,
           "fastestStaccatoNotesPerBar": 9,
-          "fastestOrnamentalNotesPerBar": 23.98695652173913
+          "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.13,
@@ -6099,8 +6099,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 116,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.994827586206899,
-          "fastestStaccatoNotesPerBar": 9.000000000000002
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 9
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 7.73,
@@ -6175,8 +6175,8 @@ const pieceList = [
         "beatUnit": "WHOLE",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.998214285714285,
-          "fastestOrnamentalNotesPerBar": 15.99642857142857
+          "fastestStructuralNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 14.93,
@@ -6212,9 +6212,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 11.993478260869566,
+            "fastestStructuralNotesPerBar": 12,
             "fastestStaccatoNotesPerBar": 9,
-            "fastestOrnamentalNotesPerBar": 23.98695652173913
+            "fastestOrnamentalNotesPerBar": 24
           },
           {
             "rank": 2,
@@ -6223,8 +6223,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 11.994827586206899,
-            "fastestStaccatoNotesPerBar": 9.000000000000002
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 9
           }
         ]
       },
@@ -6289,8 +6289,8 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 7.998214285714285,
-            "fastestOrnamentalNotesPerBar": 15.99642857142857,
+            "fastestStructuralNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16,
             "comment": "Ornamented notes are tremolo"
           }
         ]
@@ -6325,7 +6325,7 @@ const pieceList = [
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 8,
           "fastestStaccatoNotesPerBar": 4,
-          "fastestOrnamentalNotesPerBar": 11.999999999999998
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 8.8,
@@ -6355,9 +6355,9 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 108,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6.000000000000001,
-          "fastestStaccatoNotesPerBar": 3.0000000000000004,
-          "fastestOrnamentalNotesPerBar": 12.000000000000002
+          "fastestStructuralNotesPerBar": 6,
+          "fastestStaccatoNotesPerBar": 3,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.8,
@@ -6385,9 +6385,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 80,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 19.995,
-          "fastestStaccatoNotesPerBar": 7.995,
-          "fastestOrnamentalNotesPerBar": 15.99
+          "fastestStructuralNotesPerBar": 20,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.33,
@@ -6424,7 +6424,7 @@ const pieceList = [
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 8,
             "fastestStaccatoNotesPerBar": 4,
-            "fastestOrnamentalNotesPerBar": 11.999999999999998
+            "fastestOrnamentalNotesPerBar": 12
           }
         ]
       },
@@ -6456,9 +6456,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 6.000000000000001,
-            "fastestStaccatoNotesPerBar": 3.0000000000000004,
-            "fastestOrnamentalNotesPerBar": 12.000000000000002
+            "fastestStructuralNotesPerBar": 6,
+            "fastestStaccatoNotesPerBar": 3,
+            "fastestOrnamentalNotesPerBar": 12
           },
           {
             "rank": 2,
@@ -6483,9 +6483,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 19.995,
-            "fastestStaccatoNotesPerBar": 7.995,
-            "fastestOrnamentalNotesPerBar": 15.99
+            "fastestStructuralNotesPerBar": 20,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       },
@@ -6532,9 +6532,9 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 69,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.999999999999998,
-          "fastestStaccatoNotesPerBar": 15.999999999999998,
-          "fastestOrnamentalNotesPerBar": 31.999999999999996
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 4.6,
@@ -6548,7 +6548,7 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 17.999999999999996,
+          "fastestStructuralNotesPerBar": 18,
           "fastestStaccatoNotesPerBar": 12,
           "fastestOrnamentalNotesPerBar": 24
         },
@@ -6564,9 +6564,9 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.989473684210526,
-          "fastestStaccatoNotesPerBar": 7.989473684210526,
-          "fastestOrnamentalNotesPerBar": 7.989473684210526
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.06,
@@ -6580,9 +6580,9 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 132,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 2.9999999999999996,
-          "fastestStaccatoNotesPerBar": 2.9999999999999996,
-          "fastestOrnamentalNotesPerBar": 11.999999999999998
+          "fastestStructuralNotesPerBar": 3,
+          "fastestStaccatoNotesPerBar": 3,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.6,
@@ -6633,9 +6633,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.999999999999998,
-            "fastestStaccatoNotesPerBar": 15.999999999999998,
-            "fastestOrnamentalNotesPerBar": 31.999999999999996
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 32
           },
           {
             "rank": 2,
@@ -6644,7 +6644,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 17.999999999999996,
+            "fastestStructuralNotesPerBar": 18,
             "fastestStaccatoNotesPerBar": 12,
             "fastestOrnamentalNotesPerBar": 24
           }
@@ -6661,9 +6661,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.989473684210526,
-            "fastestStaccatoNotesPerBar": 7.989473684210526,
-            "fastestOrnamentalNotesPerBar": 7.989473684210526
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 8
           }
         ]
       },
@@ -6678,9 +6678,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 2.9999999999999996,
-            "fastestStaccatoNotesPerBar": 2.9999999999999996,
-            "fastestOrnamentalNotesPerBar": 11.999999999999998
+            "fastestStructuralNotesPerBar": 3,
+            "fastestStaccatoNotesPerBar": 3,
+            "fastestOrnamentalNotesPerBar": 12
           },
           {
             "rank": 2,
@@ -6754,9 +6754,9 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 31.99090909090909,
-          "fastestStaccatoNotesPerBar": 15.981818181818182,
-          "fastestOrnamentalNotesPerBar": 31.99090909090909
+          "fastestStructuralNotesPerBar": 32,
+          "fastestStaccatoNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.73,
@@ -6770,9 +6770,9 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 126,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 8.999999999999998,
-          "fastestStaccatoNotesPerBar": 8.999999999999998,
-          "fastestOrnamentalNotesPerBar": 17.999999999999996
+          "fastestStructuralNotesPerBar": 9,
+          "fastestStaccatoNotesPerBar": 9,
+          "fastestOrnamentalNotesPerBar": 18
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.3,
@@ -6826,9 +6826,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 31.99090909090909,
-            "fastestStaccatoNotesPerBar": 15.981818181818182,
-            "fastestOrnamentalNotesPerBar": 31.99090909090909,
+            "fastestStructuralNotesPerBar": 32,
+            "fastestStaccatoNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 32,
             "comment": "Based on the \"Maezel\" Canon"
           }
         ]
@@ -6844,9 +6844,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 8.999999999999998,
-            "fastestStaccatoNotesPerBar": 8.999999999999998,
-            "fastestOrnamentalNotesPerBar": 17.999999999999996,
+            "fastestStructuralNotesPerBar": 9,
+            "fastestStaccatoNotesPerBar": 9,
+            "fastestOrnamentalNotesPerBar": 18,
             "comment": "Minuetto and trio"
           }
         ]
@@ -7031,9 +7031,9 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.954545454545453,
-          "fastestStaccatoNotesPerBar": 15.954545454545453,
-          "fastestOrnamentalNotesPerBar": 15.954545454545453
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.7,
@@ -7061,9 +7061,9 @@ const pieceList = [
         "beatUnit": "WHOLE",
         "bpm": 116,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 3.998275862068966,
-          "fastestStaccatoNotesPerBar": 3.998275862068966,
-          "fastestOrnamentalNotesPerBar": 7.996551724137932
+          "fastestStructuralNotesPerBar": 4,
+          "fastestStaccatoNotesPerBar": 4,
+          "fastestOrnamentalNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": "7.73",
@@ -7093,8 +7093,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 63,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998,
-          "fastestStaccatoNotesPerBar": 5.999999999999999
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 4.2,
@@ -7138,7 +7138,7 @@ const pieceList = [
         "bpm": 88,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 12,
-          "fastestOrnamentalNotesPerBar": 15.954545454545453
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 8.8,
@@ -7151,9 +7151,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 80,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99,
-          "fastestStaccatoNotesPerBar": 7.995,
-          "fastestOrnamentalNotesPerBar": 31.994999999999997
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.66,
@@ -7266,9 +7266,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.954545454545453,
-            "fastestStaccatoNotesPerBar": 15.954545454545453,
-            "fastestOrnamentalNotesPerBar": 15.954545454545453
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       },
@@ -7294,9 +7294,9 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 3.998275862068966,
-            "fastestStaccatoNotesPerBar": 3.998275862068966,
-            "fastestOrnamentalNotesPerBar": 7.996551724137932,
+            "fastestStructuralNotesPerBar": 4,
+            "fastestStaccatoNotesPerBar": 4,
+            "fastestOrnamentalNotesPerBar": 8,
             "comment": "Disputed; see Noorduin, 2016"
           }
         ]
@@ -7323,8 +7323,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.999999999999998,
-            "fastestStaccatoNotesPerBar": 5.999999999999999
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 6
           },
           {
             "rank": 3,
@@ -7362,7 +7362,7 @@ const pieceList = [
             "metreNumerator": 2,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 12,
-            "fastestOrnamentalNotesPerBar": 15.954545454545453
+            "fastestOrnamentalNotesPerBar": 16
           },
           {
             "rank": 3,
@@ -7371,9 +7371,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99,
-            "fastestStaccatoNotesPerBar": 7.995,
-            "fastestOrnamentalNotesPerBar": 31.994999999999997
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 32
           },
           {
             "rank": 4,
@@ -7526,7 +7526,7 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.984210526315788
+          "fastestStructuralNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.06
@@ -7545,7 +7545,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 11.984210526315788
+            "fastestStructuralNotesPerBar": 12
           }
         ]
       }
@@ -7575,8 +7575,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.978947368421052,
-          "fastestOrnamentalNotesPerBar": 31.98947368421053
+          "fastestStructuralNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.06,
@@ -7596,8 +7596,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.978947368421052,
-            "fastestOrnamentalNotesPerBar": 31.98947368421053
+            "fastestStructuralNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 32
           }
         ]
       }
@@ -7645,7 +7645,7 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.997999999999999,
+          "fastestStructuralNotesPerBar": 8,
           "fastestStaccatoNotesPerBar": 6
         },
         "notesPerSecond": {
@@ -7675,8 +7675,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 63,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998,
-          "fastestStaccatoNotesPerBar": 11.999999999999998,
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 12,
           "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
@@ -7691,7 +7691,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 63,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998,
+          "fastestStructuralNotesPerBar": 12,
           "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
@@ -7706,8 +7706,8 @@ const pieceList = [
         "bpm": 66,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 9,
-          "fastestStaccatoNotesPerBar": 11.999999999999998,
-          "fastestOrnamentalNotesPerBar": 11.999999999999998
+          "fastestStaccatoNotesPerBar": 12,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 9.9,
@@ -7745,7 +7745,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.997999999999999,
+            "fastestStructuralNotesPerBar": 8,
             "fastestStaccatoNotesPerBar": 6,
             "comment": "Scherzo"
           },
@@ -7774,8 +7774,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.999999999999998,
-            "fastestStaccatoNotesPerBar": 11.999999999999998,
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 12,
             "fastestOrnamentalNotesPerBar": 16
           },
           {
@@ -7785,7 +7785,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.999999999999998,
+            "fastestStructuralNotesPerBar": 12,
             "fastestStaccatoNotesPerBar": 8,
             "comment": "Doppio movimento"
           }
@@ -7803,8 +7803,8 @@ const pieceList = [
             "metreNumerator": 3,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 9,
-            "fastestStaccatoNotesPerBar": 11.999999999999998,
-            "fastestOrnamentalNotesPerBar": 11.999999999999998,
+            "fastestStaccatoNotesPerBar": 12,
+            "fastestOrnamentalNotesPerBar": 12,
             "comment": "Finale"
           }
         ]
@@ -7949,9 +7949,9 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 31.982608695652175,
-          "fastestStaccatoNotesPerBar": 31.982608695652175,
-          "fastestOrnamentalNotesPerBar": 15.991304347826087
+          "fastestStructuralNotesPerBar": 32,
+          "fastestStaccatoNotesPerBar": 32,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.26,
@@ -7965,8 +7965,8 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999,
-          "fastestStaccatoNotesPerBar": 2.9999999999999996
+          "fastestStructuralNotesPerBar": 6,
+          "fastestStaccatoNotesPerBar": 3
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 7.6,
@@ -7979,8 +7979,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 84,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 47.99999999999999,
-          "fastestOrnamentalNotesPerBar": 47.99999999999999
+          "fastestStructuralNotesPerBar": 48,
+          "fastestOrnamentalNotesPerBar": 48
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.2,
@@ -7994,8 +7994,8 @@ const pieceList = [
         "bpm": 104,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 12,
-          "fastestStaccatoNotesPerBar": 7.996153846153845,
-          "fastestOrnamentalNotesPerBar": 15.99230769230769
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.4,
@@ -8009,9 +8009,9 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 138,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.999999999999999,
+          "fastestStructuralNotesPerBar": 8,
           "fastestStaccatoNotesPerBar": 6,
-          "fastestOrnamentalNotesPerBar": 15.999999999999998
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 9.2,
@@ -8032,9 +8032,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 31.982608695652175,
-            "fastestStaccatoNotesPerBar": 31.982608695652175,
-            "fastestOrnamentalNotesPerBar": 15.991304347826087
+            "fastestStructuralNotesPerBar": 32,
+            "fastestStaccatoNotesPerBar": 32,
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       },
@@ -8049,8 +8049,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
-            "fastestStaccatoNotesPerBar": 2.9999999999999996
+            "fastestStructuralNotesPerBar": 6,
+            "fastestStaccatoNotesPerBar": 3
           }
         ]
       },
@@ -8065,8 +8065,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 47.99999999999999,
-            "fastestOrnamentalNotesPerBar": 47.99999999999999
+            "fastestStructuralNotesPerBar": 48,
+            "fastestOrnamentalNotesPerBar": 48
           }
         ]
       },
@@ -8082,8 +8082,8 @@ const pieceList = [
             "metreNumerator": 2,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 12,
-            "fastestStaccatoNotesPerBar": 7.996153846153845,
-            "fastestOrnamentalNotesPerBar": 15.99230769230769
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16
           },
           {
             "rank": 2,
@@ -8092,9 +8092,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.999999999999999,
+            "fastestStructuralNotesPerBar": 8,
             "fastestStaccatoNotesPerBar": 6,
-            "fastestOrnamentalNotesPerBar": 15.999999999999998
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       }
@@ -8126,7 +8126,7 @@ const pieceList = [
         "bpm": 80,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 12,
-          "fastestOrnamentalNotesPerBar": 15.99
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 4,
@@ -8153,8 +8153,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 80,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.985,
-          "fastestStaccatoNotesPerBar": 5.985
+          "fastestStructuralNotesPerBar": 6,
+          "fastestStaccatoNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 2.66,
@@ -8167,8 +8167,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 56,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.989285714285714,
-          "fastestStaccatoNotesPerBar": 11.989285714285714
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.73,
@@ -8181,7 +8181,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 108,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12.000000000000002,
+          "fastestStructuralNotesPerBar": 12,
           "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
@@ -8195,9 +8195,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 52,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.984615384615384,
-          "fastestStaccatoNotesPerBar": 3.992307692307692,
-          "fastestOrnamentalNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 4,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.46,
@@ -8212,7 +8212,7 @@ const pieceList = [
         "bpm": 54,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 8,
-          "fastestOrnamentalNotesPerBar": 12.000000000000002
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.6,
@@ -8225,7 +8225,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.98695652173913,
+          "fastestStructuralNotesPerBar": 6,
           "fastestOrnamentalNotesPerBar": 9
         },
         "notesPerSecond": {
@@ -8239,8 +8239,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.984615384615384,
-          "fastestStaccatoNotesPerBar": 3.969230769230769
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 4
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 1.73,
@@ -8253,9 +8253,9 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.982608695652174,
-          "fastestStaccatoNotesPerBar": 7.982608695652174,
-          "fastestOrnamentalNotesPerBar": 15.991304347826087
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.06,
@@ -8270,8 +8270,8 @@ const pieceList = [
         "bpm": 112,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 9,
-          "fastestStaccatoNotesPerBar": 5.994642857142857,
-          "fastestOrnamentalNotesPerBar": 11.989285714285714
+          "fastestStaccatoNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.6,
@@ -8286,8 +8286,8 @@ const pieceList = [
         "bpm": 100,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 6,
-          "fastestStaccatoNotesPerBar": 3.996,
-          "fastestOrnamentalNotesPerBar": 15.995999999999999
+          "fastestStaccatoNotesPerBar": 4,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5,
@@ -8302,7 +8302,7 @@ const pieceList = [
         "bpm": 80,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 12,
-          "fastestOrnamentalNotesPerBar": 15.99
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 4,
@@ -8323,7 +8323,7 @@ const pieceList = [
             "metreNumerator": 4,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 12,
-            "fastestOrnamentalNotesPerBar": 15.99
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       },
@@ -8348,8 +8348,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 5.985,
-            "fastestStaccatoNotesPerBar": 5.985
+            "fastestStructuralNotesPerBar": 6,
+            "fastestStaccatoNotesPerBar": 6
           },
           {
             "rank": 3,
@@ -8358,8 +8358,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.989285714285714,
-            "fastestStaccatoNotesPerBar": 11.989285714285714
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 12
           },
           {
             "rank": 4,
@@ -8368,7 +8368,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 12.000000000000002,
+            "fastestStructuralNotesPerBar": 12,
             "fastestStaccatoNotesPerBar": 8
           }
         ]
@@ -8384,9 +8384,9 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 7.984615384615384,
-            "fastestStaccatoNotesPerBar": 3.992307692307692,
-            "fastestOrnamentalNotesPerBar": 15.99230769230769
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 4,
+            "fastestOrnamentalNotesPerBar": 16
           },
           {
             "rank": 2,
@@ -8395,7 +8395,7 @@ const pieceList = [
             "metreNumerator": 2,
             "metreDenominator": 2,
             "fastestStructuralNotesPerBar": 8,
-            "fastestOrnamentalNotesPerBar": 12.000000000000002,
+            "fastestOrnamentalNotesPerBar": 12,
             "comment": "Fugue"
           }
         ]
@@ -8411,7 +8411,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 5.98695652173913,
+            "fastestStructuralNotesPerBar": 6,
             "fastestOrnamentalNotesPerBar": 9
           }
         ]
@@ -8427,8 +8427,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.984615384615384,
-            "fastestStaccatoNotesPerBar": 3.969230769230769
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 4
           }
         ]
       },
@@ -8443,9 +8443,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.982608695652174,
-            "fastestStaccatoNotesPerBar": 7.982608695652174,
-            "fastestOrnamentalNotesPerBar": 15.991304347826087,
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16,
             "comment": "Ornamented notes are tremolo"
           },
           {
@@ -8456,8 +8456,8 @@ const pieceList = [
             "metreNumerator": 3,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 9,
-            "fastestStaccatoNotesPerBar": 5.994642857142857,
-            "fastestOrnamentalNotesPerBar": 11.989285714285714,
+            "fastestStaccatoNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 12,
             "comment": "Ornamented notes are tremolo"
           },
           {
@@ -8468,8 +8468,8 @@ const pieceList = [
             "metreNumerator": 2,
             "metreDenominator": 2,
             "fastestStructuralNotesPerBar": 6,
-            "fastestStaccatoNotesPerBar": 3.996,
-            "fastestOrnamentalNotesPerBar": 15.995999999999999,
+            "fastestStaccatoNotesPerBar": 4,
+            "fastestOrnamentalNotesPerBar": 16,
             "comment": "Fugue"
           }
         ]
@@ -8486,7 +8486,7 @@ const pieceList = [
             "metreNumerator": 4,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 12,
-            "fastestOrnamentalNotesPerBar": 15.99
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       }
@@ -8517,9 +8517,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.992,
-          "fastestStaccatoNotesPerBar": 3.996,
-          "fastestOrnamentalNotesPerBar": 15.995999999999999
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 4,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.66,
@@ -8547,7 +8547,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 3.9954545454545456
+          "fastestStructuralNotesPerBar": 4
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 2.93
@@ -8573,8 +8573,8 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.984210526315788,
-          "fastestStaccatoNotesPerBar": 11.984210526315788
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.06,
@@ -8602,8 +8602,8 @@ const pieceList = [
         "bpm": 88,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 6,
-          "fastestStaccatoNotesPerBar": 3.9954545454545456,
-          "fastestOrnamentalNotesPerBar": 15.995454545454544
+          "fastestStaccatoNotesPerBar": 4,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 4.4,
@@ -8617,7 +8617,7 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999
+          "fastestStructuralNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.8
@@ -8645,7 +8645,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 69,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.999999999999999,
+          "fastestStructuralNotesPerBar": 8,
           "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
@@ -8659,9 +8659,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.996153846153845,
+          "fastestStructuralNotesPerBar": 8,
           "fastestStaccatoNotesPerBar": 6,
-          "fastestOrnamentalNotesPerBar": 15.99230769230769
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.93,
@@ -8682,9 +8682,9 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 7.992,
-            "fastestStaccatoNotesPerBar": 3.996,
-            "fastestOrnamentalNotesPerBar": 15.995999999999999,
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 4,
+            "fastestOrnamentalNotesPerBar": 16,
             "comment": "Ornamented notes are tremolo"
           }
         ]
@@ -8710,7 +8710,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 3.9954545454545456
+            "fastestStructuralNotesPerBar": 4
           },
           {
             "rank": 3,
@@ -8735,8 +8735,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 11.984210526315788,
-            "fastestStaccatoNotesPerBar": 11.984210526315788
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 12
           },
           {
             "rank": 2,
@@ -8762,8 +8762,8 @@ const pieceList = [
             "metreNumerator": 2,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 6,
-            "fastestStaccatoNotesPerBar": 3.9954545454545456,
-            "fastestOrnamentalNotesPerBar": 15.995454545454544
+            "fastestStaccatoNotesPerBar": 4,
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       },
@@ -8778,7 +8778,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 5.999999999999999
+            "fastestStructuralNotesPerBar": 6
           },
           {
             "rank": 2,
@@ -8805,7 +8805,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.999999999999999,
+            "fastestStructuralNotesPerBar": 8,
             "fastestOrnamentalNotesPerBar": 24,
             "comment": "Ornamented notes are tremolo; ornamented notes occur when the word \"Geschwind\" is being sung."
           }
@@ -8822,9 +8822,9 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 7.996153846153845,
+            "fastestStructuralNotesPerBar": 8,
             "fastestStaccatoNotesPerBar": 6,
-            "fastestOrnamentalNotesPerBar": 15.99230769230769
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       }
@@ -8855,7 +8855,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.988
+          "fastestStructuralNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.33
@@ -8886,7 +8886,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.988
+            "fastestStructuralNotesPerBar": 12
           },
           {
             "rank": 2,
@@ -8932,7 +8932,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 8.003571428571428
+          "fastestStructuralNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 7.47
@@ -8984,7 +8984,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.93
@@ -9010,8 +9010,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 8.007692307692308,
-          "fastestOrnamentalNotesPerBar": 22.915384615384614
+          "fastestStructuralNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 23
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.47,
@@ -9024,8 +9024,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 116,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6.005172413793105,
-          "fastestOrnamentalNotesPerBar": 11.994827586206899
+          "fastestStructuralNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.87,
@@ -9038,8 +9038,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.991304347826087,
-          "fastestOrnamentalNotesPerBar": 32.00869565217391
+          "fastestStructuralNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.13,
@@ -9066,8 +9066,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 132,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 8.999999999999998,
-          "fastestOrnamentalNotesPerBar": 35.99999999999999
+          "fastestStructuralNotesPerBar": 9,
+          "fastestOrnamentalNotesPerBar": 36
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.6,
@@ -9108,7 +9108,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.995454545454544
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.73
@@ -9158,8 +9158,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 8.007692307692308,
-          "fastestOrnamentalNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.47,
@@ -9210,7 +9210,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.93
@@ -9222,8 +9222,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12.006818181818181,
-          "fastestOrnamentalNotesPerBar": 23.993181818181817
+          "fastestStructuralNotesPerBar": 12,
+          "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.87,
@@ -9257,7 +9257,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 8.003571428571428
+            "fastestStructuralNotesPerBar": 8
           }
         ]
       },
@@ -9321,7 +9321,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -9352,8 +9352,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 8.007692307692308,
-            "fastestOrnamentalNotesPerBar": 22.915384615384614
+            "fastestStructuralNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 23
           }
         ]
       },
@@ -9368,8 +9368,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 6.005172413793105,
-            "fastestOrnamentalNotesPerBar": 11.994827586206899,
+            "fastestStructuralNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 12,
             "comment": "Is \"scherzando\" a tempo indication?"
           }
         ]
@@ -9385,8 +9385,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.991304347826087,
-            "fastestOrnamentalNotesPerBar": 32.00869565217391
+            "fastestStructuralNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 32
           }
         ]
       },
@@ -9417,8 +9417,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 8.999999999999998,
-            "fastestOrnamentalNotesPerBar": 35.99999999999999,
+            "fastestStructuralNotesPerBar": 9,
+            "fastestOrnamentalNotesPerBar": 36,
             "comment": "The \"Allegretto\" tempo indication comes from an earlier edition, but which doesn't have any MM."
           }
         ]
@@ -9467,7 +9467,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.995454545454544
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -9528,8 +9528,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 8.007692307692308,
-            "fastestOrnamentalNotesPerBar": 15.99230769230769,
+            "fastestStructuralNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16,
             "comment": "\"à Trois Parties réelles\""
           }
         ]
@@ -9593,7 +9593,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -9608,8 +9608,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 12.006818181818181,
-            "fastestOrnamentalNotesPerBar": 23.993181818181817
+            "fastestStructuralNotesPerBar": 12,
+            "fastestOrnamentalNotesPerBar": 24
           }
         ]
       },
@@ -9681,7 +9681,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.993478260869566
+          "fastestStructuralNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.13
@@ -9752,7 +9752,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.993478260869566,
+            "fastestStructuralNotesPerBar": 12,
             "comment": "Minuet and trio"
           }
         ]
@@ -9808,8 +9808,8 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999,
-          "fastestOrnamentalNotesPerBar": 11.999999999999998
+          "fastestStructuralNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.2,
@@ -9832,7 +9832,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 63,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998
+          "fastestStructuralNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.3
@@ -9844,8 +9844,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6.006521739130434,
-          "fastestOrnamentalNotesPerBar": 11.993478260869566
+          "fastestStructuralNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.07,
@@ -9872,7 +9872,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 3.9964285714285714
+          "fastestStructuralNotesPerBar": 4
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.73
@@ -9884,7 +9884,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12.006818181818181
+          "fastestStructuralNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.87
@@ -9962,7 +9962,7 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 108,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6.000000000000001
+          "fastestStructuralNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.4
@@ -9974,7 +9974,7 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 132,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999
+          "fastestStructuralNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.2
@@ -9992,8 +9992,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
-            "fastestOrnamentalNotesPerBar": 11.999999999999998,
+            "fastestStructuralNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 12,
             "comment": "Barcarolle; likely a misprint"
           }
         ]
@@ -10023,7 +10023,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.999999999999998,
+            "fastestStructuralNotesPerBar": 12,
             "comment": "Rondoletto"
           }
         ]
@@ -10039,8 +10039,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 6.006521739130434,
-            "fastestOrnamentalNotesPerBar": 11.993478260869566
+            "fastestStructuralNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 12
           }
         ]
       },
@@ -10071,7 +10071,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 3.9964285714285714,
+            "fastestStructuralNotesPerBar": 4,
             "comment": "Rondo"
           }
         ]
@@ -10087,7 +10087,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 12.006818181818181,
+            "fastestStructuralNotesPerBar": 12,
             "comment": "Minuet"
           }
         ]
@@ -10182,7 +10182,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 6.000000000000001,
+            "fastestStructuralNotesPerBar": 6,
             "comment": "Pas redoublé"
           }
         ]
@@ -10197,7 +10197,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
+            "fastestStructuralNotesPerBar": 6,
             "comment": "Barcarolle; likely a misprint"
           }
         ]
@@ -10256,8 +10256,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.994642857142857,
-          "fastestOrnamentalNotesPerBar": 23.994642857142857
+          "fastestStructuralNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.73,
@@ -10342,8 +10342,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 5.994642857142857,
-            "fastestOrnamentalNotesPerBar": 23.994642857142857,
+            "fastestStructuralNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 24,
             "comment": "Scherzo and trio"
           }
         ]
@@ -10420,7 +10420,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.86
@@ -10468,7 +10468,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.86
@@ -10480,7 +10480,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.86
@@ -10492,7 +10492,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.86
@@ -10516,7 +10516,7 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 66,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 23.999999999999996
+          "fastestStructuralNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.2
@@ -10528,7 +10528,7 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 132,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 23.999999999999996
+          "fastestStructuralNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.2
@@ -10540,7 +10540,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.991304347826087
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.26
@@ -10564,7 +10564,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 116,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.993103448275864
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 15.46
@@ -10576,7 +10576,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99642857142857
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 14.93
@@ -10624,7 +10624,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.995999999999999
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.33
@@ -10636,7 +10636,7 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 63,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998
+          "fastestStructuralNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.6
@@ -10648,7 +10648,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99230769230769
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.86
@@ -10672,7 +10672,7 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 63,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998
+          "fastestStructuralNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.6
@@ -10708,7 +10708,7 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 25.99090909090909,
+          "fastestStructuralNotesPerBar": 26,
           "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
@@ -10722,7 +10722,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.991304347826087
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.26
@@ -10746,7 +10746,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.995999999999999
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.33
@@ -10782,7 +10782,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.995999999999999
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.33
@@ -10806,7 +10806,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.954545454545453
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.7
@@ -10818,7 +10818,7 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 108,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12.000000000000002
+          "fastestStructuralNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.8
@@ -10830,7 +10830,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.954545454545453
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.7
@@ -10866,7 +10866,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.996153846153845
+          "fastestStructuralNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.86
@@ -10912,7 +10912,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -10972,7 +10972,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -10987,7 +10987,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -11002,7 +11002,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -11032,7 +11032,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 23.999999999999996
+            "fastestStructuralNotesPerBar": 24
           }
         ]
       },
@@ -11047,7 +11047,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 23.999999999999996
+            "fastestStructuralNotesPerBar": 24
           }
         ]
       },
@@ -11062,7 +11062,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.991304347826087
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -11092,7 +11092,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.993103448275864
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -11107,7 +11107,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99642857142857
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -11167,7 +11167,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.995999999999999
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -11182,7 +11182,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.999999999999998
+            "fastestStructuralNotesPerBar": 12
           }
         ]
       },
@@ -11197,7 +11197,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99230769230769
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -11228,7 +11228,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 11.999999999999998
+            "fastestStructuralNotesPerBar": 12
           }
         ]
       },
@@ -11273,7 +11273,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 25.99090909090909,
+            "fastestStructuralNotesPerBar": 26,
             "fastestOrnamentalNotesPerBar": 12
           }
         ]
@@ -11289,7 +11289,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.991304347826087
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -11319,7 +11319,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.995999999999999
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -11365,7 +11365,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.995999999999999
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -11395,7 +11395,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.954545454545453
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -11410,7 +11410,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 6,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 12.000000000000002
+            "fastestStructuralNotesPerBar": 12
           }
         ]
       },
@@ -11425,7 +11425,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.954545454545453
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -11470,7 +11470,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 7.996153846153845,
+            "fastestStructuralNotesPerBar": 8,
             "comment": "\"a la Galopade\""
           }
         ]
@@ -11517,7 +11517,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.991304347826087
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": "6.13"
@@ -11529,7 +11529,7 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 66,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998
+          "fastestStructuralNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.2
@@ -11565,7 +11565,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 80,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.66
@@ -11637,7 +11637,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 152,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.996052631578948
+          "fastestStructuralNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.13
@@ -11675,8 +11675,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 116,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.989655172413793,
-          "fastestOrnamentalNotesPerBar": 23.989655172413798
+          "fastestStructuralNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 1.93,
@@ -11701,8 +11701,8 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 19.995652173913044,
-          "fastestOrnamentalNotesPerBar": 31.995652173913044
+          "fastestStructuralNotesPerBar": 20,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 15.33,
@@ -11741,7 +11741,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.985714285714286
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 7.46
@@ -11753,9 +11753,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.994736842105265,
-          "fastestStaccatoNotesPerBar": 7.989473684210526,
-          "fastestOrnamentalNotesPerBar": 15.994736842105265
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.13,
@@ -11769,7 +11769,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.995999999999999
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.33
@@ -11793,7 +11793,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 80,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.66
@@ -11805,7 +11805,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 80,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.66
@@ -11855,7 +11855,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 80,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.66
@@ -11867,8 +11867,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 152,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.989473684210526,
-          "fastestStaccatoNotesPerBar": 7.989473684210526
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.06,
@@ -11881,8 +11881,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 148,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 23.995945945945948,
-          "fastestStaccatoNotesPerBar": 5.995945945945945
+          "fastestStructuralNotesPerBar": 24,
+          "fastestStaccatoNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 19.73,
@@ -11919,8 +11919,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 33.391304347826086,
-          "fastestStaccatoNotesPerBar": 8.347826086956522
+          "fastestStructuralNotesPerBar": 33,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.8,
@@ -11934,7 +11934,7 @@ const pieceList = [
         "bpm": 88,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 24,
-          "fastestOrnamentalNotesPerBar": 31.99090909090909
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 8.8,
@@ -11947,7 +11947,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.995999999999999
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.33
@@ -11959,7 +11959,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 31.991999999999997,
+          "fastestStructuralNotesPerBar": 32,
           "fastestStaccatoNotesPerBar": 24
         },
         "notesPerSecond": {
@@ -11974,7 +11974,7 @@ const pieceList = [
         "bpm": 104,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 18,
-          "fastestOrnamentalNotesPerBar": 23.988461538461536
+          "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.4,
@@ -11999,8 +11999,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 104,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.996153846153845,
-          "fastestStaccatoNotesPerBar": 7.996153846153845
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.93,
@@ -12034,7 +12034,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.991304347826087,
+            "fastestStructuralNotesPerBar": 16,
             "comment": "Identified as misprint"
           }
         ]
@@ -12050,7 +12050,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.999999999999998
+            "fastestStructuralNotesPerBar": 12
           }
         ]
       },
@@ -12095,7 +12095,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -12185,7 +12185,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.996052631578948,
+            "fastestStructuralNotesPerBar": 12,
             "comment": "Repeated notes etude"
           }
         ]
@@ -12232,8 +12232,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 5.989655172413793,
-            "fastestOrnamentalNotesPerBar": 23.989655172413798,
+            "fastestStructuralNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 24,
             "comment": "Trills etude"
           }
         ]
@@ -12264,8 +12264,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 19.995652173913044,
-            "fastestOrnamentalNotesPerBar": 31.995652173913044
+            "fastestStructuralNotesPerBar": 20,
+            "fastestOrnamentalNotesPerBar": 32
           }
         ]
       },
@@ -12312,7 +12312,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.985714285714286
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -12327,9 +12327,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.994736842105265,
-            "fastestStaccatoNotesPerBar": 7.989473684210526,
-            "fastestOrnamentalNotesPerBar": 15.994736842105265
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16
           }
         ]
       },
@@ -12344,7 +12344,7 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 15.995999999999999
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -12374,7 +12374,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -12389,7 +12389,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -12450,7 +12450,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -12465,8 +12465,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.989473684210526,
-            "fastestStaccatoNotesPerBar": 7.989473684210526
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8
           }
         ]
       },
@@ -12481,8 +12481,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 23.995945945945948,
-            "fastestStaccatoNotesPerBar": 5.995945945945945
+            "fastestStructuralNotesPerBar": 24,
+            "fastestStaccatoNotesPerBar": 6
           }
         ]
       },
@@ -12527,8 +12527,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 33.391304347826086,
-            "fastestStaccatoNotesPerBar": 8.347826086956522
+            "fastestStructuralNotesPerBar": 33,
+            "fastestStaccatoNotesPerBar": 8
           }
         ]
       },
@@ -12544,7 +12544,7 @@ const pieceList = [
             "metreNumerator": 4,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 24,
-            "fastestOrnamentalNotesPerBar": 31.99090909090909
+            "fastestOrnamentalNotesPerBar": 32
           }
         ]
       },
@@ -12559,7 +12559,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.995999999999999
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -12574,7 +12574,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 31.991999999999997,
+            "fastestStructuralNotesPerBar": 32,
             "fastestStaccatoNotesPerBar": 24
           }
         ]
@@ -12591,7 +12591,7 @@ const pieceList = [
             "metreNumerator": 3,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 18,
-            "fastestOrnamentalNotesPerBar": 23.988461538461536
+            "fastestOrnamentalNotesPerBar": 24
           }
         ]
       },
@@ -12621,8 +12621,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.996153846153845,
-            "fastestStaccatoNotesPerBar": 7.996153846153845
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8
           }
         ]
       },
@@ -12669,7 +12669,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.995999999999999
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.33
@@ -12681,7 +12681,7 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.991304347826087
+          "fastestStructuralNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.26
@@ -12717,7 +12717,7 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 138,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 63.99999999999999,
+          "fastestStructuralNotesPerBar": 64,
           "fastestOrnamentalNotesPerBar": 80
         },
         "notesPerSecond": {
@@ -12731,7 +12731,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 138,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 31.999999999999996
+          "fastestStructuralNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 18.4
@@ -12750,7 +12750,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.995999999999999
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -12765,7 +12765,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.991304347826087
+            "fastestStructuralNotesPerBar": 16
           }
         ]
       },
@@ -12810,7 +12810,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 63.99999999999999,
+            "fastestStructuralNotesPerBar": 64,
             "fastestOrnamentalNotesPerBar": 80
           }
         ]
@@ -12826,7 +12826,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 31.999999999999996
+            "fastestStructuralNotesPerBar": 32
           }
         ]
       }
@@ -12873,8 +12873,8 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.981818181818182,
-          "fastestStaccatoNotesPerBar": 15.981818181818182,
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 16,
           "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
@@ -12913,8 +12913,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.981818181818182,
-            "fastestStaccatoNotesPerBar": 15.981818181818182,
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 16,
             "fastestOrnamentalNotesPerBar": 24,
             "comment": "Tempo di Marcia"
           }
@@ -12947,9 +12947,9 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 152,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.996052631578948,
-          "fastestStaccatoNotesPerBar": 11.996052631578948,
-          "fastestOrnamentalNotesPerBar": 23.992105263157896
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 12,
+          "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.13,
@@ -12979,9 +12979,9 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 152,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.997368421052633,
-          "fastestStaccatoNotesPerBar": 3.994736842105263,
-          "fastestOrnamentalNotesPerBar": 15.994736842105265
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 4,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.13,
@@ -13002,9 +13002,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 11.996052631578948,
-            "fastestStaccatoNotesPerBar": 11.996052631578948,
-            "fastestOrnamentalNotesPerBar": 23.992105263157896
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 12,
+            "fastestOrnamentalNotesPerBar": 24
           }
         ]
       },
@@ -13036,9 +13036,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.997368421052633,
-            "fastestStaccatoNotesPerBar": 3.994736842105263,
-            "fastestOrnamentalNotesPerBar": 15.994736842105265,
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 4,
+            "fastestOrnamentalNotesPerBar": 16,
             "comment": "Ornamented notes are tremolo"
           }
         ]
@@ -13070,9 +13070,9 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.992857142857143,
-          "fastestStaccatoNotesPerBar": 7.992857142857143,
-          "fastestOrnamentalNotesPerBar": 11.999999999999998
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 7.46,
@@ -13086,9 +13086,9 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.984210526315788,
-          "fastestStaccatoNotesPerBar": 11.984210526315788,
-          "fastestOrnamentalNotesPerBar": 23.992105263157896
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 12,
+          "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.06,
@@ -13102,9 +13102,9 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999,
-          "fastestStaccatoNotesPerBar": 5.999999999999999,
-          "fastestOrnamentalNotesPerBar": 6.994736842105262
+          "fastestStructuralNotesPerBar": 6,
+          "fastestStaccatoNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 7
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 7.6,
@@ -13118,9 +13118,9 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 122,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.993442622950822,
-          "fastestStaccatoNotesPerBar": 15.993442622950822,
-          "fastestOrnamentalNotesPerBar": 31.986885245901643
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 8.13,
@@ -13141,9 +13141,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.992857142857143,
-            "fastestStaccatoNotesPerBar": 7.992857142857143,
-            "fastestOrnamentalNotesPerBar": 11.999999999999998
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 12
           }
         ]
       },
@@ -13158,9 +13158,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 11.984210526315788,
-            "fastestStaccatoNotesPerBar": 11.984210526315788,
-            "fastestOrnamentalNotesPerBar": 23.992105263157896
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 12,
+            "fastestOrnamentalNotesPerBar": 24
           }
         ]
       },
@@ -13175,9 +13175,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
-            "fastestStaccatoNotesPerBar": 5.999999999999999,
-            "fastestOrnamentalNotesPerBar": 6.994736842105262
+            "fastestStructuralNotesPerBar": 6,
+            "fastestStaccatoNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 7
           }
         ]
       },
@@ -13192,9 +13192,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.993442622950822,
-            "fastestStaccatoNotesPerBar": 15.993442622950822,
-            "fastestOrnamentalNotesPerBar": 31.986885245901643
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 32
           }
         ]
       }
@@ -13226,9 +13226,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.997727272727272,
-          "fastestStaccatoNotesPerBar": 7.997727272727272,
-          "fastestOrnamentalNotesPerBar": 31.99772727272727
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": "11.73",
@@ -13249,9 +13249,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.997727272727272,
-            "fastestStaccatoNotesPerBar": 7.997727272727272,
-            "fastestOrnamentalNotesPerBar": 31.99772727272727,
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 32,
             "comment": "Very likely a misprint"
           }
         ]
@@ -13297,8 +13297,8 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 54,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 24.000000000000004,
-          "fastestStaccatoNotesPerBar": 24.000000000000004,
+          "fastestStructuralNotesPerBar": 24,
+          "fastestStaccatoNotesPerBar": 24,
           "fastestOrnamentalNotesPerBar": 64
         },
         "notesPerSecond": {
@@ -13336,8 +13336,8 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 24.000000000000004,
-            "fastestStaccatoNotesPerBar": 24.000000000000004,
+            "fastestStructuralNotesPerBar": 24,
+            "fastestStaccatoNotesPerBar": 24,
             "fastestOrnamentalNotesPerBar": 64
           }
         ]
@@ -13369,7 +13369,7 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 72,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 9.000000000000002,
+          "fastestStructuralNotesPerBar": 9,
           "fastestStaccatoNotesPerBar": 6,
           "fastestOrnamentalNotesPerBar": 12
         },
@@ -13385,8 +13385,8 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999,
-          "fastestStaccatoNotesPerBar": 5.999999999999999
+          "fastestStructuralNotesPerBar": 6,
+          "fastestStaccatoNotesPerBar": 6
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.2,
@@ -13399,8 +13399,8 @@ const pieceList = [
         "beatUnit": "DOTTED_HALF",
         "bpm": 126,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999,
-          "fastestOrnamentalNotesPerBar": 11.999999999999998
+          "fastestStructuralNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.6,
@@ -13427,9 +13427,9 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 126,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.999999999999999,
-          "fastestStaccatoNotesPerBar": 2.9999999999999996,
-          "fastestOrnamentalNotesPerBar": 11.999999999999998
+          "fastestStructuralNotesPerBar": 6,
+          "fastestStaccatoNotesPerBar": 3,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.6,
@@ -13443,9 +13443,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 11.999999999999998,
-          "fastestStaccatoNotesPerBar": 7.992857142857143,
-          "fastestOrnamentalNotesPerBar": 23.999999999999996
+          "fastestStructuralNotesPerBar": 12,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.2,
@@ -13466,7 +13466,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 9.000000000000002,
+            "fastestStructuralNotesPerBar": 9,
             "fastestStaccatoNotesPerBar": 6,
             "fastestOrnamentalNotesPerBar": 12
           },
@@ -13477,8 +13477,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
-            "fastestStaccatoNotesPerBar": 5.999999999999999
+            "fastestStructuralNotesPerBar": 6,
+            "fastestStaccatoNotesPerBar": 6
           },
           {
             "rank": 3,
@@ -13487,8 +13487,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
-            "fastestOrnamentalNotesPerBar": 11.999999999999998
+            "fastestStructuralNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 12
           }
         ]
       },
@@ -13519,9 +13519,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 5.999999999999999,
-            "fastestStaccatoNotesPerBar": 2.9999999999999996,
-            "fastestOrnamentalNotesPerBar": 11.999999999999998
+            "fastestStructuralNotesPerBar": 6,
+            "fastestStaccatoNotesPerBar": 3,
+            "fastestOrnamentalNotesPerBar": 12
           }
         ]
       },
@@ -13536,9 +13536,9 @@ const pieceList = [
             "isCutTime": true,
             "metreNumerator": 2,
             "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 11.999999999999998,
-            "fastestStaccatoNotesPerBar": 7.992857142857143,
-            "fastestOrnamentalNotesPerBar": 23.999999999999996
+            "fastestStructuralNotesPerBar": 12,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 24
           }
         ]
       }
@@ -13615,9 +13615,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.995999999999999,
-          "fastestStaccatoNotesPerBar": 7.992,
-          "fastestOrnamentalNotesPerBar": 31.991999999999997
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 13.33,
@@ -13689,9 +13689,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.995999999999999,
-            "fastestStaccatoNotesPerBar": 7.992,
-            "fastestOrnamentalNotesPerBar": 31.991999999999997
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 32
           }
         ]
       }
@@ -13722,8 +13722,8 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.991304347826087,
-          "fastestStaccatoNotesPerBar": 7.995652173913044
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 12.26,
@@ -13736,9 +13736,9 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 54,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 18.000000000000004,
-          "fastestStaccatoNotesPerBar": 9.000000000000002,
-          "fastestOrnamentalNotesPerBar": 36.00000000000001
+          "fastestStructuralNotesPerBar": 18,
+          "fastestStaccatoNotesPerBar": 9,
+          "fastestOrnamentalNotesPerBar": 36
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.4,
@@ -13752,9 +13752,9 @@ const pieceList = [
         "beatUnit": "HALF",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.997727272727272,
-          "fastestStaccatoNotesPerBar": 3.9954545454545456,
-          "fastestOrnamentalNotesPerBar": 15.995454545454544
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 4,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.73,
@@ -13769,8 +13769,8 @@ const pieceList = [
         "bpm": 112,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 18,
-          "fastestStaccatoNotesPerBar": 5.999999999999999,
-          "fastestOrnamentalNotesPerBar": 47.99999999999999
+          "fastestStaccatoNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 48
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 16.8,
@@ -13791,8 +13791,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.991304347826087,
-            "fastestStaccatoNotesPerBar": 7.995652173913044
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 8
           }
         ]
       },
@@ -13807,9 +13807,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 9,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 18.000000000000004,
-            "fastestStaccatoNotesPerBar": 9.000000000000002,
-            "fastestOrnamentalNotesPerBar": 36.00000000000001
+            "fastestStructuralNotesPerBar": 18,
+            "fastestStaccatoNotesPerBar": 9,
+            "fastestOrnamentalNotesPerBar": 36
           }
         ]
       },
@@ -13824,9 +13824,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.997727272727272,
-            "fastestStaccatoNotesPerBar": 3.9954545454545456,
-            "fastestOrnamentalNotesPerBar": 15.995454545454544,
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 4,
+            "fastestOrnamentalNotesPerBar": 16,
             "comment": "Scherzo"
           }
         ]
@@ -13843,8 +13843,8 @@ const pieceList = [
             "metreNumerator": 6,
             "metreDenominator": 8,
             "fastestStructuralNotesPerBar": 18,
-            "fastestStaccatoNotesPerBar": 5.999999999999999,
-            "fastestOrnamentalNotesPerBar": 47.99999999999999,
+            "fastestStaccatoNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 48,
             "comment": "Finale"
           }
         ]
@@ -13876,7 +13876,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 108,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6.000000000000001,
+          "fastestStructuralNotesPerBar": 6,
           "fastestOrnamentalNotesPerBar": 8
         },
         "notesPerSecond": {
@@ -13890,8 +13890,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.9785714285714295,
-          "fastestOrnamentalNotesPerBar": 11.989285714285714
+          "fastestStructuralNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.72,
@@ -13904,8 +13904,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 138,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.999999999999999,
-          "fastestStaccatoNotesPerBar": 7.999999999999999
+          "fastestStructuralNotesPerBar": 8,
+          "fastestStaccatoNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 9.2,
@@ -13918,7 +13918,7 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 138,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.999999999999999
+          "fastestStructuralNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 4.6
@@ -13956,8 +13956,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.992,
-          "fastestOrnamentalNotesPerBar": 15.984
+          "fastestStructuralNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.33,
@@ -13970,7 +13970,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 138,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 3.9999999999999996
+          "fastestStructuralNotesPerBar": 4
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 4.6
@@ -13994,7 +13994,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 69,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 3.9999999999999996
+          "fastestStructuralNotesPerBar": 4
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 4.6
@@ -14020,7 +14020,7 @@ const pieceList = [
         "beatUnit": "EIGHTH",
         "bpm": 92,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.982608695652174
+          "fastestStructuralNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.06
@@ -14032,8 +14032,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 112,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.992857142857143,
-          "fastestOrnamentalNotesPerBar": 15.985714285714286
+          "fastestStructuralNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.73,
@@ -14052,7 +14052,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 6.000000000000001,
+            "fastestStructuralNotesPerBar": 6,
             "fastestOrnamentalNotesPerBar": 8,
             "comment": "\"Von fremden Ländern und Menschen\""
           }
@@ -14068,8 +14068,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 5.9785714285714295,
-            "fastestOrnamentalNotesPerBar": 11.989285714285714,
+            "fastestStructuralNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 12,
             "comment": "\"Curiose Geschichte\""
           }
         ]
@@ -14084,8 +14084,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.999999999999999,
-            "fastestStaccatoNotesPerBar": 7.999999999999999,
+            "fastestStructuralNotesPerBar": 8,
+            "fastestStaccatoNotesPerBar": 8,
             "comment": "\"Hasche-Mann\""
           }
         ]
@@ -14100,7 +14100,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.999999999999999,
+            "fastestStructuralNotesPerBar": 8,
             "comment": "\"Bittendes Kind\""
           }
         ]
@@ -14146,8 +14146,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.992,
-            "fastestOrnamentalNotesPerBar": 15.984,
+            "fastestStructuralNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16,
             "comment": "\"Träumerei\""
           }
         ]
@@ -14162,7 +14162,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 3.9999999999999996,
+            "fastestStructuralNotesPerBar": 4,
             "comment": "\"Am Camin\""
           }
         ]
@@ -14192,7 +14192,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 3.9999999999999996,
+            "fastestStructuralNotesPerBar": 4,
             "comment": "\"Fast zu ernst\""
           }
         ]
@@ -14223,7 +14223,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 2,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.982608695652174,
+            "fastestStructuralNotesPerBar": 8,
             "comment": "\"Kind im Einschlummern\""
           }
         ]
@@ -14238,8 +14238,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.992857142857143,
-            "fastestOrnamentalNotesPerBar": 15.985714285714286,
+            "fastestStructuralNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 16,
             "comment": "\"Der Dichter spricht\""
           }
         ]
@@ -14285,9 +14285,9 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 80,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.99,
-          "fastestStaccatoNotesPerBar": 7.98,
-          "fastestOrnamentalNotesPerBar": 31.98
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 5.33,
@@ -14301,8 +14301,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 138,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.999999999999998,
-          "fastestStaccatoNotesPerBar": 15.999999999999998,
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 16,
           "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
@@ -14331,9 +14331,9 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 176,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.995454545454544,
-          "fastestStaccatoNotesPerBar": 15.995454545454544,
-          "fastestOrnamentalNotesPerBar": 27.995454545454546
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 28
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 11.73,
@@ -14364,9 +14364,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.99,
-            "fastestStaccatoNotesPerBar": 7.98,
-            "fastestOrnamentalNotesPerBar": 31.98
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 32
           }
         ]
       },
@@ -14381,8 +14381,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.999999999999998,
-            "fastestStaccatoNotesPerBar": 15.999999999999998,
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 16,
             "fastestOrnamentalNotesPerBar": 24
           },
           {
@@ -14402,9 +14402,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.995454545454544,
-            "fastestStaccatoNotesPerBar": 15.995454545454544,
-            "fastestOrnamentalNotesPerBar": 27.995454545454546
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 28
           }
         ]
       }
@@ -14435,8 +14435,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 80,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 3.99,
-          "fastestOrnamentalNotesPerBar": 15.99
+          "fastestStructuralNotesPerBar": 4,
+          "fastestOrnamentalNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 1.33,
@@ -14475,7 +14475,7 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 54,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12.000000000000002
+          "fastestStructuralNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 2.7
@@ -14537,7 +14537,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.984,
+          "fastestStructuralNotesPerBar": 16,
           "fastestOrnamentalNotesPerBar": 36
         },
         "notesPerSecond": {
@@ -14551,7 +14551,7 @@ const pieceList = [
         "beatUnit": "DOTTED_QUARTER",
         "bpm": 54,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 24.000000000000004,
+          "fastestStructuralNotesPerBar": 24,
           "fastestOrnamentalNotesPerBar": 36
         },
         "notesPerSecond": {
@@ -14652,8 +14652,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 3.99,
-            "fastestOrnamentalNotesPerBar": 15.99
+            "fastestStructuralNotesPerBar": 4,
+            "fastestOrnamentalNotesPerBar": 16
           },
           {
             "rank": 2,
@@ -14687,7 +14687,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 12.000000000000002
+            "fastestStructuralNotesPerBar": 12
           },
           {
             "rank": 2,
@@ -14733,7 +14733,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.984,
+            "fastestStructuralNotesPerBar": 16,
             "fastestOrnamentalNotesPerBar": 36
           },
           {
@@ -14743,7 +14743,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 12,
             "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 24.000000000000004,
+            "fastestStructuralNotesPerBar": 24,
             "fastestOrnamentalNotesPerBar": 36
           },
           {
@@ -14861,8 +14861,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 116,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.993103448275864,
-          "fastestStaccatoNotesPerBar": 15.993103448275864
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 16
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 7.73,
@@ -14889,7 +14889,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 69,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.999999999999999
+          "fastestStructuralNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 2.3
@@ -14901,8 +14901,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 100,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.984,
-          "fastestOrnamentalNotesPerBar": 39.984
+          "fastestStructuralNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 40
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 6.66,
@@ -14929,7 +14929,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 88,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.990909090909091
+          "fastestStructuralNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 2.93
@@ -14971,8 +14971,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 69,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.999999999999999,
-          "fastestOrnamentalNotesPerBar": 31.999999999999996
+          "fastestStructuralNotesPerBar": 8,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 2.3,
@@ -14999,7 +14999,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 80,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 7.98
+          "fastestStructuralNotesPerBar": 8
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 2.66
@@ -15013,7 +15013,7 @@ const pieceList = [
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 10,
           "fastestStaccatoNotesPerBar": 10,
-          "fastestOrnamentalNotesPerBar": 15.000000000000002
+          "fastestOrnamentalNotesPerBar": 15
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 4.8,
@@ -15027,9 +15027,9 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 152,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 15.994736842105265,
-          "fastestStaccatoNotesPerBar": 15.994736842105265,
-          "fastestOrnamentalNotesPerBar": 31.98947368421053
+          "fastestStructuralNotesPerBar": 16,
+          "fastestStaccatoNotesPerBar": 16,
+          "fastestOrnamentalNotesPerBar": 32
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 10.13,
@@ -15085,7 +15085,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 8.999999999999998
+          "fastestStructuralNotesPerBar": 9
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.8
@@ -15111,8 +15111,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.992105263157894,
-          "fastestOrnamentalNotesPerBar": 11.984210526315788
+          "fastestStructuralNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 2.53,
@@ -15140,7 +15140,7 @@ const pieceList = [
         "bpm": 88,
         "notesPerBar": {
           "fastestStructuralNotesPerBar": 18,
-          "fastestOrnamentalNotesPerBar": 23.93181818181818
+          "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 8.8,
@@ -15153,8 +15153,8 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 80,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 5.985,
-          "fastestOrnamentalNotesPerBar": 23.985
+          "fastestStructuralNotesPerBar": 6,
+          "fastestOrnamentalNotesPerBar": 24
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 2.66,
@@ -15167,7 +15167,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 76,
         "notesPerBar": {
-          "fastestStructuralNotesPerBar": 8.999999999999998
+          "fastestStructuralNotesPerBar": 9
         },
         "notesPerSecond": {
           "fastestStructuralNotesPerSecond": 3.8
@@ -15196,8 +15196,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.993103448275864,
-            "fastestStaccatoNotesPerBar": 15.993103448275864
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 16
           },
           {
             "rank": 3,
@@ -15216,7 +15216,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.999999999999999
+            "fastestStructuralNotesPerBar": 8
           },
           {
             "rank": 5,
@@ -15225,8 +15225,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.984,
-            "fastestOrnamentalNotesPerBar": 39.984
+            "fastestStructuralNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 40
           },
           {
             "rank": 6,
@@ -15245,7 +15245,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.990909090909091
+            "fastestStructuralNotesPerBar": 8
           },
           {
             "rank": 8,
@@ -15275,8 +15275,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.999999999999999,
-            "fastestOrnamentalNotesPerBar": 31.999999999999996
+            "fastestStructuralNotesPerBar": 8,
+            "fastestOrnamentalNotesPerBar": 32
           },
           {
             "rank": 11,
@@ -15295,7 +15295,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 7.98
+            "fastestStructuralNotesPerBar": 8
           }
         ]
       },
@@ -15312,7 +15312,7 @@ const pieceList = [
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 10,
             "fastestStaccatoNotesPerBar": 10,
-            "fastestOrnamentalNotesPerBar": 15.000000000000002
+            "fastestOrnamentalNotesPerBar": 15
           }
         ]
       },
@@ -15327,9 +15327,9 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 4,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 15.994736842105265,
-            "fastestStaccatoNotesPerBar": 15.994736842105265,
-            "fastestOrnamentalNotesPerBar": 31.98947368421053
+            "fastestStructuralNotesPerBar": 16,
+            "fastestStaccatoNotesPerBar": 16,
+            "fastestOrnamentalNotesPerBar": 32
           }
         ]
       },
@@ -15375,7 +15375,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 8.999999999999998
+            "fastestStructuralNotesPerBar": 9
           },
           {
             "rank": 5,
@@ -15395,8 +15395,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 5.992105263157894,
-            "fastestOrnamentalNotesPerBar": 11.984210526315788
+            "fastestStructuralNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 12
           },
           {
             "rank": 7,
@@ -15417,7 +15417,7 @@ const pieceList = [
             "metreNumerator": 3,
             "metreDenominator": 4,
             "fastestStructuralNotesPerBar": 18,
-            "fastestOrnamentalNotesPerBar": 23.93181818181818
+            "fastestOrnamentalNotesPerBar": 24
           },
           {
             "rank": 9,
@@ -15426,8 +15426,8 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 5.985,
-            "fastestOrnamentalNotesPerBar": 23.985
+            "fastestStructuralNotesPerBar": 6,
+            "fastestOrnamentalNotesPerBar": 24
           },
           {
             "rank": 10,
@@ -15436,7 +15436,7 @@ const pieceList = [
             "isCutTime": false,
             "metreNumerator": 3,
             "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 8.999999999999998
+            "fastestStructuralNotesPerBar": 9
           }
         ]
       }
@@ -15451,8 +15451,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.999999999999998,
-    "fastestOrnamentalNotesPerBar": 31.999999999999996
+    "fastestStructuralNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -15504,8 +15504,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 5.99625,
-    "fastestOrnamentalNotesPerBar": 11.9925
+    "fastestStructuralNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -15514,8 +15514,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.999999999999998,
-    "fastestOrnamentalNotesPerBar": 7.999999999999999
+    "fastestStructuralNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -15524,8 +15524,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.996052631578948,
-    "fastestStaccatoNotesPerBar": 5.992105263157894
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 6
   },
   {
     "rank": 1,
@@ -15534,8 +15534,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.999999999999998,
-    "fastestStaccatoNotesPerBar": 5.999999999999999
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 6
   },
   {
     "rank": 1,
@@ -15611,7 +15611,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 31.999999999999996
+    "fastestStructuralNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -15621,7 +15621,7 @@ const sectionList = [
     "metreNumerator": 4,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 16.01379310344828
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -15692,7 +15692,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769,
+    "fastestStructuralNotesPerBar": 16,
     "comment": "Same as Nuevo método de guitarra, xii"
   },
   {
@@ -15702,7 +15702,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769,
+    "fastestStructuralNotesPerBar": 16,
     "comment": "Same as Nuevo método de guitarra, xiii"
   },
   {
@@ -15712,8 +15712,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769,
-    "fastestOrnamentalNotesPerBar": 32.0076923076923,
+    "fastestStructuralNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 32,
     "comment": "Same as Nuevo método de guitarra, xiv"
   },
   {
@@ -15792,7 +15792,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 31.999999999999996
+    "fastestStructuralNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -15802,7 +15802,7 @@ const sectionList = [
     "metreNumerator": 4,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 16.01379310344828
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -15862,8 +15862,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
-    "fastestOrnamentalNotesPerBar": 23.999999999999996,
+    "fastestStructuralNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 24,
     "comment": "Very likely a misprint, see first publication"
   },
   {
@@ -15873,7 +15873,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769,
+    "fastestStructuralNotesPerBar": 16,
     "comment": "Same as Nuevo método de guitarra, xii"
   },
   {
@@ -15883,7 +15883,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769,
+    "fastestStructuralNotesPerBar": 16,
     "comment": "Same as Nuevo método de guitarra, xiii"
   },
   {
@@ -15893,8 +15893,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769,
-    "fastestOrnamentalNotesPerBar": 32.0076923076923,
+    "fastestStructuralNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 32,
     "comment": "Same as Nuevo método de guitarra, xiv"
   },
   {
@@ -15964,8 +15964,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 11.999999999999998,
-    "fastestOrnamentalNotesPerBar": 47.99999999999999
+    "fastestStructuralNotesPerBar": 12,
+    "fastestOrnamentalNotesPerBar": 48
   },
   {
     "rank": 1,
@@ -15974,7 +15974,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 11.999999999999998
+    "fastestStructuralNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -16014,7 +16014,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769,
+    "fastestStructuralNotesPerBar": 16,
     "comment": "Same as Escuela de guitarra, xxv"
   },
   {
@@ -16024,7 +16024,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769,
+    "fastestStructuralNotesPerBar": 16,
     "comment": "Same as Escuela de guitarra, xxiv"
   },
   {
@@ -16034,8 +16034,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769,
-    "fastestOrnamentalNotesPerBar": 32.0076923076923,
+    "fastestStructuralNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 32,
     "comment": "Same as Escuela de guitarra, xxv"
   },
   {
@@ -16046,7 +16046,7 @@ const sectionList = [
     "metreNumerator": 4,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 24,
-    "fastestOrnamentalNotesPerBar": 63.99999999999999
+    "fastestOrnamentalNotesPerBar": 64
   },
   {
     "rank": 1,
@@ -16127,7 +16127,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 35.99999999999999,
+    "fastestStructuralNotesPerBar": 36,
     "fastestOrnamentalNotesPerBar": 96
   },
   {
@@ -16137,7 +16137,7 @@ const sectionList = [
     "metreNumerator": 3,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 18,
-    "fastestOrnamentalNotesPerBar": 48.00535714285714,
+    "fastestOrnamentalNotesPerBar": 48,
     "comment": "Polonaise"
   },
   {
@@ -16189,8 +16189,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
-    "fastestStaccatoNotesPerBar": 5.999999999999999,
+    "fastestStructuralNotesPerBar": 6,
+    "fastestStaccatoNotesPerBar": 6,
     "comment": "Fugue"
   },
   {
@@ -16257,8 +16257,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
-    "fastestStaccatoNotesPerBar": 2.9999999999999996,
+    "fastestStructuralNotesPerBar": 6,
+    "fastestStaccatoNotesPerBar": 3,
     "comment": "Scherzo"
   },
   {
@@ -16268,8 +16268,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.978947368421052,
-    "fastestStaccatoNotesPerBar": 15.978947368421052
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 16
   },
   {
     "rank": 2,
@@ -16278,9 +16278,9 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 11.999999999999998,
-    "fastestStaccatoNotesPerBar": 11.999999999999998,
-    "fastestOrnamentalNotesPerBar": 31.99285714285714
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 12,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -16289,9 +16289,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12.000000000000002,
-    "fastestStaccatoNotesPerBar": 12.000000000000002,
-    "fastestOrnamentalNotesPerBar": 12.000000000000002
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 12,
+    "fastestOrnamentalNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -16301,7 +16301,7 @@ const sectionList = [
     "metreNumerator": 9,
     "metreDenominator": 8,
     "fastestStructuralNotesPerBar": 18,
-    "fastestOrnamentalNotesPerBar": 126.00000000000001
+    "fastestOrnamentalNotesPerBar": 126
   },
   {
     "rank": 1,
@@ -16310,9 +16310,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
-    "fastestStaccatoNotesPerBar": 2.9999999999999996,
-    "fastestOrnamentalNotesPerBar": 11.999999999999998,
+    "fastestStructuralNotesPerBar": 6,
+    "fastestStaccatoNotesPerBar": 3,
+    "fastestOrnamentalNotesPerBar": 12,
     "comment": "Scherzo"
   },
   {
@@ -16355,8 +16355,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.999999999999999,
-    "fastestStaccatoNotesPerBar": 7.999999999999999
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -16366,7 +16366,7 @@ const sectionList = [
     "metreNumerator": 3,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 12,
-    "fastestStaccatoNotesPerBar": 8.999999999999998,
+    "fastestStaccatoNotesPerBar": 9,
     "fastestOrnamentalNotesPerBar": 12,
     "comment": "Scherzo"
   },
@@ -16377,9 +16377,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.995652173913044,
-    "fastestStaccatoNotesPerBar": 3.997826086956522,
-    "fastestOrnamentalNotesPerBar": 7.995652173913044
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 4,
+    "fastestOrnamentalNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -16399,9 +16399,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.991304347826087,
-    "fastestStaccatoNotesPerBar": 7.982608695652174,
-    "fastestOrnamentalNotesPerBar": 15.991304347826087
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -16442,9 +16442,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
-    "fastestStaccatoNotesPerBar": 5.999999999999999,
-    "fastestOrnamentalNotesPerBar": 11.999999999999998,
+    "fastestStructuralNotesPerBar": 6,
+    "fastestStaccatoNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 12,
     "comment": "Scherzo"
   },
   {
@@ -16490,7 +16490,7 @@ const sectionList = [
     "metreDenominator": 8,
     "fastestStructuralNotesPerBar": 12,
     "fastestStaccatoNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 17.999999999999996
+    "fastestOrnamentalNotesPerBar": 18
   },
   {
     "rank": 1,
@@ -16499,8 +16499,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
-    "fastestStaccatoNotesPerBar": 5.999999999999999,
+    "fastestStructuralNotesPerBar": 6,
+    "fastestStaccatoNotesPerBar": 6,
     "comment": "Minuet"
   },
   {
@@ -16510,7 +16510,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.984,
+    "fastestStructuralNotesPerBar": 16,
     "fastestStaccatoNotesPerBar": 12,
     "fastestOrnamentalNotesPerBar": 24,
     "comment": "Theme and variations"
@@ -16522,8 +16522,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.990909090909091,
-    "fastestOrnamentalNotesPerBar": 15.981818181818182
+    "fastestStructuralNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -16532,8 +16532,8 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 7.997368421052633,
-    "fastestStaccatoNotesPerBar": 7.997368421052633
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -16542,9 +16542,9 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 7.995,
-    "fastestStaccatoNotesPerBar": 7.995,
-    "fastestOrnamentalNotesPerBar": 15.997499999999999
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -16554,8 +16554,8 @@ const sectionList = [
     "metreNumerator": 2,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 24,
-    "fastestStaccatoNotesPerBar": 15.96,
-    "fastestOrnamentalNotesPerBar": 31.98
+    "fastestStaccatoNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -16564,8 +16564,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.999999999999998,
-    "fastestStaccatoNotesPerBar": 5.999999999999999,
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 6,
     "comment": "Scherzo"
   },
   {
@@ -16575,8 +16575,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 3.972413793103448,
-    "fastestOrnamentalNotesPerBar": 15.972413793103449,
+    "fastestStructuralNotesPerBar": 4,
+    "fastestOrnamentalNotesPerBar": 16,
     "comment": "\"La Malinconia\""
   },
   {
@@ -16606,8 +16606,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
-    "fastestStaccatoNotesPerBar": 5.999999999999999
+    "fastestStructuralNotesPerBar": 6,
+    "fastestStaccatoNotesPerBar": 6
   },
   {
     "rank": 1,
@@ -16617,8 +16617,8 @@ const sectionList = [
     "metreNumerator": 4,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 12,
-    "fastestStaccatoNotesPerBar": 7.990909090909091,
-    "fastestOrnamentalNotesPerBar": 15.995454545454544
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -16627,9 +16627,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
-    "fastestStaccatoNotesPerBar": 5.999999999999999,
-    "fastestOrnamentalNotesPerBar": 11.999999999999998
+    "fastestStructuralNotesPerBar": 6,
+    "fastestStaccatoNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -16638,9 +16638,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 31.963636363636365,
-    "fastestStaccatoNotesPerBar": 31.963636363636365,
-    "fastestOrnamentalNotesPerBar": 15.981818181818182
+    "fastestStructuralNotesPerBar": 32,
+    "fastestStaccatoNotesPerBar": 32,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -16661,7 +16661,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.999999999999999
+    "fastestStructuralNotesPerBar": 8
   },
   {
     "rank": 3,
@@ -16670,7 +16670,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.995652173913044,
+    "fastestStructuralNotesPerBar": 8,
     "comment": "Identified as misprint; see Noorduin, 2016"
   },
   {
@@ -16714,8 +16714,8 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 7.997727272727272,
-    "fastestStaccatoNotesPerBar": 7.997727272727272,
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8,
     "comment": "Finale"
   },
   {
@@ -16725,8 +16725,8 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 7.998214285714285,
-    "fastestStaccatoNotesPerBar": 7.998214285714285
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -16746,9 +16746,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.995454545454544,
-    "fastestStaccatoNotesPerBar": 7.990909090909091,
-    "fastestOrnamentalNotesPerBar": 15.995454545454544
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -16757,9 +16757,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 11.999999999999998,
-    "fastestStaccatoNotesPerBar": 11.999999999999998,
-    "fastestOrnamentalNotesPerBar": 11.999999999999998
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 12,
+    "fastestOrnamentalNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -16768,8 +16768,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.994827586206899,
-    "fastestStaccatoNotesPerBar": 5.989655172413793,
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 6,
     "comment": "Minuet"
   },
   {
@@ -16832,7 +16832,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 2.997
+    "fastestStructuralNotesPerBar": 3
   },
   {
     "rank": 1,
@@ -16841,8 +16841,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.992,
-    "fastestStaccatoNotesPerBar": 3.996
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 4
   },
   {
     "rank": 2,
@@ -16851,9 +16851,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.997368421052633,
+    "fastestStructuralNotesPerBar": 8,
     "fastestStaccatoNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 7.997368421052633
+    "fastestOrnamentalNotesPerBar": 8
   },
   {
     "rank": 3,
@@ -16871,8 +16871,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.991304347826087,
-    "fastestStaccatoNotesPerBar": 7.995652173913044
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -16881,7 +16881,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.999999999999998,
+    "fastestStructuralNotesPerBar": 12,
     "fastestStaccatoNotesPerBar": 8,
     "fastestOrnamentalNotesPerBar": 16
   },
@@ -16914,8 +16914,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.985714285714286,
-    "fastestOrnamentalNotesPerBar": 15.985714285714286
+    "fastestStructuralNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 2,
@@ -16935,8 +16935,8 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 7.995652173913044,
-    "fastestStaccatoNotesPerBar": 3.997826086956522
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 4
   },
   {
     "rank": 1,
@@ -16945,8 +16945,8 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 7.999999999999999,
-    "fastestStaccatoNotesPerBar": 7.999999999999999
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -16968,7 +16968,7 @@ const sectionList = [
     "metreNumerator": 6,
     "metreDenominator": 8,
     "fastestStructuralNotesPerBar": 36,
-    "fastestOrnamentalNotesPerBar": 23.98695652173913
+    "fastestOrnamentalNotesPerBar": 24
   },
   {
     "rank": 1,
@@ -16977,7 +16977,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 63.91578947368421
+    "fastestStructuralNotesPerBar": 64
   },
   {
     "rank": 2,
@@ -16998,8 +16998,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 31.963636363636365,
-    "fastestOrnamentalNotesPerBar": 31.963636363636365
+    "fastestStructuralNotesPerBar": 32,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 2,
@@ -17008,8 +17008,8 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 15.964285714285714,
-    "fastestStaccatoNotesPerBar": 7.992857142857143
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -17029,8 +17029,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 6.000000000000001,
-    "fastestStaccatoNotesPerBar": 6.000000000000001,
+    "fastestStructuralNotesPerBar": 6,
+    "fastestStaccatoNotesPerBar": 6,
     "comment": "Minuet and trio"
   },
   {
@@ -17050,8 +17050,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.977272727272727,
-    "fastestStaccatoNotesPerBar": 7.977272727272727
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -17060,9 +17060,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 47.99999999999999,
-    "fastestStaccatoNotesPerBar": 23.999999999999996,
-    "fastestOrnamentalNotesPerBar": 23.999999999999996
+    "fastestStructuralNotesPerBar": 48,
+    "fastestStaccatoNotesPerBar": 24,
+    "fastestOrnamentalNotesPerBar": 24
   },
   {
     "rank": 2,
@@ -17072,8 +17072,8 @@ const sectionList = [
     "metreNumerator": 4,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 24,
-    "fastestStaccatoNotesPerBar": 15.995999999999999,
-    "fastestOrnamentalNotesPerBar": 31.991999999999997
+    "fastestStaccatoNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -17082,8 +17082,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 11.993478260869566,
-    "fastestStaccatoNotesPerBar": 11.993478260869566
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -17103,9 +17103,9 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 7.997368421052633,
-    "fastestStaccatoNotesPerBar": 7.997368421052633,
-    "fastestOrnamentalNotesPerBar": 15.994736842105265
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -17125,7 +17125,7 @@ const sectionList = [
     "metreNumerator": 2,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 24,
-    "fastestStaccatoNotesPerBar": 15.99,
+    "fastestStaccatoNotesPerBar": 16,
     "fastestOrnamentalNotesPerBar": 24,
     "comment": "Funeral march"
   },
@@ -17148,8 +17148,8 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 7.996551724137932,
-    "fastestStaccatoNotesPerBar": 3.998275862068966
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 4
   },
   {
     "rank": 1,
@@ -17158,8 +17158,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.997368421052633,
-    "fastestStaccatoNotesPerBar": 7.997368421052633
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8
   },
   {
     "rank": 2,
@@ -17178,8 +17178,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.993103448275864,
-    "fastestStaccatoNotesPerBar": 7.9862068965517246,
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 8,
     "comment": "Identified as misprint; see Noorduin, 2016"
   },
   {
@@ -17199,9 +17199,9 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 15.997499999999999,
-    "fastestStaccatoNotesPerBar": 3.9975,
-    "fastestOrnamentalNotesPerBar": 31.994999999999997
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 4,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -17210,9 +17210,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 23.999999999999996,
-    "fastestStaccatoNotesPerBar": 23.999999999999996,
-    "fastestOrnamentalNotesPerBar": 47.99999999999999,
+    "fastestStructuralNotesPerBar": 24,
+    "fastestStaccatoNotesPerBar": 24,
+    "fastestOrnamentalNotesPerBar": 48,
     "comment": "Ornamented notes are tremolo"
   },
   {
@@ -17245,9 +17245,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.995,
-    "fastestStaccatoNotesPerBar": 7.995,
-    "fastestOrnamentalNotesPerBar": 15.997499999999999
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -17266,9 +17266,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 11.993478260869566,
+    "fastestStructuralNotesPerBar": 12,
     "fastestStaccatoNotesPerBar": 9,
-    "fastestOrnamentalNotesPerBar": 23.98695652173913
+    "fastestOrnamentalNotesPerBar": 24
   },
   {
     "rank": 2,
@@ -17277,8 +17277,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 11.994827586206899,
-    "fastestStaccatoNotesPerBar": 9.000000000000002
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 9
   },
   {
     "rank": 1,
@@ -17331,8 +17331,8 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 7.998214285714285,
-    "fastestOrnamentalNotesPerBar": 15.99642857142857,
+    "fastestStructuralNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16,
     "comment": "Ornamented notes are tremolo"
   },
   {
@@ -17344,7 +17344,7 @@ const sectionList = [
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 8,
     "fastestStaccatoNotesPerBar": 4,
-    "fastestOrnamentalNotesPerBar": 11.999999999999998
+    "fastestOrnamentalNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -17364,9 +17364,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 6.000000000000001,
-    "fastestStaccatoNotesPerBar": 3.0000000000000004,
-    "fastestOrnamentalNotesPerBar": 12.000000000000002
+    "fastestStructuralNotesPerBar": 6,
+    "fastestStaccatoNotesPerBar": 3,
+    "fastestOrnamentalNotesPerBar": 12
   },
   {
     "rank": 2,
@@ -17385,9 +17385,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 19.995,
-    "fastestStaccatoNotesPerBar": 7.995,
-    "fastestOrnamentalNotesPerBar": 15.99
+    "fastestStructuralNotesPerBar": 20,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -17406,9 +17406,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.999999999999998,
-    "fastestStaccatoNotesPerBar": 15.999999999999998,
-    "fastestOrnamentalNotesPerBar": 31.999999999999996
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 2,
@@ -17417,7 +17417,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 17.999999999999996,
+    "fastestStructuralNotesPerBar": 18,
     "fastestStaccatoNotesPerBar": 12,
     "fastestOrnamentalNotesPerBar": 24
   },
@@ -17428,9 +17428,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.989473684210526,
-    "fastestStaccatoNotesPerBar": 7.989473684210526,
-    "fastestOrnamentalNotesPerBar": 7.989473684210526
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -17439,9 +17439,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 2.9999999999999996,
-    "fastestStaccatoNotesPerBar": 2.9999999999999996,
-    "fastestOrnamentalNotesPerBar": 11.999999999999998
+    "fastestStructuralNotesPerBar": 3,
+    "fastestStaccatoNotesPerBar": 3,
+    "fastestOrnamentalNotesPerBar": 12
   },
   {
     "rank": 2,
@@ -17482,9 +17482,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 31.99090909090909,
-    "fastestStaccatoNotesPerBar": 15.981818181818182,
-    "fastestOrnamentalNotesPerBar": 31.99090909090909,
+    "fastestStructuralNotesPerBar": 32,
+    "fastestStaccatoNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 32,
     "comment": "Based on the \"Maezel\" Canon"
   },
   {
@@ -17494,9 +17494,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8.999999999999998,
-    "fastestStaccatoNotesPerBar": 8.999999999999998,
-    "fastestOrnamentalNotesPerBar": 17.999999999999996,
+    "fastestStructuralNotesPerBar": 9,
+    "fastestStaccatoNotesPerBar": 9,
+    "fastestOrnamentalNotesPerBar": 18,
     "comment": "Minuetto and trio"
   },
   {
@@ -17548,9 +17548,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.954545454545453,
-    "fastestStaccatoNotesPerBar": 15.954545454545453,
-    "fastestOrnamentalNotesPerBar": 15.954545454545453
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -17570,9 +17570,9 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 3.998275862068966,
-    "fastestStaccatoNotesPerBar": 3.998275862068966,
-    "fastestOrnamentalNotesPerBar": 7.996551724137932,
+    "fastestStructuralNotesPerBar": 4,
+    "fastestStaccatoNotesPerBar": 4,
+    "fastestOrnamentalNotesPerBar": 8,
     "comment": "Disputed; see Noorduin, 2016"
   },
   {
@@ -17593,8 +17593,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.999999999999998,
-    "fastestStaccatoNotesPerBar": 5.999999999999999
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 6
   },
   {
     "rank": 3,
@@ -17626,7 +17626,7 @@ const sectionList = [
     "metreNumerator": 2,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 15.954545454545453
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 3,
@@ -17635,9 +17635,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99,
-    "fastestStaccatoNotesPerBar": 7.995,
-    "fastestOrnamentalNotesPerBar": 31.994999999999997
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 4,
@@ -17725,7 +17725,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 11.984210526315788
+    "fastestStructuralNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -17734,8 +17734,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.978947368421052,
-    "fastestOrnamentalNotesPerBar": 31.98947368421053
+    "fastestStructuralNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -17755,7 +17755,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.997999999999999,
+    "fastestStructuralNotesPerBar": 8,
     "fastestStaccatoNotesPerBar": 6,
     "comment": "Scherzo"
   },
@@ -17778,8 +17778,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.999999999999998,
-    "fastestStaccatoNotesPerBar": 11.999999999999998,
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 12,
     "fastestOrnamentalNotesPerBar": 16
   },
   {
@@ -17789,7 +17789,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.999999999999998,
+    "fastestStructuralNotesPerBar": 12,
     "fastestStaccatoNotesPerBar": 8,
     "comment": "Doppio movimento"
   },
@@ -17801,8 +17801,8 @@ const sectionList = [
     "metreNumerator": 3,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 9,
-    "fastestStaccatoNotesPerBar": 11.999999999999998,
-    "fastestOrnamentalNotesPerBar": 11.999999999999998,
+    "fastestStaccatoNotesPerBar": 12,
+    "fastestOrnamentalNotesPerBar": 12,
     "comment": "Finale"
   },
   {
@@ -17835,9 +17835,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 31.982608695652175,
-    "fastestStaccatoNotesPerBar": 31.982608695652175,
-    "fastestOrnamentalNotesPerBar": 15.991304347826087
+    "fastestStructuralNotesPerBar": 32,
+    "fastestStaccatoNotesPerBar": 32,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -17846,8 +17846,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
-    "fastestStaccatoNotesPerBar": 2.9999999999999996
+    "fastestStructuralNotesPerBar": 6,
+    "fastestStaccatoNotesPerBar": 3
   },
   {
     "rank": 1,
@@ -17856,8 +17856,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 47.99999999999999,
-    "fastestOrnamentalNotesPerBar": 47.99999999999999
+    "fastestStructuralNotesPerBar": 48,
+    "fastestOrnamentalNotesPerBar": 48
   },
   {
     "rank": 1,
@@ -17867,8 +17867,8 @@ const sectionList = [
     "metreNumerator": 2,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 12,
-    "fastestStaccatoNotesPerBar": 7.996153846153845,
-    "fastestOrnamentalNotesPerBar": 15.99230769230769
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 2,
@@ -17877,9 +17877,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.999999999999999,
+    "fastestStructuralNotesPerBar": 8,
     "fastestStaccatoNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 15.999999999999998
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -17889,7 +17889,7 @@ const sectionList = [
     "metreNumerator": 4,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 15.99
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -17908,8 +17908,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 5.985,
-    "fastestStaccatoNotesPerBar": 5.985
+    "fastestStructuralNotesPerBar": 6,
+    "fastestStaccatoNotesPerBar": 6
   },
   {
     "rank": 3,
@@ -17918,8 +17918,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.989285714285714,
-    "fastestStaccatoNotesPerBar": 11.989285714285714
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 12
   },
   {
     "rank": 4,
@@ -17928,7 +17928,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12.000000000000002,
+    "fastestStructuralNotesPerBar": 12,
     "fastestStaccatoNotesPerBar": 8
   },
   {
@@ -17938,9 +17938,9 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 7.984615384615384,
-    "fastestStaccatoNotesPerBar": 3.992307692307692,
-    "fastestOrnamentalNotesPerBar": 15.99230769230769
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 4,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 2,
@@ -17949,7 +17949,7 @@ const sectionList = [
     "metreNumerator": 2,
     "metreDenominator": 2,
     "fastestStructuralNotesPerBar": 8,
-    "fastestOrnamentalNotesPerBar": 12.000000000000002,
+    "fastestOrnamentalNotesPerBar": 12,
     "comment": "Fugue"
   },
   {
@@ -17959,7 +17959,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 5.98695652173913,
+    "fastestStructuralNotesPerBar": 6,
     "fastestOrnamentalNotesPerBar": 9
   },
   {
@@ -17969,8 +17969,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.984615384615384,
-    "fastestStaccatoNotesPerBar": 3.969230769230769
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 4
   },
   {
     "rank": 1,
@@ -17979,9 +17979,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.982608695652174,
-    "fastestStaccatoNotesPerBar": 7.982608695652174,
-    "fastestOrnamentalNotesPerBar": 15.991304347826087,
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16,
     "comment": "Ornamented notes are tremolo"
   },
   {
@@ -17992,8 +17992,8 @@ const sectionList = [
     "metreNumerator": 3,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 9,
-    "fastestStaccatoNotesPerBar": 5.994642857142857,
-    "fastestOrnamentalNotesPerBar": 11.989285714285714,
+    "fastestStaccatoNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 12,
     "comment": "Ornamented notes are tremolo"
   },
   {
@@ -18004,8 +18004,8 @@ const sectionList = [
     "metreNumerator": 2,
     "metreDenominator": 2,
     "fastestStructuralNotesPerBar": 6,
-    "fastestStaccatoNotesPerBar": 3.996,
-    "fastestOrnamentalNotesPerBar": 15.995999999999999,
+    "fastestStaccatoNotesPerBar": 4,
+    "fastestOrnamentalNotesPerBar": 16,
     "comment": "Fugue"
   },
   {
@@ -18016,7 +18016,7 @@ const sectionList = [
     "metreNumerator": 4,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 15.99
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18025,9 +18025,9 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 7.992,
-    "fastestStaccatoNotesPerBar": 3.996,
-    "fastestOrnamentalNotesPerBar": 15.995999999999999,
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 4,
+    "fastestOrnamentalNotesPerBar": 16,
     "comment": "Ornamented notes are tremolo"
   },
   {
@@ -18047,7 +18047,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 3.9954545454545456
+    "fastestStructuralNotesPerBar": 4
   },
   {
     "rank": 3,
@@ -18066,8 +18066,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 11.984210526315788,
-    "fastestStaccatoNotesPerBar": 11.984210526315788
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 12
   },
   {
     "rank": 2,
@@ -18087,8 +18087,8 @@ const sectionList = [
     "metreNumerator": 2,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 6,
-    "fastestStaccatoNotesPerBar": 3.9954545454545456,
-    "fastestOrnamentalNotesPerBar": 15.995454545454544
+    "fastestStaccatoNotesPerBar": 4,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18097,7 +18097,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 5.999999999999999
+    "fastestStructuralNotesPerBar": 6
   },
   {
     "rank": 2,
@@ -18118,7 +18118,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.999999999999999,
+    "fastestStructuralNotesPerBar": 8,
     "fastestOrnamentalNotesPerBar": 24,
     "comment": "Ornamented notes are tremolo; ornamented notes occur when the word \"Geschwind\" is being sung."
   },
@@ -18129,9 +18129,9 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 7.996153846153845,
+    "fastestStructuralNotesPerBar": 8,
     "fastestStaccatoNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 15.99230769230769
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18140,7 +18140,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.988
+    "fastestStructuralNotesPerBar": 12
   },
   {
     "rank": 2,
@@ -18158,7 +18158,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8.003571428571428
+    "fastestStructuralNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -18198,7 +18198,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18217,8 +18217,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8.007692307692308,
-    "fastestOrnamentalNotesPerBar": 22.915384615384614
+    "fastestStructuralNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 23
   },
   {
     "rank": 1,
@@ -18227,8 +18227,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 6.005172413793105,
-    "fastestOrnamentalNotesPerBar": 11.994827586206899,
+    "fastestStructuralNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 12,
     "comment": "Is \"scherzando\" a tempo indication?"
   },
   {
@@ -18238,8 +18238,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.991304347826087,
-    "fastestOrnamentalNotesPerBar": 32.00869565217391
+    "fastestStructuralNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -18258,8 +18258,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8.999999999999998,
-    "fastestOrnamentalNotesPerBar": 35.99999999999999,
+    "fastestStructuralNotesPerBar": 9,
+    "fastestOrnamentalNotesPerBar": 36,
     "comment": "The \"Allegretto\" tempo indication comes from an earlier edition, but which doesn't have any MM."
   },
   {
@@ -18290,7 +18290,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.995454545454544
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18327,8 +18327,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8.007692307692308,
-    "fastestOrnamentalNotesPerBar": 15.99230769230769,
+    "fastestStructuralNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16,
     "comment": "\"à Trois Parties réelles\""
   },
   {
@@ -18368,7 +18368,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18377,8 +18377,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 12.006818181818181,
-    "fastestOrnamentalNotesPerBar": 23.993181818181817
+    "fastestStructuralNotesPerBar": 12,
+    "fastestOrnamentalNotesPerBar": 24
   },
   {
     "rank": 1,
@@ -18414,7 +18414,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.993478260869566,
+    "fastestStructuralNotesPerBar": 12,
     "comment": "Minuet and trio"
   },
   {
@@ -18440,8 +18440,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
-    "fastestOrnamentalNotesPerBar": 11.999999999999998,
+    "fastestStructuralNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 12,
     "comment": "Barcarolle; likely a misprint"
   },
   {
@@ -18459,7 +18459,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.999999999999998,
+    "fastestStructuralNotesPerBar": 12,
     "comment": "Rondoletto"
   },
   {
@@ -18469,8 +18469,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 6.006521739130434,
-    "fastestOrnamentalNotesPerBar": 11.993478260869566
+    "fastestStructuralNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -18489,7 +18489,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 3.9964285714285714,
+    "fastestStructuralNotesPerBar": 4,
     "comment": "Rondo"
   },
   {
@@ -18499,7 +18499,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12.006818181818181,
+    "fastestStructuralNotesPerBar": 12,
     "comment": "Minuet"
   },
   {
@@ -18558,7 +18558,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 6.000000000000001,
+    "fastestStructuralNotesPerBar": 6,
     "comment": "Pas redoublé"
   },
   {
@@ -18567,7 +18567,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
+    "fastestStructuralNotesPerBar": 6,
     "comment": "Barcarolle; likely a misprint"
   },
   {
@@ -18597,8 +18597,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 5.994642857142857,
-    "fastestOrnamentalNotesPerBar": 23.994642857142857,
+    "fastestStructuralNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 24,
     "comment": "Scherzo and trio"
   },
   {
@@ -18638,7 +18638,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18674,7 +18674,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18683,7 +18683,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18692,7 +18692,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18710,7 +18710,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 23.999999999999996
+    "fastestStructuralNotesPerBar": 24
   },
   {
     "rank": 1,
@@ -18719,7 +18719,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 23.999999999999996
+    "fastestStructuralNotesPerBar": 24
   },
   {
     "rank": 1,
@@ -18728,7 +18728,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.991304347826087
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18746,7 +18746,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.993103448275864
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18755,7 +18755,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99642857142857
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18791,7 +18791,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.995999999999999
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18800,7 +18800,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.999999999999998
+    "fastestStructuralNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -18809,7 +18809,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99230769230769
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18828,7 +18828,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 11.999999999999998
+    "fastestStructuralNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -18855,7 +18855,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 25.99090909090909,
+    "fastestStructuralNotesPerBar": 26,
     "fastestOrnamentalNotesPerBar": 12
   },
   {
@@ -18865,7 +18865,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.991304347826087
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18883,7 +18883,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.995999999999999
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18911,7 +18911,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.995999999999999
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18929,7 +18929,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.954545454545453
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18938,7 +18938,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 6,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 12.000000000000002
+    "fastestStructuralNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -18947,7 +18947,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.954545454545453
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -18974,7 +18974,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 7.996153846153845,
+    "fastestStructuralNotesPerBar": 8,
     "comment": "\"a la Galopade\""
   },
   {
@@ -18993,7 +18993,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.991304347826087,
+    "fastestStructuralNotesPerBar": 16,
     "comment": "Identified as misprint"
   },
   {
@@ -19003,7 +19003,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.999999999999998
+    "fastestStructuralNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -19030,7 +19030,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -19084,7 +19084,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.996052631578948,
+    "fastestStructuralNotesPerBar": 12,
     "comment": "Repeated notes etude"
   },
   {
@@ -19113,8 +19113,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 5.989655172413793,
-    "fastestOrnamentalNotesPerBar": 23.989655172413798,
+    "fastestStructuralNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 24,
     "comment": "Trills etude"
   },
   {
@@ -19133,8 +19133,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 19.995652173913044,
-    "fastestOrnamentalNotesPerBar": 31.995652173913044
+    "fastestStructuralNotesPerBar": 20,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -19163,7 +19163,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.985714285714286
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -19172,9 +19172,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.994736842105265,
-    "fastestStaccatoNotesPerBar": 7.989473684210526,
-    "fastestOrnamentalNotesPerBar": 15.994736842105265
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -19183,7 +19183,7 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 15.995999999999999
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -19201,7 +19201,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -19210,7 +19210,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -19247,7 +19247,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -19256,8 +19256,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.989473684210526,
-    "fastestStaccatoNotesPerBar": 7.989473684210526
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -19266,8 +19266,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 23.995945945945948,
-    "fastestStaccatoNotesPerBar": 5.995945945945945
+    "fastestStructuralNotesPerBar": 24,
+    "fastestStaccatoNotesPerBar": 6
   },
   {
     "rank": 1,
@@ -19294,8 +19294,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 33.391304347826086,
-    "fastestStaccatoNotesPerBar": 8.347826086956522
+    "fastestStructuralNotesPerBar": 33,
+    "fastestStaccatoNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -19305,7 +19305,7 @@ const sectionList = [
     "metreNumerator": 4,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 24,
-    "fastestOrnamentalNotesPerBar": 31.99090909090909
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -19314,7 +19314,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.995999999999999
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -19323,7 +19323,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 31.991999999999997,
+    "fastestStructuralNotesPerBar": 32,
     "fastestStaccatoNotesPerBar": 24
   },
   {
@@ -19334,7 +19334,7 @@ const sectionList = [
     "metreNumerator": 3,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 18,
-    "fastestOrnamentalNotesPerBar": 23.988461538461536
+    "fastestOrnamentalNotesPerBar": 24
   },
   {
     "rank": 1,
@@ -19352,8 +19352,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.996153846153845,
-    "fastestStaccatoNotesPerBar": 7.996153846153845
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -19372,7 +19372,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.995999999999999
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -19381,7 +19381,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.991304347826087
+    "fastestStructuralNotesPerBar": 16
   },
   {
     "rank": 1,
@@ -19408,7 +19408,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 63.99999999999999,
+    "fastestStructuralNotesPerBar": 64,
     "fastestOrnamentalNotesPerBar": 80
   },
   {
@@ -19418,7 +19418,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 31.999999999999996
+    "fastestStructuralNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -19438,8 +19438,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.981818181818182,
-    "fastestStaccatoNotesPerBar": 15.981818181818182,
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 16,
     "fastestOrnamentalNotesPerBar": 24,
     "comment": "Tempo di Marcia"
   },
@@ -19450,9 +19450,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 11.996052631578948,
-    "fastestStaccatoNotesPerBar": 11.996052631578948,
-    "fastestOrnamentalNotesPerBar": 23.992105263157896
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 12,
+    "fastestOrnamentalNotesPerBar": 24
   },
   {
     "rank": 1,
@@ -19472,9 +19472,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.997368421052633,
-    "fastestStaccatoNotesPerBar": 3.994736842105263,
-    "fastestOrnamentalNotesPerBar": 15.994736842105265,
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 4,
+    "fastestOrnamentalNotesPerBar": 16,
     "comment": "Ornamented notes are tremolo"
   },
   {
@@ -19484,9 +19484,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.992857142857143,
-    "fastestStaccatoNotesPerBar": 7.992857142857143,
-    "fastestOrnamentalNotesPerBar": 11.999999999999998
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -19495,9 +19495,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 11.984210526315788,
-    "fastestStaccatoNotesPerBar": 11.984210526315788,
-    "fastestOrnamentalNotesPerBar": 23.992105263157896
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 12,
+    "fastestOrnamentalNotesPerBar": 24
   },
   {
     "rank": 1,
@@ -19506,9 +19506,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
-    "fastestStaccatoNotesPerBar": 5.999999999999999,
-    "fastestOrnamentalNotesPerBar": 6.994736842105262
+    "fastestStructuralNotesPerBar": 6,
+    "fastestStaccatoNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 7
   },
   {
     "rank": 1,
@@ -19517,9 +19517,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.993442622950822,
-    "fastestStaccatoNotesPerBar": 15.993442622950822,
-    "fastestOrnamentalNotesPerBar": 31.986885245901643
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -19528,9 +19528,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.997727272727272,
-    "fastestStaccatoNotesPerBar": 7.997727272727272,
-    "fastestOrnamentalNotesPerBar": 31.99772727272727,
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 32,
     "comment": "Very likely a misprint"
   },
   {
@@ -19550,8 +19550,8 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 24.000000000000004,
-    "fastestStaccatoNotesPerBar": 24.000000000000004,
+    "fastestStructuralNotesPerBar": 24,
+    "fastestStaccatoNotesPerBar": 24,
     "fastestOrnamentalNotesPerBar": 64
   },
   {
@@ -19561,7 +19561,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 9.000000000000002,
+    "fastestStructuralNotesPerBar": 9,
     "fastestStaccatoNotesPerBar": 6,
     "fastestOrnamentalNotesPerBar": 12
   },
@@ -19572,8 +19572,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
-    "fastestStaccatoNotesPerBar": 5.999999999999999
+    "fastestStructuralNotesPerBar": 6,
+    "fastestStaccatoNotesPerBar": 6
   },
   {
     "rank": 3,
@@ -19582,8 +19582,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
-    "fastestOrnamentalNotesPerBar": 11.999999999999998
+    "fastestStructuralNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -19602,9 +19602,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 5.999999999999999,
-    "fastestStaccatoNotesPerBar": 2.9999999999999996,
-    "fastestOrnamentalNotesPerBar": 11.999999999999998
+    "fastestStructuralNotesPerBar": 6,
+    "fastestStaccatoNotesPerBar": 3,
+    "fastestOrnamentalNotesPerBar": 12
   },
   {
     "rank": 1,
@@ -19613,9 +19613,9 @@ const sectionList = [
     "isCutTime": true,
     "metreNumerator": 2,
     "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 11.999999999999998,
-    "fastestStaccatoNotesPerBar": 7.992857142857143,
-    "fastestOrnamentalNotesPerBar": 23.999999999999996
+    "fastestStructuralNotesPerBar": 12,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 24
   },
   {
     "rank": 1,
@@ -19657,9 +19657,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.995999999999999,
-    "fastestStaccatoNotesPerBar": 7.992,
-    "fastestOrnamentalNotesPerBar": 31.991999999999997
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -19668,8 +19668,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.991304347826087,
-    "fastestStaccatoNotesPerBar": 7.995652173913044
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -19678,9 +19678,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 9,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 18.000000000000004,
-    "fastestStaccatoNotesPerBar": 9.000000000000002,
-    "fastestOrnamentalNotesPerBar": 36.00000000000001
+    "fastestStructuralNotesPerBar": 18,
+    "fastestStaccatoNotesPerBar": 9,
+    "fastestOrnamentalNotesPerBar": 36
   },
   {
     "rank": 1,
@@ -19689,9 +19689,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.997727272727272,
-    "fastestStaccatoNotesPerBar": 3.9954545454545456,
-    "fastestOrnamentalNotesPerBar": 15.995454545454544,
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 4,
+    "fastestOrnamentalNotesPerBar": 16,
     "comment": "Scherzo"
   },
   {
@@ -19702,8 +19702,8 @@ const sectionList = [
     "metreNumerator": 6,
     "metreDenominator": 8,
     "fastestStructuralNotesPerBar": 18,
-    "fastestStaccatoNotesPerBar": 5.999999999999999,
-    "fastestOrnamentalNotesPerBar": 47.99999999999999,
+    "fastestStaccatoNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 48,
     "comment": "Finale"
   },
   {
@@ -19712,7 +19712,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 6.000000000000001,
+    "fastestStructuralNotesPerBar": 6,
     "fastestOrnamentalNotesPerBar": 8,
     "comment": "\"Von fremden Ländern und Menschen\""
   },
@@ -19722,8 +19722,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 5.9785714285714295,
-    "fastestOrnamentalNotesPerBar": 11.989285714285714,
+    "fastestStructuralNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 12,
     "comment": "\"Curiose Geschichte\""
   },
   {
@@ -19732,8 +19732,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.999999999999999,
-    "fastestStaccatoNotesPerBar": 7.999999999999999,
+    "fastestStructuralNotesPerBar": 8,
+    "fastestStaccatoNotesPerBar": 8,
     "comment": "\"Hasche-Mann\""
   },
   {
@@ -19742,7 +19742,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.999999999999999,
+    "fastestStructuralNotesPerBar": 8,
     "comment": "\"Bittendes Kind\""
   },
   {
@@ -19770,8 +19770,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.992,
-    "fastestOrnamentalNotesPerBar": 15.984,
+    "fastestStructuralNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16,
     "comment": "\"Träumerei\""
   },
   {
@@ -19780,7 +19780,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 3.9999999999999996,
+    "fastestStructuralNotesPerBar": 4,
     "comment": "\"Am Camin\""
   },
   {
@@ -19798,7 +19798,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 3.9999999999999996,
+    "fastestStructuralNotesPerBar": 4,
     "comment": "\"Fast zu ernst\""
   },
   {
@@ -19817,7 +19817,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 2,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.982608695652174,
+    "fastestStructuralNotesPerBar": 8,
     "comment": "\"Kind im Einschlummern\""
   },
   {
@@ -19826,8 +19826,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.992857142857143,
-    "fastestOrnamentalNotesPerBar": 15.985714285714286,
+    "fastestStructuralNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 16,
     "comment": "\"Der Dichter spricht\""
   },
   {
@@ -19847,9 +19847,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.99,
-    "fastestStaccatoNotesPerBar": 7.98,
-    "fastestOrnamentalNotesPerBar": 31.98
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -19858,8 +19858,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.999999999999998,
-    "fastestStaccatoNotesPerBar": 15.999999999999998,
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 16,
     "fastestOrnamentalNotesPerBar": 24
   },
   {
@@ -19879,9 +19879,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.995454545454544,
-    "fastestStaccatoNotesPerBar": 15.995454545454544,
-    "fastestOrnamentalNotesPerBar": 27.995454545454546
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 28
   },
   {
     "rank": 1,
@@ -19890,8 +19890,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 3.99,
-    "fastestOrnamentalNotesPerBar": 15.99
+    "fastestStructuralNotesPerBar": 4,
+    "fastestOrnamentalNotesPerBar": 16
   },
   {
     "rank": 2,
@@ -19919,7 +19919,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 12.000000000000002
+    "fastestStructuralNotesPerBar": 12
   },
   {
     "rank": 2,
@@ -19965,7 +19965,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.984,
+    "fastestStructuralNotesPerBar": 16,
     "fastestOrnamentalNotesPerBar": 36
   },
   {
@@ -19975,7 +19975,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 12,
     "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 24.000000000000004,
+    "fastestStructuralNotesPerBar": 24,
     "fastestOrnamentalNotesPerBar": 36
   },
   {
@@ -20055,8 +20055,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.993103448275864,
-    "fastestStaccatoNotesPerBar": 15.993103448275864
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 16
   },
   {
     "rank": 3,
@@ -20075,7 +20075,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.999999999999999
+    "fastestStructuralNotesPerBar": 8
   },
   {
     "rank": 5,
@@ -20084,8 +20084,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.984,
-    "fastestOrnamentalNotesPerBar": 39.984
+    "fastestStructuralNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 40
   },
   {
     "rank": 6,
@@ -20104,7 +20104,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.990909090909091
+    "fastestStructuralNotesPerBar": 8
   },
   {
     "rank": 8,
@@ -20134,8 +20134,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.999999999999999,
-    "fastestOrnamentalNotesPerBar": 31.999999999999996
+    "fastestStructuralNotesPerBar": 8,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 11,
@@ -20154,7 +20154,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 7.98
+    "fastestStructuralNotesPerBar": 8
   },
   {
     "rank": 1,
@@ -20165,7 +20165,7 @@ const sectionList = [
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 10,
     "fastestStaccatoNotesPerBar": 10,
-    "fastestOrnamentalNotesPerBar": 15.000000000000002
+    "fastestOrnamentalNotesPerBar": 15
   },
   {
     "rank": 1,
@@ -20174,9 +20174,9 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 4,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 15.994736842105265,
-    "fastestStaccatoNotesPerBar": 15.994736842105265,
-    "fastestOrnamentalNotesPerBar": 31.98947368421053
+    "fastestStructuralNotesPerBar": 16,
+    "fastestStaccatoNotesPerBar": 16,
+    "fastestOrnamentalNotesPerBar": 32
   },
   {
     "rank": 1,
@@ -20216,7 +20216,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8.999999999999998
+    "fastestStructuralNotesPerBar": 9
   },
   {
     "rank": 5,
@@ -20236,8 +20236,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 5.992105263157894,
-    "fastestOrnamentalNotesPerBar": 11.984210526315788
+    "fastestStructuralNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 12
   },
   {
     "rank": 7,
@@ -20258,7 +20258,7 @@ const sectionList = [
     "metreNumerator": 3,
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 18,
-    "fastestOrnamentalNotesPerBar": 23.93181818181818
+    "fastestOrnamentalNotesPerBar": 24
   },
   {
     "rank": 9,
@@ -20267,8 +20267,8 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 5.985,
-    "fastestOrnamentalNotesPerBar": 23.985
+    "fastestStructuralNotesPerBar": 6,
+    "fastestOrnamentalNotesPerBar": 24
   },
   {
     "rank": 10,
@@ -20277,7 +20277,7 @@ const sectionList = [
     "isCutTime": false,
     "metreNumerator": 3,
     "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8.999999999999998
+    "fastestStructuralNotesPerBar": 9
   }
 ];
 const noteNotFoundList = [];

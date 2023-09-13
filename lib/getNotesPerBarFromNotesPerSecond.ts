@@ -25,7 +25,7 @@ export default function getNotesPerBarFromNotesPerSecond({notesPerSecond, beatUn
   const secondsPerBar = beatDuration * (metreNumerator / metreDenominator) / beatUnitValue;
 
   // Calculate the notes per bar
-  const notesPerBar = notesPerSecond * secondsPerBar;
+  const notesPerBar = Math.round(notesPerSecond * secondsPerBar);
 
   // const shouldLog = notesPerBar === 4 && metreNumerator === 4 && metreDenominator === 4 && bpm === 120 && beatUnit === NOTE_VALUE.QUARTER; // 1/24
   const shouldLog = false
