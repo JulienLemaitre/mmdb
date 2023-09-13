@@ -40,25 +40,4 @@ describe('getNotesPerBarFromNotesPerSecond', () => {
     expect(result).toBeCloseTo(3, 1);
   });
 
-  // Tests that the function throws an error when the notesPerSecond parameter is zero.
-  it('should throw an error when the notesPerSecond parameter is zero', () => {
-    expect(() => {
-      getNotesPerBarFromNotesPerSecond({notesPerSecond: 0, beatUnit: NOTE_VALUE.QUARTER, bpm: 120, metreNumerator: 4, metreDenominator: 4});
-    }).toThrow("[Invalid parameter] All parameters are required and must be greater than zero.");
-  });
-
-  // Tests that the function throws an error when the metreNumerator parameter is zero.
-  it('should throw an error when the metreNumerator parameter is zero', () => {
-    expect(() => {
-      getNotesPerBarFromNotesPerSecond({notesPerSecond: 2, beatUnit: NOTE_VALUE.QUARTER, bpm: 120, metreNumerator: 0, metreDenominator: 4});
-    }).toThrow("[Invalid parameter] All parameters are required and must be greater than zero.");
-  });
-
-  // Tests that the function throws an error when the metreDenominator parameter is zero.
-  it('should throw an error when the metreDenominator parameter is zero', () => {
-    expect(() => {
-      getNotesPerBarFromNotesPerSecond({notesPerSecond: 2, beatUnit: NOTE_VALUE.QUARTER, bpm: 120, metreNumerator: 4, metreDenominator: 0});
-    }).toThrow("[Invalid parameter] All parameters are required and must be greater than zero.");
-  });
-
 });

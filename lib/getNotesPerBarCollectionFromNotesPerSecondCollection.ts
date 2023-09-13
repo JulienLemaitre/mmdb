@@ -18,7 +18,7 @@ export default function getNotesPerBarCollectionFromNotesPerSecondCollection({ m
 
   const notes: NotesPerBarCollection = {}
   // @ts-ignore
-  Object.keys(notesPerSecond).filter((note: keyof typeof notesPerSecond) => notesPerSecond[note]).forEach((note: keyof typeof notesPerSecond) => {
+  Object.keys(notesPerSecond).filter((note: keyof typeof notesPerSecond) => notesPerSecond[note] && !isNaN(Number(notesPerSecond[note]))).forEach((note: keyof typeof notesPerSecond) => {
       const notesPerSecondRawValue = notesPerSecond[note]
       // Get the value of notesPerSecondRawValue. If it contains "(", keep only what come before it. Convert it to number
       // ex: 1/16 (staccato) => 1/16
@@ -27,13 +27,23 @@ export default function getNotesPerBarCollectionFromNotesPerSecondCollection({ m
       // console.log(`[${JSON.stringify({ beatUnit, bpm, notesPerSecond })}] notesPerSecondValue :`, notesPerSecondValue)
 
       try {
-        notes[note.replace('PerSecond', 'Value')] = getNotesPerBarFromNotesPerSecond({ notesPerSecond: notesPerSecondValue, beatUnit, bpm, metreNumerator, metreDenominator })
+        notes[note.replace('PerSecond', 'PerBar')] = getNotesPerBarFromNotesPerSecond({ notesPerSecond: notesPerSecondValue, beatUnit, bpm, metreNumerator, metreDenominator })
       } catch (e) {
+        console.log(`[[gNPBCFNPSC] Error] notesPerSecond[fastestNote] :`, notesPerSecond[note])
+        console.log(`[[gNPBCFNPSC] Error] notes[fastestNote.replace('PerSecond', 'PerBar')] :`, notes[note.replace('PerSecond', 'PerBar')])
+        throw new Error(`[gNPBCFNPSC] Error while processing ${note} in mm: ${JSON.stringify(metronomeMark)}`)
         // @ts-ignore
-        notes[note.replace('PerSecond', 'Value')] = null
+        notes[note.replace('PerSecond', 'PerBar')] = null
       }
     }
   )
+
+  // const fastestNoteError = ["fastestStructuralNotesPerSecond", "fastestStaccatoNotesPerSecond", "fastestOrnamentalNotesPerSecond"].find((fastestNote) => !!notesPerSecond[fastestNote] && !!notes[fastestNote.replace('PerSecond', 'PerBar')])
+  // if (fastestNoteError) {
+  //   console.log(`[[gNPBCFNPSC] Error] notesPerSecond[fastestNote] :`, notesPerSecond[fastestNoteError])
+  //   console.log(`[[gNPBCFNPSC] Error] notes[fastestNote.replace('PerSecond', 'PerBar')] :`, notes[fastestNoteError.replace('PerSecond', 'PerBar')])
+  //  throw new Error(`[gNPBCFNPSC] Error while processing ${fastestNoteError} in mm: ${JSON.stringify(metronomeMark)}`)
+  // }
 
   return notes
 

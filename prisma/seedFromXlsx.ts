@@ -1,6 +1,5 @@
 import {db} from "@/lib/db";
 import {CONTRIBUTION_ROLE, KEY, NOTE_VALUE, PIECE_CATEGORY, SOURCE_TYPE} from "@prisma/client";
-import {getNotesPerBar} from "@/lib/notesCalculation";
 import takeFirstOfPotentialRange from "@/lib/takeFirstOfPotentialRange";
 import parseValueRemoveParenthesis from "@/lib/parseValueRemoveParenthesis";
 import getNotesPerBarCollectionFromNotesPerSecondCollection
@@ -228,7 +227,8 @@ async function processDataFromXlsx(dataSheetList: any) {
       const isSectionDescription = rowData.hasOwnProperty('metre')
 
       if (isPieceDescription) {
-        // Push remaining movement in precedent piece
+        // - PUSH remaining movement in precedent piece
+        // - RESET movement to null
         if (movement) {
           if (piece?.movements) {
             piece.movements.push(movement)
@@ -238,7 +238,8 @@ async function processDataFromXlsx(dataSheetList: any) {
           movement = null
         }
 
-        // NEW piece
+        // PUSH precedent piece in pieceList if exists
+        // RESET piece to null
         if (piece) {
           pieceList.push(piece)
           piece = null
@@ -285,7 +286,9 @@ async function processDataFromXlsx(dataSheetList: any) {
       if (isMovement) {
         // NEW movement
 
-        if (rowData.movement) {
+        // if (rowData.movement) {
+
+        // - PUSH remaining precedent movement in current piece
           if (movement) {
             if (piece?.movements) {
               piece.movements.push(movement)
@@ -302,7 +305,7 @@ async function processDataFromXlsx(dataSheetList: any) {
             key: getKeyEnumFromKeyString(rowData.key),
             sections: [],
           }
-        }
+        // }
       }
 
       if (isSectionDescription) {
@@ -347,8 +350,7 @@ async function processDataFromXlsx(dataSheetList: any) {
           ...(sectionComment && {comment: sectionComment}),
         }
 
-
-        // NEW metronomeMark
+        // Error handling
         // @ts-ignore
         if (Object.keys(notesPerBarObject).some((note) => notesPerBarObject[note] === null)) {
           noteNotFoundList.push({
@@ -373,6 +375,8 @@ async function processDataFromXlsx(dataSheetList: any) {
             }
           })
         }
+
+        // NEW metronomeMark
         const metronomeMark = {
           movementRank: movement?.rank,
           sectionRank: section?.rank,
@@ -450,7 +454,6 @@ async function getDatas() {
       console.log(`[NO] piece`)
       return acc
     }
-    let pieceSections = []
     let movementSections = []
 
     if (piece?.movements) {
@@ -458,7 +461,7 @@ async function getDatas() {
         return [...acc, ...movement.sections]
       }, [])
     }
-    return [...acc, ...pieceSections, ...movementSections]
+    return [...acc, ...movementSections]
   }, [])
 
   // Write the objects to a new file parsedDataOutput.js
@@ -543,7 +546,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
     }
     return piece
   })
-  .map((piece, index) => {
+  .map((piece, pieceIndex, pieceArray) => {
     const birthDeath: [number, number] = composerBirthDeathYear[piece.composer.split(',')[0].trim()]
     if (!birthDeath) {
       console.log(`[SEED ERROR] birthDeath not found for ${piece.composer}`)
@@ -664,7 +667,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
   }
 
   const sourceTaskList = persistedPieceList.map((piece, index) => {
-    console.log(`[] piece.pieceVersions :`, piece.pieceVersions)
+    // console.log(`[] piece.pieceVersions :`, piece.pieceVersions)
     if (!piece.pieceVersions) {
       console.log(`[ERROR] piece.pieceVersions is null`, piece.title, JSON.stringify(piece))
     }
@@ -675,7 +678,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
       if (!metronomeMarkList) {
         console.log(`[ERROR] metronomeMarkList is null`, piece.title, piece)
       }
-      const movements = pieceVersion.movements
+      const movements = pieceVersion.movements.sort((a, b) => a.rank - b.rank)
       // if (index === 0) {
       //   console.log(`[] source`, source)
       //   console.log(`[] movements`, movements)
@@ -706,7 +709,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
                 console.log(`[] piece`, piece)
                 console.groupEnd()
               }
-              const sectionId = movements[metronomeMark.movementRank - 1].sections[metronomeMark.sectionRank - 1].id
+              const sectionId = movements.sort((a, b) => a.rank - b.rank)[metronomeMark.movementRank - 1].sections.sort((a, b) => a.rank - b.rank)[metronomeMark.sectionRank - 1].id
               return {
                 beatUnit: metronomeMark.beatUnit,
                 bpm: metronomeMark.bpm,
