@@ -1068,9 +1068,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 63,
         "notesPerBar": {},
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": "Considering the amount of mordents, should they be considered structural?"
-        }
+        "notesPerSecond": {}
       },
       {
         "movementRank": 14,
@@ -1612,9 +1610,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 63,
         "notesPerBar": {},
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": "Considering the amount of mordents, should they be considered structural?"
-        }
+        "notesPerSecond": {}
       },
       {
         "movementRank": 14,
@@ -2134,9 +2130,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 63,
         "notesPerBar": {},
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": "Considering the amount of mordents, should they be considered structural?"
-        }
+        "notesPerSecond": {}
       },
       {
         "movementRank": 13,
@@ -9671,9 +9665,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 152,
         "notesPerBar": {},
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": "16th as fastest?"
-        }
+        "notesPerSecond": {}
       },
       {
         "movementRank": 3,
@@ -9693,9 +9685,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 66,
         "notesPerBar": {},
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": "16th as fastest?"
-        }
+        "notesPerSecond": {}
       },
       {
         "movementRank": 4,
@@ -9706,7 +9696,6 @@ const pieceList = [
           "fastestOrnamentalNotesPerBar": 12
         },
         "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": "16th as fastest?",
           "fastestOrnamentalNotesPerSecond": 9.6
         }
       }
@@ -9822,9 +9811,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 116,
         "notesPerBar": {},
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": "16th as fastest?"
-        }
+        "notesPerSecond": {}
       },
       {
         "movementRank": 3,
@@ -9938,9 +9925,7 @@ const pieceList = [
         "beatUnit": "QUARTER",
         "bpm": 112,
         "notesPerBar": {},
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": "16th as fastest?"
-        }
+        "notesPerSecond": {}
       },
       {
         "movementRank": 12,
