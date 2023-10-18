@@ -24,7 +24,7 @@
       "@/app/*": ["./app/*"],
       "@/components/*": ["./components/*"],
       "@/hooks/*": ["./hooks/*"],
-      "@/lib/*": ["./lib/*"],
+      "@/utils/*": ["./utils/*"],
       "@/styles/*": ["./styles/*"],
       "@/prisma/*": ["./prisma/*"],
       "@/assets/*": ["./assets/*"]

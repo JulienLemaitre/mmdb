@@ -1,9 +1,9 @@
-import {db} from "@/lib/db";
+import {db} from "@/utils/db";
 import {CONTRIBUTION_ROLE, KEY, NOTE_VALUE, PIECE_CATEGORY, SOURCE_TYPE} from "@prisma/client";
-import takeFirstOfPotentialRange from "@/lib/takeFirstOfPotentialRange";
-import parseValueRemoveParenthesis from "@/lib/parseValueRemoveParenthesis";
+import takeFirstOfPotentialRange from "@/utils/takeFirstOfPotentialRange";
+import parseValueRemoveParenthesis from "@/utils/parseValueRemoveParenthesis";
 import getNotesPerBarCollectionFromNotesPerSecondCollection
-  from "@/lib/getNotesPerBarCollectionFromNotesPerSecondCollection";
+  from "@/utils/getNotesPerBarCollectionFromNotesPerSecondCollection";
 
 function logTestError(bpm, ...props) {
   if (bpm === 108) {

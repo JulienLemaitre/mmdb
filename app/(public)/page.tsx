@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { CONTRIBUTE_ROUTE } from "@/lib/routes";
+import { CONTRIBUTE_ROUTE } from "@/utils/routes";
 
 export const metadata: Metadata = {
   title: "The Metronome Mark Database",
