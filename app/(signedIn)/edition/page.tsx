@@ -1,4 +1,5 @@
-import { db } from "@/lib/db";
+import { db } from "@/utils/db";
+import ComposerSelect from "@/components/ComposerSelect";
 
 async function getData() {
   // Fetch all composers as person with et least 1 composition
@@ -27,17 +28,7 @@ export default async function Contribute() {
   return (
     <div className="flex flex-col items-center justify-center">
       <h1 className="text-4xl font-bold">Select a composer</h1>
-      <select className="select w-full max-w-xs my-5">
-        {/*<option disabled selected>Pick your favorite Simpson</option>*/}
-        {composers
-          .sort((a, b) => (a.lastName > b.lastName ? 1 : -1))
-          .map((person) => (
-            <option
-              key={person.id}
-              value={person.id}
-            >{`${person.firstName} ${person.lastName}`}</option>
-          ))}
-      </select>
+      <ComposerSelect composers={composers} />
       <button className="btn mt-4">Next</button>
     </div>
   );
