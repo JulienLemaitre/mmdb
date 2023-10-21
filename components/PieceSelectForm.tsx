@@ -17,7 +17,7 @@ export default function PieceSelectForm({ pieces }: PieceSelectFormProps) {
       <PieceSelect pieces={pieces} />
       <Link
         href={EDITION_PIECE_VERSION_URL + "?pieceId=" + state?.piece?.id}
-        className="btn mt-4"
+        className="btn btn-primary mt-4"
         {...(state?.piece?.id ? { disabled: false } : { disabled: true })}
       >
         Next

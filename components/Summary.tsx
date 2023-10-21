@@ -13,7 +13,9 @@ export default function Summary() {
         <li className="step">MM Source</li>
         <li className="step">Metronome marks</li>
       </ul>*/}
-      <pre>{JSON.stringify(state, null, 2)}</pre>
+      <pre className="text-xs whitespace-pre-wrap">
+        {JSON.stringify(state, null, 2)}
+      </pre>
     </>
   );
 }

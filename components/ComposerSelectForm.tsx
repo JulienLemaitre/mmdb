@@ -19,7 +19,7 @@ export default function ComposerSelectForm({
       <ComposerSelect composers={composers} />
       <Link
         href={EDITION_PIECE_URL + "?composerId=" + state?.composer?.id}
-        className="btn mt-4"
+        className="btn btn-primary mt-4"
         {...(state.composer?.id ? { disabled: false } : { disabled: true })}
       >
         Next

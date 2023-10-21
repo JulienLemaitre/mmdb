@@ -6,10 +6,10 @@ export default function ContributeLayout({ children }) {
   return (
     <EditFormProvider>
       <div className="flex h-full">
-        <aside className="bg-base-100 w-80 p-10">
+        <aside className="bg-slate-100 w-80 p-10 border-r-4 border-slate-200">
           <Summary />
         </aside>
-        <main className="flex-1 bg-base-200 p-10">{children}</main>
+        <main className="flex-1 bg-slate-100 p-10">{children}</main>
       </div>
     </EditFormProvider>
   );

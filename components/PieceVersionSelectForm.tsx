@@ -21,7 +21,7 @@ export default function PieceVersionSelectForm({
         href={
           EDITION_PIECE_VERSION_URL + "?pieceVersionId=" + state?.pieceVersionId
         }
-        className="btn mt-4"
+        className="btn btn-primary mt-4"
         {...(state?.pieceVersionId ? { disabled: false } : { disabled: true })}
       >
         Next

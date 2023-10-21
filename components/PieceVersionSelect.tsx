@@ -13,9 +13,6 @@ export default function PieceVersionSelect({
 }: PieceVersionSelectProps) {
   const { dispatch } = useEditForm();
   const onSelect = (pieceVersionId: string) => {
-    // const pieceVersion = pieceVersions.find(
-    //   (pieceVersion) => pieceVersion.id === pieceVersionId,
-    // );
     // Update the pieceVersionId in the context
     console.log(`[PieceVersionSelect] pieceVersionId: ${pieceVersionId}`);
     if (!pieceVersionId) return;
@@ -52,23 +49,29 @@ export default function PieceVersionSelect({
                     <div key={section.id} className="ml-4 flex">
                       <div>Section {section.rank}</div>
                       <div className="ml-4">
-                        <div>{section.tempoIndication.text}</div>
+                        {section?.tempoIndication?.text && (
+                          <div>{section.tempoIndication.text}</div>
+                        )}
                         <div>
                           metre :{" "}
-                          <b>
-                            {isCommonOrCutTime ? (
-                              <>
-                                <span className="text-base/2 align-middle">
-                                  {isCommonTime ? `\u{1D134}` : `\u{1D135}`}
-                                </span>
-                                {` (${section.metreNumerator}/${section.metreDenominator})`}
-                              </>
-                            ) : (
-                              `${section.metreNumerator}/${section.metreDenominator}`
-                            )}
-                          </b>
+                          {isCommonOrCutTime ? (
+                            <>
+                              <span className="text-4xl leading-3 align-middle">
+                                {isCommonTime ? `\u{1D134}` : `\u{1D135}`}
+                              </span>
+                              {` (${section.metreNumerator}/${section.metreDenominator})`}
+                            </>
+                          ) : (
+                            <b>
+                              {`${section.metreNumerator}/${section.metreDenominator}`}
+                            </b>
+                          )}
                         </div>
-                        <div>{section.comment?.text}</div>
+                        {section.comment?.text && (
+                          <div className="italic">
+                            Comment : {section.comment?.text}
+                          </div>
+                        )}
                       </div>
                     </div>
                   );
