@@ -1,23 +1,40 @@
 "use client";
+import Select from "react-select";
+import {
+  useEditForm,
+  updateEditForm,
+} from "@/components/context/editFormContext";
+import { ComposerState } from "@/types/editFormTypes";
 
 type ComposerSelectProps = {
-  composers: {
-    id: string;
-    firstName: string;
-    lastName: string;
-  }[];
+  composers: ComposerState[];
 };
 export default function ComposerSelect({ composers }: ComposerSelectProps) {
+  const composerOptions = composers.map((composer) => ({
+    value: composer.id,
+    label: `${composer.firstName} ${composer.lastName}`,
+  }));
+  const { dispatch } = useEditForm();
+  const onSelect = (composerId: string) => {
+    const composer = composers.find((composer) => composer.id === composerId);
+    // Update the composer in the context
+    console.log(`[ComposerSelect] composer: ${composer}`);
+    if (!composer) return;
+    updateEditForm(dispatch, "composer", composer);
+  };
+
   return (
-    <select className="select w-full max-w-xs my-5">
-      {composers
-        .sort((a, b) => (a.lastName > b.lastName ? 1 : -1))
-        .map((person) => (
-          <option
-            key={person.id}
-            value={person.id}
-          >{`${person.firstName} ${person.lastName}`}</option>
-        ))}
-    </select>
+    <Select
+      instanceId="composer-select"
+      defaultValue={composerOptions[0]}
+      isSearchable={true}
+      name="color"
+      options={composerOptions}
+      autoFocus
+      onChange={(composerOption) => {
+        if (!composerOption) return;
+        onSelect(composerOption?.value);
+      }}
+    />
   );
 }

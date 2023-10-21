@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { CONTRIBUTE_ROUTE } from "@/utils/routes";
+import { EDITION_COMPOSER_URL } from "@/utils/routes";
 
 export const metadata: Metadata = {
   title: "The Metronome Mark Database",
@@ -22,8 +22,8 @@ export default function Home() {
         <Link href="" className="btn">
           Explore
         </Link>
-        <Link href={CONTRIBUTE_ROUTE} className="btn">
-          Contribute
+        <Link href={EDITION_COMPOSER_URL} className="btn">
+          Edit
         </Link>
         <Link href="" className="btn">
           Review

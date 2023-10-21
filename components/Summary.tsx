@@ -7,12 +7,12 @@ export default function Summary() {
 
   return (
     <>
-      <ul className="steps steps-vertical">
+      {/*<ul className="steps steps-vertical">
         <li className="step step-primary">Composer</li>
         <li className="step step-primary">Piece</li>
         <li className="step">MM Source</li>
         <li className="step">Metronome marks</li>
-      </ul>
+      </ul>*/}
       <pre>{JSON.stringify(state, null, 2)}</pre>
     </>
   );

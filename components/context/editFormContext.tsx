@@ -1,5 +1,7 @@
+"use client";
 import { createContext, useContext, useReducer, ReactNode } from "react";
 import { Movement } from "@prisma/client";
+import { ComposerState, PieceState } from "@/types/editFormTypes";
 
 type PieceFormAction =
   | { type: "init"; payload: any }
@@ -9,8 +11,8 @@ type PieceFormAction =
   | { type: "movements"; payload: string };
 type Dispatch = (action: PieceFormAction) => void;
 type EditFormState = {
-  composerId?: string;
-  pieceId?: string;
+  composer?: ComposerState;
+  piece?: PieceState;
   pieceVersionId?: string;
   movements?: Movement[];
 };
@@ -26,9 +28,7 @@ const EditFormContext = createContext<
 
 function editFormReducer(state: EditFormState, action: PieceFormAction) {
   if (
-    ["composerId", "pieceId", "pieceVersionId", "movements"].includes(
-      action.type,
-    )
+    ["composer", "piece", "pieceVersionId", "movements"].includes(action.type)
   ) {
     return { ...state, [action.type]: action.payload };
   }
