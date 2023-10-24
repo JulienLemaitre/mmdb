@@ -18,16 +18,13 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <div className="flex flex-col items-stretch gap-2">
-        <Link href="" className="btn">
-          Explore
-        </Link>
+      <h1 className="mb-8 text-4xl font-bold">The Metronome Mark Database</h1>
+      <div className="flex flex-col items-stretch gap-6 w-full max-w-xs">
+        <button className="btn btn-disabled">Explore</button>
         <Link href={EDITION_COMPOSER_URL} className="btn">
           Edit
         </Link>
-        <Link href="" className="btn">
-          Review
-        </Link>
+        <button className="btn btn-disabled">Review</button>
       </div>
     </div>
   );
