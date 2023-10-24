@@ -2,6 +2,7 @@
 import {
   Comment,
   Movement,
+  Person,
   Piece,
   PieceVersion,
   Section,
@@ -13,6 +14,10 @@ export type ComposerState = {
   firstName: string;
   lastName: string;
 };
+export type ComposerInput = Pick<
+  Person,
+  "firstName" | "lastName" | "birthYear" | "deathYear"
+>;
 
 export type PieceState = Pick<
   Piece,
@@ -28,8 +33,8 @@ export type SectionState = Pick<
   | "isCommonTime"
   | "isCutTime"
 > & {
-  tempoIndication: Pick<TempoIndication, "text">;
-  comment: Pick<Comment, "text">;
+  tempoIndication?: Pick<TempoIndication, "text">;
+  comment?: Pick<Comment, "text">;
 };
 
 export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {

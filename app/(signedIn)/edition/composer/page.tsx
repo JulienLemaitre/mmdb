@@ -4,11 +4,11 @@ import ComposerSelectForm from "@/components/ComposerSelectForm";
 async function getData() {
   // Fetch all composers as person with et least 1 composition
   const composers = await db.person.findMany({
-    where: {
-      compositions: {
-        some: {},
-      },
-    },
+    // where: {
+    //   compositions: {
+    //     some: {},
+    //   },
+    // },
     select: {
       id: true,
       firstName: true,

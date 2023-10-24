@@ -14,6 +14,7 @@
     "seed": "ts-node -P tsconfig-seed.json -r tsconfig-paths/register --transpileOnly prisma/seedFromXlsx.ts"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.2",
     "@prisma/client": "^5.2.0",
     "@types/node": "^20.5.8",
     "@types/react": "^18.2.21",
@@ -28,12 +29,15 @@
     "eslint-config-next": "^13.5.4",
     "jose": "^4.14.4",
     "next": "^13.5.4",
+    "prisma-zod-generator": "^0.8.13",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
+    "react-hook-form": "^7.47.0",
     "react-select": "^5.7.7",
     "read-excel-file": "^5.6.1",
-    "typescript": "~5.1.6"
+    "typescript": "~5.1.6",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.2",

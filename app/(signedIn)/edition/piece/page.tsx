@@ -44,7 +44,7 @@ export default async function Piece({ searchParams: { composerId } }) {
     <div
     // className="flex flex-col items-center justify-center"
     >
-      <h1 className="mb-4 text-4xl font-bold">Select a composer</h1>
+      <h1 className="mb-4 text-4xl font-bold">Select a piece</h1>
       <PieceSelectForm pieces={pieces} />
     </div>
   );

@@ -5,6 +5,8 @@ import {
   updateEditForm,
 } from "@/components/context/editFormContext";
 import { PieceState } from "@/types/editFormTypes";
+import { CREATION_PIECE_URL } from "@/utils/routes";
+import { useRouter } from "next/navigation";
 
 type PieceSelectProps = {
   pieces: PieceState[];
@@ -16,6 +18,7 @@ export default function PieceSelect({ pieces }: PieceSelectProps) {
       piece.yearOfComposition
     })`,
   }));
+  const router = useRouter();
   const { dispatch } = useEditForm();
   const onSelect = (pieceId: string) => {
     const piece = pieces.find((piece) => piece.id === pieceId);
@@ -37,6 +40,21 @@ export default function PieceSelect({ pieces }: PieceSelectProps) {
         if (!pieceOption) return;
         onSelect(pieceOption?.value);
       }}
+      noOptionsMessage={() => (
+        <div className="text-left">
+          <div className="ml-4 mb-2">No piece found</div>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={async () => {
+              console.log("Create a new piece");
+              await router.push(CREATION_PIECE_URL);
+            }}
+          >
+            Create a new piece
+          </button>
+        </div>
+      )}
     />
   );
 }
