@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ComposerInput } from "@/types/editFormTypes";
 import { useRouter } from "next/navigation";
-import { EDITION_PIECE_URL } from "@/utils/routes";
+import { CREATION_PIECE_URL } from "@/utils/routes";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import { z } from "zod";
 import {
@@ -27,16 +27,11 @@ export default function CreateComposer() {
   const router = useRouter();
   const { dispatch } = useEditForm();
   const {
-    control,
     formState: { errors, isSubmitting },
     handleSubmit,
     register,
-    setError,
     watch,
-    setFocus,
-    resetField,
   } = useForm<ComposerInput>({
-    // resolver: zodResolver(PersonCreateOneSchema),
     resolver: zodResolver(PersonSchema),
   });
 
@@ -44,8 +39,8 @@ export default function CreateComposer() {
     // Front input values validation is successful at this point.
     console.log("data", data);
 
-    // post data to api route
-    const composer = await fetch("/api/composer/create", {
+    // post data to api route to create a composer as a person
+    const composer = await fetch("/api/person/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,9 +49,13 @@ export default function CreateComposer() {
     })
       .then((res) => res.json())
       .catch((err) => console.log(err));
-    // persist composer in db as person
 
-    console.log("composer created", composer);
+    if (!composer) {
+      console.warn("ERROR - NO composer created");
+      return;
+    }
+
+    console.log("Composer created", composer);
     const composerState = {
       id: composer.id,
       firstName: composer.firstName,
@@ -64,10 +63,10 @@ export default function CreateComposer() {
     };
 
     updateEditForm(dispatch, "composer", composerState);
-    router.push(EDITION_PIECE_URL + "?composerId=" + composer?.id);
+    router.push(CREATION_PIECE_URL);
   };
 
-  console.log(`[] errors :`, errors);
+  console.log(`[CreateComposer] errors :`, errors);
   return (
     <div
     // className="flex flex-col items-center justify-center"

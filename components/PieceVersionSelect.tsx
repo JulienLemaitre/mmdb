@@ -1,24 +1,14 @@
-"use client";
-import {
-  useEditForm,
-  updateEditForm,
-} from "@/components/context/editFormContext";
+// "use client";
 import { PieceVersionState } from "@/types/editFormTypes";
 
 type PieceVersionSelectProps = {
   pieceVersions: PieceVersionState[];
+  onSelect: (pieceVersionId: string) => void;
 };
 export default function PieceVersionSelect({
   pieceVersions,
+  onSelect,
 }: PieceVersionSelectProps) {
-  const { dispatch } = useEditForm();
-  const onSelect = (pieceVersionId: string) => {
-    // Update the pieceVersionId in the context
-    console.log(`[PieceVersionSelect] pieceVersionId: ${pieceVersionId}`);
-    if (!pieceVersionId) return;
-    updateEditForm(dispatch, "pieceVersionId", pieceVersionId);
-  };
-
   return pieceVersions.map((pieceVersion) => (
     <div
       key={pieceVersion.id}

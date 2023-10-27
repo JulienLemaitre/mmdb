@@ -1,10 +1,13 @@
 "use client";
-import Link from "next/link";
-
 import ComposerSelect from "@/components/ComposerSelect";
-import { useEditForm } from "@/components/context/editFormContext";
+import {
+  updateEditForm,
+  useEditForm,
+} from "@/components/context/editFormContext";
 import { EDITION_PIECE_URL } from "@/utils/routes";
 import { ComposerState } from "@/types/editFormTypes";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type ComposerSelectFormProps = {
   composers: ComposerState[];
@@ -12,18 +15,32 @@ type ComposerSelectFormProps = {
 export default function ComposerSelectForm({
   composers,
 }: ComposerSelectFormProps) {
-  const { state } = useEditForm();
+  const { dispatch } = useEditForm();
+  const router = useRouter();
+  const [selectedComposer, setSelectedComposer] =
+    useState<ComposerState | null>(null);
+
+  const onSelect = (composerId: string) => {
+    const composer = composers.find((composer) => composer.id === composerId);
+    console.log(`[ComposerSelectForm] onSelect: ${composer}`);
+    if (!composer) return;
+    setSelectedComposer(composer);
+  };
+  const onSubmit = () => {
+    updateEditForm(dispatch, "composer", selectedComposer);
+    router.push(EDITION_PIECE_URL + "?composerId=" + selectedComposer?.id);
+  };
 
   return (
     <>
-      <ComposerSelect composers={composers} />
-      <Link
-        href={EDITION_PIECE_URL + "?composerId=" + state?.composer?.id}
+      <ComposerSelect composers={composers} onSelect={onSelect} />
+      <button
         className="btn btn-primary mt-4"
-        {...(state.composer?.id ? { disabled: false } : { disabled: true })}
+        onClick={onSubmit}
+        {...(selectedComposer ? { disabled: false } : { disabled: true })}
       >
         Next
-      </Link>
+      </button>
     </>
   );
 }

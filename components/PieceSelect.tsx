@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import Select from "react-select";
 import {
   useEditForm,
@@ -10,23 +10,17 @@ import { useRouter } from "next/navigation";
 
 type PieceSelectProps = {
   pieces: PieceState[];
+  onSelect: (pieceId: string) => void;
 };
-export default function PieceSelect({ pieces }: PieceSelectProps) {
+export default function PieceSelect({ pieces, onSelect }: PieceSelectProps) {
   const pieceOptions = pieces.map((piece) => ({
     value: piece.id,
-    label: `${piece.title}${piece.nickName ? ` (${piece.nickName})` : ""} (${
+    label: `${piece.title}${piece.nickname ? ` (${piece.nickname})` : ""} (${
       piece.yearOfComposition
     })`,
   }));
   const router = useRouter();
   const { dispatch } = useEditForm();
-  const onSelect = (pieceId: string) => {
-    const piece = pieces.find((piece) => piece.id === pieceId);
-    // Update the pieceId in the context
-    console.log(`[PieceSelect] pieceId: ${pieceId}`);
-    if (!piece) return;
-    updateEditForm(dispatch, "piece", piece);
-  };
 
   return (
     <Select
@@ -47,8 +41,9 @@ export default function PieceSelect({ pieces }: PieceSelectProps) {
             type="button"
             className="btn btn-primary"
             onClick={async () => {
+              updateEditForm(dispatch, "piece", null);
               console.log("Create a new piece");
-              await router.push(CREATION_PIECE_URL);
+              router.push(CREATION_PIECE_URL);
             }}
           >
             Create a new piece

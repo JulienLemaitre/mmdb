@@ -18,10 +18,18 @@ export type ComposerInput = Pick<
   Person,
   "firstName" | "lastName" | "birthYear" | "deathYear"
 >;
+export type CategoryInput = {
+  label: string;
+  value: string;
+};
+export type PieceInput = Pick<
+  Piece,
+  "nickname" | "yearOfComposition" | "title"
+> & { category: CategoryInput };
 
 export type PieceState = Pick<
   Piece,
-  "id" | "nickName" | "yearOfComposition" | "title"
+  "id" | "nickname" | "yearOfComposition" | "title"
 >;
 
 export type SectionState = Pick<

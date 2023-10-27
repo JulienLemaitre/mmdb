@@ -1,9 +1,8 @@
 import { db } from "@/utils/db";
-import Link from "next/link";
-import { EDITION_PIECE_URL } from "@/utils/routes";
 import PieceVersionSelectForm from "@/components/PieceVersionSelectForm";
 
 async function getData(pieceId: string) {
+  if (!pieceId) return { pieceVersions: [] };
   // Fetch all composers as person with et least 1 composition
   const pieceVersions = await db.pieceVersion.findMany({
     where: {
@@ -43,22 +42,7 @@ async function getData(pieceId: string) {
 }
 
 export default async function Piece({ searchParams: { pieceId } }) {
-  console.log(`[Piece] pieceId :`, pieceId);
-  if (!pieceId) {
-    return (
-      <div>
-        <h1 className="mb-4 text-4xl font-bold">Select a piece first</h1>
-        <Link href={EDITION_PIECE_URL} className="btn">
-          Back
-        </Link>
-      </div>
-    );
-  }
   const { pieceVersions } = await getData(pieceId);
-  console.log(
-    `[Contribute] pieceVersions (${pieceVersions.length}) :`,
-    JSON.stringify(pieceVersions),
-  );
 
   return (
     <div
