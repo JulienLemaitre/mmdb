@@ -5,10 +5,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-generator zod {
-  provider = "prisma-zod-generator"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -25,7 +21,7 @@ enum PIECE_CATEGORY {
 model Piece {
   id                String         @id @default(uuid())
   title             String
-  nickName          String?
+  nickname          String?
   composer          Person         @relation(fields: [composerId], references: [id]) // A piece have a unique composer
   composerId        String
   yearOfComposition Int?
