@@ -18,6 +18,8 @@ type EditFormState = {
 };
 type EditFormProviderProps = { children: ReactNode };
 
+const LOCL_STORAGE_KEY = "editForm";
+
 const EditFormContext = createContext<
   | {
       state: EditFormState;
@@ -30,9 +32,12 @@ function editFormReducer(state: EditFormState, action: PieceFormAction) {
   if (
     ["composer", "piece", "pieceVersionId", "movements"].includes(action.type)
   ) {
+    const newState = { ...state, [action.type]: action.payload };
+    localStorage.setItem("editForm", JSON.stringify(newState));
     return { ...state, [action.type]: action.payload };
   }
   if (action.type === "init") {
+    localStorage.setItem("editForm", JSON.stringify({}));
     return {};
   }
   throw new Error(`Unhandled action type: ${action.type}`);
@@ -40,7 +45,20 @@ function editFormReducer(state: EditFormState, action: PieceFormAction) {
 
 // eslint-disable-next-line react/prop-types
 export function EditFormProvider({ children }: EditFormProviderProps) {
-  const [state, dispatch] = useReducer(editFormReducer, {});
+  const [state, dispatch] = useReducer(editFormReducer, {}, (initArg) => {
+    let editFormData = initArg;
+    try {
+      const localStorageValue = localStorage.getItem(LOCL_STORAGE_KEY);
+      if (localStorageValue) editFormData = JSON.parse(localStorageValue);
+    } catch (error) {
+      console.warn(
+        `Error reading localStorage key “${LOCL_STORAGE_KEY}”:`,
+        error,
+      );
+    }
+    console.log(`[useReducer Initializer] editFormData :`, editFormData);
+    return editFormData;
+  });
   const value = { state, dispatch };
   return (
     <EditFormContext.Provider value={value}>
