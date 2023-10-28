@@ -25,8 +25,8 @@ model Piece {
   composer          Person         @relation(fields: [composerId], references: [id]) // A piece have a unique composer
   composerId        String
   yearOfComposition Int?
-  creator           User           @relation(fields: [creatorId], references: [id])
-  creatorId         String
+  creator           User?          @relation(fields: [creatorId], references: [id])
+  creatorId         String?
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
   pieceVersions     PieceVersion[] // A piece can have many versions
@@ -117,8 +117,8 @@ model Source {
   references     Json? // Can be plateNumber, ISBN, ISMN, etc.
   contributions  Contribution[] // A source can have many Contributions
   metronomeMarks MetronomeMark[] // A source can have many metronome marks
-  creator        User            @relation(fields: [creatorId], references: [id])
-  creatorId      String
+  creator        User?           @relation(fields: [creatorId], references: [id])
+  creatorId      String?
   commentId      String?         @unique
   comment        Comment?        @relation(fields: [commentId], references: [id])
   createdAt      DateTime        @default(now())
@@ -157,6 +157,8 @@ model Person {
   deathYear     Int?
   compositions  Piece[] // A person can have compose many pieces
   contributions Contribution[] // A person can have many contributions
+  creator       User?          @relation(fields: [creatorId], references: [id])
+  creatorId     String?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 
@@ -168,8 +170,8 @@ model Comment {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   text          String
-  creator       User           @relation(fields: [creatorId], references: [id])
-  creatorId     String
+  creator       User?          @relation(fields: [creatorId], references: [id])
+  creatorId     String?
   source        Source?
   section       Section?
   metronomeMark MetronomeMark?
@@ -218,6 +220,7 @@ model User {
   comments      Comment[] // A user can have created many comments
   sources       Source[] // A user can have created many sources
   pieces        Piece[] // A user can have created many pieces
+  persons       Person[] // A user can have created many persons
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
