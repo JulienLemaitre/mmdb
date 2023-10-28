@@ -77,8 +77,10 @@ export function FormInput({
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
-        <span className="label-text">{label || getLabel(name)}</span>
-        {isRequired ? <span className="text-red-500">*</span> : null}
+        <span className="label-text">
+          {label || getLabel(name)}
+          {isRequired ? <span className="text-red-500 ml-1">*</span> : null}
+        </span>
       </label>
       <input
         className="input input-bordered"

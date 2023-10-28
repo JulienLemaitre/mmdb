@@ -24,8 +24,10 @@ const ControlledSelect = ({
     <div className="form-control w-full max-w-xs">
       {label && (
         <label className="label">
-          <span className="label-text">{label}</span>
-          {isRequired ? <span className="text-red-500">*</span> : null}
+          <span className="label-text">
+            {label}
+            {isRequired ? <span className="text-red-500 ml-1">*</span> : null}
+          </span>
         </label>
       )}
       <Select
