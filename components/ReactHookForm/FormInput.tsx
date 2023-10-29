@@ -74,6 +74,7 @@ type FormInputProps = {
   disabled?: boolean;
   type?: string;
   registerProps?: any;
+  inputClassName?: string;
   // watch: any;
   // showPassword?: boolean;
   // toggleShowPassword?: () => void;
@@ -88,10 +89,10 @@ export function FormInput({
   defaultValue,
   disabled = false,
   type: typeProp,
-  registerProps = {}, // watch,
-  // showPassword = false,
-} // toggleShowPassword = () => {},
-: FormInputProps) {
+  registerProps = {},
+  inputClassName = "", // showPassword = false,
+  // toggleShowPassword = () => {},
+}: FormInputProps) {
   const isInvalid = !!errors[name];
   const type =
     typeProp || ["birthYear", "deathYear", "yearOfComposition"].includes(name)
@@ -101,14 +102,17 @@ export function FormInput({
 
   return (
     <div className="form-control w-full max-w-xs">
-      <label className="label">
-        <span className="label-text">
-          {label || getLabel(name)}
-          {isRequired ? <span className="text-red-500 ml-1">*</span> : null}
-        </span>
-      </label>
+      {label ||
+        (getLabel(name) && (
+          <label className="label">
+            <span className="label-text">
+              {label || getLabel(name)}
+              {isRequired ? <span className="text-red-500 ml-1">*</span> : null}
+            </span>
+          </label>
+        ))}
       <input
-        className="input input-bordered"
+        className={`input input-bordered ${inputClassName}`}
         // type={["password"].includes(name) && showPassword ? "text" : "password"}
         type={type}
         {...register(name, {

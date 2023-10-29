@@ -44,105 +44,108 @@ export default function SectionArray({
                 )}
                 hidden
               />
-              <FormInput
-                name={
-                  `movements[${nestIndex}].sections.${index}.metreNumerator` as const
-                }
-                label="Metre numerator"
-                type="number"
-                disabled={isMetreFieldDisabled}
-                defaultValue={``}
-                {...{ register, errors }}
-              />
-              <FormInput
-                name={
-                  `movements[${nestIndex}].sections.${index}.metreDenominator` as const
-                }
-                label="Metre denominator"
-                type="number"
-                disabled={isMetreFieldDisabled}
-                defaultValue={``}
-                {...{ register, errors }}
-              />
-              <label>
-                <input
-                  {...register(
-                    `movements[${nestIndex}].sections.${index}.isCommonTime` as const,
-                    { required: "This is required" },
-                  )}
-                  name={
-                    `movements[${nestIndex}].sections.${index}.isCommonTime` as const
-                  }
-                  value={true}
-                  onClick={(e) => {
-                    // @ts-ignore
-                    const isChecked = e?.target?.checked;
-                    console.log(
-                      `[checkbox] common time isChecked :`,
-                      isChecked,
-                    );
-
-                    if (
-                      isChecked &&
-                      getValues(`movements[${nestIndex}].sections.${index}`)
-                    ) {
-                      setValue(
-                        `movements[${nestIndex}].sections.${index}.isCutTime`,
-                        false,
-                      );
-                      setValue(
-                        `movements[${nestIndex}].sections.${index}.metreNumerator`,
-                        4,
-                      );
-                      setValue(
-                        `movements[${nestIndex}].sections.${index}.metreDenominator`,
-                        4,
-                      );
+              <div className="flex gap-2 items-center">
+                <div className="text-lg font-bold">Metre :</div>
+                <div className="flex flex-col gap-1">
+                  <FormInput
+                    name={
+                      `movements[${nestIndex}].sections.${index}.metreNumerator` as const
                     }
-                  }}
-                  type="checkbox"
-                  className="mr-2"
-                />
-                Is common time
-              </label>
-              <label>
-                <input
-                  {...register(
-                    `movements[${nestIndex}].sections.${index}.isCutTime` as const,
-                    { required: "This is required" },
-                  )}
-                  name={
-                    `movements[${nestIndex}].sections.${index}.isCutTime` as const
-                  }
-                  value={true}
-                  onClick={(e) => {
-                    // @ts-ignore
-                    const isChecked = e?.target?.checked;
-                    console.log(`[checkbox] cut time isChecked :`, isChecked);
-
-                    if (
-                      isChecked &&
-                      getValues(`movements[${nestIndex}].sections.${index}`)
-                    ) {
-                      setValue(
-                        `movements[${nestIndex}].sections.${index}.isCommonTime`,
-                        false,
-                      );
-                      setValue(
-                        `movements[${nestIndex}].sections.${index}.metreNumerator`,
-                        2,
-                      );
-                      setValue(
-                        `movements[${nestIndex}].sections.${index}.metreDenominator`,
-                        2,
-                      );
+                    // label="Metre numerator"
+                    type="number"
+                    inputClassName="w-20"
+                    disabled={isMetreFieldDisabled}
+                    // defaultValue={``}
+                    {...{ register, errors }}
+                  />
+                  <div className="divider border-black my-0" />
+                  <FormInput
+                    name={
+                      `movements[${nestIndex}].sections.${index}.metreDenominator` as const
                     }
-                  }}
-                  type="checkbox"
-                  className="mr-2 ml-4"
-                />
-                Is cut time
-              </label>
+                    // label="Metre denominator"
+                    type="number"
+                    inputClassName="w-20"
+                    disabled={isMetreFieldDisabled}
+                    // defaultValue={``}
+                    {...{ register, errors }}
+                  />
+                </div>
+                <label className="text-5xl flex items-center">
+                  <input
+                    {...register(
+                      `movements[${nestIndex}].sections.${index}.isCommonTime` as const,
+                      { required: "This is required" },
+                    )}
+                    name={
+                      `movements[${nestIndex}].sections.${index}.isCommonTime` as const
+                    }
+                    value={true}
+                    onClick={(e) => {
+                      // @ts-ignore
+                      const isChecked = e?.target?.checked;
+
+                      if (
+                        isChecked &&
+                        getValues(`movements[${nestIndex}].sections.${index}`)
+                      ) {
+                        setValue(
+                          `movements[${nestIndex}].sections.${index}.isCutTime`,
+                          undefined,
+                        );
+                        setValue(
+                          `movements[${nestIndex}].sections.${index}.metreNumerator`,
+                          4,
+                        );
+                        setValue(
+                          `movements[${nestIndex}].sections.${index}.metreDenominator`,
+                          4,
+                        );
+                      }
+                    }}
+                    type="checkbox"
+                    className="mr-2"
+                  />
+                  {`\u{1D134}`}
+                </label>
+                <label className="text-5xl flex items-center">
+                  <input
+                    {...register(
+                      `movements[${nestIndex}].sections.${index}.isCutTime` as const,
+                      { required: "This is required" },
+                    )}
+                    name={
+                      `movements[${nestIndex}].sections.${index}.isCutTime` as const
+                    }
+                    value={true}
+                    onClick={(e) => {
+                      // @ts-ignore
+                      const isChecked = e?.target?.checked;
+
+                      if (
+                        isChecked &&
+                        getValues(`movements[${nestIndex}].sections.${index}`)
+                      ) {
+                        setValue(
+                          `movements[${nestIndex}].sections.${index}.isCommonTime`,
+                          undefined,
+                        );
+                        setValue(
+                          `movements[${nestIndex}].sections.${index}.metreNumerator`,
+                          2,
+                        );
+                        setValue(
+                          `movements[${nestIndex}].sections.${index}.metreDenominator`,
+                          2,
+                        );
+                      }
+                    }}
+                    type="checkbox"
+                    className="mr-2 ml-4"
+                  />
+                  <span>{`\u{1D135}`}</span>
+                </label>
+              </div>
               <FormInput
                 name={
                   `movements[${nestIndex}].sections.${index}.fastestStructuralNotesPerBar` as const
@@ -163,7 +166,7 @@ export default function SectionArray({
                   type="checkbox"
                   className="mr-2"
                 />
-                Is fastest structural note bel canto
+                Is bel canto
               </label>
               <FormInput
                 name={

@@ -35,11 +35,11 @@ const PieceVersionSchema = z.object({
               metreDenominator: z.number(),
               isCommonTime: z.string().optional(),
               isCutTime: z.string().optional(),
-              fastestStructuralNotesPerBar: z.number(),
-              isFastestStructuralNoteBelCanto: z.boolean(),
-              fastestStaccatoNotesPerBar: z.number(),
-              fastestRepeatedNotesPerBar: z.number(),
-              fastestOrnamentalNotesPerBar: z.number(),
+              fastestStructuralNotesPerBar: z.number().or(z.nan()),
+              isFastestStructuralNoteBelCanto: z.string().optional(),
+              fastestStaccatoNotesPerBar: z.number().or(z.nan()),
+              fastestRepeatedNotesPerBar: z.number().or(z.nan()),
+              fastestOrnamentalNotesPerBar: z.number().or(z.nan()),
               comment: z.string().optional(),
               tempoIndication: z
                 .object({
@@ -88,6 +88,8 @@ export default function CreatePieceVersion() {
     // Front input values validation is successful at this point.
     console.log("data", data);
 
+    // TODO: All good until here. Now need to format data to match the type needed to persist in DB.
+
     const pieceVersionData = data;
     // Remove null values from pieceVersionData
     Object.keys(pieceVersionData).forEach(
@@ -134,6 +136,8 @@ export default function CreatePieceVersion() {
     router.push(EDITION_PIECE_URL);
   }
 
+  console.log(`[CreatePieceVersion] errors :`, errors);
+
   return (
     <div
     // className="flex flex-col items-center justify-center"
@@ -175,6 +179,7 @@ export default function CreatePieceVersion() {
           )}
         </button>
       </form>
+      {/*<p>{JSON.stringify(errors, null, 2)}</p>*/}
     </div>
   );
 }
