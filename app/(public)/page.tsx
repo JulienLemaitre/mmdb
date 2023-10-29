@@ -21,7 +21,7 @@ export default function Home() {
       <h1 className="mb-8 text-4xl font-bold">The Metronome Mark Database</h1>
       <div className="flex flex-col items-stretch gap-6 w-full max-w-xs">
         <button className="btn btn-disabled">Explore</button>
-        <Link href={EDITION_COMPOSER_URL} className="btn">
+        <Link href={EDITION_COMPOSER_URL} className="btn btn-primary">
           Edit
         </Link>
         <button className="btn btn-disabled">Review</button>

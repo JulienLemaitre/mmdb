@@ -9,9 +9,13 @@ export async function POST(req: NextRequest) {
   const piece = await db.piece.create({
     data: {
       title,
-      composerId,
       ...(yearOfComposition && { yearOfComposition }),
       ...(nickname && { nickname }),
+      composer: {
+        connect: {
+          id: composerId,
+        },
+      },
     },
   });
 

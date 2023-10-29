@@ -1,4 +1,3 @@
-// import { Piece, PieceVersion } from ".prisma/client";
 import {
   Comment,
   Movement,
@@ -18,14 +17,35 @@ export type ComposerInput = Pick<
   Person,
   "firstName" | "lastName" | "birthYear" | "deathYear"
 >;
-export type CategoryInput = {
+export type SelectInput = {
   label: string;
   value: string;
 };
 export type PieceInput = Pick<
   Piece,
   "nickname" | "yearOfComposition" | "title"
-> & { category: CategoryInput };
+>;
+export type SectionInput = Pick<
+  Section,
+  | "rank"
+  | "metreNumerator"
+  | "metreDenominator"
+  | "isCommonTime"
+  | "isCutTime"
+  | "fastestStructuralNotesPerBar"
+  | "fastestStaccatoNotesPerBar"
+  | "fastestRepeatedNotesPerBar"
+  | "fastestOrnamentalNotesPerBar"
+  | "isFastestStructuralNoteBelCanto"
+> & { tempoIndication?: string; comment?: string };
+export type MovementInput = Pick<Movement, "rank"> & {
+  key: SelectInput;
+  sections: SectionInput[];
+};
+export type PieceVersionInput = {
+  category: SelectInput;
+  movements: MovementInput[];
+};
 
 export type PieceState = Pick<
   Piece,

@@ -22,7 +22,7 @@ export default function ComposerSelectForm({
 
   const onSelect = (composerId: string) => {
     const composer = composers.find((composer) => composer.id === composerId);
-    console.log(`[ComposerSelectForm] onSelect: ${composer}`);
+    console.log(`[ComposerSelectForm] onSelect:`, composer);
     if (!composer) return;
     setSelectedComposer(composer);
   };

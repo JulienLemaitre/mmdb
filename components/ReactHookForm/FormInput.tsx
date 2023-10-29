@@ -1,6 +1,8 @@
 // import { emailRegex, excludedEmailDomain, mobileRegex } from "@/utils/regex";
 // import formatPhoneInput from "@/utils/formatPhoneInput";
 
+import { UseFormRegister } from "react-hook-form";
+
 function getRegisterProps(name: string) {
   return {
     birthYear: {
@@ -62,17 +64,40 @@ function getLabel(name: string) {
   }[name];
 }
 
+type FormInputProps = {
+  register: any;
+  name: string;
+  label?: string;
+  isRequired?: boolean;
+  errors: any;
+  defaultValue?: any;
+  disabled?: boolean;
+  type?: string;
+  registerProps?: any;
+  // watch: any;
+  // showPassword?: boolean;
+  // toggleShowPassword?: () => void;
+};
+
 export function FormInput({
   register,
   name,
   label = "",
   isRequired = false,
   errors,
-  watch,
-  showPassword = false,
-  toggleShowPassword = () => {},
-}) {
+  defaultValue,
+  disabled = false,
+  type: typeProp,
+  registerProps = {}, // watch,
+  // showPassword = false,
+} // toggleShowPassword = () => {},
+: FormInputProps) {
   const isInvalid = !!errors[name];
+  const type =
+    typeProp || ["birthYear", "deathYear", "yearOfComposition"].includes(name)
+      ? "number"
+      : "text";
+  const isNumber = type === "number";
 
   return (
     <div className="form-control w-full max-w-xs">
@@ -85,15 +110,15 @@ export function FormInput({
       <input
         className="input input-bordered"
         // type={["password"].includes(name) && showPassword ? "text" : "password"}
-        type={
-          ["birthYear", "deathYear", "yearOfComposition"].includes(name)
-            ? "number"
-            : "text"
-        }
+        type={type}
         {...register(name, {
           // ...(isRequired ? { required: "Info obligatoire" } : {}),
           ...(getRegisterProps(name) || {}),
+          ...(isNumber ? { valueAsNumber: true } : {}),
+          ...registerProps,
         })}
+        {...(defaultValue ? { defaultValue } : {})}
+        {...(disabled ? { disabled: true } : {})}
       />
       <span className="label-text-alt text-red-500">
         {errors[name] && errors[name].message}
@@ -108,7 +133,7 @@ export function FormTextarea({
   label = "",
   isRequired = false,
   errors,
-  watch,
+  // watch,
   noValidation = false,
   isDisabled = false,
   value = undefined,

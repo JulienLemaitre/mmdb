@@ -73,7 +73,7 @@ export default function CreateComposer() {
     >
       <h1 className="mb-4 text-4xl font-bold">Create a composer</h1>
       <form
-        className="flex flex-col items-center justify-center"
+        // className="flex flex-col items-center justify-center"
         onSubmit={handleSubmit(onSubmit)}
       >
         <FormInput name="firstName" {...{ register, watch, errors }} />
@@ -86,6 +86,9 @@ export default function CreateComposer() {
           disabled={isSubmitting}
         >
           Submit
+          {isSubmitting && (
+            <span className="loading loading-spinner loading-sm"></span>
+          )}
         </button>
       </form>
     </div>

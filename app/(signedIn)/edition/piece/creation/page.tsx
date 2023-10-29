@@ -14,21 +14,16 @@ import {
 } from "@/utils/routes";
 import Link from "next/link";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
-import { PIECE_CATEGORY } from "@prisma/client";
-import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 
 const PieceSchema = z.object({
   title: z.string().min(2),
-  nickname: z.string().min(2).optional(),
+  nickname: z.string().optional(),
   yearOfComposition: z
     .number()
     .gte(1000)
     .lte(new Date().getFullYear())
-    .optional(),
-  category: z.object({
-    value: z.string(),
-    label: z.string(),
-  }),
+    .optional()
+    .nullable(),
 });
 
 export default function CreatePiece() {
@@ -48,7 +43,11 @@ export default function CreatePiece() {
     // Front input values validation is successful at this point.
     console.log("data", data);
 
-    const { category, ...pieceData } = data;
+    const pieceData = data;
+    // Remove null values from pieceData
+    Object.keys(pieceData).forEach(
+      (key) => pieceData[key] == null && delete pieceData[key],
+    );
 
     if (!state.composer) {
       console.warn("No composer in state to link to the piece");
@@ -73,7 +72,7 @@ export default function CreatePiece() {
     };
 
     updateEditForm(dispatch, "piece", pieceState);
-    router.push(CREATION_PIECE_VERSION_URL + "?category=" + category.value);
+    router.push(CREATION_PIECE_VERSION_URL);
   };
 
   if (!state.composer) {
@@ -89,32 +88,26 @@ export default function CreatePiece() {
 
   return (
     <div>
-      <h1 className="mb-4 text-4xl font-bold">Create a piece</h1>
+      <h1 className="mb-4 text-4xl font-bold">
+        Create a piece
+        <span className="block text-xl font-normal">General information</span>
+      </h1>
       <form
-        className="flex flex-col items-center justify-center"
+        // className="flex flex-col items-center justify-center"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <FormInput name="title" {...{ register, watch, errors }} />
+        <FormInput name="title" isRequired {...{ register, watch, errors }} />
         <FormInput name="nickname" {...{ register, watch, errors }} />
         <FormInput name="yearOfComposition" {...{ register, watch, errors }} />
-        <ControlledSelect
-          control={control}
-          name="category"
-          id="category"
-          options={Object.values(PIECE_CATEGORY).map((category) => ({
-            value: category,
-            label: category,
-          }))}
-          placeholder="Type d'ouvrage"
-          hasOptionsGrouped
-          label=""
-        />
         <button
           className="btn btn-primary mt-6 w-full max-w-xs"
           type="submit"
           disabled={isSubmitting}
         >
           Submit
+          {isSubmitting && (
+            <span className="loading loading-spinner loading-sm"></span>
+          )}
         </button>
       </form>
     </div>
