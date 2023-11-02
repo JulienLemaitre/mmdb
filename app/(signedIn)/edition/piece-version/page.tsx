@@ -24,7 +24,12 @@ async function getData(pieceId: string) {
               metreDenominator: true,
               isCommonTime: true,
               isCutTime: true,
-              tempoIndication: true,
+              tempoIndication: {
+                select: {
+                  id: true,
+                  text: true,
+                },
+              },
               comment: true,
             },
             orderBy: {
