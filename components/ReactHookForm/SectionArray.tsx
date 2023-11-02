@@ -4,6 +4,7 @@ import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import PlusIcon from "@/components/svg/PlusIcon";
 import TrashIcon from "@/components/svg/TrashIcon";
+import { getSectionDefaultValues } from "@/components/ReactHookForm/formUtils";
 
 export default function SectionArray({
   control,
@@ -27,9 +28,9 @@ export default function SectionArray({
       <ul>
         {fields.map((item, index, sectionArray) => {
           const isMetreFieldDisabled =
-            watch(`movements[${nestIndex}].sections.${index}.isCommonTime`) ===
+            watch(`movements[${nestIndex}].sections[${index}].isCommonTime`) ===
               "true" ||
-            watch(`movements[${nestIndex}].sections.${index}.isCutTime`) ===
+            watch(`movements[${nestIndex}].sections[${index}].isCutTime`) ===
               "true";
 
           return (
@@ -40,7 +41,7 @@ export default function SectionArray({
               <input
                 value={index + 1}
                 {...register(
-                  `movements[${nestIndex}].sections.${index}.rank` as const,
+                  `movements[${nestIndex}].sections[${index}].rank` as const,
                 )}
                 hidden
               />
@@ -49,7 +50,7 @@ export default function SectionArray({
                 <div className="flex flex-col gap-1">
                   <FormInput
                     name={
-                      `movements[${nestIndex}].sections.${index}.metreNumerator` as const
+                      `movements[${nestIndex}].sections[${index}].metreNumerator` as const
                     }
                     // label="Metre numerator"
                     type="number"
@@ -61,7 +62,7 @@ export default function SectionArray({
                   <div className="divider border-black my-0" />
                   <FormInput
                     name={
-                      `movements[${nestIndex}].sections.${index}.metreDenominator` as const
+                      `movements[${nestIndex}].sections[${index}].metreDenominator` as const
                     }
                     // label="Metre denominator"
                     type="number"
@@ -74,11 +75,11 @@ export default function SectionArray({
                 <label className="text-5xl flex items-center">
                   <input
                     {...register(
-                      `movements[${nestIndex}].sections.${index}.isCommonTime` as const,
+                      `movements[${nestIndex}].sections[${index}].isCommonTime` as const,
                       { required: "This is required" },
                     )}
                     name={
-                      `movements[${nestIndex}].sections.${index}.isCommonTime` as const
+                      `movements[${nestIndex}].sections[${index}].isCommonTime` as const
                     }
                     value={true}
                     onClick={(e) => {
@@ -87,18 +88,18 @@ export default function SectionArray({
 
                       if (
                         isChecked &&
-                        getValues(`movements[${nestIndex}].sections.${index}`)
+                        getValues(`movements[${nestIndex}].sections[${index}]`)
                       ) {
                         setValue(
-                          `movements[${nestIndex}].sections.${index}.isCutTime`,
+                          `movements[${nestIndex}].sections[${index}].isCutTime`,
                           undefined,
                         );
                         setValue(
-                          `movements[${nestIndex}].sections.${index}.metreNumerator`,
+                          `movements[${nestIndex}].sections[${index}].metreNumerator`,
                           4,
                         );
                         setValue(
-                          `movements[${nestIndex}].sections.${index}.metreDenominator`,
+                          `movements[${nestIndex}].sections[${index}].metreDenominator`,
                           4,
                         );
                       }
@@ -111,11 +112,11 @@ export default function SectionArray({
                 <label className="text-5xl flex items-center">
                   <input
                     {...register(
-                      `movements[${nestIndex}].sections.${index}.isCutTime` as const,
+                      `movements[${nestIndex}].sections[${index}].isCutTime` as const,
                       { required: "This is required" },
                     )}
                     name={
-                      `movements[${nestIndex}].sections.${index}.isCutTime` as const
+                      `movements[${nestIndex}].sections[${index}].isCutTime` as const
                     }
                     value={true}
                     onClick={(e) => {
@@ -124,18 +125,18 @@ export default function SectionArray({
 
                       if (
                         isChecked &&
-                        getValues(`movements[${nestIndex}].sections.${index}`)
+                        getValues(`movements[${nestIndex}].sections[${index}]`)
                       ) {
                         setValue(
-                          `movements[${nestIndex}].sections.${index}.isCommonTime`,
+                          `movements[${nestIndex}].sections[${index}].isCommonTime`,
                           undefined,
                         );
                         setValue(
-                          `movements[${nestIndex}].sections.${index}.metreNumerator`,
+                          `movements[${nestIndex}].sections[${index}].metreNumerator`,
                           2,
                         );
                         setValue(
-                          `movements[${nestIndex}].sections.${index}.metreDenominator`,
+                          `movements[${nestIndex}].sections[${index}].metreDenominator`,
                           2,
                         );
                       }
@@ -148,7 +149,7 @@ export default function SectionArray({
               </div>
               <FormInput
                 name={
-                  `movements[${nestIndex}].sections.${index}.fastestStructuralNotesPerBar` as const
+                  `movements[${nestIndex}].sections[${index}].fastestStructuralNotesPerBar` as const
                 }
                 label={`Fastest structural notes per bar`}
                 type="number"
@@ -157,10 +158,10 @@ export default function SectionArray({
               <label>
                 <input
                   {...register(
-                    `movements[${nestIndex}].sections.${index}.isFastestStructuralNoteBelCanto` as const,
+                    `movements[${nestIndex}].sections[${index}].isFastestStructuralNoteBelCanto` as const,
                   )}
                   name={
-                    `movements[${nestIndex}].sections.${index}.isFastestStructuralNoteBelCanto` as const
+                    `movements[${nestIndex}].sections[${index}].isFastestStructuralNoteBelCanto` as const
                   }
                   value={true}
                   type="checkbox"
@@ -170,7 +171,7 @@ export default function SectionArray({
               </label>
               <FormInput
                 name={
-                  `movements[${nestIndex}].sections.${index}.fastestStaccatoNotesPerBar` as const
+                  `movements[${nestIndex}].sections[${index}].fastestStaccatoNotesPerBar` as const
                 }
                 label={`Fastest staccato notes per bar`}
                 type="number"
@@ -178,7 +179,7 @@ export default function SectionArray({
               />
               <FormInput
                 name={
-                  `movements[${nestIndex}].sections.${index}.fastestRepeatedNotesPerBar` as const
+                  `movements[${nestIndex}].sections[${index}].fastestRepeatedNotesPerBar` as const
                 }
                 label={`Fastest repeated notes per bar`}
                 type="number"
@@ -186,7 +187,7 @@ export default function SectionArray({
               />
               <FormInput
                 name={
-                  `movements[${nestIndex}].sections.${index}.fastestOrnamentalNotesPerBar` as const
+                  `movements[${nestIndex}].sections[${index}].fastestOrnamentalNotesPerBar` as const
                 }
                 label={`Fastest ornamental notes per bar`}
                 type="number"
@@ -194,7 +195,7 @@ export default function SectionArray({
               />
               <FormInput // TODO: button "add a comment" and a textarea
                 name={
-                  `movements[${nestIndex}].sections.${index}.comment` as const
+                  `movements[${nestIndex}].sections[${index}].comment` as const
                 }
                 label={`Comment`}
                 defaultValue={``}
@@ -202,18 +203,18 @@ export default function SectionArray({
               />
               <ControlledSelect
                 name={
-                  `movements[${nestIndex}].sections.${index}.tempoIndication` as const
+                  `movements[${nestIndex}].sections[${index}].tempoIndication` as const
                 }
                 label={`Tempo indication`}
                 id={
-                  `movements[${nestIndex}].sections.${index}.tempoIndication` as const
+                  `movements[${nestIndex}].sections[${index}].tempoIndication` as const
                 }
                 control={control}
                 options={tempoIndicationList.map((ti) => ({
                   value: ti.id,
                   label: ti.text,
                 }))}
-                isRequired={true}
+                // isRequired={true}
                 errors={errors}
               />
               {index === sectionArray.length - 1 && (
@@ -222,7 +223,7 @@ export default function SectionArray({
                     type="button"
                     className="btn btn-accent"
                     onClick={() => {
-                      append({ rank: "append" });
+                      append(getSectionDefaultValues(index));
                     }}
                   >
                     <PlusIcon className="w-5 h-5" />

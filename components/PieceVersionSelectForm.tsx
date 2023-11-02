@@ -1,19 +1,20 @@
 "use client";
-import Link from "next/link";
 
+import Link from "next/link";
 import {
   updateEditForm,
   useEditForm,
 } from "@/components/context/editFormContext";
 import {
+  CREATION_PIECE_VERSION_URL,
   EDITION_PIECE_URL,
   EDITION_PIECE_VERSION_CONTENT_URL,
-  EDITION_PIECE_VERSION_URL,
 } from "@/utils/routes";
 import PieceVersionSelect from "@/components/PieceVersionSelect";
 import { PieceVersionState } from "@/types/editFormTypes";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import PlusIcon from "@/components/svg/PlusIcon";
 
 type PieceVersionSelectFormProps = {
   pieceVersions: PieceVersionState[];
@@ -55,6 +56,18 @@ export default function PieceVersionSelectForm({
   return (
     <>
       <PieceVersionSelect pieceVersions={pieceVersions} onSelect={onSelect} />
+      <div className="mt-4">
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => {
+            router.push(CREATION_PIECE_VERSION_URL);
+          }}
+        >
+          <PlusIcon className="w-5 h-5" />
+          New piece version
+        </button>
+      </div>
       <button
         onClick={onSubmit}
         className="btn btn-primary mt-4"

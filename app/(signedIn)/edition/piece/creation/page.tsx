@@ -22,6 +22,7 @@ const PieceSchema = z.object({
     .number()
     .gte(1000)
     .lte(new Date().getFullYear())
+    .or(z.nan())
     .optional()
     .nullable(),
 });

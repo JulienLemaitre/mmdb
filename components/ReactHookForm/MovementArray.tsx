@@ -5,6 +5,7 @@ import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import SectionArray from "@/components/ReactHookForm/SectionArray";
 import PlusIcon from "@/components/svg/PlusIcon";
 import TrashIcon from "@/components/svg/TrashIcon";
+import { getMovementDefaultValues } from "@/components/ReactHookForm/formUtils";
 
 export default function MovementArray({
   control,
@@ -36,13 +37,13 @@ export default function MovementArray({
             }`}</h4>
             <input
               value={index + 1}
-              {...register(`movements.${index}.rank` as const)}
+              {...register(`movements[${index}].rank` as const)}
               hidden
             />
             <ControlledSelect
-              name={`movements.${index}.key` as const}
+              name={`movements[${index}].key` as const}
               label={`Key`}
-              id={`movements.${index}.key` as const}
+              id={`movements[${index}].key` as const}
               control={control}
               options={Object.values(KEY).map((key) => ({
                 value: key,
@@ -63,7 +64,7 @@ export default function MovementArray({
                   type="button"
                   className="btn btn-secondary"
                   onClick={() => {
-                    append({ rank: index + 1, sections: [{ rank: 1 }] });
+                    append(getMovementDefaultValues(index));
                   }}
                 >
                   <PlusIcon className="w-5 h-5" />

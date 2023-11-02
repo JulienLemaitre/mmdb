@@ -30,14 +30,20 @@ export type SectionInput = Pick<
   | "rank"
   | "metreNumerator"
   | "metreDenominator"
-  | "isCommonTime"
-  | "isCutTime"
+  // | "isCommonTime"
+  // | "isCutTime"
   | "fastestStructuralNotesPerBar"
   | "fastestStaccatoNotesPerBar"
   | "fastestRepeatedNotesPerBar"
   | "fastestOrnamentalNotesPerBar"
-  | "isFastestStructuralNoteBelCanto"
-> & { tempoIndication?: string; comment?: string };
+  // | "isFastestStructuralNoteBelCanto"
+> & {
+  tempoIndication?: string;
+  comment?: string;
+  isCommonTime?: string;
+  isCutTime?: string;
+  isFastestStructuralNoteBelCanto?: string;
+};
 export type MovementInput = Pick<Movement, "rank"> & {
   key: SelectInput;
   sections: SectionInput[];

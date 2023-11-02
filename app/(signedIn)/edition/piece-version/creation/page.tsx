@@ -1,6 +1,7 @@
 "use client";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+// import { useRouter } from "next/navigation";
 import {
   updateEditForm,
   useEditForm,
@@ -12,51 +13,94 @@ import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import { PieceVersionInput } from "@/types/editFormTypes";
 import { EDITION_PIECE_URL } from "@/utils/routes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
-import { useEffect, useState } from "react";
+import { MOVEMENT_DEFAULT_VALUE } from "@/components/ReactHookForm/formUtils";
 
-const PieceVersionSchema = z.object({
-  category: z.object({
-    value: z.string(),
-    label: z.string(),
-  }),
-  movements: z
-    .array(
-      z.object({
-        rank: z.number(),
-        key: z.object({
-          value: z.string(),
-          label: z.string(),
+const PieceVersionSchema = z
+  .object({
+    category: z.object({
+      value: z.string(),
+      label: z.string(),
+    }),
+    movements: z
+      .array(
+        z.object({
+          rank: z.number(),
+          key: z.object({
+            value: z.string(),
+            label: z.string(),
+          }),
+          sections: z
+            .array(
+              z.object({
+                rank: z.number(),
+                metreNumerator: z.number(),
+                metreDenominator: z.number(),
+                isCommonTime: z.string().optional(),
+                isCutTime: z.string().optional(),
+                fastestStructuralNotesPerBar: z.number(),
+                isFastestStructuralNoteBelCanto: z.string().optional(),
+                fastestStaccatoNotesPerBar: z.number().or(z.nan()),
+                fastestRepeatedNotesPerBar: z.number().or(z.nan()),
+                fastestOrnamentalNotesPerBar: z.number().or(z.nan()),
+                comment: z.string().optional(),
+                tempoIndication: z
+                  .object({
+                    value: z.string(),
+                    label: z.string(),
+                  })
+                  .optional(),
+              }),
+            )
+            .nonempty(),
         }),
-        sections: z
-          .array(
-            z.object({
-              rank: z.number(),
-              metreNumerator: z.number(),
-              metreDenominator: z.number(),
-              isCommonTime: z.string().optional(),
-              isCutTime: z.string().optional(),
-              fastestStructuralNotesPerBar: z.number().or(z.nan()),
-              isFastestStructuralNoteBelCanto: z.string().optional(),
-              fastestStaccatoNotesPerBar: z.number().or(z.nan()),
-              fastestRepeatedNotesPerBar: z.number().or(z.nan()),
-              fastestOrnamentalNotesPerBar: z.number().or(z.nan()),
-              comment: z.string().optional(),
-              tempoIndication: z
-                .object({
-                  value: z.string(),
-                  label: z.string(),
-                })
-                .optional(),
-            }),
-          )
-          .nonempty(),
-      }),
-    )
-    .nonempty(),
-});
+      )
+      .nonempty(),
+  })
+  .refine(
+    (data) => {
+      return data.movements.some((movement, mIndex) => {
+        return movement.sections.some((section, sIndex) => {
+          console.log({ mIndex, sIndex });
+          return [
+            section.fastestStructuralNotesPerBar,
+            section.fastestStaccatoNotesPerBar,
+            section.fastestRepeatedNotesPerBar,
+            section.fastestOrnamentalNotesPerBar,
+          ].every((value) => value === null || Number.isNaN(value) || !value);
+        });
+      });
+    },
+    (data) => {
+      let movementIndex = 0,
+        sectionIndex = 0;
+      const condition = data.movements.some((movement, mIndex) => {
+        return movement.sections.some((section, sIndex) => {
+          movementIndex = mIndex;
+          sectionIndex = sIndex;
+          console.log({ movementIndex, sectionIndex });
+          return [
+            section.fastestStructuralNotesPerBar,
+            section.fastestStaccatoNotesPerBar,
+            section.fastestRepeatedNotesPerBar,
+            section.fastestOrnamentalNotesPerBar,
+          ].every((value) => value === null || Number.isNaN(value) || !value);
+        });
+      });
+      return {
+        message: "At least one fastest notes per bar field must be filled",
+        path: [
+          "movements",
+          movementIndex,
+          "sections",
+          sectionIndex,
+          "fastestStructuralNotesPerBar",
+        ],
+      };
+    },
+  );
 
 export default function CreatePieceVersion() {
-  const router = useRouter();
+  // const router = useRouter();
   const { dispatch, state } = useEditForm();
   const {
     formState: { errors, isSubmitting },
@@ -69,7 +113,13 @@ export default function CreatePieceVersion() {
     watch,
   } = useForm<PieceVersionInput>({
     defaultValues: {
-      movements: [{ rank: 1, sections: [{ rank: 1 }] }],
+      movements: [
+        MOVEMENT_DEFAULT_VALUE,
+        // {
+        //   rank: 1,
+        //   sections: [{ rank: 1, isCutTime: "false", isCommonTime: "false" }],
+        // },
+      ],
     },
     resolver: zodResolver(PieceVersionSchema),
   });
@@ -127,14 +177,14 @@ export default function CreatePieceVersion() {
       pieceId: pieceVersion.pieceId,
     };
 
-    updateEditForm(dispatch, "pieceVersion", pieceVersionState);
+    // updateEditForm(dispatch, "pieceVersion", pieceVersionState);
 
     console.log(`[onSubmit] DONE :`);
   };
 
-  if (!state.piece) {
-    router.push(EDITION_PIECE_URL);
-  }
+  // if (!state.piece) {
+  //   router.push(EDITION_PIECE_URL);
+  // }
 
   console.log(`[CreatePieceVersion] errors :`, errors);
 

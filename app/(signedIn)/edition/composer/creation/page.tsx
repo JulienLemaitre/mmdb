@@ -19,6 +19,7 @@ const PersonSchema = z.object({
     .number()
     .gte(1000)
     .lte(new Date().getFullYear())
+    .or(z.nan())
     .optional()
     .nullable(),
 });
@@ -76,9 +77,21 @@ export default function CreateComposer() {
         // className="flex flex-col items-center justify-center"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <FormInput name="firstName" {...{ register, watch, errors }} />
-        <FormInput name="lastName" {...{ register, watch, errors }} />
-        <FormInput name="birthYear" {...{ register, watch, errors }} />
+        <FormInput
+          name="firstName"
+          isRequired
+          {...{ register, watch, errors }}
+        />
+        <FormInput
+          name="lastName"
+          isRequired
+          {...{ register, watch, errors }}
+        />
+        <FormInput
+          name="birthYear"
+          isRequired
+          {...{ register, watch, errors }}
+        />
         <FormInput name="deathYear" {...{ register, watch, errors }} />
         <button
           className="btn btn-primary mt-6 w-full max-w-xs"

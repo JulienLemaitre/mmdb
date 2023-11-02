@@ -2,6 +2,8 @@
 // import formatPhoneInput from "@/utils/formatPhoneInput";
 
 import { UseFormRegister } from "react-hook-form";
+import get from "just-safe-get";
+import { GetErrorMessage } from "@/utils/GetErrorMessage";
 
 function getRegisterProps(name: string) {
   return {
@@ -93,12 +95,23 @@ export function FormInput({
   inputClassName = "", // showPassword = false,
   // toggleShowPassword = () => {},
 }: FormInputProps) {
-  const isInvalid = !!errors[name];
+  // Create a version of name with every array index as [index]. replaced by .index.
+  // This is to be able to use getValues() with arrays.
+  const nameWithDotIndex = name.replace(/\[(\d+)\]\./g, ".$1.");
+
+  // console.log(
+  //   `[] get(errors, ${nameWithDotIndex}) :`,
+  //   get(errors, nameWithDotIndex),
+  // );
+  const error = get(errors, nameWithDotIndex);
+  const isInvalid = !!error;
   const type =
     typeProp || ["birthYear", "deathYear", "yearOfComposition"].includes(name)
       ? "number"
       : "text";
   const isNumber = type === "number";
+  const errorMessage = error?.message;
+  // console.log(`[] error :`, error);
 
   return (
     <div className="form-control w-full max-w-xs">
@@ -124,9 +137,14 @@ export function FormInput({
         {...(defaultValue ? { defaultValue } : {})}
         {...(disabled ? { disabled: true } : {})}
       />
-      <span className="label-text-alt text-red-500">
-        {errors[name] && errors[name].message}
-      </span>
+      {GetErrorMessage(errorMessage) && (
+        <span className="label-text-alt text-red-500">
+          {GetErrorMessage(errorMessage)}
+        </span>
+      )}
+      {/*<span className="label-text-alt text-red-500">
+        {GetErrorMessage(errorMessage)}
+      </span>*/}
     </div>
   );
 }
