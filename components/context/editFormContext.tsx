@@ -28,16 +28,29 @@ const EditFormContext = createContext<
   | undefined
 >(undefined);
 
+function localStorageSetItem(key: string, value: any) {
+  if (typeof window !== "undefined") {
+    // Perform localStorage action
+    return localStorage.setItem(key, JSON.stringify(value));
+  }
+}
+function localStorageGetItem(key: string) {
+  if (typeof window !== "undefined") {
+    // Perform localStorage action
+    return localStorage.getItem(key);
+  }
+}
+
 function editFormReducer(state: EditFormState, action: PieceFormAction) {
   if (
     ["composer", "piece", "pieceVersionId", "movements"].includes(action.type)
   ) {
     const newState = { ...state, [action.type]: action.payload };
-    localStorage.setItem("editForm", JSON.stringify(newState));
+    localStorageSetItem("editForm", newState);
     return { ...state, [action.type]: action.payload };
   }
   if (action.type === "init") {
-    localStorage.setItem("editForm", JSON.stringify({}));
+    localStorageSetItem("editForm", {});
     return {};
   }
   throw new Error(`Unhandled action type: ${action.type}`);
@@ -48,7 +61,7 @@ export function EditFormProvider({ children }: EditFormProviderProps) {
   const [state, dispatch] = useReducer(editFormReducer, {}, (initArg) => {
     let editFormData = initArg;
     try {
-      const localStorageValue = localStorage.getItem(LOCL_STORAGE_KEY);
+      const localStorageValue = localStorageGetItem(LOCL_STORAGE_KEY);
       if (localStorageValue) editFormData = JSON.parse(localStorageValue);
     } catch (error) {
       console.warn(
