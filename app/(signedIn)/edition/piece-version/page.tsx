@@ -26,7 +26,6 @@ async function getData(pieceId: string) {
               isCutTime: true,
               tempoIndication: {
                 select: {
-                  id: true,
                   text: true,
                 },
               },

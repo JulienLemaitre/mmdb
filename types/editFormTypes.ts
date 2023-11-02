@@ -67,8 +67,8 @@ export type SectionState = Pick<
   | "isCommonTime"
   | "isCutTime"
 > & {
-  tempoIndication?: Pick<TempoIndication, "text">;
-  comment?: Pick<Comment, "text">;
+  tempoIndication: Pick<TempoIndication, "text"> | null;
+  comment: Pick<Comment, "text"> | null;
 };
 
 export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {
