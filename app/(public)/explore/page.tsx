@@ -444,47 +444,58 @@ export default async function Page() {
                         }
                       </div>
                       <div className="w-1/2">
-                        <div className="ml-4 border-2 border-gray-300 rounded-2xl p-4">
-                          <div className="flex">
-                            <div className="mr-4">Source:</div>
-                            <div>
-                              <div className="text-gray-700">
-                                {pieceSource.year} -{" "}
-                                {pieceSource.type.toLowerCase()}
+                        {pieceSource ? (
+                          <div className="ml-4 border-2 border-gray-300 rounded-2xl p-4">
+                            <div className="flex">
+                              <div className="mr-4">Source:</div>
+                              <div>
+                                <div className="text-gray-700">
+                                  {pieceSource.year} -{" "}
+                                  {pieceSource.type.toLowerCase()}
+                                </div>
+                                {pieceSource.title && (
+                                  <div className="text-gray-700">
+                                    {pieceSource.title}
+                                  </div>
+                                )}
+                                {pieceSource.link && (
+                                  <div className="text-gray-700">
+                                    <a href={pieceSource.link} target="_blank">
+                                      {pieceSource.link}
+                                    </a>
+                                  </div>
+                                )}
+                                {pieceSource.references && (
+                                  <div className="text-gray-700">
+                                    {JSON.stringify(pieceSource.references)}
+                                  </div>
+                                )}
                               </div>
-                              {pieceSource.title && (
-                                <div className="text-gray-700">
-                                  {pieceSource.title}
+                            </div>
+                            {pieceSource.contributions.map((contribution) => (
+                              <div key={contribution.id} className="flex">
+                                <div className="mr-4">
+                                  {contribution.role.toLowerCase()}:
                                 </div>
-                              )}
-                              {pieceSource.link && (
-                                <div className="text-gray-700">
-                                  <a href={pieceSource.link} target="_blank">
-                                    {pieceSource.link}
-                                  </a>
+                                <div className="mr-4">
+                                  {contribution.person?.firstName
+                                    ? contribution.person?.firstName +
+                                      contribution.person?.lastName
+                                    : contribution.organization?.name}
                                 </div>
-                              )}
-                              {pieceSource.references && (
-                                <div className="text-gray-700">
-                                  {JSON.stringify(pieceSource.references)}
-                                </div>
-                              )}
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="ml-4 border-2 border-gray-300 rounded-2xl p-4">
+                            <div className="flex">
+                              <div className="mr-4">Source:</div>
+                              <div>
+                                <div className="text-gray-700">No source</div>
+                              </div>
                             </div>
                           </div>
-                          {pieceSource.contributions.map((contribution) => (
-                            <div key={contribution.id} className="flex">
-                              <div className="mr-4">
-                                {contribution.role.toLowerCase()}:
-                              </div>
-                              <div className="mr-4">
-                                {contribution.person?.firstName
-                                  ? contribution.person?.firstName +
-                                    contribution.person?.lastName
-                                  : contribution.organization?.name}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
+                        )}
                       </div>
                     </div>
                   </div>
