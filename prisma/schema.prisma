@@ -25,10 +25,10 @@ model Piece {
   title             String
   nickname          String?
   composer          Person         @relation(fields: [composerId], references: [id]) // A piece have a unique composer
-  composerId        String
+  composerId        String         @db.Uuid
   yearOfComposition Int?
   creator           User?          @relation(fields: [creatorId], references: [id])
-  creatorId         String?
+  creatorId         String?        @db.Uuid
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
   pieceVersions     PieceVersion[] // A piece can have many versions
@@ -39,7 +39,7 @@ model Piece {
 model PieceVersion {
   id        String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   piece     Piece          @relation(fields: [pieceId], references: [id]) // A piece version belongs to a single piece
-  pieceId   String
+  pieceId   String         @db.Uuid
   category  PIECE_CATEGORY
   movements Movement[] // A pieceVersion can have many movements
   sources   Source[] // A pieceVersion can have many sources
@@ -50,7 +50,7 @@ model PieceVersion {
 model Movement {
   id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   pieceVersion   PieceVersion @relation(fields: [pieceVersionId], references: [id]) // A movement belongs to a single piece
-  pieceVersionId String
+  pieceVersionId String       @db.Uuid
   rank           Int
   key            KEY
   createdAt      DateTime     @default(now())
@@ -63,7 +63,7 @@ model Movement {
 model Section {
   id                              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   movement                        Movement         @relation(fields: [movementId], references: [id])
-  movementId                      String
+  movementId                      String           @db.Uuid
   rank                            Int
   metreNumerator                  Int
   metreDenominator                Int
@@ -75,9 +75,9 @@ model Section {
   fastestOrnamentalNotesPerBar    Float?
   isFastestStructuralNoteBelCanto Boolean          @default(false)
   tempoIndication                 TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
-  tempoIndicationId               String?
+  tempoIndicationId               String?          @db.Uuid
   metronomeMarks                  MetronomeMark[] // A movement can have many metronome marks
-  commentId                       String?          @unique
+  commentId                       String?          @unique @db.Uuid
   comment                         Comment?         @relation(fields: [commentId], references: [id])
   createdAt                       DateTime         @default(now())
   updatedAt                       DateTime         @updatedAt
@@ -96,7 +96,7 @@ model TempoIndication {
 model MetronomeMark {
   id             String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   source         Source     @relation(fields: [sourceId], references: [id])
-  sourceId       String
+  sourceId       String     @db.Uuid
   beatUnit       NOTE_VALUE
   bpm            Int
   notesPerSecond Json? // Will not be used after data seeding
@@ -104,8 +104,8 @@ model MetronomeMark {
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   section        Section    @relation(fields: [sectionId], references: [id])
-  sectionId      String
-  commentId      String?    @unique
+  sectionId      String     @db.Uuid
+  commentId      String?    @unique @db.Uuid
   comment        Comment?   @relation(fields: [commentId], references: [id])
 }
 
@@ -120,8 +120,8 @@ model Source {
   contributions  Contribution[] // A source can have many Contributions
   metronomeMarks MetronomeMark[] // A source can have many metronome marks
   creator        User?           @relation(fields: [creatorId], references: [id])
-  creatorId      String?
-  commentId      String?         @unique
+  creatorId      String?         @db.Uuid
+  commentId      String?         @unique @db.Uuid
   comment        Comment?        @relation(fields: [commentId], references: [id])
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
@@ -130,11 +130,11 @@ model Source {
 model Contribution {
   id             String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   source         Source            @relation(fields: [sourceId], references: [id])
-  sourceId       String
+  sourceId       String            @db.Uuid
   person         Person?           @relation(fields: [personId], references: [id])
-  personId       String?
+  personId       String?           @db.Uuid
   organization   Organization?     @relation(fields: [organizationId], references: [id])
-  organizationId String?
+  organizationId String?           @db.Uuid
   role           CONTRIBUTION_ROLE
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt
@@ -160,7 +160,7 @@ model Person {
   compositions  Piece[] // A person can have compose many pieces
   contributions Contribution[] // A person can have many contributions
   creator       User?          @relation(fields: [creatorId], references: [id])
-  creatorId     String?
+  creatorId     String?        @db.Uuid
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 
@@ -173,7 +173,7 @@ model Comment {
   updatedAt     DateTime       @updatedAt
   text          String
   creator       User?          @relation(fields: [creatorId], references: [id])
-  creatorId     String?
+  creatorId     String?        @db.Uuid
   source        Source?
   section       Section?
   metronomeMark MetronomeMark?
@@ -186,7 +186,7 @@ model Comment {
 
 model Account {
   id                String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId            String
+  userId            String  @db.Uuid
   type              String
   provider          String
   providerAccountId String
@@ -206,7 +206,7 @@ model Account {
 model Session {
   id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   sessionToken String   @unique
-  userId       String
+  userId       String   @db.Uuid
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
