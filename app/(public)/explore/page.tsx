@@ -68,21 +68,13 @@ export default async function Page() {
                   >
                     <h2 className="text-2xl font-bold">{piece.title}</h2>
                     <div className="flex mb-4">
-                      {["yearOfComposition", "category"].map(
-                        (key, index, array) => (
-                          <Fragment key={key}>
-                            <div className="mr-4">
-                              {key}: {pieceVersion[key]}
-                            </div>
-                            {
-                              // Add separator if not last item
-                              index !== Object.keys(array).length - 1 && (
-                                <div className="mr-4">|</div>
-                              )
-                            }
-                          </Fragment>
-                        ),
-                      )}
+                      <div className="mr-4">
+                        yearOfComposition: {piece.yearOfComposition}
+                      </div>
+                      <div className="mr-4">|</div>
+                      <div className="mr-4">
+                        category: {pieceVersion.category}
+                      </div>
                     </div>
                     <div className="flex mb-4">
                       <div className="w-1/2">
@@ -208,10 +200,10 @@ export default async function Page() {
                                                             metronomeMark: mm,
                                                           },
                                                         );
-                                                      console.log(
-                                                        `[Home] notesPerSecondComputedFromNotesPerBar :`,
-                                                        notesPerSecondCollectionComputedFromNotesPerBarCollection,
-                                                      );
+                                                      // console.log(
+                                                      //   `[Home] notesPerSecondComputedFromNotesPerBar :`,
+                                                      //   notesPerSecondCollectionComputedFromNotesPerBarCollection,
+                                                      // );
                                                     } catch (e: any) {
                                                       console.log(
                                                         `--------------------------------------------------`,

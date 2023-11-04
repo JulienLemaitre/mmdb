@@ -1,3 +1,5 @@
+export const HOME_URL = "/";
+export const EXPLORE_URL = "/explore";
 export const EDITION_COMPOSER_URL = "/edition/composer";
 export const CREATION_COMPOSER_URL = "/edition/composer/creation";
 export const EDITION_PIECE_URL = "/edition/piece";
