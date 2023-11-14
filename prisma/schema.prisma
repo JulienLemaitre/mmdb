@@ -217,6 +217,8 @@ model User {
   id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name          String?
   email         String?   @unique
+  passwordHash  String?
+  role          String?   @default("USER")
   emailVerified DateTime?
   image         String?
   accounts      Account[]
