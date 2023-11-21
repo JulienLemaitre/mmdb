@@ -1,11 +1,15 @@
 // import { emailRegex, excludedEmailDomain, mobileRegex } from "@/utils/regex";
 // import formatPhoneInput from "@/utils/formatPhoneInput";
 
-import { UseFormRegister } from "react-hook-form";
 import get from "just-safe-get";
 import { GetErrorMessage } from "@/utils/GetErrorMessage";
 
 function getRegisterProps(name: string) {
+  if (name.toLowerCase().includes("year")) {
+    return {
+      setValueAs: (v) => (v ? parseInt(v) : null),
+    };
+  }
   return {
     birthYear: {
       setValueAs: (v) => (v ? parseInt(v) : null),
@@ -93,8 +97,8 @@ export function FormInput({
   type: typeProp,
   registerProps = {},
   inputClassName = "", // showPassword = false,
-  // toggleShowPassword = () => {},
-}: FormInputProps) {
+} // toggleShowPassword = () => {},
+: FormInputProps) {
   // Create a version of name with every array index as [index]. replaced by .index.
   // This is to be able to use getValues() with arrays.
   const nameWithDotIndex = name.replace(/\[(\d+)\]\./g, ".$1.");
@@ -115,15 +119,14 @@ export function FormInput({
 
   return (
     <div className="form-control w-full max-w-xs">
-      {label ||
-        (getLabel(name) && (
-          <label className="label">
-            <span className="label-text">
-              {label || getLabel(name)}
-              {isRequired ? <span className="text-red-500 ml-1">*</span> : null}
-            </span>
-          </label>
-        ))}
+      {(label || getLabel(name)) && (
+        <label className="label">
+          <span className="label-text">
+            {label || getLabel(name)}
+            {isRequired ? <span className="text-red-500 ml-1">*</span> : null}
+          </span>
+        </label>
+      )}
       <input
         className={`input input-bordered ${inputClassName}`}
         // type={["password"].includes(name) && showPassword ? "text" : "password"}
@@ -142,9 +145,6 @@ export function FormInput({
           {GetErrorMessage(errorMessage)}
         </span>
       )}
-      {/*<span className="label-text-alt text-red-500">
-        {GetErrorMessage(errorMessage)}
-      </span>*/}
     </div>
   );
 }

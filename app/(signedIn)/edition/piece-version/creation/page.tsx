@@ -1,7 +1,7 @@
 "use client";
 import { z } from "zod";
 import { useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   updateEditForm,
   useEditForm,
@@ -11,96 +11,53 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { PIECE_CATEGORY } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import { PieceVersionInput } from "@/types/editFormTypes";
-import { EDITION_PIECE_URL } from "@/utils/routes";
+import { CREATION_SOURCE_URL } from "@/utils/routes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
 import { MOVEMENT_DEFAULT_VALUE } from "@/components/ReactHookForm/formUtils";
 
-const PieceVersionSchema = z
-  .object({
-    category: z.object({
-      value: z.string(),
-      label: z.string(),
-    }),
-    movements: z
-      .array(
-        z.object({
-          rank: z.number(),
-          key: z.object({
-            value: z.string(),
-            label: z.string(),
-          }),
-          sections: z
-            .array(
-              z.object({
-                rank: z.number(),
-                metreNumerator: z.number(),
-                metreDenominator: z.number(),
-                isCommonTime: z.string().optional(),
-                isCutTime: z.string().optional(),
-                fastestStructuralNotesPerBar: z.number(),
-                isFastestStructuralNoteBelCanto: z.string().optional(),
-                fastestStaccatoNotesPerBar: z.number().or(z.nan()),
-                fastestRepeatedNotesPerBar: z.number().or(z.nan()),
-                fastestOrnamentalNotesPerBar: z.number().or(z.nan()),
-                comment: z.string().optional(),
-                tempoIndication: z
-                  .object({
-                    value: z.string(),
-                    label: z.string(),
-                  })
-                  .optional(),
-              }),
-            )
-            .nonempty(),
+const PieceVersionSchema = z.object({
+  category: z.object({
+    value: z.string(),
+    label: z.string(),
+  }),
+  movements: z
+    .array(
+      z.object({
+        rank: z.number(),
+        key: z.object({
+          value: z.string(),
+          label: z.string(),
         }),
-      )
-      .nonempty(),
-  })
-  .refine(
-    (data) => {
-      return data.movements.some((movement, mIndex) => {
-        return movement.sections.some((section, sIndex) => {
-          console.log({ mIndex, sIndex });
-          return [
-            section.fastestStructuralNotesPerBar,
-            section.fastestStaccatoNotesPerBar,
-            section.fastestRepeatedNotesPerBar,
-            section.fastestOrnamentalNotesPerBar,
-          ].every((value) => value === null || Number.isNaN(value) || !value);
-        });
-      });
-    },
-    (data) => {
-      let movementIndex = 0,
-        sectionIndex = 0;
-      const condition = data.movements.some((movement, mIndex) => {
-        return movement.sections.some((section, sIndex) => {
-          movementIndex = mIndex;
-          sectionIndex = sIndex;
-          console.log({ movementIndex, sectionIndex });
-          return [
-            section.fastestStructuralNotesPerBar,
-            section.fastestStaccatoNotesPerBar,
-            section.fastestRepeatedNotesPerBar,
-            section.fastestOrnamentalNotesPerBar,
-          ].every((value) => value === null || Number.isNaN(value) || !value);
-        });
-      });
-      return {
-        message: "At least one fastest notes per bar field must be filled",
-        path: [
-          "movements",
-          movementIndex,
-          "sections",
-          sectionIndex,
-          "fastestStructuralNotesPerBar",
-        ],
-      };
-    },
-  );
+        sections: z
+          .array(
+            z.object({
+              rank: z.number(),
+              metreNumerator: z.number(),
+              metreDenominator: z.number(),
+              isCommonTime: z.string().optional(),
+              isCutTime: z.string().optional(),
+              fastestStructuralNotesPerBar: z.number(),
+              isFastestStructuralNoteBelCanto: z.string().optional(),
+              fastestStaccatoNotesPerBar: z.number().or(z.nan()),
+              fastestRepeatedNotesPerBar: z.number().or(z.nan()),
+              fastestOrnamentalNotesPerBar: z.number().or(z.nan()),
+              comment: z.string().optional(),
+              tempoIndication: z
+                .object({
+                  value: z.string(),
+                  label: z.string(),
+                })
+                .optional(),
+            }),
+          )
+          .nonempty(),
+      }),
+    )
+    .nonempty(),
+});
 
 export default function CreatePieceVersion() {
-  // const router = useRouter();
+  const router = useRouter();
   const { dispatch, state } = useEditForm();
   const {
     formState: { errors, isSubmitting },
@@ -113,13 +70,7 @@ export default function CreatePieceVersion() {
     watch,
   } = useForm<PieceVersionInput>({
     defaultValues: {
-      movements: [
-        MOVEMENT_DEFAULT_VALUE,
-        // {
-        //   rank: 1,
-        //   sections: [{ rank: 1, isCutTime: "false", isCommonTime: "false" }],
-        // },
-      ],
+      movements: [MOVEMENT_DEFAULT_VALUE],
     },
     resolver: zodResolver(PieceVersionSchema),
   });
@@ -137,8 +88,6 @@ export default function CreatePieceVersion() {
   const onSubmit = async (data: PieceVersionInput) => {
     // Front input values validation is successful at this point.
     console.log("data", data);
-
-    // TODO: All good until here. Now need to format data to match the type needed to persist in DB.
 
     const pieceVersionData = data;
     // Remove null values from pieceVersionData
@@ -171,35 +120,20 @@ export default function CreatePieceVersion() {
     }
 
     console.log("Piece version created", pieceVersion);
-    const pieceVersionState = {
-      id: pieceVersion.id,
-      category: pieceVersion.category,
-      pieceId: pieceVersion.pieceId,
-    };
 
-    // updateEditForm(dispatch, "pieceVersion", pieceVersionState);
-
-    console.log(`[onSubmit] DONE :`);
+    updateEditForm(dispatch, "pieceVersion", pieceVersion);
+    router.push(CREATION_SOURCE_URL);
   };
-
-  // if (!state.piece) {
-  //   router.push(EDITION_PIECE_URL);
-  // }
 
   console.log(`[CreatePieceVersion] errors :`, errors);
 
   return (
-    <div
-    // className="flex flex-col items-center justify-center"
-    >
+    <div>
       <h1 className="mb-4 text-4xl font-bold">
         Create a piece
         <span className="block text-xl font-normal">Content details</span>
       </h1>
-      <form
-        // className="flex flex-col items-center justify-center"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <ControlledSelect
           name="category"
           label="Category"
@@ -229,7 +163,6 @@ export default function CreatePieceVersion() {
           )}
         </button>
       </form>
-      {/*<p>{JSON.stringify(errors, null, 2)}</p>*/}
     </div>
   );
 }

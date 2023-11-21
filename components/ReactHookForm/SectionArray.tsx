@@ -5,6 +5,8 @@ import { FormInput } from "@/components/ReactHookForm/FormInput";
 import PlusIcon from "@/components/svg/PlusIcon";
 import TrashIcon from "@/components/svg/TrashIcon";
 import { getSectionDefaultValues } from "@/components/ReactHookForm/formUtils";
+import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
+import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
 
 export default function SectionArray({
   control,
@@ -24,7 +26,7 @@ export default function SectionArray({
   );
 
   return (
-    <div className="pl-4 border-l-accent border-l-2 my-4">
+    <div className="my-4">
       <ul>
         {fields.map((item, index, sectionArray) => {
           const isMetreFieldDisabled =
@@ -34,7 +36,7 @@ export default function SectionArray({
               "true";
 
           return (
-            <li key={item.id}>
+            <li key={item.id} className="px-4 border-accent border-2 my-3">
               <h4 className="my-4 text-xl font-bold text-accent">{`Section ${
                 index + 1
               }`}</h4>
@@ -46,7 +48,9 @@ export default function SectionArray({
                 hidden
               />
               <div className="flex gap-2 items-center">
-                <div className="text-lg font-bold">Metre :</div>
+                <div className="text-lg font-bold">
+                  Metre :<span className="text-red-500 ml-1">*</span>
+                </div>
                 <div className="flex flex-col gap-1">
                   <FormInput
                     name={
@@ -148,6 +152,7 @@ export default function SectionArray({
                 </label>
               </div>
               <FormInput
+                isRequired={true}
                 name={
                   `movements[${nestIndex}].sections[${index}].fastestStructuralNotesPerBar` as const
                 }
@@ -214,31 +219,61 @@ export default function SectionArray({
                   value: ti.id,
                   label: ti.text,
                 }))}
-                // isRequired={true}
                 errors={errors}
               />
-              {index === sectionArray.length - 1 && (
-                <section className="my-4 flex gap-2 w-full justify-between">
+              <section className="my-4 flex gap-2 w-full justify-between">
+                {index === sectionArray.length - 1 && (
+                  <>
+                    <button
+                      type="button"
+                      className="btn btn-accent"
+                      onClick={() => {
+                        append(getSectionDefaultValues(index));
+                      }}
+                    >
+                      <PlusIcon className="w-5 h-5" />
+                      Add section
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-error"
+                      onClick={() => remove(index)}
+                    >
+                      <TrashIcon className="w-5 h-5" />
+                      {`Delete section ${index + 1}`}
+                    </button>
+                  </>
+                )}
+                {index > 0 && (
                   <button
                     type="button"
-                    className="btn btn-accent"
+                    className="btn btn-move"
                     onClick={() => {
-                      append(getSectionDefaultValues(index));
+                      setValue(`sectionArray.${index - 1}.rank`, index + 1);
+                      setValue(`sectionArray.${index}.rank`, index);
+                      move(index, index - 1);
                     }}
                   >
-                    <PlusIcon className="w-5 h-5" />
-                    Add section
+                    <ArrowUpIcon className="w-5 h-5" />
+                    Move up
                   </button>
+                )}
+
+                {index < sectionArray.length - 1 && (
                   <button
                     type="button"
-                    className="btn btn-error"
-                    onClick={() => remove(index)}
+                    className="btn btn-move"
+                    onClick={() => {
+                      setValue(`sectionArray.${index + 1}.rank`, index + 1);
+                      setValue(`sectionArray.${index}.rank`, index + 2);
+                      move(index, index + 1);
+                    }}
                   >
-                    <TrashIcon className="w-5 h-5" />
-                    {`Delete section ${index + 1}`}
+                    <ArrowDownIcon className="w-5 h-5" />
+                    Move down
                   </button>
-                </section>
-              )}
+                )}
+              </section>
             </li>
           );
         })}

@@ -3,10 +3,22 @@ import { db } from "@/utils/db";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  console.log(`[POST piece version] body :`, body);
-  const { category, movements = {} } = body;
+  console.log(`[POST piece version] body :`, JSON.stringify(body));
+  const { category, movements = [] } = body;
 
-  const piece = await db.pieceVersion.create({
+  const isPieceExisting = await db.piece.findUnique({
+    where: {
+      id: body.pieceId,
+    },
+  });
+  console.log(
+    `[piece-version POST] isPieceExisting`,
+    JSON.stringify(isPieceExisting, null, 2),
+  );
+  if (!isPieceExisting) {
+    NextResponse.json({ error: "Piece not found" }, { status: 404 });
+  }
+  const pieceVersion = await db.pieceVersion.create({
     data: {
       piece: {
         connect: {
@@ -35,9 +47,16 @@ export async function POST(req: NextRequest) {
                 ? {
                     tempoIndication: {
                       connectOrCreate: {
-                        text:
-                          section.tempoIndication.value ||
-                          section.tempoIndication,
+                        where: {
+                          text:
+                            section.tempoIndication.value ||
+                            section.tempoIndication,
+                        },
+                        create: {
+                          text:
+                            section.tempoIndication.value ||
+                            section.tempoIndication,
+                        },
                       },
                     },
                   }
@@ -56,12 +75,45 @@ export async function POST(req: NextRequest) {
         })),
       },
     },
-    // composer: {
-    //   connect: {
-    //     id: composerId,
-    //   },
-    // },
+    select: {
+      id: true,
+      category: true,
+      movements: {
+        select: {
+          id: true,
+          rank: true,
+          key: true,
+          sections: {
+            select: {
+              id: true,
+              rank: true,
+              metreNumerator: true,
+              metreDenominator: true,
+              isCommonTime: true,
+              isCutTime: true,
+              fastestStructuralNotesPerBar: true,
+              fastestStaccatoNotesPerBar: true,
+              fastestRepeatedNotesPerBar: true,
+              fastestOrnamentalNotesPerBar: true,
+              isFastestStructuralNoteBelCanto: true,
+              tempoIndication: {
+                select: {
+                  id: true,
+                  text: true,
+                },
+              },
+              comment: {
+                select: {
+                  id: true,
+                  text: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
-  return NextResponse.json(piece);
+  return NextResponse.json(pieceVersion);
 }

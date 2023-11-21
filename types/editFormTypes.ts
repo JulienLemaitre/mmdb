@@ -5,6 +5,7 @@ import {
   Piece,
   PieceVersion,
   Section,
+  Source,
   TempoIndication,
 } from "@prisma/client";
 
@@ -77,4 +78,18 @@ export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {
 
 export type PieceVersionState = Pick<PieceVersion, "id" | "category"> & {
   movements: MovementState[];
+};
+
+export type SourceDescriptionState = Pick<
+  Source,
+  "id" | "title" | "type" | "link" | "year" | "references"
+> & {
+  comment: Pick<Comment, "text"> | null;
+};
+
+export type SourceDescriptionInput = Pick<
+  Source,
+  "id" | "title" | "type" | "link" | "year" | "references"
+> & {
+  comment: Pick<Comment, "text"> | null;
 };

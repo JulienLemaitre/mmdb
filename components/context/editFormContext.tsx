@@ -1,24 +1,35 @@
 "use client";
-import { createContext, useContext, useReducer, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useReducer,
+  ReactNode,
+  useEffect,
+} from "react";
 import { Movement } from "@prisma/client";
-import { ComposerState, PieceState } from "@/types/editFormTypes";
+import {
+  ComposerState,
+  PieceState,
+  PieceVersionState,
+  SourceDescriptionState,
+} from "@/types/editFormTypes";
 
 type PieceFormAction =
   | { type: "init"; payload: any }
   | { type: "composerId"; payload: string }
   | { type: "pieceId"; payload: string }
   | { type: "pieceVersionId"; payload: string }
-  | { type: "movements"; payload: string };
+  | { type: "sourceDescription"; payload: string };
 type Dispatch = (action: PieceFormAction) => void;
 type EditFormState = {
   composer?: ComposerState;
   piece?: PieceState;
-  pieceVersionId?: string;
-  movements?: Movement[];
+  pieceVersion?: PieceVersionState;
+  sourceDescription?: SourceDescriptionState;
 };
 type EditFormProviderProps = { children: ReactNode };
 
-const LOCL_STORAGE_KEY = "editForm";
+const LOCAL_STORAGE_KEY = "editForm";
 
 const EditFormContext = createContext<
   | {
@@ -43,35 +54,40 @@ function localStorageGetItem(key: string) {
 
 function editFormReducer(state: EditFormState, action: PieceFormAction) {
   if (
-    ["composer", "piece", "pieceVersionId", "movements"].includes(action.type)
+    ["composer", "piece", "pieceVersion", "sourceDescription"].includes(
+      action.type,
+    )
   ) {
     const newState = { ...state, [action.type]: action.payload };
     localStorageSetItem("editForm", newState);
     return { ...state, [action.type]: action.payload };
   }
   if (action.type === "init") {
-    localStorageSetItem("editForm", {});
-    return {};
+    localStorageSetItem("editForm", action.payload || {});
+    return action.payload || {};
   }
   throw new Error(`Unhandled action type: ${action.type}`);
 }
 
 // eslint-disable-next-line react/prop-types
 export function EditFormProvider({ children }: EditFormProviderProps) {
-  const [state, dispatch] = useReducer(editFormReducer, {}, (initArg) => {
-    let editFormData = initArg;
+  const [state, dispatch] = useReducer(editFormReducer, {});
+
+  useEffect(() => {
     try {
-      const localStorageValue = localStorageGetItem(LOCL_STORAGE_KEY);
-      if (localStorageValue) editFormData = JSON.parse(localStorageValue);
+      const localStorageValue = localStorageGetItem(LOCAL_STORAGE_KEY);
+      if (localStorageValue) {
+        console.log(`[INIT] editForm from localStorage`, localStorageValue);
+        initEditForm(dispatch, JSON.parse(localStorageValue));
+      }
     } catch (error) {
       console.warn(
-        `Error reading localStorage key “${LOCL_STORAGE_KEY}”:`,
+        `Error reading localStorage key “${LOCAL_STORAGE_KEY}”:`,
         error,
       );
     }
-    console.log(`[useReducer Initializer] editFormData :`, editFormData);
-    return editFormData;
-  });
+  }, []);
+
   const value = { state, dispatch };
   return (
     <EditFormContext.Provider value={value}>
@@ -92,6 +108,6 @@ export function updateEditForm(dispatch, type, value) {
   dispatch({ type, payload: value });
 }
 
-export function initEditForm(dispatch) {
-  dispatch({ type: "init" });
+export function initEditForm(dispatch, initialState = {}) {
+  dispatch({ type: "init", payload: initialState });
 }

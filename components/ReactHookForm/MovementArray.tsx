@@ -6,6 +6,8 @@ import SectionArray from "@/components/ReactHookForm/SectionArray";
 import PlusIcon from "@/components/svg/PlusIcon";
 import TrashIcon from "@/components/svg/TrashIcon";
 import { getMovementDefaultValues } from "@/components/ReactHookForm/formUtils";
+import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
+import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
 
 export default function MovementArray({
   control,
@@ -78,6 +80,32 @@ export default function MovementArray({
                   <TrashIcon className="w-5 h-5" />
                   {`Delete Movement ${index + 1}`}
                 </button>
+
+                {index > 0 && (
+                  <button
+                    type="button"
+                    className="btn btn-move"
+                    onClick={() => {
+                      move(index, index - 1);
+                    }}
+                  >
+                    <ArrowUpIcon className="w-5 h-5" />
+                    Move up
+                  </button>
+                )}
+
+                {index < mvtArray.length - 1 && (
+                  <button
+                    type="button"
+                    className="btn btn-move"
+                    onClick={() => {
+                      move(index, index + 1);
+                    }}
+                  >
+                    <ArrowDownIcon className="w-5 h-5" />
+                    Move down
+                  </button>
+                )}
               </section>
             )}
           </li>

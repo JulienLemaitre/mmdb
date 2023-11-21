@@ -11,12 +11,12 @@ export const MOVEMENT_DEFAULT_VALUE = {
 export function getMovementDefaultValues(index: number) {
   return {
     ...MOVEMENT_DEFAULT_VALUE,
-    rank: index + 1,
+    rank: index + 2,
   };
 }
 export function getSectionDefaultValues(index: number) {
   return {
     ...SECTION_DEFAULT_VALUE,
-    rank: index + 1,
+    rank: index + 2,
   };
 }
