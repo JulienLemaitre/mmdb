@@ -60,32 +60,40 @@ export default function MovementArray({
               {...{ control, register, getValues, setValue, errors, watch }}
               tempoIndicationList={tempoIndicationList}
             />
-            {index === mvtArray.length - 1 && (
-              <section className="my-4 flex gap-2 w-full justify-between">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => {
-                    append(getMovementDefaultValues(index));
-                  }}
-                >
-                  <PlusIcon className="w-5 h-5" />
-                  Add movement
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-error"
-                  onClick={() => remove(index)}
-                >
-                  <TrashIcon className="w-5 h-5" />
-                  {`Delete Movement ${index + 1}`}
-                </button>
+            <section className="my-4 flex gap-2 w-full justify-between">
+              <div className="flex gap-2">
+                {index === mvtArray.length - 1 && (
+                  <>
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => {
+                        append(getMovementDefaultValues(index));
+                      }}
+                    >
+                      <PlusIcon className="w-5 h-5" />
+                      Add movement
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-error"
+                      onClick={() => remove(index)}
+                    >
+                      <TrashIcon className="w-5 h-5" />
+                      {`Delete Movement ${index + 1}`}
+                    </button>
+                  </>
+                )}
+              </div>
 
+              <div className="flex gap-2">
                 {index > 0 && (
                   <button
                     type="button"
                     className="btn btn-move"
                     onClick={() => {
+                      setValue(`mvtArray.${index - 1}.rank`, index + 1);
+                      setValue(`mvtArray.${index}.rank`, index);
                       move(index, index - 1);
                     }}
                   >
@@ -99,6 +107,8 @@ export default function MovementArray({
                     type="button"
                     className="btn btn-move"
                     onClick={() => {
+                      setValue(`mvtArray.${index + 1}.rank`, index + 1);
+                      setValue(`mvtArray.${index}.rank`, index + 2);
                       move(index, index + 1);
                     }}
                   >
@@ -106,8 +116,8 @@ export default function MovementArray({
                     Move down
                   </button>
                 )}
-              </section>
-            )}
+              </div>
+            </section>
           </li>
         ))}
       </ul>

@@ -222,57 +222,62 @@ export default function SectionArray({
                 errors={errors}
               />
               <section className="my-4 flex gap-2 w-full justify-between">
-                {index === sectionArray.length - 1 && (
-                  <>
+                <div className="flex gap-2">
+                  {index === sectionArray.length - 1 && (
+                    <>
+                      <button
+                        type="button"
+                        className="btn btn-accent"
+                        onClick={() => {
+                          append(getSectionDefaultValues(index));
+                        }}
+                      >
+                        <PlusIcon className="w-5 h-5" />
+                        Add section
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-error"
+                        onClick={() => remove(index)}
+                      >
+                        <TrashIcon className="w-5 h-5" />
+                        {`Delete section ${index + 1}`}
+                      </button>
+                    </>
+                  )}
+                </div>
+
+                <div className="flex gap-2">
+                  {index > 0 && (
                     <button
                       type="button"
-                      className="btn btn-accent"
+                      className="btn btn-move"
                       onClick={() => {
-                        append(getSectionDefaultValues(index));
+                        setValue(`sectionArray.${index - 1}.rank`, index + 1);
+                        setValue(`sectionArray.${index}.rank`, index);
+                        move(index, index - 1);
                       }}
                     >
-                      <PlusIcon className="w-5 h-5" />
-                      Add section
+                      <ArrowUpIcon className="w-5 h-5" />
+                      Move up
                     </button>
+                  )}
+
+                  {index < sectionArray.length - 1 && (
                     <button
                       type="button"
-                      className="btn btn-error"
-                      onClick={() => remove(index)}
+                      className="btn btn-move"
+                      onClick={() => {
+                        setValue(`sectionArray.${index + 1}.rank`, index + 1);
+                        setValue(`sectionArray.${index}.rank`, index + 2);
+                        move(index, index + 1);
+                      }}
                     >
-                      <TrashIcon className="w-5 h-5" />
-                      {`Delete section ${index + 1}`}
+                      <ArrowDownIcon className="w-5 h-5" />
+                      Move down
                     </button>
-                  </>
-                )}
-                {index > 0 && (
-                  <button
-                    type="button"
-                    className="btn btn-move"
-                    onClick={() => {
-                      setValue(`sectionArray.${index - 1}.rank`, index + 1);
-                      setValue(`sectionArray.${index}.rank`, index);
-                      move(index, index - 1);
-                    }}
-                  >
-                    <ArrowUpIcon className="w-5 h-5" />
-                    Move up
-                  </button>
-                )}
-
-                {index < sectionArray.length - 1 && (
-                  <button
-                    type="button"
-                    className="btn btn-move"
-                    onClick={() => {
-                      setValue(`sectionArray.${index + 1}.rank`, index + 1);
-                      setValue(`sectionArray.${index}.rank`, index + 2);
-                      move(index, index + 1);
-                    }}
-                  >
-                    <ArrowDownIcon className="w-5 h-5" />
-                    Move down
-                  </button>
-                )}
+                  )}
+                </div>
               </section>
             </li>
           );
