@@ -21,7 +21,7 @@ async function getData() {
 export default async function Composer() {
   const { composers } = await getData();
   console.log(
-    `[Contribute] composers (${composers.length}) :`,
+    `[Composer] composers (${composers.length}) :`,
     JSON.stringify(composers),
   );
 

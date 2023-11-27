@@ -7,8 +7,8 @@ import {
 } from "@/components/context/editFormContext";
 import {
   CREATION_PIECE_VERSION_URL,
+  CREATION_SOURCE_URL,
   EDITION_PIECE_URL,
-  EDITION_PIECE_VERSION_CONTENT_URL,
 } from "@/utils/routes";
 import PieceVersionSelect from "@/components/PieceVersionSelect";
 import { PieceVersionState } from "@/types/editFormTypes";
@@ -24,22 +24,20 @@ export default function PieceVersionSelectForm({
 }: PieceVersionSelectFormProps) {
   const router = useRouter();
   const { dispatch, state } = useEditForm();
-  const [selectPieceVersionId, setSelectPieceVersionId] = useState<
-    string | null
-  >(null);
+  const [selectedPieceVersion, setSelectedPieceVersion] =
+    useState<PieceVersionState | null>(null);
 
   const onSelect = (pieceVersionId: string) => {
+    const pieceVersion = pieceVersions.find(
+      (pieceVersion) => pieceVersion.id === pieceVersionId,
+    );
     console.log(`[PieceVersionSelectForm] onSelect: ${pieceVersionId}`);
-    if (!pieceVersionId) return;
-    setSelectPieceVersionId(pieceVersionId);
+    if (!pieceVersion) return;
+    setSelectedPieceVersion(pieceVersion);
   };
   const onSubmit = () => {
-    updateEditForm(dispatch, "pieceVersionId", selectPieceVersionId);
-    router.push(
-      EDITION_PIECE_VERSION_CONTENT_URL +
-        "?pieceVersionId=" +
-        selectPieceVersionId,
-    );
+    updateEditForm(dispatch, "pieceVersion", selectedPieceVersion);
+    router.push(CREATION_SOURCE_URL);
   };
 
   if (!state.piece) {
@@ -71,7 +69,7 @@ export default function PieceVersionSelectForm({
       <button
         onClick={onSubmit}
         className="btn btn-primary mt-4"
-        {...(selectPieceVersionId ? { disabled: false } : { disabled: true })}
+        {...(selectedPieceVersion ? { disabled: false } : { disabled: true })}
       >
         Next
       </button>

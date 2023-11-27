@@ -1,6 +1,8 @@
 import {
   Comment,
+  CONTRIBUTION_ROLE,
   Movement,
+  Organization,
   Person,
   Piece,
   PieceVersion,
@@ -9,15 +11,41 @@ import {
   TempoIndication,
 } from "@prisma/client";
 
-export type ComposerState = {
+export type PersonState = {
   id: string;
   firstName: string;
   lastName: string;
 };
-export type ComposerInput = Pick<
+export type ComposerState = PersonState;
+export type OrganizationState = {
+  id: string;
+  name: string;
+};
+export type ContributionState =
+  | {
+      id: string;
+      role: CONTRIBUTION_ROLE;
+      person: PersonState;
+    }
+  | {
+      id: string;
+      role: CONTRIBUTION_ROLE;
+      organization: OrganizationState;
+    };
+export type ContributionStateWithoutId =
+  | {
+      person: PersonState;
+      role: CONTRIBUTION_ROLE;
+    }
+  | {
+      organization: OrganizationState;
+      role: CONTRIBUTION_ROLE;
+    };
+export type PersonInput = Pick<
   Person,
   "firstName" | "lastName" | "birthYear" | "deathYear"
 >;
+export type ComposerInput = PersonInput;
 export type SelectInput = {
   label: string;
   value: string;
@@ -92,4 +120,22 @@ export type SourceDescriptionInput = Pick<
   "id" | "title" | "type" | "link" | "year" | "references"
 > & {
   comment: Pick<Comment, "text"> | null;
+};
+
+export type ContributionInput = {
+  role: Option;
+} & (
+  | {
+      person: PersonInput;
+    }
+  | {
+      organization: Pick<Organization, "id" | "name">;
+    }
+);
+export type SourceContributionInput = Pick<Source, "id"> & {
+  contributions: ContributionInput[];
+};
+export type Option = {
+  value: string;
+  label: string;
 };

@@ -57,7 +57,7 @@ function getRegisterProps(name: string) {
   }[name];
 }
 
-function getLabel(name: string) {
+export function getLabel(name: string) {
   return {
     firstName: "First Name",
     lastName: "Last Name",
@@ -97,8 +97,8 @@ export function FormInput({
   type: typeProp,
   registerProps = {},
   inputClassName = "", // showPassword = false,
-} // toggleShowPassword = () => {},
-: FormInputProps) {
+  // toggleShowPassword = () => {},
+}: FormInputProps) {
   // Create a version of name with every array index as [index]. replaced by .index.
   // This is to be able to use getValues() with arrays.
   const nameWithDotIndex = name.replace(/\[(\d+)\]\./g, ".$1.");

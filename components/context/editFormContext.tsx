@@ -6,7 +6,6 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-import { Movement } from "@prisma/client";
 import {
   ComposerState,
   PieceState,
@@ -19,7 +18,11 @@ type PieceFormAction =
   | { type: "composerId"; payload: string }
   | { type: "pieceId"; payload: string }
   | { type: "pieceVersionId"; payload: string }
-  | { type: "sourceDescription"; payload: string };
+  | { type: "composer"; payload: any }
+  | { type: "piece"; payload: any }
+  | { type: "pieceVersion"; payload: any }
+  | { type: "sourceDescription"; payload: any }
+  | { type: "contributions"; payload: any };
 type Dispatch = (action: PieceFormAction) => void;
 type EditFormState = {
   composer?: ComposerState;
@@ -54,13 +57,27 @@ function localStorageGetItem(key: string) {
 
 function editFormReducer(state: EditFormState, action: PieceFormAction) {
   if (
-    ["composer", "piece", "pieceVersion", "sourceDescription"].includes(
-      action.type,
-    )
+    [
+      "composer",
+      "piece",
+      "pieceVersion",
+      "sourceDescription",
+      "contributions",
+    ].includes(action.type)
   ) {
     const newState = { ...state, [action.type]: action.payload };
     localStorageSetItem("editForm", newState);
-    return { ...state, [action.type]: action.payload };
+    return newState;
+  }
+  if (["composerId", "pieceId", "pieceVersionId"].includes(action.type)) {
+    const newState = {
+      ...state,
+      [action.type.substring(0, action.type.length - 3)]: {
+        id: action.payload,
+      },
+    };
+    localStorageSetItem("editForm", newState);
+    return newState;
   }
   if (action.type === "init") {
     localStorageSetItem("editForm", action.payload || {});

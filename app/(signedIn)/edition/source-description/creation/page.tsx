@@ -9,8 +9,8 @@ import { useForm } from "react-hook-form";
 import { SourceDescriptionInput } from "@/types/editFormTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  CREATION_SOURCE_CONTRIBUTIONS_URL,
   EDITION_PIECE_VERSION_URL,
-  EDITION_SOURCE_CONTRIBUTIONS_URL,
 } from "@/utils/routes";
 import Link from "next/link";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
@@ -87,7 +87,7 @@ export default function CreateSourceDescription() {
 
     console.log("source description created", sourceDescription);
     updateEditForm(dispatch, "sourceDescription", sourceDescription);
-    router.push(EDITION_SOURCE_CONTRIBUTIONS_URL);
+    router.push(CREATION_SOURCE_CONTRIBUTIONS_URL);
   };
 
   if (!state.pieceVersion) {

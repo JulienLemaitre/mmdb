@@ -9,3 +9,10 @@ export const zodYearOptional = z
   .or(z.nan())
   .optional()
   .nullable();
+
+export const zodPerson = z.object({
+  firstName: z.string().min(2),
+  lastName: z.string().min(2),
+  birthYear: zodYear,
+  deathYear: zodYearOptional,
+});

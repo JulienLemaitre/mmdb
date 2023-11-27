@@ -3,10 +3,10 @@ import { db } from "@/utils/db";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  console.log(`[POST composer] body :`, body);
+  console.log(`[POST person] body :`, body);
   const { firstName, lastName, birthYear, deathYear } = body;
 
-  const composer = await db.person.create({
+  const person = await db.person.create({
     data: {
       firstName,
       lastName,
@@ -15,5 +15,5 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  return NextResponse.json(composer);
+  return NextResponse.json(person);
 }

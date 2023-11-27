@@ -64,7 +64,7 @@ export default function ReferenceArray({ control, register, errors, watch }) {
           }}
         >
           <PlusIcon className="w-5 h-5" />
-          Add a reference
+          Add a reference (plate number, ISBN, ISMN...)
         </button>
       </ul>
     </>

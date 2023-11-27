@@ -93,10 +93,7 @@ export default function CreatePiece() {
         Create a piece
         <span className="block text-xl font-normal">General information</span>
       </h1>
-      <form
-        // className="flex flex-col items-center justify-center"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <FormInput name="title" isRequired {...{ register, watch, errors }} />
         <FormInput name="nickname" {...{ register, watch, errors }} />
         <FormInput name="yearOfComposition" {...{ register, watch, errors }} />

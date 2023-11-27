@@ -6,7 +6,10 @@ export const EDITION_PIECE_URL = "/edition/piece";
 export const CREATION_PIECE_URL = "/edition/piece/creation";
 export const EDITION_PIECE_VERSION_URL = "/edition/piece-version";
 export const CREATION_PIECE_VERSION_URL = "/edition/piece-version/creation";
-export const EDITION_PIECE_VERSION_CONTENT_URL =
-  "/edition/piece-version-content";
+// export const EDITION_PIECE_VERSION_CONTENT_URL =
+//   "/edition/piece-version-content";
 export const CREATION_SOURCE_URL = "/edition/source-description/creation";
-export const EDITION_SOURCE_CONTRIBUTIONS_URL = "/edition/source-contributions";
+export const CREATION_SOURCE_CONTRIBUTIONS_URL =
+  "/edition/source-contributions/creation";
+export const CREATION_METRONOMOE_MARKS_URL =
+  "/edition/metronome-marks/creation";
