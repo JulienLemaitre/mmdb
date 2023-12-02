@@ -14,6 +14,7 @@ import { Option, PieceVersionInput } from "@/types/editFormTypes";
 import { CREATION_SOURCE_URL } from "@/utils/routes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
 import { MOVEMENT_DEFAULT_VALUE } from "@/components/ReactHookForm/formUtils";
+import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
 
 const PieceVersionSchema = z.object({
   category: z.object({
@@ -81,6 +82,17 @@ export default function CreatePieceVersion() {
     fetch("/api/tempoIndicationList/get")
       .then((res) => res.json())
       .then((data) => {
+        // Get the index of tempoIndication with id === TEMPO_INDICATION_NONE_ID (text === "-- None --")
+        const noneIndex = data.findIndex(
+          (tempoIndication) => tempoIndication.id === TEMPO_INDICATION_NONE_ID,
+        );
+        // Copy the tempoIndication with text === "-- None --"
+        const noneTempoIndication = data[noneIndex];
+        // Remove the targetted tempoIndication from the list
+        data.splice(noneIndex, 1);
+        // put the tempoIndication with text === "-- None --" as the first element in the array
+        data.unshift(noneTempoIndication);
+
         setTempoIndicationList(data);
       });
   }, []);

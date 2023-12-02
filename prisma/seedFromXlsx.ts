@@ -4,6 +4,7 @@ import takeFirstOfPotentialRange from "@/utils/takeFirstOfPotentialRange";
 import parseValueRemoveParenthesis from "@/utils/parseValueRemoveParenthesis";
 import getNotesPerBarCollectionFromNotesPerSecondCollection
   from "@/utils/getNotesPerBarCollectionFromNotesPerSecondCollection";
+import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
 
 function logTestError(bpm, ...props) {
   if (bpm === 108) {
@@ -793,6 +794,14 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
   for (const task of contributionsTaskList) {
     persistedContributionsList.push(await task())
   }
+
+  // Persist a TempoIndication "-- None --"
+  await db.tempoIndication.create({
+    data: {
+      id: TEMPO_INDICATION_NONE_ID,
+      text: "-- None --"
+    }
+  })
 
   console.log(`-------- END - seedDB --------`)
 }
