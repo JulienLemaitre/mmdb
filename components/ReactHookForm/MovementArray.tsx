@@ -16,6 +16,7 @@ export default function MovementArray({
   getValues,
   errors,
   tempoIndicationList,
+  onTempoIndicationCreated,
   watch,
 }) {
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
@@ -59,6 +60,7 @@ export default function MovementArray({
               nestIndex={index}
               {...{ control, register, getValues, setValue, errors, watch }}
               tempoIndicationList={tempoIndicationList}
+              onTempoIndicationCreated={onTempoIndicationCreated}
             />
             <section className="my-4 flex gap-2 w-full justify-between">
               <div className="flex gap-2">

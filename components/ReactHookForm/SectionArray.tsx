@@ -7,6 +7,7 @@ import TrashIcon from "@/components/svg/TrashIcon";
 import { getSectionDefaultValues } from "@/components/ReactHookForm/formUtils";
 import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
 import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
+import ControlledCreatableSelect from "@/components/ReactHookForm/ControlledCreatableSelect";
 
 export default function SectionArray({
   control,
@@ -16,6 +17,7 @@ export default function SectionArray({
   errors,
   nestIndex,
   tempoIndicationList,
+  onTempoIndicationCreated,
   watch,
 }) {
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
@@ -151,6 +153,22 @@ export default function SectionArray({
                   <span>{`\u{1D135}`}</span>
                 </label>
               </div>
+              <ControlledCreatableSelect
+                name={
+                  `movements[${nestIndex}].sections[${index}].tempoIndication` as const
+                }
+                label={`Tempo indication`}
+                id={
+                  `movements[${nestIndex}].sections[${index}].tempoIndication` as const
+                }
+                control={control}
+                options={tempoIndicationList.map((ti) => ({
+                  value: ti.id,
+                  label: ti.text,
+                }))}
+                onOptionCreated={onTempoIndicationCreated}
+                errors={errors}
+              />
               <FormInput
                 isRequired={true}
                 name={
@@ -205,21 +223,6 @@ export default function SectionArray({
                 label={`Comment`}
                 defaultValue={``}
                 {...{ register, errors }}
-              />
-              <ControlledSelect
-                name={
-                  `movements[${nestIndex}].sections[${index}].tempoIndication` as const
-                }
-                label={`Tempo indication`}
-                id={
-                  `movements[${nestIndex}].sections[${index}].tempoIndication` as const
-                }
-                control={control}
-                options={tempoIndicationList.map((ti) => ({
-                  value: ti.id,
-                  label: ti.text,
-                }))}
-                errors={errors}
               />
               <section className="my-4 flex gap-2 w-full justify-between">
                 <div className="flex gap-2">

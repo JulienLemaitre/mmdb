@@ -25,7 +25,6 @@ export default function PieceSelect({ pieces, onSelect }: PieceSelectProps) {
   return (
     <Select
       instanceId="piece-select"
-      defaultValue={pieceOptions[0]}
       isSearchable={true}
       name="color"
       options={pieceOptions}

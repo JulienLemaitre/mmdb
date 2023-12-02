@@ -43,20 +43,11 @@ export async function POST(req: NextRequest) {
               fastestRepeatedNotesPerBar: section.fastestRepeatedNotesPerBar,
               fastestOrnamentalNotesPerBar:
                 section.fastestOrnamentalNotesPerBar,
-              ...(section.tempoIndication?.value || section.tempoIndication
+              ...(section.tempoIndication?.value
                 ? {
                     tempoIndication: {
-                      connectOrCreate: {
-                        where: {
-                          text:
-                            section.tempoIndication.value ||
-                            section.tempoIndication,
-                        },
-                        create: {
-                          text:
-                            section.tempoIndication.value ||
-                            section.tempoIndication,
-                        },
+                      connect: {
+                        id: section.tempoIndication.value,
                       },
                     },
                   }
