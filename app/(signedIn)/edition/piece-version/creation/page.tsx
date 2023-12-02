@@ -42,12 +42,10 @@ const PieceVersionSchema = z.object({
               fastestRepeatedNotesPerBar: z.number().or(z.nan()),
               fastestOrnamentalNotesPerBar: z.number().or(z.nan()),
               comment: z.string().optional(),
-              tempoIndication: z
-                .object({
-                  value: z.string(),
-                  label: z.string(),
-                })
-                .optional(),
+              tempoIndication: z.object({
+                value: z.string(),
+                label: z.string(),
+              }),
             }),
           )
           .nonempty(),

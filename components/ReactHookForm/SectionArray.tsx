@@ -1,6 +1,5 @@
 // 'use client'
 import { useFieldArray } from "react-hook-form";
-import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import PlusIcon from "@/components/svg/PlusIcon";
 import TrashIcon from "@/components/svg/TrashIcon";
@@ -158,6 +157,7 @@ export default function SectionArray({
                   `movements[${nestIndex}].sections[${index}].tempoIndication` as const
                 }
                 label={`Tempo indication`}
+                isRequired
                 id={
                   `movements[${nestIndex}].sections[${index}].tempoIndication` as const
                 }
