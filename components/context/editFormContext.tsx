@@ -10,7 +10,7 @@ import {
   ComposerState,
   PieceState,
   PieceVersionState,
-  SourceDescriptionState,
+  SourceState,
 } from "@/types/editFormTypes";
 
 type PieceFormAction =
@@ -21,14 +21,14 @@ type PieceFormAction =
   | { type: "composer"; payload: any }
   | { type: "piece"; payload: any }
   | { type: "pieceVersion"; payload: any }
-  | { type: "sourceDescription"; payload: any }
+  | { type: "source"; payload: any }
   | { type: "contributions"; payload: any };
 type Dispatch = (action: PieceFormAction) => void;
 type EditFormState = {
   composer?: ComposerState;
   piece?: PieceState;
   pieceVersion?: PieceVersionState;
-  sourceDescription?: SourceDescriptionState;
+  source?: SourceState;
 };
 type EditFormProviderProps = { children: ReactNode };
 
@@ -57,13 +57,9 @@ function localStorageGetItem(key: string) {
 
 function editFormReducer(state: EditFormState, action: PieceFormAction) {
   if (
-    [
-      "composer",
-      "piece",
-      "pieceVersion",
-      "sourceDescription",
-      "contributions",
-    ].includes(action.type)
+    ["composer", "piece", "pieceVersion", "source", "contributions"].includes(
+      action.type,
+    )
   ) {
     const newState = { ...state, [action.type]: action.payload };
     localStorageSetItem("editForm", newState);

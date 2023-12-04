@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  console.log(`[POST piece version] body :`, JSON.stringify(body));
+  console.log(`[POST source-description] body :`, JSON.stringify(body));
   const {
     title,
     type,

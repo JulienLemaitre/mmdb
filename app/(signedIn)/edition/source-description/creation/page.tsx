@@ -6,7 +6,7 @@ import {
   useEditForm,
 } from "@/components/context/editFormContext";
 import { useForm } from "react-hook-form";
-import { SourceDescriptionInput } from "@/types/editFormTypes";
+import { SourceInput } from "@/types/editFormTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   CREATION_SOURCE_CONTRIBUTIONS_URL,
@@ -19,7 +19,7 @@ import { SOURCE_TYPE } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import ReferenceArray from "@/components/ReactHookForm/ReferenceArray";
 
-const SourceDescriptionSchema = z.object({
+const SourceSchema = z.object({
   title: z.string().optional(),
   type: z.object({
     value: z.string(),
@@ -39,7 +39,7 @@ const SourceDescriptionSchema = z.object({
   comment: z.string().optional(),
 });
 
-export default function CreateSourceDescription() {
+export default function CreateSource() {
   const router = useRouter();
   const { dispatch, state } = useEditForm();
   const {
@@ -48,23 +48,21 @@ export default function CreateSourceDescription() {
     register,
     watch,
     control,
-  } = useForm<SourceDescriptionInput>({
+  } = useForm<SourceInput>({
     defaultValues: {
       type: SOURCE_TYPE.EDITION,
     },
-    resolver: zodResolver(SourceDescriptionSchema),
+    resolver: zodResolver(SourceSchema),
   });
-  console.log(`[CreateSourceDescription] watch() :`, watch());
 
-  const onSubmit = async (data: SourceDescriptionInput) => {
+  const onSubmit = async (data: SourceInput) => {
     // Front input values validation is successful at this point.
     console.log("data", data);
 
-    const sourceDescriptionData = data;
-    // Remove null values from sourceDescriptionData
-    Object.keys(sourceDescriptionData).forEach(
-      (key) =>
-        sourceDescriptionData[key] == null && delete sourceDescriptionData[key],
+    const sourceData = data;
+    // Remove null values from sourceData
+    Object.keys(sourceData).forEach(
+      (key) => sourceData[key] == null && delete sourceData[key],
     );
 
     if (!state.pieceVersion) {
@@ -72,21 +70,21 @@ export default function CreateSourceDescription() {
       return;
     }
     // post data to api route
-    const sourceDescription = await fetch("/api/source-description/create", {
+    const source = await fetch("/api/source-description/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ...sourceDescriptionData,
+        ...sourceData,
         pieceVersionId: state.pieceVersion.id,
       }),
     })
       .then((res) => res.json())
       .catch((err) => console.log(err));
 
-    console.log("source description created", sourceDescription);
-    updateEditForm(dispatch, "sourceDescription", sourceDescription);
+    console.log("source description created", source);
+    updateEditForm(dispatch, "source", source);
     router.push(CREATION_SOURCE_CONTRIBUTIONS_URL);
   };
 

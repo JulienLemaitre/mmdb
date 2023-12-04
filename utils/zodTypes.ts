@@ -16,3 +16,8 @@ export const zodPerson = z.object({
   birthYear: zodYear,
   deathYear: zodYearOptional,
 });
+
+export const zodOption = z.object({
+  value: z.string(),
+  label: z.string(),
+});

@@ -11,5 +11,4 @@ export const CREATION_PIECE_VERSION_URL = "/edition/piece-version/creation";
 export const CREATION_SOURCE_URL = "/edition/source-description/creation";
 export const CREATION_SOURCE_CONTRIBUTIONS_URL =
   "/edition/source-contributions/creation";
-export const CREATION_METRONOMOE_MARKS_URL =
-  "/edition/metronome-marks/creation";
+export const CREATION_METRONOME_MARKS_URL = "/edition/metronome-marks/creation";

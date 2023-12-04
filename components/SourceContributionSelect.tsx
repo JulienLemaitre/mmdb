@@ -1,7 +1,7 @@
 import Select from "react-select";
 import {
   ContributionState,
-  Option,
+  OptionInput,
   OrganizationState,
   PersonState,
 } from "@/types/editFormTypes";
@@ -11,7 +11,7 @@ import NewSourceContributionForm from "@/components/NewSourceContributionForm";
 import Label from "@/components/Label";
 
 type SourceContributionSelectProps = {
-  sourceContributionOptions: Option[];
+  sourceContributionOptions: OptionInput[];
   onAddPersonContribution: (
     personContribution:
       | {
@@ -128,7 +128,7 @@ export default function SourceContributionSelect({
             name="sourceContribution"
             options={sourceContributionOptions}
             autoFocus
-            onChange={(sourceContributionOption: Option | null) => {
+            onChange={(sourceContributionOption: OptionInput | null) => {
               if (!sourceContributionOption) return;
               if (sourceContributionOption.label.endsWith("[person]")) {
                 setSelectedPersonId(sourceContributionOption.value);

@@ -1,6 +1,7 @@
-import {
+import type {
   Comment,
   CONTRIBUTION_ROLE,
+  MetronomeMark,
   Movement,
   Organization,
   Person,
@@ -10,6 +11,8 @@ import {
   Source,
   TempoIndication,
 } from "@prisma/client";
+
+// Data in STATE
 
 export type PersonState = {
   id: string;
@@ -41,46 +44,6 @@ export type ContributionStateWithoutId =
       organization: OrganizationState;
       role: CONTRIBUTION_ROLE;
     };
-export type PersonInput = Pick<
-  Person,
-  "firstName" | "lastName" | "birthYear" | "deathYear"
->;
-export type ComposerInput = PersonInput;
-export type SelectInput = {
-  label: string;
-  value: string;
-};
-export type PieceInput = Pick<
-  Piece,
-  "nickname" | "yearOfComposition" | "title"
->;
-export type SectionInput = Pick<
-  Section,
-  | "rank"
-  | "metreNumerator"
-  | "metreDenominator"
-  // | "isCommonTime"
-  // | "isCutTime"
-  | "fastestStructuralNotesPerBar"
-  | "fastestStaccatoNotesPerBar"
-  | "fastestRepeatedNotesPerBar"
-  | "fastestOrnamentalNotesPerBar"
-  // | "isFastestStructuralNoteBelCanto"
-> & {
-  tempoIndication?: string;
-  comment?: string;
-  isCommonTime?: string;
-  isCutTime?: string;
-  isFastestStructuralNoteBelCanto?: string;
-};
-export type MovementInput = Pick<Movement, "rank"> & {
-  key: SelectInput;
-  sections: SectionInput[];
-};
-export type PieceVersionInput = {
-  category: SelectInput;
-  movements: MovementInput[];
-};
 
 export type PieceState = Pick<
   Piece,
@@ -108,14 +71,58 @@ export type PieceVersionState = Pick<PieceVersion, "id" | "category"> & {
   movements: MovementState[];
 };
 
-export type SourceDescriptionState = Pick<
+export type SourceState = Pick<
   Source,
   "id" | "title" | "type" | "link" | "year" | "references"
 > & {
   comment: Pick<Comment, "text"> | null;
 };
 
-export type SourceDescriptionInput = Pick<
+// Form INPUTS
+
+export type OptionInput = {
+  value: string;
+  label: string;
+};
+
+export type PersonInput = Pick<
+  Person,
+  "firstName" | "lastName" | "birthYear" | "deathYear"
+>;
+export type ComposerInput = PersonInput;
+export type PieceInput = Pick<
+  Piece,
+  "nickname" | "yearOfComposition" | "title"
+>;
+export type SectionInput = Pick<
+  Section,
+  | "rank"
+  | "metreNumerator"
+  | "metreDenominator"
+  // | "isCommonTime"
+  // | "isCutTime"
+  | "fastestStructuralNotesPerBar"
+  | "fastestStaccatoNotesPerBar"
+  | "fastestRepeatedNotesPerBar"
+  | "fastestOrnamentalNotesPerBar"
+  // | "isFastestStructuralNoteBelCanto"
+> & {
+  tempoIndication?: string;
+  comment?: string;
+  isCommonTime?: string;
+  isCutTime?: string;
+  isFastestStructuralNoteBelCanto?: string;
+};
+export type MovementInput = Pick<Movement, "rank"> & {
+  key: OptionInput;
+  sections: SectionInput[];
+};
+export type PieceVersionInput = {
+  category: OptionInput;
+  movements: MovementInput[];
+};
+
+export type SourceInput = Pick<
   Source,
   "id" | "title" | "type" | "link" | "year" | "references"
 > & {
@@ -123,7 +130,7 @@ export type SourceDescriptionInput = Pick<
 };
 
 export type ContributionInput = {
-  role: Option;
+  role: OptionInput;
 } & (
   | {
       person: PersonInput;
@@ -132,10 +139,8 @@ export type ContributionInput = {
       organization: Pick<Organization, "id" | "name">;
     }
 );
-export type SourceContributionInput = Pick<Source, "id"> & {
-  contributions: ContributionInput[];
-};
-export type Option = {
-  value: string;
-  label: string;
+
+export type MetronomeMarksInput = Pick<MetronomeMark, "sectionId" | "bpm"> & {
+  beatUnit: OptionInput;
+  comment: Pick<Comment, "text"> | null;
 };

@@ -1,7 +1,7 @@
 "use client";
 import {
   ContributionStateWithoutId,
-  Option,
+  OptionInput,
   OrganizationState,
   PersonState,
 } from "@/types/editFormTypes";
@@ -9,12 +9,12 @@ import {
   updateEditForm,
   useEditForm,
 } from "@/components/context/editFormContext";
-// import { useRouter } from "next/navigation";
-// import { CREATION_METRONOMOE_MARKS_URL } from "@/utils/routes";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import PlusIcon from "@/components/svg/PlusIcon";
 import SourceContributionSelect from "@/components/SourceContributionSelect";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
+import { CREATION_METRONOME_MARKS_URL } from "@/utils/routes";
 
 type SourceContributionSelectFormProps = {
   persons: PersonState[];
@@ -26,7 +26,7 @@ export default function SourceContributionSelectForm({
   organizations,
 }: SourceContributionSelectFormProps) {
   const { dispatch } = useEditForm();
-  // const router = useRouter();
+  const router = useRouter();
 
   const [selectedContributions, setSelectedContributions] = useState<
     ContributionStateWithoutId[]
@@ -135,17 +135,16 @@ export default function SourceContributionSelectForm({
   };
   const onSubmit = () => {
     updateEditForm(dispatch, "contributions", selectedContributions);
-    console.log(`Contributions are in context - Should redirect now`);
-    // router.push(CREATION_METRONOMOE_MARKS_URL);
+    router.push(CREATION_METRONOME_MARKS_URL);
   };
 
-  const personOptions: Option[] = [...persons, ...createdPersons].map(
+  const personOptions: OptionInput[] = [...persons, ...createdPersons].map(
     (person: PersonState) => ({
       value: person.id,
       label: `${person.firstName} ${person.lastName} [person]`,
     }),
   );
-  const organizationOptions: Option[] = [
+  const organizationOptions: OptionInput[] = [
     ...organizations,
     ...createdOrganizations,
   ].map((organization: OrganizationState) => ({

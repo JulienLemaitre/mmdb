@@ -10,25 +10,20 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PIECE_CATEGORY, TempoIndication } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
-import { Option, PieceVersionInput } from "@/types/editFormTypes";
+import { OptionInput, PieceVersionInput } from "@/types/editFormTypes";
 import { CREATION_SOURCE_URL } from "@/utils/routes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
 import { MOVEMENT_DEFAULT_VALUE } from "@/components/ReactHookForm/formUtils";
 import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
+import { zodOption } from "@/utils/zodTypes";
 
 const PieceVersionSchema = z.object({
-  category: z.object({
-    value: z.string(),
-    label: z.string(),
-  }),
+  category: zodOption,
   movements: z
     .array(
       z.object({
         rank: z.number(),
-        key: z.object({
-          value: z.string(),
-          label: z.string(),
-        }),
+        key: zodOption,
         sections: z
           .array(
             z.object({
@@ -43,10 +38,7 @@ const PieceVersionSchema = z.object({
               fastestRepeatedNotesPerBar: z.number().or(z.nan()),
               fastestOrnamentalNotesPerBar: z.number().or(z.nan()),
               comment: z.string().optional(),
-              tempoIndication: z.object({
-                value: z.string(),
-                label: z.string(),
-              }),
+              tempoIndication: zodOption,
             }),
           )
           .nonempty(),
@@ -88,7 +80,7 @@ export default function CreatePieceVersion() {
         );
         // Copy the tempoIndication with text === "-- None --"
         const noneTempoIndication = data[noneIndex];
-        // Remove the targetted tempoIndication from the list
+        // Remove the targeted tempoIndication from the list
         data.splice(noneIndex, 1);
         // put the tempoIndication with text === "-- None --" as the first element in the array
         data.unshift(noneTempoIndication);
@@ -99,7 +91,7 @@ export default function CreatePieceVersion() {
 
   const onTempoIndicationCreated = async (
     inputValue: string,
-  ): Promise<Option | void> => {
+  ): Promise<OptionInput | void> => {
     return await fetch("/api/tempoIndication/create", {
       method: "POST",
       headers: {
