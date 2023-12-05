@@ -109,6 +109,8 @@ model MetronomeMark {
   sectionId      String     @db.Uuid
   commentId      String?    @unique @db.Uuid
   comment        Comment?   @relation(fields: [commentId], references: [id])
+
+  @@unique([sourceId, sectionId])
 }
 
 model Source {
