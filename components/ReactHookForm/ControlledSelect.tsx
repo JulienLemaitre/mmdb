@@ -37,6 +37,9 @@ const ControlledSelect = ({
         onChange={onChange}
         onBlur={onBlur}
         value={value || defaultValue}
+        classNames={{
+          control: () => "h-12",
+        }}
         {...selectProps}
       />
       <span className="label-text-alt text-red-500">

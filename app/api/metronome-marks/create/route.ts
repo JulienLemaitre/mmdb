@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   console.log(`[POST metronome marks] body :`, body);
   const { metronomeMarks, sourceId } = body;
 
-  const organization = await db.metronomeMark.createMany({
+  const metronomeMarksRes = await db.metronomeMark.createMany({
     data: metronomeMarks.map((metronomeMark: MetronomeMarksInput) => ({
       sourceId: sourceId,
       sectionId: metronomeMark.sectionId,
@@ -15,6 +15,10 @@ export async function POST(req: NextRequest) {
       beatUnit: metronomeMark.beatUnit.value,
     })),
   });
+  console.log(
+    `[API metronome marks create] metronomeMarksRes :`,
+    metronomeMarksRes,
+  );
 
-  return NextResponse.json(organization);
+  return NextResponse.json(metronomeMarksRes);
 }

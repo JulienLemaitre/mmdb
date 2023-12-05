@@ -80,6 +80,7 @@ type FormInputProps = {
   disabled?: boolean;
   type?: string;
   registerProps?: any;
+  controlClassName?: string;
   inputClassName?: string;
   // watch: any;
   // showPassword?: boolean;
@@ -96,9 +97,10 @@ export function FormInput({
   disabled = false,
   type: typeProp,
   registerProps = {},
+  controlClassName = "",
   inputClassName = "", // showPassword = false,
-  // toggleShowPassword = () => {},
-}: FormInputProps) {
+} // toggleShowPassword = () => {},
+: FormInputProps) {
   // Create a version of name with every array index as [index]. replaced by .index.
   // This is to be able to use getValues() with arrays.
   const nameWithDotIndex = name.replace(/\[(\d+)\]\./g, ".$1.");
@@ -118,7 +120,7 @@ export function FormInput({
   // console.log(`[] error :`, error);
 
   return (
-    <div className="form-control w-full max-w-xs">
+    <div className={`form-control w-full max-w-xs ${controlClassName}`}>
       {(label || getLabel(name)) && (
         <label className="label">
           <span className="label-text">

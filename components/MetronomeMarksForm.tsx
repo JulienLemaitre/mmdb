@@ -5,6 +5,7 @@ import MetronomeMarkArray from "@/components/ReactHookForm/MetronomeMarkArray";
 import { z } from "zod";
 import { zodOption } from "@/utils/zodTypes";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const MetronomeMarksSchema = z.object({
   metronomeMarks: z.array(
@@ -19,6 +20,7 @@ const MetronomeMarksSchema = z.object({
 
 export default function MetronomeMarksForm({ sectionList, sourceId }) {
   const router = useRouter();
+  const [isDataSaved, setIsDataSaved] = useState<boolean>(false);
   const {
     formState: { errors, isSubmitting },
     control,
@@ -33,8 +35,8 @@ export default function MetronomeMarksForm({ sectionList, sourceId }) {
       metronomeMarks: sectionList.map((sectionStateList) => {
         return {
           sectionId: sectionStateList.id,
-          beatUnit: { value: "", label: "" },
-          bpm: 0,
+          // beatUnit: undefined,
+          // bpm: undefined,
           // comment: "",
         };
       }),
@@ -56,6 +58,7 @@ export default function MetronomeMarksForm({ sectionList, sourceId }) {
         }),
       });
       if (response.ok) {
+        setIsDataSaved(true);
         console.log(
           `[onSubmit] Metronome marks are persisted - Should redirect on a summary thank you page`,
         );
@@ -69,10 +72,34 @@ export default function MetronomeMarksForm({ sectionList, sourceId }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <MetronomeMarkArray
-        {...{ control, register, errors, watch }}
-        sectionList={sectionList}
-      />
+      {isDataSaved && (
+        <div className="alert alert-success">
+          <div className="flex-1">
+            <label className="label">
+              <span className="label-text">Data saved</span>
+            </label>
+          </div>
+        </div>
+      )}
+      {!isDataSaved && (
+        <>
+          <MetronomeMarkArray
+            {...{ control, register, errors, watch }}
+            sectionList={sectionList}
+            setValue={setValue}
+          />
+          <button
+            className="btn btn-primary mt-6 w-full max-w-xs"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            Submit
+            {isSubmitting && (
+              <span className="loading loading-spinner loading-sm"></span>
+            )}
+          </button>
+        </>
+      )}
     </form>
   );
 }

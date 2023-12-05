@@ -1,14 +1,9 @@
 import { useFieldArray } from "react-hook-form";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import TrashIcon from "@/components/svg/TrashIcon";
-import PlusIcon from "@/components/svg/PlusIcon";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
-
-const REFERENCE_TYPE = {
-  PLATE_NUMBER: "Plate number",
-  ISBN: "ISBN",
-  ISMN: "ISMN",
-} as const;
+import { NOTE_VALUE } from "@prisma/client";
+import { useState } from "react";
 
 export default function MetronomeMarkArray({
   control,
@@ -16,6 +11,7 @@ export default function MetronomeMarkArray({
   errors,
   watch,
   sectionList,
+  setValue,
 }) {
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
@@ -23,6 +19,7 @@ export default function MetronomeMarkArray({
       name: "metronomeMarks",
     },
   );
+  const [commentToShow, setCommentToShow] = useState<number[]>([]);
 
   return (
     <>
@@ -32,53 +29,76 @@ export default function MetronomeMarkArray({
           console.log(`[MetronomeMarkArray] item ${index} :`, item);
           const section = sectionList[index];
           console.log(`[MetronomeMarkArray] section :`, section);
+          const rank = section.movement.rank;
+          const key = section.movement.key;
+          const tempoIndication = section.tempoIndication?.text;
+
           return (
             <li key={item.id}>
-              <h4 className="mt-6 text-lg font-bold text-secondary">{`Mvt ${
-                section.movement.rank
-              } - Section ${index + 1}`}</h4>
+              <h4 className="mt-6 text-lg font-bold text-secondary">
+                {`Mvt ${rank} in ${key.replaceAll("_", " ")} - Section ${
+                  index + 1
+                }`}
+                <span className="italic">
+                  {tempoIndication && ` - ${tempoIndication}`}
+                </span>
+              </h4>
               <div className="flex items-end gap-3">
                 <ControlledSelect
-                  name={`metronomeMarks[${index}].type` as const}
-                  label={`MetronomeMark type`}
-                  id={`metronomeMarks[${index}].type` as const}
+                  name={`metronomeMarks[${index}].beatUnit` as const}
+                  label={`Beat unit`}
+                  id={`metronomeMarks[${index}].beatUnit` as const}
                   control={control}
-                  options={Object.entries(REFERENCE_TYPE).map(
-                    ([key, value]) => ({
-                      value: key,
-                      label: value,
-                    }),
-                  )}
+                  options={Object.keys(NOTE_VALUE).map((key) => ({
+                    value: key,
+                    label: key.replaceAll("_", " "),
+                  }))}
                   isRequired={true}
                   errors={errors}
                 />
                 <FormInput
-                  name={`metronomeMarks[${index}].reference` as const}
+                  name={`metronomeMarks[${index}].bpm` as const}
                   isRequired
-                  label="MetronomeMark"
+                  label="BPM"
+                  type="number"
                   {...{ register, watch, errors }}
                 />
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => remove(index)}
-                >
-                  <TrashIcon />
-                </button>
+                {!commentToShow.includes(index) && (
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => setCommentToShow((prev) => [...prev, index])}
+                  >
+                    Add a Comment
+                  </button>
+                )}
               </div>
+              {commentToShow.includes(index) && (
+                <div className="flex items-end gap-3">
+                  <FormInput
+                    name={`metronomeMarks[${index}].comment` as const}
+                    label={`Comment`}
+                    controlClassName="max-w-xl"
+                    defaultValue={``}
+                    {...{ register, errors }}
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-error"
+                    onClick={() => {
+                      setValue(`metronomeMarks[${index}].comment`, "");
+                      setCommentToShow((prev) =>
+                        prev.filter((item) => item !== index),
+                      );
+                    }}
+                  >
+                    <TrashIcon className="w-5 h-5" />
+                  </button>
+                </div>
+              )}
             </li>
           );
         })}
-        <button
-          type="button"
-          className="btn btn-secondary mt-3"
-          onClick={() => {
-            append({});
-          }}
-        >
-          <PlusIcon className="w-5 h-5" />
-          Add a reference (plate number, ISBN, ISMN...)
-        </button>
       </ul>
     </>
   );
