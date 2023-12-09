@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
+import Providers from "@/components/Providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className="h-screen w-screen">
-        <div className="w-full h-full flex flex-col">{children}</div>
-        <div id="modal"></div>
+        <Providers>
+          <div className="w-full h-full flex flex-col">{children}</div>
+          <div id="modal"></div>
+        </Providers>
       </body>
     </html>
   );

@@ -1,3 +1,5 @@
+import SignInButton from "@/components/SignInButton";
+
 export default function NavBar({ title }: { title: string }) {
   return (
     <div className="navbar bg-base-100 px-4">
@@ -10,7 +12,8 @@ export default function NavBar({ title }: { title: string }) {
         </a>
       </div>
       <div className="flex-none">
-        <div className="dropdown dropdown-end">
+        <SignInButton />
+        {/*<div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               <img src="https://ui-avatars.com/api/?name=Julien+Lemaître" />
@@ -30,10 +33,10 @@ export default function NavBar({ title }: { title: string }) {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <SignInButton />
             </li>
           </ul>
-        </div>
+        </div>*/}
       </div>
     </div>
   );
