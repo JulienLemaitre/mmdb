@@ -1,5 +1,6 @@
 import { db } from "@/utils/db";
 import * as bcrypt from "bcrypt";
+import { signJwtAccessToken } from "@/utils/jwt";
 
 interface RequestBody {
   email: string;
@@ -19,7 +20,12 @@ export async function POST(request: Request) {
     (await bcrypt.compare(body.password, user.passwordHash))
   ) {
     const { passwordHash, ...userWithoutPassword } = user;
-    return new Response(JSON.stringify(userWithoutPassword), {
+    const accessToken = signJwtAccessToken(userWithoutPassword);
+    const result = {
+      ...userWithoutPassword,
+      accessToken,
+    };
+    return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
     });
   } else {
