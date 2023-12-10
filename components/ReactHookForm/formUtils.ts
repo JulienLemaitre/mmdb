@@ -1,7 +1,7 @@
 export const SECTION_DEFAULT_VALUE = {
   rank: 1,
-  isCutTime: "",
-  isCommonTime: "",
+  isCutTime: false,
+  isCommonTime: false,
   isFastestStructuralNoteBelCanto: "",
 };
 export const MOVEMENT_DEFAULT_VALUE = {

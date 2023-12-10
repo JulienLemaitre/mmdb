@@ -109,8 +109,8 @@ export type SectionInput = Pick<
 > & {
   tempoIndication?: string;
   comment?: string;
-  isCommonTime?: string;
-  isCutTime?: string;
+  isCommonTime?: boolean;
+  isCutTime?: boolean;
   isFastestStructuralNoteBelCanto?: string;
 };
 export type MovementInput = Pick<Movement, "rank"> & {

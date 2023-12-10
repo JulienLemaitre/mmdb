@@ -10,6 +10,8 @@ import {
   updateEditForm,
   useEditForm,
 } from "@/components/context/editFormContext";
+import { fetchAPI } from "@/utils/fetchAPI";
+import { useSession } from "next-auth/react";
 
 const PersonSchema = z.object({
   firstName: z.string().min(2),
@@ -27,6 +29,7 @@ const PersonSchema = z.object({
 export default function CreateComposer() {
   const router = useRouter();
   const { dispatch } = useEditForm();
+  const { data: session } = useSession();
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
@@ -41,15 +44,13 @@ export default function CreateComposer() {
     console.log("data", data);
 
     // post data to api route to create a composer as a person
-    const composer = await fetch("/api/person/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const composer = await fetchAPI(
+      "/api/person/create",
+      {
+        variables: data,
       },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .catch((err) => console.log(err));
+      session?.user?.accessToken,
+    );
 
     if (!composer) {
       console.warn("ERROR - NO composer created");

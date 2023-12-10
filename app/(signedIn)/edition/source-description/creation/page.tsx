@@ -18,6 +18,8 @@ import { zodYear } from "@/utils/zodTypes";
 import { SOURCE_TYPE } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import ReferenceArray from "@/components/ReactHookForm/ReferenceArray";
+import { fetchAPI } from "@/utils/fetchAPI";
+import { useSession } from "next-auth/react";
 
 const SourceSchema = z.object({
   title: z.string().optional(),
@@ -42,6 +44,7 @@ const SourceSchema = z.object({
 export default function CreateSource() {
   const router = useRouter();
   const { dispatch, state } = useEditForm();
+  const { data: session } = useSession();
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
@@ -70,18 +73,16 @@ export default function CreateSource() {
       return;
     }
     // post data to api route
-    const source = await fetch("/api/source-description/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const source = await fetchAPI(
+      "/api/source-description/create",
+      {
+        variables: {
+          ...sourceData,
+          pieceVersionId: state.pieceVersion.id,
+        },
       },
-      body: JSON.stringify({
-        ...sourceData,
-        pieceVersionId: state.pieceVersion.id,
-      }),
-    })
-      .then((res) => res.json())
-      .catch((err) => console.log(err));
+      session?.user?.accessToken,
+    );
 
     console.log("source description created", source);
     updateEditForm(dispatch, "source", source);

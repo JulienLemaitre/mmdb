@@ -30,6 +30,5 @@ export async function POST(request: Request) {
     });
   } else {
     return new Response(null);
-    // return new Response("Unauthorized", { status: 401 });
   }
 }

@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
-import { MetronomeMarksInput } from "@/types/editFormTypes";
+import { MetronomeMarksInput, SectionState } from "@/types/editFormTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MetronomeMarkArray from "@/components/ReactHookForm/MetronomeMarkArray";
 import { z } from "zod";
 import { zodOption } from "@/utils/zodTypes";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { fetchAPI } from "@/utils/fetchAPI";
 
 const MetronomeMarksSchema = z.object({
   metronomeMarks: z.array(
@@ -18,16 +20,24 @@ const MetronomeMarksSchema = z.object({
   ),
 });
 
-export default function MetronomeMarksForm({ sectionList, sourceId }) {
-  const router = useRouter();
+interface MetronomeMarksFormProps {
+  sectionList: SectionState[];
+  sourceId: string;
+}
+export default function MetronomeMarksForm({
+  sectionList,
+  sourceId,
+}: MetronomeMarksFormProps) {
+  // const router = useRouter();
   const [isDataSaved, setIsDataSaved] = useState<boolean>(false);
+  const { data: session } = useSession();
   const {
     formState: { errors, isSubmitting },
     control,
     register,
     handleSubmit,
-    getValues,
-    reset,
+    // getValues,
+    // reset,
     setValue,
     watch,
   } = useForm<{ metronomeMarks: MetronomeMarksInput[] }>({
@@ -35,9 +45,6 @@ export default function MetronomeMarksForm({ sectionList, sourceId }) {
       metronomeMarks: sectionList.map((sectionStateList) => {
         return {
           sectionId: sectionStateList.id,
-          // beatUnit: undefined,
-          // bpm: undefined,
-          // comment: "",
         };
       }),
     },
@@ -47,16 +54,17 @@ export default function MetronomeMarksForm({ sectionList, sourceId }) {
   const onSubmit = async (data: { metronomeMarks: MetronomeMarksInput[] }) => {
     console.log(`[] data :`, data);
     try {
-      const response = await fetch(`/api/metronome-marks/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetchAPI(
+        "/api/metronome-marks/create",
+        {
+          variables: {
+            metronomeMarks: data.metronomeMarks,
+            sourceId: sourceId,
+          },
         },
-        body: JSON.stringify({
-          metronomeMarks: data.metronomeMarks,
-          sourceId: sourceId,
-        }),
-      });
+        session?.user?.accessToken,
+      );
+
       if (response.ok) {
         setIsDataSaved(true);
         console.log(

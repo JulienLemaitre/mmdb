@@ -16,6 +16,8 @@ import MovementArray from "@/components/ReactHookForm/MovementArray";
 import { MOVEMENT_DEFAULT_VALUE } from "@/components/ReactHookForm/formUtils";
 import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
 import { zodOption } from "@/utils/zodTypes";
+import { useSession } from "next-auth/react";
+import { fetchAPI } from "@/utils/fetchAPI";
 
 const PieceVersionSchema = z.object({
   category: zodOption,
@@ -30,8 +32,8 @@ const PieceVersionSchema = z.object({
               rank: z.number(),
               metreNumerator: z.number(),
               metreDenominator: z.number(),
-              isCommonTime: z.string().optional(),
-              isCutTime: z.string().optional(),
+              isCommonTime: z.boolean().optional(),
+              isCutTime: z.boolean().optional(),
               fastestStructuralNotesPerBar: z.number(),
               isFastestStructuralNoteBelCanto: z.string().optional(),
               fastestStaccatoNotesPerBar: z.number().or(z.nan()),
@@ -50,6 +52,7 @@ const PieceVersionSchema = z.object({
 export default function CreatePieceVersion() {
   const router = useRouter();
   const { dispatch, state } = useEditForm();
+  const { data: session } = useSession();
   const {
     formState: { errors, isSubmitting },
     control,
@@ -92,17 +95,16 @@ export default function CreatePieceVersion() {
   const onTempoIndicationCreated = async (
     inputValue: string,
   ): Promise<OptionInput | void> => {
-    return await fetch("/api/tempoIndication/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    return await fetchAPI(
+      "/api/tempoIndication/create",
+      {
+        variables: {
+          text: inputValue,
+        },
       },
-      body: JSON.stringify({
-        text: inputValue,
-      }),
-    })
-      .then(async (response) => {
-        const newTempoIndication = await response.json();
+      session?.user?.accessToken,
+    )
+      .then(async (newTempoIndication) => {
         console.log(
           `[onTempoIndicationCreated] newTempoIndication :`,
           newTempoIndication,
@@ -137,18 +139,16 @@ export default function CreatePieceVersion() {
     }
 
     // post data to api route to create a piece version
-    const pieceVersion = await fetch("/api/piece-version/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const pieceVersion = await fetchAPI(
+      "/api/piece-version/create",
+      {
+        variables: {
+          ...pieceVersionData,
+          pieceId: state.piece.id,
+        },
       },
-      body: JSON.stringify({
-        ...pieceVersionData,
-        pieceId: state.piece.id,
-      }),
-    })
-      .then((res) => res.json())
-      .catch((err) => console.log(err));
+      session?.user?.accessToken,
+    );
 
     if (!pieceVersion) {
       console.warn("ERROR - NO piece version created");

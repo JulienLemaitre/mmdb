@@ -7,6 +7,8 @@ import { zodPerson } from "@/utils/zodTypes";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import { FormInput, getLabel } from "@/components/ReactHookForm/FormInput";
 import { ChangeEvent, useState } from "react";
+import { fetchAPI } from "@/utils/fetchAPI";
+import { useSession } from "next-auth/react";
 
 const SourceContributionsSchema = z.union([
   z.object({
@@ -41,6 +43,7 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
     resolver: zodResolver(SourceContributionsSchema),
   });
   const [isPerson, setIsPerson] = useState<boolean>(true);
+  const { data: session } = useSession();
 
   const onIsOrganizationToggleChange = (
     event: ChangeEvent<HTMLInputElement>,
@@ -64,15 +67,13 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
     console.log(`[] data :`, data);
     if ("person" in data) {
       // Persist the new person
-      const person = await fetch("/api/person/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const person = await fetchAPI(
+        "/api/person/create",
+        {
+          variables: data.person,
         },
-        body: JSON.stringify(data.person),
-      })
-        .then((res) => res.json())
-        .catch((err) => console.log(err));
+        session?.user?.accessToken,
+      );
 
       console.log(`person created :`, person);
       onContributionCreated({
@@ -82,15 +83,13 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
     }
     if ("organization" in data) {
       // Persist the new organization
-      const organization = await fetch("/api/organization/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const organization = await fetchAPI(
+        "/api/organization/create",
+        {
+          variables: data.organization,
         },
-        body: JSON.stringify(data.organization),
-      })
-        .then((res) => res.json())
-        .catch((err) => console.log(err));
+        session?.user?.accessToken,
+      );
 
       console.log(`organization created :`, organization);
       onContributionCreated({

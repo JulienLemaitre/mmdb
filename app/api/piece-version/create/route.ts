@@ -42,8 +42,8 @@ export async function POST(req: NextRequest) {
               rank: section.rank,
               metreNumerator: section.metreNumerator,
               metreDenominator: section.metreDenominator,
-              isCommonTime: section.isCommonTime === "true",
-              isCutTime: section.isCutTime === "true",
+              isCommonTime: section.isCommonTime,
+              isCutTime: section.isCutTime,
               fastestStructuralNotesPerBar:
                 section.fastestStructuralNotesPerBar,
               fastestStaccatoNotesPerBar: section.fastestStaccatoNotesPerBar,

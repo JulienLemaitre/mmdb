@@ -14,6 +14,8 @@ import {
 } from "@/utils/routes";
 import Link from "next/link";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
+import { fetchAPI } from "@/utils/fetchAPI";
+import { useSession } from "next-auth/react";
 
 const PieceSchema = z.object({
   title: z.string().min(2),
@@ -30,6 +32,7 @@ const PieceSchema = z.object({
 export default function CreatePiece() {
   const router = useRouter();
   const { dispatch, state } = useEditForm();
+  const { data: session } = useSession();
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
@@ -55,15 +58,13 @@ export default function CreatePiece() {
       return;
     }
     // post data to api route
-    const piece = await fetch("/api/piece/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const piece = await fetchAPI(
+      "/api/piece/create",
+      {
+        variables: { ...pieceData, composerId: state.composer.id },
       },
-      body: JSON.stringify({ ...pieceData, composerId: state.composer.id }),
-    })
-      .then((res) => res.json())
-      .catch((err) => console.log(err));
+      session?.user?.accessToken,
+    );
 
     console.log("piece created", piece);
     const pieceState = {

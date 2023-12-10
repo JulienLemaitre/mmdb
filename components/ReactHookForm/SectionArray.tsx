@@ -31,10 +31,8 @@ export default function SectionArray({
       <ul>
         {fields.map((item, index, sectionArray) => {
           const isMetreFieldDisabled =
-            watch(`movements[${nestIndex}].sections[${index}].isCommonTime`) ===
-              "true" ||
-            watch(`movements[${nestIndex}].sections[${index}].isCutTime`) ===
-              "true";
+            watch(`movements[${nestIndex}].sections[${index}].isCommonTime`) ||
+            watch(`movements[${nestIndex}].sections[${index}].isCutTime`);
 
           return (
             <li key={item.id} className="px-4 border-accent border-2 my-3">
@@ -86,7 +84,6 @@ export default function SectionArray({
                     name={
                       `movements[${nestIndex}].sections[${index}].isCommonTime` as const
                     }
-                    value={true}
                     onClick={(e) => {
                       // @ts-ignore
                       const isChecked = e?.target?.checked;
@@ -97,7 +94,7 @@ export default function SectionArray({
                       ) {
                         setValue(
                           `movements[${nestIndex}].sections[${index}].isCutTime`,
-                          undefined,
+                          false,
                         );
                         setValue(
                           `movements[${nestIndex}].sections[${index}].metreNumerator`,
@@ -123,7 +120,6 @@ export default function SectionArray({
                     name={
                       `movements[${nestIndex}].sections[${index}].isCutTime` as const
                     }
-                    value={true}
                     onClick={(e) => {
                       // @ts-ignore
                       const isChecked = e?.target?.checked;
@@ -134,7 +130,7 @@ export default function SectionArray({
                       ) {
                         setValue(
                           `movements[${nestIndex}].sections[${index}].isCommonTime`,
-                          undefined,
+                          false,
                         );
                         setValue(
                           `movements[${nestIndex}].sections[${index}].metreNumerator`,
