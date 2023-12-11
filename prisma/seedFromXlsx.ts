@@ -529,6 +529,21 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
     }
   })
 
+  // Create admin and editor test accounts
+  await db.user.createMany({
+    data: [
+      {
+        name: "mmdb ADMIN",
+        email: "julem80+mmdbadmin@pm.me",
+        role: "ADMIN",
+      },
+      {
+        name: "mmdb EDITOR",
+        email: "julem80+mmdeditor@pm.me",
+        role: "EDITOR",
+      }],
+  })
+
   const pieceTaskList = pieceList
   .map((piece) => {
     // Fix for wrongly written Beethoven name

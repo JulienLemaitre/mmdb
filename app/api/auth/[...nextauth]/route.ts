@@ -45,6 +45,21 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      console.log(
+        `[signIn cb] { user, account, profile, email, credentials }`,
+        JSON.stringify({ user, account, profile, email, credentials }, null, 2),
+      );
+      const isAllowedToSignIn = true;
+      if (isAllowedToSignIn) {
+        return true;
+      } else {
+        // Return false to display a default error message
+        return false;
+        // Or you can return a URL to redirect to:
+        // return '/unauthorized'
+      }
+    },
     async session({ session, token }) {
       session.user = token as any;
       return session;
@@ -52,6 +67,13 @@ const handler = NextAuth({
     async jwt({ token, user }) {
       return { ...token, ...user };
     },
+  },
+  pages: {
+    signIn: "/login",
+    // signOut: "/logout",
+    // error: "/login",
+    // verifyRequest: "/login",
+    // newUser: "/login",
   },
 });
 

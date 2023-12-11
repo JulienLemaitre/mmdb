@@ -3,6 +3,9 @@
 
 import get from "just-safe-get";
 import { GetErrorMessage } from "@/utils/GetErrorMessage";
+import { useState } from "react";
+import EyeSlashIcon from "@/components/svg/EyeSlashIcon";
+import EyeIcon from "@/components/svg/EyeIcon";
 
 function getRegisterProps(name: string) {
   if (name.toLowerCase().includes("year")) {
@@ -99,8 +102,10 @@ export function FormInput({
   registerProps = {},
   controlClassName = "",
   inputClassName = "", // showPassword = false,
-} // toggleShowPassword = () => {},
-: FormInputProps) {
+  // toggleShowPassword = () => {},
+}: FormInputProps) {
+  const [showPassword, setShowPassword] = useState(false);
+
   // Create a version of name with every array index as [index]. replaced by .index.
   // This is to be able to use getValues() with arrays.
   const nameWithDotIndex = name.replace(/\[(\d+)\]\./g, ".$1.");
@@ -112,9 +117,9 @@ export function FormInput({
   const error = get(errors, nameWithDotIndex);
   const isInvalid = !!error;
   const type =
-    typeProp || ["birthYear", "deathYear", "yearOfComposition"].includes(name)
-      ? "number"
-      : "text";
+    (typeProp === "password" && showPassword ? "text" : null) ||
+    typeProp ||
+    (name.toLowerCase().includes("year") ? "number" : "text");
   const isNumber = type === "number";
   const errorMessage = error?.message;
   // console.log(`[] error :`, error);
@@ -129,19 +134,33 @@ export function FormInput({
           </span>
         </label>
       )}
-      <input
-        className={`input input-bordered ${inputClassName}`}
-        // type={["password"].includes(name) && showPassword ? "text" : "password"}
-        type={type}
-        {...register(name, {
-          // ...(isRequired ? { required: "Info obligatoire" } : {}),
-          ...(getRegisterProps(name) || {}),
-          ...(isNumber ? { valueAsNumber: true } : {}),
-          ...registerProps,
-        })}
-        {...(defaultValue ? { defaultValue } : {})}
-        {...(disabled ? { disabled: true } : {})}
-      />
+      <div className="flex w-full relative">
+        <input
+          className={`input input-bordered ${inputClassName} flex-1`}
+          // type={["password"].includes(name) && showPassword ? "text" : "password"}
+          type={type}
+          {...register(name, {
+            // ...(isRequired ? { required: "Info obligatoire" } : {}),
+            ...(getRegisterProps(name) || {}),
+            ...(isNumber ? { valueAsNumber: true } : {}),
+            ...registerProps,
+          })}
+          {...(defaultValue ? { defaultValue } : {})}
+          {...(disabled ? { disabled: true } : {})}
+        />
+        {typeProp === "password" && (
+          <button
+            className="btn btn-ghost ml-2 absolute right-0"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <EyeSlashIcon className="w-5 h-5" />
+            ) : (
+              <EyeIcon className="w-5 h-5" />
+            )}
+          </button>
+        )}
+      </div>
       {GetErrorMessage(errorMessage) && (
         <span className="label-text-alt text-red-500">
           {GetErrorMessage(errorMessage)}
