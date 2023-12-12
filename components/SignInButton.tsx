@@ -4,7 +4,7 @@ import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 const SignInButton = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   if (session && session.user) {
     return (
       <div className="flex gap-4 ml-auto">
@@ -16,7 +16,7 @@ const SignInButton = () => {
         <div className="flex items-center">
           <button
             type="button"
-            onClick={() => signOut()}
+            onClick={() => signOut({ callbackUrl: "/" })}
             className="text-red-600"
           >
             Sign out
@@ -29,9 +29,17 @@ const SignInButton = () => {
   return (
     <div className="flex gap-4 ml-auto">
       <div className="flex items-center">
-        <button type="button" onClick={() => signIn()} className="text-sky-600">
-          Sign In
-        </button>
+        {status === "loading" ? (
+          <div className="text-sm font-medium text-gray-500">Loading...</div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => signIn()}
+            className="text-sky-600"
+          >
+            Sign In
+          </button>
+        )}
       </div>
     </div>
   );

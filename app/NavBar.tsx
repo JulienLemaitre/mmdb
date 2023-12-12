@@ -1,15 +1,23 @@
 import SignInButton from "@/components/SignInButton";
 
-export default function NavBar({ title }: { title: string }) {
+export default function NavBar({
+  title,
+  isHome,
+}: {
+  title?: string;
+  isHome?: boolean;
+}) {
   return (
     <div className="navbar bg-base-100 px-4">
       <div className="flex-none">
-        <span className="text-lg font-bold">{title}</span>
+        {title ? <span className="text-lg font-bold">{title}</span> : null}
       </div>
       <div className="flex-1 px-2 mx-2 text-center flex justify-center">
-        <a className="btn btn-ghost normal-case text-xl" href="/">
-          MM Database
-        </a>
+        {isHome ? null : (
+          <a className="btn btn-ghost normal-case text-xl" href="/">
+            MM Database
+          </a>
+        )}
       </div>
       <div className="flex-none">
         <SignInButton />

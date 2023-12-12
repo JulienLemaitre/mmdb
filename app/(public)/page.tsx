@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <NavBar title="Home" />
+      <NavBar isHome />
       <div className="flex flex-col items-center justify-center min-h-screen py-2">
         <h1 className="mb-8 text-4xl font-bold">The Metronome Mark Database</h1>
         <div className="flex flex-col items-stretch gap-6 w-full max-w-xs">
