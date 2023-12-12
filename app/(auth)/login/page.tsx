@@ -15,7 +15,9 @@ const LoginSchema = z.object({
 export default function Login() {
   const searchParams = useSearchParams();
   const message = searchParams.get("message");
+  const callbackUrl = searchParams.get("callbackUrl");
   console.log(`[Login] message :`, message);
+  console.log(`[Login] callbackUrl :`, callbackUrl);
   const {
     register,
     handleSubmit,
@@ -31,7 +33,7 @@ export default function Login() {
       email: data.email,
       password: data.password,
       redirect: true,
-      callbackUrl: `/`,
+      callbackUrl: callbackUrl || `/`,
     });
   };
 

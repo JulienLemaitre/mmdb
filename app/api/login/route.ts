@@ -29,6 +29,17 @@ export async function POST(request: Request) {
       headers: { "Content-Type": "application/json" },
     });
   } else {
-    return new Response(null);
+    console.log(
+      `[] No user or no passwordHash in user or wrong password provided :`,
+      user,
+    );
+    return new Response(
+      JSON.stringify({
+        error: "No user or no passwordHash in user or wrong password provided",
+      }),
+      {
+        headers: { "Content-Type": "application/json" },
+      },
+    );
   }
 }

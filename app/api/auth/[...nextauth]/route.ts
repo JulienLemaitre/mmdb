@@ -33,7 +33,15 @@ const handler = NextAuth({
           }),
           headers: { "Content-Type": "application/json" },
         });
+        console.log(`[auth authorize] res :`, res);
+        console.log(`[auth authorize] res.ok :`, res.ok);
         const user = await res.json();
+        console.log(`[auth authorize] user :`, user);
+        if (user.error) {
+          // Return null if user data could not be retrieved
+          console.log(`[auth authorize] user.error :`, user.error);
+          return null;
+        }
 
         // If no error and we have user data, return it
         if (res.ok && user) {
@@ -71,7 +79,7 @@ const handler = NextAuth({
   pages: {
     signIn: "/login",
     // signOut: "/logout",
-    // error: "/login",
+    error: "/auth/error",
     // verifyRequest: "/login",
     // newUser: "/login",
   },
