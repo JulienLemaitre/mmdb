@@ -52,8 +52,13 @@ export default function CreateComposer() {
       session?.user?.accessToken,
     );
 
-    if (!composer) {
-      console.warn("ERROR - NO composer created");
+    if (!composer || composer.error) {
+      console.warn(
+        `ERROR - NO composer created${
+          composer?.error ? ` [${composer.error}]` : ""
+        }`,
+      );
+      // TODO should trigger a toast
       return;
     }
 

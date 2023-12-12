@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/db";
 import isReqAuthorized from "@/utils/isReqAuthorized";
+import getDecodedTokenFromReq from "@/utils/getDecodedTokenFromReq";
 
 export async function POST(req: NextRequest) {
   if (!isReqAuthorized(req)) {
@@ -8,7 +9,13 @@ export async function POST(req: NextRequest) {
       status: 401,
     });
   }
-
+  const decodedToken = await getDecodedTokenFromReq(req);
+  const creatorId = decodedToken?.id;
+  if (!creatorId) {
+    return new Response(JSON.stringify({ error: "Unauthorized creator" }), {
+      status: 401,
+    });
+  }
   const body = await req.json();
   console.log(`[POST person] body :`, body);
   const { firstName, lastName, birthYear, deathYear } = body;
@@ -19,6 +26,7 @@ export async function POST(req: NextRequest) {
       lastName,
       birthYear,
       ...(deathYear && { deathYear }),
+      creatorId,
     },
   });
 

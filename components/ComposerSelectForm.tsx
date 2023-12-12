@@ -1,12 +1,13 @@
 "use client";
 import ComposerSelect from "@/components/ComposerSelect";
 import {
+  initEditForm,
   updateEditForm,
   useEditForm,
 } from "@/components/context/editFormContext";
 import { EDITION_PIECE_URL } from "@/utils/routes";
 import { ComposerState } from "@/types/editFormTypes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type ComposerSelectFormProps = {
@@ -19,6 +20,12 @@ export default function ComposerSelectForm({
   const router = useRouter();
   const [selectedComposer, setSelectedComposer] =
     useState<ComposerState | null>(null);
+
+  // Reset the form context when the component is mounted
+  useEffect(() => {
+    console.log(`Reset the form context`);
+    initEditForm(dispatch);
+  }, []);
 
   const onSelect = (composerId: string) => {
     const composer = composers.find((composer) => composer.id === composerId);
