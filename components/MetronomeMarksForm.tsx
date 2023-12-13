@@ -71,7 +71,8 @@ export default function MetronomeMarksForm({
           `[onSubmit] Metronome marks are persisted - Should redirect on a summary thank you page`,
         );
       } else {
-        console.error("Error creating metronome marks");
+        console.error("Error creating metronome marks", response);
+        // TODO: handle the error on screen
       }
     } catch (error) {
       console.error("Error creating metronome marks", error);

@@ -27,5 +27,8 @@ export async function POST(req: NextRequest) {
     metronomeMarksRes,
   );
 
-  return NextResponse.json(metronomeMarksRes);
+  return NextResponse.json({
+    ok: !!metronomeMarksRes?.count,
+    ...metronomeMarksRes,
+  });
 }
