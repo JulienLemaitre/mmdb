@@ -37,7 +37,7 @@ export default function MetronomeMarkArray({
             <li key={item.id}>
               <h4 className="mt-6 text-lg font-bold text-secondary">
                 {`Mvt ${rank} in ${key.replaceAll("_", " ")} - Section ${
-                  index + 1
+                  section.rank
                 }`}
                 <span className="italic">
                   {tempoIndication && ` - ${tempoIndication}`}
