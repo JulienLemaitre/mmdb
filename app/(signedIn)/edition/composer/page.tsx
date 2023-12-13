@@ -2,18 +2,21 @@ import { db } from "@/utils/db";
 import ComposerSelectForm from "@/components/ComposerSelectForm";
 
 async function getData() {
-  // Fetch all composers as person with et least 1 composition
+  // Fetch all persons as composers
   const composers = await db.person.findMany({
-    // where: {
-    //   compositions: {
-    //     some: {},
-    //   },
-    // },
     select: {
       id: true,
       firstName: true,
       lastName: true,
     },
+    orderBy: [
+      {
+        lastName: "asc",
+      },
+      {
+        firstName: "asc",
+      },
+    ],
   });
   return { composers };
 }
