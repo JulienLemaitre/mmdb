@@ -33,6 +33,7 @@ type EditFormState = {
 type EditFormProviderProps = { children: ReactNode };
 
 const LOCAL_STORAGE_KEY = "editForm";
+const USE_LOCAL_STORAGE = false;
 
 const EditFormContext = createContext<
   | {
@@ -43,13 +44,13 @@ const EditFormContext = createContext<
 >(undefined);
 
 function localStorageSetItem(key: string, value: any) {
-  if (typeof window !== "undefined") {
+  if (typeof window !== "undefined" && USE_LOCAL_STORAGE) {
     // Perform localStorage action
     return localStorage.setItem(key, JSON.stringify(value));
   }
 }
 function localStorageGetItem(key: string) {
-  if (typeof window !== "undefined") {
+  if (typeof window !== "undefined" && USE_LOCAL_STORAGE) {
     // Perform localStorage action
     return localStorage.getItem(key);
   }
