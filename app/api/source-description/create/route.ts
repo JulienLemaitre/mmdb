@@ -39,13 +39,7 @@ export async function POST(req: NextRequest) {
       link,
       year,
       references,
-      ...(comment && {
-        comment: {
-          create: {
-            text: comment,
-          },
-        },
-      }),
+      ...(comment && { comment }),
     },
     select: {
       id: true,

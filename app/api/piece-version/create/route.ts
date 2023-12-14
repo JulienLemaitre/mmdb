@@ -94,13 +94,8 @@ export async function POST(req: NextRequest) {
               fastestRepeatedNotesPerBar: true,
               fastestOrnamentalNotesPerBar: true,
               isFastestStructuralNoteBelCanto: true,
+              comment: true,
               tempoIndication: {
-                select: {
-                  id: true,
-                  text: true,
-                },
-              },
-              comment: {
                 select: {
                   id: true,
                   text: true,

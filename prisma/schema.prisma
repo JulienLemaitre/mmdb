@@ -81,8 +81,7 @@ model Section {
   tempoIndication                 TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
   tempoIndicationId               String?          @db.Uuid
   metronomeMarks                  MetronomeMark[] // A movement can have many metronome marks
-  commentId                       String?          @unique @db.Uuid
-  comment                         Comment?         @relation(fields: [commentId], references: [id])
+  comment                         String?
   createdAt                       DateTime         @default(now())
   updatedAt                       DateTime         @updatedAt
 
@@ -109,8 +108,7 @@ model MetronomeMark {
   updatedAt      DateTime   @updatedAt
   section        Section    @relation(fields: [sectionId], references: [id])
   sectionId      String     @db.Uuid
-  commentId      String?    @unique @db.Uuid
-  comment        Comment?   @relation(fields: [commentId], references: [id])
+  comment        String?
 
   @@unique([sourceId, sectionId])
 }
@@ -127,8 +125,7 @@ model Source {
   metronomeMarks MetronomeMark[] // A source can have many metronome marks
   creator        User?           @relation(fields: [creatorId], references: [id])
   creatorId      String?         @db.Uuid
-  commentId      String?         @unique @db.Uuid
-  comment        Comment?        @relation(fields: [commentId], references: [id])
+  comment        String?
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
 }
@@ -173,21 +170,6 @@ model Person {
   @@unique([firstName, lastName])
 }
 
-model Comment {
-  id            String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  text          String
-  creator       User?          @relation(fields: [creatorId], references: [id])
-  creatorId     String?        @db.Uuid
-  source        Source?
-  section       Section?
-  metronomeMark MetronomeMark?
-
-  // add a constraint to ensure that one and only one of sourceId, sectionId or metronomeMarkId is set
-  // constraint source_section_metronomeMark_xor check ((sourceId IS NOT NULL AND sectionId IS NULL AND metronomeMarkId IS NULL) OR (sectionId IS NOT NULL AND sourceId IS NULL AND metronomeMarkId IS NULL) OR (metronomeMarkId IS NOT NULL AND sourceId IS NULL AND sectionId IS NULL))
-}
-
 // Next-auth related models
 
 model Account {
@@ -227,7 +209,6 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  comments      Comment[] // A user can have created many comments
   sources       Source[] // A user can have created many sources
   pieces        Piece[] // A user can have created many pieces
   pieceVersions PieceVersion[] // A user can have created many pieceVersions

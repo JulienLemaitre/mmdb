@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
       sectionId: metronomeMark.sectionId,
       bpm: metronomeMark.bpm,
       beatUnit: metronomeMark.beatUnit.value,
+      ...(metronomeMark.comment && { comment: metronomeMark.comment }),
     })),
   });
   console.log(

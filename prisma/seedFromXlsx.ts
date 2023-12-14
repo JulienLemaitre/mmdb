@@ -615,6 +615,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
                           ...(section.fastestStructuralNotesPerBar && { fastestStructuralNotesPerBar: section.fastestStructuralNotesPerBar }),
                           ...(section.fastestStaccatoNotesPerBar && { fastestStaccatoNotesPerBar: section.fastestStaccatoNotesPerBar }),
                           ...(section.fastestOrnamentalNotesPerBar && { fastestOrnamentalNotesPerBar: section.fastestOrnamentalNotesPerBar }),
+                          ...(section.comment && { comment: section.comment }),
                           ...(section.tempoIndication && {
                             tempoIndication: {
                               connectOrCreate: {
@@ -626,18 +627,6 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
                                 }
                               }
                             },
-                          }),
-                          ...(section.comment && {
-                            comment: {
-                              create: {
-                                creator: {
-                                  connect: {
-                                    id: userArjun.id
-                                  },
-                                },
-                                text: section.comment,
-                              }
-                            }
                           }),
                         }
                       }),
@@ -711,6 +700,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
           type: source.type,
           link: source.link,
           year: source.year,
+          ...(source.comment && { comment: source.comment }),
           pieceVersions: {
             connect: {
               id: pieceVersion.id,
@@ -739,18 +729,6 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
               }
             }),
           },
-          ...(source.comment && {
-            comment: {
-              create: {
-                creator: {
-                  connect: {
-                    id: userArjun.id
-                  },
-                },
-                text: source.comment,
-              }
-            }
-          }),
         },
         include: {
           metronomeMarks: true,
