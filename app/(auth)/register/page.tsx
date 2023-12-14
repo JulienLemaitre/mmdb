@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
+import { useEffect, useState } from "react";
 
 const UserSchema = z
   .object({
@@ -27,6 +28,7 @@ const UserSchema = z
 export default function Register() {
   const router = useRouter();
   const { data: session } = useSession();
+  const [message, setMessage] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -37,11 +39,9 @@ export default function Register() {
     resolver: zodResolver(UserSchema),
   });
 
-  // If logged in, redirect to the homepage
-  if (session?.user) {
-    router.push("/");
-    return null;
-  }
+  useEffect(() => {
+    setMessage(null);
+  }, [watch]);
 
   const onSubmit = async (data) => {
     console.log("data", data);
@@ -52,56 +52,96 @@ export default function Register() {
       },
       body: JSON.stringify(data),
     });
+    console.log(`[] response :`, response);
 
     if (response.ok) {
       router.push("/register/success");
+      return;
+    }
+
+    // Error handling
+    const dataError = await response.json();
+    const errorMessage = dataError?.error;
+    console.log(`[] errorMessage :`, errorMessage);
+    if (errorMessage) {
+      setMessage(errorMessage);
     }
   };
 
   return (
     <div className="flex-col items-center">
       <h1 className="mb-4 text-4xl font-bold">Register</h1>
-      <form
-        // className="flex flex-col items-center justify-center w-full max-w-md mt-6"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <FormInput
-          name="name"
-          label="Name"
-          isRequired
-          {...{ register, watch, errors }}
-        />
-        <FormInput
-          name="email"
-          label="Email"
-          isRequired
-          {...{ register, watch, errors }}
-        />
-        <FormInput
-          name="password"
-          label="Password"
-          type="password"
-          isRequired
-          {...{ register, watch, errors }}
-        />
-        <FormInput
-          name="confirmPassword"
-          label="Confirm password"
-          type="password"
-          isRequired
-          {...{ register, watch, errors }}
-        />
-        <button
-          className="btn btn-primary mt-6 w-full max-w-xs"
-          type="submit"
-          disabled={isSubmitting}
+      {message ? (
+        <div role="alert" className="alert alert-warning">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="stroke-current shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+            />
+          </svg>
+          <span>{message}</span>
+        </div>
+      ) : null}
+      {session?.user ? (
+        <>
+          <div className="mb-4 text-xl font-bold">
+            You are already logged in as {session.user.name}!
+          </div>
+          <button className="btn btn-primary" onClick={() => router.push("/")}>
+            Go to homepage
+          </button>
+        </>
+      ) : null}
+      {!session?.user ? (
+        <form
+          // className="flex flex-col items-center justify-center w-full max-w-md mt-6"
+          onSubmit={handleSubmit(onSubmit)}
         >
-          Register
-          {isSubmitting && (
-            <span className="loading loading-spinner loading-sm"></span>
-          )}
-        </button>
-      </form>
+          <FormInput
+            name="name"
+            label="Name"
+            isRequired
+            {...{ register, watch, errors }}
+          />
+          <FormInput
+            name="email"
+            label="Email"
+            isRequired
+            {...{ register, watch, errors }}
+          />
+          <FormInput
+            name="password"
+            label="Password"
+            type="password"
+            isRequired
+            {...{ register, watch, errors }}
+          />
+          <FormInput
+            name="confirmPassword"
+            label="Confirm password"
+            type="password"
+            isRequired
+            {...{ register, watch, errors }}
+          />
+          <button
+            className="btn btn-primary mt-6 w-full max-w-xs"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            Register
+            {isSubmitting && (
+              <span className="loading loading-spinner loading-sm"></span>
+            )}
+          </button>
+        </form>
+      ) : null}
     </div>
   );
 }

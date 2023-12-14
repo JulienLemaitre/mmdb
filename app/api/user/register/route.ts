@@ -16,9 +16,12 @@ export async function POST(request: Request) {
   });
 
   if (user) {
-    return new Response(JSON.stringify({ error: "User already exists" }), {
-      status: 400,
-    });
+    return new Response(
+      JSON.stringify({ error: "User already exists with this email" }),
+      {
+        status: 400,
+      },
+    );
   }
 
   if (!(body.name && body.email && body.password)) {
@@ -37,9 +40,12 @@ export async function POST(request: Request) {
   const createdUser = await db.user.create({ data: newUser });
 
   if (!createdUser) {
-    return new Response(JSON.stringify({ error: "User not created" }), {
-      status: 400,
-    });
+    return new Response(
+      JSON.stringify({ error: "An error occurred - User not created" }),
+      {
+        status: 400,
+      },
+    );
   }
 
   // Send confirmation email to verify the email address
