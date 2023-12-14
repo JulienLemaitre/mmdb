@@ -9,6 +9,7 @@ export async function POST(req: NextRequest) {
       status: 401,
     });
   }
+
   const decodedToken = await getDecodedTokenFromReq(req);
   const creatorId = decodedToken?.id;
   if (!creatorId) {
@@ -16,6 +17,7 @@ export async function POST(req: NextRequest) {
       status: 401,
     });
   }
+
   const body = await req.json();
   console.log(`[POST person] body :`, body);
   const { firstName, lastName, birthYear, deathYear } = body;
@@ -26,7 +28,11 @@ export async function POST(req: NextRequest) {
       lastName,
       birthYear,
       ...(deathYear && { deathYear }),
-      creatorId,
+      creator: {
+        connect: {
+          id: creatorId,
+        },
+      },
     },
   });
 

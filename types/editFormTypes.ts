@@ -1,5 +1,4 @@
 import type {
-  Comment,
   CONTRIBUTION_ROLE,
   MetronomeMark,
   Movement,
@@ -58,9 +57,9 @@ export type SectionState = Pick<
   | "metreDenominator"
   | "isCommonTime"
   | "isCutTime"
+  | "comment"
 > & {
   tempoIndication: Pick<TempoIndication, "text"> | null;
-  comment: Pick<Comment, "text"> | null;
 };
 
 export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {
@@ -73,10 +72,8 @@ export type PieceVersionState = Pick<PieceVersion, "id" | "category"> & {
 
 export type SourceState = Pick<
   Source,
-  "id" | "title" | "type" | "link" | "year" | "references"
-> & {
-  comment: Pick<Comment, "text"> | null;
-};
+  "id" | "title" | "type" | "link" | "year" | "references" | "comment"
+>;
 
 // Form INPUTS
 
@@ -106,9 +103,9 @@ export type SectionInput = Pick<
   | "fastestRepeatedNotesPerBar"
   | "fastestOrnamentalNotesPerBar"
   // | "isFastestStructuralNoteBelCanto"
+  | "comment"
 > & {
   tempoIndication?: string;
-  comment?: string;
   isCommonTime?: boolean;
   isCutTime?: boolean;
   isFastestStructuralNoteBelCanto?: string;
@@ -124,10 +121,8 @@ export type PieceVersionInput = {
 
 export type SourceInput = Pick<
   Source,
-  "id" | "title" | "type" | "link" | "year" | "references"
-> & {
-  comment: Pick<Comment, "text"> | null;
-};
+  "id" | "title" | "type" | "link" | "year" | "references" | "comment"
+>;
 
 export type ContributionInput = {
   role: OptionInput;
@@ -140,7 +135,9 @@ export type ContributionInput = {
     }
 );
 
-export type MetronomeMarksInput = Pick<MetronomeMark, "sectionId" | "bpm"> & {
+export type MetronomeMarksInput = Pick<
+  MetronomeMark,
+  "sectionId" | "bpm" | "comment"
+> & {
   beatUnit: OptionInput;
-  comment: Pick<Comment, "text"> | null;
 };

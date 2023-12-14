@@ -1,6 +1,6 @@
 "use client";
 import { useEditForm } from "@/components/context/editFormContext";
-import { SectionState } from "@/types/editFormTypes";
+import { MovementState, SectionState } from "@/types/editFormTypes";
 import MetronomeMarksForm from "@/components/MetronomeMarksForm";
 
 export default function CreateMetronomeMarks() {
@@ -11,25 +11,30 @@ export default function CreateMetronomeMarks() {
   }
 
   const sectionList =
-    state.pieceVersion?.movements.reduce<SectionState[]>(
-      (sectionList, movement) => {
-        return [
-          ...sectionList,
-          ...movement.sections.map((section) => {
-            // Insert in section the properties of movement except "sections"
-            return {
-              ...section,
-              movement: {
-                ...movement,
-                sections: undefined,
-              },
-            };
-          }),
-        ];
-      },
-      [],
-    ) || [];
-  console.log(`[CreateMetronomeMarks] sectionList :`, sectionList);
+    state.pieceVersion?.movements
+      .reduce<(SectionState & { movement: Omit<MovementState, "sections"> })[]>(
+        (sectionList, movement) => {
+          return [
+            ...sectionList,
+            ...movement.sections.map((section) => {
+              // Insert in section the properties of movement except "sections"
+              return {
+                ...section,
+                movement: {
+                  ...movement,
+                  sections: undefined,
+                },
+              };
+            }),
+          ];
+        },
+        [],
+      )
+      .sort((a, b) =>
+        a.movement.rank - b.movement.rank === 0
+          ? a.rank - b.rank
+          : a.movement.rank - b.movement.rank,
+      ) || [];
 
   const sourceId = state?.source?.id;
 

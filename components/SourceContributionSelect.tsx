@@ -113,15 +113,15 @@ export default function SourceContributionSelect({
   }, [role, newOrganization, newPerson, onAddContribution]);
 
   return (
-    <>
+    <div className="max-w-md">
       {!isContributionCreation ? (
         <>
           <Label label={`Person or Organization`} />
           <Select
             getOptionValue={(option) =>
               option.label
-                .replaceAll("[person]", "")
-                .replaceAll("[organization]", "")
+                .replaceAll(" [person]", "")
+                .replaceAll(" [organization]", "")
             }
             instanceId="source-contribution-select"
             isSearchable={true}
@@ -182,6 +182,6 @@ export default function SourceContributionSelect({
       >
         Add this contribution
       </button>
-    </>
+    </div>
   );
 }

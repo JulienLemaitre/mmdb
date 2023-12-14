@@ -2,10 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/db";
 import { Prisma } from "@prisma/client";
 import isReqAuthorized from "@/utils/isReqAuthorized";
+import getDecodedTokenFromReq from "@/utils/getDecodedTokenFromReq";
 
 export async function POST(req: NextRequest) {
   if (!isReqAuthorized(req)) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+    });
+  }
+
+  const decodedToken = await getDecodedTokenFromReq(req);
+  const creatorId = decodedToken?.id;
+  if (!creatorId) {
+    return new Response(JSON.stringify({ error: "Unauthorized creator" }), {
       status: 401,
     });
   }
@@ -32,6 +41,11 @@ export async function POST(req: NextRequest) {
       pieceVersions: {
         connect: {
           id: pieceVersionId,
+        },
+      },
+      creator: {
+        connect: {
+          id: creatorId,
         },
       },
       title,

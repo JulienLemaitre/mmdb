@@ -1,10 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/db";
 import isReqAuthorized from "@/utils/isReqAuthorized";
+import getDecodedTokenFromReq from "@/utils/getDecodedTokenFromReq";
 
 export async function POST(req: NextRequest) {
   if (!isReqAuthorized(req)) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+    });
+  }
+
+  const decodedToken = await getDecodedTokenFromReq(req);
+  const creatorId = decodedToken?.id;
+  if (!creatorId) {
+    return new Response(JSON.stringify({ error: "Unauthorized creator" }), {
       status: 401,
     });
   }
@@ -33,44 +42,51 @@ export async function POST(req: NextRequest) {
         },
       },
       category: category.value,
+      creator: {
+        connect: {
+          id: creatorId,
+        },
+      },
       movements: {
-        create: movements.map((movement) => ({
-          rank: movement.rank,
-          key: movement.key.value,
-          sections: {
-            create: movement.sections.map((section) => ({
-              rank: section.rank,
-              metreNumerator: section.metreNumerator,
-              metreDenominator: section.metreDenominator,
-              isCommonTime: section.isCommonTime,
-              isCutTime: section.isCutTime,
-              fastestStructuralNotesPerBar:
-                section.fastestStructuralNotesPerBar,
-              fastestStaccatoNotesPerBar: section.fastestStaccatoNotesPerBar,
-              fastestRepeatedNotesPerBar: section.fastestRepeatedNotesPerBar,
-              fastestOrnamentalNotesPerBar:
-                section.fastestOrnamentalNotesPerBar,
-              ...(section.tempoIndication?.value
-                ? {
-                    tempoIndication: {
-                      connect: {
-                        id: section.tempoIndication.value,
-                      },
-                    },
-                  }
-                : {}),
-              ...(section.comment
-                ? {
-                    comment: {
-                      create: {
-                        text: section.comment,
-                      },
-                    },
-                  }
-                : {}),
-            })),
-          },
-        })),
+        create: movements
+          .sort((a, b) => a.rank - b.rank)
+          .map((movement) => ({
+            rank: movement.rank,
+            key: movement.key.value,
+            sections: {
+              create: movement.sections
+                .sort((a, b) => a.rank - b.rank)
+                .map((section) => ({
+                  rank: section.rank,
+                  metreNumerator: section.metreNumerator,
+                  metreDenominator: section.metreDenominator,
+                  isCommonTime: section.isCommonTime,
+                  isCutTime: section.isCutTime,
+                  fastestStructuralNotesPerBar:
+                    section.fastestStructuralNotesPerBar,
+                  fastestStaccatoNotesPerBar:
+                    section.fastestStaccatoNotesPerBar,
+                  fastestRepeatedNotesPerBar:
+                    section.fastestRepeatedNotesPerBar,
+                  fastestOrnamentalNotesPerBar:
+                    section.fastestOrnamentalNotesPerBar,
+                  ...(section.tempoIndication?.value
+                    ? {
+                        tempoIndication: {
+                          connect: {
+                            id: section.tempoIndication.value,
+                          },
+                        },
+                      }
+                    : {}),
+                  ...(section.comment
+                    ? {
+                        comment: section.comment,
+                      }
+                    : {}),
+                })),
+            },
+          })),
       },
     },
     select: {
