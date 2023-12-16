@@ -1,6 +1,8 @@
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 import Providers from "@/components/Providers";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,6 +22,8 @@ export default function RootLayout({
           <div className="w-full h-full flex flex-col">{children}</div>
           <div id="modal"></div>
         </Providers>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
