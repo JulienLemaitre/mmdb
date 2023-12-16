@@ -2,7 +2,7 @@ import NextAuth from "next-auth/next"; // test with "next-auth" if necessary
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const API_URL = process.env.VERCEL_URL
-  ? `${process.env.VERCEL_URL}/api`
+  ? `https://${process.env.VERCEL_URL}/api`
   : "http://localhost:3000/api";
 
 const handler = NextAuth({
