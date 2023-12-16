@@ -522,10 +522,14 @@ function getKeyEnumFromKeyString(keyString: string) {
 async function seedDB({pieceList}: {pieceList: any[]}) {
   console.log(`-------- START - seedDB --------`)
   // console.log(`[] pieceList`, pieceList)
+  const now = new Date()
   const userArjun = await db.user.create({
     data: {
       name: "Arjun Wasan",
       email: "arjunwasan@gmail.com",
+      role: "EDITOR",
+      emailVerified: now,
+      passwordHash: "$2a$10$7EEZGctSWdX99AYhIVv.WuVPjSFUdlPcHsnQaSibin.YVilNJBBk2",
     }
   })
 
@@ -536,12 +540,31 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
         name: "mmdb ADMIN",
         email: "julem80+mmdbadmin@pm.me",
         role: "ADMIN",
+        emailVerified: now,
+        passwordHash: "$2a$10$XG46.V.GsuDeS/MhdP4EeuAldCkCXrbILQcTae1YXEHC5Knvwirnm",
       },
       {
         name: "mmdb EDITOR",
-        email: "julem80+mmdeditor@pm.me",
+        email: "julem80+mmdbeditor@pm.me",
         role: "EDITOR",
-      }],
+        emailVerified: now,
+        passwordHash: "$2a$10$wkkjfc62trF0/lxpEWeHMufw3/JfOayEyi37yjaJwQ18YBe580gmC",
+      },
+      {
+        name: "Setfan Pospiech",
+        email: "st.pospiech@web.de",
+        role: "EDITOR",
+        emailVerified: now,
+        passwordHash: "$2a$10$NgfYJUZgxR8PxENV.2aE4.xJc.ayim2wljlquH.7xP01gbMbeBT3S",
+      },
+      {
+        name: "Wim Winters",
+        email: "wwinters@telenet.be",
+        role: "EDITOR",
+        emailVerified: now,
+        passwordHash: "$2a$10$xa0I2y70qbNl3yC7AZepXuEO07WAcyNX2nRx4/dqWvHz5CdsbZ6uS",
+      }
+    ],
   })
 
   const pieceTaskList = pieceList
