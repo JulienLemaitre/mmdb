@@ -1,6 +1,10 @@
 import NextAuth from "next-auth/next"; // test with "next-auth" if necessary
 import CredentialsProvider from "next-auth/providers/credentials";
 
+const API_URL = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}/api`
+  : "http://localhost:3000/api";
+
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
@@ -25,7 +29,8 @@ const handler = NextAuth({
         // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
-        const res = await fetch("http://localhost:3000/api/login", {
+        console.log(`[Credentials authorize] API_URL :`, API_URL);
+        const res = await fetch(`${API_URL}/login`, {
           method: "POST",
           body: JSON.stringify({
             email: credentials?.email,
