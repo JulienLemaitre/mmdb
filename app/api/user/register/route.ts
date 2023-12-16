@@ -8,6 +8,10 @@ interface RegisterBody {
   password: string;
 }
 
+const API_URL = process.env.VERCEL_URL
+  ? `${process.env.VERCEL_URL}/api`
+  : "http://localhost:3000/api";
+
 export async function POST(request: Request) {
   const body = (await request.json()) as RegisterBody;
 
@@ -55,7 +59,7 @@ export async function POST(request: Request) {
       expiresIn: "1h",
     },
   );
-  const verifyLink = `http://localhost:3000/api/user/verify/${token}`;
+  const verifyLink = `${API_URL}/user/verify/${token}`;
   console.log(`[register] verifyLink :`, verifyLink);
   // TODO: send an email with the link to verify the email address
 
