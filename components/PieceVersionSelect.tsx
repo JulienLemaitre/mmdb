@@ -57,9 +57,9 @@ export default function PieceVersionSelect({
                             </b>
                           )}
                         </div>
-                        {section.comment?.text && (
+                        {section.comment && (
                           <div className="italic">
-                            Comment : {section.comment?.text}
+                            Comment : {section.comment}
                           </div>
                         )}
                       </div>
