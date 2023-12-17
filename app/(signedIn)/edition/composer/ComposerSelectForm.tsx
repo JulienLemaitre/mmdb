@@ -1,11 +1,11 @@
 "use client";
-import ComposerSelect from "@/components/ComposerSelect";
+import ComposerSelect from "@/app/(signedIn)/edition/composer/ComposerSelect";
 import {
   initEditForm,
   updateEditForm,
   useEditForm,
 } from "@/components/context/editFormContext";
-import { EDITION_PIECE_URL } from "@/utils/routes";
+import { SELECT_PIECE_URL } from "@/utils/routes";
 import { ComposerState } from "@/types/editFormTypes";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -35,7 +35,7 @@ export default function ComposerSelectForm({
   };
   const onSubmit = () => {
     updateEditForm(dispatch, "composer", selectedComposer);
-    router.push(EDITION_PIECE_URL + "?composerId=" + selectedComposer?.id);
+    router.push(SELECT_PIECE_URL + "?composerId=" + selectedComposer?.id);
   };
 
   return (

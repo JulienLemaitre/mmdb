@@ -9,8 +9,8 @@ import { useForm } from "react-hook-form";
 import { SourceInput } from "@/types/editFormTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  CREATION_SOURCE_CONTRIBUTIONS_URL,
-  EDITION_PIECE_VERSION_URL,
+  CREATE_SOURCE_CONTRIBUTIONS_URL,
+  SELECT_PIECE_VERSION_URL,
 } from "@/utils/routes";
 import Link from "next/link";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
@@ -86,7 +86,7 @@ export default function CreateSource() {
 
     console.log("source description created", source);
     updateEditForm(dispatch, "source", source);
-    router.push(CREATION_SOURCE_CONTRIBUTIONS_URL);
+    router.push(CREATE_SOURCE_CONTRIBUTIONS_URL);
   };
 
   if (!state.pieceVersion) {
@@ -95,7 +95,7 @@ export default function CreateSource() {
         <h1 className="mb-4 text-4xl font-bold">
           Select a piece version first
         </h1>
-        <Link href={EDITION_PIECE_VERSION_URL} className="btn">
+        <Link href={SELECT_PIECE_VERSION_URL} className="btn">
           Back
         </Link>
       </div>

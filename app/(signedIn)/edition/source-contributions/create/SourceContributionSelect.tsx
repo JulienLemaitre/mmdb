@@ -7,7 +7,7 @@ import {
 } from "@/types/editFormTypes";
 import { useCallback, useEffect, useState } from "react";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
-import NewSourceContributionForm from "@/components/NewSourceContributionForm";
+import NewSourceContributionForm from "@/app/(signedIn)/edition/source-contributions/create/NewSourceContributionForm";
 import Label from "@/components/Label";
 
 type SourceContributionSelectProps = {

@@ -16,6 +16,10 @@
   font-size: 2.25rem/* 36px */;
   line-height: 0.5rem/* 18px */;
 }
+.common-time-sm {
+  font-size: 2rem/* 36px */;
+  line-height: 0.5rem/* 18px */;
+}
 .rainbow-mesh {
   background-color: hsla(0, 100%, 50%, 1);
   background-image: radial-gradient(

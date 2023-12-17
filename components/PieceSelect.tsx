@@ -5,7 +5,7 @@ import {
   updateEditForm,
 } from "@/components/context/editFormContext";
 import { PieceState } from "@/types/editFormTypes";
-import { CREATION_PIECE_URL } from "@/utils/routes";
+import { CREATE_PIECE_URL } from "@/utils/routes";
 import { useRouter } from "next/navigation";
 
 type PieceSelectProps = {
@@ -42,7 +42,7 @@ export default function PieceSelect({ pieces, onSelect }: PieceSelectProps) {
             onClick={async () => {
               updateEditForm(dispatch, "piece", null);
               console.log("Create a new piece");
-              router.push(CREATION_PIECE_URL);
+              router.push(CREATE_PIECE_URL);
             }}
           >
             Create a new piece

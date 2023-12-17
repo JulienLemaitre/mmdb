@@ -3,10 +3,7 @@ import {
   updateEditForm,
   useEditForm,
 } from "@/components/context/editFormContext";
-import {
-  EDITION_COMPOSER_URL,
-  EDITION_PIECE_VERSION_URL,
-} from "@/utils/routes";
+import { SELECT_COMPOSER_URL, SELECT_PIECE_VERSION_URL } from "@/utils/routes";
 import PieceSelect from "@/components/PieceSelect";
 import { PieceState } from "@/types/editFormTypes";
 import { useRouter } from "next/navigation";
@@ -29,14 +26,14 @@ export default function PieceSelectForm({ pieces }: PieceSelectFormProps) {
   };
   const onSubmit = () => {
     updateEditForm(dispatch, "piece", selectedPiece);
-    router.push(EDITION_PIECE_VERSION_URL + "?pieceId=" + selectedPiece?.id);
+    router.push(SELECT_PIECE_VERSION_URL + "?pieceId=" + selectedPiece?.id);
   };
 
   if (!state.composer) {
     return (
       <div>
         <h2 className="mb-4 text-2xl font-bold">Select a composer first</h2>
-        <Link href={EDITION_COMPOSER_URL} className="btn btn-secondary">
+        <Link href={SELECT_COMPOSER_URL} className="btn btn-secondary">
           Back
         </Link>
       </div>

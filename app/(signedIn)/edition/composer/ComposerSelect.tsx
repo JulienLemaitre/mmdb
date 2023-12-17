@@ -2,7 +2,7 @@
 import Select from "react-select";
 import { ComposerState } from "@/types/editFormTypes";
 import { useRouter } from "next/navigation";
-import { CREATION_COMPOSER_URL } from "@/utils/routes";
+import { CREATE_COMPOSER_URL } from "@/utils/routes";
 
 type ComposerSelectProps = {
   composers: ComposerState[];
@@ -37,7 +37,7 @@ export default function ComposerSelect({
             className="btn btn-primary"
             onClick={() => {
               console.log("Create a new composer");
-              router.push(CREATION_COMPOSER_URL);
+              router.push(CREATE_COMPOSER_URL);
             }}
           >
             Create a new composer

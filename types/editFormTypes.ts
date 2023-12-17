@@ -13,27 +13,32 @@ import type {
 
 // Data in STATE
 
+export type isNewProp = {
+  isNew?: boolean;
+};
 export type PersonState = {
   id: string;
   firstName: string;
   lastName: string;
+  birthYear: number;
+  deathYear: number | null;
 };
-export type ComposerState = PersonState;
+export type ComposerState = PersonState & isNewProp;
 export type OrganizationState = {
   id: string;
   name: string;
 };
 export type ContributionState =
-  | {
+  | ({
       id: string;
       role: CONTRIBUTION_ROLE;
       person: PersonState;
-    }
-  | {
+    } & isNewProp)
+  | ({
       id: string;
       role: CONTRIBUTION_ROLE;
       organization: OrganizationState;
-    };
+    } & isNewProp);
 export type ContributionStateWithoutId =
   | {
       person: PersonState;
@@ -47,7 +52,8 @@ export type ContributionStateWithoutId =
 export type PieceState = Pick<
   Piece,
   "id" | "nickname" | "yearOfComposition" | "title"
->;
+> &
+  isNewProp;
 
 export type SectionState = Pick<
   Section,
@@ -58,6 +64,10 @@ export type SectionState = Pick<
   | "isCommonTime"
   | "isCutTime"
   | "comment"
+  | "fastestStructuralNotesPerBar"
+  | "fastestStaccatoNotesPerBar"
+  | "fastestRepeatedNotesPerBar"
+  | "fastestOrnamentalNotesPerBar"
 > & {
   tempoIndication: Pick<TempoIndication, "text"> | null;
 };
@@ -68,12 +78,13 @@ export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {
 
 export type PieceVersionState = Pick<PieceVersion, "id" | "category"> & {
   movements: MovementState[];
-};
+} & isNewProp;
 
 export type SourceState = Pick<
   Source,
   "id" | "title" | "type" | "link" | "year" | "references" | "comment"
->;
+> &
+  isNewProp;
 
 // Form INPUTS
 

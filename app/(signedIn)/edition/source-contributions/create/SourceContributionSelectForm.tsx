@@ -12,9 +12,9 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import PlusIcon from "@/components/svg/PlusIcon";
-import SourceContributionSelect from "@/components/SourceContributionSelect";
+import SourceContributionSelect from "@/app/(signedIn)/edition/source-contributions/create/SourceContributionSelect";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
-import { CREATION_METRONOME_MARKS_URL } from "@/utils/routes";
+import { CREATE_METRONOME_MARKS_URL } from "@/utils/routes";
 
 type SourceContributionSelectFormProps = {
   persons: PersonState[];
@@ -135,7 +135,7 @@ export default function SourceContributionSelectForm({
   };
   const onSubmit = () => {
     updateEditForm(dispatch, "contributions", selectedContributions);
-    router.push(CREATION_METRONOME_MARKS_URL);
+    router.push(CREATE_METRONOME_MARKS_URL);
   };
 
   const personOptions: OptionInput[] = [...persons, ...createdPersons].map(

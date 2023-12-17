@@ -1,5 +1,5 @@
 import { db } from "@/utils/db";
-import ComposerSelectForm from "@/components/ComposerSelectForm";
+import ComposerSelectForm from "@/app/(signedIn)/edition/composer/ComposerSelectForm";
 
 async function getData() {
   // Fetch all persons as composers
@@ -8,6 +8,8 @@ async function getData() {
       id: true,
       firstName: true,
       lastName: true,
+      birthYear: true,
+      deathYear: true,
     },
     orderBy: [
       {

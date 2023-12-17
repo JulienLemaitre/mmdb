@@ -6,9 +6,9 @@ import {
   useEditForm,
 } from "@/components/context/editFormContext";
 import {
-  CREATION_PIECE_VERSION_URL,
-  CREATION_SOURCE_URL,
-  EDITION_PIECE_URL,
+  CREATE_PIECE_VERSION_URL,
+  CREATE_SOURCE_URL,
+  SELECT_PIECE_URL,
 } from "@/utils/routes";
 import PieceVersionSelect from "@/components/PieceVersionSelect";
 import { PieceVersionState } from "@/types/editFormTypes";
@@ -37,14 +37,14 @@ export default function PieceVersionSelectForm({
   };
   const onSubmit = () => {
     updateEditForm(dispatch, "pieceVersion", selectedPieceVersion);
-    router.push(CREATION_SOURCE_URL);
+    router.push(CREATE_SOURCE_URL);
   };
 
   if (!state.piece) {
     return (
       <div>
         <h1 className="mb-4 text-4xl font-bold">Select a piece first</h1>
-        <Link href={EDITION_PIECE_URL} className="btn btn-secondary">
+        <Link href={SELECT_PIECE_URL} className="btn btn-secondary">
           Back
         </Link>
       </div>
@@ -59,7 +59,7 @@ export default function PieceVersionSelectForm({
           type="button"
           className="btn btn-primary"
           onClick={() => {
-            router.push(CREATION_PIECE_VERSION_URL);
+            router.push(CREATE_PIECE_VERSION_URL);
           }}
         >
           <PlusIcon className="w-5 h-5" />

@@ -1,5 +1,5 @@
 import { db } from "@/utils/db";
-import SourceContributionSelectForm from "@/components/SourceContributionSelectForm";
+import SourceContributionSelectForm from "@/app/(signedIn)/edition/source-contributions/create/SourceContributionSelectForm";
 
 async function getData() {
   // Fetch all persons
@@ -8,6 +8,8 @@ async function getData() {
       id: true,
       firstName: true,
       lastName: true,
+      birthYear: true,
+      deathYear: true,
     },
   });
 

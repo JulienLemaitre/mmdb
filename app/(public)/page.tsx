@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { EDITION_COMPOSER_URL, EXPLORE_URL } from "@/utils/routes";
+import { SELECT_COMPOSER_URL, EXPLORE_URL } from "@/utils/routes";
 import NavBar from "@/app/NavBar";
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default function Home() {
           <Link href={EXPLORE_URL} className="btn btn-primary">
             Explore
           </Link>
-          <Link href={EDITION_COMPOSER_URL} className="btn btn-primary">
+          <Link href={SELECT_COMPOSER_URL} className="btn btn-primary">
             Edit
           </Link>
           <button className="btn btn-disabled">Review</button>

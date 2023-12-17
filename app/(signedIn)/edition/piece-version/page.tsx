@@ -30,6 +30,10 @@ async function getData(pieceId: string) {
                 },
               },
               comment: true,
+              fastestStaccatoNotesPerBar: true,
+              fastestStructuralNotesPerBar: true,
+              fastestRepeatedNotesPerBar: true,
+              fastestOrnamentalNotesPerBar: true,
             },
             orderBy: {
               rank: "asc",

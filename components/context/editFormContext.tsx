@@ -8,6 +8,7 @@ import {
 } from "react";
 import {
   ComposerState,
+  ContributionState,
   PieceState,
   PieceVersionState,
   SourceState,
@@ -29,6 +30,7 @@ type EditFormState = {
   piece?: PieceState;
   pieceVersion?: PieceVersionState;
   source?: SourceState;
+  contributions?: ContributionState[];
 };
 type EditFormProviderProps = { children: ReactNode };
 
@@ -57,6 +59,7 @@ function localStorageGetItem(key: string) {
 }
 
 function editFormReducer(state: EditFormState, action: PieceFormAction) {
+  // Entries created
   if (
     ["composer", "piece", "pieceVersion", "source", "contributions"].includes(
       action.type,
@@ -66,6 +69,7 @@ function editFormReducer(state: EditFormState, action: PieceFormAction) {
     localStorageSetItem("editForm", newState);
     return newState;
   }
+  // New ids - still needed ?
   if (["composerId", "pieceId", "pieceVersionId"].includes(action.type)) {
     const newState = {
       ...state,

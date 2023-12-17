@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { PIECE_CATEGORY, TempoIndication } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import { OptionInput, PieceVersionInput } from "@/types/editFormTypes";
-import { CREATION_SOURCE_URL } from "@/utils/routes";
+import { CREATE_SOURCE_URL } from "@/utils/routes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
 import { MOVEMENT_DEFAULT_VALUE } from "@/components/ReactHookForm/formUtils";
 import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
@@ -158,7 +158,7 @@ export default function CreatePieceVersion() {
     console.log("Piece version created", pieceVersion);
 
     updateEditForm(dispatch, "pieceVersion", pieceVersion);
-    router.push(CREATION_SOURCE_URL);
+    router.push(CREATE_SOURCE_URL);
   };
 
   console.log(`[CreatePieceVersion] errors :`, errors);

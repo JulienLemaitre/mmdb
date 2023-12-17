@@ -93,7 +93,7 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
 
       console.log(`organization created :`, organization);
       onContributionCreated({
-        role: data.role,
+        role: data.role.value,
         organization,
       });
     }

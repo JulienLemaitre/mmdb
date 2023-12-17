@@ -1,32 +1,25 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ComposerInput } from "@/types/editFormTypes";
+import { ComposerInput, PersonState } from "@/types/editFormTypes";
 import { useRouter } from "next/navigation";
-import { CREATION_PIECE_URL } from "@/utils/routes";
+import { CREATE_PIECE_URL } from "@/utils/routes";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
-import { z } from "zod";
 import {
   updateEditForm,
   useEditForm,
 } from "@/components/context/editFormContext";
 import { fetchAPI } from "@/utils/fetchAPI";
 import { useSession } from "next-auth/react";
+import { zodPerson } from "@/utils/zodTypes";
 
-const PersonSchema = z.object({
-  firstName: z.string().min(2),
-  lastName: z.string().min(2),
-  birthYear: z.number().gte(1000).lte(new Date().getFullYear()),
-  deathYear: z
-    .number()
-    .gte(1000)
-    .lte(new Date().getFullYear())
-    .or(z.nan())
-    .optional()
-    .nullable(),
-});
+const PersonSchema = zodPerson;
 
-export default function CreateComposer() {
+export default function ComposerEditForm({
+  composer,
+}: {
+  composer?: PersonState;
+}) {
   const router = useRouter();
   const { dispatch } = useEditForm();
   const { data: session } = useSession();
@@ -37,40 +30,45 @@ export default function CreateComposer() {
     watch,
   } = useForm<ComposerInput>({
     resolver: zodResolver(PersonSchema),
+    ...(composer && { defaultValues: composer }),
   });
 
   const onSubmit = async (data: ComposerInput) => {
     // Front input values validation is successful at this point.
     console.log("data", data);
+    const apiUrl = composer ? `/api/person/update` : "/api/person/create";
 
     // post data to api route to create a composer as a person
-    const composer = await fetchAPI(
-      "/api/person/create",
+    const editedComposer = await fetchAPI(
+      apiUrl,
       {
-        variables: data,
+        variables: { ...data, id: composer?.id },
       },
       session?.user?.accessToken,
     );
 
-    if (!composer || composer.error) {
+    if (!editedComposer || editedComposer.error) {
       console.warn(
-        `ERROR - NO composer created${
-          composer?.error ? ` [${composer.error}]` : ""
+        `ERROR - NO composer ${composer ? "updated" : "created"}${
+          editedComposer?.error ? ` [${editedComposer.error}]` : ""
         }`,
       );
       // TODO should trigger a toast
       return;
     }
 
-    console.log("Composer created", composer);
+    console.log("Composer created", editedComposer);
     const composerState = {
-      id: composer.id,
-      firstName: composer.firstName,
-      lastName: composer.lastName,
+      id: editedComposer.id,
+      firstName: editedComposer.firstName,
+      lastName: editedComposer.lastName,
+      birthYear: editedComposer.birthYear,
+      deathYear: editedComposer.deathYear,
+      isNew: true,
     };
 
     updateEditForm(dispatch, "composer", composerState);
-    router.push(CREATION_PIECE_URL);
+    router.push(CREATE_PIECE_URL);
   };
 
   console.log(`[CreateComposer] errors :`, errors);
@@ -78,7 +76,9 @@ export default function CreateComposer() {
     <div
     // className="flex flex-col items-center justify-center"
     >
-      <h1 className="mb-4 text-4xl font-bold">Create a composer</h1>
+      <h1 className="mb-4 text-4xl font-bold">{`${
+        composer ? `Update` : `Create`
+      } a composer`}</h1>
       <form
         // className="flex flex-col items-center justify-center"
         onSubmit={handleSubmit(onSubmit)}
