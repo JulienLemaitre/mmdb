@@ -28,7 +28,7 @@ export default async function ComposerUpdate({ searchParams: { personId } }) {
 
   if (!composer) {
     return (
-      <div>
+      <div className="w-full max-w-md">
         <h1 className="mb-4 text-4xl font-bold">Composer update error</h1>
         <p className="mb-4 text-lg">
           The composer you are trying to update was not found.

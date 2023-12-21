@@ -25,15 +25,9 @@ async function getData() {
 
 export default async function Composer() {
   const { composers } = await getData();
-  console.log(
-    `[Composer] composers (${composers.length}) :`,
-    JSON.stringify(composers),
-  );
 
   return (
-    <div
-    // className="flex flex-col items-center justify-center"
-    >
+    <div className="w-full max-w-md">
       <h1 className="mb-4 text-4xl font-bold">Select a composer</h1>
       <ComposerSelectForm composers={composers} />
     </div>

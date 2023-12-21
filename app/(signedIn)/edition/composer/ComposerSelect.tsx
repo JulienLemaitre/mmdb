@@ -7,16 +7,21 @@ import { CREATE_COMPOSER_URL } from "@/utils/routes";
 type ComposerSelectProps = {
   composers: ComposerState[];
   onSelect: (composerId: string) => void;
+  selectedComposer: ComposerState | null;
 };
 export default function ComposerSelect({
   composers,
   onSelect,
+  selectedComposer,
 }: ComposerSelectProps) {
-  const composerOptions = composers.map((composer) => ({
-    value: composer.id,
-    label: `${composer.firstName} ${composer.lastName}`,
-  }));
+  const composerOptions = composers.map((composer) =>
+    getComposerOption(composer),
+  );
   const router = useRouter();
+  const defaultOption = selectedComposer
+    ? getComposerOption(selectedComposer)
+    : null;
+  console.log(`[ComposerSelect] defaultOption :`, defaultOption);
 
   return (
     <Select
@@ -24,6 +29,7 @@ export default function ComposerSelect({
       isSearchable={true}
       name="composer"
       options={composerOptions}
+      defaultValue={defaultOption}
       autoFocus
       onChange={(composerOption) => {
         if (!composerOption) return;
@@ -46,4 +52,11 @@ export default function ComposerSelect({
       )}
     />
   );
+}
+
+function getComposerOption(composer: ComposerState) {
+  return {
+    value: composer.id,
+    label: `${composer.firstName} ${composer.lastName}`,
+  };
 }

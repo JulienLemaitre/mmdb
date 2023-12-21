@@ -76,7 +76,7 @@ export default function CreatePiece() {
 
   if (!state.composer) {
     return (
-      <div>
+      <div className="w-full max-w-md">
         <h1 className="mb-4 text-4xl font-bold">Select a composer first</h1>
         <Link href={SELECT_COMPOSER_URL} className="btn">
           Back

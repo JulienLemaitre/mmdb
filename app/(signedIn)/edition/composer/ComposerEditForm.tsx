@@ -73,9 +73,7 @@ export default function ComposerEditForm({
 
   console.log(`[CreateComposer] errors :`, errors);
   return (
-    <div
-    // className="flex flex-col items-center justify-center"
-    >
+    <div className="w-full max-w-md">
       <h1 className="mb-4 text-4xl font-bold">{`${
         composer ? `Update` : `Create`
       } a composer`}</h1>

@@ -33,37 +33,29 @@ export default function Summary() {
         Reset all
       </button>
       {composer?.id ? (
-        <div
-          className={clsx(
-            "border-2 p-2 mt-3",
-            composer.isNew ? "hover:border-primary" : "",
-          )}
-        >
-          {composer.isNew ? (
-            <div className="float-right ml-2 mb-2">
-              <button
-                className="btn btn-outline btn-xs"
-                onClick={() =>
-                  router.push(UPDATE_COMPOSER_URL + `?personId=${composer.id}`)
-                }
-              >
-                Edit
-              </button>
-            </div>
-          ) : null}
+        <div className="border-2 p-2 mt-3 hover:border-gray-300">
+          <div className="float-right ml-2 mb-2">
+            <button
+              className="btn btn-outline btn-xs"
+              onClick={() =>
+                router.push(
+                  composer.isNew
+                    ? UPDATE_COMPOSER_URL + `?personId=${composer.id}`
+                    : SELECT_COMPOSER_URL,
+                )
+              }
+            >
+              {composer.isNew ? "Edit" : "Change selection"}
+            </button>
+          </div>
           <h3 className="font-bold uppercase text-xs">Composer</h3>
           <div>{`${composer.firstName} ${composer.lastName}`}</div>
           <div>{`${composer.birthYear} - ${composer.deathYear || ""}`}</div>
         </div>
       ) : null}
       {piece?.id ? (
-        <div
-          className={clsx(
-            "border-2 p-2 mt-3",
-            piece.isNew ? "hover:border-primary" : "",
-          )}
-        >
-          <h3 className="font-bold uppercase text-xs mt-3">piece</h3>
+        <div className="border-2 p-2 mt-3 hover:border-gray-300">
+          <h3 className="font-bold uppercase text-xs">piece</h3>
           {piece.title ? (
             <>
               <div>{piece.title}</div>
@@ -81,7 +73,7 @@ export default function Summary() {
         <div
           className={clsx(
             "border-2 p-2 mt-3",
-            pieceVersion.isNew ? "hover:border-primary" : "",
+            pieceVersion.isNew ? "hover:border-gray-300" : "",
           )}
         >
           <div>{`Category: ${pieceVersion.category}`}</div>
@@ -95,20 +87,25 @@ export default function Summary() {
               </h3>
               {movement.sections.map((section, sectionIndex, sectionList) => {
                 const {
+                  comment,
+                  fastestOrnamentalNotesPerBar,
+                  fastestRepeatedNotesPerBar,
+                  fastestStaccatoNotesPerBar,
+                  fastestStructuralNotesPerBar,
                   isCommonTime,
                   isCutTime,
-                  fastestStructuralNotesPerBar,
-                  fastestStaccatoNotesPerBar,
-                  fastestRepeatedNotesPerBar,
-                  fastestOrnamentalNotesPerBar,
+                  metreDenominator,
+                  metreNumerator,
+                  rank,
+                  tempoIndication,
                 } = section;
                 const isCommonOrCutTime = isCommonTime || isCutTime;
                 return (
                   <div key={`mvt-${mvtIndex}-section-${sectionIndex}`}>
                     <h4 className="italic mt-1">
-                      <span className="not-italic font-bold text-xs">{`Section ${section.rank}`}</span>
-                      {` - ${section.tempoIndication?.text}${
-                        section.comment ? ` (${section.comment})` : ""
+                      <span className="not-italic font-bold text-xs">{`Section ${rank}`}</span>
+                      {` - ${tempoIndication?.text}${
+                        comment ? ` (${comment})` : ""
                       }`}
                     </h4>
                     <div>
@@ -119,36 +116,34 @@ export default function Summary() {
                             <span className="common-time-sm align-middle">
                               {isCommonTime ? `\u{1D134}` : `\u{1D135}`}
                             </span>
-                            {` (${section.metreNumerator}/${section.metreDenominator})`}
+                            {` (${metreNumerator}/${metreDenominator})`}
                           </>
                         ) : (
-                          `${section.metreNumerator}/${section.metreDenominator}`
+                          `${metreNumerator}/${metreDenominator}`
                         )}
                       </b>
                     </div>
                     <h5 className="font-bold uppercase text-xs mt-1">
                       Fastest notes per bar
                     </h5>
-                    {section.fastestStructuralNotesPerBar && (
+                    {fastestStructuralNotesPerBar && (
                       <div className="">
-                        structural :{" "}
-                        <b>{section.fastestStructuralNotesPerBar}</b>
+                        structural : <b>{fastestStructuralNotesPerBar}</b>
                       </div>
                     )}
-                    {section.fastestRepeatedNotesPerBar && (
+                    {fastestRepeatedNotesPerBar && (
                       <div className="">
-                        repeated : <b>{section.fastestRepeatedNotesPerBar}</b>
+                        repeated : <b>{fastestRepeatedNotesPerBar}</b>
                       </div>
                     )}
-                    {section.fastestStaccatoNotesPerBar && (
+                    {fastestStaccatoNotesPerBar && (
                       <div className="">
-                        staccato: <b>{section.fastestStaccatoNotesPerBar}</b>
+                        staccato: <b>{fastestStaccatoNotesPerBar}</b>
                       </div>
                     )}
-                    {section.fastestOrnamentalNotesPerBar && (
+                    {fastestOrnamentalNotesPerBar && (
                       <div className="">
-                        ornamental :{" "}
-                        <b>{section.fastestOrnamentalNotesPerBar}</b>
+                        ornamental : <b>{fastestOrnamentalNotesPerBar}</b>
                       </div>
                     )}
                   </div>
@@ -159,12 +154,7 @@ export default function Summary() {
         </div>
       ) : null}
       {source?.id ? (
-        <div
-          className={clsx(
-            "border-2 p-2 mt-3",
-            source.isNew ? "hover:border-primary" : "",
-          )}
-        >
+        <div className="border-2 p-2 mt-3 hover:border-gray-300">
           <h3 className="font-bold uppercase text-xs mt-3">Source</h3>
           {source.title ? <div>{source.title}</div> : null}
           <div>{`${source.year} [${source.type}]`}</div>
