@@ -36,6 +36,13 @@ type EditFormProviderProps = { children: ReactNode };
 
 const LOCAL_STORAGE_KEY = "editForm";
 const USE_LOCAL_STORAGE = false;
+const ENTITIES_IN_ORDER = [
+  "composer",
+  "piece",
+  "pieceVersion",
+  "source",
+  "contributions",
+];
 
 const EditFormContext = createContext<
   | {
@@ -60,12 +67,24 @@ function localStorageGetItem(key: string) {
 
 function editFormReducer(state: EditFormState, action: PieceFormAction) {
   // Entries created
-  if (
-    ["composer", "piece", "pieceVersion", "source", "contributions"].includes(
-      action.type,
-    )
-  ) {
+  if (ENTITIES_IN_ORDER.includes(action.type)) {
     const newState = { ...state, [action.type]: action.payload };
+
+    // Reset all entities after the current one
+    if (action.payload.id !== state[action.type]?.id) {
+      for (const entity of ENTITIES_IN_ORDER) {
+        if (entity === action.type) continue;
+        if (
+          ENTITIES_IN_ORDER.indexOf(entity) >
+            ENTITIES_IN_ORDER.indexOf(action.type) &&
+          newState[entity]
+        ) {
+          console.log(`[editFormReducer] Resetting ${entity}`);
+          newState[entity] = undefined;
+        }
+      }
+    }
+
     localStorageSetItem("editForm", newState);
     return newState;
   }
