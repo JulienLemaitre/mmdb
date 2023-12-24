@@ -1,5 +1,5 @@
 import { db } from "@/utils/db";
-import PieceSelectForm from "@/components/PieceSelectForm";
+import PieceSelectForm from "@/app/(signedIn)/edition/piece/PieceSelectForm";
 
 async function getData(composerId: string) {
   if (!composerId) return { pieces: [] };

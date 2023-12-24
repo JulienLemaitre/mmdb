@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import { db } from "@/utils/db";
 import ComposerEditForm from "@/app/(signedIn)/edition/composer/ComposerEditForm";
 
@@ -6,7 +9,7 @@ async function getData(personId: string) {
     console.log(`[ComposerUpdate] personId is undefined`);
     return { composer: null };
   }
-  // Fetch all persons as composers
+  // Fetch the previously selected composer
   const composer = await db.person.findUnique({
     where: {
       id: personId,

@@ -4,10 +4,12 @@ import { PieceVersionState } from "@/types/editFormTypes";
 type PieceVersionSelectProps = {
   pieceVersions: PieceVersionState[];
   onSelect: (pieceVersionId: string) => void;
+  selectedPieceVersion: PieceVersionState | null;
 };
 export default function PieceVersionSelect({
   pieceVersions,
   onSelect,
+  selectedPieceVersion,
 }: PieceVersionSelectProps) {
   return pieceVersions.map((pieceVersion) => (
     <div
@@ -17,6 +19,7 @@ export default function PieceVersionSelect({
       <input
         type="radio"
         id={pieceVersion.id}
+        checked={pieceVersion.id === selectedPieceVersion?.id}
         name="pieceVersion"
         value={pieceVersion.id}
         onChange={(e) => onSelect(e.target.value)}

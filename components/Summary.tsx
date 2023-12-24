@@ -4,7 +4,14 @@ import {
   useEditForm,
   initEditForm,
 } from "@/components/context/editFormContext";
-import { SELECT_COMPOSER_URL, UPDATE_COMPOSER_URL } from "@/utils/routes";
+import {
+  SELECT_COMPOSER_URL,
+  SELECT_PIECE_URL,
+  SELECT_PIECE_VERSION_URL,
+  UPDATE_COMPOSER_URL,
+  UPDATE_PIECE_URL,
+  UPDATE_PIECE_VERSION_URL,
+} from "@/utils/routes";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { clsx } from "clsx";
@@ -55,6 +62,20 @@ export default function Summary() {
       ) : null}
       {piece?.id ? (
         <div className="border-2 p-2 mt-3 hover:border-gray-300">
+          <div className="float-right ml-2 mb-2">
+            <button
+              className="btn btn-outline btn-xs"
+              onClick={() =>
+                router.push(
+                  piece.isNew
+                    ? UPDATE_PIECE_URL + `?pieceId=${piece.id}`
+                    : SELECT_PIECE_URL + `?composerId=${composer?.id}`,
+                )
+              }
+            >
+              {piece.isNew ? "Edit" : "Change selection"}
+            </button>
+          </div>
           <h3 className="font-bold uppercase text-xs">piece</h3>
           {piece.title ? (
             <>
@@ -70,12 +91,23 @@ export default function Summary() {
         </div>
       ) : null}
       {pieceVersion?.id ? (
-        <div
-          className={clsx(
-            "border-2 p-2 mt-3",
-            pieceVersion.isNew ? "hover:border-gray-300" : "",
-          )}
-        >
+        <div className="border-2 p-2 mt-3 hover:border-gray-300">
+          <div className="float-right ml-2 mb-2">
+            <button
+              className="btn btn-outline btn-xs"
+              onClick={() =>
+                router.push(
+                  pieceVersion.isNew
+                    ? UPDATE_PIECE_VERSION_URL +
+                        `?pieceVersionId=${pieceVersion.id}`
+                    : SELECT_PIECE_VERSION_URL + `?pieceId=${piece?.id}`,
+                )
+              }
+            >
+              {pieceVersion.isNew ? "Edit" : "Change selection"}
+            </button>
+          </div>
+          <h3 className="font-bold uppercase text-xs">Piece Version</h3>
           <div>{`Category: ${pieceVersion.category}`}</div>
           {pieceVersion.movements.map((movement, mvtIndex, mvtArray) => (
             <div key={`mvt-${mvtIndex}`}>

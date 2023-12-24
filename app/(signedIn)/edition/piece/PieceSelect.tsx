@@ -1,9 +1,5 @@
 // "use client";
 import Select from "react-select";
-import {
-  useEditForm,
-  updateEditForm,
-} from "@/components/context/editFormContext";
 import { PieceState } from "@/types/editFormTypes";
 import { CREATE_PIECE_URL } from "@/utils/routes";
 import { useRouter } from "next/navigation";
@@ -11,16 +7,17 @@ import { useRouter } from "next/navigation";
 type PieceSelectProps = {
   pieces: PieceState[];
   onSelect: (pieceId: string) => void;
+  selectedPiece: PieceState | null;
 };
-export default function PieceSelect({ pieces, onSelect }: PieceSelectProps) {
-  const pieceOptions = pieces.map((piece) => ({
-    value: piece.id,
-    label: `${piece.title}${piece.nickname ? ` (${piece.nickname})` : ""} (${
-      piece.yearOfComposition
-    })`,
-  }));
+export default function PieceSelect({
+  pieces,
+  onSelect,
+  selectedPiece,
+}: PieceSelectProps) {
+  const pieceOptions = pieces.map((piece) => getPieceOption(piece));
   const router = useRouter();
-  const { dispatch } = useEditForm();
+  const defaultOption = selectedPiece ? getPieceOption(selectedPiece) : null;
+  console.log(`[PieceSelect] defaultOption :`, defaultOption);
 
   return (
     <Select
@@ -28,6 +25,7 @@ export default function PieceSelect({ pieces, onSelect }: PieceSelectProps) {
       isSearchable={true}
       name="color"
       options={pieceOptions}
+      defaultValue={defaultOption}
       autoFocus
       onChange={(pieceOption) => {
         if (!pieceOption) return;
@@ -40,7 +38,6 @@ export default function PieceSelect({ pieces, onSelect }: PieceSelectProps) {
             type="button"
             className="btn btn-primary"
             onClick={async () => {
-              updateEditForm(dispatch, "piece", null);
               console.log("Create a new piece");
               router.push(CREATE_PIECE_URL);
             }}
@@ -51,4 +48,13 @@ export default function PieceSelect({ pieces, onSelect }: PieceSelectProps) {
       )}
     />
   );
+}
+
+function getPieceOption(piece: PieceState) {
+  return {
+    value: piece.id,
+    label: `${piece.title}${piece.nickname ? ` (${piece.nickname})` : ""} (${
+      piece.yearOfComposition
+    })`,
+  };
 }

@@ -19,18 +19,22 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  console.log(`[POST person update] body :`, body);
-  const { firstName, lastName, birthYear, deathYear, id } = body;
+  console.log(`[POST piece update] body :`, body);
+  const { title, nickname, yearOfComposition, composerId, id } = body;
 
-  const person = await db.person.update({
+  const piece = await db.piece.update({
     where: {
       id,
     },
     data: {
-      firstName,
-      lastName,
-      birthYear,
-      ...(deathYear && { deathYear }),
+      title,
+      ...(nickname && { nickname }),
+      ...(yearOfComposition && { yearOfComposition }),
+      composer: {
+        connect: {
+          id: composerId,
+        },
+      },
       creator: {
         connect: {
           id: creatorId,
@@ -39,5 +43,5 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  return NextResponse.json(person);
+  return NextResponse.json(piece);
 }

@@ -10,9 +10,9 @@ import {
   CREATE_SOURCE_URL,
   SELECT_PIECE_URL,
 } from "@/utils/routes";
-import PieceVersionSelect from "@/components/PieceVersionSelect";
+import PieceVersionSelect from "@/app/(signedIn)/edition/piece-version/PieceVersionSelect";
 import { PieceVersionState } from "@/types/editFormTypes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import PlusIcon from "@/components/svg/PlusIcon";
 
@@ -26,6 +26,18 @@ export default function PieceVersionSelectForm({
   const { dispatch, state } = useEditForm();
   const [selectedPieceVersion, setSelectedPieceVersion] =
     useState<PieceVersionState | null>(null);
+  console.log(
+    `[PieceVersionSelectForm] selectedPieceVersion :`,
+    selectedPieceVersion,
+  );
+
+  // Reset the form context when the component is mounted
+  useEffect(() => {
+    // Init the form with context value if exists
+    if (state.pieceVersion) {
+      onSelect(state.pieceVersion.id);
+    }
+  }, []);
 
   const onSelect = (pieceVersionId: string) => {
     const pieceVersion = pieceVersions.find(
@@ -43,7 +55,7 @@ export default function PieceVersionSelectForm({
   if (!state.piece) {
     return (
       <div>
-        <h1 className="mb-4 text-4xl font-bold">Select a piece first</h1>
+        <h2 className="mb-4 text-2xl font-bold">Select a piece first</h2>
         <Link href={SELECT_PIECE_URL} className="btn btn-secondary">
           Back
         </Link>
@@ -53,7 +65,11 @@ export default function PieceVersionSelectForm({
 
   return (
     <>
-      <PieceVersionSelect pieceVersions={pieceVersions} onSelect={onSelect} />
+      <PieceVersionSelect
+        pieceVersions={pieceVersions}
+        onSelect={onSelect}
+        selectedPieceVersion={selectedPieceVersion}
+      />
       <div className="mt-4">
         <button
           type="button"

@@ -4,10 +4,10 @@ import {
   useEditForm,
 } from "@/components/context/editFormContext";
 import { SELECT_COMPOSER_URL, SELECT_PIECE_VERSION_URL } from "@/utils/routes";
-import PieceSelect from "@/components/PieceSelect";
+import PieceSelect from "@/app/(signedIn)/edition/piece/PieceSelect";
 import { PieceState } from "@/types/editFormTypes";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 type PieceSelectFormProps = {
@@ -18,9 +18,19 @@ export default function PieceSelectForm({ pieces }: PieceSelectFormProps) {
   const router = useRouter();
   const [selectedPiece, setSelectedPiece] = useState<PieceState | null>(null);
 
+  // Reset the form context when the component is mounted
+  useEffect(() => {
+    // Init the form with context value if exists
+    if (state.piece) {
+      onSelect(state.piece.id);
+    }
+  }, []);
+
   const onSelect = (pieceId: string) => {
     const piece = pieces.find((piece) => piece.id === pieceId);
     console.log(`[PieceSelectForm] onSelect: ${pieceId}`);
+    console.log(`[PieceSelectForm] piece: `, piece);
+    console.log(`[PieceSelectForm] pieces: `, pieces);
     if (!piece) return;
     setSelectedPiece(piece);
   };
@@ -40,9 +50,18 @@ export default function PieceSelectForm({ pieces }: PieceSelectFormProps) {
     );
   }
 
+  // If we have a default value to set, we prevent an initial render of react-select that would prevent its use
+  if (state.piece && !selectedPiece) {
+    return null;
+  }
+
   return (
     <>
-      <PieceSelect pieces={pieces} onSelect={onSelect} />
+      <PieceSelect
+        pieces={pieces}
+        onSelect={onSelect}
+        selectedPiece={selectedPiece}
+      />
       <button
         onClick={onSubmit}
         className="btn btn-primary mt-4"
