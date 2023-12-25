@@ -60,7 +60,19 @@ export default async function Page() {
               person.compositions.map((piece) => {
                 // Piece versions
                 const pieceVersion = piece.pieceVersions[0];
-                const pieceSource = pieceVersion.sources[0];
+                const pieceSource = pieceVersion?.sources[0];
+
+                if (!pieceVersion) {
+                  return (
+                    <div
+                      key={piece.id}
+                      className="my-8 border-solid border-l-4 border-l-emerald-500 pl-2"
+                    >
+                      <h2 className="text-2xl font-bold">{piece.title}</h2>
+                      <div>{`No Piece version found`}</div>
+                    </div>
+                  );
+                }
                 return (
                   <div
                     key={pieceVersion.id}
@@ -73,7 +85,7 @@ export default async function Page() {
                       </div>
                       <div className="mr-4">|</div>
                       <div className="mr-4">
-                        category: {pieceVersion.category}
+                        category: {pieceVersion?.category}
                       </div>
                     </div>
                     <div className="flex mb-4">
@@ -268,7 +280,7 @@ export default async function Page() {
                                                               (!originalNotesPerSecond &&
                                                                 computedNotesPerSecondFromNotesPerBar);
 
-                                                            if (
+                                                            /*if (
                                                               isOriginalNotesPerSecondAndComputedDiff
                                                             ) {
                                                               console.log(
@@ -312,7 +324,7 @@ export default async function Page() {
                                                                 ),
                                                               );
                                                               console.groupEnd();
-                                                            }
+                                                            }*/
 
                                                             return (
                                                               <Fragment
@@ -328,12 +340,12 @@ export default async function Page() {
                                                                         15
                                                                           ? "bg-red-500"
                                                                           : computedNotesPerSecondFromNotesPerBar >=
-                                                                            11
-                                                                          ? "bg-orange-400"
-                                                                          : computedNotesPerSecondFromNotesPerBar >=
-                                                                            8
-                                                                          ? "bg-amber-200"
-                                                                          : "bg-white"
+                                                                              11
+                                                                            ? "bg-orange-400"
+                                                                            : computedNotesPerSecondFromNotesPerBar >=
+                                                                                8
+                                                                              ? "bg-amber-200"
+                                                                              : "bg-white"
                                                                       } px-2`}
                                                                     >
                                                                       {
@@ -362,12 +374,12 @@ export default async function Page() {
                                                                         15
                                                                           ? "bg-red-500"
                                                                           : originalNotesPerSecond >=
-                                                                            11
-                                                                          ? "bg-orange-400"
-                                                                          : originalNotesPerSecond >=
-                                                                            8
-                                                                          ? "bg-amber-200"
-                                                                          : "bg-white"
+                                                                              11
+                                                                            ? "bg-orange-400"
+                                                                            : originalNotesPerSecond >=
+                                                                                8
+                                                                              ? "bg-amber-200"
+                                                                              : "bg-white"
                                                                       } px-2`}
                                                                     >
                                                                       {
