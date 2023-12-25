@@ -213,7 +213,7 @@ export default function PieceVersionEditForm({
         >
           Submit
           {isSubmitting && (
-            <span className="loading loading-spinner loading-sm"></span>
+            <span className="loading loading-spinner loading-md"></span>
           )}
         </button>
       </form>

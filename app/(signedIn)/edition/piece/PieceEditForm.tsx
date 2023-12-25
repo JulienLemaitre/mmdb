@@ -18,7 +18,7 @@ import { FormInput } from "@/components/ReactHookForm/FormInput";
 
 const PieceSchema = z.object({
   title: z.string().min(2),
-  nickname: z.string().optional(),
+  nickname: z.string().optional().nullable(),
   yearOfComposition: zodYearOptional,
 });
 
@@ -106,7 +106,7 @@ export default function PieceEditForm({ piece }: { piece?: PieceState }) {
         >
           Submit
           {isSubmitting && (
-            <span className="loading loading-spinner loading-sm"></span>
+            <span className="loading loading-spinner loading-md"></span>
           )}
         </button>
       </form>

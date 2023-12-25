@@ -17,6 +17,7 @@ export default function PieceSelectForm({ pieces }: PieceSelectFormProps) {
   const { dispatch, state } = useEditForm();
   const router = useRouter();
   const [selectedPiece, setSelectedPiece] = useState<PieceState | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   // Reset the form context when the component is mounted
   useEffect(() => {
@@ -35,6 +36,8 @@ export default function PieceSelectForm({ pieces }: PieceSelectFormProps) {
     setSelectedPiece(piece);
   };
   const onSubmit = () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     updateEditForm(dispatch, "piece", selectedPiece);
     router.push(SELECT_PIECE_VERSION_URL + "?pieceId=" + selectedPiece?.id);
   };
@@ -67,7 +70,10 @@ export default function PieceSelectForm({ pieces }: PieceSelectFormProps) {
         className="btn btn-primary mt-4"
         {...(selectedPiece ? { disabled: false } : { disabled: true })}
       >
-        Next
+        {isSubmitting && (
+          <span className="loading loading-spinner loading-md" />
+        )}
+        Choose Piece
       </button>
     </>
   );

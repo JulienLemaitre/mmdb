@@ -104,7 +104,7 @@ export default function ComposerEditForm({
         >
           Submit
           {isSubmitting && (
-            <span className="loading loading-spinner loading-sm"></span>
+            <span className="loading loading-spinner loading-md"></span>
           )}
         </button>
       </form>

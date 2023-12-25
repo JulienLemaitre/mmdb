@@ -4,6 +4,7 @@ import {
   useEditForm,
   initEditForm,
 } from "@/components/context/editFormContext";
+import ResetIcon from "@/components/svg/ResetIcon";
 import {
   SELECT_COMPOSER_URL,
   SELECT_PIECE_URL,
@@ -14,7 +15,6 @@ import {
 } from "@/utils/routes";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { clsx } from "clsx";
 
 export default function Summary() {
   const { dispatch, state } = useEditForm();
@@ -37,6 +37,7 @@ export default function Summary() {
   return (
     <div className="text-sm">
       <button className="btn btn-warning" onClick={onReset}>
+        <ResetIcon className="w-5 h-5" />
         Reset all
       </button>
       {composer?.id ? (
@@ -52,7 +53,7 @@ export default function Summary() {
                 )
               }
             >
-              {composer.isNew ? "Edit" : "Change selection"}
+              {composer.isNew ? "Update" : "Change selection"}
             </button>
           </div>
           <h3 className="font-bold uppercase text-xs">Composer</h3>
@@ -73,7 +74,7 @@ export default function Summary() {
                 )
               }
             >
-              {piece.isNew ? "Edit" : "Change selection"}
+              {piece.isNew ? "Update" : "Change selection"}
             </button>
           </div>
           <h3 className="font-bold uppercase text-xs">piece</h3>
@@ -104,7 +105,7 @@ export default function Summary() {
                 )
               }
             >
-              {pieceVersion.isNew ? "Edit" : "Change selection"}
+              {pieceVersion.isNew ? "Update" : "Change selection"}
             </button>
           </div>
           <h3 className="font-bold uppercase text-xs">Piece Version</h3>
@@ -210,7 +211,7 @@ export default function Summary() {
       ) : null}
       <div className="mt-4">
         <button
-          className="btn btn-neutral btn-sm"
+          className="btn btn-outline btn-sm"
           onClick={() => setShowRawContext((state) => !state)}
         >
           {`${showRawContext ? "Hide" : "Show"} raw context`}

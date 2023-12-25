@@ -26,10 +26,7 @@ export default function PieceVersionSelectForm({
   const { dispatch, state } = useEditForm();
   const [selectedPieceVersion, setSelectedPieceVersion] =
     useState<PieceVersionState | null>(null);
-  console.log(
-    `[PieceVersionSelectForm] selectedPieceVersion :`,
-    selectedPieceVersion,
-  );
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   // Reset the form context when the component is mounted
   useEffect(() => {
@@ -48,6 +45,8 @@ export default function PieceVersionSelectForm({
     setSelectedPieceVersion(pieceVersion);
   };
   const onSubmit = () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     updateEditForm(dispatch, "pieceVersion", selectedPieceVersion);
     router.push(CREATE_SOURCE_URL);
   };
@@ -87,7 +86,10 @@ export default function PieceVersionSelectForm({
         className="btn btn-primary mt-4"
         {...(selectedPieceVersion ? { disabled: false } : { disabled: true })}
       >
-        Next
+        {isSubmitting && (
+          <span className="loading loading-spinner loading-md" />
+        )}
+        Choose Piece Version
       </button>
     </>
   );

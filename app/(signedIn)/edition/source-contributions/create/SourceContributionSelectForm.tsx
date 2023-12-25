@@ -226,7 +226,9 @@ export default function SourceContributionSelectForm({
             ? { disabled: false }
             : { disabled: true })}
         >
-          Next
+          {`Submit Source Contribution${
+            selectedContributions.length > 1 ? "s" : ""
+          }`}
         </button>
       </div>
     </>

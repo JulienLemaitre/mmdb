@@ -19,6 +19,7 @@ export default function ComposerSelectForm({
   const router = useRouter();
   const [selectedComposer, setSelectedComposer] =
     useState<ComposerState | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   // Reset the form context when the component is mounted
   useEffect(() => {
@@ -35,6 +36,8 @@ export default function ComposerSelectForm({
     setSelectedComposer(composer);
   };
   const onSubmit = () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     updateEditForm(dispatch, "composer", selectedComposer);
     router.push(SELECT_PIECE_URL + "?composerId=" + selectedComposer?.id);
   };
@@ -56,7 +59,10 @@ export default function ComposerSelectForm({
         onClick={onSubmit}
         {...(selectedComposer ? { disabled: false } : { disabled: true })}
       >
-        Next
+        {isSubmitting && (
+          <span className="loading loading-spinner loading-md" />
+        )}
+        Choose Composer
       </button>
     </>
   );
