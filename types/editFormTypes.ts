@@ -13,6 +13,14 @@ import type {
 
 // Data in STATE
 
+export type StateEntity = {
+  rank: number;
+  name: string;
+  displayName: string;
+  segment: string;
+  path: string;
+};
+
 export type isNewProp = {
   isNew?: boolean;
 };
@@ -85,6 +93,11 @@ export type SourceState = Pick<
   "id" | "title" | "type" | "link" | "year" | "references" | "comment"
 > &
   isNewProp;
+
+export type MetronomeMarkState = Pick<
+  MetronomeMark,
+  "id" | "sectionId" | "bpm" | "comment" | "beatUnit" | "sourceId"
+>;
 
 // Form INPUTS
 

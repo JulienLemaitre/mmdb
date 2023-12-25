@@ -15,13 +15,14 @@ import {
   PieceVersionInput,
   PieceVersionState,
 } from "@/types/editFormTypes";
-import { CREATE_SOURCE_URL } from "@/utils/routes";
+import { CREATE_SOURCE_URL, SELECT_PIECE_URL } from "@/utils/routes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
 import { MOVEMENT_DEFAULT_VALUE } from "@/components/ReactHookForm/formUtils";
 import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
 import { zodOption } from "@/utils/zodTypes";
 import { useSession } from "next-auth/react";
 import { fetchAPI } from "@/utils/fetchAPI";
+import Link from "next/link";
 
 const PieceVersionSchema = z.object({
   category: zodOption,
@@ -179,6 +180,17 @@ export default function PieceVersionEditForm({
   };
 
   console.log(`[CreatePieceVersion] errors :`, errors);
+
+  if (!state.piece) {
+    return (
+      <div>
+        <h2 className="mb-4 text-2xl font-bold">Select a piece first</h2>
+        <Link href={SELECT_PIECE_URL} className="btn btn-secondary">
+          Back
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div>

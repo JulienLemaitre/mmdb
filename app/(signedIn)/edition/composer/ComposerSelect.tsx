@@ -21,7 +21,6 @@ export default function ComposerSelect({
   const defaultOption = selectedComposer
     ? getComposerOption(selectedComposer)
     : null;
-  console.log(`[ComposerSelect] defaultOption :`, defaultOption);
 
   return (
     <Select

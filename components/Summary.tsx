@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Summary() {
-  const { dispatch, state } = useEditForm();
+  const { dispatch, state, nextStep } = useEditForm();
   const router = useRouter();
   const [showRawContext, setShowRawContext] = useState<boolean>(false);
 
@@ -32,7 +32,7 @@ export default function Summary() {
   const pieceVersion = state.pieceVersion;
   const source = state.source;
   const contributions = state.contributions;
-  // const metronomeMarks = state.metronomeMarks;
+  const metronomeMarks = state.metronomeMarks;
 
   return (
     <div className="text-sm">
@@ -118,7 +118,7 @@ export default function Summary() {
                 ) : null}
                 {`${mvtArray.length > 1 ? ` in ` : ""}${movement.key}`}
               </h3>
-              {movement.sections.map((section, sectionIndex, sectionList) => {
+              {movement.sections.map((section, sectionIndex) => {
                 const {
                   comment,
                   fastestOrnamentalNotesPerBar,
@@ -207,6 +207,16 @@ export default function Summary() {
               }`}</div>
             </div>
           ))}
+        </div>
+      ) : null}
+      {nextStep ? (
+        <div className="my-4">
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={() => router.push(nextStep.path)}
+          >
+            Next step: {nextStep.displayName}
+          </button>
         </div>
       ) : null}
       <div className="mt-4">

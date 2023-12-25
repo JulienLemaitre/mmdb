@@ -72,7 +72,7 @@ export default function PieceVersionSelectForm({
       <div className="mt-4">
         <button
           type="button"
-          className="btn btn-primary"
+          className="btn btn-secondary"
           onClick={() => {
             router.push(CREATE_PIECE_VERSION_URL);
           }}
