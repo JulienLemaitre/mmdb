@@ -142,9 +142,9 @@ export function useEditForm() {
   let lastCompletedStateEntity;
   let nextStep = STATE_ENTITIES[0];
   // Determine present step index by finding the last entity from STATE_ENTITIES with an existing id in state
-  const lastCompletedStateEntityName = STATE_ENTITIES_NAMES.toReversed().find(
-    (entity) => context.state[entity]?.id,
-  );
+  const lastCompletedStateEntityName = [...STATE_ENTITIES_NAMES]
+    .reverse()
+    .find((entity) => context.state[entity]?.id);
   if (lastCompletedStateEntityName) {
     lastCompletedStateEntity = STATE_ENTITIES.find(
       (entity) => entity.name === lastCompletedStateEntityName,
