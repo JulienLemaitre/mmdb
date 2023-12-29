@@ -567,6 +567,14 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
     ],
   })
 
+  // Persist a TempoIndication "-- None --"
+  await db.tempoIndication.create({
+    data: {
+      id: TEMPO_INDICATION_NONE_ID,
+      text: "-- None --"
+    }
+  })
+
   const pieceTaskList = pieceList
   .map((piece) => {
     // Fix for wrongly written Beethoven name
@@ -639,7 +647,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
                           ...(section.fastestStaccatoNotesPerBar && { fastestStaccatoNotesPerBar: section.fastestStaccatoNotesPerBar }),
                           ...(section.fastestOrnamentalNotesPerBar && { fastestOrnamentalNotesPerBar: section.fastestOrnamentalNotesPerBar }),
                           ...(section.comment && { comment: section.comment }),
-                          ...(section.tempoIndication && {
+                          ...(section.tempoIndication ? {
                             tempoIndication: {
                               connectOrCreate: {
                                 where: {
@@ -649,6 +657,12 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
                                   text: section.tempoIndication,
                                 }
                               }
+                            },
+                          } : {
+                            tempoIndication: {
+                              connect: {
+                                id: TEMPO_INDICATION_NONE_ID,
+                              },
                             },
                           }),
                         }
@@ -810,14 +824,6 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
   for (const task of contributionsTaskList) {
     persistedContributionsList.push(await task())
   }
-
-  // Persist a TempoIndication "-- None --"
-  await db.tempoIndication.create({
-    data: {
-      id: TEMPO_INDICATION_NONE_ID,
-      text: "-- None --"
-    }
-  })
 
   console.log(`-------- END - seedDB --------`)
 }
