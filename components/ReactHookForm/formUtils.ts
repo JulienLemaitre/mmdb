@@ -2,7 +2,7 @@ export const SECTION_DEFAULT_VALUE = {
   rank: 1,
   isCutTime: false,
   isCommonTime: false,
-  isFastestStructuralNoteBelCanto: "",
+  isFastestStructuralNoteBelCanto: false,
 };
 export const MOVEMENT_DEFAULT_VALUE = {
   rank: 1,
