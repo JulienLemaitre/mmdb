@@ -129,7 +129,7 @@ export type SectionInput = Pick<
   // | "isFastestStructuralNoteBelCanto"
   | "comment"
 > & {
-  tempoIndication?: string;
+  tempoIndication: OptionInput;
   isCommonTime?: boolean;
   isCutTime?: boolean;
   isFastestStructuralNoteBelCanto?: string;
@@ -139,6 +139,7 @@ export type MovementInput = Pick<Movement, "rank"> & {
   sections: SectionInput[];
 };
 export type PieceVersionInput = {
+  id?: string;
   category: OptionInput;
   movements: MovementInput[];
 };

@@ -1,3 +1,5 @@
+import deleteNullPropertiesFromObject from "@/utils/deleteNullPropertiesFromObject";
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -22,7 +24,9 @@ async function getData(personId: string) {
       deathYear: true,
     },
   });
-  return { composer };
+  return {
+    composer: composer ? deleteNullPropertiesFromObject(composer) : null,
+  };
 }
 
 export default async function ComposerUpdate({ searchParams: { personId } }) {

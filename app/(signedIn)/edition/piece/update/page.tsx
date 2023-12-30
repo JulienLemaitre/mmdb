@@ -1,3 +1,5 @@
+import deleteNullPropertiesFromObject from "@/utils/deleteNullPropertiesFromObject";
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -22,7 +24,7 @@ async function getData(pieceId: string) {
     },
   });
   console.log(`[PieceUpdate] FETCHED piece :`, piece);
-  return { piece };
+  return { piece: piece ? deleteNullPropertiesFromObject(piece) : null };
 }
 
 export default async function PieceUpdate({ searchParams: { pieceId } }) {

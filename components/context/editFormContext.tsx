@@ -29,8 +29,8 @@ type EditFormState = {
   composer?: ComposerState;
   piece?: PieceState;
   pieceVersion?: PieceVersionState;
-  source?: SourceState;
-  contributions?: ContributionState[];
+  sourceDescription?: SourceState;
+  sourceContributions?: ContributionState[];
   metronomeMarks?: MetronomeMarkState[];
 };
 type EditFormProviderProps = { children: ReactNode };
@@ -52,7 +52,9 @@ export const STATE_ENTITIES: StateEntity[] = STATE_ENTITIES_NAMES.map(
     name: entity,
     displayName: entity.replace(/([A-Z])/g, " $1").toLowerCase(),
     segment: entity.replace(/([A-Z])/g, "_$1").toLowerCase(),
-    path: "/edition/" + entity.replace(/([A-Z])/g, "-$1").toLowerCase(),
+    path:
+      `/edition/${index >= 3 ? "creation/" : ""}` +
+      entity.replace(/([A-Z])/g, "-$1").toLowerCase(),
   }),
 );
 

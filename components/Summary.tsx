@@ -12,9 +12,11 @@ import {
   UPDATE_COMPOSER_URL,
   UPDATE_PIECE_URL,
   UPDATE_PIECE_VERSION_URL,
+  UPDATE_SOURCE_DESCRIPTION_URL,
 } from "@/utils/routes";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import NewBadge from "@/components/NewBadge";
 
 export default function Summary() {
   const { dispatch, state, nextStep } = useEditForm();
@@ -30,9 +32,18 @@ export default function Summary() {
   const composer = state.composer;
   const piece = state.piece;
   const pieceVersion = state.pieceVersion;
-  const source = state.source;
-  const contributions = state.contributions;
-  const metronomeMarks = state.metronomeMarks;
+  const sourceDescription = state.sourceDescription;
+  const sourceContributions = state.sourceContributions;
+  // const metronomeMarks = state.metronomeMarks;
+  let references: { type: string; reference: string }[] = [];
+  if (sourceDescription?.references) {
+    try {
+      // @ts-ignore
+      references = JSON.parse(sourceDescription?.references);
+    } catch (e) {
+      console.log(`[Summary] Error parsing references:`, e);
+    }
+  }
 
   return (
     <div className="text-sm">
@@ -56,7 +67,10 @@ export default function Summary() {
               {composer.isNew ? "Update" : "Change selection"}
             </button>
           </div>
-          <h3 className="font-bold uppercase text-xs">Composer</h3>
+          <h3 className="font-bold uppercase text-xs">
+            Composer
+            {composer.isNew ? <NewBadge /> : null}
+          </h3>
           <div>{`${composer.firstName} ${composer.lastName}`}</div>
           <div>{`${composer.birthYear} - ${composer.deathYear || ""}`}</div>
         </div>
@@ -77,7 +91,9 @@ export default function Summary() {
               {piece.isNew ? "Update" : "Change selection"}
             </button>
           </div>
-          <h3 className="font-bold uppercase text-xs">piece</h3>
+          <h3 className="font-bold uppercase text-xs">
+            piece{piece.isNew ? <NewBadge /> : null}
+          </h3>
           {piece.title ? (
             <>
               <div>{piece.title}</div>
@@ -108,7 +124,9 @@ export default function Summary() {
               {pieceVersion.isNew ? "Update" : "Change selection"}
             </button>
           </div>
-          <h3 className="font-bold uppercase text-xs">Piece Version</h3>
+          <h3 className="font-bold uppercase text-xs">
+            Piece Version{pieceVersion.isNew ? <NewBadge /> : null}
+          </h3>
           <div>{`Category: ${pieceVersion.category}`}</div>
           {pieceVersion.movements.map((movement, mvtIndex, mvtArray) => (
             <div key={`mvt-${mvtIndex}`}>
@@ -186,19 +204,38 @@ export default function Summary() {
           ))}
         </div>
       ) : null}
-      {source?.id ? (
+      {sourceDescription?.id ? (
         <div className="border-2 p-2 mt-3 hover:border-gray-300">
-          <h3 className="font-bold uppercase text-xs mt-3">Source</h3>
-          {source.title ? <div>{source.title}</div> : null}
-          <div>{`${source.year} [${source.type}]`}</div>
-          {source.link ? <div>{source.link}</div> : null}
-          {source.references ? (
-            <div>{JSON.stringify(source.references)}</div>
+          {sourceDescription.isNew ? (
+            <div className="float-right ml-2 mb-2">
+              <button
+                className="btn btn-outline btn-xs"
+                onClick={() =>
+                  router.push(
+                    UPDATE_SOURCE_DESCRIPTION_URL +
+                      `?sourceDescriptionId=${sourceDescription.id}`,
+                  )
+                }
+              >
+                {"Update"}
+              </button>
+            </div>
           ) : null}
-          {(contributions || []).length > 0 ? (
+          <h3 className="font-bold uppercase text-xs">
+            Source{sourceDescription.isNew ? <NewBadge /> : null}
+          </h3>
+          {sourceDescription.title ? (
+            <div>{sourceDescription.title}</div>
+          ) : null}
+          <div>{`${sourceDescription.year} [${sourceDescription.type}]`}</div>
+          {sourceDescription.link ? <div>{sourceDescription.link}</div> : null}
+          {references?.length > 0 ? (
+            <div>{JSON.stringify(sourceDescription.references)}</div>
+          ) : null}
+          {(sourceContributions || []).length > 0 ? (
             <h4 className="font-bold uppercase text-xs mt-3">{`Contributors`}</h4>
           ) : null}
-          {(contributions || []).map((contribution, index) => (
+          {(sourceContributions || []).map((contribution, index) => (
             <div key={`contribution-${index}`}>
               <div>{`${contribution.role}: ${
                 "person" in contribution
