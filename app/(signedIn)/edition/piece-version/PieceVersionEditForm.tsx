@@ -15,7 +15,10 @@ import {
   PieceVersionInput,
   PieceVersionState,
 } from "@/types/editFormTypes";
-import { CREATE_SOURCE_URL, SELECT_PIECE_URL } from "@/utils/routes";
+import {
+  CREATE_SOURCE_DESCRIPTION_URL,
+  SELECT_PIECE_URL,
+} from "@/utils/routes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
 import { MOVEMENT_DEFAULT_VALUE } from "@/components/ReactHookForm/formUtils";
 import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
@@ -29,18 +32,20 @@ const PieceVersionSchema = z.object({
   movements: z
     .array(
       z.object({
+        id: z.string().optional(),
         rank: z.number(),
         key: zodOption,
         sections: z
           .array(
             z.object({
+              id: z.string().optional(),
               rank: z.number(),
               metreNumerator: z.number(),
               metreDenominator: z.number(),
               isCommonTime: z.boolean().optional(),
               isCutTime: z.boolean().optional(),
               fastestStructuralNotesPerBar: z.number(),
-              isFastestStructuralNoteBelCanto: z.string().optional(),
+              isFastestStructuralNoteBelCanto: z.boolean().optional(),
               fastestStaccatoNotesPerBar: z.number().or(z.nan()),
               fastestRepeatedNotesPerBar: z.number().or(z.nan()),
               fastestOrnamentalNotesPerBar: z.number().or(z.nan()),
@@ -147,6 +152,17 @@ export default function PieceVersionEditForm({
       return;
     }
 
+    if (pieceVersion) {
+      console.log(`[onSubmit] pieceVersion :`, pieceVersion);
+    }
+
+    const variables = {
+      ...pieceVersionData,
+      ...(pieceVersion && { id: pieceVersion.id }),
+      pieceId: state.piece.id,
+    };
+    console.log(`[onSubmit] variables :`, variables);
+
     const apiUrl = pieceVersion
       ? `/api/piece-version/update`
       : "/api/piece-version/create";
@@ -155,10 +171,7 @@ export default function PieceVersionEditForm({
     const editedPieceVersion = await fetchAPI(
       apiUrl,
       {
-        variables: {
-          ...pieceVersionData,
-          pieceId: state.piece.id,
-        },
+        variables,
       },
       session?.user?.accessToken,
     );
@@ -176,10 +189,10 @@ export default function PieceVersionEditForm({
     };
 
     updateEditForm(dispatch, "pieceVersion", pieceVersionState);
-    router.push(CREATE_SOURCE_URL);
+    router.push(CREATE_SOURCE_DESCRIPTION_URL);
   };
 
-  console.log(`[CreatePieceVersion] errors :`, errors);
+  console.log(`[PieceVersionEditForm] errors :`, errors);
 
   if (!state.piece) {
     return (

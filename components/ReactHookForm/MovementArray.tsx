@@ -26,6 +26,8 @@ export default function MovementArray({
     },
   );
 
+  console.log(`[MovementArray] fields :`, fields);
+
   return (
     <>
       <ul>
@@ -38,6 +40,11 @@ export default function MovementArray({
                 ? ` (or whole piece if not divided in movements)`
                 : ""
             }`}</h4>
+            <input
+              value={`movements[${index}].id` as const}
+              {...register(`movements[${index}].id` as const)}
+              hidden
+            />
             <input
               value={index + 1}
               {...register(`movements[${index}].rank` as const)}

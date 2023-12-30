@@ -7,7 +7,7 @@ import {
 } from "@/components/context/editFormContext";
 import {
   CREATE_PIECE_VERSION_URL,
-  CREATE_SOURCE_URL,
+  CREATE_SOURCE_DESCRIPTION_URL,
   SELECT_PIECE_URL,
 } from "@/utils/routes";
 import PieceVersionSelect from "@/app/(signedIn)/edition/piece-version/PieceVersionSelect";
@@ -48,7 +48,7 @@ export default function PieceVersionSelectForm({
     if (isSubmitting) return;
     setIsSubmitting(true);
     updateEditForm(dispatch, "pieceVersion", selectedPieceVersion);
-    router.push(CREATE_SOURCE_URL);
+    router.push(CREATE_SOURCE_DESCRIPTION_URL);
   };
 
   if (!state.piece) {

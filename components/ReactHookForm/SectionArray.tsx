@@ -26,6 +26,8 @@ export default function SectionArray({
     },
   );
 
+  console.log(`[SectionArray] fields :`, fields);
+
   return (
     <div className="my-4">
       <ul>
@@ -39,6 +41,13 @@ export default function SectionArray({
               <h4 className="my-4 text-xl font-bold text-accent">{`Section ${
                 index + 1
               }`}</h4>
+              <input
+                value={`movements[${nestIndex}].sections[${index}].id` as const}
+                {...register(
+                  `movements[${nestIndex}].sections[${index}].id` as const,
+                )}
+                hidden
+              />
               <input
                 value={index + 1}
                 {...register(
@@ -182,7 +191,7 @@ export default function SectionArray({
                   name={
                     `movements[${nestIndex}].sections[${index}].isFastestStructuralNoteBelCanto` as const
                   }
-                  value={true}
+                  // value={true}
                   type="checkbox"
                   className="mr-2"
                 />

@@ -1,3 +1,5 @@
+import deleteNullPropertiesFromObject from "@/utils/deleteNullPropertiesFromObject";
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -32,6 +34,7 @@ async function getData(pieceVersionId: string) {
               isCutTime: true,
               tempoIndication: {
                 select: {
+                  id: true,
                   text: true,
                 },
               },
@@ -40,6 +43,7 @@ async function getData(pieceVersionId: string) {
               fastestStructuralNotesPerBar: true,
               fastestRepeatedNotesPerBar: true,
               fastestOrnamentalNotesPerBar: true,
+              isFastestStructuralNoteBelCanto: true,
             },
             orderBy: {
               rank: "asc",
@@ -52,7 +56,11 @@ async function getData(pieceVersionId: string) {
       },
     },
   });
-  return { pieceVersion };
+  return {
+    pieceVersion: pieceVersion
+      ? deleteNullPropertiesFromObject(pieceVersion) // We ensure values will not be initiated with null values
+      : null,
+  };
 }
 
 export default async function PieceVersionUpdate({
@@ -89,7 +97,10 @@ export default async function PieceVersionUpdate({
       },
       sections: mvt.sections.map((section) => ({
         ...section,
-        tempoIndication: section?.tempoIndication?.text,
+        tempoIndication: {
+          label: section.tempoIndication!.text,
+          value: section.tempoIndication!.id,
+        },
       })),
     })),
   };

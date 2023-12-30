@@ -132,7 +132,7 @@ export type SectionInput = Pick<
   tempoIndication: OptionInput;
   isCommonTime?: boolean;
   isCutTime?: boolean;
-  isFastestStructuralNoteBelCanto?: string;
+  isFastestStructuralNoteBelCanto?: boolean;
 };
 export type MovementInput = Pick<Movement, "rank"> & {
   key: OptionInput;
