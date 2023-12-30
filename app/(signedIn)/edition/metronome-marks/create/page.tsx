@@ -36,7 +36,7 @@ export default function CreateMetronomeMarks() {
           : a.movement.rank - b.movement.rank,
       ) || [];
 
-  const sourceId = state?.source?.id;
+  const sourceId = state?.sourceDescription?.id;
 
   if (!sourceId) {
     console.warn("ERROR - NO sourceId found in Context");
