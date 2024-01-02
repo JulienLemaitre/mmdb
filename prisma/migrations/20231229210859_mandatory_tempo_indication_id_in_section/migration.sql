@@ -7,6 +7,9 @@
 -- DropForeignKey
 ALTER TABLE "Section" DROP CONSTRAINT "Section_tempoIndicationId_fkey";
 
+-- Replace NULL values with TEMPO_INDICATION_NONE_ID
+UPDATE "Section" SET "tempoIndicationId" = '6a16e457-6aeb-4802-a59e-4ce3b91cafa2' WHERE "tempoIndicationId" IS NULL;
+
 -- AlterTable
 ALTER TABLE "Section" ALTER COLUMN "tempoIndicationId" SET NOT NULL;
 
