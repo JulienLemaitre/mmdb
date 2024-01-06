@@ -118,6 +118,8 @@ export default function SourceContributionSelect({
         <>
           <Label label={`Person or Organization`} />
           <Select
+            className="react-select-container"
+            classNamePrefix="react-select"
             getOptionValue={(option) =>
               option.label
                 .replaceAll(" [person]", "")
@@ -156,6 +158,8 @@ export default function SourceContributionSelect({
           />
           <Label label={`role`} isRequired />
           <Select
+            className="react-select-container"
+            classNamePrefix="react-select"
             instanceId="contribution-role"
             name="contributionRole"
             options={contributionRoleOptions}

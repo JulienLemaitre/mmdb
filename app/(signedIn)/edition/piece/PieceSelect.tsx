@@ -21,6 +21,8 @@ export default function PieceSelect({
 
   return (
     <Select
+      className="react-select-container"
+      classNamePrefix="react-select"
       instanceId="piece-select"
       isSearchable={true}
       name="color"

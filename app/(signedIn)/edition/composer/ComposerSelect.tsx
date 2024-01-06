@@ -24,6 +24,8 @@ export default function ComposerSelect({
 
   return (
     <Select
+      className="react-select-container"
+      classNamePrefix="react-select"
       instanceId="composer-select"
       isSearchable={true}
       name="composer"
