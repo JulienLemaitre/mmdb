@@ -2,6 +2,8 @@ import { EditFormProvider } from "@/components/context/editFormContext";
 import Summary from "@/components/Summary";
 import NavBar from "@/app/NavBar";
 
+export const dynamic = "force-dynamic";
+
 export default function ContributeLayout({ children }) {
   // SideBar layout
   return (

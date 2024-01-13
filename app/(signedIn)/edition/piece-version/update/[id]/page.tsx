@@ -2,9 +2,6 @@ import deleteNullPropertiesFromObject from "@/utils/deleteNullPropertiesFromObje
 import { db } from "@/utils/db";
 import PieceVersionEditForm from "@/app/(signedIn)/edition/piece-version/PieceVersionEditForm";
 
-// export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
 async function getData(pieceVersionId: string) {
   if (!pieceVersionId) {
     console.log(`[PieceVersionUpdate] pieceVersionId is undefined`);

@@ -1,8 +1,4 @@
 import deleteNullPropertiesFromObject from "@/utils/deleteNullPropertiesFromObject";
-
-// export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
 import { db } from "@/utils/db";
 import ComposerEditForm from "@/app/(signedIn)/edition/composer/ComposerEditForm";
 

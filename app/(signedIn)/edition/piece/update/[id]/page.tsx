@@ -1,8 +1,4 @@
 import deleteNullPropertiesFromObject from "@/utils/deleteNullPropertiesFromObject";
-
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
 import { db } from "@/utils/db";
 import PieceEditForm from "@/app/(signedIn)/edition/piece/PieceEditForm";
 
@@ -11,6 +7,8 @@ async function getData(pieceId: string) {
     console.log(`[PieceUpdate] pieceId is undefined`);
     return { piece: null };
   }
+  console.log(`[ENTER getData] pieceId:`, pieceId);
+
   // Fetch the previously selected piece
   const piece = await db.piece.findUnique({
     where: {
