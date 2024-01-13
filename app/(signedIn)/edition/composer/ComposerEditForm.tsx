@@ -1,7 +1,7 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ComposerInput, PersonState } from "@/types/editFormTypes";
+import { PersonInput } from "@/types/editFormTypes";
 import { useRouter } from "next/navigation";
 import { CREATE_PIECE_URL } from "@/utils/routes";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
@@ -18,9 +18,9 @@ const PersonSchema = zodPerson;
 
 export default function ComposerEditForm({
   composer,
-}: {
-  composer?: PersonState;
-}) {
+}: Readonly<{
+  composer?: PersonInput;
+}>) {
   const router = useRouter();
   const { dispatch } = useEditForm();
   const { data: session } = useSession();
@@ -29,12 +29,12 @@ export default function ComposerEditForm({
     handleSubmit,
     register,
     watch,
-  } = useForm<ComposerInput>({
+  } = useForm<PersonInput>({
     resolver: zodResolver(PersonSchema),
     ...(composer && { defaultValues: composer }),
   });
 
-  const onSubmit = async (data: ComposerInput) => {
+  const onSubmit = async (data: PersonInput) => {
     // Front input values validation is successful at this point.
     console.log("data", data);
     const apiUrl = composer ? `/api/person/update` : "/api/person/create";
@@ -59,7 +59,7 @@ export default function ComposerEditForm({
       return;
     }
 
-    console.log("Composer created", editedComposer);
+    console.log(`Composer ${composer ? "updated" : "created"}`, editedComposer);
     const composerState = {
       id: editedComposer.id,
       firstName: editedComposer.firstName,
@@ -73,6 +73,7 @@ export default function ComposerEditForm({
     router.push(CREATE_PIECE_URL);
   };
 
+  console.log(`[CreateComposer] composer :`, composer);
   console.log(`[CreateComposer] errors :`, errors);
   return (
     <div className="w-full max-w-md">

@@ -109,12 +109,11 @@ export type OptionInput = {
 export type PersonInput = Pick<
   Person,
   "firstName" | "lastName" | "birthYear" | "deathYear"
->;
-export type ComposerInput = PersonInput;
+> & { id?: string };
 export type PieceInput = Pick<
   Piece,
   "nickname" | "yearOfComposition" | "title"
->;
+> & { id?: string };
 export type SectionInput = Pick<
   Section,
   | "rank"

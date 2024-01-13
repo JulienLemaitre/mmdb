@@ -9,7 +9,7 @@ import {
 } from "@/components/context/editFormContext";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
-import { PieceInput, PieceState } from "@/types/editFormTypes";
+import { PieceInput } from "@/types/editFormTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { fetchAPI } from "@/utils/fetchAPI";
 import { CREATE_PIECE_VERSION_URL, SELECT_COMPOSER_URL } from "@/utils/routes";
@@ -22,7 +22,9 @@ const PieceSchema = z.object({
   yearOfComposition: zodYearOptional,
 });
 
-export default function PieceEditForm({ piece }: { piece?: PieceState }) {
+export default function PieceEditForm({
+  piece,
+}: Readonly<{ piece?: PieceInput }>) {
   const router = useRouter();
   const { dispatch, state } = useEditForm();
   const { data: session } = useSession();
@@ -93,7 +95,7 @@ export default function PieceEditForm({ piece }: { piece?: PieceState }) {
   return (
     <div>
       <h1 className="mb-4 text-4xl font-bold">
-        Create a piece
+        Create a piece{" "}
         <span className="block text-xl font-normal">General information</span>
       </h1>
       <form onSubmit={handleSubmit(onSubmit)}>

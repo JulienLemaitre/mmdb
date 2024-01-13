@@ -72,7 +72,7 @@ export default function Summary() {
             {composer.isNew ? <NewBadge /> : null}
           </h3>
           <div>{`${composer.firstName} ${composer.lastName}`}</div>
-          <div>{`${composer.birthYear} - ${composer.deathYear || ""}`}</div>
+          <div>{`${composer.birthYear} - ${composer.deathYear ?? ""}`}</div>
         </div>
       ) : null}
       {piece?.id ? (
@@ -176,26 +176,26 @@ export default function Summary() {
                     <h5 className="font-bold uppercase text-xs mt-1">
                       Fastest notes per bar
                     </h5>
-                    {fastestStructuralNotesPerBar && (
+                    {fastestStructuralNotesPerBar > 0 && (
                       <div className="">
                         structural : <b>{fastestStructuralNotesPerBar}</b>
                       </div>
                     )}
-                    {fastestRepeatedNotesPerBar && (
+                    {fastestRepeatedNotesPerBar ? (
                       <div className="">
                         repeated : <b>{fastestRepeatedNotesPerBar}</b>
                       </div>
-                    )}
-                    {fastestStaccatoNotesPerBar && (
+                    ) : null}
+                    {fastestStaccatoNotesPerBar ? (
                       <div className="">
                         staccato: <b>{fastestStaccatoNotesPerBar}</b>
                       </div>
-                    )}
-                    {fastestOrnamentalNotesPerBar && (
+                    ) : null}
+                    {fastestOrnamentalNotesPerBar ? (
                       <div className="">
                         ornamental : <b>{fastestOrnamentalNotesPerBar}</b>
                       </div>
-                    )}
+                    ) : null}
                   </div>
                 );
               })}
@@ -230,7 +230,7 @@ export default function Summary() {
           {references?.length > 0 ? (
             <div>{JSON.stringify(sourceDescription.references)}</div>
           ) : null}
-          {(sourceContributions || []).length > 0 ? (
+          {(sourceContributions ?? []).length > 0 ? (
             <h4 className="font-bold uppercase text-xs mt-3">{`Contributors`}</h4>
           ) : null}
           {(sourceContributions || []).map((contribution, index) => (

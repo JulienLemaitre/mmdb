@@ -61,9 +61,9 @@ const PieceVersionSchema = z.object({
 
 export default function PieceVersionEditForm({
   pieceVersion,
-}: {
+}: Readonly<{
   pieceVersion?: PieceVersionInput;
-}) {
+}>) {
   const router = useRouter();
   const { dispatch, state } = useEditForm();
   const { data: session } = useSession();
@@ -77,7 +77,7 @@ export default function PieceVersionEditForm({
     setValue,
     watch,
   } = useForm<PieceVersionInput>({
-    defaultValues: pieceVersion || {
+    defaultValues: pieceVersion ?? {
       movements: [MOVEMENT_DEFAULT_VALUE],
     },
     resolver: zodResolver(PieceVersionSchema),
@@ -209,7 +209,7 @@ export default function PieceVersionEditForm({
   return (
     <div>
       <h1 className="mb-4 text-4xl font-bold">
-        Create a piece
+        Create a piece{" "}
         <span className="block text-xl font-normal">Content details</span>
       </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
