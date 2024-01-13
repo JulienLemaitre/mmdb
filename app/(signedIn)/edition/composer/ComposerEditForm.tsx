@@ -12,6 +12,7 @@ import {
 import { fetchAPI } from "@/utils/fetchAPI";
 import { useSession } from "next-auth/react";
 import { zodPerson } from "@/utils/zodTypes";
+import BackButton from "@/components/BackButton";
 
 const PersonSchema = zodPerson;
 
@@ -43,6 +44,7 @@ export default function ComposerEditForm({
       apiUrl,
       {
         variables: { ...data, id: composer?.id },
+        cache: "no-store",
       },
       session?.user?.accessToken,
     );
@@ -108,6 +110,7 @@ export default function ComposerEditForm({
           )}
         </button>
       </form>
+      <BackButton />
     </div>
   );
 }

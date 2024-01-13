@@ -27,7 +27,7 @@ async function getData(pieceId: string) {
   return { piece: piece ? deleteNullPropertiesFromObject(piece) : null };
 }
 
-export default async function PieceUpdate({ searchParams: { pieceId } }) {
+export default async function PieceUpdate({ params: { id: pieceId } }) {
   const { piece } = await getData(pieceId);
   console.log(`[PieceUpdate] piece :`, JSON.stringify(piece));
 

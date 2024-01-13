@@ -1,6 +1,6 @@
 import deleteNullPropertiesFromObject from "@/utils/deleteNullPropertiesFromObject";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 import { db } from "@/utils/db";
@@ -11,7 +11,7 @@ async function getData(personId: string) {
     console.log(`[ComposerUpdate] personId is undefined`);
     return { composer: null };
   }
-  // Fetch the previously selected composer
+  // Fetch the previously created composer
   const composer = await db.person.findUnique({
     where: {
       id: personId,
@@ -24,12 +24,13 @@ async function getData(personId: string) {
       deathYear: true,
     },
   });
+  console.log(`[ComposerUpdate getData] composer :`, composer);
   return {
     composer: composer ? deleteNullPropertiesFromObject(composer) : null,
   };
 }
 
-export default async function ComposerUpdate({ searchParams: { personId } }) {
+export default async function ComposerUpdate({ params: { id: personId } }) {
   const { composer } = await getData(personId);
   console.log(`[ComposerUpdate] composer :`, JSON.stringify(composer));
 

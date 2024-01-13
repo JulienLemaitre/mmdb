@@ -1,16 +1,17 @@
 import deleteNullPropertiesFromObject from "@/utils/deleteNullPropertiesFromObject";
-
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
 import { db } from "@/utils/db";
 import PieceVersionEditForm from "@/app/(signedIn)/edition/piece-version/PieceVersionEditForm";
+
+// export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 async function getData(pieceVersionId: string) {
   if (!pieceVersionId) {
     console.log(`[PieceVersionUpdate] pieceVersionId is undefined`);
     return { pieceVersion: null };
   }
+  console.log(`[ENTER getData] pieceVersionId:`, pieceVersionId);
+
   // Fetch the previously selected pieceVersion
   const pieceVersion = await db.pieceVersion.findUnique({
     where: {
@@ -64,7 +65,7 @@ async function getData(pieceVersionId: string) {
 }
 
 export default async function PieceVersionUpdate({
-  searchParams: { pieceVersionId },
+  params: { id: pieceVersionId },
 }) {
   const { pieceVersion } = await getData(pieceVersionId);
   console.log(

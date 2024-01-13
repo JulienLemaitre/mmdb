@@ -61,6 +61,7 @@ export default function PieceEditForm({ piece }: { piece?: PieceState }) {
       apiUrl,
       {
         variables: { ...pieceData, composerId: state.composer.id },
+        cache: "no-store",
       },
       session?.user?.accessToken,
     );

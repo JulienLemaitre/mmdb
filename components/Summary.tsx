@@ -59,7 +59,7 @@ export default function Summary() {
               onClick={() =>
                 router.push(
                   composer.isNew
-                    ? UPDATE_COMPOSER_URL + `?personId=${composer.id}`
+                    ? UPDATE_COMPOSER_URL + composer.id
                     : SELECT_COMPOSER_URL,
                 )
               }
@@ -83,7 +83,7 @@ export default function Summary() {
               onClick={() =>
                 router.push(
                   piece.isNew
-                    ? UPDATE_PIECE_URL + `?pieceId=${piece.id}`
+                    ? UPDATE_PIECE_URL + piece.id
                     : SELECT_PIECE_URL + `?composerId=${composer?.id}`,
                 )
               }
@@ -115,8 +115,7 @@ export default function Summary() {
               onClick={() =>
                 router.push(
                   pieceVersion.isNew
-                    ? UPDATE_PIECE_VERSION_URL +
-                        `?pieceVersionId=${pieceVersion.id}`
+                    ? UPDATE_PIECE_VERSION_URL + pieceVersion.id
                     : SELECT_PIECE_VERSION_URL + `?pieceId=${piece?.id}`,
                 )
               }
@@ -212,8 +211,7 @@ export default function Summary() {
                 className="btn btn-outline btn-xs"
                 onClick={() =>
                   router.push(
-                    UPDATE_SOURCE_DESCRIPTION_URL +
-                      `?sourceDescriptionId=${sourceDescription.id}`,
+                    UPDATE_SOURCE_DESCRIPTION_URL + sourceDescription.id,
                   )
                 }
               >

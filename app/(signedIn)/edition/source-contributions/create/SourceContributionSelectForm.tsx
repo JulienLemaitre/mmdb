@@ -134,7 +134,7 @@ export default function SourceContributionSelectForm({
     setIsFormOpen(false);
   };
   const onSubmit = () => {
-    updateEditForm(dispatch, "contributions", selectedContributions);
+    updateEditForm(dispatch, "sourceContributions", selectedContributions);
     router.push(CREATE_METRONOME_MARKS_URL);
   };
 

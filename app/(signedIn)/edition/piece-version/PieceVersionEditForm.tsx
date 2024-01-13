@@ -73,7 +73,7 @@ export default function PieceVersionEditForm({
     register,
     handleSubmit,
     getValues,
-    reset,
+    // reset,
     setValue,
     watch,
   } = useForm<PieceVersionInput>({
@@ -172,6 +172,7 @@ export default function PieceVersionEditForm({
       apiUrl,
       {
         variables,
+        cache: "no-store",
       },
       session?.user?.accessToken,
     );
