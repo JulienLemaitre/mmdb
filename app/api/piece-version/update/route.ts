@@ -30,6 +30,57 @@ export async function POST(req: NextRequest) {
   type Operation = Section | Movement | SelectedPieceVersion;
   const operations: PrismaPromise<Operation>[] = [];
 
+  // Fetch the current piece version with its movements and sections ids
+  const currentPieceVersion = await db.pieceVersion.findUnique({
+    where: { id: pieceVersionId },
+    select: {
+      id: true,
+      movements: {
+        select: {
+          id: true,
+          sections: {
+            select: {
+              id: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!currentPieceVersion) {
+    return new Response(
+      JSON.stringify({ error: "Piece version to update not found" }),
+      {
+        status: 404,
+      },
+    );
+  }
+
+  // Find the sections that are not in the new piece version
+  const sectionsToDelete = currentPieceVersion.movements
+    .map((movement) => movement.sections)
+    .flat()
+    .filter(
+      (section) =>
+        !movements.some((m) => m.sections.some((s) => s.id === section.id)),
+    );
+  console.log(`[PV Update] sectionsToDelete :`, sectionsToDelete);
+  // Delete the sections that are not in the new piece version
+  sectionsToDelete.forEach((section) =>
+    operations.push(db.section.delete({ where: { id: section.id } })),
+  );
+
+  // Find the movements that are not in the new piece version
+  const movementsToDelete = currentPieceVersion.movements.filter(
+    (movement) => !movements.some((m) => m.id === movement.id),
+  );
+  console.log(`[PV Update] movementsToDelete :`, movementsToDelete);
+  // Delete the movements that are not in the new piece version
+  movementsToDelete.forEach((movement) =>
+    operations.push(db.movement.delete({ where: { id: movement.id } })),
+  );
+
   // First, handle the movements
   for (const movement of movements) {
     const upsertMovement = {
@@ -38,10 +89,6 @@ export async function POST(req: NextRequest) {
       key: movement.key.value,
       pieceVersion: { connect: { id: pieceVersionId } },
     };
-    // // Generate a unique ID for new movements
-    // if (!movement.id) {
-    //   movement.id = uuidv4();
-    // }
 
     // Upsert each movement
     operations.push(
@@ -146,119 +193,4 @@ export async function POST(req: NextRequest) {
   const pieceVersion = results[results.length - 1];
 
   return NextResponse.json(pieceVersion);
-  // const pieceVersion = await db.pieceVersion.update({
-  //   where: {
-  //     id,
-  //   },
-  //   data: {
-  //     piece: {
-  //       connect: {
-  //         id: body.pieceId,
-  //       },
-  //     },
-  //     category: category.value,
-  //     creator: {
-  //       connect: {
-  //         id: creatorId,
-  //       },
-  //     },
-  //     movements: {
-  //       upsert: movements
-  //         .sort((a, b) => a.rank - b.rank)
-  //         .map((movement) => {
-  //           const upsertMovement = {
-  //             rank: movement.rank,
-  //             key: movement.key.value,
-  //             sections: {
-  //               upsert: movement.sections
-  //                 .sort((a, b) => a.rank - b.rank)
-  //                 .map((section) => {
-  //                   const upsertSection = {
-  //                     rank: section.rank,
-  //                     metreNumerator: section.metreNumerator,
-  //                     metreDenominator: section.metreDenominator,
-  //                     isCommonTime: section.isCommonTime,
-  //                     isCutTime: section.isCutTime,
-  //                     fastestStructuralNotesPerBar:
-  //                       section.fastestStructuralNotesPerBar,
-  //                     fastestStaccatoNotesPerBar:
-  //                       section.fastestStaccatoNotesPerBar,
-  //                     fastestRepeatedNotesPerBar:
-  //                       section.fastestRepeatedNotesPerBar,
-  //                     fastestOrnamentalNotesPerBar:
-  //                       section.fastestOrnamentalNotesPerBar,
-  //                     isFastestStructuralNoteBelCanto:
-  //                       section.isFastestStructuralNoteBelCanto,
-  //                     ...(section.tempoIndication?.value
-  //                       ? {
-  //                           tempoIndication: {
-  //                             connect: {
-  //                               id: section.tempoIndication.value,
-  //                             },
-  //                           },
-  //                         }
-  //                       : {}),
-  //                     ...(section.comment
-  //                       ? {
-  //                           comment: section.comment,
-  //                         }
-  //                       : {}),
-  //                   };
-  //                   return {
-  //                     where: {
-  //                       id: section.id,
-  //                     },
-  //                     create: upsertSection,
-  //                     update: upsertSection,
-  //                   };
-  //                 }),
-  //             },
-  //           };
-  //
-  //           return {
-  //             where: {
-  //               id: movement.id,
-  //             },
-  //             create: upsertMovement,
-  //             update: upsertMovement,
-  //           };
-  //         }),
-  //     },
-  //   },
-  //   select: {
-  //     id: true,
-  //     category: true,
-  //     movements: {
-  //       select: {
-  //         id: true,
-  //         rank: true,
-  //         key: true,
-  //         sections: {
-  //           select: {
-  //             id: true,
-  //             rank: true,
-  //             metreNumerator: true,
-  //             metreDenominator: true,
-  //             isCommonTime: true,
-  //             isCutTime: true,
-  //             fastestStructuralNotesPerBar: true,
-  //             fastestStaccatoNotesPerBar: true,
-  //             fastestRepeatedNotesPerBar: true,
-  //             fastestOrnamentalNotesPerBar: true,
-  //             isFastestStructuralNoteBelCanto: true,
-  //             comment: true,
-  //             tempoIndication: {
-  //               select: {
-  //                 id: true,
-  //                 text: true,
-  //               },
-  //             },
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-  // });
-  //
-  // return NextResponse.json(pieceVersion);
 }
