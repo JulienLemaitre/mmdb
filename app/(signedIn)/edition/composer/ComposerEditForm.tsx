@@ -36,7 +36,7 @@ export default function ComposerEditForm({
 
   const onSubmit = async (data: PersonInput) => {
     // Front input values validation is successful at this point.
-    console.log("data", data);
+    console.log("[ComposerEditForm] onSubmit data", data);
     const apiUrl = composer ? `/api/person/update` : "/api/person/create";
 
     // post data to api route to create a composer as a person

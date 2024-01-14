@@ -59,7 +59,7 @@ export default function Summary() {
               onClick={() =>
                 router.push(
                   composer.isNew
-                    ? UPDATE_COMPOSER_URL + composer.id
+                    ? UPDATE_COMPOSER_URL + `?personId=${composer.id}`
                     : SELECT_COMPOSER_URL,
                 )
               }
