@@ -56,7 +56,7 @@ async function getData(pieceVersionId: string) {
   });
   return {
     pieceVersion: pieceVersion
-      ? deleteNullPropertiesFromObject(pieceVersion) // We ensure values will not be initiated with null values
+      ? deleteNullPropertiesFromObject(pieceVersion) // We ensure properties will not be initiated with null values
       : null,
   };
 }

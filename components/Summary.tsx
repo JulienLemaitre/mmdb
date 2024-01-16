@@ -83,7 +83,7 @@ export default function Summary() {
               onClick={() =>
                 router.push(
                   piece.isNew
-                    ? UPDATE_PIECE_URL + piece.id
+                    ? UPDATE_PIECE_URL + `?pieceId=${piece.id}`
                     : SELECT_PIECE_URL + `?composerId=${composer?.id}`,
                 )
               }

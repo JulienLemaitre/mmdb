@@ -76,8 +76,9 @@ export type SectionState = Pick<
   | "fastestStaccatoNotesPerBar"
   | "fastestRepeatedNotesPerBar"
   | "fastestOrnamentalNotesPerBar"
+  | "isFastestStructuralNoteBelCanto"
 > & {
-  tempoIndication: Pick<TempoIndication, "text"> | null;
+  tempoIndication: Pick<TempoIndication, "text">;
 };
 
 export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {
@@ -119,19 +120,19 @@ export type SectionInput = Pick<
   | "rank"
   | "metreNumerator"
   | "metreDenominator"
-  // | "isCommonTime"
-  // | "isCutTime"
+  | "isCommonTime"
+  | "isCutTime"
   | "fastestStructuralNotesPerBar"
   | "fastestStaccatoNotesPerBar"
   | "fastestRepeatedNotesPerBar"
   | "fastestOrnamentalNotesPerBar"
-  // | "isFastestStructuralNoteBelCanto"
+  | "isFastestStructuralNoteBelCanto"
   | "comment"
 > & {
   tempoIndication: OptionInput;
-  isCommonTime?: boolean;
-  isCutTime?: boolean;
-  isFastestStructuralNoteBelCanto?: boolean;
+  // isCommonTime?: boolean;
+  // isCutTime?: boolean;
+  // isFastestStructuralNoteBelCanto?: boolean;
 };
 export type MovementInput = Pick<Movement, "rank"> & {
   key: OptionInput;
