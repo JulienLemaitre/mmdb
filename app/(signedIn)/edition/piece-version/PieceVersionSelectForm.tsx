@@ -21,7 +21,7 @@ type PieceVersionSelectFormProps = {
 };
 export default function PieceVersionSelectForm({
   pieceVersions,
-}: PieceVersionSelectFormProps) {
+}: Readonly<PieceVersionSelectFormProps>) {
   const router = useRouter();
   const { dispatch, state } = useEditForm();
   const [selectedPieceVersion, setSelectedPieceVersion] =

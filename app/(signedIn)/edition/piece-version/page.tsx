@@ -34,6 +34,7 @@ async function getData(pieceId: string) {
               fastestStructuralNotesPerBar: true,
               fastestRepeatedNotesPerBar: true,
               fastestOrnamentalNotesPerBar: true,
+              isFastestStructuralNoteBelCanto: true,
             },
             orderBy: {
               rank: "asc",
