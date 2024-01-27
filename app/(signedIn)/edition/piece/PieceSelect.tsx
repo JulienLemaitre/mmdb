@@ -1,8 +1,9 @@
 // "use client";
-import Select from "react-select";
+import Select from "@/components/ReactSelect/Select";
 import { PieceState } from "@/types/editFormTypes";
 import { CREATE_PIECE_URL } from "@/utils/routes";
 import { useRouter } from "next/navigation";
+import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";
 
 type PieceSelectProps = {
   pieces: PieceState[];
@@ -13,7 +14,7 @@ export default function PieceSelect({
   pieces,
   onSelect,
   selectedPiece,
-}: PieceSelectProps) {
+}: Readonly<PieceSelectProps>) {
   const pieceOptions = pieces.map((piece) => getPieceOption(piece));
   const router = useRouter();
   const defaultOption = selectedPiece ? getPieceOption(selectedPiece) : null;
@@ -33,30 +34,19 @@ export default function PieceSelect({
         if (!pieceOption) return;
         onSelect(pieceOption?.value);
       }}
-      noOptionsMessage={() => (
-        <div className="text-left">
-          <div className="ml-4 mb-2">No piece found</div>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={async () => {
-              console.log("Create a new piece");
-              router.push(CREATE_PIECE_URL);
-            }}
-          >
-            Create a new piece
-          </button>
-        </div>
-      )}
+      noOptionsMessage={getNoOptionsMessage({
+        router,
+        entityName: "piece",
+        createUrl: CREATE_PIECE_URL,
+      })}
     />
   );
 }
 
 function getPieceOption(piece: PieceState) {
+  const nickname = piece.nickname ? ` (${piece.nickname})` : "";
   return {
     value: piece.id,
-    label: `${piece.title}${piece.nickname ? ` (${piece.nickname})` : ""} (${
-      piece.yearOfComposition
-    })`,
+    label: `${piece.title}${nickname} (${piece.yearOfComposition})`,
   };
 }

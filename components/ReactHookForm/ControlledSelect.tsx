@@ -1,4 +1,4 @@
-import Select from "react-select";
+import Select from "@/components/ReactSelect/Select";
 import { useController } from "react-hook-form";
 
 const ControlledSelect = ({
@@ -41,9 +41,7 @@ const ControlledSelect = ({
         value={value || defaultValue}
         {...selectProps}
       />
-      <span className="label-text-alt text-red-500">
-        {error && error.message}
-      </span>
+      <span className="label-text-alt text-red-500">{error?.message}</span>
     </div>
   );
 };

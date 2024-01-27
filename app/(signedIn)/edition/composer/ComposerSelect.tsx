@@ -1,8 +1,9 @@
 // "use client";
-import Select from "react-select";
+import Select from "@/components/ReactSelect/Select";
 import { ComposerState } from "@/types/editFormTypes";
 import { useRouter } from "next/navigation";
 import { CREATE_COMPOSER_URL } from "@/utils/routes";
+import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";
 
 type ComposerSelectProps = {
   composers: ComposerState[];
@@ -13,7 +14,7 @@ export default function ComposerSelect({
   composers,
   onSelect,
   selectedComposer,
-}: ComposerSelectProps) {
+}: Readonly<ComposerSelectProps>) {
   const composerOptions = composers.map((composer) =>
     getComposerOption(composer),
   );
@@ -36,21 +37,11 @@ export default function ComposerSelect({
         if (!composerOption) return;
         onSelect(composerOption?.value);
       }}
-      noOptionsMessage={() => (
-        <div className="text-left">
-          <div className="ml-4 mb-2">No composer found</div>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => {
-              console.log("Create a new composer");
-              router.push(CREATE_COMPOSER_URL);
-            }}
-          >
-            Create a new composer
-          </button>
-        </div>
-      )}
+      noOptionsMessage={getNoOptionsMessage({
+        router,
+        entityName: "composer",
+        createUrl: CREATE_COMPOSER_URL,
+      })}
     />
   );
 }

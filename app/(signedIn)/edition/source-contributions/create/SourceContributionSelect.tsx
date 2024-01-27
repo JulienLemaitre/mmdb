@@ -1,4 +1,4 @@
-import Select from "react-select";
+import Select from "@/components/ReactSelect/Select";
 import {
   ContributionState,
   OptionInput,
@@ -39,7 +39,7 @@ export default function SourceContributionSelect({
   sourceContributionOptions,
   onAddOrganizationContribution,
   onAddPersonContribution,
-}: SourceContributionSelectProps) {
+}: Readonly<SourceContributionSelectProps>) {
   const contributionRoleOptions = Object.values(CONTRIBUTION_ROLE).map(
     (category) => ({
       value: category,
@@ -95,6 +95,7 @@ export default function SourceContributionSelect({
     onAddPersonContribution,
     onAddOrganizationContribution,
   ]);
+
   const onContributionCreated = (contribution: ContributionState) => {
     setRole(contribution.role);
     if ("person" in contribution) {
@@ -104,6 +105,7 @@ export default function SourceContributionSelect({
       setNewOrganization(contribution.organization);
     }
   };
+
   useEffect(() => {
     // Call onAddContribution when the required data is in state
     if (role && (newPerson || newOrganization)) {
@@ -111,6 +113,22 @@ export default function SourceContributionSelect({
       onAddContribution();
     }
   }, [role, newOrganization, newPerson, onAddContribution]);
+
+  const noOptionsMessage = () => (
+    <div className="text-left">
+      <div className="ml-4 mb-2">No person or organization found</div>
+      <button
+        type="button"
+        className="btn btn-primary"
+        onClick={() => {
+          console.log("Create a new sourceContribution");
+          setIsContributionCreation(true);
+        }}
+      >
+        Create a new sourceContribution
+      </button>
+    </div>
+  );
 
   return (
     <div className="max-w-md">
@@ -140,21 +158,7 @@ export default function SourceContributionSelect({
                 setSelectedPersonId(undefined);
               }
             }}
-            noOptionsMessage={() => (
-              <div className="text-left">
-                <div className="ml-4 mb-2">No person or organization found</div>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={() => {
-                    console.log("Create a new sourceContribution");
-                    setIsContributionCreation(true);
-                  }}
-                >
-                  Create a new sourceContribution
-                </button>
-              </div>
-            )}
+            noOptionsMessage={noOptionsMessage}
           />
           <Label label={`role`} isRequired />
           <Select
@@ -181,7 +185,7 @@ export default function SourceContributionSelect({
       )}
       <button
         className="btn btn-primary mt-6 w-full max-w-xs"
-        disabled={!role || !(selectedOrganizationId || selectedPersonId)}
+        disabled={!role || !(selectedOrganizationId ?? selectedPersonId)}
         onClick={onAddContribution}
       >
         Add this contribution
