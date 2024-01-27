@@ -25,6 +25,7 @@ export default function PieceSelect({
       className="react-select-container"
       classNamePrefix="react-select"
       instanceId="piece-select"
+      placeholder="Enter piece name..."
       isSearchable={true}
       name="color"
       options={pieceOptions}

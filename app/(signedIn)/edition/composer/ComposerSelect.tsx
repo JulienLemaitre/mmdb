@@ -28,6 +28,7 @@ export default function ComposerSelect({
       className="react-select-container"
       classNamePrefix="react-select"
       instanceId="composer-select"
+      placeholder="Enter composer name..."
       isSearchable={true}
       name="composer"
       options={composerOptions}

@@ -29,6 +29,10 @@ export default async function Composer() {
   return (
     <div className="w-full max-w-md">
       <h1 className="mb-4 text-4xl font-bold">Select a composer</h1>
+      <p className="italic">
+        {`Search by typing the name.
+          If it is not listed yet, you will be able to create it.`}
+      </p>
       <ComposerSelectForm composers={composers} />
     </div>
   );
