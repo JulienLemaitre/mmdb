@@ -27,7 +27,7 @@ const SourceSchema = z.object({
     value: z.string(),
     label: z.string(),
   }),
-  link: z.union([z.literal(""), z.string().trim().url()]),
+  link: z.string().trim().url(),
   year: zodYear,
   references: z.array(
     z.object({
@@ -139,11 +139,12 @@ export default function SourceDescriptionEditForm({
         <FormInput name="title" {...{ register, watch, errors }} />
         <FormInput
           name="link"
+          isRequired
           label="Link to the online score"
           {...{ register, watch, errors }}
         />
         <ReferenceArray {...{ control, register, errors, watch }} />
-        <FormInput // TODO: button "add a comment" and a textarea
+        <FormInput
           name="comment"
           label={`Comment`}
           defaultValue={``}

@@ -117,7 +117,7 @@ model Source {
   title          String? // ?? Is it usefull ?
   pieceVersions  PieceVersion[] // A source is linked one or more pieceVersions
   type           SOURCE_TYPE
-  link           String?
+  link           String
   year           Int
   references     Json? // Can be plateNumber, ISBN, ISMN, etc.
   contributions  Contribution[] // A source can have many Contributions
