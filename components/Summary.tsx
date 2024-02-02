@@ -34,16 +34,7 @@ export default function Summary() {
   const pieceVersion = state.pieceVersion;
   const sourceDescription = state.sourceDescription;
   const sourceContributions = state.sourceContributions;
-  // const metronomeMarks = state.metronomeMarks;
-  let references: { type: string; reference: string }[] = [];
-  if (sourceDescription?.references) {
-    try {
-      // @ts-ignore
-      references = JSON.parse(sourceDescription?.references);
-    } catch (e) {
-      console.log(`[Summary] Error parsing references:`, e);
-    }
-  }
+  const references = sourceDescription?.references ?? [];
 
   return (
     <div className="text-sm">
@@ -128,7 +119,7 @@ export default function Summary() {
           </h3>
           <div>{`Category: ${pieceVersion.category}`}</div>
           {pieceVersion.movements.map((movement, mvtIndex, mvtArray) => (
-            <div key={`mvt-${mvtIndex}`}>
+            <div key={`mvt-${movement.id}`}>
               <h3 className="mt-3">
                 {mvtArray.length > 1 ? (
                   <span className="font-bold text-xs">{`Mvt ${movement.rank}`}</span>
@@ -151,7 +142,7 @@ export default function Summary() {
                 } = section;
                 const isCommonOrCutTime = isCommonTime || isCutTime;
                 return (
-                  <div key={`mvt-${mvtIndex}-section-${sectionIndex}`}>
+                  <div key={`mvt-${movement.id}-section-${section.id}`}>
                     <h4 className="italic mt-1">
                       <span className="not-italic font-bold text-xs">{`Section ${rank}`}</span>
                       {` - ${tempoIndication?.text}${
@@ -227,14 +218,16 @@ export default function Summary() {
           ) : null}
           <div>{`${sourceDescription.year} [${sourceDescription.type}]`}</div>
           {sourceDescription.link ? <div>{sourceDescription.link}</div> : null}
-          {references?.length > 0 ? (
-            <div>{JSON.stringify(sourceDescription.references)}</div>
-          ) : null}
+          {references.map((reference) => (
+            <div
+              key={reference.reference}
+            >{`${reference.type}: ${reference.reference}`}</div>
+          ))}
           {(sourceContributions ?? []).length > 0 ? (
             <h4 className="font-bold uppercase text-xs mt-3">{`Contributors`}</h4>
           ) : null}
-          {(sourceContributions || []).map((contribution, index) => (
-            <div key={`contribution-${index}`}>
+          {(sourceContributions ?? []).map((contribution) => (
+            <div key={`contribution-${contribution.id}`}>
               <div>{`${contribution.role}: ${
                 "person" in contribution
                   ? `${contribution.person.firstName} ${contribution.person.lastName}`

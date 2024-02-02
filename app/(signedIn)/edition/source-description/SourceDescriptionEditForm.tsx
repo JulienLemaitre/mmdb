@@ -6,7 +6,7 @@ import {
   useEditForm,
 } from "@/components/context/editFormContext";
 import { useForm } from "react-hook-form";
-import { SourceInput } from "@/types/editFormTypes";
+import { SourceDescriptionInput } from "@/types/editFormTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   CREATE_SOURCE_CONTRIBUTIONS_URL,
@@ -44,7 +44,7 @@ const SourceSchema = z.object({
 export default function SourceDescriptionEditForm({
   sourceDescription,
 }: Readonly<{
-  sourceDescription?: SourceInput;
+  sourceDescription?: SourceDescriptionInput;
 }>) {
   const router = useRouter();
   const { dispatch, state } = useEditForm();
@@ -62,7 +62,7 @@ export default function SourceDescriptionEditForm({
     resolver: zodResolver(SourceSchema),
   });
 
-  const onSubmit = async (data: SourceInput) => {
+  const onSubmit = async (data: SourceDescriptionInput) => {
     // Front input values validation is successful at this point.
     console.log("data", data);
 

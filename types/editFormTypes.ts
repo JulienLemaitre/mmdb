@@ -6,10 +6,15 @@ import type {
   Person,
   Piece,
   PieceVersion,
+  Reference,
   Section,
   Source,
   TempoIndication,
 } from "@prisma/client";
+
+// Sub-Types
+
+export type ReferenceTypeAndReference = Pick<Reference, "type" | "reference">;
 
 // Data in STATE
 
@@ -89,11 +94,13 @@ export type PieceVersionState = Pick<PieceVersion, "id" | "category"> & {
   movements: MovementState[];
 } & isNewProp;
 
-export type SourceState = Pick<
+export type ReferenceState = Pick<Reference, "id" | "type" | "reference">;
+export type SourceDescriptionState = Pick<
   Source,
-  "id" | "title" | "type" | "link" | "year" | "references" | "comment"
-> &
-  isNewProp;
+  "id" | "title" | "type" | "link" | "year" | "comment"
+> & {
+  references: ReferenceState[];
+} & isNewProp;
 
 export type MetronomeMarkState = Pick<
   MetronomeMark,
@@ -130,9 +137,6 @@ export type SectionInput = Pick<
   | "comment"
 > & {
   tempoIndication: OptionInput;
-  // isCommonTime?: boolean;
-  // isCutTime?: boolean;
-  // isFastestStructuralNoteBelCanto?: boolean;
 };
 export type MovementInput = Pick<Movement, "rank"> & {
   key: OptionInput;
@@ -144,10 +148,12 @@ export type PieceVersionInput = {
   movements: MovementInput[];
 };
 
-export type SourceInput = Pick<
-  Source,
-  "id" | "title" | "type" | "link" | "year" | "references" | "comment"
->;
+export type SourceDescriptionInput = Pick<Source, "id" | "link" | "year"> & {
+  comment?: string;
+  title?: string;
+  references?: ReferenceInput[];
+  type: OptionInput;
+};
 
 export type ContributionInput = {
   role: OptionInput;

@@ -119,7 +119,7 @@ model Source {
   type           SOURCE_TYPE
   link           String
   year           Int
-  references     Json? // Can be plateNumber, ISBN, ISMN, etc.
+  references     Reference[] // A source can have many references
   contributions  Contribution[] // A source can have many Contributions
   metronomeMarks MetronomeMark[] // A source can have many metronome marks
   creator        User?           @relation(fields: [creatorId], references: [id])
@@ -127,6 +127,18 @@ model Source {
   comment        String?
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
+}
+
+model Reference {
+  id        String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  source    Source         @relation(fields: [sourceId], references: [id])
+  sourceId  String         @db.Uuid
+  type      REFERENCE_TYPE
+  reference String
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@unique([type, reference])
 }
 
 model Contribution {
@@ -289,6 +301,12 @@ enum SOURCE_TYPE {
   LETTER
   EDITION
   OTHER
+}
+
+enum REFERENCE_TYPE {
+  PLATE_NUMBER
+  ISBN
+  ISMN
 }
 
 enum CONTRIBUTION_ROLE {

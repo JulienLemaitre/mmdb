@@ -53,8 +53,9 @@ export const STATE_ENTITIES: StateEntity[] = STATE_ENTITIES_NAMES.map(
     displayName: entity.replace(/([A-Z])/g, " $1").toLowerCase(),
     segment: entity.replace(/([A-Z])/g, "_$1").toLowerCase(),
     path:
-      `/edition/${index >= 3 ? "creation/" : ""}` +
-      entity.replace(/([A-Z])/g, "-$1").toLowerCase(),
+      `/edition/` +
+      entity.replace(/([A-Z])/g, "-$1").toLowerCase() +
+      (index >= 3 ? "create/" : ""),
   }),
 );
 

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/db";
-import { Prisma } from "@prisma/client";
 import isReqAuthorized from "@/utils/isReqAuthorized";
 import getDecodedTokenFromReq from "@/utils/getDecodedTokenFromReq";
+import { ReferenceTypeAndReference } from "@/types/editFormTypes";
 
 export async function POST(req: NextRequest) {
   if (!isReqAuthorized(req)) {
@@ -31,10 +31,12 @@ export async function POST(req: NextRequest) {
     pieceVersionId,
   } = body;
 
-  const references = referencesInput.map((reference) => ({
-    type: reference.type.value,
-    reference: reference.reference,
-  })) as Prisma.JsonArray;
+  const references: ReferenceTypeAndReference[] = referencesInput.map(
+    (reference) => ({
+      type: reference.type.value,
+      reference: reference.reference,
+    }),
+  );
 
   const source = await db.source.create({
     data: {
@@ -52,7 +54,9 @@ export async function POST(req: NextRequest) {
       type: type.value,
       link,
       year,
-      references,
+      references: {
+        create: references,
+      },
       ...(comment && { comment }),
     },
     select: {

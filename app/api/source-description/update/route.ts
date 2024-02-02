@@ -2,6 +2,7 @@ import isReqAuthorized from "@/utils/isReqAuthorized";
 import getDecodedTokenFromReq from "@/utils/getDecodedTokenFromReq";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/db";
+import { ReferenceTypeAndReference } from "@/types/editFormTypes";
 
 export async function POST(req: NextRequest) {
   if (!isReqAuthorized(req)) {
@@ -20,8 +21,15 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
   console.log(`[POST piece update] body :`, body);
-  const { title, year, type, link, comment, references, id, pieceVersionId } =
+  const { title, year, type, link, comment, references: referencesInput, id, pieceVersionId } =
     body;
+
+  const references: ReferenceTypeAndReference[] = referencesInput.map(
+    (reference) => ({
+      type: reference.type.value,
+      reference: reference.reference,
+    }),
+  );
 
   const piece = await db.source.update({
     where: {
@@ -42,7 +50,18 @@ export async function POST(req: NextRequest) {
       type: type.value,
       link,
       year,
-      references,
+      references: {
+        connectOrCreate: references.map((reference) => ({
+          where: {
+            type: reference.type,
+            reference: reference.reference,
+          },
+          create: {
+            type: reference.type,
+            reference: reference.reference,
+          },
+        })),
+      },
       ...(comment && { comment }),
     },
     select: {
