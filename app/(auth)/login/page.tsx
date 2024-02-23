@@ -6,13 +6,14 @@ import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
+import { Suspense } from "react";
 
 const LoginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
 });
 
-export default function Login() {
+function LoginPage() {
   const searchParams = useSearchParams();
   const message = searchParams.get("message");
   const callbackUrl = searchParams.get("callbackUrl");
@@ -33,7 +34,7 @@ export default function Login() {
       email: data.email,
       password: data.password,
       redirect: true,
-      callbackUrl: callbackUrl || `/`,
+      callbackUrl: callbackUrl ?? `/`,
     });
   };
 
@@ -70,5 +71,14 @@ export default function Login() {
         </button>
       </form>
     </div>
+  );
+}
+
+export default function Login() {
+  return (
+    // You could have a loading skeleton as the `fallback` too
+    <Suspense>
+      <LoginPage />
+    </Suspense>
   );
 }

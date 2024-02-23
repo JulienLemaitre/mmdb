@@ -1,5 +1,5 @@
 import { db } from "@/utils/db";
-import PieceVersionSelectForm from "@/components/PieceVersionSelectForm";
+import PieceVersionSelectForm from "@/app/(signedIn)/edition/piece-version/PieceVersionSelectForm";
 
 async function getData(pieceId: string) {
   if (!pieceId) return { pieceVersions: [] };
@@ -30,6 +30,11 @@ async function getData(pieceId: string) {
                 },
               },
               comment: true,
+              fastestStaccatoNotesPerBar: true,
+              fastestStructuralNotesPerBar: true,
+              fastestRepeatedNotesPerBar: true,
+              fastestOrnamentalNotesPerBar: true,
+              isFastestStructuralNoteBelCanto: true,
             },
             orderBy: {
               rank: "asc",

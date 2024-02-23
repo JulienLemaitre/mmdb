@@ -1,5 +1,5 @@
 import { db } from "@/utils/db";
-import PieceSelectForm from "@/components/PieceSelectForm";
+import PieceSelectForm from "@/app/(signedIn)/edition/piece/PieceSelectForm";
 
 async function getData(composerId: string) {
   if (!composerId) return { pieces: [] };
@@ -25,10 +25,12 @@ export default async function Piece({ searchParams: { composerId } }) {
   const { pieces } = await getData(composerId);
 
   return (
-    <div
-    // className="flex flex-col items-center justify-center"
-    >
+    <div className="w-full max-w-md">
       <h1 className="mb-4 text-4xl font-bold">Select a piece</h1>
+      <p className="italic">
+        {`Search by typing the name.
+          If it is not listed yet, you will be able to create it.`}
+      </p>
       <PieceSelectForm pieces={pieces} />
     </div>
   );

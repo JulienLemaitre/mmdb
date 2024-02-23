@@ -1,4 +1,5 @@
-import Select from "react-select";
+import Select from "@/components/ReactSelect/Select";
+import labelOnlyFilterOption from "@/utils/labelOnlyFilterOption";
 import { useController } from "react-hook-form";
 
 const ControlledSelect = ({
@@ -31,20 +32,18 @@ const ControlledSelect = ({
         </label>
       )}
       <Select
+        className="react-select-container"
+        classNamePrefix="react-select"
         instanceId={`composer-select-${id}`}
         name={name}
-        ref={ref}
+        innerRef={ref}
         onChange={onChange}
         onBlur={onBlur}
         value={value || defaultValue}
-        classNames={{
-          control: () => "h-12",
-        }}
+        filterOption={labelOnlyFilterOption}
         {...selectProps}
       />
-      <span className="label-text-alt text-red-500">
-        {error && error.message}
-      </span>
+      <span className="label-text-alt text-red-500">{error?.message}</span>
     </div>
   );
 };

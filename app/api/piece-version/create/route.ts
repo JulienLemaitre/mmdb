@@ -70,6 +70,8 @@ export async function POST(req: NextRequest) {
                     section.fastestRepeatedNotesPerBar,
                   fastestOrnamentalNotesPerBar:
                     section.fastestOrnamentalNotesPerBar,
+                  isFastestStructuralNoteBelCanto:
+                    section.isFastestStructuralNoteBelCanto,
                   ...(section.tempoIndication?.value
                     ? {
                         tempoIndication: {

@@ -3,9 +3,11 @@ export async function fetchAPI(
   {
     variables,
     method = "POST",
+    cache, // default to no cache if = "no-store"
   }: {
     variables: any;
     method?: "POST" | "GET";
+    cache?: "no-store" | "force-cache";
   },
   accessToken?: string,
 ) {
@@ -16,6 +18,7 @@ export async function fetchAPI(
       Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(variables),
+    cache,
   })
     .then((res) => res.json())
     .catch((err) => console.log(err));

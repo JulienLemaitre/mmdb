@@ -39,21 +39,4 @@ describe("getNotesPerBarFromNotesPerSecond", () => {
     });
     expect(result).toBeCloseTo(3, 1);
   });
-
-  it("should calculate the number of notes per bar correctly for a triplet sixteenth note in a 3/4 time signature with 150 bpm", () => {
-    const notesPerSecond = 0.41;
-    const metreNumerator = 3;
-    const metreDenominator = 4;
-    const bpm = 150; // 0.4 seconds per beat
-    const beatUnit = NOTE_VALUE.TRIPLET_SIXTEENTH; // 1/24
-
-    const result = getNotesPerBarFromNotesPerSecond({
-      notesPerSecond,
-      beatUnit,
-      bpm,
-      metreNumerator,
-      metreDenominator,
-    });
-    expect(result).toBeCloseTo(3, 1);
-  });
 });

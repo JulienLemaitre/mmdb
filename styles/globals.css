@@ -6,6 +6,72 @@
   [data-nextjs-scroll-focus-boundary] {
     display: contents;
   }
+
+  p {
+    @apply my-4
+  }
+}
+
+@layer components {
+  .react-select-container .react-select__control {
+    @apply h-12 bg-white dark:bg-neutral-700 border-2 border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500;
+  }
+
+  .react-select-container .react-select__control--is-focused {
+    @apply border-neutral-500 hover:border-neutral-500 dark:border-neutral-400 dark:hover:border-neutral-400 shadow-none;
+  }
+
+  .react-select-container .react-select__menu {
+    @apply bg-neutral-100 dark:bg-neutral-700 border-2 border-neutral-300 dark:border-neutral-600;
+  }
+
+  .react-select-container .react-select__option {
+    @apply text-neutral-600 dark:text-neutral-200 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-700 dark:hover:bg-neutral-800;
+  }
+
+  .react-select-container .react-select__indicator-separator {
+    @apply bg-neutral-400;
+  }
+
+  .react-select-container .react-select__input-container,
+  .react-select-container .react-select__placeholder,
+  .react-select-container .react-select__single-value {
+    @apply text-neutral-600 dark:text-neutral-200;
+  }
+
+  /* Multi-value container and labels */
+  .react-select-container .react-select__multi-value {
+    @apply bg-neutral-400 dark:bg-neutral-600 rounded-md;
+  }
+
+  .react-select-container .react-select__multi-value__label {
+    @apply text-neutral-800 dark:text-neutral-100;
+  }
+
+  /* Multi-value remove button and SVG */
+  .react-select-container .react-select__multi-value__remove {
+    @apply bg-neutral-500 dark:bg-neutral-700 hover:bg-neutral-600 dark:hover:bg-neutral-800 rounded-full;
+  }
+
+  .react-select-container .react-select__multi-value__remove .css-tj5bde-Svg {
+    @apply text-neutral-200 dark:text-neutral-400;
+  }
+
+  /* Clear and dropdown indicator */
+  .react-select-container .react-select__clear-indicator,
+  .react-select-container .react-select__dropdown-indicator {
+    @apply text-neutral-400 dark:text-neutral-600;
+  }
+
+  .react-select-container .react-select__clear-indicator:hover,
+  .react-select-container .react-select__dropdown-indicator:hover {
+    @apply text-neutral-500 dark:text-neutral-500;
+  }
+
+  .react-select-container .react-select__clear-indicator .css-tj5bde-Svg,
+  .react-select-container .react-select__dropdown-indicator .css-tj5bde-Svg {
+    @apply fill-current;
+  }
 }
 
 * {
@@ -14,6 +80,10 @@
 
 .common-time {
   font-size: 2.25rem/* 36px */;
+  line-height: 0.5rem/* 18px */;
+}
+.common-time-sm {
+  font-size: 2rem/* 36px */;
   line-height: 0.5rem/* 18px */;
 }
 .rainbow-mesh {

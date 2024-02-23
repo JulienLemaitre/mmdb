@@ -8,32 +8,56 @@ import {
 } from "react";
 import {
   ComposerState,
+  ContributionState,
+  MetronomeMarkState,
   PieceState,
   PieceVersionState,
-  SourceState,
+  SourceDescriptionState,
+  StateEntity,
 } from "@/types/editFormTypes";
 
 type PieceFormAction =
   | { type: "init"; payload: any }
-  | { type: "composerId"; payload: string }
-  | { type: "pieceId"; payload: string }
-  | { type: "pieceVersionId"; payload: string }
   | { type: "composer"; payload: any }
   | { type: "piece"; payload: any }
   | { type: "pieceVersion"; payload: any }
-  | { type: "source"; payload: any }
-  | { type: "contributions"; payload: any };
+  | { type: "sourceDescription"; payload: any }
+  | { type: "sourceContributions"; payload: any }
+  | { type: "metronomeMarks"; payload: any };
 type Dispatch = (action: PieceFormAction) => void;
 type EditFormState = {
   composer?: ComposerState;
   piece?: PieceState;
   pieceVersion?: PieceVersionState;
-  source?: SourceState;
+  sourceDescription?: SourceDescriptionState;
+  sourceContributions?: ContributionState[];
+  metronomeMarks?: MetronomeMarkState[];
 };
 type EditFormProviderProps = { children: ReactNode };
 
 const LOCAL_STORAGE_KEY = "editForm";
 const USE_LOCAL_STORAGE = false;
+export const STATE_ENTITIES_NAMES = [
+  "composer",
+  "piece",
+  "pieceVersion",
+  "sourceDescription",
+  "sourceContributions",
+  "metronomeMarks",
+];
+
+export const STATE_ENTITIES: StateEntity[] = STATE_ENTITIES_NAMES.map(
+  (entity, index) => ({
+    rank: index + 1,
+    name: entity,
+    displayName: entity.replace(/([A-Z])/g, " $1").toLowerCase(),
+    segment: entity.replace(/([A-Z])/g, "_$1").toLowerCase(),
+    path:
+      `/edition/` +
+      entity.replace(/([A-Z])/g, "-$1").toLowerCase() +
+      (index >= 3 ? "create/" : ""),
+  }),
+);
 
 const EditFormContext = createContext<
   | {
@@ -57,22 +81,25 @@ function localStorageGetItem(key: string) {
 }
 
 function editFormReducer(state: EditFormState, action: PieceFormAction) {
-  if (
-    ["composer", "piece", "pieceVersion", "source", "contributions"].includes(
-      action.type,
-    )
-  ) {
+  // Entries created
+  if (STATE_ENTITIES_NAMES.includes(action.type)) {
     const newState = { ...state, [action.type]: action.payload };
-    localStorageSetItem("editForm", newState);
-    return newState;
-  }
-  if (["composerId", "pieceId", "pieceVersionId"].includes(action.type)) {
-    const newState = {
-      ...state,
-      [action.type.substring(0, action.type.length - 3)]: {
-        id: action.payload,
-      },
-    };
+
+    // Reset all entities after the current one
+    if (action.payload.id !== state[action.type]?.id) {
+      for (const entity of STATE_ENTITIES_NAMES) {
+        if (entity === action.type) continue;
+        if (
+          STATE_ENTITIES_NAMES.indexOf(entity) >
+            STATE_ENTITIES_NAMES.indexOf(action.type) &&
+          newState[entity]
+        ) {
+          console.log(`[editFormReducer] Resetting ${entity}`);
+          newState[entity] = undefined;
+        }
+      }
+    }
+
     localStorageSetItem("editForm", newState);
     return newState;
   }
@@ -84,7 +111,9 @@ function editFormReducer(state: EditFormState, action: PieceFormAction) {
 }
 
 // eslint-disable-next-line react/prop-types
-export function EditFormProvider({ children }: EditFormProviderProps) {
+export function EditFormProvider({
+  children,
+}: Readonly<EditFormProviderProps>) {
   const [state, dispatch] = useReducer(editFormReducer, {});
 
   useEffect(() => {
@@ -115,7 +144,19 @@ export function useEditForm() {
   if (context === undefined) {
     throw new Error("useEditForm must be used within a EditFormProvider");
   }
-  return context;
+  let lastCompletedStateEntity;
+  let nextStep = STATE_ENTITIES[0];
+  // Determine present step index by finding the last entity from STATE_ENTITIES with an existing id in state
+  const lastCompletedStateEntityName = [...STATE_ENTITIES_NAMES]
+    .reverse()
+    .find((entity) => context.state[entity]?.id);
+  if (lastCompletedStateEntityName) {
+    lastCompletedStateEntity = STATE_ENTITIES.find(
+      (entity) => entity.name === lastCompletedStateEntityName,
+    );
+    nextStep = STATE_ENTITIES[lastCompletedStateEntity.rank];
+  }
+  return { ...context, lastCompletedStateEntity, nextStep };
 }
 
 export function updateEditForm(dispatch, type, value) {

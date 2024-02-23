@@ -64,25 +64,25 @@ model Movement {
 }
 
 model Section {
-  id                              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  movement                        Movement         @relation(fields: [movementId], references: [id])
-  movementId                      String           @db.Uuid
+  id                              String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  movement                        Movement        @relation(fields: [movementId], references: [id])
+  movementId                      String          @db.Uuid
   rank                            Int
   metreNumerator                  Int
   metreDenominator                Int
-  isCommonTime                    Boolean          @default(false)
-  isCutTime                       Boolean          @default(false)
+  isCommonTime                    Boolean         @default(false)
+  isCutTime                       Boolean         @default(false)
   fastestStructuralNotesPerBar    Float
   fastestStaccatoNotesPerBar      Float?
   fastestRepeatedNotesPerBar      Float?
   fastestOrnamentalNotesPerBar    Float?
-  isFastestStructuralNoteBelCanto Boolean          @default(false)
-  tempoIndication                 TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
-  tempoIndicationId               String?          @db.Uuid
+  isFastestStructuralNoteBelCanto Boolean         @default(false)
+  tempoIndication                 TempoIndication @relation(fields: [tempoIndicationId], references: [id])
+  tempoIndicationId               String          @db.Uuid
   metronomeMarks                  MetronomeMark[] // A movement can have many metronome marks
   comment                         String?
-  createdAt                       DateTime         @default(now())
-  updatedAt                       DateTime         @updatedAt
+  createdAt                       DateTime        @default(now())
+  updatedAt                       DateTime        @updatedAt
 
   @@unique([movementId, rank])
 }
@@ -117,9 +117,9 @@ model Source {
   title          String? // ?? Is it usefull ?
   pieceVersions  PieceVersion[] // A source is linked one or more pieceVersions
   type           SOURCE_TYPE
-  link           String?
+  link           String
   year           Int
-  references     Json? // Can be plateNumber, ISBN, ISMN, etc.
+  references     Reference[] // A source can have many references
   contributions  Contribution[] // A source can have many Contributions
   metronomeMarks MetronomeMark[] // A source can have many metronome marks
   creator        User?           @relation(fields: [creatorId], references: [id])
@@ -127,6 +127,18 @@ model Source {
   comment        String?
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
+}
+
+model Reference {
+  id        String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  source    Source         @relation(fields: [sourceId], references: [id])
+  sourceId  String         @db.Uuid
+  type      REFERENCE_TYPE
+  reference String
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@unique([type, reference])
 }
 
 model Contribution {
@@ -289,6 +301,12 @@ enum SOURCE_TYPE {
   LETTER
   EDITION
   OTHER
+}
+
+enum REFERENCE_TYPE {
+  PLATE_NUMBER
+  ISBN
+  ISMN
 }
 
 enum CONTRIBUTION_ROLE {

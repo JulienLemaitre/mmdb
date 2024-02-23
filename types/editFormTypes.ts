@@ -6,34 +6,52 @@ import type {
   Person,
   Piece,
   PieceVersion,
+  Reference,
   Section,
   Source,
   TempoIndication,
 } from "@prisma/client";
 
+// Sub-Types
+
+export type ReferenceTypeAndReference = Pick<Reference, "type" | "reference">;
+
 // Data in STATE
 
+export type StateEntity = {
+  rank: number;
+  name: string;
+  displayName: string;
+  segment: string;
+  path: string;
+};
+
+export type isNewProp = {
+  isNew?: boolean;
+};
 export type PersonState = {
   id: string;
   firstName: string;
   lastName: string;
+  birthYear: number;
+  deathYear: number | null;
 };
-export type ComposerState = PersonState;
+export type ComposerState = PersonState & isNewProp;
 export type OrganizationState = {
   id: string;
   name: string;
 };
 export type ContributionState =
-  | {
+  | ({
       id: string;
       role: CONTRIBUTION_ROLE;
       person: PersonState;
-    }
-  | {
+    } & isNewProp)
+  | ({
       id: string;
       role: CONTRIBUTION_ROLE;
       organization: OrganizationState;
-    };
+    } & isNewProp);
 export type ContributionStateWithoutId =
   | {
       person: PersonState;
@@ -47,7 +65,8 @@ export type ContributionStateWithoutId =
 export type PieceState = Pick<
   Piece,
   "id" | "nickname" | "yearOfComposition" | "title"
->;
+> &
+  isNewProp;
 
 export type SectionState = Pick<
   Section,
@@ -58,8 +77,13 @@ export type SectionState = Pick<
   | "isCommonTime"
   | "isCutTime"
   | "comment"
+  | "fastestStructuralNotesPerBar"
+  | "fastestStaccatoNotesPerBar"
+  | "fastestRepeatedNotesPerBar"
+  | "fastestOrnamentalNotesPerBar"
+  | "isFastestStructuralNoteBelCanto"
 > & {
-  tempoIndication: Pick<TempoIndication, "text"> | null;
+  tempoIndication: Pick<TempoIndication, "text">;
 };
 
 export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {
@@ -68,11 +92,21 @@ export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {
 
 export type PieceVersionState = Pick<PieceVersion, "id" | "category"> & {
   movements: MovementState[];
-};
+} & isNewProp;
 
-export type SourceState = Pick<
+export type ReferenceState = Pick<Reference, "type" | "reference">;
+export type SourceDescriptionState = Pick<
   Source,
-  "id" | "title" | "type" | "link" | "year" | "references" | "comment"
+  "title" | "type" | "link" | "year" | "comment"
+> & {
+  id?: string;
+  references: ReferenceState[];
+  pieceVersions?: Pick<PieceVersionState, "id">[];
+} & isNewProp;
+
+export type MetronomeMarkState = Pick<
+  MetronomeMark,
+  "id" | "sectionId" | "bpm" | "comment" | "beatUnit" | "sourceId"
 >;
 
 // Form INPUTS
@@ -85,44 +119,48 @@ export type OptionInput = {
 export type PersonInput = Pick<
   Person,
   "firstName" | "lastName" | "birthYear" | "deathYear"
->;
-export type ComposerInput = PersonInput;
+> & { id?: string };
 export type PieceInput = Pick<
   Piece,
   "nickname" | "yearOfComposition" | "title"
->;
+> & { id?: string };
 export type SectionInput = Pick<
   Section,
   | "rank"
   | "metreNumerator"
   | "metreDenominator"
-  // | "isCommonTime"
-  // | "isCutTime"
+  | "isCommonTime"
+  | "isCutTime"
   | "fastestStructuralNotesPerBar"
   | "fastestStaccatoNotesPerBar"
   | "fastestRepeatedNotesPerBar"
   | "fastestOrnamentalNotesPerBar"
-  // | "isFastestStructuralNoteBelCanto"
+  | "isFastestStructuralNoteBelCanto"
   | "comment"
 > & {
-  tempoIndication?: string;
-  isCommonTime?: boolean;
-  isCutTime?: boolean;
-  isFastestStructuralNoteBelCanto?: string;
+  tempoIndication: OptionInput;
 };
 export type MovementInput = Pick<Movement, "rank"> & {
   key: OptionInput;
   sections: SectionInput[];
 };
 export type PieceVersionInput = {
+  id?: string;
   category: OptionInput;
   movements: MovementInput[];
 };
+export type ReferenceInput = {
+  type: OptionInput;
+  reference: string;
+};
 
-export type SourceInput = Pick<
-  Source,
-  "id" | "title" | "type" | "link" | "year" | "references" | "comment"
->;
+export type SourceDescriptionInput = Pick<Source, "link" | "year"> & {
+  id?: string;
+  comment?: string;
+  title?: string;
+  references?: ReferenceInput[];
+  type: OptionInput;
+};
 
 export type ContributionInput = {
   role: OptionInput;
