@@ -106,7 +106,8 @@ export default function Summary() {
               onClick={() =>
                 router.push(
                   pieceVersion.isNew
-                    ? UPDATE_PIECE_VERSION_URL + pieceVersion.id
+                    ? UPDATE_PIECE_VERSION_URL +
+                        `?pieceVersionId=${pieceVersion.id}`
                     : SELECT_PIECE_VERSION_URL + `?pieceId=${piece?.id}`,
                 )
               }
@@ -202,7 +203,8 @@ export default function Summary() {
                 className="btn btn-outline btn-xs"
                 onClick={() =>
                   router.push(
-                    UPDATE_SOURCE_DESCRIPTION_URL + sourceDescription.id,
+                    UPDATE_SOURCE_DESCRIPTION_URL +
+                      `?sourceDescriptionId=${sourceDescription.id}`,
                   )
                 }
               >

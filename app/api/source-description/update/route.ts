@@ -21,8 +21,16 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
   console.log(`[POST piece update] body :`, body);
-  const { title, year, type, link, comment, references: referencesInput, id, pieceVersionId } =
-    body;
+  const {
+    title,
+    year,
+    type,
+    link,
+    comment,
+    references: referencesInput,
+    id,
+    pieceVersionId,
+  } = body;
 
   const references: ReferenceTypeAndReference[] = referencesInput.map(
     (reference) => ({
@@ -31,7 +39,7 @@ export async function POST(req: NextRequest) {
     }),
   );
 
-  const piece = await db.source.update({
+  const sourceDescription = await db.source.update({
     where: {
       id,
     },
@@ -53,8 +61,10 @@ export async function POST(req: NextRequest) {
       references: {
         connectOrCreate: references.map((reference) => ({
           where: {
-            type: reference.type,
-            reference: reference.reference,
+            type_reference: {
+              reference: reference.reference,
+              type: reference.type,
+            },
           },
           create: {
             type: reference.type,
@@ -75,5 +85,5 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  return NextResponse.json(piece);
+  return NextResponse.json(sourceDescription);
 }

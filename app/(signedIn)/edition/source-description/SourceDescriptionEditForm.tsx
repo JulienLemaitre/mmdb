@@ -18,8 +18,7 @@ import { zodYear } from "@/utils/zodTypes";
 import { SOURCE_TYPE } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import ReferenceArray from "@/components/ReactHookForm/ReferenceArray";
-import { fetchAPI } from "@/utils/fetchAPI";
-import { useSession } from "next-auth/react";
+import getSourceDescriptionStateFromInput from "@/utils/getSourceDescriptionStateFromInput";
 
 const SourceSchema = z.object({
   title: z.string().optional(),
@@ -48,16 +47,18 @@ export default function SourceDescriptionEditForm({
 }>) {
   const router = useRouter();
   const { dispatch, state } = useEditForm();
-  const { data: session } = useSession();
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
     register,
     watch,
     control,
-  } = useForm<SourceInput>({
-    defaultValues: sourceDescription || {
-      type: SOURCE_TYPE.EDITION,
+  } = useForm<SourceDescriptionInput>({
+    defaultValues: sourceDescription ?? {
+      type: {
+        value: SOURCE_TYPE.EDITION,
+        label: SOURCE_TYPE.EDITION,
+      },
     },
     resolver: zodResolver(SourceSchema),
   });
@@ -76,25 +77,20 @@ export default function SourceDescriptionEditForm({
       console.warn("No pieceVersion in state to link to the source");
       return;
     }
-    // post data to api route
-    const apiUrl = sourceDescription
-      ? "/api/source-description/update"
-      : "/api/source-description/create";
-    const editedSourceDescription = await fetchAPI(
-      apiUrl,
-      {
-        variables: {
-          ...sourceData,
-          pieceVersionId: state.pieceVersion.id,
-        },
-        cache: "no-store",
-      },
-      session?.user?.accessToken,
-    );
 
-    editedSourceDescription.isNew = true;
-    console.log("source description created", editedSourceDescription);
-    updateEditForm(dispatch, "sourceDescription", editedSourceDescription);
+    //TODO: for Source Description, Contributions and Metronome Marks, we will keep the data in state only and send to API once the user has completed all of them.
+
+    const sourceDescriptionState = getSourceDescriptionStateFromInput({
+      ...sourceData,
+      // pieceVersions: [state.pieceVersion.id],
+    });
+
+    sourceDescriptionState.isNew = true;
+    console.log(
+      "source description to be stored in state",
+      sourceDescriptionState,
+    );
+    updateEditForm(dispatch, "sourceDescription", sourceDescriptionState);
     router.push(CREATE_SOURCE_CONTRIBUTIONS_URL);
   };
 
@@ -114,7 +110,7 @@ export default function SourceDescriptionEditForm({
   return (
     <div>
       <h1 className="mb-4 text-4xl font-bold">
-        Create a source
+        Create a Metronome Mark Source{" "}
         <span className="block text-xl font-normal">General description</span>
       </h1>
       <form onSubmit={handleSubmit(onSubmit)}>

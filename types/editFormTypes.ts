@@ -94,12 +94,14 @@ export type PieceVersionState = Pick<PieceVersion, "id" | "category"> & {
   movements: MovementState[];
 } & isNewProp;
 
-export type ReferenceState = Pick<Reference, "id" | "type" | "reference">;
+export type ReferenceState = Pick<Reference, "type" | "reference">;
 export type SourceDescriptionState = Pick<
   Source,
-  "id" | "title" | "type" | "link" | "year" | "comment"
+  "title" | "type" | "link" | "year" | "comment"
 > & {
+  id?: string;
   references: ReferenceState[];
+  pieceVersions?: Pick<PieceVersionState, "id">[];
 } & isNewProp;
 
 export type MetronomeMarkState = Pick<
@@ -147,8 +149,13 @@ export type PieceVersionInput = {
   category: OptionInput;
   movements: MovementInput[];
 };
+export type ReferenceInput = {
+  type: OptionInput;
+  reference: string;
+};
 
-export type SourceDescriptionInput = Pick<Source, "id" | "link" | "year"> & {
+export type SourceDescriptionInput = Pick<Source, "link" | "year"> & {
+  id?: string;
   comment?: string;
   title?: string;
   references?: ReferenceInput[];

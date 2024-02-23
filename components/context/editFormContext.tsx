@@ -12,7 +12,7 @@ import {
   MetronomeMarkState,
   PieceState,
   PieceVersionState,
-  SourceState,
+  SourceDescriptionState,
   StateEntity,
 } from "@/types/editFormTypes";
 
@@ -29,7 +29,7 @@ type EditFormState = {
   composer?: ComposerState;
   piece?: PieceState;
   pieceVersion?: PieceVersionState;
-  sourceDescription?: SourceState;
+  sourceDescription?: SourceDescriptionState;
   sourceContributions?: ContributionState[];
   metronomeMarks?: MetronomeMarkState[];
 };
@@ -111,7 +111,9 @@ function editFormReducer(state: EditFormState, action: PieceFormAction) {
 }
 
 // eslint-disable-next-line react/prop-types
-export function EditFormProvider({ children }: EditFormProviderProps) {
+export function EditFormProvider({
+  children,
+}: Readonly<EditFormProviderProps>) {
   const [state, dispatch] = useReducer(editFormReducer, {});
 
   useEffect(() => {
