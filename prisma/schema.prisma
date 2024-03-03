@@ -21,11 +21,24 @@ enum PIECE_CATEGORY {
   OTHER
 }
 
+model Collection {
+  id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title      String
+  composerId String  @db.Uuid
+  composer   Person  @relation(fields: [composerId], references: [id]) // A collection has a unique composer
+  pieces     Piece[]
+
+  @@unique([composerId, title])
+}
+
 model Piece {
   id                String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title             String
+  collection        Collection?    @relation(fields: [collectionId], references: [id]) // A piece may have a unique collection
+  collectionId      String?        @db.Uuid
+  collectionRank    Int?
   nickname          String?
-  composer          Person         @relation(fields: [composerId], references: [id]) // A piece have a unique composer
+  composer          Person         @relation(fields: [composerId], references: [id]) // A piece has a unique composer
   composerId        String         @db.Uuid
   yearOfComposition Int?
   creator           User?          @relation(fields: [creatorId], references: [id])
@@ -35,19 +48,20 @@ model Piece {
   pieceVersions     PieceVersion[] // A piece can have many versions
 
   @@unique([composerId, title])
+  @@unique([collectionId, collectionRank])
 }
 
 model PieceVersion {
-  id        String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  piece     Piece          @relation(fields: [pieceId], references: [id]) // A piece version belongs to a single piece
-  pieceId   String         @db.Uuid
+  id        String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  piece     Piece                      @relation(fields: [pieceId], references: [id]) // A piece version belongs to a single piece
+  pieceId   String                     @db.Uuid
   category  PIECE_CATEGORY
   movements Movement[] // A pieceVersion can have many movements
-  sources   Source[] // A pieceVersion can have many sources
-  creator   User?          @relation(fields: [creatorId], references: [id])
-  creatorId String?        @db.Uuid
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
+  mMSources MMSourcesOnPieceVersions[] // A pieceVersion can have many sources
+  creator   User?                      @relation(fields: [creatorId], references: [id])
+  creatorId String?                    @db.Uuid
+  createdAt DateTime                   @default(now())
+  updatedAt DateTime                   @updatedAt
 }
 
 model Movement {
@@ -97,8 +111,8 @@ model TempoIndication {
 
 model MetronomeMark {
   id             String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  source         Source     @relation(fields: [sourceId], references: [id])
-  sourceId       String     @db.Uuid
+  mMSource       MMSource   @relation(fields: [mMSourceId], references: [id])
+  mMSourceId     String     @db.Uuid
   beatUnit       NOTE_VALUE
   bpm            Int
   notesPerSecond Json? // Will not be used after data seeding
@@ -109,42 +123,52 @@ model MetronomeMark {
   sectionId      String     @db.Uuid
   comment        String?
 
-  @@unique([sourceId, sectionId])
+  @@unique([mMSourceId, sectionId])
 }
 
-model Source {
-  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+model MMSourcesOnPieceVersions {
+  pieceVersion   PieceVersion @relation(fields: [pieceVersionId], references: [id])
+  pieceVersionId String       @db.Uuid
+  mMSource       MMSource     @relation(fields: [mMSourceId], references: [id])
+  mMSourceId     String       @db.Uuid
+  rank           Int
+
+  @@id([mMSourceId, rank])
+}
+
+model MMSource {
+  id             String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title          String? // ?? Is it usefull ?
-  pieceVersions  PieceVersion[] // A source is linked one or more pieceVersions
+  pieceVersions  MMSourcesOnPieceVersions[] // A source is composed of one or more pieceVersions
   type           SOURCE_TYPE
   link           String
   year           Int
   references     Reference[] // A source can have many references
   contributions  Contribution[] // A source can have many Contributions
   metronomeMarks MetronomeMark[] // A source can have many metronome marks
-  creator        User?           @relation(fields: [creatorId], references: [id])
-  creatorId      String?         @db.Uuid
+  creator        User?                      @relation(fields: [creatorId], references: [id])
+  creatorId      String?                    @db.Uuid
   comment        String?
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  createdAt      DateTime                   @default(now())
+  updatedAt      DateTime                   @updatedAt
 }
 
 model Reference {
-  id        String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  source    Source         @relation(fields: [sourceId], references: [id])
-  sourceId  String         @db.Uuid
-  type      REFERENCE_TYPE
-  reference String
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
+  id         String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  mMSource   MMSource       @relation(fields: [mMSourceId], references: [id])
+  mMSourceId String         @db.Uuid
+  type       REFERENCE_TYPE
+  reference  String
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
 
   @@unique([type, reference])
 }
 
 model Contribution {
   id             String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  source         Source            @relation(fields: [sourceId], references: [id])
-  sourceId       String            @db.Uuid
+  mMSource       MMSource          @relation(fields: [mMSourceId], references: [id])
+  mMSourceId     String            @db.Uuid
   person         Person?           @relation(fields: [personId], references: [id])
   personId       String?           @db.Uuid
   organization   Organization?     @relation(fields: [organizationId], references: [id])
@@ -171,6 +195,7 @@ model Person {
   lastName      String
   birthYear     Int
   deathYear     Int?
+  collections   Collection[]
   compositions  Piece[] // A person can have compose many pieces
   contributions Contribution[] // A person can have many contributions
   creator       User?          @relation(fields: [creatorId], references: [id])
@@ -220,7 +245,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  sources       Source[] // A user can have created many sources
+  mMSources     MMSource[] // A user can have created many sources
   pieces        Piece[] // A user can have created many pieces
   pieceVersions PieceVersion[] // A user can have created many pieceVersions
   persons       Person[] // A user can have created many persons
