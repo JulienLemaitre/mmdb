@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     }),
   );
 
-  const sourceDescription = await db.source.update({
+  const sourceDescription = await db.mMSource.update({
     where: {
       id,
     },
