@@ -375,17 +375,15 @@ export default function ComposerPiecesDetais({ person }) {
                       <div className="flex">
                         <div className="mr-4">Source:</div>
                         <div>
-                          <div className="text-gray-700">
+                          <div className="">
                             {pieceSource.mMSource.year} -{" "}
                             {pieceSource.mMSource.type.toLowerCase()}
                           </div>
                           {pieceSource.mMSource.title && (
-                            <div className="text-gray-700">
-                              {pieceSource.mMSource.title}
-                            </div>
+                            <div className="">{pieceSource.mMSource.title}</div>
                           )}
                           {pieceSource.mMSource.link && (
-                            <div className="text-gray-700">
+                            <div className=" break-all">
                               <a
                                 href={pieceSource.mMSource.link}
                                 target="_blank"
@@ -396,7 +394,7 @@ export default function ComposerPiecesDetais({ person }) {
                           )}
                           {pieceSource.mMSource.references &&
                             pieceSource.mMSource.references.length > 0 && (
-                              <div className="text-gray-700">
+                              <div className="">
                                 {JSON.stringify(
                                   pieceSource.mMSource.references,
                                 )}
@@ -425,7 +423,7 @@ export default function ComposerPiecesDetais({ person }) {
                       <div className="flex">
                         <div className="mr-4">Source:</div>
                         <div>
-                          <div className="text-gray-700">No source</div>
+                          <div className="">No source</div>
                         </div>
                       </div>
                     </div>

@@ -16,7 +16,17 @@ const getData = async () => {
                       tempoIndication: true,
                       metronomeMarks: {
                         include: {
-                          mMSource: true,
+                          mMSource: {
+                            include: {
+                              contributions: {
+                                include: {
+                                  person: true,
+                                  organization: true,
+                                },
+                              },
+                              references: true,
+                            },
+                          },
                         },
                       },
                     },
@@ -52,7 +62,7 @@ export default async function Page() {
 
   return (
     <main className="p-8">
-      <div className="w-full h-[500px]">
+      <div className="w-full h-[800px] text-slate-900 dark:text-white">
         <GlobalShart persons={persons} />
       </div>
       <ComposersPiecesDetails persons={persons} />

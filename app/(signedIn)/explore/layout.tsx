@@ -4,7 +4,7 @@ export default function SignedInRootLayout({ children }) {
   return (
     <>
       <NavBar title="Exploration" />
-      <div className="bg-gray-100 flex-1">{children}</div>
+      <div className="bg-zinc-50 dark:bg-zinc-800 flex-1">{children}</div>
     </>
   );
 }
