@@ -85,10 +85,6 @@ export default function GlobalShart({ persons }) {
     `[GlobalShart] dataGroupedPerCompositor :`,
     dataGroupedPerCompositor,
   );
-  console.log(
-    `[GlobalShart] dataGroupedPerNoteType :`,
-    dataGroupedPerNoteTypeObject,
-  );
   const dataGroupedPerNoteType = Object.entries(
     dataGroupedPerNoteTypeObject,
   ).map(([key, value]) => ({
@@ -122,15 +118,6 @@ export default function GlobalShart({ persons }) {
         },
       },
     },
-    // axis: {
-    //   textColor: "#eee",
-    //   fontSize: "14px",
-    //   tickColor: "#eee",
-    // },
-    // grid: {
-    //   stroke: "#888",
-    //   strokeWidth: 1,
-    // },
   };
 
   return (
@@ -194,7 +181,7 @@ export default function GlobalShart({ persons }) {
 
 const Tooltip = ({ node: { data } }) => {
   const { meta } = data;
-  console.log(`[Tooltip] meta :`, meta);
+  // console.log(`[Tooltip] meta :`, meta);
   const { noteType, composer, piece, movement, section, mm } = meta;
   const { isCommonTime, isCutTime } = section;
   const { mMSource } = mm;
