@@ -12,7 +12,10 @@ export default function GlobalShart({ persons }) {
     staccato: [],
   };
   const mmList: any[] = [];
-  const dataGroupedPerCompositor = persons.map((person) => {
+  const dataGroupedPerCompositor = persons
+  // Sort persons by birth date
+  .sort((a, b) => a.birthYear - b.birthYear)
+  .map((person) => {
     const personDataId = person.firstName + " " + person.lastName;
     const personData: { x: number; y: number; meta?: any }[] = [];
     person.compositions.forEach((piece) => {
@@ -81,43 +84,46 @@ export default function GlobalShart({ persons }) {
       data: personData,
     };
   });
-  console.log(
-    `[GlobalShart] dataGroupedPerCompositor :`,
-    dataGroupedPerCompositor,
-  );
+  // console.log(
+  //   `[GlobalShart] dataGroupedPerCompositor :`,
+  //   dataGroupedPerCompositor,
+  // );
   const dataGroupedPerNoteType = Object.entries(
     dataGroupedPerNoteTypeObject,
   ).map(([key, value]) => ({
     id: key,
     data: value,
   }));
-  console.log(`[GlobalShart] dataGroupedPerNoteType :`, dataGroupedPerNoteType);
-  console.log(`[GlobalShart] minDate :`, minDate);
+  // console.log(`[GlobalShart] dataGroupedPerNoteType :`, dataGroupedPerNoteType);
+  // console.log(`[GlobalShart] minDate :`, minDate);
 
   // axis: Partial<{domain: Partial<{line: Partial<Partial<CSSProperties>>}>, ticks: Partial<...>, legend: Partial<...>}
   const theme = {
-    axis: {
-      domain: {
-        line: {
-          strokeWidth: 1,
-          stroke: "#aaaaaa",
-        },
-      },
-      ticks: {
-        line: {
-          strokeWidth: 1,
-          stroke: "#aaaaaa",
-        },
-        text: {
-          fill: "#aaaaaa",
-        },
-      },
-      legend: {
-        text: {
-          fill: "#aaaaaa",
-        },
-      },
+    text: {
+      fill: "#aaaaaa",
     },
+    // axis: {
+    //   domain: {
+    //     line: {
+    //       strokeWidth: 1,
+    //       stroke: "#aaaaaa",
+    //     },
+    //   },
+    //   ticks: {
+    //     line: {
+    //       strokeWidth: 1,
+    //       stroke: "#aaaaaa",
+    //     },
+    //     text: {
+    //       fill: "#aaaaaa",
+    //     },
+    //   },
+    //   legend: {
+    //     text: {
+    //       fill: "#aaaaaa",
+    //     },
+    //   },
+    // },
   };
 
   return (
@@ -130,7 +136,7 @@ export default function GlobalShart({ persons }) {
       // xFormat=">-.2f"
       yScale={{ type: "linear", min: 0, max: "auto" }}
       yFormat=">-.2r"
-      blendMode="multiply"
+      blendMode="soft-light"
       axisTop={null}
       axisRight={null}
       axisBottom={{
@@ -188,7 +194,7 @@ const Tooltip = ({ node: { data } }) => {
   const isCommonOrCutTime = isCommonTime || isCutTime;
   // return <div>{JSON.stringify(meta, null, 2)}</div>;
   return (
-    <div className="rounded-md bg-primary text-primary-content p-2 text-sm">
+    <div className="rounded-md bg-gray-300 text-primary-content p-2 text-sm">
       <h2 className="card-title text-sm">{`${data.y.toFixed(2)} - ${noteType}`}</h2>
       <div>{composer}</div>
       <div>{piece?.title}</div>
