@@ -53,6 +53,9 @@ const getData = async () => {
         },
       },
     },
+    orderBy: {
+      birthYear: "asc",
+    }
   });
   return { persons };
 };

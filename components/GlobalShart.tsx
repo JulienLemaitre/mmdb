@@ -21,7 +21,6 @@ export default function GlobalShart({ persons }) {
   const mmList: any[] = [];
   const dataGroupedPerCompositor = persons
   // Sort persons by birth date
-  .toSorted((a, b) => a.birthYear - b.birthYear)
   .map((person) => {
     const personDataId = person.firstName + " " + person.lastName;
     const personData: { x: number; y: number; meta?: any }[] = [];
@@ -198,7 +197,7 @@ const Tooltip = ({ node: { data } }) => {
   const isCommonOrCutTime = isCommonTime || isCutTime;
   // return <div>{JSON.stringify(meta, null, 2)}</div>;
   return (
-    <div className="rounded-md bg-gray-300 p-2 text-sm shadow-md">
+    <div className="rounded-md bg-gray-300 text-gray-800 dark:bg-gray-900 dark:text-gray-300 p-2 text-sm shadow-md">
       <h2 className="card-title text-sm">{`${data.y.toFixed(2)} - ${noteType}`}</h2>
       <div>{composer}</div>
       <div>{piece?.title}</div>
