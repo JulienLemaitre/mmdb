@@ -1,9 +1,16 @@
 "use client";
 import { ResponsiveScatterPlot } from "@nivo/scatterplot";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
+import {useCallback, useRef, useState} from "react";
 
 export default function GlobalShart({ persons }) {
-  // console.log(`[GlobalShart] persons :`, persons);
+  const [selectedNode, setSelectedNode] = useState<any | null>(null)
+  console.log(`[GlobalShart] selectedNode :`, selectedNode)
+
+  const onClick = useCallback((node, event) => {
+    setSelectedNode(node)
+  }, [])
+
   let minDate: number = 2000;
   const dataGroupedPerNoteTypeObject = {
     structural: [],
@@ -14,7 +21,7 @@ export default function GlobalShart({ persons }) {
   const mmList: any[] = [];
   const dataGroupedPerCompositor = persons
   // Sort persons by birth date
-  .sort((a, b) => a.birthYear - b.birthYear)
+  .toSorted((a, b) => a.birthYear - b.birthYear)
   .map((person) => {
     const personDataId = person.firstName + " " + person.lastName;
     const personData: { x: number; y: number; meta?: any }[] = [];
@@ -41,11 +48,6 @@ export default function GlobalShart({ persons }) {
                   .replace(/fastest/g, "")
                   .replace(/NotesPerSecond/g, "")
                   .toLowerCase();
-                // console.log(
-                //   `[for in] noteType :`,
-                //   noteType,
-                //   notesPerSecond[notesPerSecondElement],
-                // );
                 const mmData: any = { x: mmList.length + 1 };
                 // const mmData: any = { x: piece.yearOfComposition };
                 mmData.y = notesPerSecond[notesPerSecondElement];
@@ -181,6 +183,8 @@ export default function GlobalShart({ persons }) {
         },
       ]}
       tooltip={Tooltip}
+      onClick={onClick}
+      motionConfig="stiff"
     />
   );
 }
@@ -194,7 +198,7 @@ const Tooltip = ({ node: { data } }) => {
   const isCommonOrCutTime = isCommonTime || isCutTime;
   // return <div>{JSON.stringify(meta, null, 2)}</div>;
   return (
-    <div className="rounded-md bg-gray-300 text-primary-content p-2 text-sm">
+    <div className="rounded-md bg-gray-300 p-2 text-sm shadow-md">
       <h2 className="card-title text-sm">{`${data.y.toFixed(2)} - ${noteType}`}</h2>
       <div>{composer}</div>
       <div>{piece?.title}</div>
