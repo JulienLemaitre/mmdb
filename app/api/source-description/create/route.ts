@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     }),
   );
 
-  const source = await db.source.create({
+  const source = await db.mMSource.create({
     data: {
       pieceVersions: {
         connect: {

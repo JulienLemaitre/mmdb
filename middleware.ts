@@ -25,7 +25,7 @@ export default withAuth(
   {
     callbacks: {
       authorized: ({ token }) => {
-        console.log(`[middleware auhtorized] token :`, token);
+        // console.log(`[middleware auhtorized] token :`, token);
         return !!token;
       },
     },

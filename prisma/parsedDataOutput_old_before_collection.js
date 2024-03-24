@@ -21,8 +21,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -81,8 +80,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 2
+      ]
     },
     "metronomeMarkList": [
       {
@@ -141,8 +139,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 3
+      ]
     },
     "metronomeMarkList": [
       {
@@ -204,8 +201,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 4
+      ]
     },
     "metronomeMarkList": [
       {
@@ -267,8 +263,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 5
+      ]
     },
     "metronomeMarkList": [
       {
@@ -330,8 +325,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 6
+      ]
     },
     "metronomeMarkList": [
       {
@@ -390,8 +384,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 7
+      ]
     },
     "metronomeMarkList": [
       {
@@ -450,8 +443,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 8
+      ]
     },
     "metronomeMarkList": [
       {
@@ -510,8 +502,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 9
+      ]
     },
     "metronomeMarkList": [
       {
@@ -570,8 +561,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 10
+      ]
     },
     "metronomeMarkList": [
       {
@@ -627,8 +617,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 11
+      ]
     },
     "metronomeMarkList": [
       {
@@ -687,8 +676,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 12
+      ]
     },
     "metronomeMarkList": [
       {
@@ -747,8 +735,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 13
+      ]
     },
     "metronomeMarkList": [
       {
@@ -804,8 +791,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 14
+      ]
     },
     "metronomeMarkList": [
       {
@@ -864,8 +850,7 @@ const pieceList = [
             "name": "Czerny, Carl"
           }
         }
-      ],
-      "rank": 15
+      ]
     },
     "metronomeMarkList": [
       {
@@ -918,8 +903,7 @@ const pieceList = [
             "name": "Unidentified"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -1464,8 +1448,7 @@ const pieceList = [
             "name": "Fossa, François de"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -2004,8 +1987,7 @@ const pieceList = [
             "name": "Campo"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -2494,8 +2476,7 @@ const pieceList = [
             "name": "Schott"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -2682,8 +2663,7 @@ const pieceList = [
             "name": "Tobias Haslinger"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -2738,8 +2718,7 @@ const pieceList = [
             "name": "Pleyel"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -2996,10 +2975,6 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.18",
-      "pieceRank": "1"
-    },
     "title": "String Quartet No.1, Op.18 No.1",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
@@ -3015,8 +2990,7 @@ const pieceList = [
             "name": "Offenbach: Jean André"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -3154,10 +3128,6 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.18",
-      "pieceRank": "2"
-    },
     "title": "String Quartet No.2, Op.18 No.2",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
@@ -3173,8 +3143,7 @@ const pieceList = [
             "name": "Offenbach: Jean André"
           }
         }
-      ],
-      "rank": 2
+      ]
     },
     "metronomeMarkList": [
       {
@@ -3339,10 +3308,6 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.18",
-      "pieceRank": "3"
-    },
     "title": "String Quartet No.3, Op.18 No.3",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
@@ -3358,8 +3323,7 @@ const pieceList = [
             "name": "Offenbach: Jean André"
           }
         }
-      ],
-      "rank": 3
+      ]
     },
     "metronomeMarkList": [
       {
@@ -3496,10 +3460,6 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.18",
-      "pieceRank": "4"
-    },
     "title": "String Quartet No.4, Op.18 No.4",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
@@ -3515,8 +3475,7 @@ const pieceList = [
             "name": "Offenbach: Jean André"
           }
         }
-      ],
-      "rank": 4
+      ]
     },
     "metronomeMarkList": [
       {
@@ -3685,10 +3644,6 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.18",
-      "pieceRank": "5"
-    },
     "title": "String Quartet No.5, Op.18 No.5",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
@@ -3704,8 +3659,7 @@ const pieceList = [
             "name": "Offenbach: Jean André"
           }
         }
-      ],
-      "rank": 5
+      ]
     },
     "metronomeMarkList": [
       {
@@ -3865,10 +3819,6 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.18",
-      "pieceRank": "6"
-    },
     "title": "String Quartet No.6, Op.18 No.6",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
@@ -3884,8 +3834,7 @@ const pieceList = [
             "name": "Breitkopf and Hartel"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -4099,10 +4048,6 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.59",
-      "pieceRank": "1"
-    },
     "title": "String Quartet No.7, Op.59 No.1",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
@@ -4118,8 +4063,7 @@ const pieceList = [
             "name": "Offenbach: Jean André"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -4303,10 +4247,6 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.59",
-      "pieceRank": "2"
-    },
     "title": "String Quartet No.8, Op.59 No.2",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
@@ -4322,8 +4262,7 @@ const pieceList = [
             "name": "Offenbach: Jean André"
           }
         }
-      ],
-      "rank": 2
+      ]
     },
     "metronomeMarkList": [
       {
@@ -4484,10 +4423,6 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.59",
-      "pieceRank": "3"
-    },
     "title": "String Quartet No.9, Op.59 No.3",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
@@ -4503,8 +4438,7 @@ const pieceList = [
             "name": "Offenbach: Jean André"
           }
         }
-      ],
-      "rank": 3
+      ]
     },
     "metronomeMarkList": [
       {
@@ -4683,8 +4617,7 @@ const pieceList = [
             "name": "Offenbach: Jean André"
           }
         }
-      ],
-      "rank": 4
+      ]
     },
     "metronomeMarkList": [
       {
@@ -4927,8 +4860,7 @@ const pieceList = [
             "name": "Manuscript"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -5156,8 +5088,7 @@ const pieceList = [
             "name": "Artaria"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -5329,8 +5260,7 @@ const pieceList = [
             "name": "Cianchettini & Sperati"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -5525,8 +5455,7 @@ const pieceList = [
             "name": "Cianchettini & Sperati"
           }
         }
-      ],
-      "rank": 2
+      ]
     },
     "metronomeMarkList": [
       {
@@ -5704,8 +5633,7 @@ const pieceList = [
             "name": "Cianchettini & Sperati"
           }
         }
-      ],
-      "rank": 3
+      ]
     },
     "metronomeMarkList": [
       {
@@ -5929,8 +5857,7 @@ const pieceList = [
             "name": "N. Simrock"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -6136,8 +6063,7 @@ const pieceList = [
             "name": "Manuscript"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -6391,8 +6317,7 @@ const pieceList = [
             "name": "Breitkopf and Hartel"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -6601,8 +6526,7 @@ const pieceList = [
             "name": "S.A. Steiner & Co."
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -6808,8 +6732,7 @@ const pieceList = [
             "name": "S.A. Steiner & Co."
           }
         }
-      ],
-      "rank": 2
+      ]
     },
     "metronomeMarkList": [
       {
@@ -6966,8 +6889,7 @@ const pieceList = [
             "name": "Breitkopf and Hartel"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -7017,8 +6939,7 @@ const pieceList = [
             "name": "S.A. Steiner & Co."
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -7104,8 +7025,7 @@ const pieceList = [
             "name": "Schott"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -7547,8 +7467,7 @@ const pieceList = [
             "name": "N. Simrock"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -7601,8 +7520,7 @@ const pieceList = [
             "name": "Kunst"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -7652,8 +7570,7 @@ const pieceList = [
             "name": "Wiener Modenzeitung und Zeitschrift für Kunst"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -7707,8 +7624,7 @@ const pieceList = [
             "name": "Breitkopf and Hartel"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -7915,8 +7831,7 @@ const pieceList = [
             "name": "C.G. Roder"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -7972,8 +7887,7 @@ const pieceList = [
             "name": "J. Rieter-Biedermann"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -8030,8 +7944,7 @@ const pieceList = [
             "name": "N. Simrock"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -8207,8 +8120,7 @@ const pieceList = [
             "name": "J. Rieter-Biedermann"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -8600,8 +8512,7 @@ const pieceList = [
             "name": "C.G. Roder"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -8939,8 +8850,7 @@ const pieceList = [
             "name": "C.F. Peters"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -9017,8 +8927,7 @@ const pieceList = [
             "name": "Unidentified"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -10307,8 +10216,7 @@ const pieceList = [
             "name": "The author"
           }
         }
-      ],
-      "rank": 3
+      ]
     },
     "metronomeMarkList": [
       {
@@ -10486,8 +10394,7 @@ const pieceList = [
             "name": "A. Diabelli et Comp."
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -11596,8 +11503,7 @@ const pieceList = [
             "name": "Tobias Haslinger"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -12741,7 +12647,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "year": 1837,
-      "link": "https://ks.imslp.net/files/imglnks/usimg/2/2b/IMSLP582004-PMLP14384-czerny_365_bk_1.pdf",
+      "comment": "https://ks.imslp.net/files/imglnks/usimg/2/2b/IMSLP582004-PMLP14384-czerny_365_bk_1.pdf",
       "contributions": [
         {
           "role": "PUBLISHER",
@@ -12749,8 +12655,7 @@ const pieceList = [
             "name": "Tobias Haslinger"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -12938,8 +12843,7 @@ const pieceList = [
             "name": "N. Simrock"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -13029,8 +12933,7 @@ const pieceList = [
             "name": "N. Simrock"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -13153,8 +13056,7 @@ const pieceList = [
             "name": "N. Simrock"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -13310,8 +13212,7 @@ const pieceList = [
             "name": "Hofmeister"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -13368,8 +13269,7 @@ const pieceList = [
             "name": "Diabelli"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -13455,8 +13355,7 @@ const pieceList = [
             "name": "Friedrich Hofmeister"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -13656,8 +13555,7 @@ const pieceList = [
             "name": "Breitkopf and Hartel"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -13810,8 +13708,7 @@ const pieceList = [
             "name": "Breitkopf and Hartel"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -13965,8 +13862,7 @@ const pieceList = [
             "name": "Breitkopf and Hartel"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -14361,8 +14257,7 @@ const pieceList = [
             "name": "P. Jurgenson"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -14526,8 +14421,7 @@ const pieceList = [
             "name": "P. Jurgenson"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {
@@ -14939,8 +14833,7 @@ const pieceList = [
             "name": "P. Jurgenson"
           }
         }
-      ],
-      "rank": 1
+      ]
     },
     "metronomeMarkList": [
       {

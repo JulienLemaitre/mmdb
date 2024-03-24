@@ -8,7 +8,7 @@ import type {
   PieceVersion,
   Reference,
   Section,
-  Source,
+  MMSource,
   TempoIndication,
 } from "@prisma/client";
 
@@ -96,7 +96,7 @@ export type PieceVersionState = Pick<PieceVersion, "id" | "category"> & {
 
 export type ReferenceState = Pick<Reference, "type" | "reference">;
 export type SourceDescriptionState = Pick<
-  Source,
+  MMSource,
   "title" | "type" | "link" | "year" | "comment"
 > & {
   id?: string;
@@ -106,7 +106,7 @@ export type SourceDescriptionState = Pick<
 
 export type MetronomeMarkState = Pick<
   MetronomeMark,
-  "id" | "sectionId" | "bpm" | "comment" | "beatUnit" | "sourceId"
+  "id" | "sectionId" | "bpm" | "comment" | "beatUnit" | "mMSourceId"
 >;
 
 // Form INPUTS
@@ -154,7 +154,7 @@ export type ReferenceInput = {
   reference: string;
 };
 
-export type SourceDescriptionInput = Pick<Source, "link" | "year"> & {
+export type SourceDescriptionInput = Pick<MMSource, "link" | "year"> & {
   id?: string;
   comment?: string;
   title?: string;

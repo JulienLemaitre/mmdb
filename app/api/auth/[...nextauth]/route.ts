@@ -29,7 +29,7 @@ const handler = NextAuth({
         // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
-        console.log(`[Credentials authorize] API_URL :`, API_URL);
+        // console.log(`[Credentials authorize] API_URL :`, API_URL);
         const res = await fetch(`${API_URL}/login`, {
           method: "POST",
           body: JSON.stringify({
@@ -38,10 +38,10 @@ const handler = NextAuth({
           }),
           headers: { "Content-Type": "application/json" },
         });
-        console.log(`[auth authorize] res :`, res);
-        console.log(`[auth authorize] res.ok :`, res.ok);
+        // console.log(`[auth authorize] res :`, res);
+        // console.log(`[auth authorize] res.ok :`, res.ok);
         const user = await res.json();
-        console.log(`[auth authorize] user :`, user);
+        // console.log(`[auth authorize] user :`, user);
         if (user.error) {
           // Return null if user data could not be retrieved
           console.log(`[auth authorize] user.error :`, user.error);
@@ -59,10 +59,10 @@ const handler = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log(
-        `[signIn cb] { user, account, profile, email, credentials }`,
-        JSON.stringify({ user, account, profile, email, credentials }, null, 2),
-      );
+      // console.log(
+      //   `[signIn cb] { user, account, profile, email, credentials }`,
+      //   JSON.stringify({ user, account, profile, email, credentials }, null, 2),
+      // );
       const isAllowedToSignIn = true;
       if (isAllowedToSignIn) {
         return true;

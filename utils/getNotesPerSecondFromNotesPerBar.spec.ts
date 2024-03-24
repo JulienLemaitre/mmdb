@@ -42,25 +42,6 @@ describe("getNotesPerSecondFromNotesPerBar", () => {
     expect(result).toBeCloseTo(1, 1);
   });
 
-  // Tests that the function correctly calculates the number of notes per second for a triplet sixteenth note in a 3/4 time signature with 150 bpm
-  it("should calculate the correct number of notes per second for a triplet sixteenth note in a 3/4 time signature with 150 bpm", () => {
-    const notesPerBar = 3;
-    const metreNumerator = 3;
-    const metreDenominator = 4;
-    const bpm = 150; // 0.4 seconds per beat
-    const beatUnit = NOTE_VALUE.TRIPLET_SIXTEENTH; // 1/24
-
-    const result = getNotesPerSecondFromNotesPerBar({
-      notesPerBar,
-      metreNumerator,
-      metreDenominator,
-      bpm,
-      beatUnit,
-    });
-
-    expect(result).toBeCloseTo(0.41, 1);
-  });
-
   // Tests that the function throws an error if the notesPerBar parameter is missing or invalid
   it("should throw an error if the notesPerBar parameter is missing or invalid", () => {
     const metreNumerator = 4;

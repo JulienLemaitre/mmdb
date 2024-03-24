@@ -1,5 +1,5 @@
-import {db} from "@/utils/db";
-import {CONTRIBUTION_ROLE, KEY, NOTE_VALUE, PIECE_CATEGORY, SOURCE_TYPE} from "@prisma/client";
+import { db } from "@/utils/db";
+import { CONTRIBUTION_ROLE, KEY, NOTE_VALUE, PIECE_CATEGORY, SOURCE_TYPE } from "@prisma/client";
 import takeFirstOfPotentialRange from "@/utils/takeFirstOfPotentialRange";
 import parseValueRemoveParenthesis from "@/utils/parseValueRemoveParenthesis";
 import getNotesPerBarCollectionFromNotesPerSecondCollection
@@ -36,7 +36,6 @@ Object.keys(NOTE_VALUE).forEach((beatUnit: string, index) => {
 console.log(`[] beatUnitXlsToNorm :`, beatUnitXlsToNorm)
 
 const directoryPath = path.join(__dirname, "ArjunData", "20230319_MM_folders");
-// const directoryPath = path.join(__dirname, "ArjunData", "20230319_MM_folders", "19th Century Composers", "Beethoven");
 console.log(`directoryPath :`, directoryPath)
 
 const noteNotFoundList: any[] = []
@@ -197,10 +196,7 @@ async function traverseDirectory(directory: string) {
     } else if (path.extname(filePath) === '.xlsx') {
       // console.log(`- file: ${filePath}`)
       const categoryKey = Object.keys(pieceCategory).find((key) => filePath.includes(key))
-      // if (!categoryKey) {
-      //   throw new Error(`[ERROR] categoryKey not found for ${filePath}`)
-      // }
-      const pieceListCategory = pieceCategory[categoryKey || "Autre"]
+      const pieceListCategory = pieceCategory[categoryKey ?? "Autre"]
       // console.log(`[] pieceListCategory :`, pieceListCategory)
       const singleSheetData = await readExcelFile(filePath);
       // console.log(`[traverseDirectory] singleSheetData`, singleSheetData.map((data: any) => JSON.stringify(data)))
@@ -221,6 +217,9 @@ async function processDataFromXlsx(dataSheetList: any) {
     const dataSheet = data
     let piece: any
     let movement: any
+    let lastMMSource: any = {}
+    let sourceRank: number = 0
+
     dataSheet.forEach((rowData: any) => {
       // Single row data
       const isPieceDescription = rowData.hasOwnProperty('composer') && rowData.hasOwnProperty('title')
@@ -247,8 +246,34 @@ async function processDataFromXlsx(dataSheetList: any) {
         }
         // Generate yearOfComposition as number from string. If "(" is found in original string, take into account only the first part of the string
         const yearOfComposition = rowData.yearOfComposition.includes('(') ? rowData.yearOfComposition.split('(')[0] : rowData.yearOfComposition
+        const collectionPartInTitle = /,(\s+Op.\d+\s+No.\d+)/
+        const collectionTitleFull = collectionPartInTitle.exec(rowData.title)
+
+        let collectionTitle : string
+        let pieceRank : string
+        let collection : any = {}
+        if (collectionTitleFull) {
+          console.log(`[processDataFromXlsx] collectionTitleFull :`, collectionTitleFull)
+          const collectionTitlePart = /\s*(Op.\d+)\s+No.\d+/
+          const collectionTitleMatch = collectionTitlePart.exec(collectionTitleFull[0])
+          console.log(`[processDataFromXlsx] collectionTitleMatch :`, collectionTitleMatch)
+          const pieceNumberPart = /\s*Op.\d+\s+No.(\d+)/
+          const pieceNumberMatch = pieceNumberPart.exec(collectionTitleFull[0])
+          console.log(`[processDataFromXlsx] pieceNumberMatch :`, pieceNumberMatch)
+          if (collectionTitleMatch && pieceNumberMatch) {
+            collectionTitle = collectionTitleMatch[1]
+          console.log(`[processDataFromXlsx] collectionTitle :`, collectionTitle)
+            pieceRank = pieceNumberMatch[1]
+          console.log(`[processDataFromXlsx] pieceNumber :`, pieceRank)
+            collection = {
+              title: collectionTitle,
+              pieceRank,
+            }
+          }
+        }
 
         piece = {
+          ...(collection?.title ? { collection } : {}),
           title: rowData.title,
           category: pieceListCategory,
           composer: rowData.composer,
@@ -281,13 +306,23 @@ async function processDataFromXlsx(dataSheetList: any) {
           }
           source.contributions.push(editorContribution)
         }
+
+        // Compare relevant infos to lastMMSource in order to either assign the rank 1 to the piece in a new MMSource, OR increment this piece rank in an existing MMSource
+        const isSameMMSource = lastMMSource.year === source.year && lastMMSource.type === source.type && JSON.stringify(lastMMSource.contributions) === JSON.stringify(source.contributions)
+
+        if (isSameMMSource) {
+          sourceRank++
+        } else {
+          sourceRank = 1
+        }
+        lastMMSource = source
+        source.rank = sourceRank
+
         piece.source = source
       }
 
       if (isMovement) {
         // NEW movement
-
-        // if (rowData.movement) {
 
         // - PUSH remaining precedent movement in current piece
           if (movement) {
@@ -575,7 +610,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
     }
   })
 
-  const pieceTaskList = pieceList
+  const pieceListFixed = pieceList
   .map((piece) => {
     // Fix for wrongly written Beethoven name
     if (piece.composer === "Beethoven, Ludwig Van") {
@@ -593,11 +628,72 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
     }
     return piece
   })
-  .map((piece, pieceIndex, pieceArray) => {
+
+  const collectionToCreateList : any[] = []
+    pieceListFixed.filter((piece) => piece.collection).forEach((piece) => {
+      if (!collectionToCreateList.some((collection) => collection.title === piece.collection.title && collection.composer === piece.composer)) {
+        collectionToCreateList.push({
+          title: piece.collection.title,
+          composer: piece.composer,
+        })
+      }
+  })
+
+  const collectionTaskList = collectionToCreateList.map((collection) => {
+    return async function () {
+      const persistedCollection = await db.collection.create({
+        data: {
+          title: collection.title,
+          composer: {
+            connectOrCreate: {
+              where: {
+                firstName_lastName: {
+                  firstName: collection.composer.split(',')[1].trim(),
+                  lastName: collection.composer.split(',')[0].trim(),
+                }
+              },
+              create: {
+                firstName: collection.composer.split(',')[1].trim(),
+                lastName: collection.composer.split(',')[0].trim(),
+                birthYear: composerBirthDeathYear[collection.composer.split(',')[0].trim()][0],
+                deathYear: composerBirthDeathYear[collection.composer.split(',')[0].trim()][1],
+              },
+            },
+          }
+        }
+      })
+      .catch((e) => {
+        console.error(`[CREATE ERROR] collection`, collection.title, collection.composer)
+        console.error(`[CREATE ERROR] e.message`, e.message)
+        return null
+      })
+
+      return {
+        ...persistedCollection,
+      }
+    }
+  })
+
+  const persistedCollectionList: any[] = []
+  for (const task of collectionTaskList) {
+    persistedCollectionList.push(await task())
+  }
+
+  console.log(`[SEED] persistedCollectionList`, JSON.stringify(persistedCollectionList, null, 2))
+
+  const pieceTaskList = pieceListFixed.map((piece, pieceIndex, pieceArray) => {
     const birthDeath: [number, number] = composerBirthDeathYear[piece.composer.split(',')[0].trim()]
+    const collectionId: string = persistedCollectionList.find((collection) => collection.title === piece.collection?.title)?.id
     if (!birthDeath) {
       console.log(`[SEED ERROR] birthDeath not found for ${piece.composer}`)
     }
+    const shouldLinkToCollection = !!piece?.collection?.pieceRank && collectionId
+    if (piece.collection) {
+      console.log(`[SEED COLLECTION] Piece HAS Collection :`, piece.collection.title, piece.collection.pieceRank, piece.title)
+      console.log(`[SEED COLLECTION] collectionId :`, collectionId)
+      console.log(`[SEED COLLECTION] shouldLinkToCollection :`, shouldLinkToCollection)
+    }
+
     return async function () {
       const persistedPiece = await db.piece.create({
         data: {
@@ -606,6 +702,10 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
               id: userArjun.id
             },
           },
+          ...(shouldLinkToCollection && {
+            collection: { connect: { id: collectionId } },
+            collectionRank: Number(piece.collection.pieceRank),
+          }),
           title: piece.title,
           yearOfComposition: piece.yearOfComposition,
           composer: {
@@ -721,13 +821,9 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
         console.log(`[ERROR] metronomeMarkList is null`, piece.title, piece)
       }
       const movements = pieceVersion.movements.sort((a, b) => a.rank - b.rank)
-      // if (index === 0) {
-      //   console.log(`[] source`, source)
-      //   console.log(`[] movements`, movements)
-      // }
 
       // Persist source and metronomeMarks
-      const persistedSource = await db.source.create({
+      const persistedSource = await db.mMSource.create({
         data: {
           creator: {
             connect: {
@@ -739,8 +835,13 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
           year: source.year,
           ...(source.comment && { comment: source.comment }),
           pieceVersions: {
-            connect: {
-              id: pieceVersion.id,
+            create: {
+              rank: source.rank,
+              pieceVersion: {
+                connect: {
+                  id: pieceVersion.id
+                }
+              }
             }
           },
           metronomeMarks: {
@@ -795,7 +896,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
         const persistedContribution = await db.contribution.create({
           data: {
             role: contribution.role,
-            source: {
+            mMSource: {
               connect: {
                 id: source.id,
               },

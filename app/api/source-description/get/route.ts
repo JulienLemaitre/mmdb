@@ -8,7 +8,7 @@ export async function GET(request: Request) {
     return new Response(JSON.stringify({ error: "No id provided" }), {
       status: 400,
     });
-  const sourceDescriptionResult = await db.source.findUnique({
+  const sourceDescriptionResult = await db.mMSource.findUnique({
     where: {
       id,
     },
