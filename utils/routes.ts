@@ -1,21 +1,22 @@
-export const HOME_URL = "/";
-export const EXPLORE_URL = "/explore";
-export const SELECT_COMPOSER_URL = "/edition/composer";
-export const CREATE_COMPOSER_URL = "/edition/composer/create";
-export const UPDATE_COMPOSER_URL = "/edition/composer/update";
-export const SELECT_PIECE_URL = "/edition/piece";
-export const CREATE_PIECE_URL = "/edition/piece/create";
-export const UPDATE_PIECE_URL = "/edition/piece/update";
-export const SELECT_PIECE_VERSION_URL = "/edition/piece-version";
-export const CREATE_PIECE_VERSION_URL = "/edition/piece-version/create";
-export const UPDATE_PIECE_VERSION_URL = "/edition/piece-version/update";
-export const CREATE_SOURCE_DESCRIPTION_URL =
+export const URL_HOME = "/";
+export const URL_EXPLORE = "/explore";
+export const URL_EDITION = "/edition";
+export const URL_SELECT_COMPOSER = "/edition/composer";
+export const URL_CREATE_COMPOSER = "/edition/composer/create";
+export const URL_UPDATE_COMPOSER = "/edition/composer/update";
+export const URL_SELECT_PIECE = "/edition/piece";
+export const URL_CREATE_PIECE = "/edition/piece/create";
+export const URL_UPDATE_PIECE = "/edition/piece/update";
+export const URL_SELECT_PIECE_VERSION = "/edition/piece-version";
+export const URL_CREATE_PIECE_VERSION = "/edition/piece-version/create";
+export const URL_UPDATE_PIECE_VERSION = "/edition/piece-version/update";
+export const URL_CREATE_SOURCE_DESCRIPTION =
   "/edition/source-description/create";
-export const UPDATE_SOURCE_DESCRIPTION_URL =
+export const URL_UPDATE_SOURCE_DESCRIPTION =
   "/edition/source-description/update";
-export const CREATE_SOURCE_CONTRIBUTIONS_URL =
+export const URL_CREATE_SOURCE_CONTRIBUTIONS =
   "/edition/source-contributions/create";
-export const UPDATE_SOURCE_CONTRIBUTIONS_URL =
+export const URL_UPDATE_SOURCE_CONTRIBUTIONS =
   "/edition/source-contributions/update";
-export const CREATE_METRONOME_MARKS_URL = "/edition/metronome-marks/create";
-export const UPDATE_METRONOME_MARKS_URL = "/edition/metronome-marks/update";
+export const URL_CREATE_METRONOME_MARKS = "/edition/metronome-marks/create";
+export const URL_UPDATE_METRONOME_MARKS = "/edition/metronome-marks/update";

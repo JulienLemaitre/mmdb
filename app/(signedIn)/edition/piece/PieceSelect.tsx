@@ -1,7 +1,7 @@
 // "use client";
 import Select from "@/components/ReactSelect/Select";
 import { PieceState } from "@/types/editFormTypes";
-import { CREATE_PIECE_URL } from "@/utils/routes";
+import { URL_CREATE_PIECE } from "@/utils/routes";
 import { useRouter } from "next/navigation";
 import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";
 
@@ -38,7 +38,7 @@ export default function PieceSelect({
       noOptionsMessage={getNoOptionsMessage({
         router,
         entityName: "piece",
-        createUrl: CREATE_PIECE_URL,
+        createUrl: URL_CREATE_PIECE,
       })}
     />
   );

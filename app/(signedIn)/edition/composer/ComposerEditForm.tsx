@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonInput } from "@/types/editFormTypes";
 import { useRouter } from "next/navigation";
-import { CREATE_PIECE_URL } from "@/utils/routes";
+import { URL_CREATE_PIECE } from "@/utils/routes";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import {
   updateEditForm,
@@ -70,7 +70,7 @@ export default function ComposerEditForm({
     };
 
     updateEditForm(dispatch, "composer", composerState);
-    router.push(CREATE_PIECE_URL);
+    router.push(URL_CREATE_PIECE);
   };
 
   console.log(`[CreateComposer] composer :`, composer);

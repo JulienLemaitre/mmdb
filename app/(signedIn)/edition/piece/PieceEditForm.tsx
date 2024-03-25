@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { PieceInput } from "@/types/editFormTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { fetchAPI } from "@/utils/fetchAPI";
-import { CREATE_PIECE_VERSION_URL, SELECT_COMPOSER_URL } from "@/utils/routes";
+import { URL_CREATE_PIECE_VERSION, URL_SELECT_COMPOSER } from "@/utils/routes";
 import Link from "next/link";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 
@@ -78,14 +78,14 @@ export default function PieceEditForm({
     };
 
     updateEditForm(dispatch, "piece", pieceState);
-    router.push(CREATE_PIECE_VERSION_URL);
+    router.push(URL_CREATE_PIECE_VERSION);
   };
 
   if (!state.composer) {
     return (
       <div className="w-full max-w-md">
         <h1 className="mb-4 text-4xl font-bold">Select a composer first</h1>
-        <Link href={SELECT_COMPOSER_URL} className="btn">
+        <Link href={URL_SELECT_COMPOSER} className="btn">
           Back
         </Link>
       </div>

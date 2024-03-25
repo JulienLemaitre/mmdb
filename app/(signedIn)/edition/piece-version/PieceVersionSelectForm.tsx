@@ -6,9 +6,9 @@ import {
   useEditForm,
 } from "@/components/context/editFormContext";
 import {
-  CREATE_PIECE_VERSION_URL,
-  CREATE_SOURCE_DESCRIPTION_URL,
-  SELECT_PIECE_URL,
+  URL_CREATE_PIECE_VERSION,
+  URL_CREATE_SOURCE_DESCRIPTION,
+  URL_SELECT_PIECE,
 } from "@/utils/routes";
 import PieceVersionSelect from "@/app/(signedIn)/edition/piece-version/PieceVersionSelect";
 import { PieceVersionState } from "@/types/editFormTypes";
@@ -48,14 +48,14 @@ export default function PieceVersionSelectForm({
     if (isSubmitting) return;
     setIsSubmitting(true);
     updateEditForm(dispatch, "pieceVersion", selectedPieceVersion);
-    router.push(CREATE_SOURCE_DESCRIPTION_URL);
+    router.push(URL_CREATE_SOURCE_DESCRIPTION);
   };
 
   if (!state.piece) {
     return (
       <div>
         <h2 className="mb-4 text-2xl font-bold">Select a piece first</h2>
-        <Link href={SELECT_PIECE_URL} className="btn btn-secondary">
+        <Link href={URL_SELECT_PIECE} className="btn btn-secondary">
           Back
         </Link>
       </div>
@@ -74,7 +74,7 @@ export default function PieceVersionSelectForm({
           type="button"
           className="btn btn-secondary"
           onClick={() => {
-            router.push(CREATE_PIECE_VERSION_URL);
+            router.push(URL_CREATE_PIECE_VERSION);
           }}
         >
           <PlusIcon className="w-5 h-5" />

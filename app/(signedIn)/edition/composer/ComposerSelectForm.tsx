@@ -4,7 +4,7 @@ import {
   updateEditForm,
   useEditForm,
 } from "@/components/context/editFormContext";
-import { SELECT_PIECE_URL } from "@/utils/routes";
+import { URL_SELECT_PIECE } from "@/utils/routes";
 import { ComposerState } from "@/types/editFormTypes";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -39,7 +39,7 @@ export default function ComposerSelectForm({
     if (isSubmitting) return;
     setIsSubmitting(true);
     updateEditForm(dispatch, "composer", selectedComposer);
-    router.push(SELECT_PIECE_URL + "?composerId=" + selectedComposer?.id);
+    router.push(URL_SELECT_PIECE + "?composerId=" + selectedComposer?.id);
   };
 
   // If we have a default value to set, we prevent an initial render of react-select that would prevent its use

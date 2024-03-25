@@ -16,8 +16,8 @@ import {
   PieceVersionState,
 } from "@/types/editFormTypes";
 import {
-  CREATE_SOURCE_DESCRIPTION_URL,
-  SELECT_PIECE_URL,
+  URL_CREATE_SOURCE_DESCRIPTION,
+  URL_SELECT_PIECE,
 } from "@/utils/routes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
 import { MOVEMENT_DEFAULT_VALUE } from "@/components/ReactHookForm/formUtils";
@@ -190,7 +190,7 @@ export default function PieceVersionEditForm({
     };
 
     updateEditForm(dispatch, "pieceVersion", pieceVersionState);
-    router.push(CREATE_SOURCE_DESCRIPTION_URL);
+    router.push(URL_CREATE_SOURCE_DESCRIPTION);
   };
 
   console.log(`[PieceVersionEditForm] errors :`, errors);
@@ -199,7 +199,7 @@ export default function PieceVersionEditForm({
     return (
       <div>
         <h2 className="mb-4 text-2xl font-bold">Select a piece first</h2>
-        <Link href={SELECT_PIECE_URL} className="btn btn-secondary">
+        <Link href={URL_SELECT_PIECE} className="btn btn-secondary">
           Back
         </Link>
       </div>

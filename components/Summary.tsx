@@ -6,13 +6,13 @@ import {
 } from "@/components/context/editFormContext";
 import ResetIcon from "@/components/svg/ResetIcon";
 import {
-  SELECT_COMPOSER_URL,
-  SELECT_PIECE_URL,
-  SELECT_PIECE_VERSION_URL,
-  UPDATE_COMPOSER_URL,
-  UPDATE_PIECE_URL,
-  UPDATE_PIECE_VERSION_URL,
-  UPDATE_SOURCE_DESCRIPTION_URL,
+  URL_SELECT_COMPOSER,
+  URL_SELECT_PIECE,
+  URL_SELECT_PIECE_VERSION,
+  URL_UPDATE_COMPOSER,
+  URL_UPDATE_PIECE,
+  URL_UPDATE_PIECE_VERSION,
+  URL_UPDATE_SOURCE_DESCRIPTION,
 } from "@/utils/routes";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -26,7 +26,7 @@ export default function Summary() {
   const onReset = () => {
     console.log("Reset");
     initEditForm(dispatch);
-    router.push(SELECT_COMPOSER_URL);
+    router.push(URL_SELECT_COMPOSER);
   };
 
   const composer = state.composer;
@@ -50,8 +50,8 @@ export default function Summary() {
               onClick={() =>
                 router.push(
                   composer.isNew
-                    ? UPDATE_COMPOSER_URL + `?personId=${composer.id}`
-                    : SELECT_COMPOSER_URL,
+                    ? URL_UPDATE_COMPOSER + `?personId=${composer.id}`
+                    : URL_SELECT_COMPOSER,
                 )
               }
             >
@@ -74,8 +74,8 @@ export default function Summary() {
               onClick={() =>
                 router.push(
                   piece.isNew
-                    ? UPDATE_PIECE_URL + `?pieceId=${piece.id}`
-                    : SELECT_PIECE_URL + `?composerId=${composer?.id}`,
+                    ? URL_UPDATE_PIECE + `?pieceId=${piece.id}`
+                    : URL_SELECT_PIECE + `?composerId=${composer?.id}`,
                 )
               }
             >
@@ -106,9 +106,9 @@ export default function Summary() {
               onClick={() =>
                 router.push(
                   pieceVersion.isNew
-                    ? UPDATE_PIECE_VERSION_URL +
+                    ? URL_UPDATE_PIECE_VERSION +
                         `?pieceVersionId=${pieceVersion.id}`
-                    : SELECT_PIECE_VERSION_URL + `?pieceId=${piece?.id}`,
+                    : URL_SELECT_PIECE_VERSION + `?pieceId=${piece?.id}`,
                 )
               }
             >
@@ -203,7 +203,7 @@ export default function Summary() {
                 className="btn btn-outline btn-xs"
                 onClick={() =>
                   router.push(
-                    UPDATE_SOURCE_DESCRIPTION_URL +
+                    URL_UPDATE_SOURCE_DESCRIPTION +
                       `?sourceDescriptionId=${sourceDescription.id}`,
                   )
                 }

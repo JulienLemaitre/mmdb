@@ -14,7 +14,7 @@ import { useState } from "react";
 import PlusIcon from "@/components/svg/PlusIcon";
 import SourceContributionSelect from "@/app/(signedIn)/edition/source-contributions/create/SourceContributionSelect";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
-import { CREATE_METRONOME_MARKS_URL } from "@/utils/routes";
+import { URL_CREATE_METRONOME_MARKS } from "@/utils/routes";
 
 type SourceContributionSelectFormProps = {
   persons: PersonState[];
@@ -135,7 +135,7 @@ export default function SourceContributionSelectForm({
   };
   const onSubmit = () => {
     updateEditForm(dispatch, "sourceContributions", selectedContributions);
-    router.push(CREATE_METRONOME_MARKS_URL);
+    router.push(URL_CREATE_METRONOME_MARKS);
   };
 
   const personOptions: OptionInput[] = [...persons, ...createdPersons].map(

@@ -2,7 +2,7 @@
 import Select from "@/components/ReactSelect/Select";
 import { ComposerState } from "@/types/editFormTypes";
 import { useRouter } from "next/navigation";
-import { CREATE_COMPOSER_URL } from "@/utils/routes";
+import { URL_CREATE_COMPOSER } from "@/utils/routes";
 import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";
 
 type ComposerSelectProps = {
@@ -41,7 +41,7 @@ export default function ComposerSelect({
       noOptionsMessage={getNoOptionsMessage({
         router,
         entityName: "composer",
-        createUrl: CREATE_COMPOSER_URL,
+        createUrl: URL_CREATE_COMPOSER,
       })}
     />
   );
