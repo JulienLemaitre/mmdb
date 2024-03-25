@@ -1,4 +1,6 @@
 import SignInButton from "@/components/SignInButton";
+import React from "react";
+import QuestionMarkCircleIcon from "@/components/svg/QuestionMarkCircleIcon";
 
 export default function NavBar({
   title,
@@ -7,6 +9,9 @@ export default function NavBar({
   title?: string;
   isHome?: boolean;
 }) {
+  // find if we are in /edition segment from router
+  const isEdition = title === "Edition";
+
   return (
     <div className="navbar bg-base-100 px-4">
       <div className="flex-none">
@@ -19,6 +24,14 @@ export default function NavBar({
           </a>
         )}
       </div>
+
+      {isEdition ? (
+        <div className="flex-none">
+          <label htmlFor="my-drawer-4" className="drawer-button btn btn-link">
+            <QuestionMarkCircleIcon className="w-7 h-7" />
+          </label>
+        </div>
+      ) : null}
       <div className="flex-none">
         <SignInButton />
         {/*<div className="dropdown dropdown-end">
