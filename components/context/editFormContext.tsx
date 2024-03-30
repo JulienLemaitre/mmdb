@@ -12,7 +12,7 @@ import {
   MetronomeMarkState,
   PieceState,
   PieceVersionState,
-  SourceDescriptionState,
+  MMSourceDescriptionState,
   StateEntity,
 } from "@/types/editFormTypes";
 
@@ -29,7 +29,7 @@ type EditFormState = {
   composer?: ComposerState;
   piece?: PieceState;
   pieceVersion?: PieceVersionState;
-  sourceDescription?: SourceDescriptionState;
+  sourceDescription?: MMSourceDescriptionState;
   sourceContributions?: ContributionState[];
   metronomeMarks?: MetronomeMarkState[];
 };

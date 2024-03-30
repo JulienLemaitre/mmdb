@@ -1,10 +1,10 @@
 import {
   SourceDescriptionInput,
-  SourceDescriptionState,
+  MMSourceDescriptionState,
 } from "@/types/editFormTypes";
 
 export default function getSourceDescriptionInputFromState(
-  sourceDescription: SourceDescriptionState,
+  sourceDescription: MMSourceDescriptionState,
 ): SourceDescriptionInput {
   const { id, title, year, type, link, comment, references } =
     sourceDescription;

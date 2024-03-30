@@ -4,14 +4,13 @@ import QuestionMarkCircleIcon from "@/components/svg/QuestionMarkCircleIcon";
 
 export default function NavBar({
   title,
+  isFeedForm,
   isHome,
 }: {
   title?: string;
+  isFeedForm?: boolean;
   isHome?: boolean;
 }) {
-  // find if we are in /edition segment from router
-  const isEdition = title === "Edition";
-
   return (
     <div className="navbar bg-base-100 px-4">
       <div className="flex-none">
@@ -25,7 +24,7 @@ export default function NavBar({
         )}
       </div>
 
-      {isEdition ? (
+      {isFeedForm ? (
         <div className="flex-none">
           <label htmlFor="my-drawer-4" className="drawer-button btn btn-link">
             <QuestionMarkCircleIcon className="w-7 h-7" />

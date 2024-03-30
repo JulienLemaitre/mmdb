@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { URL_EXPLORE, URL_EDITION } from "@/utils/routes";
+import { URL_EXPLORE, URL_FEED } from "@/utils/routes";
 import NavBar from "@/app/NavBar";
 
 export const metadata: Metadata = {
@@ -26,8 +26,8 @@ export default function Home() {
           <Link href={URL_EXPLORE} className="btn btn-primary">
             Explore data
           </Link>
-          <Link href={URL_EDITION} className="btn btn-primary">
-            Edit new Metronome Marks
+          <Link href={URL_FEED} className="btn btn-primary">
+            Enter new Metronome Marks data
           </Link>
           <button className="btn btn-disabled">Review</button>
         </div>

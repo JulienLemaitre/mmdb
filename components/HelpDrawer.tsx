@@ -72,8 +72,8 @@ const HelpDrawer = () => {
             </i>
           </p>
           <p>
-            If these pieces don't yet exist in our data, you will be guided to
-            describe it in details.
+            If these pieces don&apos;t yet exist in our data, you will be guided
+            to describe it in details.
           </p>
         </div>
       </ul>

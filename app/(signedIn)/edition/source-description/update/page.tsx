@@ -3,7 +3,7 @@
 import SourceDescriptionEditForm from "@/app/(signedIn)/edition/source-description/SourceDescriptionEditForm";
 import { useEditForm } from "@/components/context/editFormContext";
 import { useEffect, useState } from "react";
-import { SourceDescriptionState } from "@/types/editFormTypes";
+import { MMSourceDescriptionState } from "@/types/editFormTypes";
 import Loader from "@/components/Loader";
 import getSourceDescriptionInputFromState from "@/utils/getSourceDescriptionInputFromState";
 
@@ -12,7 +12,7 @@ export default function SourceDescriptionUpdate({
 }) {
   const { state } = useEditForm();
   const [sourceDescription, setSourceDescription] =
-    useState<SourceDescriptionState | null>(null);
+    useState<MMSourceDescriptionState | null>(null);
   const [isSourceDescriptionInitialized, setIsSourceDescriptionInitialized] =
     useState(false);
 

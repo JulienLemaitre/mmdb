@@ -10,7 +10,9 @@ import type {
   Section,
   MMSource,
   TempoIndication,
+  MMSourcesOnPieceVersions,
 } from "@prisma/client";
+import { FeedFormState } from "@/components/context/feedFormContext";
 
 // Sub-Types
 
@@ -25,7 +27,12 @@ export type StateEntity = {
   segment: string;
   path: string;
 };
-
+export type FeedStateEntity = {
+  rank: number;
+  id: string;
+  title: string;
+  isComplete: (state: FeedFormState) => boolean;
+};
 export type isNewProp = {
   isNew?: boolean;
 };
@@ -95,13 +102,20 @@ export type PieceVersionState = Pick<PieceVersion, "id" | "category"> & {
 } & isNewProp;
 
 export type ReferenceState = Pick<Reference, "type" | "reference">;
-export type SourceDescriptionState = Pick<
+export type MMSourceDescriptionState = Pick<
   MMSource,
   "title" | "type" | "link" | "year" | "comment"
 > & {
   id?: string;
   references: ReferenceState[];
   pieceVersions?: Pick<PieceVersionState, "id">[];
+} & isNewProp;
+
+export type MMSourcePieceVersionsState = Pick<
+  MMSourcesOnPieceVersions,
+  "rank"
+> & {
+  pieceVersionId: string;
 } & isNewProp;
 
 export type MetronomeMarkState = Pick<

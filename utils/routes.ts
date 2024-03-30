@@ -1,5 +1,6 @@
 export const URL_HOME = "/";
 export const URL_EXPLORE = "/explore";
+export const URL_FEED = "/feed";
 export const URL_EDITION = "/edition";
 export const URL_SELECT_COMPOSER = "/edition/composer";
 export const URL_CREATE_COMPOSER = "/edition/composer/create";

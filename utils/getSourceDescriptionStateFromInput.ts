@@ -1,24 +1,24 @@
 import {
   SourceDescriptionInput,
-  SourceDescriptionState,
+  MMSourceDescriptionState,
 } from "@/types/editFormTypes";
 
 export default function getSourceDescriptionStateFromInput(
   sourceDescriptionInput: SourceDescriptionInput,
-): SourceDescriptionState {
+): MMSourceDescriptionState {
   const { id, title, year, type, link, comment, references } =
     sourceDescriptionInput;
 
-  const sourceDescriptionState: SourceDescriptionState = {
+  const sourceDescriptionState: MMSourceDescriptionState = {
     id,
     title: title ?? null,
     year,
-    type: type.value as SourceDescriptionState["type"],
+    type: type.value as MMSourceDescriptionState["type"],
     link,
     comment: comment ?? null,
     references: (references ?? []).map((reference) => ({
       type: reference.type
-        .value as SourceDescriptionState["references"][0]["type"],
+        .value as MMSourceDescriptionState["references"][0]["type"],
       reference: reference.reference,
     })),
   };
