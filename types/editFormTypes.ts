@@ -13,6 +13,7 @@ import type {
   MMSourcesOnPieceVersions,
 } from "@prisma/client";
 import { FeedFormState } from "@/components/context/feedFormContext";
+import { FC } from "react";
 
 // Sub-Types
 
@@ -30,11 +31,16 @@ export type StateEntity = {
 export type FeedStateEntity = {
   rank: number;
   id: string;
+  actionTypes: string[];
   title: string;
   isComplete: (state: FeedFormState) => boolean;
+  Component?: FC;
 };
 export type isNewProp = {
   isNew?: boolean;
+};
+export type nextProp = {
+  next?: boolean;
 };
 export type PersonState = {
   id: string;
@@ -109,7 +115,8 @@ export type MMSourceDescriptionState = Pick<
   id?: string;
   references: ReferenceState[];
   pieceVersions?: Pick<PieceVersionState, "id">[];
-} & isNewProp;
+} & isNewProp &
+  nextProp;
 
 export type MMSourcePieceVersionsState = Pick<
   MMSourcesOnPieceVersions,

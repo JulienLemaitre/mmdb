@@ -1,29 +1,33 @@
-// "use client";
+"use client";
 import {
   ContributionStateWithoutId,
   OptionInput,
   OrganizationState,
   PersonState,
 } from "@/types/editFormTypes";
+import {
+  updateEditForm,
+  useEditForm,
+} from "@/components/context/editFormContext";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import PlusIcon from "@/components/svg/PlusIcon";
 import SourceContributionSelect from "@/app/(signedIn)/edition/source-contributions/create/SourceContributionSelect";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
-import StepNavigation from "@/components/multiStepForm/StepNavigation";
+import { URL_CREATE_METRONOME_MARKS } from "@/utils/routes";
 
 type SourceContributionSelectFormProps = {
   persons: PersonState[];
   organizations: OrganizationState[];
-  onSubmit: (selectedContributions: ContributionStateWithoutId[]) => void;
-  submitTitle?: string;
 };
 
 export default function SourceContributionSelectForm({
   persons,
   organizations,
-  onSubmit,
-  submitTitle,
 }: SourceContributionSelectFormProps) {
+  const { dispatch } = useEditForm();
+  const router = useRouter();
+
   const [selectedContributions, setSelectedContributions] = useState<
     ContributionStateWithoutId[]
   >([]);
@@ -129,6 +133,10 @@ export default function SourceContributionSelectForm({
     ]);
     setIsFormOpen(false);
   };
+  const onSubmit = () => {
+    updateEditForm(dispatch, "sourceContributions", selectedContributions);
+    router.push(URL_CREATE_METRONOME_MARKS);
+  };
 
   const personOptions: OptionInput[] = [...persons, ...createdPersons].map(
     (person: PersonState) => ({
@@ -210,11 +218,19 @@ export default function SourceContributionSelectForm({
         </div>
       )}
 
-      <StepNavigation
-        onClick={() => onSubmit(selectedContributions)}
-        isNextDisabled={!(selectedContributions.length > 0 && !isFormOpen)}
-        submitTitle={submitTitle}
-      />
+      <div>
+        <button
+          className="btn btn-primary mt-4"
+          onClick={onSubmit}
+          {...(selectedContributions.length > 0 && !isFormOpen
+            ? { disabled: false }
+            : { disabled: true })}
+        >
+          {`Submit Source Contribution${
+            selectedContributions.length > 1 ? "s" : ""
+          }`}
+        </button>
+      </div>
     </>
   );
 }

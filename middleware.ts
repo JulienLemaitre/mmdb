@@ -9,7 +9,8 @@ export default withAuth(
         ? req.nextauth?.token?.role
         : "";
     if (
-      req.nextUrl.pathname.startsWith("/edition") &&
+      (req.nextUrl.pathname.startsWith("/edition") ||
+        req.nextUrl.pathname.startsWith("/feed")) &&
       !["EDITOR", "REVIEWER", "ADMIN"].includes(userRole)
     ) {
       return NextResponse.rewrite(new URL("/not-authorized", req.url));

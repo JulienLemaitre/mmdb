@@ -1,24 +1,14 @@
 "use client";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
-import {
-  updateEditForm,
-  useEditForm,
-} from "@/components/context/editFormContext";
 import { useForm } from "react-hook-form";
 import { SourceDescriptionInput } from "@/types/editFormTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  URL_CREATE_SOURCE_CONTRIBUTIONS,
-  URL_SELECT_PIECE_VERSION,
-} from "@/utils/routes";
-import Link from "next/link";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import { zodYear } from "@/utils/zodTypes";
 import { SOURCE_TYPE } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import ReferenceArray from "@/components/ReactHookForm/ReferenceArray";
-import getSourceDescriptionStateFromInput from "@/utils/getSourceDescriptionStateFromInput";
+import StepNavigation from "@/components/multiStepForm/StepNavigation";
 
 const SourceSchema = z.object({
   title: z.string().optional(),
@@ -40,13 +30,14 @@ const SourceSchema = z.object({
   comment: z.string().optional(),
 });
 
-export default function SourceDescriptionEditForm({
-  sourceDescription,
-}: Readonly<{
-  sourceDescription?: SourceDescriptionInput;
-}>) {
-  const router = useRouter();
-  const { dispatch, state } = useEditForm();
+export default function SourceDescriptionEditForm(
+  props: Readonly<{
+    sourceDescription?: SourceDescriptionInput;
+    onSubmit: (sourceDescription: SourceDescriptionInput) => Promise<void>;
+    submitTitle?: string;
+  }>,
+) {
+  const { sourceDescription, onSubmit, submitTitle } = props;
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
@@ -63,57 +54,13 @@ export default function SourceDescriptionEditForm({
     resolver: zodResolver(SourceSchema),
   });
 
-  const onSubmit = async (data: SourceDescriptionInput) => {
-    // Front input values validation is successful at this point.
-    console.log("data", data);
-
-    const sourceData = data;
-    // Remove null values from sourceData
-    Object.keys(sourceData).forEach(
-      (key) => sourceData[key] == null && delete sourceData[key],
-    );
-
-    if (!state.pieceVersion) {
-      console.warn("No pieceVersion in state to link to the source");
-      return;
-    }
-
-    //TODO: for Source Description, Contributions and Metronome Marks, we will keep the data in state only and send to API once the user has completed all of them.
-
-    const sourceDescriptionState = getSourceDescriptionStateFromInput({
-      ...sourceData,
-      // pieceVersions: [state.pieceVersion.id],
-    });
-
-    sourceDescriptionState.isNew = true;
-    console.log(
-      "source description to be stored in state",
-      sourceDescriptionState,
-    );
-    updateEditForm(dispatch, "sourceDescription", sourceDescriptionState);
-    router.push(URL_CREATE_SOURCE_CONTRIBUTIONS);
-  };
-
-  if (!state.pieceVersion) {
-    return (
-      <div>
-        <h1 className="mb-4 text-4xl font-bold">
-          Select a piece version first
-        </h1>
-        <Link href={URL_SELECT_PIECE_VERSION} className="btn">
-          Back
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <div>
       <h1 className="mb-4 text-4xl font-bold">
         Create a Metronome Mark Source{" "}
         <span className="block text-xl font-normal">General description</span>
       </h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-md">
         <ControlledSelect
           name="type"
           label="Source type"
@@ -135,6 +82,7 @@ export default function SourceDescriptionEditForm({
         <FormInput name="title" {...{ register, watch, errors }} />
         <FormInput
           name="link"
+          type="url"
           isRequired
           label="Link to the online score"
           {...{ register, watch, errors }}
@@ -146,16 +94,11 @@ export default function SourceDescriptionEditForm({
           defaultValue={``}
           {...{ register, errors }}
         />
-        <button
-          className="btn btn-primary mt-6 w-full max-w-xs"
-          type="submit"
-          disabled={isSubmitting}
-        >
-          Submit
-          {isSubmitting && (
-            <span className="loading loading-spinner loading-sm"></span>
-          )}
-        </button>
+        <StepNavigation
+          isSubmitBtn
+          isSubmitting={isSubmitting}
+          submitTitle={submitTitle}
+        />
       </form>
     </div>
   );
