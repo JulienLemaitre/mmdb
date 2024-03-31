@@ -8,7 +8,7 @@ import {
 } from "@/components/context/feedFormContext";
 import { getStepByRank } from "@/components/multiStepForm/constants";
 import { ContributionStateWithoutId } from "@/types/editFormTypes";
-import SourceContributionSelectForm from "@/app/(signedIn)/edition/source-contributions/create/SourceContributionSelectForm";
+import SourceContributionSelectForm from "@/components/entities/source-contributions/create/SourceContributionSelectForm";
 
 export default function MMSourceContributions() {
   const [data, setData] = useState(null);
@@ -34,7 +34,8 @@ export default function MMSourceContributions() {
   }, []);
 
   if (isLoading) return <Loader />;
-  if (!data) return <p>Oups, No data could be fetched. Can't continue...</p>;
+  if (!data)
+    return <p>{`Oups, No data could be fetched. Can't continue...`}</p>;
 
   const { persons, organizations } = data;
 
