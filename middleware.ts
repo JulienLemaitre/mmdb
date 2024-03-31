@@ -9,8 +9,7 @@ export default withAuth(
         ? req.nextauth?.token?.role
         : "";
     if (
-      (req.nextUrl.pathname.startsWith("/edition") ||
-        req.nextUrl.pathname.startsWith("/feed")) &&
+      req.nextUrl.pathname.startsWith("/feed") &&
       !["EDITOR", "REVIEWER", "ADMIN"].includes(userRole)
     ) {
       return NextResponse.rewrite(new URL("/not-authorized", req.url));
@@ -34,5 +33,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/edition/:path*", "/explore/:path*"],
+  matcher: ["/feed/:path*", "/explore/:path*"],
 };

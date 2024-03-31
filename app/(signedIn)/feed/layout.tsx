@@ -6,7 +6,7 @@ import Steps from "@/components/multiStepForm/Steps";
 
 export const dynamic = "force-dynamic";
 
-export default function ContributeLayout({ children }) {
+export default function FeedLayout({ children }) {
   return (
     <div className="drawer drawer-end flex-1">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
