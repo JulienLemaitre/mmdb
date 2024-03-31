@@ -8,9 +8,9 @@ import {
 } from "react";
 import {
   // ComposerState,
-  ContributionState,
   FeedStateEntity,
   MetronomeMarkState,
+  MMSourceContributionsState,
   // PieceState,
   // PieceVersionState,
   MMSourceDescriptionState,
@@ -41,7 +41,7 @@ type FeedFormInfos = {
 export type FeedFormState = {
   formInfos?: FeedFormInfos;
   mMSourceDescription?: MMSourceDescriptionState;
-  mMSourceContributions?: ContributionState[];
+  mMSourceContributions?: MMSourceContributionsState;
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
   // composer?: ComposerState;
   // piece?: PieceState;

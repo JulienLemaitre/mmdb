@@ -14,7 +14,7 @@ export default function MMSourceContributions() {
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(true);
 
-  const { dispatch, currentStepRank } = useFeedForm();
+  const { dispatch, currentStepRank, state } = useFeedForm();
   const step = getStepByRank(currentStepRank);
 
   const onSubmit = (selectedContributions: ContributionStateWithoutId[]) => {
@@ -41,6 +41,7 @@ export default function MMSourceContributions() {
 
   return (
     <SourceContributionSelectForm
+      contributions={state.mMSourceContributions?.selectedContributions}
       persons={persons}
       organizations={organizations}
       onSubmit={onSubmit}

@@ -36,10 +36,10 @@ export type FeedStateEntity = {
   isComplete: (state: FeedFormState) => boolean;
   Component?: FC;
 };
-export type isNewProp = {
+export type IsNewProp = {
   isNew?: boolean;
 };
-export type nextProp = {
+export type GoNextProp = {
   next?: boolean;
 };
 export type PersonState = {
@@ -49,7 +49,7 @@ export type PersonState = {
   birthYear: number;
   deathYear: number | null;
 };
-export type ComposerState = PersonState & isNewProp;
+export type ComposerState = PersonState & IsNewProp;
 export type OrganizationState = {
   id: string;
   name: string;
@@ -59,12 +59,15 @@ export type ContributionState =
       id: string;
       role: CONTRIBUTION_ROLE;
       person: PersonState;
-    } & isNewProp)
+    } & IsNewProp)
   | ({
       id: string;
       role: CONTRIBUTION_ROLE;
       organization: OrganizationState;
-    } & isNewProp);
+    } & IsNewProp);
+export type MMSourceContributionsState = {
+  selectedContributions: ContributionState[];
+};
 export type ContributionStateWithoutId =
   | {
       person: PersonState;
@@ -79,7 +82,7 @@ export type PieceState = Pick<
   Piece,
   "id" | "nickname" | "yearOfComposition" | "title"
 > &
-  isNewProp;
+  IsNewProp;
 
 export type SectionState = Pick<
   Section,
@@ -105,7 +108,7 @@ export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {
 
 export type PieceVersionState = Pick<PieceVersion, "id" | "category"> & {
   movements: MovementState[];
-} & isNewProp;
+} & IsNewProp;
 
 export type ReferenceState = Pick<Reference, "type" | "reference">;
 export type MMSourceDescriptionState = Pick<
@@ -115,15 +118,15 @@ export type MMSourceDescriptionState = Pick<
   id?: string;
   references: ReferenceState[];
   pieceVersions?: Pick<PieceVersionState, "id">[];
-} & isNewProp &
-  nextProp;
+} & IsNewProp &
+  GoNextProp;
 
 export type MMSourcePieceVersionsState = Pick<
   MMSourcesOnPieceVersions,
   "rank"
 > & {
   pieceVersionId: string;
-} & isNewProp;
+} & IsNewProp;
 
 export type MetronomeMarkState = Pick<
   MetronomeMark,

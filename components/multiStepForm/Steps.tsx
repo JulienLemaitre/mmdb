@@ -11,8 +11,6 @@ const Steps = () => {
   const { currentStepRank, dispatch, lastCompletedStepRank } = useFeedForm();
 
   const goToStep = (stepRank: number) => {
-    console.log(`[goToStep] Going to step ${stepRank}`);
-    console.log(`[] lastCompletedStepRank :`, lastCompletedStepRank);
     if (
       typeof lastCompletedStepRank === "number" &&
       stepRank <= lastCompletedStepRank + 1

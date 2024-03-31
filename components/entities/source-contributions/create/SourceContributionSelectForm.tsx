@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ContributionStateWithoutId,
   OptionInput,
@@ -13,13 +11,15 @@ import { CONTRIBUTION_ROLE } from "@prisma/client";
 import StepNavigation from "@/components/multiStepForm/StepNavigation";
 
 type SourceContributionSelectFormProps = {
+  contributions?: ContributionStateWithoutId[];
   persons: PersonState[];
   organizations: OrganizationState[];
-  onSubmit: (selectedContributions: ContributionStateWithoutId[]) => void;
+  onSubmit: (contributions: ContributionStateWithoutId[]) => void;
   submitTitle?: string;
 };
 
 export default function SourceContributionSelectForm({
+  contributions,
   persons,
   organizations,
   onSubmit,
@@ -27,7 +27,7 @@ export default function SourceContributionSelectForm({
 }: SourceContributionSelectFormProps) {
   const [selectedContributions, setSelectedContributions] = useState<
     ContributionStateWithoutId[]
-  >([]);
+  >(contributions || []);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [createdPersons, setCreatedPersons] = useState<PersonState[]>([]);
