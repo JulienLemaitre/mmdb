@@ -1,15 +1,15 @@
 "use client";
 import { ResponsiveScatterPlot } from "@nivo/scatterplot";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
-import {useCallback, useRef, useState} from "react";
+import { useCallback, useRef, useState } from "react";
 
 export default function GlobalShart({ persons }) {
-  const [selectedNode, setSelectedNode] = useState<any | null>(null)
-  console.log(`[GlobalShart] selectedNode :`, selectedNode)
+  const [selectedNode, setSelectedNode] = useState<any | null>(null);
+  console.log(`[GlobalShart] selectedNode :`, selectedNode);
 
   const onClick = useCallback((node, event) => {
-    setSelectedNode(node)
-  }, [])
+    setSelectedNode(node);
+  }, []);
 
   let minDate: number = 2000;
   const dataGroupedPerNoteTypeObject = {
@@ -20,71 +20,71 @@ export default function GlobalShart({ persons }) {
   };
   const mmList: any[] = [];
   const dataGroupedPerCompositor = persons
-  // Sort persons by birth date
-  .map((person) => {
-    const personDataId = person.firstName + " " + person.lastName;
-    const personData: { x: number; y: number; meta?: any }[] = [];
-    person.compositions.forEach((piece) => {
-      // console.log(`[] piece :`, piece)
-      if (piece.yearOfComposition < minDate) {
-        minDate = piece.yearOfComposition;
-      }
-      piece.pieceVersions.forEach((pv) => {
-        const hasMultipleMovements = pv.movements.length > 1;
-        pv.movements.forEach((mvt) => {
-          const hasMultipleSections = mvt.sections.length > 1;
-          mvt.sections.forEach((section) => {
-            // console.log(`[GlobalShart] section :`, section);
+    // Sort persons by birth date
+    .map((person) => {
+      const personDataId = person.firstName + " " + person.lastName;
+      const personData: { x: number; y: number; meta?: any }[] = [];
+      person.compositions.forEach((piece) => {
+        // console.log(`[] piece :`, piece)
+        if (piece.yearOfComposition < minDate) {
+          minDate = piece.yearOfComposition;
+        }
+        piece.pieceVersions.forEach((pv) => {
+          const hasMultipleMovements = pv.movements.length > 1;
+          pv.movements.forEach((mvt) => {
+            const hasMultipleSections = mvt.sections.length > 1;
+            mvt.sections.forEach((section) => {
+              // console.log(`[GlobalShart] section :`, section);
 
-            section?.metronomeMarks?.forEach((MM) => {
-              const notesPerSecond =
-                getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM({
-                  metronomeMark: MM,
-                  section,
-                });
-              for (const notesPerSecondElement in notesPerSecond) {
-                const noteType = notesPerSecondElement
-                  .replace(/fastest/g, "")
-                  .replace(/NotesPerSecond/g, "")
-                  .toLowerCase();
-                const mmData: any = { x: mmList.length + 1 };
-                // const mmData: any = { x: piece.yearOfComposition };
-                mmData.y = notesPerSecond[notesPerSecondElement];
-                mmData.meta = {
-                  noteType,
-                  composer: personDataId,
-                  piece: {
-                    title: piece.title,
-                  },
-                  movement: {
-                    ...(hasMultipleMovements ? { rank: mvt.rank } : {}),
-                  },
-                  section: {
-                    ...(hasMultipleSections ? { rank: section.rank } : {}),
-                    metreNumerator: section.metreNumerator,
-                    metreDenominator: section.metreDenominator,
-                    isCommonTime: section.isCommonTime,
-                    isCutTime: section.isCutTime,
-                    comment: section.comment,
-                    tempoIndication: section.tempoIndication,
-                  },
-                  mm: MM,
-                };
-                mmList.push(mmData);
-                dataGroupedPerNoteTypeObject[noteType].push(mmData);
-                personData.push(mmData);
-              }
+              section?.metronomeMarks?.forEach((MM) => {
+                const notesPerSecond =
+                  getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM({
+                    metronomeMark: MM,
+                    section,
+                  });
+                for (const notesPerSecondElement in notesPerSecond) {
+                  const noteType = notesPerSecondElement
+                    .replace(/fastest/g, "")
+                    .replace(/NotesPerSecond/g, "")
+                    .toLowerCase();
+                  const mmData: any = { x: mmList.length + 1 };
+                  // const mmData: any = { x: piece.yearOfComposition };
+                  mmData.y = notesPerSecond[notesPerSecondElement];
+                  mmData.meta = {
+                    noteType,
+                    composer: personDataId,
+                    piece: {
+                      title: piece.title,
+                    },
+                    movement: {
+                      ...(hasMultipleMovements ? { rank: mvt.rank } : {}),
+                    },
+                    section: {
+                      ...(hasMultipleSections ? { rank: section.rank } : {}),
+                      metreNumerator: section.metreNumerator,
+                      metreDenominator: section.metreDenominator,
+                      isCommonTime: section.isCommonTime,
+                      isCutTime: section.isCutTime,
+                      comment: section.comment,
+                      tempoIndication: section.tempoIndication,
+                    },
+                    mm: MM,
+                  };
+                  mmList.push(mmData);
+                  dataGroupedPerNoteTypeObject[noteType].push(mmData);
+                  personData.push(mmData);
+                }
+              });
             });
           });
         });
       });
-    });
 
-    return {
-      id: personDataId,
-      data: personData,
-    };
-  });
+      return {
+        id: personDataId,
+        data: personData,
+      };
+    });
   // console.log(
   //   `[GlobalShart] dataGroupedPerCompositor :`,
   //   dataGroupedPerCompositor,

@@ -1,4 +1,5 @@
 import React from "react";
+import XMarkIcon from "@/components/svg/XMarkIcon";
 
 const HelpDrawer = () => {
   return (
@@ -8,8 +9,16 @@ const HelpDrawer = () => {
         aria-label="close sidebar"
         className="drawer-overlay"
       ></label>
-      <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+      <ul className="menu p-4 w-fit min-h-full bg-base-200 text-base-content">
         {/* Sidebar content here */}
+        <div className="pb-2">
+          <label
+            htmlFor="my-drawer-4"
+            className="drawer-button btn btn-link h-auto min-h-fit px-0 align-bottom"
+          >
+            <XMarkIcon className="w-7 h-7" />
+          </label>
+        </div>
         <div className="prose">
           <h2>{`First, some definitions`}</h2>
           <p>

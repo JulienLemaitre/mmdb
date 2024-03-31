@@ -2,6 +2,7 @@ import { FeedStateEntity } from "@/types/editFormTypes";
 import Intro from "@/components/multiStepForm/stepForms/Intro";
 import MMSourceDescription from "@/components/multiStepForm/stepForms/MMSourceDescription";
 import MMSourceContributions from "@/components/multiStepForm/stepForms/MMSourceContributions";
+import MMSourcePieceVersions from "@/components/multiStepForm/stepForms/MMSourcePieceVersions";
 
 export const steps: FeedStateEntity[] = [
   {
@@ -17,7 +18,7 @@ export const steps: FeedStateEntity[] = [
     id: "mMSourceDescription",
     actionTypes: ["mMSourceDescription"],
     title: "MM Source description",
-    isComplete: (state) => !!state?.mMSourceDescription?.id,
+    isComplete: (state) => !!state?.mMSourceDescription,
     Component: MMSourceDescription,
   },
   {
@@ -38,6 +39,7 @@ export const steps: FeedStateEntity[] = [
     isComplete: (state) =>
       (state?.mMSourcePieceVersions?.length || 0) > 0 &&
       !!state?.formInfos?.allSourcePieceVersionsDone,
+    Component: MMSourcePieceVersions,
   },
   {
     rank: 4,

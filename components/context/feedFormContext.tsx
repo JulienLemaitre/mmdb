@@ -21,6 +21,7 @@ import { steps } from "@/components/multiStepForm/constants";
 type PieceFormAction =
   | { type: "init"; payload: any }
   | { type: "goToPrevStep" }
+  | { type: "goToStep"; payload: any }
   | { type: "formInfos"; payload: any }
   // | { type: "composer"; payload: any }
   // | { type: "piece"; payload: any }
@@ -60,9 +61,6 @@ const allowedActions = new Set();
 steps.forEach((step) =>
   step.actionTypes.forEach((actionType) => allowedActions.add(actionType)),
 );
-allowedActions.forEach(function (value) {
-  console.log(`[feedFormContext] allowedActions :`, value);
-});
 
 const FeedFormContext = createContext<
   | {
@@ -94,6 +92,18 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
       formInfos: {
         ...state.formInfos,
         currentStepRank: currentStepRank - 1,
+      },
+    };
+  }
+
+  // Navigation to specific step
+  if (action.type === "goToStep") {
+    const { stepRank } = action.payload;
+    return {
+      ...state,
+      formInfos: {
+        ...state.formInfos,
+        currentStepRank: stepRank,
       },
     };
   }
@@ -182,7 +192,9 @@ export function useFeedForm() {
   return {
     ...context,
     lastCompletedStepId: lastCompletedStep?.id,
+    lastCompletedStepRank: lastCompletedStep?.rank,
     nextStepToCompleteId: nextStep.id,
+    nextStepToCompleteRank: nextStep.rank || 0,
     currentStepRank: context.state.formInfos?.currentStepRank || 0,
   };
 }

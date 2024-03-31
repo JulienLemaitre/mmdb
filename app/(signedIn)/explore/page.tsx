@@ -7,6 +7,7 @@ const getData = async () => {
     include: {
       compositions: {
         include: {
+          collection: true,
           pieceVersions: {
             include: {
               movements: {
@@ -55,7 +56,7 @@ const getData = async () => {
     },
     orderBy: {
       birthYear: "asc",
-    }
+    },
   });
   return { persons };
 };

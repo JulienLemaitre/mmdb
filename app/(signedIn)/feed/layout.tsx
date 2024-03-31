@@ -16,12 +16,10 @@ export default function FeedLayout({ children }) {
           <NavBar title="Feeding the database" isFeedForm />
           <FeedFormProvider>
             <div className="bg-zinc-50 dark:bg-zinc-800 flex-1 flex items-stretch">
-              <aside className="bg-base-100 w-1/2 max-w-sm p-10 overflow-auto">
+              <aside className="bg-base-100 w-1/2 max-w-sm p-10 overflow-auto border-r-base-200 border-r-4">
                 <Steps />
               </aside>
-              <main className="flex-1 bg-zinc-100 dark:bg-zinc-900 p-10">
-                {children}
-              </main>
+              <main className="flex-1 bg-base-100 p-10">{children}</main>
             </div>
           </FeedFormProvider>
         </div>
