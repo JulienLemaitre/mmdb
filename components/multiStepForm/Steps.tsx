@@ -7,16 +7,16 @@ import { steps } from "@/components/multiStepForm/constants";
 const Steps = () => {
   const {
     state,
-    dispatch,
-    lastCompletedStepId,
-    nextStepToCompleteId,
+    // dispatch,
+    // lastCompletedStepId,
+    // nextStepToCompleteId,
     currentStepRank,
   } = useFeedForm();
   console.log(`[Steps] :`, {
     state,
-    dispatch,
-    lastCompletedStepId,
-    nextStepId: nextStepToCompleteId,
+    // dispatch,
+    // lastCompletedStepId,
+    // nextStepId: nextStepToCompleteId,
   });
 
   return (

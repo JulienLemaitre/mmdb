@@ -4,9 +4,10 @@ import getSourceDescriptionStateFromInput from "@/utils/getSourceDescriptionStat
 import { updateFeedForm } from "@/components/context/feedFormContext";
 import { useFeedForm } from "@/components/context/feedFormContext";
 import { getStepByRank } from "@/components/multiStepForm/constants";
+import getSourceDescriptionInputFromState from "@/utils/getSourceDescriptionInputFromState";
 
 const MMSourceDescription = () => {
-  const { dispatch, currentStepRank } = useFeedForm();
+  const { dispatch, currentStepRank, state } = useFeedForm();
   const step = getStepByRank(currentStepRank);
 
   const onSubmit = async (data: SourceDescriptionInput) => {
@@ -33,8 +34,16 @@ const MMSourceDescription = () => {
     updateFeedForm(dispatch, "mMSourceDescription", sourceDescriptionState);
   };
 
+  const sourceDescriptionInput = getSourceDescriptionInputFromState(
+    state?.mMSourceDescription,
+  );
+
   return (
-    <SourceDescriptionEditForm onSubmit={onSubmit} submitTitle={step.title} />
+    <SourceDescriptionEditForm
+      onSubmit={onSubmit}
+      submitTitle={step.title}
+      sourceDescription={sourceDescriptionInput}
+    />
   );
 };
 

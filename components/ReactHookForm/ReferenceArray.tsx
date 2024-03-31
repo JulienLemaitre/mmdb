@@ -28,18 +28,22 @@ export default function ReferenceArray({ control, register, errors, watch }) {
               index + 1
             }`}</h4>
             <div className="flex items-end gap-3">
-              <ControlledSelect
-                name={`references[${index}].type` as const}
-                label={`Reference type`}
-                id={`references[${index}].type` as const}
-                control={control}
-                options={Object.entries(REFERENCE_TYPE).map(([key, value]) => ({
-                  value: key,
-                  label: value,
-                }))}
-                isRequired={true}
-                errors={errors}
-              />
+              <div className="flex-shrink-0 min-w-40">
+                <ControlledSelect
+                  name={`references[${index}].type` as const}
+                  label={`Reference type`}
+                  id={`references[${index}].type` as const}
+                  control={control}
+                  options={Object.entries(REFERENCE_TYPE).map(
+                    ([key, value]) => ({
+                      value: key,
+                      label: value,
+                    }),
+                  )}
+                  isRequired={true}
+                  errors={errors}
+                />
+              </div>
               <FormInput
                 name={`references[${index}].reference` as const}
                 isRequired
