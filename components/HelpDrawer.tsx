@@ -1,7 +1,24 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import XMarkIcon from "@/components/svg/XMarkIcon";
+import { useFeedForm } from "@/components/context/feedFormContext";
+import { stepHelpContent } from "@/components/multiStepForm/stepHelpContent";
 
 const HelpDrawer = () => {
+  const { currentStepRank } = useFeedForm();
+  const [isSectonHelpChecked, setIsSectonHelpChecked] = useState(true);
+  const toggleSectionHelp = () => {
+    setIsSectonHelpChecked(!isSectonHelpChecked);
+  };
+
+  useEffect(() => {
+    // When we change the form step, we check the section help only if it exists
+    setIsSectonHelpChecked(!!stepHelpContent[currentStepRank]);
+  }, [currentStepRank]);
+
+  const SectionHelp = stepHelpContent[currentStepRank];
+
   return (
     <div className="drawer-side">
       <label
@@ -19,71 +36,73 @@ const HelpDrawer = () => {
             <XMarkIcon className="w-7 h-7" />
           </label>
         </div>
-        <div className="prose">
-          <h2>{`First, some definitions`}</h2>
-          <p>
-            A <i>Metronome Mark</i> (
-            <strong>
-              <dfn id="definition-mm">
-                <abbr title="Metronome Mark">MM</abbr>
-              </dfn>
-            </strong>
-            ) is a combination of a <i>note value</i> and a pace expressed as{" "}
-            <i>
-              <abbr title="Beat Per Minute">BPM</abbr>
-            </i>
-            .
-          </p>
-          <p>
-            A{" "}
-            <strong>
-              <dfn>Metronome Mark Source</dfn>
-            </strong>{" "}
-            is any document that includes a <i>Metronome Mark</i>. It will
-            mostly be edtions, but it can be a letter or a diary for example.
-          </p>
-          <h2>
-            1 - Describe the{" "}
-            <i>
-              <abbr title="Metronome Mark">MM</abbr> Source
-            </i>
-          </h2>
-          <p>
-            A simple form with basic informations about the{" "}
-            <i>
-              <abbr title="Metronome Mark">MM</abbr> Source
-            </i>
-            : type, title, year of publication, link to online score.
-          </p>
-          <h2>
-            2 - List the <i>contributors</i> to the{" "}
-            <i>
-              <abbr title="Metronome Mark">MM</abbr> Source
-            </i>
-          </h2>
-          <p>
-            You will list peoples or companies which contributed to the{" "}
-            <i>
-              <abbr title="Metronome Mark">MM</abbr> Source
-            </i>{" "}
-            and their respective <i>role</i> (editor, publisher, etc.).
-          </p>
-          <h2>
-            3 - List the pieces that composes the{" "}
-            <i>
-              <abbr title="Metronome Mark">MM</abbr> Source
-            </i>
-          </h2>
-          <p>
-            You will list in order the <i>pieces</i> that appear in the{" "}
-            <i>
-              <abbr title="Metronome Mark">MM</abbr> Source.
-            </i>
-          </p>
-          <p>
-            If these pieces don&apos;t yet exist in our data, you will be guided
-            to describe it in details.
-          </p>
+
+        <div role="tablist" className="tabs tabs-bordered">
+          {/* Contextual section help tab */}
+          <input
+            type="radio"
+            name="help-aside-tab"
+            role="tab"
+            className="tab"
+            aria-label="Section help"
+            checked={isSectonHelpChecked}
+            onChange={toggleSectionHelp}
+            disabled={!SectionHelp}
+          />
+          <div role="tabpanel" className="tab-content py-6">
+            <div className="prose w-full">{SectionHelp}</div>
+          </div>
+
+          {/* General glossary help */}
+          <input
+            type="radio"
+            name="help-aside-tab"
+            role="tab"
+            className="tab"
+            aria-label="Glossary"
+            checked={!isSectonHelpChecked}
+            onChange={toggleSectionHelp}
+          />
+          <div role="tabpanel" className="tab-content py-6">
+            <div className="prose">
+              <p>
+                A <i>Metronome Mark</i> (
+                <strong>
+                  <dfn id="def-mm">
+                    <abbr title="Metronome Mark">MM</abbr>
+                  </dfn>
+                </strong>
+                ) is a combination of a <i>note value</i> and a pace expressed
+                as{" "}
+                <i>
+                  <abbr title="Beat Per Minute">BPM</abbr>
+                </i>
+                .
+              </p>
+              <p>
+                A{" "}
+                <strong>
+                  <dfn>
+                    <abbr title="Metronome Mark">MM</abbr> Source
+                  </dfn>
+                </strong>{" "}
+                is any document that includes a <i>Metronome Mark</i>. It will
+                mostly be editions, but it can be a letter or a diary for
+                example.
+              </p>
+              <p>
+                A <abbr title="Metronome Mark">MM</abbr> Source{" "}
+                <strong>
+                  <dfn>Contribution</dfn>
+                </strong>{" "}
+                is a person or a company involved in the MM Source. It must have
+                a specific role from this list : MM provider, arranger, editor,
+                publisher, transcriber, translator. The MM Provider role is
+                important and give the possibility to indicate that the composer
+                or any other person is the provider of the MM Source.
+              </p>
+            </div>
+          </div>
         </div>
       </ul>
     </div>
