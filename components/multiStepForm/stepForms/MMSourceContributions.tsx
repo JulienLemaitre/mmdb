@@ -45,6 +45,7 @@ export default function MMSourceContributions() {
       persons={persons}
       organizations={organizations}
       onSubmit={onSubmit}
+      title={step.title}
       submitTitle={step.title}
     />
   );

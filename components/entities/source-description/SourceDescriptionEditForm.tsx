@@ -35,9 +35,10 @@ export default function SourceDescriptionEditForm(
     sourceDescription?: SourceDescriptionInput;
     onSubmit: (sourceDescription: SourceDescriptionInput) => Promise<void>;
     submitTitle?: string;
+    title?: string;
   }>,
 ) {
-  const { sourceDescription, onSubmit, submitTitle } = props;
+  const { sourceDescription, onSubmit, submitTitle, title } = props;
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
@@ -57,8 +58,14 @@ export default function SourceDescriptionEditForm(
   return (
     <div>
       <h1 className="mb-4 text-4xl font-bold">
-        Create a Metronome Mark Source{" "}
-        <span className="block text-xl font-normal">General description</span>
+        {title ?? (
+          <>
+            Metronome Mark Source
+            <span className="block text-xl font-normal">
+              General description
+            </span>
+          </>
+        )}
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-md">
         <ControlledSelect

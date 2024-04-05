@@ -16,6 +16,7 @@ type SourceContributionSelectFormProps = {
   organizations: OrganizationState[];
   onSubmit: (contributions: ContributionStateWithoutId[]) => void;
   submitTitle?: string;
+  title?: string;
 };
 
 export default function SourceContributionSelectForm({
@@ -24,6 +25,7 @@ export default function SourceContributionSelectForm({
   organizations,
   onSubmit,
   submitTitle,
+  title,
 }: SourceContributionSelectFormProps) {
   const [selectedContributions, setSelectedContributions] = useState<
     ContributionStateWithoutId[]
@@ -151,6 +153,14 @@ export default function SourceContributionSelectForm({
 
   return (
     <>
+      <h1 className="mb-4 text-4xl font-bold">
+        {title ?? (
+          <>
+            Metronome Mark Source
+            <span className="block text-xl font-normal">Contributions</span>
+          </>
+        )}
+      </h1>
       <ul className="my-4">
         {selectedContributions.map((contribution, index) => {
           if ("organization" in contribution) {

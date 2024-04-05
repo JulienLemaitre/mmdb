@@ -12,9 +12,9 @@ const Intro = () => {
 
   return (
     <div className="w-full prose">
-      <h1>Registering new Metronome Marks</h1>
+      <h1>Registering new data</h1>
       <p>
-        {`You will be guided through the process of registering new Metronome Marks. This involves several steps and notions that are explained at each steps.`}
+        {`You will be guided through the process of registering a new source of Metronome Marks. This involves several steps and notions that are explained along the way.`}
       </p>
       <p>
         You can access the help section at any time clicking in the{" "}
@@ -24,8 +24,10 @@ const Intro = () => {
         >
           <QuestionMarkCircleIcon className="w-7 h-7" />
         </label>{" "}
-        button in the header.
+        button in the header. You will find a contextual help for each step, and
+        a general glossary of the terminology used on this website.
       </p>
+      <p>Thank you to contribute!</p>
       <button
         className="btn btn-primary"
         onClick={() =>

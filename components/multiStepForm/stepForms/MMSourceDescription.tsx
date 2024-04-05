@@ -43,6 +43,7 @@ const MMSourceDescription = () => {
       onSubmit={onSubmit}
       submitTitle={step.title}
       sourceDescription={sourceDescriptionInput}
+      title={step.title}
     />
   );
 };
