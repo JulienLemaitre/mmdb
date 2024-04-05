@@ -27,8 +27,7 @@ export const steps: FeedStateEntity[] = [
     actionTypes: ["mMSourceContributions", "formInfos"],
     title: "MM Source contributors",
     isComplete: (state) =>
-      (state?.mMSourceContributions?.selectedContributions?.length || 0) > 0 &&
-      state?.formInfos?.allSourceContributionsDone === true,
+      (state?.mMSourceContributions?.selectedContributions?.length || 0) > 0,
     Component: MMSourceContributions,
   },
   {
