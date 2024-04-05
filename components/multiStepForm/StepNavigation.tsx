@@ -2,6 +2,7 @@ import {
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
+import ArrowLeftIcon from "@/components/svg/ArrowLeftIcon";
 
 function StepNavigation(
   props: Readonly<{
@@ -30,7 +31,8 @@ function StepNavigation(
         disabled={isSubmitting}
         onClick={goToPrevStep}
       >
-        Previous
+        <ArrowLeftIcon className="w-5 h-5 mr-2" />
+        Back
       </button>
       <button
         className="btn btn-primary"
