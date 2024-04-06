@@ -101,6 +101,32 @@ const HelpDrawer = () => {
                 important and give the possibility to indicate that the composer
                 or any other person is the provider of the MM Source.
               </p>
+              <p>
+                A{" "}
+                <strong>
+                  <dfn>Piece Version</dfn>
+                </strong>{" "}
+                is the structure of a the piece in terms of movements (if any)
+                and sections.
+              </p>
+              <p>
+                A{" "}
+                <strong>
+                  <dfn>Section</dfn>
+                </strong>{" "}
+                is defined by three characteristics:
+              </p>
+              <ul>
+                <li>time signature</li>
+                <li>tempo indication</li>
+                <li>metronome mark</li>
+              </ul>
+              <p>
+                Each time one of them changes, you need to define a new section.
+                For each section created, you will register the maximum number
+                of notes per bar concerning structural, staccato, repeated and
+                ornamental notes.
+              </p>
             </div>
           </div>
         </div>

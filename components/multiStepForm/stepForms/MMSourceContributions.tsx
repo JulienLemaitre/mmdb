@@ -19,7 +19,7 @@ export default function MMSourceContributions() {
 
   const onSubmit = (selectedContributions: ContributionStateWithoutId[]) => {
     updateFeedForm(dispatch, "mMSourceContributions", {
-      selectedContributions,
+      array: selectedContributions,
       next: true,
     });
   };
@@ -41,7 +41,7 @@ export default function MMSourceContributions() {
 
   return (
     <SourceContributionSelectForm
-      contributions={state.mMSourceContributions?.selectedContributions}
+      contributions={state.mMSourceContributions}
       persons={persons}
       organizations={organizations}
       onSubmit={onSubmit}

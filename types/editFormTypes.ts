@@ -48,8 +48,9 @@ export type PersonState = {
   lastName: string;
   birthYear: number;
   deathYear: number | null;
-};
-export type ComposerState = PersonState & IsNewProp;
+} & IsNewProp;
+// export type ComposerState = PersonState & IsNewProp;
+// export type NewPersonState = PersonState & { isNew: true };
 export type OrganizationState = {
   id: string;
   name: string;
@@ -65,9 +66,9 @@ export type ContributionState =
       role: CONTRIBUTION_ROLE;
       organization: OrganizationState;
     } & IsNewProp);
-export type MMSourceContributionsState = {
-  selectedContributions: ContributionState[];
-};
+
+export type MMSourceContributionsState = ContributionState[];
+
 export type ContributionStateWithoutId =
   | {
       person: PersonState;
@@ -83,6 +84,7 @@ export type PieceState = Pick<
   "id" | "nickname" | "yearOfComposition" | "title"
 > &
   IsNewProp;
+// export type NewPieceState = PieceState & { isNew: true };
 
 export type SectionState = Pick<
   Section,
@@ -109,6 +111,7 @@ export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {
 export type PieceVersionState = Pick<PieceVersion, "id" | "category"> & {
   movements: MovementState[];
 } & IsNewProp;
+export type NewPieceVersionState = PieceVersionState & { isNew: true };
 
 export type ReferenceState = Pick<Reference, "type" | "reference">;
 export type MMSourceDescriptionState = Pick<

@@ -8,9 +8,9 @@ export const steps: FeedStateEntity[] = [
   {
     rank: 0,
     id: "intro",
-    actionTypes: ["formInfos"],
+    actionTypes: ["formInfo"],
     title: "Introduction",
-    isComplete: (state) => state?.formInfos?.introDone === true,
+    isComplete: (state) => state?.formInfo?.introDone === true,
     Component: Intro,
   },
   {
@@ -24,35 +24,34 @@ export const steps: FeedStateEntity[] = [
   {
     rank: 2,
     id: "mMSourceContributions",
-    actionTypes: ["mMSourceContributions", "formInfos"],
+    actionTypes: ["mMSourceContributions", "formInfo"],
     title: "MM Source contributors",
-    isComplete: (state) =>
-      (state?.mMSourceContributions?.selectedContributions?.length || 0) > 0,
+    isComplete: (state) => (state?.mMSourceContributions?.length || 0) > 0,
     Component: MMSourceContributions,
   },
   {
     rank: 3,
     id: "mMSourcePieceVersions",
-    actionTypes: ["mMSourcePieceVersions", "formInfos"],
+    actionTypes: ["mMSourcePieceVersions", "formInfo"],
     title: "Pieces and Versions",
     isComplete: (state) =>
       (state?.mMSourcePieceVersions?.length || 0) > 0 &&
-      !!state?.formInfos?.allSourcePieceVersionsDone,
+      !!state?.formInfo?.allSourcePieceVersionsDone,
     Component: MMSourcePieceVersions,
   },
   {
     rank: 4,
     id: "metronomeMarks",
-    actionTypes: ["metronomeMarks", "formInfos"],
+    actionTypes: ["metronomeMarks", "formInfo"],
     title: "Metronome Marks",
     isComplete: (state) =>
       (state?.metronomeMarks?.length || 0) > 0 &&
-      !!state?.formInfos?.allMetronomeMarksDone,
+      !!state?.formInfo?.allMetronomeMarksDone,
   },
   {
     rank: 5,
     id: "summary",
-    actionTypes: ["formInfos"],
+    actionTypes: ["formInfo"],
     title: "Summary",
     isComplete: () => false,
   },

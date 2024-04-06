@@ -31,7 +31,10 @@ const Intro = () => {
       <button
         className="btn btn-primary"
         onClick={() =>
-          updateFeedForm(dispatch, "formInfos", { introDone: true, next: true })
+          updateFeedForm(dispatch, "formInfo", {
+            value: { introDone: true },
+            next: true,
+          })
         }
       >
         Begin now!

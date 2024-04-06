@@ -26,12 +26,14 @@ const MMSourceDescription = () => {
     });
 
     sourceDescriptionState.isNew = true;
-    sourceDescriptionState.next = true;
     console.log(
       "source description to be stored in state",
       sourceDescriptionState,
     );
-    updateFeedForm(dispatch, "mMSourceDescription", sourceDescriptionState);
+    updateFeedForm(dispatch, "mMSourceDescription", {
+      value: sourceDescriptionState,
+      next: true,
+    });
   };
 
   const sourceDescriptionInput = getSourceDescriptionInputFromState(

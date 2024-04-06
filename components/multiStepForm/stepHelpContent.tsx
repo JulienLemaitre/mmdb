@@ -1,7 +1,7 @@
 import React from "react";
 
 export const stepHelpContent = {
-  // 0: <>Voici un exemple</>,
+  // Source description
   1: (
     <>
       <h2>
@@ -26,6 +26,7 @@ export const stepHelpContent = {
       </p>
     </>
   ),
+  // contributions
   2: (
     <>
       <h2>
@@ -43,24 +44,35 @@ export const stepHelpContent = {
       </p>
     </>
   ),
+  // Pieces and versions
   3: (
     <>
       <h2>
-        3 - List the pieces that composes the{" "}
+        3 - Pieces and Versions contained in the{" "}
         <i>
           <abbr title="Metronome Mark">MM</abbr> Source
         </i>
       </h2>
       <p>
-        You will list in order the <i>pieces</i> that appear in the{" "}
+        In this section you will describe, in order, the <i>pieces</i> that are
+        part of your{" "}
         <i>
           <abbr title="Metronome Mark">MM</abbr> Source.
         </i>
       </p>
-      <p>
-        If these pieces don&apos;t yet exist in our data, you will be guided to
-        describe it in details.
-      </p>
+      <h3>For a given piece</h3>
+      <ol>
+        <li>
+          {/*<p>*/}
+          {`- You will first search for it in the data we already have. If you don't find it there, you will have to register it.`}
+          {/*</p>*/}
+        </li>
+        <li>
+          {/*<p>*/}
+          {`- Then, the piece already exist in the database, you will be presented with a list of versions that are already registered for it. If one correspond to your case, select it. If none of them correspond, or if the piece itself was not present in the database, you will describe the version you have in hand.`}
+          {/*</p>*/}
+        </li>
+      </ol>
     </>
   ),
   4: <>Section 4 help</>,
