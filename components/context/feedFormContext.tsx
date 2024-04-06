@@ -52,7 +52,7 @@ export type FeedFormState = {
 };
 type FeedFormProviderProps = { children: ReactNode };
 
-const INITIAL_STATE: FeedFormState = {
+const TEST_STATE: FeedFormState = {
   formInfo: {
     currentStepRank: 3,
     introDone: true,
@@ -92,18 +92,18 @@ const INITIAL_STATE: FeedFormState = {
   pieceVersions: [],
   metronomeMarks: [],
 };
-// const INITIAL_STATE: FeedFormState = {
-//   formInfo: {
-//     currentStepRank: 0,
-//   },
-//   mMSourceDescription: undefined,
-//   mMSourceContributions: [],
-//   mMSourcePieceVersions: [],
-//   persons: [],
-//   pieces: [],
-//   pieceVersions: [],
-//   metronomeMarks: [],
-// };
+const INITIAL_STATE: FeedFormState = TEST_STATE || {
+  formInfo: {
+    currentStepRank: 0,
+  },
+  mMSourceDescription: undefined,
+  mMSourceContributions: [],
+  mMSourcePieceVersions: [],
+  persons: [],
+  pieces: [],
+  pieceVersions: [],
+  metronomeMarks: [],
+};
 const LOCAL_STORAGE_KEY = "feedForm";
 const USE_LOCAL_STORAGE = false;
 const allowedActions = new Set();

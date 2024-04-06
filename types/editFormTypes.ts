@@ -57,12 +57,12 @@ export type OrganizationState = {
 };
 export type ContributionState =
   | ({
-      id: string;
+      id?: string;
       role: CONTRIBUTION_ROLE;
       person: PersonState;
     } & IsNewProp)
   | ({
-      id: string;
+      id?: string;
       role: CONTRIBUTION_ROLE;
       organization: OrganizationState;
     } & IsNewProp);

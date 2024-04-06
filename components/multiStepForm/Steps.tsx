@@ -15,7 +15,8 @@ import {
 import { steps } from "@/components/multiStepForm/constants";
 
 const Steps = () => {
-  const { currentStepRank, dispatch, lastCompletedStepRank } = useFeedForm();
+  const { currentStepRank, dispatch, lastCompletedStepRank, state } =
+    useFeedForm();
 
   const goToStep = (stepRank: number) => {
     if (
