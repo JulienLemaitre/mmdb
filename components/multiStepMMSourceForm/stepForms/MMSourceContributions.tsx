@@ -6,7 +6,7 @@ import {
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
-import { getStepByRank } from "@/components/multiStepForm/constants";
+import { getStepByRank } from "@/components/multiStepMMSourceForm/constants";
 import { ContributionStateWithoutId } from "@/types/editFormTypes";
 import SourceContributionSelectForm from "@/components/entities/source-contributions/create/SourceContributionSelectForm";
 

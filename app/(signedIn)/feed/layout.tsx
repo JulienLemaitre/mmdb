@@ -2,7 +2,7 @@ import { FeedFormProvider } from "@/components/context/feedFormContext";
 import NavBar from "@/app/NavBar";
 import React from "react";
 import HelpDrawer from "@/components/HelpDrawer";
-import Steps from "@/components/multiStepForm/Steps";
+import Steps from "@/components/multiStepMMSourceForm/Steps";
 
 export const dynamic = "force-dynamic";
 

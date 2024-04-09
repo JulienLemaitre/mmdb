@@ -3,7 +3,7 @@
 import React from "react";
 import { useFeedForm } from "@/components/context/feedFormContext";
 // import Loader from "@/components/Loader";
-import { getStepByRank } from "@/components/multiStepForm/constants";
+import { getStepByRank } from "@/components/multiStepMMSourceForm/constants";
 
 const FeedPage = () => {
   const { currentStepRank } = useFeedForm();

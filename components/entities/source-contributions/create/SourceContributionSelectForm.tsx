@@ -8,7 +8,7 @@ import { useState } from "react";
 import PlusIcon from "@/components/svg/PlusIcon";
 import SourceContributionSelect from "@/components/entities/source-contributions/create/SourceContributionSelect";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
-import StepNavigation from "@/components/multiStepForm/StepNavigation";
+import StepNavigation from "@/components/multiStepMMSourceForm/StepNavigation";
 
 type SourceContributionSelectFormProps = {
   contributions?: ContributionStateWithoutId[];

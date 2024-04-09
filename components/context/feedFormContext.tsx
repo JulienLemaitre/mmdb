@@ -17,7 +17,7 @@ import {
   MMSourceDescriptionState,
   MMSourcePieceVersionsState,
 } from "@/types/editFormTypes";
-import { steps } from "@/components/multiStepForm/constants";
+import { steps } from "@/components/multiStepMMSourceForm/constants";
 
 type PieceFormAction =
   | { type: "init"; payload: any }

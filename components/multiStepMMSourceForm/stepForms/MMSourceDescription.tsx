@@ -3,7 +3,7 @@ import { SourceDescriptionInput } from "@/types/editFormTypes";
 import getSourceDescriptionStateFromInput from "@/utils/getSourceDescriptionStateFromInput";
 import { updateFeedForm } from "@/components/context/feedFormContext";
 import { useFeedForm } from "@/components/context/feedFormContext";
-import { getStepByRank } from "@/components/multiStepForm/constants";
+import { getStepByRank } from "@/components/multiStepMMSourceForm/constants";
 import getSourceDescriptionInputFromState from "@/utils/getSourceDescriptionInputFromState";
 
 const MMSourceDescription = () => {

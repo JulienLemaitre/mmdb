@@ -8,7 +8,7 @@ import { zodYear } from "@/utils/zodTypes";
 import { SOURCE_TYPE } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import ReferenceArray from "@/components/ReactHookForm/ReferenceArray";
-import StepNavigation from "@/components/multiStepForm/StepNavigation";
+import StepNavigation from "@/components/multiStepMMSourceForm/StepNavigation";
 
 const SourceSchema = z.object({
   title: z.string().optional(),

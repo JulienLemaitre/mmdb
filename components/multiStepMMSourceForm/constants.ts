@@ -1,8 +1,8 @@
 import { FeedStateEntity } from "@/types/editFormTypes";
-import Intro from "@/components/multiStepForm/stepForms/Intro";
-import MMSourceDescription from "@/components/multiStepForm/stepForms/MMSourceDescription";
-import MMSourceContributions from "@/components/multiStepForm/stepForms/MMSourceContributions";
-import MMSourcePieceVersions from "@/components/multiStepForm/stepForms/MMSourcePieceVersions";
+import Intro from "@/components/multiStepMMSourceForm/stepForms/Intro";
+import MMSourceDescription from "@/components/multiStepMMSourceForm/stepForms/MMSourceDescription";
+import MMSourceContributions from "@/components/multiStepMMSourceForm/stepForms/MMSourceContributions";
+import MMSourcePieceVersions from "@/components/multiStepMMSourceForm/stepForms/MMSourcePieceVersions";
 
 export const steps: FeedStateEntity[] = [
   {
