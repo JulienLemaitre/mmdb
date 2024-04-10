@@ -6,13 +6,13 @@ import {
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
-import { getStepByRank } from "@/components/multiStepMMSourceForm/constants";
+import { getStepByRank } from "@/components/multiStepMMSourceForm/stepsUtils";
 import { ContributionStateWithoutId } from "@/types/editFormTypes";
 import SourceContributionSelectForm from "@/components/entities/source-contributions/create/SourceContributionSelectForm";
 
 export default function MMSourceContributions() {
   const [data, setData] = useState(null);
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { dispatch, currentStepRank, state } = useFeedForm();
   const step = getStepByRank(currentStepRank);
@@ -29,7 +29,7 @@ export default function MMSourceContributions() {
       .then((res) => res.json())
       .then((data) => {
         setData(data);
-        setLoading(false);
+        setIsLoading(false);
       });
   }, []);
 

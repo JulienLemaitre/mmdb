@@ -1,10 +1,10 @@
-import { FeedStateEntity } from "@/types/editFormTypes";
+import { FeedFormStep } from "@/types/editFormTypes";
 import Intro from "@/components/multiStepMMSourceForm/stepForms/Intro";
 import MMSourceDescription from "@/components/multiStepMMSourceForm/stepForms/MMSourceDescription";
 import MMSourceContributions from "@/components/multiStepMMSourceForm/stepForms/MMSourceContributions";
 import MMSourcePieceVersions from "@/components/multiStepMMSourceForm/stepForms/MMSourcePieceVersions";
 
-export const steps: FeedStateEntity[] = [
+export const steps: FeedFormStep[] = [
   {
     rank: 0,
     id: "intro",
@@ -32,7 +32,11 @@ export const steps: FeedStateEntity[] = [
   {
     rank: 3,
     id: "mMSourcePieceVersions",
-    actionTypes: ["mMSourcePieceVersions", "formInfo"],
+    actionTypes: [
+      "mMSourcePieceVersions",
+      "formInfo",
+      "editedSourceOnPieceVersions",
+    ],
     title: "Pieces and Versions",
     isComplete: (state) =>
       (state?.mMSourcePieceVersions?.length || 0) > 0 &&
@@ -57,9 +61,9 @@ export const steps: FeedStateEntity[] = [
   },
 ];
 
-export function getStepById(stepId: string): FeedStateEntity {
+export function getStepById(stepId: string): FeedFormStep {
   return steps.find((step) => step.id === stepId) || steps[0];
 }
-export function getStepByRank(rank: number): FeedStateEntity {
+export function getStepByRank(rank: number): FeedFormStep {
   return steps.find((step) => step.rank === rank) || steps[0];
 }

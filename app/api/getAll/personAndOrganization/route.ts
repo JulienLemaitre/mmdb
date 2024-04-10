@@ -2,7 +2,7 @@ import { db } from "@/utils/db";
 
 export async function GET(request: Request) {
   // Fetch all persons
-  const personsFecth = db.person.findMany({
+  const personsFetch = db.person.findMany({
     select: {
       id: true,
       firstName: true,
@@ -21,7 +21,7 @@ export async function GET(request: Request) {
   });
 
   const [persons, organizations] = await Promise.all([
-    personsFecth,
+    personsFetch,
     organizationsFetch,
   ]);
 

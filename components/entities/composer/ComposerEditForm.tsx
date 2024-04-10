@@ -1,4 +1,3 @@
-"use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonInput } from "@/types/editFormTypes";
@@ -18,8 +17,10 @@ const PersonSchema = zodPerson;
 
 export default function ComposerEditForm({
   composer,
+  onComposerCreated,
 }: Readonly<{
   composer?: PersonInput;
+  onComposerCreated: (composer: PersonInput) => void;
 }>) {
   const router = useRouter();
   const { dispatch } = useEditForm();
@@ -82,7 +83,7 @@ export default function ComposerEditForm({
       } a composer`}</h1>
       <form
         // className="flex flex-col items-center justify-center"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onComposerCreated)}
       >
         <FormInput
           name="firstName"

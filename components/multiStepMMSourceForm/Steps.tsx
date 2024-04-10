@@ -12,7 +12,7 @@ import {
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
-import { steps } from "@/components/multiStepMMSourceForm/constants";
+import { steps } from "@/components/multiStepMMSourceForm/stepsUtils";
 
 const Steps = () => {
   const { currentStepRank, dispatch, lastCompletedStepRank, state } =
