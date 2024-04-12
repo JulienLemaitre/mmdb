@@ -12,7 +12,10 @@ import type {
   TempoIndication,
   MMSourcesOnPieceVersions,
 } from "@prisma/client";
-import { FeedFormState } from "@/components/context/feedFormContext";
+import {
+  EditedSourceOnPieceVersionsState,
+  FeedFormState,
+} from "@/components/context/feedFormContext";
 import { FC } from "react";
 
 // Sub-Types
@@ -28,12 +31,19 @@ export type StateEntity = {
   segment: string;
   path: string;
 };
-export type FeedStateEntity = {
+export type FeedFormStep = {
   rank: number;
   id: string;
   actionTypes: string[];
   title: string;
   isComplete: (state: FeedFormState) => boolean;
+  Component?: FC;
+};
+export type SourceOnPieceVersionFormStep = {
+  id: string;
+  name: string;
+  rank: number;
+  isComplete: (state: EditedSourceOnPieceVersionsState) => boolean;
   Component?: FC;
 };
 export type IsNewProp = {
@@ -78,6 +88,12 @@ export type ContributionStateWithoutId =
       organization: OrganizationState;
       role: CONTRIBUTION_ROLE;
     };
+
+// export type SourceOnPieceVersionState = {
+//   sourceId: string;
+//   pieceVersionId: string;
+//   rank: number;
+// };
 
 export type PieceState = Pick<
   Piece,
