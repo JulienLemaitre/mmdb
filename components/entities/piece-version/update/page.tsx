@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { PieceVersionState } from "@/types/editFormTypes";
+import { PieceVersionState } from "@/types/formTypes";
 import Loader from "@/components/Loader";
 import PieceVersionEditForm from "@/components/entities/piece-version/PieceVersionEditForm";
 import { useEditForm } from "@/components/context/editFormContext";

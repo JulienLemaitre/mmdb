@@ -7,7 +7,6 @@ import {
   useEffect,
 } from "react";
 import {
-  // ComposerState,
   PersonState,
   FeedFormStep,
   MetronomeMarkState,
@@ -16,7 +15,7 @@ import {
   NewPieceVersionState,
   MMSourceDescriptionState,
   MMSourcePieceVersionsState,
-} from "@/types/editFormTypes";
+} from "@/types/formTypes";
 import { steps } from "@/components/multiStepMMSourceForm/stepsUtils";
 
 type PieceFormAction =
@@ -41,16 +40,16 @@ type FeedFormInfo = {
   allMetronomeMarksDone?: boolean;
   allSourceContributionsDone?: boolean;
 };
-export type EditedSourceOnPieceVersionsState = {
-  composerId?: string;
-  isCollection?: boolean;
-};
+// export type EditedSourceOnPieceVersionsState = {
+//   composerId?: string;
+//   isCollection?: boolean;
+// };
 export type FeedFormState = {
   formInfo?: FeedFormInfo;
   mMSourceDescription?: MMSourceDescriptionState;
   mMSourceContributions?: MMSourceContributionsState;
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
-  editedSourceOnPieceVersions?: EditedSourceOnPieceVersionsState;
+  // editedSourceOnPieceVersions?: EditedSourceOnPieceVersionsState;
   persons?: PersonState[];
   pieces?: PieceState[];
   pieceVersions?: NewPieceVersionState[];
@@ -241,11 +240,11 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
     //   }
     // }
 
-    localStorageSetItem("feedForm", newState);
+    localStorageSetItem(LOCAL_STORAGE_KEY, newState);
     return newState;
   }
   if (action.type === "init") {
-    localStorageSetItem("feedForm", action.payload || INITIAL_STATE);
+    localStorageSetItem(LOCAL_STORAGE_KEY, action.payload || INITIAL_STATE);
     return action.payload || INITIAL_STATE;
   }
   throw new Error(`Unhandled action type: ${action.type}`);
@@ -285,7 +284,7 @@ export function useFeedForm() {
   if (context === undefined) {
     throw new Error("useFeedForm must be used within a FeedFormProvider");
   }
-  const lastCompletedStep = getLastCompletedStepId(context.state);
+  const lastCompletedStep = getLastCompletedStep(context.state);
   // console.log(`[useFeedForm] lastCompletedStep :`, lastCompletedStep);
   const nextStep = steps[lastCompletedStep ? lastCompletedStep?.rank + 1 : 0];
   return {
@@ -306,11 +305,9 @@ export function initFeedForm(dispatch, initialState = INITIAL_STATE) {
   dispatch({ type: "init", payload: initialState });
 }
 
-function getLastCompletedStepId(
-  state: FeedFormState,
-): FeedFormStep | undefined {
+function getLastCompletedStep(state: FeedFormState): FeedFormStep | undefined {
   // traversing the steps array, we return the step before the first incomplete one id
-  // console.group(`getLastCompletedStepId`);
+  // console.group(`getLastCompletedStep`);
   for (let i = 0; i < steps.length; i++) {
     // console.log(`steps[${i}] isComplete :`, steps[i].isComplete(state));
     if (!steps[i].isComplete(state)) {

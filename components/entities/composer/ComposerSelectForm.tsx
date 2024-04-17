@@ -1,6 +1,6 @@
 import ComposerSelect from "@/components/entities/composer/ComposerSelect";
 import { useState } from "react";
-import { PersonState } from "@/types/editFormTypes";
+import { PersonState } from "@/types/formTypes";
 
 type ComposerSelectFormProps = {
   composers: PersonState[];

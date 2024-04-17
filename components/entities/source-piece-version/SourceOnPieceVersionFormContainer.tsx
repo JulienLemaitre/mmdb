@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MMSourcePieceVersionsState } from "@/types/editFormTypes";
+import { MMSourcePieceVersionsState } from "@/types/formTypes";
 import PlusIcon from "@/components/svg/PlusIcon";
 import StepNavigation from "@/components/multiStepMMSourceForm/StepNavigation";
 import SourceOnPieceVersionForm from "@/components/multiStepSourcePieceVersionsForm/SourceOnPieceVersionForm";

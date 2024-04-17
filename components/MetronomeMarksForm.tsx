@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { MetronomeMarksInput, SectionState } from "@/types/editFormTypes";
+import { MetronomeMarksInput, SectionState } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MetronomeMarkArray from "@/components/ReactHookForm/MetronomeMarkArray";
 import { z } from "zod";

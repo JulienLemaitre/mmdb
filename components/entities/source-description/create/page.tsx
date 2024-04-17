@@ -2,7 +2,7 @@
 
 import SourceDescriptionEditForm from "@/components/entities/source-description/SourceDescriptionEditForm";
 import getSourceDescriptionStateFromInput from "@/utils/getSourceDescriptionStateFromInput";
-import { SourceDescriptionInput } from "@/types/editFormTypes";
+import { SourceDescriptionInput } from "@/types/formTypes";
 import {
   updateEditForm,
   useEditForm,

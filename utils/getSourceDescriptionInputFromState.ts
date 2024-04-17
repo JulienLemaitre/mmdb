@@ -1,7 +1,7 @@
 import {
   SourceDescriptionInput,
   MMSourceDescriptionState,
-} from "@/types/editFormTypes";
+} from "@/types/formTypes";
 
 export default function getSourceDescriptionInputFromState(
   sourceDescription?: MMSourceDescriptionState,

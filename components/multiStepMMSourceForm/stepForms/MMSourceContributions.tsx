@@ -7,7 +7,7 @@ import {
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import { getStepByRank } from "@/components/multiStepMMSourceForm/stepsUtils";
-import { ContributionStateWithoutId } from "@/types/editFormTypes";
+import { ContributionStateWithoutId } from "@/types/formTypes";
 import SourceContributionSelectForm from "@/components/entities/source-contributions/create/SourceContributionSelectForm";
 
 export default function MMSourceContributions() {

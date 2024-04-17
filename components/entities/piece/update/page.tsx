@@ -3,7 +3,7 @@
 import PieceEditForm from "@/components/entities/piece/PieceEditForm";
 import { useEditForm } from "../../../context/editFormContext";
 import { useEffect, useState } from "react";
-import { PieceState } from "@/types/editFormTypes";
+import { PieceState } from "@/types/formTypes";
 import Loader from "@/components/Loader";
 
 export default function PieceUpdate({ searchParams: { pieceId } }) {

@@ -7,14 +7,14 @@ import {
   useEffect,
 } from "react";
 import {
-  ComposerState,
+  PersonState,
   ContributionState,
   MetronomeMarkState,
   PieceState,
   PieceVersionState,
   MMSourceDescriptionState,
   StateEntity,
-} from "@/types/editFormTypes";
+} from "@/types/formTypes";
 
 type PieceFormAction =
   | { type: "init"; payload: any }
@@ -26,7 +26,7 @@ type PieceFormAction =
   | { type: "metronomeMarks"; payload: any };
 type Dispatch = (action: PieceFormAction) => void;
 type EditFormState = {
-  composer?: ComposerState;
+  composer?: PersonState;
   piece?: PieceState;
   pieceVersion?: PieceVersionState;
   sourceDescription?: MMSourceDescriptionState;

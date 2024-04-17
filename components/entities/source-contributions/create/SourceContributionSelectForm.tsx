@@ -3,7 +3,7 @@ import {
   OptionInput,
   OrganizationState,
   PersonState,
-} from "@/types/editFormTypes";
+} from "@/types/formTypes";
 import { useState } from "react";
 import PlusIcon from "@/components/svg/PlusIcon";
 import SourceContributionSelect from "@/components/entities/source-contributions/create/SourceContributionSelect";

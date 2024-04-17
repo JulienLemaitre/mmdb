@@ -1,4 +1,4 @@
-import { PieceInput, PieceState } from "@/types/editFormTypes";
+import { PieceInput, PieceState } from "@/types/formTypes";
 
 export default function getPieceInputFromPieceState(
   pieceState: PieceState,

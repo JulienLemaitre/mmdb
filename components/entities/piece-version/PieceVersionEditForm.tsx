@@ -14,7 +14,7 @@ import {
   OptionInput,
   PieceVersionInput,
   PieceVersionState,
-} from "@/types/editFormTypes";
+} from "@/types/formTypes";
 import {
   URL_CREATE_SOURCE_DESCRIPTION,
   URL_SELECT_PIECE,

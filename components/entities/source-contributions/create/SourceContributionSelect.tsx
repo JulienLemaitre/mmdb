@@ -4,7 +4,7 @@ import {
   OptionInput,
   OrganizationState,
   PersonState,
-} from "@/types/editFormTypes";
+} from "@/types/formTypes";
 import { useCallback, useEffect, useState } from "react";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
 import NewSourceContributionForm from "@/components/entities/source-contributions/create/NewSourceContributionForm";

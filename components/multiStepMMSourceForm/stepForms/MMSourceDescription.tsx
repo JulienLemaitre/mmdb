@@ -1,5 +1,5 @@
 import SourceDescriptionEditForm from "@/components/entities/source-description/SourceDescriptionEditForm";
-import { SourceDescriptionInput } from "@/types/editFormTypes";
+import { SourceDescriptionInput } from "@/types/formTypes";
 import getSourceDescriptionStateFromInput from "@/utils/getSourceDescriptionStateFromInput";
 import { updateFeedForm } from "@/components/context/feedFormContext";
 import { useFeedForm } from "@/components/context/feedFormContext";

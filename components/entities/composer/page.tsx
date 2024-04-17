@@ -33,7 +33,10 @@ export default async function Composer() {
         {`Search by typing the name.
           If it is not listed yet, you will be able to create it.`}
       </p>
-      <ComposerSelectForm composers={composers} />
+      <ComposerSelectForm
+        composers={composers}
+        onComposerSelect={(composer) => {}}
+      />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 // "use client";
 import Select from "@/components/ReactSelect/Select";
-import { PieceState } from "@/types/editFormTypes";
+import { PieceState } from "@/types/formTypes";
 import { URL_CREATE_PIECE } from "@/utils/routes";
 import { useRouter } from "next/navigation";
 import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";

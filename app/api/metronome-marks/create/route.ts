@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/db";
-import { MetronomeMarksInput } from "@/types/editFormTypes";
+import { MetronomeMarksInput } from "@/types/formTypes";
 import isReqAuthorized from "@/utils/isReqAuthorized";
 
 export async function POST(req: NextRequest) {

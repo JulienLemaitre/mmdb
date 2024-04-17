@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { ContributionInput } from "@/types/editFormTypes";
+import { ContributionInput } from "@/types/formTypes";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";

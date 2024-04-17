@@ -1,4 +1,4 @@
-import { FeedFormStep } from "@/types/editFormTypes";
+import { FeedFormStep } from "@/types/formTypes";
 import Intro from "@/components/multiStepMMSourceForm/stepForms/Intro";
 import MMSourceDescription from "@/components/multiStepMMSourceForm/stepForms/MMSourceDescription";
 import MMSourceContributions from "@/components/multiStepMMSourceForm/stepForms/MMSourceContributions";

@@ -9,7 +9,7 @@ import {
 } from "@/components/context/editFormContext";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
-import { PieceInput } from "@/types/editFormTypes";
+import { PieceInput } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { fetchAPI } from "@/utils/fetchAPI";
 import { URL_CREATE_PIECE_VERSION, URL_SELECT_COMPOSER } from "@/utils/routes";

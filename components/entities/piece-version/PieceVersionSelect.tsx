@@ -1,5 +1,5 @@
 // "use client";
-import { PieceVersionState } from "@/types/editFormTypes";
+import { PieceVersionState } from "@/types/formTypes";
 
 type PieceVersionSelectProps = {
   pieceVersions: PieceVersionState[];

@@ -5,7 +5,7 @@ import {
   SectionInput,
   SectionState,
   MovementState,
-} from "@/types/editFormTypes";
+} from "@/types/formTypes";
 
 function getSectionInputFromSectionState(sectionState: SectionState) {
   const sectionInput: SectionInput = {

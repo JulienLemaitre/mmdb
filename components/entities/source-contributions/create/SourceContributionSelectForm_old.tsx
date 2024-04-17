@@ -4,7 +4,7 @@ import {
   OptionInput,
   OrganizationState,
   PersonState,
-} from "@/types/editFormTypes";
+} from "@/types/formTypes";
 import {
   updateEditForm,
   useEditForm,

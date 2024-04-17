@@ -5,8 +5,9 @@ import {
 } from "@/components/context/feedFormContext";
 import QuestionMarkCircleIcon from "@/components/svg/QuestionMarkCircleIcon";
 import { getStepByRank } from "@/components/multiStepMMSourceForm/stepsUtils";
-import { MMSourcePieceVersionsState } from "@/types/editFormTypes";
+import { MMSourcePieceVersionsState } from "@/types/formTypes";
 import SourceOnPieceVersionFormContainer from "@/components/entities/source-piece-version/SourceOnPieceVersionFormContainer";
+import { SourceOnPieceVersionsFormProvider } from "@/components/context/SourceOnPieceVersionFormContext";
 
 const MMSourcePieceVersions = () => {
   const { dispatch, currentStepRank, state } = useFeedForm();
@@ -37,12 +38,14 @@ const MMSourcePieceVersions = () => {
           button here or in the header.
         </p>
       </div>
-      <SourceOnPieceVersionFormContainer
-        sourcePieceVersions={state.mMSourcePieceVersions}
-        onSubmit={onSubmit}
-        title={step.title}
-        submitTitle={step.title}
-      />
+      <SourceOnPieceVersionsFormProvider>
+        <SourceOnPieceVersionFormContainer
+          sourcePieceVersions={state.mMSourcePieceVersions}
+          onSubmit={onSubmit}
+          title={step.title}
+          submitTitle={step.title}
+        />
+      </SourceOnPieceVersionsFormProvider>
     </>
   );
 };

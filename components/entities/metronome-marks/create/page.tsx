@@ -1,6 +1,6 @@
 "use client";
 import { useEditForm } from "@/components/context/editFormContext";
-import { MovementState, SectionState } from "@/types/editFormTypes";
+import { MovementState, SectionState } from "@/types/formTypes";
 import MetronomeMarksForm from "@/components/MetronomeMarksForm";
 
 export default function CreateMetronomeMarks() {

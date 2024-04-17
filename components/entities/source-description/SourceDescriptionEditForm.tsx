@@ -1,7 +1,7 @@
 "use client";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { SourceDescriptionInput } from "@/types/editFormTypes";
+import { SourceDescriptionInput } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import { zodYear } from "@/utils/zodTypes";

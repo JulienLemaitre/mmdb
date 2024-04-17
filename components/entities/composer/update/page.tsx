@@ -3,12 +3,12 @@
 import ComposerEditForm from "@/components/entities/composer/ComposerEditForm";
 import { useEditForm } from "@/components/context/editFormContext";
 import { useEffect, useState } from "react";
-import { ComposerState } from "@/types/editFormTypes";
+import { PersonState } from "@/types/formTypes";
 import Loader from "@/components/Loader";
 
 export default function ComposerUpdate({ searchParams: { personId } }) {
   const { state } = useEditForm();
-  const [composer, setComposer] = useState<ComposerState | null>(null);
+  const [composer, setComposer] = useState<PersonState | null>(null);
   const [isComposerInitialized, setIsComposerInitialized] = useState(false);
 
   useEffect(() => {
@@ -66,5 +66,5 @@ export default function ComposerUpdate({ searchParams: { personId } }) {
 
   console.log(`[ComposerUpdate] initial composer value :`, composer);
 
-  return <ComposerEditForm composer={composer} />;
+  return <ComposerEditForm composer={composer} onSubmit={(composer) => {}} />;
 }

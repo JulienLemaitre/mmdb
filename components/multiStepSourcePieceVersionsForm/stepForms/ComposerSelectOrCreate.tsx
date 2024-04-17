@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Person } from "@prisma/client";
+import Loader from "@/components/Loader";
+import ComposerSelectForm from "@/components/entities/composer/ComposerSelectForm";
+import ComposerEditForm from "@/components/entities/composer/ComposerEditForm";
+import { PersonInput, PersonState } from "@/types/formTypes";
+import {
+  useSourceOnPieceVersionsForm,
+  updateSourceOnPieceVersionsForm,
+} from "@/components/context/SourceOnPieceVersionFormContext";
 import {
   useFeedForm,
   updateFeedForm,
 } from "@/components/context/feedFormContext";
-import Loader from "@/components/Loader";
-import ComposerSelectForm from "@/components/entities/composer/ComposerSelectForm";
-import ComposerEditForm from "@/components/entities/composer/ComposerEditForm";
-import { PersonInput, PersonState } from "@/types/editFormTypes";
 
 const ComposerSelectOrCreate = () => {
   const [composers, setComposers] = useState<Person[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreation, setIsCreation] = useState(false);
-  const { state, dispatch } = useFeedForm();
+  const { state, dispatch } = useSourceOnPieceVersionsForm();
+  const { state: feedFormState } = useFeedForm();
   console.log(
     `[SourceOnPieceVersionForm] state.editedSourceOnPieceVersions :`,
-    state.editedSourceOnPieceVersions,
+    state,
   );
-  const selectedComposerId = state.editedSourceOnPieceVersions?.composerId;
-  const newPersons = state.persons;
+  const selectedComposerId = state?.composerId;
+  const newPersons = feedFormState.persons;
   const composerFullList = [...(composers || []), ...(newPersons || [])];
   const selectedComposer: PersonState | undefined = composerFullList.find(
     (composer) => composer.id === selectedComposerId,
@@ -41,17 +46,21 @@ const ComposerSelectOrCreate = () => {
   const onComposerCreated = (composer: PersonInput) => {
     console.log(`[onComposerCreated] composer :`, composer);
     updateFeedForm(dispatch, "persons", composer);
-    updateFeedForm(dispatch, "editedSourceOnPieceVersions", {
-      composerId: composer.id,
+    updateSourceOnPieceVersionsForm(dispatch, "composerId", {
+      value: {
+        composerId: composer.id,
+      },
+      next: true,
     });
   };
 
   const onComposerSelect = (composer: PersonInput) => {
     console.log(`[onComposerSelect] composer :`, composer);
-    updateFeedForm(dispatch, "editedSourceOnPieceVersions", {
+    updateSourceOnPieceVersionsForm(dispatch, "editedSourceOnPieceVersions", {
       value: {
         composerId: composer.id,
       },
+      next: true,
     });
   };
 
@@ -62,7 +71,7 @@ const ComposerSelectOrCreate = () => {
   console.log(`[ComposerSelectOrCreate] composers :`, composers);
 
   return isCreation ? (
-    <ComposerEditForm onComposerCreated={onComposerCreated} />
+    <ComposerEditForm onSubmit={onComposerCreated} />
   ) : (
     <ComposerSelectForm
       composers={composers}

@@ -11,7 +11,7 @@ import {
   URL_SELECT_PIECE,
 } from "@/utils/routes";
 import PieceVersionSelect from "@/components/entities/piece-version/PieceVersionSelect";
-import { PieceVersionState } from "@/types/editFormTypes";
+import { PieceVersionState } from "@/types/formTypes";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import PlusIcon from "@/components/svg/PlusIcon";

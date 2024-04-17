@@ -1,14 +1,14 @@
 // "use client";
 import Select from "@/components/ReactSelect/Select";
-import { ComposerState } from "@/types/editFormTypes";
+import { PersonState } from "@/types/formTypes";
 import { useRouter } from "next/navigation";
 import { URL_CREATE_COMPOSER } from "@/utils/routes";
 import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";
 
 type ComposerSelectProps = {
-  composers: ComposerState[];
+  composers: PersonState[];
   onSelect: (composerId: string) => void;
-  selectedComposer: ComposerState | null;
+  selectedComposer: PersonState | null;
 };
 export default function ComposerSelect({
   composers,
@@ -47,7 +47,7 @@ export default function ComposerSelect({
   );
 }
 
-function getComposerOption(composer: ComposerState) {
+function getComposerOption(composer: PersonState) {
   return {
     value: composer.id,
     label: `${composer.firstName} ${composer.lastName}`,

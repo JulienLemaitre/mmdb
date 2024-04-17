@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/db";
 import isReqAuthorized from "@/utils/isReqAuthorized";
 import getDecodedTokenFromReq from "@/utils/getDecodedTokenFromReq";
-import { ReferenceTypeAndReference } from "@/types/editFormTypes";
+import { ReferenceTypeAndReference } from "@/types/formTypes";
 
 export async function POST(req: NextRequest) {
   if (!isReqAuthorized(req)) {

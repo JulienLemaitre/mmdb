@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PersonInput } from "@/types/editFormTypes";
+import { PersonInput } from "@/types/formTypes";
 import { useRouter } from "next/navigation";
 import { URL_CREATE_PIECE } from "@/utils/routes";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
@@ -17,10 +17,10 @@ const PersonSchema = zodPerson;
 
 export default function ComposerEditForm({
   composer,
-  onComposerCreated,
+  onSubmit,
 }: Readonly<{
   composer?: PersonInput;
-  onComposerCreated: (composer: PersonInput) => void;
+  onSubmit: (composer: PersonInput) => void;
 }>) {
   const router = useRouter();
   const { dispatch } = useEditForm();
@@ -35,7 +35,7 @@ export default function ComposerEditForm({
     ...(composer && { defaultValues: composer }),
   });
 
-  const onSubmit = async (data: PersonInput) => {
+  const onSubmitDefault = async (data: PersonInput) => {
     // Front input values validation is successful at this point.
     console.log("[ComposerEditForm] onSubmit data", data);
     const apiUrl = composer ? `/api/person/update` : "/api/person/create";
@@ -61,7 +61,7 @@ export default function ComposerEditForm({
     }
 
     console.log(`Composer ${composer ? "updated" : "created"}`, editedComposer);
-    const composerState = {
+    const PersonState = {
       id: editedComposer.id,
       firstName: editedComposer.firstName,
       lastName: editedComposer.lastName,
@@ -70,7 +70,7 @@ export default function ComposerEditForm({
       isNew: true,
     };
 
-    updateEditForm(dispatch, "composer", composerState);
+    updateEditForm(dispatch, "composer", PersonState);
     router.push(URL_CREATE_PIECE);
   };
 
@@ -83,7 +83,7 @@ export default function ComposerEditForm({
       } a composer`}</h1>
       <form
         // className="flex flex-col items-center justify-center"
-        onSubmit={handleSubmit(onComposerCreated)}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <FormInput
           name="firstName"

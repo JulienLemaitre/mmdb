@@ -3,7 +3,7 @@
 import SourceDescriptionEditForm from "@/components/entities/source-description/SourceDescriptionEditForm";
 import { useEditForm } from "@/components/context/editFormContext";
 import { useEffect, useState } from "react";
-import { MMSourceDescriptionState } from "@/types/editFormTypes";
+import { MMSourceDescriptionState } from "@/types/formTypes";
 import Loader from "@/components/Loader";
 import getSourceDescriptionInputFromState from "@/utils/getSourceDescriptionInputFromState";
 

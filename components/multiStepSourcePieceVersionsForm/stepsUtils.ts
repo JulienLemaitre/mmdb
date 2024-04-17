@@ -1,35 +1,43 @@
-import { EditedSourceOnPieceVersionsState } from "@/components/context/feedFormContext";
-import { SourceOnPieceVersionFormStep } from "@/types/editFormTypes";
+import { SourceOnPieceVersionsFormStep } from "@/types/formTypes";
 import ComposerSelectOrCreate from "@/components/multiStepSourcePieceVersionsForm/stepForms/ComposerSelectOrCreate";
+import { SourceOnPieceVersionsFormState } from "@/components/context/SourceOnPieceVersionFormContext";
+import SinglePieceOrCollectionSelect from "@/components/multiStepSourcePieceVersionsForm/stepForms/SinglePieceOrCollectionSelect";
 
-export const steps: SourceOnPieceVersionFormStep[] = [
+export const steps: SourceOnPieceVersionsFormStep[] = [
   {
     id: "composer",
     name: "Composer",
     rank: 0,
-    isComplete: (
-      editedSourceOnPieceVersions: EditedSourceOnPieceVersionsState,
-    ) => !!editedSourceOnPieceVersions.composerId,
+    isComplete: (state: SourceOnPieceVersionsFormState) => !!state.composerId,
     Component: ComposerSelectOrCreate,
+    actionTypes: ["composerId", "formInfo"],
+  },
+  {
+    id: "singlePieceOrCollection",
+    name: "Single Piece or Collection",
+    rank: 1,
+    isComplete: (state: SourceOnPieceVersionsFormState) =>
+      typeof state.isCollection === "boolean",
+    Component: SinglePieceOrCollectionSelect,
+    actionTypes: ["formInfo"],
   },
 ];
 
-export function getCompletedSteps(state: any) {
-  const completedSteps = [
-    (editedSourceOnPieceVersions: EditedSourceOnPieceVersionsState) =>
-      !!editedSourceOnPieceVersions.composerId,
-    (editedSourceOnPieceVersions: EditedSourceOnPieceVersionsState) =>
-      !!editedSourceOnPieceVersions.isCollection,
-  ].map((isStepCompleted) =>
-    isStepCompleted(state.editedSourceOnPieceVersions || {}),
+export function getAllowedActions() {
+  const allowedActions = new Set();
+  steps.forEach((step) =>
+    step.actionTypes.forEach((actionType) => allowedActions.add(actionType)),
   );
-
-  return completedSteps;
+  return allowedActions;
 }
 
-export function getStepById(stepId: string): SourceOnPieceVersionFormStep {
+export function getAllStepStatus(state: any) {
+  return steps.map((step) => step.isComplete(state));
+}
+
+export function getStepById(stepId: string): SourceOnPieceVersionsFormStep {
   return steps.find((step) => step.id === stepId) || steps[0];
 }
-export function getStepByRank(rank: number): SourceOnPieceVersionFormStep {
+export function getStepByRank(rank: number): SourceOnPieceVersionsFormStep {
   return steps.find((step) => step.rank === rank) || steps[0];
 }

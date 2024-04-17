@@ -1,4 +1,4 @@
-import { PersonInput, PersonState } from "@/types/editFormTypes";
+import { PersonInput, PersonState } from "@/types/formTypes";
 
 export default function getPersonInputFromPersonState(
   personState: PersonState,
