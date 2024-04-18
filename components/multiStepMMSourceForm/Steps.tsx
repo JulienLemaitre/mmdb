@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
   JsonView,
   allExpanded,
@@ -17,9 +17,11 @@ import { steps } from "@/components/multiStepMMSourceForm/stepsUtils";
 const Steps = () => {
   const { currentStepRank, dispatch, lastCompletedStepRank, state } =
     useFeedForm();
+  const isDisabled = !!state.formInfo?.isSourceOnPieceVersionformOpen;
 
   const goToStep = (stepRank: number) => {
     if (
+      !isDisabled &&
       typeof lastCompletedStepRank === "number" &&
       stepRank <= lastCompletedStepRank + 1
     ) {
@@ -31,18 +33,22 @@ const Steps = () => {
     <>
       <ul className="steps steps-vertical bg-base">
         {steps.map((step) => {
-          const stepClassName =
+          let stepClassName =
             step.rank === 0 ||
             (typeof lastCompletedStepRank === "number" &&
               step.rank <= lastCompletedStepRank + 1)
               ? "step-primary"
               : "";
-          const setpBtnClassName =
+          let stepBtnClassName =
             step.rank === (currentStepRank || 0) ? "btn-primary" : "btn-ghost";
+          if (isDisabled) {
+            stepBtnClassName += " opacity-40 cursor-not-allowed";
+            stepClassName = "step-disabled cursor-not-allowed";
+          }
           return (
             <li className={`step ${stepClassName}`} key={step.title}>
               <div
-                className={`step-title btn h-[50px] ${setpBtnClassName}`}
+                className={`step-title btn h-[50px] ${stepBtnClassName}`}
                 onClick={() => goToStep(step.rank)}
               >
                 {step.title}

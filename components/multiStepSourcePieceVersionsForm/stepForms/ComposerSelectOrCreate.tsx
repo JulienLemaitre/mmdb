@@ -19,10 +19,6 @@ const ComposerSelectOrCreate = () => {
   const [isCreation, setIsCreation] = useState(false);
   const { state, dispatch } = useSourceOnPieceVersionsForm();
   const { state: feedFormState } = useFeedForm();
-  console.log(
-    `[SourceOnPieceVersionForm] state.editedSourceOnPieceVersions :`,
-    state,
-  );
   const selectedComposerId = state?.composerId;
   const newPersons = feedFormState.persons;
   const composerFullList = [...(composers || []), ...(newPersons || [])];
@@ -44,7 +40,6 @@ const ComposerSelectOrCreate = () => {
   }, []);
 
   const onComposerCreated = (composer: PersonInput) => {
-    console.log(`[onComposerCreated] composer :`, composer);
     updateFeedForm(dispatch, "persons", composer);
     updateSourceOnPieceVersionsForm(dispatch, "composerId", {
       value: {
@@ -55,8 +50,7 @@ const ComposerSelectOrCreate = () => {
   };
 
   const onComposerSelect = (composer: PersonInput) => {
-    console.log(`[onComposerSelect] composer :`, composer);
-    updateSourceOnPieceVersionsForm(dispatch, "editedSourceOnPieceVersions", {
+    updateSourceOnPieceVersionsForm(dispatch, "composerId", {
       value: {
         composerId: composer.id,
       },
@@ -67,8 +61,6 @@ const ComposerSelectOrCreate = () => {
   if (isLoading) return <Loader />;
   if (!composers)
     return <p>{`Oups, No data could be fetched. Can't continue...`}</p>;
-
-  console.log(`[ComposerSelectOrCreate] composers :`, composers);
 
   return isCreation ? (
     <ComposerEditForm onSubmit={onComposerCreated} />

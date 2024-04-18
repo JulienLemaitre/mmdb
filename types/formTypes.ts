@@ -39,7 +39,7 @@ export type FeedFormStep = {
 };
 export type SourceOnPieceVersionsFormStep = {
   id: string;
-  name: string;
+  title: string;
   rank: number;
   isComplete: (state: SourceOnPieceVersionsFormState) => boolean;
   Component?: FC;

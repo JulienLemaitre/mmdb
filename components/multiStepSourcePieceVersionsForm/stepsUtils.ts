@@ -6,7 +6,7 @@ import SinglePieceOrCollectionSelect from "@/components/multiStepSourcePieceVers
 export const steps: SourceOnPieceVersionsFormStep[] = [
   {
     id: "composer",
-    name: "Composer",
+    title: "Composer",
     rank: 0,
     isComplete: (state: SourceOnPieceVersionsFormState) => !!state.composerId,
     Component: ComposerSelectOrCreate,
@@ -14,7 +14,7 @@ export const steps: SourceOnPieceVersionsFormStep[] = [
   },
   {
     id: "singlePieceOrCollection",
-    name: "Single Piece or Collection",
+    title: "Single Piece or Collection",
     rank: 1,
     isComplete: (state: SourceOnPieceVersionsFormState) =>
       typeof state.isCollection === "boolean",

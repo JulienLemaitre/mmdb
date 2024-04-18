@@ -171,6 +171,10 @@ function SourceOnPieceVersionsFormReducer(
 
     // We increment currentStep of we are told to with the property 'next' in any payload
     if (next === true && typeof state?.formInfo?.currentStepRank === "number") {
+      console.log(
+        `[SOPVFContext] NEXT - go to step:`,
+        state.formInfo.currentStepRank + 1,
+      );
       newState = {
         ...newState,
         formInfo: {
@@ -275,15 +279,15 @@ function getLastCompletedStep(
   state: SourceOnPieceVersionsFormState,
 ): SourceOnPieceVersionsFormStep | undefined {
   // traversing the steps array, we return the step before the first incomplete one id
-  console.group(`SOPEVF getLastCompletedStep`);
+  // console.group(`SOPEVF getLastCompletedStep`);
   for (let i = 0; i < steps.length; i++) {
-    console.log(`steps[${i}] isComplete :`, steps[i].isComplete(state));
+    // console.log(`steps[${i}] isComplete :`, steps[i].isComplete(state));
     if (!steps[i].isComplete(state)) {
-      console.groupEnd();
+      // console.groupEnd();
       return steps[i - 1];
     }
   }
-  console.groupEnd();
+  // console.groupEnd();
   // If none incomplete step found, we return the last step id
   return steps[steps.length - 1];
 }

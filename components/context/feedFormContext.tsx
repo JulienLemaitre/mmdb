@@ -36,6 +36,7 @@ type Dispatch = (action: PieceFormAction) => void;
 type FeedFormInfo = {
   currentStepRank: number;
   introDone?: boolean;
+  isSourceOnPieceVersionformOpen?: boolean;
   allSourcePieceVersionsDone?: boolean;
   allMetronomeMarksDone?: boolean;
   allSourceContributionsDone?: boolean;

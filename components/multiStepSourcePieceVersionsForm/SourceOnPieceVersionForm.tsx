@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useFeedForm } from "@/components/context/feedFormContext";
 import { MMSourcePieceVersionsState } from "@/types/formTypes";
-import ComposerSelectForm from "@/components/entities/composer/ComposerSelectForm";
 import SourceOnPieceVersionsSteps from "@/components/multiStepSourcePieceVersionsForm/SourceOnPieceVersionsSteps";
-import Loader from "@/components/Loader";
-import { getAllStepStatus } from "@/components/multiStepSourcePieceVersionsForm/stepsUtils";
 import { getStepByRank } from "@/components/multiStepSourcePieceVersionsForm/stepsUtils";
-import { Person } from "@prisma/client";
+import { useSourceOnPieceVersionsForm } from "@/components/context/SourceOnPieceVersionFormContext";
 
 type SourceOnPieceVersionFormProps = {
   sourceOnPieceVersions?: MMSourcePieceVersionsState[];
@@ -24,26 +19,13 @@ const SourceOnPieceVersionForm = ({
   sourceOnPieceVersions,
   onAddSourcePieceVersions,
 }: SourceOnPieceVersionFormProps) => {
-  const [currentStepRank, setCurrentStepRank] = useState<number>(0);
-  const { state } = useFeedForm();
-  console.log(`[SourceOnPieceVersionForm] state :`, state);
-
-  const completedSteps = getAllStepStatus(state);
-  const [hasComposer, isCollection] = completedSteps;
-  console.log(`[SourceOnPieceVersionForm] [hasComposer, isCollection] :`, [
-    hasComposer,
-    isCollection,
-  ]);
-
+  const { currentStepRank } = useSourceOnPieceVersionsForm();
   const currentStep = getStepByRank(currentStepRank);
   const StepFormComponent = currentStep.Component;
 
   return (
     <div>
-      <SourceOnPieceVersionsSteps
-        completedSteps={completedSteps}
-        currentStep={currentStep}
-      />
+      <SourceOnPieceVersionsSteps />
       {StepFormComponent ? (
         <StepFormComponent />
       ) : (
