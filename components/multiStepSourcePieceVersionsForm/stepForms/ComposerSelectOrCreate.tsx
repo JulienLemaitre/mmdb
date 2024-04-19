@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Person } from "@prisma/client";
+import { v4 as uuidv4 } from "uuid";
 import Loader from "@/components/Loader";
 import ComposerSelectForm from "@/components/entities/composer/ComposerSelectForm";
 import ComposerEditForm from "@/components/entities/composer/ComposerEditForm";
@@ -18,13 +19,14 @@ const ComposerSelectOrCreate = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isCreation, setIsCreation] = useState(false);
   const { state, dispatch } = useSourceOnPieceVersionsForm();
-  const { state: feedFormState } = useFeedForm();
-  const selectedComposerId = state?.composerId;
+  const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
+  const selectedComposerId = state?.composer?.id;
   const newPersons = feedFormState.persons;
   const composerFullList = [...(composers || []), ...(newPersons || [])];
   const selectedComposer: PersonState | undefined = composerFullList.find(
     (composer) => composer.id === selectedComposerId,
   );
+  console.groupEnd();
 
   useEffect(() => {
     fetch("/api/getAll/composer")
@@ -40,22 +42,31 @@ const ComposerSelectOrCreate = () => {
   }, []);
 
   const onComposerCreated = (composer: PersonInput) => {
-    updateFeedForm(dispatch, "persons", composer);
-    updateSourceOnPieceVersionsForm(dispatch, "composerId", {
+    const newComposer: PersonState = {
+      ...composer,
+      id: composer.id || uuidv4(),
+      isNew: true,
+    };
+    updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
+    updateSourceOnPieceVersionsForm(dispatch, "composer", {
       value: {
-        composerId: composer.id,
+        id: newComposer.id,
       },
       next: true,
     });
   };
 
   const onComposerSelect = (composer: PersonInput) => {
-    updateSourceOnPieceVersionsForm(dispatch, "composerId", {
+    updateSourceOnPieceVersionsForm(dispatch, "composer", {
       value: {
-        composerId: composer.id,
+        id: composer.id,
       },
       next: true,
     });
+  };
+
+  const onComposerCreationClick = () => {
+    setIsCreation(true);
   };
 
   if (isLoading) return <Loader />;
@@ -69,6 +80,7 @@ const ComposerSelectOrCreate = () => {
       composers={composers}
       value={selectedComposer}
       onComposerSelect={onComposerSelect}
+      onComposerCreationClick={onComposerCreationClick}
     />
   );
 };

@@ -1,31 +1,30 @@
 import ComposerSelect from "@/components/entities/composer/ComposerSelect";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PersonState } from "@/types/formTypes";
 
 type ComposerSelectFormProps = {
   composers: PersonState[];
   value?: PersonState;
   onComposerSelect: (event: any) => void;
+  onComposerCreationClick: () => void;
 };
 export default function ComposerSelectForm({
   composers,
   value,
   onComposerSelect,
+  onComposerCreationClick,
 }: ComposerSelectFormProps) {
-  // const { dispatch, state } = useEditForm();
-  // const router = useRouter();
   const [selectedComposer, setSelectedComposer] = useState<PersonState | null>(
     value || null,
   );
-  // const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  // // Reset the form context when the component is mounted
-  // useEffect(() => {
-  //   // Init the form with context value if exists
-  //   if (state.composer) {
-  //     onSelect(state.composer.id);
-  //   }
-  // }, []);
+  // Reset the form context when the component is mounted
+  useEffect(() => {
+    // Init the form with context value if exists
+    if (value) {
+      onSelect(value.id);
+    }
+  }, []);
 
   const onSelect = (composerId: string) => {
     const composer = composers.find((composer) => composer.id === composerId);
@@ -33,15 +32,9 @@ export default function ComposerSelectForm({
     if (!composer) return;
     setSelectedComposer(composer);
   };
-  // const onSubmit = () => {
-  //   if (isSubmitting) return;
-  //   setIsSubmitting(true);
-  //   updateEditForm(dispatch, "composer", selectedComposer);
-  //   router.push(URL_SELECT_PIECE + "?composerId=" + selectedComposer?.id);
-  // };
 
   // If we have a default value to set, we prevent an initial render of react-select that would prevent its use
-  if (selectedComposer && !selectedComposer) {
+  if (value && !selectedComposer) {
     return null;
   }
 
@@ -51,17 +44,13 @@ export default function ComposerSelectForm({
         composers={composers}
         onSelect={onSelect}
         selectedComposer={selectedComposer}
+        onComposerCreationClick={onComposerCreationClick}
       />
       <button
         className="btn btn-primary mt-4"
         onClick={() => onComposerSelect(selectedComposer)}
         {...(selectedComposer ? { disabled: false } : { disabled: true })}
       >
-        {/*
-        {isSubmitting && (
-          <span className="loading loading-spinner loading-md" />
-        )}
-*/}
         Choose Composer
       </button>
     </>

@@ -1,4 +1,16 @@
-export default function getNoOptionsMessage({ router, entityName, createUrl }) {
+type GetNoOptionsMessageProps = {
+  router?: any;
+  entityName: string;
+  createUrl?: string;
+  onClick?: () => void;
+};
+
+export default function getNoOptionsMessage({
+  router,
+  entityName,
+  createUrl,
+  onClick,
+}: GetNoOptionsMessageProps) {
   return function noOptionMessage() {
     return (
       <div className="text-left">
@@ -8,7 +20,8 @@ export default function getNoOptionsMessage({ router, entityName, createUrl }) {
           className="btn btn-primary"
           onClick={() => {
             console.log(`Create a new ${entityName}`);
-            router.push(createUrl);
+            if (typeof onClick === "function") onClick();
+            if (router && createUrl) router.push(createUrl);
           }}
         >
           {`Create a new ${entityName}`}

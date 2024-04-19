@@ -1,15 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonInput } from "@/types/formTypes";
-import { useRouter } from "next/navigation";
-import { URL_CREATE_PIECE } from "@/utils/routes";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
-import {
-  updateEditForm,
-  useEditForm,
-} from "@/components/context/editFormContext";
-import { fetchAPI } from "@/utils/fetchAPI";
-import { useSession } from "next-auth/react";
 import { zodPerson } from "@/utils/zodTypes";
 import BackButton from "@/components/BackButton";
 
@@ -22,9 +14,6 @@ export default function ComposerEditForm({
   composer?: PersonInput;
   onSubmit: (composer: PersonInput) => void;
 }>) {
-  const router = useRouter();
-  const { dispatch } = useEditForm();
-  const { data: session } = useSession();
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
@@ -34,45 +23,6 @@ export default function ComposerEditForm({
     resolver: zodResolver(PersonSchema),
     ...(composer && { defaultValues: composer }),
   });
-
-  const onSubmitDefault = async (data: PersonInput) => {
-    // Front input values validation is successful at this point.
-    console.log("[ComposerEditForm] onSubmit data", data);
-    const apiUrl = composer ? `/api/person/update` : "/api/person/create";
-
-    // post data to api route to create a composer as a person
-    const editedComposer = await fetchAPI(
-      apiUrl,
-      {
-        variables: { ...data, id: composer?.id },
-        cache: "no-store",
-      },
-      session?.user?.accessToken,
-    );
-
-    if (!editedComposer || editedComposer.error) {
-      console.warn(
-        `ERROR - NO composer ${composer ? "updated" : "created"}${
-          editedComposer?.error ? ` [${editedComposer.error}]` : ""
-        }`,
-      );
-      // TODO should trigger a toast
-      return;
-    }
-
-    console.log(`Composer ${composer ? "updated" : "created"}`, editedComposer);
-    const PersonState = {
-      id: editedComposer.id,
-      firstName: editedComposer.firstName,
-      lastName: editedComposer.lastName,
-      birthYear: editedComposer.birthYear,
-      deathYear: editedComposer.deathYear,
-      isNew: true,
-    };
-
-    updateEditForm(dispatch, "composer", PersonState);
-    router.push(URL_CREATE_PIECE);
-  };
 
   console.log(`[CreateComposer] composer :`, composer);
   console.log(`[CreateComposer] errors :`, errors);
