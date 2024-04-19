@@ -467,7 +467,7 @@ async function processDataFromXlsx(dataSheetList: any) {
 
 async function getDatas() {
   // Verify if a parsedDataOutput.js file already exists
-  const parsedDataOutputPath = path.join(__dirname, 'parsedDataOutput.js')
+  const parsedDataOutputPath = path.join(__dirname, '/output/parsedDataOutput.js')
   const parsedDataOutputExists = fs.existsSync(parsedDataOutputPath)
   console.log(`[getDatas] parsedDataOutputExists :`, parsedDataOutputExists)
 
