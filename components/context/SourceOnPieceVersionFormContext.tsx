@@ -15,12 +15,13 @@ import { SourceOnPieceVersionsFormStep } from "@/types/formTypes";
 type SourceOnPieceVersionsFormInfo = {
   currentStepRank: number;
   allSourcePieceVersionsDone?: boolean;
+  isCollection?: boolean;
 };
 
 export type SourceOnPieceVersionsFormState = {
   formInfo?: SourceOnPieceVersionsFormInfo;
-  composerId?: string;
-  isCollection?: boolean;
+  composer?: { id?: string };
+  piece?: { id?: string };
 };
 
 type SourceOnPieceVersionsFormAction =
@@ -31,11 +32,15 @@ type SourceOnPieceVersionsFormAction =
   | { type: "goToPrevStep" }
   | { type: "goToStep"; payload: { stepRank: number } }
   | {
-      type: "composerId";
-      payload: { value: { composerId: string }; next?: boolean };
+      type: "composer";
+      payload: { value: { id: string }; next?: boolean };
     }
   | {
-      type: "isCollection";
+      type: "piece";
+      payload: { value: { id: string }; next?: boolean };
+    }
+  | {
+      type: "formInfo";
       payload: { value: { isCollection: boolean }; next?: boolean };
     };
 
@@ -258,8 +263,8 @@ export function useSourceOnPieceVersionsForm() {
     ...context,
     lastCompletedStepId: lastCompletedStep?.id,
     lastCompletedStepRank: lastCompletedStep?.rank,
-    nextStepToCompleteId: nextStep.id,
-    nextStepToCompleteRank: nextStep.rank || 0,
+    nextStepToCompleteId: nextStep?.id,
+    nextStepToCompleteRank: nextStep?.rank || 0,
     currentStepRank: context.state.formInfo?.currentStepRank || 0,
   };
 }
