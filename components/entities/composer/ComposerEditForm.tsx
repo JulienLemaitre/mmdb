@@ -3,7 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonInput } from "@/types/formTypes";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import { zodPerson } from "@/utils/zodTypes";
-import BackButton from "@/components/BackButton";
 
 const PersonSchema = zodPerson;
 
@@ -62,7 +61,6 @@ export default function ComposerEditForm({
           )}
         </button>
       </form>
-      <BackButton />
     </div>
   );
 }

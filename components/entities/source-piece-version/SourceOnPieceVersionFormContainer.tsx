@@ -44,6 +44,13 @@ const SourceOnPieceVersionFormContainer = ({
     });
   };
 
+  const onFormClose = () => {
+    setIsFormOpen(false);
+    updateFeedForm(dispatch, "formInfo", {
+      value: { isSourceOnPieceVersionformOpen: false },
+    });
+  };
+
   return (
     <>
       <ul className="my-4">
@@ -66,6 +73,7 @@ const SourceOnPieceVersionFormContainer = ({
         <SourceOnPieceVersionForm
           sourceOnPieceVersions={sourceOnPieceVersions}
           onAddSourcePieceVersions={onAddSourcePieceVersions}
+          onFormClose={onFormClose}
         />
       ) : (
         <div>

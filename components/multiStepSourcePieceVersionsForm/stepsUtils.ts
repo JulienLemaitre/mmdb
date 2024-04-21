@@ -3,6 +3,8 @@ import ComposerSelectOrCreate from "@/components/multiStepSourcePieceVersionsFor
 import { SourceOnPieceVersionsFormState } from "@/components/context/SourceOnPieceVersionFormContext";
 import SinglePieceOrCollectionSelect from "@/components/multiStepSourcePieceVersionsForm/stepForms/SinglePieceOrCollectionSelect";
 import PieceSelectOrCreate from "@/components/multiStepSourcePieceVersionsForm/stepForms/PieceSelectOrCreate";
+import PieceVersionSelectOrCreate from "@/components/multiStepSourcePieceVersionsForm/stepForms/PieceVersionSelectOrCreate";
+import Summary from "@/components/multiStepSourcePieceVersionsForm/stepForms/Summary";
 
 export const steps: SourceOnPieceVersionsFormStep[] = [
   {
@@ -15,7 +17,7 @@ export const steps: SourceOnPieceVersionsFormStep[] = [
   },
   {
     id: "singlePieceOrCollection",
-    title: "Single Piece or Collection",
+    title: "Single or Collection",
     rank: 1,
     isComplete: (state: SourceOnPieceVersionsFormState) =>
       typeof state.formInfo?.isCollection === "boolean",
@@ -24,12 +26,28 @@ export const steps: SourceOnPieceVersionsFormStep[] = [
   },
   {
     id: "piece",
-    title: "Piece Description",
+    title: "Piece",
     rank: 2,
-    isComplete: (state: SourceOnPieceVersionsFormState) =>
-      typeof state.formInfo?.isCollection === "boolean",
+    isComplete: (state: SourceOnPieceVersionsFormState) => !!state.piece?.id,
     Component: PieceSelectOrCreate,
-    actionTypes: ["formInfo", "piece"],
+    actionTypes: ["piece"],
+  },
+  {
+    id: "pieceVersion",
+    title: "Piece Version",
+    rank: 3,
+    isComplete: (state: SourceOnPieceVersionsFormState) =>
+      !!state.pieceVersion?.id,
+    Component: PieceVersionSelectOrCreate,
+    actionTypes: ["pieceVersion"],
+  },
+  {
+    id: "summary",
+    title: "Summary",
+    rank: 4,
+    isComplete: (state: SourceOnPieceVersionsFormState) => false,
+    Component: Summary,
+    actionTypes: ["reset", "formInfo"],
   },
 ];
 

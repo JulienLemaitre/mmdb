@@ -1,4 +1,3 @@
-// 'use client'
 import { useFieldArray } from "react-hook-form";
 import { KEY } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";

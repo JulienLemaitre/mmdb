@@ -22,6 +22,7 @@ export type SourceOnPieceVersionsFormState = {
   formInfo?: SourceOnPieceVersionsFormInfo;
   composer?: { id?: string };
   piece?: { id?: string };
+  pieceVersion?: { id?: string };
 };
 
 type SourceOnPieceVersionsFormAction =
@@ -37,6 +38,10 @@ type SourceOnPieceVersionsFormAction =
     }
   | {
       type: "piece";
+      payload: { value: { id: string }; next?: boolean };
+    }
+  | {
+      type: "pieceVersion";
       payload: { value: { id: string }; next?: boolean };
     }
   | {

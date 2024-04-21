@@ -14,6 +14,7 @@ import {
 import Loader from "@/components/Loader";
 import PieceEditForm from "@/components/entities/piece/PieceEditForm";
 import PieceSelectForm from "@/components/entities/piece/PieceSelectForm";
+import { URL_API_GETALL_COMPOSER_PIECES } from "@/utils/routes";
 
 function PieceSelectOrCreate() {
   const [pieces, setPieces] = useState<Piece[] | null>(null);
@@ -46,7 +47,10 @@ function PieceSelectOrCreate() {
     if (typeof isNewComposer !== "boolean")
       console.log(`[useEffect 2] isNewComposer not boolean:`, isNewComposer);
     if (typeof isNewComposer === "boolean" && !isNewComposer) {
-      fetch("/api/getAll/composerPieces?composerId=" + selectedComposerId)
+      fetch(
+        URL_API_GETALL_COMPOSER_PIECES + "?composerId=" + selectedComposerId,
+        { cache: "no-store" },
+      )
         .then((res) => res.json())
         .then((data) => {
           const pieces: Piece[] = data?.pieces;
@@ -63,7 +67,7 @@ function PieceSelectOrCreate() {
         })
         .catch((err) => {
           console.log(
-            `[fetch("/api/getAll/composerPieces?composerId=${selectedComposerId}")] err :`,
+            `[fetch("URL_API_GETALL_COMPOSER_PIECES?composerId=${selectedComposerId}")] err :`,
             err,
           );
           setIsLoading(false);

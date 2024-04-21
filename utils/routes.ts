@@ -1,3 +1,10 @@
+export const URL_API_GETALL_COMPOSERS = "/api/getAll/composers";
+export const URL_API_GETALL_COMPOSER_PIECES = "/api/getAll/composerPieces";
+export const URL_API_GETALL_PIECE_PIECE_VERSIONS =
+  "/api/getAll/piecePieceVersions";
+export const URL_API_GETALL_TEMPO_INDICATIONS = "/api/getAll/tempoIndications";
+export const URL_API_GETALL_PERSONS_AND_ORGANIZATIONS =
+  "/api/getAll/personsAndOrganizations";
 export const URL_HOME = "/";
 export const URL_EXPLORE = "/explore";
 export const URL_FEED = "/feed";

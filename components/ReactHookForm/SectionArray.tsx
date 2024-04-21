@@ -1,4 +1,3 @@
-// 'use client'
 import { useFieldArray } from "react-hook-form";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import PlusIcon from "@/components/svg/PlusIcon";

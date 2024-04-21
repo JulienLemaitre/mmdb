@@ -8,6 +8,7 @@ type SourceOnPieceVersionFormProps = {
   onAddSourcePieceVersions: (
     sourceOnPieceVersions: MMSourcePieceVersionsState[],
   ) => void;
+  onFormClose: () => void;
 };
 
 /**
@@ -16,8 +17,9 @@ type SourceOnPieceVersionFormProps = {
  * @constructor
  */
 const SourceOnPieceVersionForm = ({
-  sourceOnPieceVersions,
-  onAddSourcePieceVersions,
+  // sourceOnPieceVersions,
+  // onAddSourcePieceVersions,
+  onFormClose,
 }: SourceOnPieceVersionFormProps) => {
   const { currentStepRank } = useSourceOnPieceVersionsForm();
   const currentStep = getStepByRank(currentStepRank);
@@ -27,7 +29,7 @@ const SourceOnPieceVersionForm = ({
     <div>
       <SourceOnPieceVersionsSteps />
       {StepFormComponent ? (
-        <StepFormComponent />
+        <StepFormComponent onFormClose={onFormClose} />
       ) : (
         <div>Nothing to show...</div>
       )}

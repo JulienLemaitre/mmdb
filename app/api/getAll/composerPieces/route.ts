@@ -19,9 +19,11 @@ export async function GET(request: Request) {
       yearOfComposition: true,
     },
   });
-  const pieces = piecesResult
-    ? deleteNullPropertiesFromObject(piecesResult) // We ensure properties will not be initiated with null values
-    : null;
+  const pieces = piecesResult.map((piece: any) => {
+    return piece
+      ? deleteNullPropertiesFromObject(piece) // We ensure properties will not be initiated with null values
+      : null;
+  });
 
-  return Response.json(pieces);
+  return Response.json({ pieces });
 }

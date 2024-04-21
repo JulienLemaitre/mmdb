@@ -42,7 +42,7 @@ export type SourceOnPieceVersionsFormStep = {
   title: string;
   rank: number;
   isComplete: (state: SourceOnPieceVersionsFormState) => boolean;
-  Component?: FC;
+  Component?: FC<{ onFormClose: () => void }>;
   actionTypes: string[];
 };
 export type IsNewProp = {
@@ -180,9 +180,11 @@ export type SectionInput = Pick<
   | "isFastestStructuralNoteBelCanto"
   | "comment"
 > & {
+  id?: string;
   tempoIndication: OptionInput;
 };
 export type MovementInput = Pick<Movement, "rank"> & {
+  id?: string;
   key: OptionInput;
   sections: SectionInput[];
 };

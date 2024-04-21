@@ -9,6 +9,7 @@ import {
 import { getStepByRank } from "@/components/multiStepMMSourceForm/stepsUtils";
 import { ContributionStateWithoutId } from "@/types/formTypes";
 import SourceContributionSelectForm from "@/components/entities/source-contributions/create/SourceContributionSelectForm";
+import { URL_API_GETALL_PERSONS_AND_ORGANIZATIONS } from "@/utils/routes";
 
 export default function MMSourceContributions() {
   const [data, setData] = useState(null);
@@ -25,7 +26,7 @@ export default function MMSourceContributions() {
   };
 
   useEffect(() => {
-    fetch("/api/getAll/personAndOrganization")
+    fetch(URL_API_GETALL_PERSONS_AND_ORGANIZATIONS)
       .then((res) => res.json())
       .then((data) => {
         setData(data);

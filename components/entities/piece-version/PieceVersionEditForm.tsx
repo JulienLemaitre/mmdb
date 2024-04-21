@@ -1,31 +1,17 @@
-"use client";
 import { z } from "zod";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import {
-  updateEditForm,
-  useEditForm,
-} from "@/components/context/editFormContext";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PIECE_CATEGORY, TempoIndication } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
-import {
-  OptionInput,
-  PieceVersionInput,
-  PieceVersionState,
-} from "@/types/formTypes";
-import {
-  URL_CREATE_SOURCE_DESCRIPTION,
-  URL_SELECT_PIECE,
-} from "@/utils/routes";
+import { OptionInput, PieceVersionInput } from "@/types/formTypes";
+import { URL_API_GETALL_TEMPO_INDICATIONS } from "@/utils/routes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
 import { MOVEMENT_DEFAULT_VALUE } from "@/components/ReactHookForm/formUtils";
 import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
 import { zodOption } from "@/utils/zodTypes";
 import { useSession } from "next-auth/react";
 import { fetchAPI } from "@/utils/fetchAPI";
-import Link from "next/link";
 
 const PieceVersionSchema = z.object({
   category: zodOption,
@@ -61,11 +47,11 @@ const PieceVersionSchema = z.object({
 
 export default function PieceVersionEditForm({
   pieceVersion,
+  onSubmit,
 }: Readonly<{
   pieceVersion?: PieceVersionInput;
+  onSubmit: (pieceVersion: PieceVersionInput) => void;
 }>) {
-  const router = useRouter();
-  const { dispatch, state } = useEditForm();
   const { data: session } = useSession();
   const {
     formState: { errors, isSubmitting },
@@ -88,7 +74,7 @@ export default function PieceVersionEditForm({
   >([]);
   // Fetch tempoIndicationList from API
   useEffect(() => {
-    fetch("/api/tempoIndicationList/get")
+    fetch(URL_API_GETALL_TEMPO_INDICATIONS)
       .then((res) => res.json())
       .then((data) => {
         // Get the index of tempoIndication with id === TEMPO_INDICATION_NONE_ID (text === "-- None --")
@@ -137,74 +123,7 @@ export default function PieceVersionEditForm({
       });
   };
 
-  const onSubmit = async (data: PieceVersionInput) => {
-    // Front input values validation is successful at this point.
-    console.log("data", data);
-
-    const pieceVersionData = data;
-    // Remove null values from pieceVersionData
-    Object.keys(pieceVersionData).forEach(
-      (key) => pieceVersionData[key] == null && delete pieceVersionData[key],
-    );
-
-    if (!state.piece) {
-      console.warn("No piece in state to link to the piece version");
-      return;
-    }
-
-    if (pieceVersion) {
-      console.log(`[onSubmit] pieceVersion :`, pieceVersion);
-    }
-
-    const variables = {
-      ...pieceVersionData,
-      ...(pieceVersion && { id: pieceVersion.id }),
-      pieceId: state.piece.id,
-    };
-    console.log(`[onSubmit] variables :`, variables);
-
-    const apiUrl = pieceVersion
-      ? `/api/piece-version/update`
-      : "/api/piece-version/create";
-
-    // post data to api route to create a piece version
-    const editedPieceVersion = await fetchAPI(
-      apiUrl,
-      {
-        variables,
-        cache: "no-store",
-      },
-      session?.user?.accessToken,
-    );
-
-    if (!editedPieceVersion) {
-      console.warn("ERROR - NO piece version created");
-      return;
-    }
-
-    console.log("Piece version created", editedPieceVersion);
-
-    const pieceVersionState: PieceVersionState = {
-      ...editedPieceVersion,
-      isNew: true,
-    };
-
-    updateEditForm(dispatch, "pieceVersion", pieceVersionState);
-    router.push(URL_CREATE_SOURCE_DESCRIPTION);
-  };
-
   console.log(`[PieceVersionEditForm] errors :`, errors);
-
-  if (!state.piece) {
-    return (
-      <div>
-        <h2 className="mb-4 text-2xl font-bold">Select a piece first</h2>
-        <Link href={URL_SELECT_PIECE} className="btn btn-secondary">
-          Back
-        </Link>
-      </div>
-    );
-  }
 
   return (
     <div>

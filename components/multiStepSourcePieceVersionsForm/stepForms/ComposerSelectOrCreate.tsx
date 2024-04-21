@@ -13,6 +13,7 @@ import {
   useFeedForm,
   updateFeedForm,
 } from "@/components/context/feedFormContext";
+import { URL_API_GETALL_COMPOSERS } from "@/utils/routes";
 
 const ComposerSelectOrCreate = () => {
   const [composers, setComposers] = useState<Person[] | null>(null);
@@ -29,14 +30,14 @@ const ComposerSelectOrCreate = () => {
   console.groupEnd();
 
   useEffect(() => {
-    fetch("/api/getAll/composer")
+    fetch(URL_API_GETALL_COMPOSERS, { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         setComposers(data?.composers);
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(`[fetch("/api/getAll/composer")] err :`, err);
+        console.log(`[fetch(URL_API_GETALL_COMPOSERS)] err :`, err);
         setIsLoading(false);
       });
   }, []);
