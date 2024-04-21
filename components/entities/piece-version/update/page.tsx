@@ -78,5 +78,10 @@ export default function PieceVersionUpdate({
   const pieceVersionInput =
     getPieceVersionInputFromPieceVersionState(pieceVersion);
 
-  return <PieceVersionEditForm pieceVersion={pieceVersionInput} />;
+  return (
+    <PieceVersionEditForm
+      pieceVersion={pieceVersionInput}
+      onSubmit={() => console.log("submit")}
+    />
+  );
 }

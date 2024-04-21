@@ -1,5 +1,5 @@
 import PieceEditForm from "../PieceEditForm";
 
 export default function CreatePiece() {
-  return <PieceEditForm />;
+  return <PieceEditForm onSubmit={() => console.log("submit")} />;
 }

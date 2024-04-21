@@ -58,7 +58,13 @@ export default async function Piece({ searchParams: { pieceId } }) {
     // className="flex flex-col items-center justify-center"
     >
       <h1 className="mb-4 text-4xl font-bold">Select a piece version</h1>
-      <PieceVersionSelectForm pieceVersions={pieceVersions} />
+      <PieceVersionSelectForm
+        pieceVersions={pieceVersions}
+        onPieceVersionSelect={() => console.log("onPieceVersionSelect")}
+        onPieceVersionCreationClick={() =>
+          console.log("onPieceVersionCreationClick")
+        }
+      />
     </div>
   );
 }

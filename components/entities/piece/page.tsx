@@ -31,7 +31,15 @@ export default async function Piece({ searchParams: { composerId } }) {
         {`Search by typing the name.
           If it is not listed yet, you will be able to create it.`}
       </p>
-      <PieceSelectForm pieces={pieces} />
+      <PieceSelectForm
+        pieces={pieces}
+        onPieceSelect={(piece) => {
+          console.log(`[Piece] piece: `, piece);
+        }}
+        onPieceCreationClick={() => {
+          console.log(`[Piece] onPieceCreationClick`);
+        }}
+      />
     </div>
   );
 }

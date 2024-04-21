@@ -36,6 +36,7 @@ export default async function Composer() {
       <ComposerSelectForm
         composers={composers}
         onComposerSelect={(composer) => {}}
+        onComposerCreationClick={() => console.log("onComposerCreationClick")}
       />
     </div>
   );

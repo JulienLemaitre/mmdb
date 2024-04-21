@@ -66,5 +66,5 @@ export default function PieceUpdate({ searchParams: { pieceId } }) {
 
   console.log(`[PieceUpdate] initial piece value :`, piece);
 
-  return <PieceEditForm piece={piece} />;
+  return <PieceEditForm piece={piece} onSubmit={() => console.log("submit")} />;
 }
