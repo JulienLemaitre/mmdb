@@ -46,6 +46,8 @@ function PieceVersionSelectOrCreate() {
   useEffect(() => {
     if (typeof isNewPiece !== "boolean")
       console.log(`[useEffect 2] isNewComposer not boolean:`, isNewPiece);
+
+    // If we selected an existing piece, we fetch all its pieceVersions
     if (typeof isNewPiece === "boolean" && !isNewPiece) {
       fetch(
         URL_API_GETALL_PIECE_PIECE_VERSIONS + "?pieceId=" + selectedPieceId,
@@ -72,6 +74,11 @@ function PieceVersionSelectOrCreate() {
           );
           setIsLoading(false);
         });
+    }
+
+    // If we have created a new piece, we don't fetch anything and set loading to false
+    if (typeof isNewPiece === "boolean" && isNewPiece) {
+      setIsLoading(false);
     }
   }, [isNewPiece]);
 

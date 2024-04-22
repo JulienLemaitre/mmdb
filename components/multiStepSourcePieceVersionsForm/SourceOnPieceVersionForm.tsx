@@ -2,6 +2,8 @@ import { MMSourcePieceVersionsState } from "@/types/formTypes";
 import SourceOnPieceVersionsSteps from "@/components/multiStepSourcePieceVersionsForm/SourceOnPieceVersionsSteps";
 import { getStepByRank } from "@/components/multiStepSourcePieceVersionsForm/stepsUtils";
 import { useSourceOnPieceVersionsForm } from "@/components/context/SourceOnPieceVersionFormContext";
+import { allExpanded, darkStyles, JsonView } from "react-json-view-lite";
+import React from "react";
 
 type SourceOnPieceVersionFormProps = {
   sourceOnPieceVersions?: MMSourcePieceVersionsState[];
@@ -21,7 +23,7 @@ const SourceOnPieceVersionForm = ({
   // onAddSourcePieceVersions,
   onFormClose,
 }: SourceOnPieceVersionFormProps) => {
-  const { currentStepRank } = useSourceOnPieceVersionsForm();
+  const { state, currentStepRank } = useSourceOnPieceVersionsForm();
   const currentStep = getStepByRank(currentStepRank);
   const StepFormComponent = currentStep.Component;
 
@@ -33,6 +35,13 @@ const SourceOnPieceVersionForm = ({
       ) : (
         <div>Nothing to show...</div>
       )}
+      <div className="text-[0.6em]">
+        <JsonView
+          data={state}
+          shouldExpandNode={allExpanded}
+          style={darkStyles}
+        />
+      </div>
     </div>
   );
 };

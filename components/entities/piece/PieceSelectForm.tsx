@@ -14,6 +14,7 @@ export default function PieceSelectForm({
   onPieceSelect,
   onPieceCreationClick,
 }: PieceSelectFormProps) {
+  console.log(`[PieceSelectForm] pieces :`, pieces);
   const [selectedPiece, setSelectedPiece] = useState<PieceState | null>(null);
 
   // Reset the form context when the component is mounted

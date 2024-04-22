@@ -20,16 +20,23 @@ function PieceSelectOrCreate() {
   const [isLoading, setIsLoading] = useState(true);
   const [isCreation, setIsCreation] = useState(false);
   const { dispatch, state } = useSourceOnPieceVersionsForm();
-
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
   const selectedComposerId = state?.composer?.id;
   const selectedPieceId = state?.piece?.id;
-  const newPersons = feedFormState.persons;
-  const selectedPiece: PieceState | undefined = pieces?.find(
-    (piece) => piece.id === selectedPieceId,
-  );
+  const newPieces = feedFormState.pieces;
+  let pieceFullList = [...(pieces || []), ...(newPieces || [])];
+
+  // If we have new pieces, we need to sort the pieceFullList
+  if (newPieces?.length) {
+    pieceFullList = pieceFullList.sort((a, b) => {
+      if (a.title < b.title) return -1;
+      if (a.title > b.title) return 1;
+      return 0;
+    });
+  }
 
   // If composer is newly created, we shift in creation mode directly
+  const newPersons = feedFormState.persons;
   const isNewComposer =
     selectedComposerId &&
     newPersons?.some((person) => person.id === selectedComposerId);
@@ -119,16 +126,22 @@ function PieceSelectOrCreate() {
 
   if (isLoading) return <Loader />;
 
-  if (isCreation) return <PieceEditForm onSubmit={onPieceCreated} />;
+  const selectedPiece: PieceState | undefined = pieceFullList?.find(
+    (piece) => piece.id === selectedPieceId,
+  );
+  console.log(`[] selectedPiece :`, selectedPiece);
 
-  if (!pieces)
+  if (isCreation && !selectedPiece)
+    return <PieceEditForm onSubmit={onPieceCreated} />;
+
+  if (!pieceFullList)
     return (
       <p>{`Oups, something went wrong with data fetching. Can't continue...`}</p>
     );
 
   return (
     <PieceSelectForm
-      pieces={pieces}
+      pieces={pieceFullList}
       value={selectedPiece}
       onPieceSelect={onPieceSelect}
       onPieceCreationClick={onPieceCreationClick}
