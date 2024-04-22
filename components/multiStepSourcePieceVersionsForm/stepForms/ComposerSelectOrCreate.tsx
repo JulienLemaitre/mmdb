@@ -23,11 +23,22 @@ const ComposerSelectOrCreate = () => {
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
   const selectedComposerId = state?.composer?.id;
   const newPersons = feedFormState.persons;
-  const composerFullList = [...(composers || []), ...(newPersons || [])];
+  let composerFullList = [...(composers || []), ...(newPersons || [])];
+
+  // If we have new composers, we need to sort the composerFullList
+  if (newPersons?.length) {
+    composerFullList = composerFullList.sort((a, b) => {
+      if (a.lastName < b.lastName) return -1;
+      if (a.lastName > b.lastName) return 1;
+      if (a.firstName < b.firstName) return -1;
+      if (a.firstName > b.firstName) return 1;
+      return 0;
+    });
+  }
+
   const selectedComposer: PersonState | undefined = composerFullList.find(
     (composer) => composer.id === selectedComposerId,
   );
-  console.groupEnd();
 
   useEffect(() => {
     fetch(URL_API_GETALL_COMPOSERS, { cache: "no-store" })
@@ -71,14 +82,14 @@ const ComposerSelectOrCreate = () => {
   };
 
   if (isLoading) return <Loader />;
-  if (!composers)
+  if (!composerFullList)
     return <p>{`Oups, No data could be fetched. Can't continue...`}</p>;
 
   return isCreation ? (
     <ComposerEditForm onSubmit={onComposerCreated} />
   ) : (
     <ComposerSelectForm
-      composers={composers}
+      composers={composerFullList}
       value={selectedComposer}
       onComposerSelect={onComposerSelect}
       onComposerCreationClick={onComposerCreationClick}
