@@ -46,6 +46,8 @@ function PieceSelectOrCreate() {
   useEffect(() => {
     if (typeof isNewComposer !== "boolean")
       console.log(`[useEffect 2] isNewComposer not boolean:`, isNewComposer);
+
+    // If we selected an existing composer, we fetch all his pieces
     if (typeof isNewComposer === "boolean" && !isNewComposer) {
       fetch(
         URL_API_GETALL_COMPOSER_PIECES + "?composerId=" + selectedComposerId,
@@ -72,6 +74,11 @@ function PieceSelectOrCreate() {
           );
           setIsLoading(false);
         });
+    }
+
+    // If we have created a new composer, we don't fetch anything and set loading to false
+    if (typeof isNewComposer === "boolean" && isNewComposer) {
+      setIsLoading(false);
     }
   }, [isNewComposer]);
 
