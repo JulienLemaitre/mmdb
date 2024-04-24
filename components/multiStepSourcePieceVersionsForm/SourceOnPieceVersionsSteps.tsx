@@ -13,7 +13,8 @@ const SourceOnPieceVersionsSteps = () => {
   const { state, currentStepRank, lastCompletedStepRank, dispatch } =
     useSourceOnPieceVersionsForm();
   const completedSteps = getAllStepStatus(state);
-  const currentStep = getStepByRank(currentStepRank);
+  const currentStep = getStepByRank({ state, rank: currentStepRank });
+  const formSteps = steps[state.formInfo.formType];
 
   const goToStep = (stepRank: number) => {
     if (
@@ -27,7 +28,7 @@ const SourceOnPieceVersionsSteps = () => {
   return (
     <div className="mb-4">
       <ul className="steps">
-        {steps.map((step, index) => {
+        {formSteps.map((step, index) => {
           // console.group(`STEP ${index}`);
           // console.log(`[] step.rank :`, step.rank);
           const stepClassName =

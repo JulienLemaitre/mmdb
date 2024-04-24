@@ -12,14 +12,15 @@ import {
 } from "@/components/multiStepSourcePieceVersionsForm/stepsUtils";
 import { SourceOnPieceVersionsFormStep } from "@/types/formTypes";
 
+type SourceOnPieceVersionsFormType = "single" | "collection";
 type SourceOnPieceVersionsFormInfo = {
+  formType: SourceOnPieceVersionsFormType;
   currentStepRank: number;
   allSourcePieceVersionsDone?: boolean;
-  isCollection?: boolean;
 };
 
 export type SourceOnPieceVersionsFormState = {
-  formInfo?: SourceOnPieceVersionsFormInfo;
+  formInfo: SourceOnPieceVersionsFormInfo;
   composer?: { id?: string };
   piece?: { id?: string };
   pieceVersion?: { id?: string };
@@ -46,7 +47,10 @@ type SourceOnPieceVersionsFormAction =
     }
   | {
       type: "formInfo";
-      payload: { value: { isCollection: boolean }; next?: boolean };
+      payload: {
+        value: { formType: SourceOnPieceVersionsFormType };
+        next?: boolean;
+      };
     };
 
 type Dispatch = (action: SourceOnPieceVersionsFormAction) => void;
@@ -56,6 +60,7 @@ type SourceOnPieceVersionsFormProviderProps = { children: ReactNode };
 const INITIAL_STATE: SourceOnPieceVersionsFormState = {
   formInfo: {
     currentStepRank: 0,
+    formType: "single",
   },
 };
 
@@ -122,7 +127,7 @@ function SourceOnPieceVersionsFormReducer(
     };
   }
 
-  const allowedActions = getAllowedActions();
+  const allowedActions = getAllowedActions(state);
   const isActionAllowed = allowedActions.has(action.type);
   console.log(
     `[SourceOnPieceVersionsFormReducer] allowedActions :`,
@@ -288,16 +293,17 @@ export function initSourceOnPieceVersionsForm(
 function getLastCompletedStep(
   state: SourceOnPieceVersionsFormState,
 ): SourceOnPieceVersionsFormStep | undefined {
+  const formSteps = steps[state.formInfo.formType];
   // traversing the steps array, we return the step before the first incomplete one id
   // console.group(`SOPEVF getLastCompletedStep`);
-  for (let i = 0; i < steps.length; i++) {
+  for (let i = 0; i < formSteps.length; i++) {
     // console.log(`steps[${i}] isComplete :`, steps[i].isComplete(state));
-    if (!steps[i].isComplete(state)) {
+    if (!formSteps[i].isComplete(state)) {
       // console.groupEnd();
-      return steps[i - 1];
+      return formSteps[i - 1];
     }
   }
   // console.groupEnd();
   // If none incomplete step found, we return the last step id
-  return steps[steps.length - 1];
+  return formSteps[formSteps.length - 1];
 }

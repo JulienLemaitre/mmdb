@@ -7,6 +7,11 @@ import {
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
+import ArrowLeftIcon from "@/components/svg/ArrowLeftIcon";
+import {
+  updateSourceOnPieceVersionsForm,
+  useSourceOnPieceVersionsForm,
+} from "@/components/context/SourceOnPieceVersionFormContext";
 
 type SourcePieceVersionSelectFormProps = {
   sourcePieceVersions?: MMSourcePieceVersionsState[];
@@ -26,6 +31,8 @@ const SourceOnPieceVersionFormContainer = ({
   >(sourcePieceVersions || []);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const { dispatch } = useFeedForm();
+  const { dispatch: dispatchSourceOnPieceVersionsForm } =
+    useSourceOnPieceVersionsForm();
 
   const onAddSourcePieceVersions = (
     sourcePieceVersions: MMSourcePieceVersionsState[],
@@ -37,11 +44,16 @@ const SourceOnPieceVersionFormContainer = ({
     setIsFormOpen(false);
   };
 
-  const onFormOpen = () => {
-    setIsFormOpen(true);
+  const onFormOpen = (formType: "single" | "collection") => {
+    updateSourceOnPieceVersionsForm(
+      dispatchSourceOnPieceVersionsForm,
+      "formInfo",
+      { value: { formType } },
+    );
     updateFeedForm(dispatch, "formInfo", {
       value: { isSourceOnPieceVersionformOpen: true },
     });
+    setIsFormOpen(true);
   };
 
   const onFormClose = () => {
@@ -76,10 +88,22 @@ const SourceOnPieceVersionFormContainer = ({
           onFormClose={onFormClose}
         />
       ) : (
-        <div>
-          <button type="button" className="btn btn-accent" onClick={onFormOpen}>
+        <div className="flex gap-4 items-center mt-6">
+          <button
+            className="btn btn-accent"
+            type="button"
+            onClick={() => onFormOpen("single")}
+          >
             <PlusIcon className="w-5 h-5" />
-            Add a piece
+            Add a single piece
+          </button>
+          <button
+            className="btn btn-accent"
+            type="button"
+            onClick={() => onFormOpen("collection")}
+          >
+            <PlusIcon className="w-5 h-5" />
+            Add a complete collection
           </button>
         </div>
       )}

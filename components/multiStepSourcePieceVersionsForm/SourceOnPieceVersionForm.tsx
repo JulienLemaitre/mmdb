@@ -24,7 +24,7 @@ const SourceOnPieceVersionForm = ({
   onFormClose,
 }: SourceOnPieceVersionFormProps) => {
   const { state, currentStepRank } = useSourceOnPieceVersionsForm();
-  const currentStep = getStepByRank(currentStepRank);
+  const currentStep = getStepByRank({ state, rank: currentStepRank });
   const StepFormComponent = currentStep.Component;
 
   return (
