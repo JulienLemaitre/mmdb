@@ -174,7 +174,7 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
 
   // Entries created
   if (isActionAllowed) {
-    const { next, value, array } = action.payload || {};
+    const { next, value, array, deleteIdArray } = action.payload || {};
 
     let newState = state;
 
@@ -186,7 +186,6 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
         const isEntityInState = newState[action.type]?.find(
           (stateEntity) => entity.id && stateEntity.id === entity.id,
         );
-        console.log(`[] isEntityInState :`, isEntityInState);
         if (isEntityInState) {
           console.log(`[] UPDATE entity in array with new value :`, entity);
           newState = {
@@ -202,6 +201,28 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
             ...newState,
             [action.type]: [...newState[action.type], entity],
           };
+        }
+      });
+    }
+    // If payload is an entity array, we update the state accordingly
+    if (deleteIdArray) {
+      // For each entity in the array
+      deleteIdArray.forEach((entityId) => {
+        // If we find an entity in state with the same id, we remove it
+        const isEntityInState = newState[action.type]?.find(
+          (stateEntity) => entityId && stateEntity.id === entityId,
+        );
+        if (isEntityInState) {
+          console.log(`[] REMOVE entity in array with id :`, entityId);
+          newState = {
+            ...newState,
+            [action.type]: newState[action.type].filter(
+              (stateEntity) => stateEntity.id !== entityId,
+            ),
+          };
+        } else {
+          // otherwise, we warn entity was not found
+          console.log(`[] NOT FOUND - entity to REMOVE with id :`, entityId);
         }
       });
     }
