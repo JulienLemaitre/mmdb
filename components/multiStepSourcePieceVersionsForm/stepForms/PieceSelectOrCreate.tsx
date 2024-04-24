@@ -98,13 +98,34 @@ function PieceSelectOrCreate() {
       (key) => pieceData[key] == null && delete pieceData[key],
     );
 
+    const composerId = pieceData.composerId || selectedComposerId;
+    if (!composerId) {
+      console.log(
+        "OUPS: No composerId in pieceData or form state to link to the piece",
+      );
+      // TODO: trigger a toast
+      return;
+    }
+
     const pieceState = getPieceStateFromInput({
       ...pieceData,
-      // pieceVersions: [state.pieceVersion.id],
+      composerId,
     });
     pieceState.isNew = true;
-    console.log("New piece to be stored in state", pieceState);
-    updateFeedForm(feedFormDispatch, "pieces", { array: [pieceState] });
+
+    // If a piece is selected AND it is a newly created one present in the form state, we build a deletedIdArray with its id for it to be removed from state
+    let deleteIdArray: string[] = [];
+    if (
+      selectedPieceId &&
+      feedFormState.pieces?.some((piece) => piece.id === selectedPieceId)
+    ) {
+      deleteIdArray = [selectedPieceId];
+    }
+
+    updateFeedForm(feedFormDispatch, "pieces", {
+      array: [pieceState],
+      ...(deleteIdArray.length ? { deleteIdArray } : {}),
+    });
     updateSourceOnPieceVersionsForm(dispatch, "piece", {
       value: { id: pieceState.id },
       next: true,
@@ -112,6 +133,20 @@ function PieceSelectOrCreate() {
   };
 
   const onPieceSelect = (piece: PieceInput) => {
+    // If a piece is selected AND it is a newly created one present in the form state, we build a deletedIdArray with its id for it to be removed from state
+    let deleteIdArray: string[] = [];
+    if (
+      selectedPieceId &&
+      feedFormState.pieces?.some((piece) => piece.id === selectedPieceId)
+    ) {
+      deleteIdArray = [selectedPieceId];
+    }
+    if (deleteIdArray.length) {
+      updateFeedForm(feedFormDispatch, "pieces", {
+        deleteIdArray,
+      });
+    }
+
     updateSourceOnPieceVersionsForm(dispatch, "piece", {
       value: {
         id: piece.id,
@@ -129,10 +164,14 @@ function PieceSelectOrCreate() {
   const selectedPiece: PieceState | undefined = pieceFullList?.find(
     (piece) => piece.id === selectedPieceId,
   );
-  console.log(`[] selectedPiece :`, selectedPiece);
 
-  if (isCreation && !selectedPiece)
-    return <PieceEditForm onSubmit={onPieceCreated} />;
+  if (isCreation)
+    return (
+      <PieceEditForm
+        onSubmit={onPieceCreated}
+        onCancel={() => setIsCreation(false)}
+      />
+    );
 
   if (!pieceFullList)
     return (

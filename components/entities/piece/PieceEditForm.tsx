@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { PieceInput } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
+import ArrowLeftIcon from "@/components/svg/ArrowLeftIcon";
 
 const PieceSchema = z.object({
   title: z.string().min(2),
@@ -14,7 +15,12 @@ const PieceSchema = z.object({
 export default function PieceEditForm({
   piece,
   onSubmit,
-}: Readonly<{ piece?: PieceInput; onSubmit: (piece: PieceInput) => void }>) {
+  onCancel,
+}: Readonly<{
+  piece?: PieceInput;
+  onSubmit: (piece: PieceInput) => void;
+  onCancel: () => void;
+}>) {
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
@@ -38,16 +44,27 @@ export default function PieceEditForm({
         <FormInput name="title" isRequired {...{ register, watch, errors }} />
         <FormInput name="nickname" {...{ register, watch, errors }} />
         <FormInput name="yearOfComposition" {...{ register, watch, errors }} />
-        <button
-          className="btn btn-primary mt-6 w-full max-w-xs"
-          type="submit"
-          disabled={isSubmitting}
-        >
-          Submit
-          {isSubmitting && (
-            <span className="loading loading-spinner loading-md"></span>
-          )}
-        </button>
+        <div className="flex gap-4 items-center mt-6">
+          <button
+            className="btn btn-neutral"
+            type="button"
+            disabled={isSubmitting}
+            onClick={onCancel}
+          >
+            <ArrowLeftIcon className="w-5 h-5 mr-2" />
+            Cancel
+          </button>
+          <button
+            className="btn btn-primary mt-6 w-full max-w-xs"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            Submit
+            {isSubmitting && (
+              <span className="loading loading-spinner loading-md"></span>
+            )}
+          </button>
+        </div>
       </form>
     </div>
   );

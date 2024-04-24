@@ -96,10 +96,9 @@ export type ContributionStateWithoutId =
 
 export type PieceState = Pick<
   Piece,
-  "id" | "nickname" | "yearOfComposition" | "title"
+  "id" | "nickname" | "yearOfComposition" | "title" | "composerId"
 > &
   IsNewProp;
-// export type NewPieceState = PieceState & { isNew: true };
 
 export type SectionState = Pick<
   Section,
@@ -165,7 +164,7 @@ export type PersonInput = Pick<
 export type PieceInput = Pick<
   Piece,
   "nickname" | "yearOfComposition" | "title"
-> & { id?: string };
+> & { id?: string; composerId?: string };
 export type SectionInput = Pick<
   Section,
   | "rank"

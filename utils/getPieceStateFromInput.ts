@@ -2,7 +2,7 @@ import { PieceInput, PieceState } from "@/types/formTypes";
 import { v4 as uuidv4 } from "uuid";
 
 export default function getPieceStateFromInput(
-  pieceInput: PieceInput,
+  pieceInput: PieceInput & { composerId: string },
 ): PieceState {
   return {
     ...pieceInput,

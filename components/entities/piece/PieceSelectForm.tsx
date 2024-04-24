@@ -43,6 +43,7 @@ export default function PieceSelectForm({
         pieces={pieces}
         onSelect={onSelect}
         selectedPiece={selectedPiece}
+        onPieceCreationClick={onPieceCreationClick}
       />
       <button
         onClick={() => onPieceSelect(selectedPiece)}

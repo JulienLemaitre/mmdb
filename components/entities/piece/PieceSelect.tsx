@@ -1,24 +1,21 @@
-// "use client";
 import Select from "@/components/ReactSelect/Select";
 import { PieceState } from "@/types/formTypes";
-import { URL_CREATE_PIECE } from "@/utils/routes";
-import { useRouter } from "next/navigation";
 import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";
 
 type PieceSelectProps = {
   pieces: PieceState[];
   onSelect: (pieceId: string) => void;
   selectedPiece: PieceState | null;
+  onPieceCreationClick: () => void;
 };
 export default function PieceSelect({
   pieces,
   onSelect,
   selectedPiece,
+  onPieceCreationClick,
 }: Readonly<PieceSelectProps>) {
   const pieceOptions = pieces.map((piece) => getPieceOption(piece));
-  const router = useRouter();
   const defaultOption = selectedPiece ? getPieceOption(selectedPiece) : null;
-  console.log(`[PieceSelect] defaultOption :`, defaultOption);
 
   return (
     <Select
@@ -36,9 +33,8 @@ export default function PieceSelect({
         onSelect(pieceOption?.value);
       }}
       noOptionsMessage={getNoOptionsMessage({
-        router,
         entityName: "piece",
-        createUrl: URL_CREATE_PIECE,
+        onClick: onPieceCreationClick,
       })}
     />
   );
