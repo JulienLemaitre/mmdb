@@ -24,6 +24,10 @@ function PieceSelectOrCreate() {
   const selectedComposerId = state?.composer?.id;
   const selectedPieceId = state?.piece?.id;
   const newPieces = feedFormState.pieces;
+  const newSelectedPiece = newPieces?.find(
+    (piece) => piece.id === selectedPieceId,
+  );
+  const isPieceSelectedNew = !!newSelectedPiece;
   let pieceFullList = [...(pieces || []), ...(newPieces || [])];
 
   // If we have new pieces, we need to sort the pieceFullList
@@ -115,10 +119,7 @@ function PieceSelectOrCreate() {
 
     // If a piece is selected AND it is a newly created one present in the form state, we build a deletedIdArray with its id for it to be removed from state
     let deleteIdArray: string[] = [];
-    if (
-      selectedPieceId &&
-      feedFormState.pieces?.some((piece) => piece.id === selectedPieceId)
-    ) {
+    if (selectedPieceId && isPieceSelectedNew) {
       deleteIdArray = [selectedPieceId];
     }
 
@@ -132,13 +133,9 @@ function PieceSelectOrCreate() {
     });
   };
 
-  const onPieceSelect = (piece: PieceInput) => {
-    // If a piece is selected AND it is a newly created one present in the form state, we build a deletedIdArray with its id for it to be removed from state
+  const deleteSelectedPieceIfNew = () => {
     let deleteIdArray: string[] = [];
-    if (
-      selectedPieceId &&
-      feedFormState.pieces?.some((piece) => piece.id === selectedPieceId)
-    ) {
+    if (selectedPieceId && isPieceSelectedNew) {
       deleteIdArray = [selectedPieceId];
     }
     if (deleteIdArray.length) {
@@ -146,6 +143,11 @@ function PieceSelectOrCreate() {
         deleteIdArray,
       });
     }
+  };
+
+  const onPieceSelect = (piece: PieceInput) => {
+    // If a piece is selected AND it is a newly created one present in the form state, we build a deletedIdArray with its id for it to be removed from state
+    deleteSelectedPieceIfNew();
 
     updateSourceOnPieceVersionsForm(dispatch, "piece", {
       value: {
@@ -159,17 +161,23 @@ function PieceSelectOrCreate() {
     setIsCreation(true);
   };
 
+  const onCancelPieceCreation = () => {
+    deleteSelectedPieceIfNew();
+    setIsCreation(false);
+  };
+
   if (isLoading) return <Loader />;
 
   const selectedPiece: PieceState | undefined = pieceFullList?.find(
     (piece) => piece.id === selectedPieceId,
   );
 
-  if (isCreation)
+  if (isCreation || isPieceSelectedNew)
     return (
       <PieceEditForm
+        piece={newSelectedPiece}
         onSubmit={onPieceCreated}
-        onCancel={() => setIsCreation(false)}
+        onCancel={onCancelPieceCreation}
       />
     );
 
