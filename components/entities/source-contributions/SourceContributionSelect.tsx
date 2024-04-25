@@ -7,7 +7,7 @@ import {
 } from "@/types/formTypes";
 import { useCallback, useEffect, useState } from "react";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
-import NewSourceContributionForm from "@/components/entities/source-contributions/create/NewSourceContributionForm";
+import NewSourceContributionForm from "@/components/entities/source-contributions/NewSourceContributionForm";
 import Label from "@/components/Label";
 
 type SourceContributionSelectProps = {
@@ -109,7 +109,11 @@ export default function SourceContributionSelect({
   useEffect(() => {
     // Call onAddContribution when the required data is in state
     if (role && (newPerson || newOrganization)) {
-      console.log("useEffect:", { role, newPerson, newOrganization });
+      console.log("useEffect Call onAddContribution:", {
+        role,
+        newPerson,
+        newOrganization,
+      });
       onAddContribution();
     }
   }, [role, newOrganization, newPerson, onAddContribution]);

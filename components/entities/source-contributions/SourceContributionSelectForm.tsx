@@ -1,36 +1,35 @@
-"use client";
 import {
   ContributionStateWithoutId,
   OptionInput,
   OrganizationState,
   PersonState,
 } from "@/types/formTypes";
-import {
-  updateEditForm,
-  useEditForm,
-} from "@/components/context/editFormContext";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import PlusIcon from "@/components/svg/PlusIcon";
-import SourceContributionSelect from "@/components/entities/source-contributions/create/SourceContributionSelect";
+import SourceContributionSelect from "@/components/entities/source-contributions/SourceContributionSelect";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
-import { URL_CREATE_METRONOME_MARKS } from "@/utils/routes";
+import StepNavigation from "@/components/multiStepMMSourceForm/StepNavigation";
 
 type SourceContributionSelectFormProps = {
+  contributions?: ContributionStateWithoutId[];
   persons: PersonState[];
   organizations: OrganizationState[];
+  onSubmit: (contributions: ContributionStateWithoutId[]) => void;
+  submitTitle?: string;
+  title?: string;
 };
 
 export default function SourceContributionSelectForm({
+  contributions,
   persons,
   organizations,
+  onSubmit,
+  submitTitle,
+  title,
 }: SourceContributionSelectFormProps) {
-  const { dispatch } = useEditForm();
-  const router = useRouter();
-
   const [selectedContributions, setSelectedContributions] = useState<
     ContributionStateWithoutId[]
-  >([]);
+  >(contributions || []);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [createdPersons, setCreatedPersons] = useState<PersonState[]>([]);
@@ -133,10 +132,6 @@ export default function SourceContributionSelectForm({
     ]);
     setIsFormOpen(false);
   };
-  const onSubmit = () => {
-    updateEditForm(dispatch, "sourceContributions", selectedContributions);
-    router.push(URL_CREATE_METRONOME_MARKS);
-  };
 
   const personOptions: OptionInput[] = [...persons, ...createdPersons].map(
     (person: PersonState) => ({
@@ -158,6 +153,14 @@ export default function SourceContributionSelectForm({
 
   return (
     <>
+      <h1 className="mb-4 text-4xl font-bold">
+        {title ?? (
+          <>
+            Metronome Mark Source
+            <span className="block text-xl font-normal">Contributions</span>
+          </>
+        )}
+      </h1>
       <ul className="my-4">
         {selectedContributions.map((contribution, index) => {
           if ("organization" in contribution) {
@@ -218,19 +221,11 @@ export default function SourceContributionSelectForm({
         </div>
       )}
 
-      <div>
-        <button
-          className="btn btn-primary mt-4"
-          onClick={onSubmit}
-          {...(selectedContributions.length > 0 && !isFormOpen
-            ? { disabled: false }
-            : { disabled: true })}
-        >
-          {`Submit Source Contribution${
-            selectedContributions.length > 1 ? "s" : ""
-          }`}
-        </button>
-      </div>
+      <StepNavigation
+        onClick={() => onSubmit(selectedContributions)}
+        isNextDisabled={!(selectedContributions.length > 0 && !isFormOpen)}
+        submitTitle={submitTitle}
+      />
     </>
   );
 }
