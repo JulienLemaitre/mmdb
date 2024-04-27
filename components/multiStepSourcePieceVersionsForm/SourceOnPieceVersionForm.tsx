@@ -1,4 +1,3 @@
-import { MMSourcePieceVersionsState } from "@/types/formTypes";
 import SourceOnPieceVersionsSteps from "@/components/multiStepSourcePieceVersionsForm/SourceOnPieceVersionsSteps";
 import { getStepByRank } from "@/components/multiStepSourcePieceVersionsForm/stepsUtils";
 import { useSourceOnPieceVersionsForm } from "@/components/context/SourceOnPieceVersionFormContext";
@@ -6,10 +5,6 @@ import { allExpanded, darkStyles, JsonView } from "react-json-view-lite";
 import React from "react";
 
 type SourceOnPieceVersionFormProps = {
-  sourceOnPieceVersions?: MMSourcePieceVersionsState[];
-  onAddSourcePieceVersions: (
-    sourceOnPieceVersions: MMSourcePieceVersionsState[],
-  ) => void;
   onFormClose: () => void;
 };
 
@@ -19,8 +14,6 @@ type SourceOnPieceVersionFormProps = {
  * @constructor
  */
 const SourceOnPieceVersionForm = ({
-  // sourceOnPieceVersions,
-  // onAddSourcePieceVersions,
   onFormClose,
 }: SourceOnPieceVersionFormProps) => {
   const { state, currentStepRank } = useSourceOnPieceVersionsForm();

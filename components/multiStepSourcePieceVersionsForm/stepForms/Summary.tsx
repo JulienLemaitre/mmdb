@@ -1,39 +1,31 @@
 import React from "react";
 import { useSourceOnPieceVersionsForm } from "@/components/context/SourceOnPieceVersionFormContext";
 import { allExpanded, darkStyles, JsonView } from "react-json-view-lite";
-import { useFeedForm } from "@/components/context/feedFormContext";
+import {
+  updateFeedForm,
+  useFeedForm,
+} from "@/components/context/feedFormContext";
 
 function Summary({ onFormClose }: { onFormClose: () => void }) {
-  const { state, dispatch } = useSourceOnPieceVersionsForm();
+  const { state } = useSourceOnPieceVersionsForm();
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
-  const onAddPieceVersionOnSource = () => {
+
+  const onAddSourceOnPieceVersions = () => {
     if (!state.pieceVersion?.id) {
       console.log(
         `[onAddPieceVersionOnSource] ERROR: state.pieceVersion?.id SHOULD BE DEFINED`,
       );
       return;
     }
-    // if (!feedFormState.mMSourceDescription?.id) {
-    //   console.log(
-    //     `[onAddPieceVersionOnSource] ERROR: feedFormState.mMSourceDescription?.id SHOULD BE DEFINED`,
-    //   );
-    //   return;
-    // }
-    feedFormDispatch({
-      type: "mMSourcePieceVersions",
-      payload: {
-        array: [
-          {
-            pieceVersionId: state.pieceVersion?.id,
-            // mMSourceId: feedFormState.mMSourceDescription?.id,
-            rank: (feedFormState.mMSourcePieceVersions || []).length + 1,
-          },
-        ],
-      },
+    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+      array: [
+        {
+          pieceVersionId: state.pieceVersion?.id,
+          rank: (feedFormState.mMSourcePieceVersions || []).length + 1,
+        },
+      ],
     });
 
-    // reset sourceOnPieceVersionForm
-    dispatch({ type: "init" });
     onFormClose();
   };
 
@@ -47,7 +39,7 @@ function Summary({ onFormClose }: { onFormClose: () => void }) {
         />
       </div>
       <button
-        onClick={onAddPieceVersionOnSource}
+        onClick={onAddSourceOnPieceVersions}
         className="btn btn-primary mt-4"
       >
         Confirm adding this piece

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   updateFeedForm,
   useFeedForm,
@@ -47,7 +46,6 @@ const MMSourcePieceVersions = () => {
         <SourceOnPieceVersionFormContainer
           sourcePieceVersions={state.mMSourcePieceVersions}
           onSubmit={onSubmit}
-          title={step.title}
           submitTitle={step.title}
         />
       </SourceOnPieceVersionsFormProvider>

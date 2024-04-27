@@ -66,10 +66,6 @@ const INITIAL_STATE: SourceOnPieceVersionsFormState = {
 
 const LOCAL_STORAGE_KEY = "sourceOnPieceVersionsForm";
 const USE_LOCAL_STORAGE = false;
-// const allowedActions = new Set();
-// steps.forEach((step) =>
-//   step.actionTypes.forEach((actionType) => allowedActions.add(actionType)),
-// );
 
 const SourceOnPieceVersionsFormContext = createContext<
   | {
@@ -96,7 +92,8 @@ function SourceOnPieceVersionsFormReducer(
   state: SourceOnPieceVersionsFormState,
   action: SourceOnPieceVersionsFormAction,
 ): any {
-  console.log(`[SourceOnPieceVersionsFormReducer] action.type :`, action.type);
+  console.group(`[SourceOnPieceVersionsFormReducer]`);
+  console.log(`action.type :`, action.type);
 
   // Navigation back
   if (action.type === "goToPrevStep") {
@@ -110,10 +107,7 @@ function SourceOnPieceVersionsFormReducer(
     };
   }
 
-  console.log(
-    `[SourceOnPieceVersionsFormReducer] action.payload :`,
-    action.payload,
-  );
+  console.log(`action.payload :`, action.payload);
 
   // Navigation to specific step
   if (action.type === "goToStep") {
@@ -129,14 +123,8 @@ function SourceOnPieceVersionsFormReducer(
 
   const allowedActions = getAllowedActions(state);
   const isActionAllowed = allowedActions.has(action.type);
-  console.log(
-    `[SourceOnPieceVersionsFormReducer] allowedActions :`,
-    allowedActions,
-  );
-  console.log(
-    `[SourceOnPieceVersionsFormReducer] isActionAllowed :`,
-    isActionAllowed,
-  );
+  console.log(`allowedActions :`, allowedActions);
+  console.log(`isActionAllowed :`, isActionAllowed);
 
   // Entries created
   if (isActionAllowed) {
@@ -279,7 +267,7 @@ export function useSourceOnPieceVersionsForm() {
   };
 }
 
-export function updateSourceOnPieceVersionsForm(dispatch, type, value) {
+export function updateSourceOnPieceVersionsForm(dispatch, type, value?: any) {
   dispatch({ type, payload: value });
 }
 
