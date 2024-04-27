@@ -89,13 +89,13 @@ const TEST_STATE: FeedFormState = {
       role: "MM_PROVIDER",
     },
   ],
-  // mMSourcePieceVersions: [
-  //   {
-  //     pieceVersionId: "25b562cc-41b9-4596-87c4-36008a622c95",
-  //     rank: 1,
-  //   },
-  // ],
-  mMSourcePieceVersions: [],
+  mMSourcePieceVersions: [
+    {
+      pieceVersionId: "25b562cc-41b9-4596-87c4-36008a622c95",
+      rank: 1,
+    },
+  ],
+  // mMSourcePieceVersions: [],
   persons: [],
   pieces: [],
   pieceVersions: [],
@@ -182,7 +182,7 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
 
   // Entries created
   if (isActionAllowed) {
-    const { next, value, array, deleteIdArray } = action.payload || {};
+    const { next, value, array, deleteIdArray, idKey } = action.payload || {};
 
     let newState = state;
 
@@ -215,22 +215,23 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
     // If payload is an entity array, we update the state accordingly
     if (deleteIdArray) {
       // For each entity in the array
-      deleteIdArray.forEach((entityId) => {
+      deleteIdArray.forEach((idToDelete) => {
+        const id = idKey || "id";
         // If we find an entity in state with the same id, we remove it
         const isEntityInState = newState[action.type]?.find(
-          (stateEntity) => entityId && stateEntity.id === entityId,
+          (stateEntity) => idToDelete && stateEntity[id] === idToDelete,
         );
         if (isEntityInState) {
-          console.log(`[] REMOVE entity in array with id :`, entityId);
+          console.log(`[] REMOVE entity in array with id :`, idToDelete);
           newState = {
             ...newState,
             [action.type]: newState[action.type].filter(
-              (stateEntity) => stateEntity.id !== entityId,
+              (stateEntity) => stateEntity[id] !== idToDelete,
             ),
           };
         } else {
           // otherwise, we warn entity was not found
-          console.log(`[] NOT FOUND - entity to REMOVE with id :`, entityId);
+          console.log(`[] NOT FOUND - entity to REMOVE with id :`, idToDelete);
         }
       });
     }

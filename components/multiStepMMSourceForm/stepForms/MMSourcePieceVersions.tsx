@@ -4,7 +4,6 @@ import {
 } from "@/components/context/feedFormContext";
 import QuestionMarkCircleIcon from "@/components/svg/QuestionMarkCircleIcon";
 import { getStepByRank } from "@/components/multiStepMMSourceForm/stepsUtils";
-import { MMSourcePieceVersionsState } from "@/types/formTypes";
 import SourceOnPieceVersionFormContainer from "@/components/entities/source-piece-version/SourceOnPieceVersionFormContainer";
 import { SourceOnPieceVersionsFormProvider } from "@/components/context/SourceOnPieceVersionFormContext";
 
@@ -12,9 +11,9 @@ const MMSourcePieceVersions = () => {
   const { dispatch, currentStepRank, state } = useFeedForm();
   const step = getStepByRank(currentStepRank);
 
-  const onSubmit = (sourceOnPieceVersions: MMSourcePieceVersionsState[]) => {
-    updateFeedForm(dispatch, "mMSourcePieceVersions", {
-      array: sourceOnPieceVersions,
+  const onSubmit = () => {
+    updateFeedForm(dispatch, "formInfo", {
+      value: { allSourcePieceVersionsDone: true },
       next: true,
     });
   };

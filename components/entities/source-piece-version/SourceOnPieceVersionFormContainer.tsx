@@ -10,10 +10,11 @@ import {
   updateSourceOnPieceVersionsForm,
   useSourceOnPieceVersionsForm,
 } from "@/components/context/SourceOnPieceVersionFormContext";
+import TrashIcon from "@/components/svg/TrashIcon";
 
 type SourcePieceVersionSelectFormProps = {
   sourcePieceVersions?: MMSourcePieceVersionsState[];
-  onSubmit: (sourcePieceVersions: MMSourcePieceVersionsState[]) => void;
+  onSubmit: () => void;
   submitTitle?: string;
 };
 
@@ -47,23 +48,48 @@ const SourceOnPieceVersionFormContainer = ({
     });
   };
 
+  const onDeletePieceVersionId = (pieceVersionId) => {
+    updateFeedForm(dispatch, "mMSourcePieceVersions", {
+      deleteIdArray: [pieceVersionId],
+      idKey: "pieceVersionId",
+    });
+    // Delete new PieceVersion as well if exists
+    updateFeedForm(dispatch, "pieceVersions", {
+      deleteIdArray: [pieceVersionId],
+    });
+  };
+
   return (
     <>
       {isFormOpen ? (
         <SourceOnPieceVersionForm onFormClose={onFormClose} />
       ) : (
         <>
-          <ul className="my-4">
+          <ul className="my-4 max-w-[65ch]">
             {sourcePieceVersions.map((sourcePieceVersion, index) => (
               <li
                 key={`${index}-${sourcePieceVersion.pieceVersionId}-${sourcePieceVersion.rank}`}
               >
-                <h4 className="mt-6 text-lg font-bold text-secondary">{`Piece ${
-                  index + 1
-                }`}</h4>
-                <div className="flex gap-3 items-center">
-                  <div className="font-bold">{`${sourcePieceVersion.rank}:`}</div>
-                  <div>{sourcePieceVersion.pieceVersionId}</div>
+                <div className="mt-6 flex gap-4 items-end w-full">
+                  <div className="flex-grow">
+                    <h4 className="text-lg font-bold text-secondary">{`Piece ${sourcePieceVersion.rank}`}</h4>
+                    <div className="flex gap-3 items-center">
+                      <div>{sourcePieceVersion.pieceVersionId}</div>
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-neutral hover:btn-error"
+                      onClick={() =>
+                        onDeletePieceVersionId(
+                          sourcePieceVersion.pieceVersionId,
+                        )
+                      }
+                    >
+                      <TrashIcon className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </li>
             ))}
@@ -82,6 +108,7 @@ const SourceOnPieceVersionFormContainer = ({
               className="btn btn-accent"
               type="button"
               onClick={() => onFormOpen("collection")}
+              disabled={true}
             >
               <PlusIcon className="w-5 h-5" />
               Add a complete collection
@@ -92,7 +119,7 @@ const SourceOnPieceVersionFormContainer = ({
 
       {!isFormOpen ? (
         <StepNavigation
-          onClick={() => onSubmit(sourcePieceVersions)}
+          onClick={onSubmit}
           isNextDisabled={!(sourcePieceVersions.length > 0 && !isFormOpen)}
           submitTitle={submitTitle}
         />

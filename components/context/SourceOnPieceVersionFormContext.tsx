@@ -98,6 +98,7 @@ function SourceOnPieceVersionsFormReducer(
   // Navigation back
   if (action.type === "goToPrevStep") {
     const currentStepRank = state?.formInfo?.currentStepRank || 1;
+    console.groupEnd();
     return {
       ...state,
       formInfo: {
@@ -112,6 +113,7 @@ function SourceOnPieceVersionsFormReducer(
   // Navigation to specific step
   if (action.type === "goToStep") {
     const { stepRank } = action.payload;
+    console.groupEnd();
     return {
       ...state,
       formInfo: {
@@ -204,10 +206,12 @@ function SourceOnPieceVersionsFormReducer(
     // }
 
     localStorageSetItem(LOCAL_STORAGE_KEY, newState);
+    console.groupEnd();
     return newState;
   }
   if (action.type === "init") {
     localStorageSetItem(LOCAL_STORAGE_KEY, action.payload || INITIAL_STATE);
+    console.groupEnd();
     return action.payload || INITIAL_STATE;
   }
   throw new Error(`Unhandled action type: ${action.type}`);
