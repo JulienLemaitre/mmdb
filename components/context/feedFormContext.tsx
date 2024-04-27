@@ -15,6 +15,7 @@ import {
   NewPieceVersionState,
   MMSourceDescriptionState,
   MMSourcePieceVersionsState,
+  TempoIndicationState,
 } from "@/types/formTypes";
 import { steps } from "@/components/multiStepMMSourceForm/stepsUtils";
 
@@ -24,9 +25,9 @@ type PieceFormAction =
   | { type: "goToStep"; payload: any }
   | { type: "formInfo"; payload: any }
   | { type: "persons"; payload: any }
-  // | { type: "composer"; payload: any }
   | { type: "pieces"; payload: any }
   | { type: "pieceVersions"; payload: any }
+  | { type: "tempoIndications"; payload: any }
   | { type: "mMSourceDescription"; payload: any }
   | { type: "mMSourceContributions"; payload: any }
   | { type: "mMSourcePieceVersions"; payload: any }
@@ -41,19 +42,15 @@ type FeedFormInfo = {
   allMetronomeMarksDone?: boolean;
   allSourceContributionsDone?: boolean;
 };
-// export type EditedSourceOnPieceVersionsState = {
-//   composerId?: string;
-//   isCollection?: boolean;
-// };
 export type FeedFormState = {
   formInfo?: FeedFormInfo;
   mMSourceDescription?: MMSourceDescriptionState;
   mMSourceContributions?: MMSourceContributionsState;
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
-  // editedSourceOnPieceVersions?: EditedSourceOnPieceVersionsState;
   persons?: PersonState[];
   pieces?: PieceState[];
   pieceVersions?: NewPieceVersionState[];
+  tempoIndications?: TempoIndicationState[];
   metronomeMarks?: MetronomeMarkState[];
 };
 type FeedFormProviderProps = { children: ReactNode };
@@ -97,6 +94,7 @@ const TEST_STATE: FeedFormState = {
   pieces: [],
   pieceVersions: [],
   metronomeMarks: [],
+  tempoIndications: [],
 };
 // const INITIAL_STATE: FeedFormState = {
 const INITIAL_STATE: FeedFormState = TEST_STATE || {
@@ -110,6 +108,7 @@ const INITIAL_STATE: FeedFormState = TEST_STATE || {
   pieces: [],
   pieceVersions: [],
   metronomeMarks: [],
+  tempoIndications: [],
 };
 const LOCAL_STORAGE_KEY = "feedForm";
 const USE_LOCAL_STORAGE = false;
@@ -140,11 +139,13 @@ function localStorageGetItem(key: string) {
 }
 
 function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
-  console.log(`[feedFormReducer] action.type :`, action.type);
+  console.group(`[feedFormReducer]`);
+  console.log(`[] action.type :`, action.type);
 
   // Navigation back
   if (action.type === "goToPrevStep") {
     const currentStepRank = state?.formInfo?.currentStepRank || 1;
+    console.groupEnd();
     return {
       ...state,
       formInfo: {
@@ -154,11 +155,12 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
     };
   }
 
-  console.log(`[feedFormReducer] action.payload :`, action.payload);
+  console.log(`[] action.payload :`, action.payload);
 
   // Navigation to specific step
   if (action.type === "goToStep") {
     const { stepRank } = action.payload;
+    console.groupEnd();
     return {
       ...state,
       formInfo: {
@@ -169,8 +171,8 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
   }
 
   const isActionAllowed = allowedActions.has(action.type);
-  console.log(`[feedFormReducer] allowedActions :`, allowedActions);
-  console.log(`[feedFormReducer] isActionAllowed :`, isActionAllowed);
+  console.log(`[] allowedActions :`, allowedActions);
+  console.log(`[] isActionAllowed :`, isActionAllowed);
 
   // Entries created
   if (isActionAllowed) {
@@ -263,12 +265,15 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
     // }
 
     localStorageSetItem(LOCAL_STORAGE_KEY, newState);
+    console.groupEnd();
     return newState;
   }
   if (action.type === "init") {
     localStorageSetItem(LOCAL_STORAGE_KEY, action.payload || INITIAL_STATE);
+    console.groupEnd();
     return action.payload || INITIAL_STATE;
   }
+  console.groupEnd();
   throw new Error(`Unhandled action type: ${action.type}`);
 }
 
@@ -307,7 +312,6 @@ export function useFeedForm() {
     throw new Error("useFeedForm must be used within a FeedFormProvider");
   }
   const lastCompletedStep = getLastCompletedStep(context.state);
-  // console.log(`[useFeedForm] lastCompletedStep :`, lastCompletedStep);
   const nextStep = steps[lastCompletedStep ? lastCompletedStep?.rank + 1 : 0];
   return {
     ...context,

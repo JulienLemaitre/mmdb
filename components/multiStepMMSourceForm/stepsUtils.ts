@@ -39,6 +39,7 @@ export const steps: FeedFormStep[] = [
       "persons",
       "pieces",
       "pieceVersions",
+      "tempoIndications",
     ],
     title: "Pieces and Versions",
     isComplete: (state) =>

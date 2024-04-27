@@ -1,17 +1,24 @@
 import { z } from "zod";
+import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PIECE_CATEGORY, TempoIndication } from "@prisma/client";
+import { PIECE_CATEGORY } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
-import { OptionInput, PieceVersionInput } from "@/types/formTypes";
+import {
+  OptionInput,
+  PieceVersionInput,
+  TempoIndicationState,
+} from "@/types/formTypes";
 import { URL_API_GETALL_TEMPO_INDICATIONS } from "@/utils/routes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
 import { MOVEMENT_DEFAULT_VALUE } from "@/components/ReactHookForm/formUtils";
 import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
 import { zodOption } from "@/utils/zodTypes";
-import { useSession } from "next-auth/react";
-import { fetchAPI } from "@/utils/fetchAPI";
+import {
+  updateFeedForm,
+  useFeedForm,
+} from "@/components/context/feedFormContext";
 
 const PieceVersionSchema = z.object({
   category: zodOption,
@@ -52,14 +59,12 @@ export default function PieceVersionEditForm({
   pieceVersion?: PieceVersionInput;
   onSubmit: (pieceVersion: PieceVersionInput) => void;
 }>) {
-  const { data: session } = useSession();
   const {
     formState: { errors, isSubmitting },
     control,
     register,
     handleSubmit,
     getValues,
-    // reset,
     setValue,
     watch,
   } = useForm<PieceVersionInput>({
@@ -70,8 +75,10 @@ export default function PieceVersionEditForm({
   });
 
   const [tempoIndicationList, setTempoIndicationList] = useState<
-    TempoIndication[]
+    TempoIndicationState[]
   >([]);
+  const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
+
   // Fetch tempoIndicationList from API
   useEffect(() => {
     fetch(URL_API_GETALL_TEMPO_INDICATIONS)
@@ -95,35 +102,22 @@ export default function PieceVersionEditForm({
   const onTempoIndicationCreated = async (
     inputValue: string,
   ): Promise<OptionInput | void> => {
-    return await fetchAPI(
-      "/api/tempoIndication/create",
-      {
-        variables: {
-          text: inputValue,
-        },
-      },
-      session?.user?.accessToken,
-    )
-      .then(async (newTempoIndication) => {
-        console.log(
-          `[onTempoIndicationCreated] newTempoIndication :`,
-          newTempoIndication,
-        );
-        const newOption = {
-          value: newTempoIndication.id,
-          label: newTempoIndication.text,
-        };
-        setTempoIndicationList((tiList) => [...tiList, newTempoIndication]);
-
-        // Return an option to be feeded to ReactCreatableSelect onChange
-        return newOption;
-      })
-      .catch((reason) => {
-        console.error(reason);
-      });
+    // persist the new tempoIndication in main form context
+    const newTempoIndication = {
+      id: uuidv4(),
+      text: inputValue,
+      isNew: true,
+    };
+    updateFeedForm(feedFormDispatch, "tempoIndications", {
+      array: [newTempoIndication],
+    });
+    return { value: newTempoIndication.id, label: newTempoIndication.text };
   };
 
-  console.log(`[PieceVersionEditForm] errors :`, errors);
+  const fullTempoIndicationList = [
+    ...tempoIndicationList,
+    ...(feedFormState.tempoIndications || []),
+  ];
 
   return (
     <div>
@@ -148,7 +142,7 @@ export default function PieceVersionEditForm({
         <h2 className="my-4 text-3xl font-bold">Piece structure</h2>
         <MovementArray
           {...{ control, register, getValues, setValue, errors, watch }}
-          tempoIndicationList={tempoIndicationList}
+          tempoIndicationList={fullTempoIndicationList}
           onTempoIndicationCreated={onTempoIndicationCreated}
         />
         <button

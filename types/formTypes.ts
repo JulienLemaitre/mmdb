@@ -122,10 +122,13 @@ export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {
   sections: SectionState[];
 };
 
+export type TempoIndicationState = Pick<TempoIndication, "id" | "text"> &
+  IsNewProp;
+
 export type PieceVersionState = Pick<PieceVersion, "id" | "category"> & {
   movements: MovementState[];
 } & IsNewProp;
-export type NewPieceVersionState = PieceVersionState & { isNew: true };
+export type NewPieceVersionState = PieceVersionState & IsNewProp;
 
 export type ReferenceState = Pick<Reference, "type" | "reference">;
 export type MMSourceDescriptionState = Pick<
