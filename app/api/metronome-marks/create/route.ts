@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/db";
-import { MetronomeMarksInput } from "@/types/formTypes";
+import { MetronomeMarkInput } from "@/types/formTypes";
 import isReqAuthorized from "@/utils/isReqAuthorized";
 
 export async function POST(req: NextRequest) {
@@ -11,11 +11,10 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  console.log(`[POST metronome marks] body :`, body);
   const { metronomeMarks, sourceId } = body;
 
   const metronomeMarksRes = await db.metronomeMark.createMany({
-    data: metronomeMarks.map((metronomeMark: MetronomeMarksInput) => ({
+    data: metronomeMarks.map((metronomeMark: MetronomeMarkInput) => ({
       sourceId: sourceId,
       sectionId: metronomeMark.sectionId,
       bpm: metronomeMark.bpm,

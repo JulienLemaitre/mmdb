@@ -39,7 +39,6 @@ type FeedFormInfo = {
   introDone?: boolean;
   isSourceOnPieceVersionformOpen?: boolean;
   allSourcePieceVersionsDone?: boolean;
-  allMetronomeMarksDone?: boolean;
   allSourceContributionsDone?: boolean;
 };
 export type FeedFormState = {
@@ -91,7 +90,7 @@ const TEST_STATE: FeedFormState = {
   ],
   mMSourcePieceVersions: [
     {
-      pieceVersionId: "25b562cc-41b9-4596-87c4-36008a622c95",
+      pieceVersionId: "36ca7ed1-a43c-4d3a-b676-6293d2e63d26",
       rank: 1,
     },
   ],
@@ -177,8 +176,6 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
   }
 
   const isActionAllowed = allowedActions.has(action.type);
-  console.log(`[] allowedActions :`, allowedActions);
-  console.log(`[] isActionAllowed :`, isActionAllowed);
 
   // Entries created
   if (isActionAllowed) {
@@ -190,16 +187,20 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
     if (array) {
       // For each entity in the array
       array.forEach((entity) => {
+        const id = idKey || "id";
         // If we find an entity in state with the same id, we update it
         const isEntityInState = newState[action.type]?.find(
-          (stateEntity) => entity.id && stateEntity.id === entity.id,
+          (stateEntity) => entity[id] && stateEntity[id] === entity[id],
         );
         if (isEntityInState) {
-          console.log(`[] UPDATE entity in array with new value :`, entity);
+          console.log(
+            `[] UPDATE entity in array with idKey [${id}] new value :`,
+            entity,
+          );
           newState = {
             ...newState,
             [action.type]: newState[action.type].map((stateEntity) =>
-              stateEntity.id === entity.id ? entity : stateEntity,
+              stateEntity[id] === entity[id] ? entity : stateEntity,
             ),
           };
         } else {

@@ -5,6 +5,7 @@ export const URL_API_GETALL_PIECE_PIECE_VERSIONS =
 export const URL_API_GETALL_TEMPO_INDICATIONS = "/api/getAll/tempoIndications";
 export const URL_API_GETALL_PERSONS_AND_ORGANIZATIONS =
   "/api/getAll/personsAndOrganizations";
+export const URL_API_GETMANY_PIECEVERSIONS = "/api/pieceVersion/getMany";
 export const URL_HOME = "/";
 export const URL_EXPLORE = "/explore";
 export const URL_FEED = "/feed";

@@ -115,7 +115,7 @@ export type SectionState = Pick<
   | "fastestOrnamentalNotesPerBar"
   | "isFastestStructuralNoteBelCanto"
 > & {
-  tempoIndication: Pick<TempoIndication, "text">;
+  tempoIndication: Pick<TempoIndication, "id" | "text">;
 };
 
 export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {
@@ -150,8 +150,10 @@ export type MMSourcePieceVersionsState = Pick<
 
 export type MetronomeMarkState = Pick<
   MetronomeMark,
-  "id" | "sectionId" | "bpm" | "comment" | "beatUnit" | "mMSourceId"
->;
+  "sectionId" | "bpm" | "comment" | "beatUnit"
+> & {
+  id?: string;
+};
 
 // Form INPUTS
 
@@ -219,7 +221,7 @@ export type ContributionInput = {
     }
 );
 
-export type MetronomeMarksInput = Pick<
+export type MetronomeMarkInput = Pick<
   MetronomeMark,
   "sectionId" | "bpm" | "comment"
 > & {

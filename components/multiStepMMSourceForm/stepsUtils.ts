@@ -3,6 +3,7 @@ import Intro from "@/components/multiStepMMSourceForm/stepForms/Intro";
 import MMSourceDescription from "@/components/multiStepMMSourceForm/stepForms/MMSourceDescription";
 import MMSourceContributions from "@/components/multiStepMMSourceForm/stepForms/MMSourceContributions";
 import MMSourcePieceVersions from "@/components/multiStepMMSourceForm/stepForms/MMSourcePieceVersions";
+import MetronomeMarks from "@/components/multiStepMMSourceForm/stepForms/MetronomeMarks";
 
 export const steps: FeedFormStep[] = [
   {
@@ -52,9 +53,8 @@ export const steps: FeedFormStep[] = [
     id: "metronomeMarks",
     actionTypes: ["metronomeMarks", "formInfo"],
     title: "Metronome Marks",
-    isComplete: (state) =>
-      (state?.metronomeMarks?.length || 0) > 0 &&
-      !!state?.formInfo?.allMetronomeMarksDone,
+    isComplete: (state) => (state?.metronomeMarks?.length || 0) > 0,
+    Component: MetronomeMarks,
   },
   {
     rank: 5,

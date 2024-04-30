@@ -3,7 +3,7 @@ import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import TrashIcon from "@/components/svg/TrashIcon";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import { NOTE_VALUE } from "@prisma/client";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
 export default function MetronomeMarkArray({
   control,
@@ -22,29 +22,32 @@ export default function MetronomeMarkArray({
   return (
     <>
       <ul>
-        {fields.map((item, index) => {
-          // console.log(`[MetronomeMarkArray] item ${index} :`, item);
-          const section = sectionList[index];
-          // console.log(`[MetronomeMarkArray] section :`, section);
+        {sectionList.map((section, index) => {
           const movementRank = section.movement.rank;
           const key = section.movement.key;
           const tempoIndication = section.tempoIndication?.text;
 
           return (
-            <>
+            <Fragment key={section.id}>
               {section.rank === 1 ? (
                 <h3 className="text-xl font-bold text-accent mt-6">
                   {`Movement ${movementRank} in ${key.replaceAll("_", " ")}`}
                 </h3>
               ) : null}
-              <li key={item.id}>
+              <li key={section.id}>
                 <h4 className="mt-4 text-lg font-bold text-secondary">
                   {`Section ${section.rank}`}
                   <span className="italic">
                     {tempoIndication && ` - ${tempoIndication}`}
                   </span>
                 </h4>
-                <div className="flex items-end gap-3">
+                <input
+                  {...register(`metronomeMarks[${index}].sectionId`, {
+                    value: section.id,
+                  })}
+                  type="hidden"
+                />
+                <div className="flex gap-3">
                   <ControlledSelect
                     name={`metronomeMarks[${index}].beatUnit` as const}
                     label={`Beat unit`}
@@ -67,7 +70,7 @@ export default function MetronomeMarkArray({
                   {!commentToShow.includes(index) && (
                     <button
                       type="button"
-                      className="btn btn-secondary"
+                      className="btn btn-secondary mt-9"
                       onClick={() =>
                         setCommentToShow((prev) => [...prev, index])
                       }
@@ -91,7 +94,7 @@ export default function MetronomeMarkArray({
                       onClick={() => {
                         setValue(`metronomeMarks[${index}].comment`, "");
                         setCommentToShow((prev) =>
-                          prev.filter((item) => item !== index),
+                          prev.filter((idx) => idx !== index),
                         );
                       }}
                     >
@@ -100,7 +103,7 @@ export default function MetronomeMarkArray({
                   </div>
                 )}
               </li>
-            </>
+            </Fragment>
           );
         })}
       </ul>
