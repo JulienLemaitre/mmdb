@@ -37,6 +37,7 @@ export const steps: FeedFormStep[] = [
       "mMSourcePieceVersions",
       "formInfo",
       "editedSourceOnPieceVersions",
+      "organizations",
       "persons",
       "pieces",
       "pieceVersions",

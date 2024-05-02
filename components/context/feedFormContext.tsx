@@ -16,6 +16,7 @@ import {
   MMSourceDescriptionState,
   MMSourcePieceVersionsState,
   TempoIndicationState,
+  OrganizationState,
 } from "@/types/formTypes";
 import { steps } from "@/components/multiStepMMSourceForm/stepsUtils";
 
@@ -24,6 +25,7 @@ type PieceFormAction =
   | { type: "goToPrevStep" }
   | { type: "goToStep"; payload: any }
   | { type: "formInfo"; payload: any }
+  | { type: "organizations"; payload: any }
   | { type: "persons"; payload: any }
   | { type: "pieces"; payload: any }
   | { type: "pieceVersions"; payload: any }
@@ -46,6 +48,7 @@ export type FeedFormState = {
   mMSourceDescription?: MMSourceDescriptionState;
   mMSourceContributions?: MMSourceContributionsState;
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
+  organizations?: OrganizationState[];
   persons?: PersonState[];
   pieces?: PieceState[];
   pieceVersions?: NewPieceVersionState[];
@@ -95,6 +98,7 @@ const TEST_STATE: FeedFormState = {
     },
   ],
   // mMSourcePieceVersions: [],
+  organizations: [],
   persons: [],
   pieces: [],
   pieceVersions: [],
@@ -109,6 +113,7 @@ const INITIAL_STATE: FeedFormState = TEST_STATE || {
   mMSourceDescription: undefined,
   mMSourceContributions: [],
   mMSourcePieceVersions: [],
+  organizations: [],
   persons: [],
   pieces: [],
   pieceVersions: [],

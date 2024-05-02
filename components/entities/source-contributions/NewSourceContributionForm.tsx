@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
 import { ContributionInput } from "@/types/formTypes";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,8 +8,10 @@ import { zodPerson } from "@/utils/zodTypes";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import { FormInput, getLabel } from "@/components/ReactHookForm/FormInput";
 import { ChangeEvent, useState } from "react";
-import { fetchAPI } from "@/utils/fetchAPI";
-import { useSession } from "next-auth/react";
+import {
+  updateFeedForm,
+  useFeedForm,
+} from "@/components/context/feedFormContext";
 
 const SourceContributionsSchema = z.union([
   z.object({
@@ -42,8 +45,8 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
     // defaultValues: {},
     resolver: zodResolver(SourceContributionsSchema),
   });
+  const { dispatch: feedFormDispatch } = useFeedForm();
   const [isPerson, setIsPerson] = useState<boolean>(true);
-  const { data: session } = useSession();
 
   const onIsOrganizationToggleChange = (
     event: ChangeEvent<HTMLInputElement>,
@@ -66,35 +69,39 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
   const onSubmit = async (data: ContributionInput) => {
     console.log(`[] data :`, data);
     if ("person" in data) {
-      // Persist the new person
-      const person = await fetchAPI(
-        "/api/person/create",
-        {
-          variables: data.person,
-        },
-        session?.user?.accessToken,
-      );
+      // Persist the new person in state
+      const newPerson = {
+        id: uuidv4(),
+        birthYear: data.person.birthYear,
+        ...(!Number.isNaN(data.person?.deathYear)
+          ? { deathYear: data.person.deathYear }
+          : {}),
+        firstName: data.person.firstName,
+        lastName: data.person.lastName,
+      };
 
-      console.log(`person created :`, person);
+      updateFeedForm(feedFormDispatch, "persons", {
+        array: [newPerson],
+      });
+
       onContributionCreated({
         role: data.role.value,
-        person,
+        person: newPerson,
       });
     }
     if ("organization" in data) {
-      // Persist the new organization
-      const organization = await fetchAPI(
-        "/api/organization/create",
-        {
-          variables: data.organization,
-        },
-        session?.user?.accessToken,
-      );
+      // Persist the new organization in state
+      const newOrganization = {
+        id: uuidv4(),
+        name: data.organization.name,
+      };
+      updateFeedForm(feedFormDispatch, "organizations", {
+        array: [newOrganization],
+      });
 
-      console.log(`organization created :`, organization);
       onContributionCreated({
         role: data.role.value,
-        organization,
+        organization: newOrganization,
       });
     }
   };
