@@ -14,31 +14,45 @@ function MetronomeMarks() {
   const [pieceVersions, setPieceVersions] = useState<PieceVersionState[]>();
 
   useEffect(() => {
-    fetch(URL_API_GETMANY_PIECEVERSIONS, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        idList: (state.mMSourcePieceVersions || []).map(
-          (SoPV) => SoPV.pieceVersionId,
-        ),
-      }),
-    })
-      .then((res) => res.json())
-      .then((pieceVersions) => {
-        if (!pieceVersions) {
-          console.log(
-            `[Fetch] NO pieceVersions for idList:`,
-            (state.mMSourcePieceVersions || []).map(
-              (SoPV) => SoPV.pieceVersionId,
-            ),
-          );
-          return;
-        }
+    const statePieceVersionIds: string[] = [];
+    const dbPieceVersionIds: string[] = [];
+    state.mMSourcePieceVersions!.forEach((SoPV) => {
+      if (state.pieceVersions!.some((pv) => pv.id === SoPV.pieceVersionId)) {
+        statePieceVersionIds.push(SoPV.pieceVersionId);
+      } else {
+        dbPieceVersionIds.push(SoPV.pieceVersionId);
+      }
+    });
 
-        setPieceVersions(pieceVersions);
-      });
+    const pieceVersionsFromState = statePieceVersionIds
+      .map((id) => state.pieceVersions!.find((pv) => pv.id === id))
+      .filter((pv) => pv !== undefined) as PieceVersionState[];
+
+    if (dbPieceVersionIds.length > 0) {
+      fetch(URL_API_GETMANY_PIECEVERSIONS, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          idList: dbPieceVersionIds,
+        }),
+      })
+        .then((res) => res.json())
+        .then((pieceVersions) => {
+          if (!pieceVersions) {
+            console.log(
+              `[Fetch] NO pieceVersions for idList:`,
+              dbPieceVersionIds,
+            );
+            return;
+          }
+
+          setPieceVersions([...pieceVersionsFromState, ...pieceVersions]);
+        });
+    } else {
+      setPieceVersions(pieceVersionsFromState);
+    }
   }, []);
 
   if (!pieceVersions || pieceVersions.length === 0) {

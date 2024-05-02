@@ -125,7 +125,10 @@ export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {
 export type TempoIndicationState = Pick<TempoIndication, "id" | "text"> &
   IsNewProp;
 
-export type PieceVersionState = Pick<PieceVersion, "id" | "category"> & {
+export type PieceVersionState = Pick<
+  PieceVersion,
+  "id" | "category" | "pieceId"
+> & {
   movements: MovementState[];
 } & IsNewProp;
 export type NewPieceVersionState = PieceVersionState & IsNewProp;
@@ -194,6 +197,7 @@ export type MovementInput = Pick<Movement, "rank"> & {
 };
 export type PieceVersionInput = {
   id?: string;
+  pieceId: string;
   category: OptionInput;
   movements: MovementInput[];
 };

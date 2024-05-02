@@ -86,6 +86,13 @@ function PieceVersionSelectOrCreate() {
     // Front input values validation is successful at this point.
     console.log("[onPieceVersionCreated] data", data);
 
+    if (!selectedPieceId) {
+      console.log(
+        `[onPieceVersionCreated] No selectedPieceId found - cannot create pieceVersion`,
+      );
+      return;
+    }
+
     const pieceVersionData = data;
     // Remove null values from pieceVersionData
     Object.keys(pieceVersionData).forEach(
@@ -94,7 +101,7 @@ function PieceVersionSelectOrCreate() {
 
     const pieceVersionState = getPieceVersionStateFromInput({
       ...pieceVersionData,
-      // pieceVersions: [state.pieceVersion.id],
+      pieceId: selectedPieceId,
     });
     pieceVersionState.isNew = true;
     console.log("New pieceVersion to be stored in state", pieceVersionState);

@@ -15,6 +15,7 @@ export async function GET(request: Request) {
     select: {
       id: true,
       category: true,
+      pieceId: true,
       movements: {
         select: {
           id: true,
