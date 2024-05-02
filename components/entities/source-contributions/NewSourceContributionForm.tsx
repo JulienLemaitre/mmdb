@@ -78,6 +78,7 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
           : {}),
         firstName: data.person.firstName,
         lastName: data.person.lastName,
+        isNew: true,
       };
 
       updateFeedForm(feedFormDispatch, "persons", {
@@ -94,6 +95,7 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
       const newOrganization = {
         id: uuidv4(),
         name: data.organization.name,
+        isNew: true,
       };
       updateFeedForm(feedFormDispatch, "organizations", {
         array: [newOrganization],
