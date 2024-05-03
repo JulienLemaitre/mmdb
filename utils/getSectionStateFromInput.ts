@@ -8,7 +8,8 @@ export default function getSectionStateFromInput(
     ...sectionInput,
     id: sectionInput.id || uuidv4(),
     tempoIndication: {
-      text: sectionInput.tempoIndication.value,
+      id: sectionInput.tempoIndication.value,
+      text: sectionInput.tempoIndication.label,
     },
   };
 }
