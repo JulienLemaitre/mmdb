@@ -43,6 +43,7 @@ export default function getPieceVersionInputFromPieceVersionState(
 ): PieceVersionInput {
   const pieceVersionInput: PieceVersionInput = {
     id: pieceVersionState.id,
+    pieceId: pieceVersionState.pieceId,
     category: {
       value: pieceVersionState.category,
       label: pieceVersionState.category,
