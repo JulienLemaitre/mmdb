@@ -55,6 +55,7 @@ export type FeedFormState = {
   tempoIndications?: TempoIndicationState[];
   metronomeMarks?: MetronomeMarkState[];
 };
+export type PersistableFeedFormState = Required<FeedFormState>;
 type FeedFormProviderProps = { children: ReactNode };
 
 const TEST_STATE: FeedFormState = {
@@ -105,8 +106,8 @@ const TEST_STATE: FeedFormState = {
   metronomeMarks: [],
   tempoIndications: [],
 };
-// const INITIAL_STATE: FeedFormState = {
-const INITIAL_STATE: FeedFormState = TEST_STATE || {
+const INITIAL_STATE: FeedFormState = {
+  // const INITIAL_STATE: FeedFormState = TEST_STATE || {
   formInfo: {
     currentStepRank: 0,
   },

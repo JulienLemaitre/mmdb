@@ -4,6 +4,7 @@ import MMSourceDescription from "@/components/multiStepMMSourceForm/stepForms/MM
 import MMSourceContributions from "@/components/multiStepMMSourceForm/stepForms/MMSourceContributions";
 import MMSourcePieceVersions from "@/components/multiStepMMSourceForm/stepForms/MMSourcePieceVersions";
 import MetronomeMarks from "@/components/multiStepMMSourceForm/stepForms/MetronomeMarks";
+import FeedSummary from "@/components/multiStepMMSourceForm/stepForms/FeedSummary";
 
 export const steps: FeedFormStep[] = [
   {
@@ -63,6 +64,7 @@ export const steps: FeedFormStep[] = [
     actionTypes: ["formInfo"],
     title: "Summary",
     isComplete: () => false,
+    Component: FeedSummary,
   },
 ];
 

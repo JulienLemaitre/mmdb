@@ -12,7 +12,10 @@ import type {
   TempoIndication,
   MMSourcesOnPieceVersions,
 } from "@prisma/client";
-import { FeedFormState } from "@/components/context/feedFormContext";
+import {
+  FeedFormState,
+  PersistableFeedFormState,
+} from "@/components/context/feedFormContext";
 import { FC } from "react";
 import { SourceOnPieceVersionsFormState } from "@/components/context/SourceOnPieceVersionFormContext";
 
@@ -63,7 +66,7 @@ export type PersonState = {
 export type OrganizationState = {
   id: string;
   name: string;
-};
+} & IsNewProp;
 export type ContributionState =
   | ({
       id?: string;
@@ -231,3 +234,41 @@ export type MetronomeMarkInput = Pick<
 > & {
   beatUnit: OptionInput;
 };
+
+export function assertsIsPersistableFeedFormState(
+  valueToTest: any,
+): asserts valueToTest is PersistableFeedFormState {
+  if (
+    !(
+      valueToTest &&
+      typeof valueToTest === "object" &&
+      "formInfo" in valueToTest &&
+      typeof valueToTest["formInfo"] === "object" &&
+      "mMSourceDescription" in valueToTest &&
+      typeof valueToTest["mMSourceDescription"] === "object" &&
+      "mMSourceContributions" in valueToTest &&
+      Array.isArray(valueToTest.mMSourceContributions) &&
+      valueToTest.mMSourceContributions.length > 0 &&
+      "mMSourcePieceVersions" in valueToTest &&
+      Array.isArray(valueToTest.mMSourcePieceVersions) &&
+      valueToTest.mMSourcePieceVersions.length > 0 &&
+      "metronomeMarks" in valueToTest &&
+      Array.isArray(valueToTest.metronomeMarks) &&
+      valueToTest.metronomeMarks.length > 0 &&
+      "organizations" in valueToTest &&
+      Array.isArray(valueToTest.organizations) &&
+      "persons" in valueToTest &&
+      Array.isArray(valueToTest.persons) &&
+      "pieces" in valueToTest &&
+      Array.isArray(valueToTest.pieces) &&
+      "pieceVersions" in valueToTest &&
+      Array.isArray(valueToTest.pieceVersions) &&
+      "tempoIndications" in valueToTest &&
+      Array.isArray(valueToTest.tempoIndications)
+    )
+  ) {
+    throw new Error(
+      `Value does not appear to be a PersistableFeedFormState: ${valueToTest}`,
+    );
+  }
+}
