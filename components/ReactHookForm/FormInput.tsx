@@ -125,7 +125,9 @@ export function FormInput({
   // console.log(`[] error :`, error);
 
   return (
-    <div className={`form-control w-full max-w-xs ${controlClassName}`}>
+    <div
+      className={`relative form-control w-full max-w-xs ${controlClassName}${disabled ? ` opacity-50` : ""}`}
+    >
       {(label || getLabel(name)) && (
         <label className="label">
           <span className="label-text">
@@ -162,7 +164,7 @@ export function FormInput({
         )}
       </div>
       {GetErrorMessage(errorMessage) && (
-        <span className="label-text-alt text-red-500">
+        <span className="label-text-alt text-red-500 absolute top-full">
           {GetErrorMessage(errorMessage)}
         </span>
       )}

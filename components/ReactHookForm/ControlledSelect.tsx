@@ -22,7 +22,9 @@ const ControlledSelect = ({
   });
 
   return (
-    <div className="form-control w-full max-w-xs">
+    <div
+      className={`relative form-control w-full max-w-xs${selectProps.isDisabled ? ` opacity-50 cursor-not-allowed` : ""}`}
+    >
       {label && (
         <label className="label">
           <span className="label-text">
@@ -43,7 +45,9 @@ const ControlledSelect = ({
         filterOption={labelOnlyFilterOption}
         {...selectProps}
       />
-      <span className="label-text-alt text-red-500">{error?.message}</span>
+      <span className="absolute top-full label-text-alt text-red-500">
+        {error?.message}
+      </span>
     </div>
   );
 };

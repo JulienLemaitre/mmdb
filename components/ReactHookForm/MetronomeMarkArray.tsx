@@ -12,12 +12,24 @@ export default function MetronomeMarkArray({
   watch,
   sectionList,
   setValue,
+  getValues,
 }) {
   const { fields } = useFieldArray({
     control,
     name: "metronomeMarks",
   });
   const [commentToShow, setCommentToShow] = useState<number[]>([]);
+
+  const onRemoveComment = (index: number) => {
+    setValue(`metronomeMarks[${index}].comment`, "");
+    setCommentToShow((prev) => prev.filter((idx) => idx !== index));
+  };
+
+  const resetValue = (index: number, valueName: string) => {
+    if (getValues(`metronomeMarks[${index}].[${valueName}]`)) {
+      setValue(`metronomeMarks[${index}].[${valueName}]`, undefined);
+    }
+  };
 
   return (
     <>
@@ -26,6 +38,7 @@ export default function MetronomeMarkArray({
           const movementRank = section.movement.rank;
           const key = section.movement.key;
           const tempoIndication = section.tempoIndication?.text;
+          const isNoMMChecked = !!watch(`metronomeMarks[${index}].noMM`);
 
           return (
             <Fragment key={section.id}>
@@ -47,7 +60,33 @@ export default function MetronomeMarkArray({
                   })}
                   type="hidden"
                 />
-                <div className="flex gap-3">
+                <div className="flex items-end gap-3">
+                  <label className="text-md flex items-center btn btn-outline mt-9">
+                    <input
+                      {...register(
+                        `metronomeMarks[${index}].noMM` as const,
+                        // { required: "This is required" },
+                      )}
+                      name={`metronomeMarks[${index}].noMM` as const}
+                      onClick={(e) => {
+                        // @ts-ignore
+                        const isChecked = e?.target?.checked;
+
+                        if (isChecked) {
+                          setValue(`metronomeMarks[${index}].noMM`, true);
+                          resetValue(index, "beatUnit");
+                          resetValue(index, "bpm");
+                          resetValue(index, "comment");
+                        }
+                        if (!isChecked) {
+                          setValue(`metronomeMarks[${index}].noMM`, false);
+                        }
+                      }}
+                      type="checkbox"
+                      className="mr-2"
+                    />
+                    {`No Metronome Mark`}
+                  </label>
                   <ControlledSelect
                     name={`metronomeMarks[${index}].beatUnit` as const}
                     label={`Beat unit`}
@@ -57,12 +96,14 @@ export default function MetronomeMarkArray({
                       value: key,
                       label: key.replaceAll("_", " "),
                     }))}
-                    isRequired={true}
+                    isRequired={!isNoMMChecked}
+                    isDisabled={isNoMMChecked}
                     errors={errors}
                   />
                   <FormInput
                     name={`metronomeMarks[${index}].bpm` as const}
-                    isRequired
+                    isRequired={!isNoMMChecked}
+                    disabled={isNoMMChecked}
                     label="BPM"
                     type="number"
                     {...{ register, watch, errors }}
@@ -71,6 +112,7 @@ export default function MetronomeMarkArray({
                     <button
                       type="button"
                       className="btn btn-secondary mt-9"
+                      disabled={isNoMMChecked}
                       onClick={() =>
                         setCommentToShow((prev) => [...prev, index])
                       }
@@ -91,12 +133,7 @@ export default function MetronomeMarkArray({
                     <button
                       type="button"
                       className="btn btn-error"
-                      onClick={() => {
-                        setValue(`metronomeMarks[${index}].comment`, "");
-                        setCommentToShow((prev) =>
-                          prev.filter((idx) => idx !== index),
-                        );
-                      }}
+                      onClick={() => onRemoveComment(index)}
                     >
                       <TrashIcon className="w-5 h-5" />
                     </button>

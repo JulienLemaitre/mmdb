@@ -155,12 +155,15 @@ export type MMSourcePieceVersionsState = Pick<
   pieceVersionId: string;
 } & IsNewProp;
 
-export type MetronomeMarkState = Pick<
-  MetronomeMark,
-  "sectionId" | "bpm" | "comment" | "beatUnit"
-> & {
-  id?: string;
-};
+export type MetronomeMarkState =
+  | (Pick<MetronomeMark, "sectionId" | "bpm" | "comment" | "beatUnit"> & {
+      id?: string;
+      noMM: false;
+    })
+  | (Pick<MetronomeMark, "sectionId"> & {
+      id?: string;
+      noMM: true;
+    });
 
 // Form INPUTS
 
@@ -233,12 +236,14 @@ export type ContributionInput = {
     }
 );
 
-export type MetronomeMarkInput = Pick<
-  MetronomeMark,
-  "sectionId" | "bpm" | "comment"
-> & {
-  beatUnit: OptionInputTyped<NOTE_VALUE>;
-};
+export type MetronomeMarkInput =
+  | (Pick<MetronomeMark, "sectionId" | "bpm" | "comment"> & {
+      beatUnit: OptionInputTyped<NOTE_VALUE>;
+      noMM: false;
+    })
+  | (Pick<MetronomeMark, "sectionId"> & {
+      noMM: true;
+    });
 
 export function assertsIsPersistableFeedFormState(
   valueToTest: any,

@@ -99,6 +99,7 @@ function PieceSelectOrCreate() {
     const pieceData = data;
     // Remove null values from pieceData
     Object.keys(pieceData).forEach(
+      // '== null' is true for undefined AND null values
       (key) => pieceData[key] == null && delete pieceData[key],
     );
 

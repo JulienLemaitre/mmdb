@@ -196,19 +196,19 @@ export default function getFeedFormTestState() {
       {
         sectionId: "movements[0].sections[0].id",
         bpm: 64,
-        comment: null,
+        comment: "",
         beatUnit: "HALF",
       },
       {
         sectionId: "acb64690-99f7-432d-9e51-425a9d0a2770",
         bpm: 80,
-        comment: null,
+        comment: "",
         beatUnit: "WHOLE",
       },
       {
         sectionId: "movements[0].sections[1].id",
         bpm: 108,
-        comment: null,
+        comment: "",
         beatUnit: "QUARTER",
       },
       {

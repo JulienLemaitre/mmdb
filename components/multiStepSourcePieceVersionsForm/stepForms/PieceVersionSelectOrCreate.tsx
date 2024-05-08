@@ -96,6 +96,7 @@ function PieceVersionSelectOrCreate() {
     const pieceVersionData = data;
     // Remove null values from pieceVersionData
     Object.keys(pieceVersionData).forEach(
+      // '== null' is true for undefined AND null values
       (key) => pieceVersionData[key] == null && delete pieceVersionData[key],
     );
 

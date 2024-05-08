@@ -17,6 +17,7 @@ const MMSourceDescription = () => {
     const sourceData = data;
     // Remove null values from sourceData
     Object.keys(sourceData).forEach(
+      // '== null' is true for undefined AND null values
       (key) => sourceData[key] == null && delete sourceData[key],
     );
 

@@ -7,14 +7,23 @@ export default function getMetronomeMarkInputFromState(
     return;
   }
 
-  const { sectionId, bpm, comment, beatUnit } = metronomeMark;
+  const { sectionId, noMM } = metronomeMark;
 
-  const metronomeMarkInput: MetronomeMarkInput = {
-    sectionId,
-    bpm,
-    comment,
-    beatUnit: { value: beatUnit, label: beatUnit },
-  };
+  const metronomeMarkInput: MetronomeMarkInput = noMM
+    ? {
+        sectionId,
+        noMM: true,
+      }
+    : {
+        noMM: !metronomeMark.beatUnit,
+        sectionId,
+        bpm: metronomeMark.bpm,
+        comment: metronomeMark.comment,
+        beatUnit: {
+          value: metronomeMark.beatUnit,
+          label: metronomeMark.beatUnit,
+        },
+      };
 
   return metronomeMarkInput;
 }
