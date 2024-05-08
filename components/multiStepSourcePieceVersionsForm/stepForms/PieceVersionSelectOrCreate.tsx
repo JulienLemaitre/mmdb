@@ -109,7 +109,7 @@ function PieceVersionSelectOrCreate() {
       array: [pieceVersionState],
     });
     updateSourceOnPieceVersionsForm(dispatch, "pieceVersion", {
-      value: { id: pieceVersionState.id },
+      value: pieceVersionState,
       next: true,
     });
   };

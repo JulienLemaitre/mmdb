@@ -8,6 +8,15 @@ import {
   PieceVersionState,
   TempoIndicationState,
 } from "@/types/formTypes";
+import {
+  Movement,
+  Organization,
+  Person,
+  PieceVersion,
+  PrismaPromise,
+  Section,
+} from "@prisma/client";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const state = (await request.json()) as FeedFormState;
@@ -44,6 +53,8 @@ export async function POST(request: Request) {
   const newPersonsFromSourceContributions: PersonState[] = [];
   state.mMSourceContributions.forEach((contribution) => {
     if ("person" in contribution && contribution.person.isNew) {
+      const newPerson = contribution.person;
+      delete newPerson.isNew;
       newPersonsFromSourceContributions.push(contribution.person);
     }
   });
@@ -61,6 +72,8 @@ export async function POST(request: Request) {
         pieceVersion.id === pieceVersionId && pieceVersion.isNew,
     );
     if (!pieceVersion) return;
+    // New PieceVersion
+    delete pieceVersion.isNew;
     newPieceVersions.push(pieceVersion);
 
     // Having a new pieceVersion, we check if there is new tempoIndications to persist
@@ -72,6 +85,8 @@ export async function POST(request: Request) {
             tempoIndication.isNew,
         );
         if (newTempoIndication) {
+          // New tempoIndication
+          delete newTempoIndication.isNew;
           newTempoIndications.push(newTempoIndication);
         }
       });
@@ -82,12 +97,18 @@ export async function POST(request: Request) {
       (piece) => piece.id === pieceId && piece.isNew,
     );
     if (!piece) return;
+    // New Piece
+    delete piece.isNew;
     newPieces.push(piece);
     const { composerId } = piece;
     const newPerson = state.persons.find(
       (person) => person.id === composerId && person.isNew,
     );
-    if (newPerson) newPersonsFromPieceComposers.push(newPerson);
+    if (newPerson) {
+      // New person
+      delete newPerson.isNew;
+      newPersonsFromPieceComposers.push(newPerson);
+    }
   });
 
   const newPersons = [
@@ -99,6 +120,8 @@ export async function POST(request: Request) {
   const newOrganizations: OrganizationState[] = [];
   state.mMSourceContributions.forEach((contribution) => {
     if ("organization" in contribution && contribution.organization.isNew) {
+      const newOrganization = contribution.organization;
+      delete newOrganization.isNew;
       newOrganizations.push(contribution.organization);
     }
   });
@@ -111,11 +134,34 @@ export async function POST(request: Request) {
   console.log(`[] newTempoIndications :`, newTempoIndications);
   console.groupEnd();
 
-  // 5 - Gather new metronomeMarks to persist from metronomeMarks
+  // 4 - Persist
+  type SelectedPieceVersion = Pick<PieceVersion, "id" | "category"> & {
+    movements: Omit<Movement, "createdAt" | "updatedAt" | "pieceVersionId">[];
+  };
+  type Operation =
+    | Person
+    | Organization
+    | Section
+    | Movement
+    | SelectedPieceVersion;
+  const operations: PrismaPromise<Operation>[] = [];
 
-  return new Response(JSON.stringify({ id: "mMSourceId" }), {
-    headers: { "Content-Type": "application/json" },
-  });
+  // Persons
+  operations.push(
+    ...newPersons.map((person) => db.person.create({ data: person })),
+  );
+
+  // Organizations
+  operations.push(
+    ...newOrganizations.map((organization) =>
+      db.organization.create({ data: organization }),
+    ),
+  );
+
+  // Execute all operations in a single transaction
+  const results = await db.$transaction(operations);
+
+  return NextResponse.json(results);
 }
 
 const exampleBody = {

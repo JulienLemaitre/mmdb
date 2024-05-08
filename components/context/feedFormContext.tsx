@@ -19,6 +19,7 @@ import {
   OrganizationState,
 } from "@/types/formTypes";
 import { steps } from "@/components/multiStepMMSourceForm/stepsUtils";
+import getFeedFormTestState from "@/utils/getFeedFormTestState";
 
 type PieceFormAction =
   | { type: "init"; payload: any }
@@ -58,56 +59,9 @@ export type FeedFormState = {
 export type PersistableFeedFormState = Required<FeedFormState>;
 type FeedFormProviderProps = { children: ReactNode };
 
-const TEST_STATE: FeedFormState = {
-  formInfo: {
-    currentStepRank: 3,
-    introDone: true,
-  },
-  mMSourceDescription: {
-    id: undefined,
-    title: "Et adipisicing omnis",
-    year: 1971,
-    type: "EDITION",
-    link: "https://www.selozemoragog.com",
-    comment: "Esse aliquid ut ver",
-    references: [],
-    isNew: true,
-  },
-  mMSourceContributions: [
-    {
-      organization: {
-        id: "9dea18ed-9ef3-4f4a-bcc0-52cab29db74e",
-        name: "Breitkopf and Hartel",
-      },
-      role: "PUBLISHER",
-    },
-    {
-      person: {
-        id: "4aa7131f-371d-4ae7-a61e-594b9f1e2ec7",
-        firstName: "Antonín",
-        lastName: "Dvořák",
-        birthYear: 1841,
-        deathYear: 1904,
-      },
-      role: "MM_PROVIDER",
-    },
-  ],
-  mMSourcePieceVersions: [
-    {
-      pieceVersionId: "36ca7ed1-a43c-4d3a-b676-6293d2e63d26",
-      rank: 1,
-    },
-  ],
-  // mMSourcePieceVersions: [],
-  organizations: [],
-  persons: [],
-  pieces: [],
-  pieceVersions: [],
-  metronomeMarks: [],
-  tempoIndications: [],
-};
-const INITIAL_STATE: FeedFormState = {
-  // const INITIAL_STATE: FeedFormState = TEST_STATE || {
+const TEST_STATE: FeedFormState | null = getFeedFormTestState();
+// const INITIAL_STATE: FeedFormState = {
+const INITIAL_STATE: FeedFormState = TEST_STATE || {
   formInfo: {
     currentStepRank: 0,
   },

@@ -11,6 +11,7 @@ import type {
   MMSource,
   TempoIndication,
   MMSourcesOnPieceVersions,
+  NOTE_VALUE,
 } from "@prisma/client";
 import {
   FeedFormState,
@@ -167,6 +168,10 @@ export type OptionInput = {
   value: string;
   label: string;
 };
+export type OptionInputTyped<T> = {
+  value: T;
+  label: T;
+};
 
 export type PersonInput = Pick<
   Person,
@@ -232,7 +237,7 @@ export type MetronomeMarkInput = Pick<
   MetronomeMark,
   "sectionId" | "bpm" | "comment"
 > & {
-  beatUnit: OptionInput;
+  beatUnit: OptionInputTyped<NOTE_VALUE>;
 };
 
 export function assertsIsPersistableFeedFormState(
