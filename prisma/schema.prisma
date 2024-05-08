@@ -78,25 +78,25 @@ model Movement {
 }
 
 model Section {
-  id                              String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  movement                        Movement        @relation(fields: [movementId], references: [id])
-  movementId                      String          @db.Uuid
+  id                              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  movement                        Movement         @relation(fields: [movementId], references: [id])
+  movementId                      String           @db.Uuid
   rank                            Int
   metreNumerator                  Int
   metreDenominator                Int
-  isCommonTime                    Boolean         @default(false)
-  isCutTime                       Boolean         @default(false)
+  isCommonTime                    Boolean          @default(false)
+  isCutTime                       Boolean          @default(false)
   fastestStructuralNotesPerBar    Float
   fastestStaccatoNotesPerBar      Float?
   fastestRepeatedNotesPerBar      Float?
   fastestOrnamentalNotesPerBar    Float?
-  isFastestStructuralNoteBelCanto Boolean         @default(false)
-  tempoIndication                 TempoIndication @relation(fields: [tempoIndicationId], references: [id])
-  tempoIndicationId               String          @db.Uuid
+  isFastestStructuralNoteBelCanto Boolean          @default(false)
+  tempoIndication                 TempoIndication? @relation(fields: [tempoIndicationId], references: [id])
+  tempoIndicationId               String?          @db.Uuid
   metronomeMarks                  MetronomeMark[] // A movement can have many metronome marks
   comment                         String?
-  createdAt                       DateTime        @default(now())
-  updatedAt                       DateTime        @updatedAt
+  createdAt                       DateTime         @default(now())
+  updatedAt                       DateTime         @updatedAt
 
   @@unique([movementId, rank])
 }
