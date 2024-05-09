@@ -27,6 +27,8 @@ model Collection {
   composerId String  @db.Uuid
   composer   Person  @relation(fields: [composerId], references: [id]) // A collection has a unique composer
   pieces     Piece[]
+  creator    User?   @relation(fields: [creatorId], references: [id])
+  creatorId  String? @db.Uuid
 
   @@unique([composerId, title])
 }
@@ -105,8 +107,11 @@ model TempoIndication {
   id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   text      String    @unique
   sections  Section[] // A tempo indication can be used by many sections
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  creator   User?     @relation(fields: [creatorId], references: [id])
+  creatorId String?   @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model MetronomeMark {
@@ -185,6 +190,8 @@ model Organization {
   id            String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name          String         @unique
   contributions Contribution[] // An organization can have many contributions
+  creator       User?          @relation(fields: [creatorId], references: [id])
+  creatorId     String?        @db.Uuid
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 }
@@ -236,21 +243,24 @@ model Session {
 }
 
 model User {
-  id            String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name          String?
-  email         String?        @unique
-  passwordHash  String?
-  role          String?        @default("USER")
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  mMSources     MMSource[] // A user can have created many sources
-  pieces        Piece[] // A user can have created many pieces
-  pieceVersions PieceVersion[] // A user can have created many pieceVersions
-  persons       Person[] // A user can have created many persons
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id               String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name             String?
+  email            String?           @unique
+  passwordHash     String?
+  role             String?           @default("USER")
+  emailVerified    DateTime?
+  image            String?
+  accounts         Account[]
+  sessions         Session[]
+  mMSources        MMSource[] // A user can have created many sources
+  collections      Collection[] // A user can have creatd many collections
+  pieces           Piece[] // A user can have created many pieces
+  pieceVersions    PieceVersion[] // A user can have created many pieceVersions
+  persons          Person[] // A user can have created many persons
+  organizations    Organization[] // A user can have created many organizations
+  TempoIndications TempoIndication[] // A user can have created many tempoIndications
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
 }
 
 model VerificationToken {
