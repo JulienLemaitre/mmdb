@@ -35,25 +35,33 @@ export default function MetronomeMarkArray({
     <>
       <ul>
         {sectionList.map((section, index) => {
+          console.log(`[] section :`, section);
+          const isPieceBeginning =
+            index === 0 || section.pieceId !== sectionList[index - 1].pieceId;
           const movementRank = section.movement.rank;
           const key = section.movement.key;
           const tempoIndication = section.tempoIndication?.text;
           const isNoMMChecked = !!watch(`metronomeMarks[${index}].noMM`);
 
           return (
-            <Fragment key={section.id}>
-              {section.rank === 1 ? (
+            <Fragment key={section.pieceId + section.id}>
+              {isPieceBeginning ? (
                 <h3 className="text-xl font-bold text-accent mt-6">
-                  {`Movement ${movementRank} in ${key.replaceAll("_", " ")}`}
+                  {`Piece ${section.pieceId}`}
                 </h3>
               ) : null}
-              <li key={section.id}>
-                <h4 className="mt-4 text-lg font-bold text-secondary">
+              {section.rank === 1 ? (
+                <h4 className="text-lg font-bold text-primary mt-6">
+                  {`Movement ${movementRank} in ${key.replaceAll("_", " ")}`}
+                </h4>
+              ) : null}
+              <li>
+                <h5 className="mt-4 text-md font-bold text-secondary">
                   {`Section ${section.rank}`}
                   <span className="italic">
                     {tempoIndication && ` - ${tempoIndication}`}
                   </span>
-                </h4>
+                </h5>
                 <input
                   {...register(`metronomeMarks[${index}].sectionId`, {
                     value: section.id,

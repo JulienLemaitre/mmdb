@@ -121,6 +121,11 @@ export type SectionState = Pick<
 > & {
   tempoIndication: Pick<TempoIndication, "id" | "text">;
 };
+export type SectionStateExtendedForMMForm = SectionState & {
+  movement: Omit<MovementState, "sections">;
+  mMSourceOnPieceVersion: { rank: number; pieceVersionId: string };
+  pieceId: string;
+};
 
 export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {
   sections: SectionState[];

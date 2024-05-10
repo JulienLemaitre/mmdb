@@ -4,9 +4,8 @@ import { useFeedForm } from "@/components/context/feedFormContext";
 import { URL_API_GETMANY_PIECEVERSIONS } from "@/utils/routes";
 import Loader from "@/components/Loader";
 import {
-  MovementState,
   PieceVersionState,
-  SectionState,
+  SectionStateExtendedForMMForm,
 } from "@/types/formTypes";
 
 function MetronomeMarks() {
@@ -59,42 +58,47 @@ function MetronomeMarks() {
     return <Loader />;
   }
 
-  const sectionList = pieceVersions
-    .reduce<(SectionState & { movement: Omit<MovementState, "sections"> })[]>(
-      (sectionList, pieceVersion) => {
-        return [
-          ...sectionList,
-          ...pieceVersion.movements.reduce<
-            (SectionState & { movement: Omit<MovementState, "sections"> })[]
-          >((sectionList, movement) => {
-            return [
-              ...sectionList,
-              ...movement.sections.map((section, index) => {
-                // Insert in section the properties of movement except "sections"
-                return {
-                  ...section,
-                  movement: {
-                    ...movement,
-                    sections: undefined,
-                  },
-                };
-              }),
-            ];
-          }, []),
-        ];
-      },
-      [],
-    )
-    .sort((a, b) =>
-      a.movement.rank - b.movement.rank === 0
-        ? a.rank - b.rank
-        : a.movement.rank - b.movement.rank,
+  const sectionList = state.mMSourcePieceVersions!.reduce<
+    SectionStateExtendedForMMForm[]
+  >((sectionList, mMSourceOnPieceVersion) => {
+    const pieceVersion = pieceVersions.find(
+      (pv) => pv.id === mMSourceOnPieceVersion.pieceVersionId,
     );
+    if (!pieceVersion) {
+      throw new Error(
+        `[MetronomeMarks] NO pieceVersion for mMSourceOnPieceVersion.pieceVersionId: ${mMSourceOnPieceVersion.pieceVersionId}`,
+      );
+    }
+
+    return [
+      ...sectionList,
+      ...pieceVersion.movements.reduce<SectionStateExtendedForMMForm[]>(
+        (sectionList, movement) => {
+          return [
+            ...sectionList,
+            ...movement.sections.map((section, index) => {
+              // Insert in section the properties of movement except "sections"
+              return {
+                ...section,
+                movement: {
+                  ...movement,
+                  sections: undefined,
+                },
+                mMSourceOnPieceVersion,
+                pieceId: pieceVersion.pieceId,
+              };
+            }),
+          ];
+        },
+        [],
+      ),
+    ];
+  }, []);
 
   // If there are metronome marks in state but not the same number as sectionList, we raise an error
   const metronomeMarks = state.metronomeMarks;
   if (metronomeMarks?.length && metronomeMarks.length !== sectionList.length) {
-    console.log(
+    console.warn(
       `[ERROR] metronomeMarks.length (${metronomeMarks.length}) !== sectionList.length (${sectionList.length})`,
     );
   }

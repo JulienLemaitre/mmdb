@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import {
   MetronomeMarkInput,
   MetronomeMarkState,
-  SectionState,
+  SectionStateExtendedForMMForm,
 } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MetronomeMarkArray from "@/components/ReactHookForm/MetronomeMarkArray";
@@ -75,7 +75,7 @@ const MetronomeMarkListSchema = z
   });
 
 interface MetronomeMarksFormProps {
-  sectionList: SectionState[];
+  sectionList: SectionStateExtendedForMMForm[];
   metronomeMarks?: MetronomeMarkState[];
 }
 export default function MetronomeMarksForm({
@@ -111,8 +111,6 @@ export default function MetronomeMarksForm({
       next: true,
     });
   };
-  console.log(`[onSubmit] watch() :`, watch());
-  console.log(`[onSubmit] errors :`, errors);
 
   // @ts-ignore
   const isOneMMRequiredError = errors?.general?.message === ONE_MM_REQUIRED;

@@ -20,6 +20,21 @@ export async function POST(request: Request) {
     select: {
       id: true,
       category: true,
+      pieceId: true,
+      // piece: {
+      //   select: {
+      //     id: true,
+      //     title: true,
+      //     yearOfComposition: true,
+      //     composer: {
+      //       select: {
+      //         id: true,
+      //         firstName: true,
+      //         lastName: true,
+      //       },
+      //     },
+      //   },
+      // },
       movements: {
         select: {
           id: true,
