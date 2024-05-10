@@ -1,22 +1,20 @@
-export const SECTION_DEFAULT_VALUE = {
-  rank: 1,
-  isCutTime: false,
-  isCommonTime: false,
-  isFastestStructuralNoteBelCanto: false,
-};
-export const MOVEMENT_DEFAULT_VALUE = {
-  rank: 1,
-  sections: [SECTION_DEFAULT_VALUE],
-};
-export function getMovementDefaultValues(index: number) {
+import { v4 as uuidv4 } from "uuid";
+
+export function getMovementDefaultValues(indexAfterWhichAppend?: number) {
   return {
-    ...MOVEMENT_DEFAULT_VALUE,
-    rank: index + 2,
+    id: uuidv4(),
+    rank:
+      typeof indexAfterWhichAppend === "number" ? indexAfterWhichAppend + 2 : 1,
+    sections: [getSectionDefaultValues()],
   };
 }
-export function getSectionDefaultValues(index: number) {
+export function getSectionDefaultValues(indexAfterWhichAppend?: number) {
   return {
-    ...SECTION_DEFAULT_VALUE,
-    rank: index + 2,
+    id: uuidv4(),
+    isCutTime: false,
+    isCommonTime: false,
+    isFastestStructuralNoteBelCanto: false,
+    rank:
+      typeof indexAfterWhichAppend === "number" ? indexAfterWhichAppend + 2 : 1,
   };
 }

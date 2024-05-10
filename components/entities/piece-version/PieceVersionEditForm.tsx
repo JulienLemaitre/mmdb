@@ -12,7 +12,7 @@ import {
 } from "@/types/formTypes";
 import { URL_API_GETALL_TEMPO_INDICATIONS } from "@/utils/routes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
-import { MOVEMENT_DEFAULT_VALUE } from "@/components/ReactHookForm/formUtils";
+import { getMovementDefaultValues } from "@/components/ReactHookForm/formUtils";
 import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
 import { zodOption } from "@/utils/zodTypes";
 import {
@@ -25,13 +25,13 @@ const PieceVersionSchema = z.object({
   movements: z
     .array(
       z.object({
-        id: z.string().optional(),
+        id: z.string(),
         rank: z.number(),
         key: zodOption,
         sections: z
           .array(
             z.object({
-              id: z.string().optional(),
+              id: z.string(),
               rank: z.number(),
               metreNumerator: z.number(),
               metreDenominator: z.number(),
@@ -69,7 +69,7 @@ export default function PieceVersionEditForm({
     watch,
   } = useForm<PieceVersionInput>({
     defaultValues: pieceVersion ?? {
-      movements: [MOVEMENT_DEFAULT_VALUE],
+      movements: [getMovementDefaultValues()],
     },
     resolver: zodResolver(PieceVersionSchema),
   });
