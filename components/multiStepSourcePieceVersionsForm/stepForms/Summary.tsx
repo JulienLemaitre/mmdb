@@ -1,10 +1,10 @@
 import React from "react";
 import { useSourceOnPieceVersionsForm } from "@/components/context/SourceOnPieceVersionFormContext";
-import { collapseAllNested, darkStyles, JsonView } from "react-json-view-lite";
 import {
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
+import DebugBox from "@/components/DebugBox";
 
 function Summary({ onFormClose }: { onFormClose: () => void }) {
   const { state } = useSourceOnPieceVersionsForm();
@@ -31,13 +31,7 @@ function Summary({ onFormClose }: { onFormClose: () => void }) {
 
   return (
     <div>
-      <div className="text-[0.6em]">
-        <JsonView
-          data={state}
-          shouldExpandNode={collapseAllNested}
-          style={darkStyles}
-        />
-      </div>
+      <DebugBox stateObject={state} />
       <button
         onClick={onAddSourceOnPieceVersions}
         className="btn btn-primary mt-4"

@@ -1,8 +1,8 @@
 import SourceOnPieceVersionsSteps from "@/components/multiStepSourcePieceVersionsForm/SourceOnPieceVersionsSteps";
 import { getStepByRank } from "@/components/multiStepSourcePieceVersionsForm/stepsUtils";
 import { useSourceOnPieceVersionsForm } from "@/components/context/SourceOnPieceVersionFormContext";
-import { allExpanded, darkStyles, JsonView } from "react-json-view-lite";
 import React from "react";
+import DebugBox from "@/components/DebugBox";
 
 type SourceOnPieceVersionFormProps = {
   onFormClose: () => void;
@@ -28,13 +28,7 @@ const SourceOnPieceVersionForm = ({
       ) : (
         <div>Nothing to show...</div>
       )}
-      <div className="text-[0.6em]">
-        <JsonView
-          data={state}
-          shouldExpandNode={allExpanded}
-          style={darkStyles}
-        />
-      </div>
+      <DebugBox stateObject={state} />
     </div>
   );
 };

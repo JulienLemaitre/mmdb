@@ -1,12 +1,12 @@
 "use client";
 
-import { JsonView, collapseAllNested, darkStyles } from "react-json-view-lite";
-import "react-json-view-lite/dist/index.css";
 import {
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import { steps } from "@/components/multiStepMMSourceForm/stepsUtils";
+import DebugBox from "@/components/DebugBox";
+import React from "react";
 
 const Steps = () => {
   const { currentStepRank, dispatch, lastCompletedStepRank, state } =
@@ -51,13 +51,7 @@ const Steps = () => {
           );
         })}
       </ul>
-      <div className="text-[0.6em]">
-        <JsonView
-          data={state}
-          shouldExpandNode={collapseAllNested}
-          style={darkStyles}
-        />
-      </div>
+      <DebugBox stateObject={state} />
     </>
   );
 };

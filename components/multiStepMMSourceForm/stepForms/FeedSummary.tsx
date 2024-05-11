@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import {
-  initFeedForm,
+  // initFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import { URL_API_FEEDFORM_SUBMIT } from "@/utils/routes";
 import { fetchAPI } from "@/utils/fetchAPI";
 import { useSession } from "next-auth/react";
-import { collapseAllNested, darkStyles, JsonView } from "react-json-view-lite";
+import DebugBox from "@/components/DebugBox";
 
 function FeedSummary() {
   const [isSaveSuccess, setIsSaveSuccess] = useState<boolean>();
   const [savedValues, setSavedValues] = useState<any>();
-  const { state, dispatch } = useFeedForm();
+  const { state } = useFeedForm();
   const { data: session } = useSession();
 
   const saveAll = () => {
@@ -24,7 +24,7 @@ function FeedSummary() {
     )
       .then((response) => {
         console.log("response", response);
-        initFeedForm(dispatch);
+        // initFeedForm(dispatch);
         setSavedValues(response);
         setIsSaveSuccess(true);
       })
@@ -40,11 +40,7 @@ function FeedSummary() {
       <div>
         <div>Voilà ! All has been saved successfully.</div>
         <div>Thank you.</div>
-        <JsonView
-          data={savedValues}
-          shouldExpandNode={collapseAllNested}
-          style={darkStyles}
-        />
+        <DebugBox stateObject={savedValues} />
       </div>
     );
   }
