@@ -517,15 +517,19 @@ export default parsedData;`;
 async function main() {
   const { pieceList, sectionList, noteNotFoundList } = await getDatas()
   console.log(`[MAIN] counts :`, {pieceList: pieceList.length, sectionList: sectionList.length, noteNotFoundList: noteNotFoundList.length})
-  await seedDB({pieceList})
-.then(async () => {
-  await db.$disconnect();
-})
-.catch(async (e) => {
-  console.error(e);
-  await db.$disconnect();
-  process.exit(1);
-});
+  const pieceListWithAllCollection = makeCollectionEntryforPieceList(pieceList)
+  console.log(`[COUNTS] pieceListWithAllCollection.length :`, pieceListWithAllCollection.length)
+  // console.log(`[] pieceListWithAllCollection`, JSON.stringify(pieceListWithAllCollection, null, 2))
+
+  await seedDB({pieceList: pieceListWithAllCollection})
+  .then(async () => {
+    await db.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await db.$disconnect();
+    process.exit(1);
+  });
 }
 
 main().then(() => {
@@ -533,6 +537,61 @@ main().then(() => {
 }).catch((e) => {
   console.error(e)
 })
+
+function makeCollectionEntryforPieceList(pieceList: any[]) {
+  const collectionHintWords = ["Études", "Exercises", "School", "Escuela", "método", "Pièces", "Kinderszenen"]
+  function hasTitleCollectionHintWord(title: string) {
+    return collectionHintWords.some((word) => title.includes(word))
+  }
+  const pieceListWithoutCollectionToMake = pieceList.filter((piece: any) => !hasTitleCollectionHintWord(piece.title))
+  const pieceListWithCollectionToMake = pieceList.filter((piece: any) => hasTitleCollectionHintWord(piece.title))
+
+  const pieceListWithRequiredCollectionInfo: any[] = []
+
+  pieceListWithCollectionToMake.forEach((piece: any) => {
+    const collectionMainTitlePartRegex = /.+,\s*(Op.\s*\d+)/
+    const collectionTitleMatch = collectionMainTitlePartRegex.exec(piece.title)
+    console.log(`[isCollectionHint] collectionTitleMatch :`, collectionTitleMatch)
+    const collectionTitle = collectionTitleMatch?.[0] || piece.title
+    console.log(`[isCollectionHint] collectionTitle :`, collectionTitle)
+    const collection = {
+      title: collectionTitle,
+    }
+    const commonPieceFields = {
+      category: piece.category,
+      composer: piece.composer,
+      yearOfComposition: piece.yearOfComposition,
+      source: piece.source,
+    }
+    const collectionPieceList = piece.movements.reduce((acc: any[], movement: any, index: number) => {
+      const newPiece = {
+        collection: {
+          ...collection,
+          pieceRank: index + 1,
+        },
+        ...commonPieceFields,
+        title: collectionTitle + ` No.${index + 1}`,
+        movements: [{
+          ...piece.movements[index],
+          rank: 1,
+        }],
+        metronomeMarkList: [{
+          ...piece.metronomeMarkList[index],
+          movementRank: 1,
+          sectionRank: 1
+        }],
+      }
+      acc.push(newPiece)
+      return acc
+    }, [])
+
+    // console.log(`[] collectionPieceList`, JSON.stringify(collectionPieceList, null, 2))
+
+    pieceListWithRequiredCollectionInfo.push(...collectionPieceList)
+  })
+
+  return [...pieceListWithoutCollectionToMake,...pieceListWithRequiredCollectionInfo]
+}
 
 function getKeyEnumFromKeyString(keyString: string) {
   if (!keyString) return null
@@ -688,13 +747,14 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
       console.log(`[SEED ERROR] birthDeath not found for ${piece.composer}`)
     }
     const shouldLinkToCollection = !!piece?.collection?.pieceRank && collectionId
-    if (piece.collection) {
-      console.log(`[SEED COLLECTION] Piece HAS Collection :`, piece.collection.title, piece.collection.pieceRank, piece.title)
-      console.log(`[SEED COLLECTION] collectionId :`, collectionId)
-      console.log(`[SEED COLLECTION] shouldLinkToCollection :`, shouldLinkToCollection)
-    }
 
     return async function () {
+      console.log(`[PERSIST] piece :`, piece.title)
+      if (piece.collection) {
+        console.log(`[SEED COLLECTION] Piece HAS Collection :`, piece.collection.title, piece.collection.pieceRank, piece.title)
+        console.log(`[SEED COLLECTION] collectionId :`, collectionId)
+        console.log(`[SEED COLLECTION] shouldLinkToCollection :`, shouldLinkToCollection)
+      }
       const persistedPiece = await db.piece.create({
         data: {
           creator: {
@@ -820,6 +880,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
       if (!metronomeMarkList) {
         console.log(`[ERROR] metronomeMarkList is null`, piece.title, piece)
       }
+      console.log(`[PERSIST] mMSource, pieceVersion and MMs for piece :`, piece.title)
       const movements = pieceVersion.movements.sort((a, b) => a.rank - b.rank)
 
       // Persist source and metronomeMarks
@@ -893,6 +954,8 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
 
     piece.source.contributions.forEach((contribution) => {
       contributionsTaskList.push(async function () {
+        console.log(`[PERSIST] ${contribution.role} contribution of ${contribution.organization.name} to ${source.type} source (${source.year})`)
+
         const persistedContribution = await db.contribution.create({
           data: {
             role: contribution.role,
