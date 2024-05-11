@@ -12,6 +12,7 @@ import type {
   TempoIndication,
   MMSourcesOnPieceVersions,
   NOTE_VALUE,
+  Contribution,
 } from "@prisma/client";
 import {
   FeedFormState,
@@ -62,8 +63,6 @@ export type PersonState = {
   birthYear: number;
   deathYear: number | null;
 } & IsNewProp;
-// export type PersonState = PersonState & IsNewProp;
-// export type NewPersonState = PersonState & { isNew: true };
 export type OrganizationState = {
   id: string;
   name: string;
@@ -91,12 +90,6 @@ export type ContributionStateWithoutId =
       organization: OrganizationState;
       role: CONTRIBUTION_ROLE;
     };
-
-// export type SourceOnPieceVersionState = {
-//   sourceId: string;
-//   pieceVersionId: string;
-//   rank: number;
-// };
 
 export type PieceState = Pick<
   Piece,
@@ -163,10 +156,14 @@ export type MMSourcePieceVersionsState = Pick<
 export type MetronomeMarkState =
   | (Pick<MetronomeMark, "sectionId" | "bpm" | "comment" | "beatUnit"> & {
       id?: string;
+      pieceVersionRank: number;
+      pieceVersionId: string;
       noMM: false;
     })
   | (Pick<MetronomeMark, "sectionId"> & {
       id?: string;
+      pieceVersionRank: number;
+      pieceVersionId: string;
       noMM: true;
     });
 
@@ -284,6 +281,65 @@ export function assertsIsPersistableFeedFormState(
   ) {
     throw new Error(
       `Value does not appear to be a PersistableFeedFormState: ${valueToTest}`,
+    );
+  }
+}
+
+type MetronomeMarkStateWithValue = MetronomeMarkState & { noMM: false };
+export function assertsIsMetronomeMarkWithValue(
+  valueToTest: any,
+): asserts valueToTest is MetronomeMarkStateWithValue {
+  if (
+    !(
+      valueToTest &&
+      typeof valueToTest === "object" &&
+      "sectionId" in valueToTest &&
+      typeof valueToTest["sectionId"] === "string" &&
+      "bpm" in valueToTest &&
+      typeof valueToTest["bpm"] === "number" &&
+      "beatUnit" in valueToTest &&
+      typeof valueToTest["beatUnit"] === "string" &&
+      "noMM" in valueToTest &&
+      valueToTest["noMM"] === false
+    )
+  ) {
+    throw new Error(
+      `Value does not appear to be a MetronomeMarkState with noMM === false: ${valueToTest}`,
+    );
+  }
+}
+
+type PersistableContribution = Pick<Contribution, "role"> & {
+  id?: string;
+  personId: string;
+  organizationId: null;
+};
+export function assertsContributionHasPersonOrOrganization(
+  valueToTest: any,
+): asserts valueToTest is PersistableContribution {
+  if (
+    !(
+      (valueToTest &&
+        typeof valueToTest === "object" &&
+        "role" in valueToTest &&
+        typeof valueToTest["role"] === "string" &&
+        "person" in valueToTest &&
+        typeof valueToTest["person"] === "object" &&
+        (("organization" in valueToTest &&
+          valueToTest["organization"] == null) ||
+          !("organization" in valueToTest))) ||
+      (valueToTest &&
+        typeof valueToTest === "object" &&
+        "role" in valueToTest &&
+        typeof valueToTest["role"] === "string" &&
+        (("person" in valueToTest && valueToTest["person"] == null) ||
+          !("person" in valueToTest)) &&
+        "organization" in valueToTest &&
+        typeof valueToTest["organization"] === "object")
+    )
+  ) {
+    throw new Error(
+      `Value does not appear to be a PersistableContribution: ${valueToTest}`,
     );
   }
 }

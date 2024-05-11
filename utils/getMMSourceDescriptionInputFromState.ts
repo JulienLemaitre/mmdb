@@ -3,7 +3,7 @@ import {
   MMSourceDescriptionState,
 } from "@/types/formTypes";
 
-export default function getSourceDescriptionInputFromState(
+export default function getMMSourceDescriptionInputFromState(
   sourceDescription?: MMSourceDescriptionState,
 ): SourceDescriptionInput | undefined {
   if (!sourceDescription) {

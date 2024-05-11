@@ -104,7 +104,10 @@ export default function MetronomeMarksForm({
 
   const onSubmit = async (data: { metronomeMarks: MetronomeMarkInput[] }) => {
     console.log(`[] data :`, data);
-    const array = getMetronomeMarkStateFromInput(data.metronomeMarks);
+    const array = getMetronomeMarkStateFromInput(
+      data.metronomeMarks,
+      sectionList,
+    );
     updateFeedForm(dispatch, "metronomeMarks", {
       array,
       idKey: "sectionId",

@@ -62,8 +62,8 @@ type FeedFormProviderProps = { children: ReactNode };
 // @ts-ignore
 const TEST_STATE: FeedFormState | null = getFeedFormTestState();
 
-// const INITIAL_STATE: FeedFormState = {
-const INITIAL_STATE: FeedFormState = TEST_STATE || {
+const INITIAL_STATE: FeedFormState = {
+  // const INITIAL_STATE: FeedFormState = TEST_STATE || {
   formInfo: {
     currentStepRank: 0,
   },

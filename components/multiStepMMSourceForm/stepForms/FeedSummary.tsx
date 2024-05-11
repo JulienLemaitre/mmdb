@@ -4,23 +4,28 @@ import {
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import { URL_API_FEEDFORM_SUBMIT } from "@/utils/routes";
+import { fetchAPI } from "@/utils/fetchAPI";
+import { useSession } from "next-auth/react";
+import { collapseAllNested, darkStyles, JsonView } from "react-json-view-lite";
 
 function FeedSummary() {
   const [isSaveSuccess, setIsSaveSuccess] = useState<boolean>();
+  const [savedValues, setSavedValues] = useState<any>();
   const { state, dispatch } = useFeedForm();
+  const { data: session } = useSession();
 
   const saveAll = () => {
-    fetch(URL_API_FEEDFORM_SUBMIT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    fetchAPI(
+      URL_API_FEEDFORM_SUBMIT,
+      {
+        variables: state,
       },
-      body: JSON.stringify(state),
-    })
-      .then((res) => res.json())
+      session?.user?.accessToken,
+    )
       .then((response) => {
         console.log("response", response);
-        // initFeedForm(dispatch);
+        initFeedForm(dispatch);
+        setSavedValues(response);
         setIsSaveSuccess(true);
       })
       .catch((error) => {
@@ -35,6 +40,11 @@ function FeedSummary() {
       <div>
         <div>Voilà ! All has been saved successfully.</div>
         <div>Thank you.</div>
+        <JsonView
+          data={savedValues}
+          shouldExpandNode={collapseAllNested}
+          style={darkStyles}
+        />
       </div>
     );
   }

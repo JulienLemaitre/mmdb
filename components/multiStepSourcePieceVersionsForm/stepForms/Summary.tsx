@@ -1,6 +1,6 @@
 import React from "react";
 import { useSourceOnPieceVersionsForm } from "@/components/context/SourceOnPieceVersionFormContext";
-import { allExpanded, darkStyles, JsonView } from "react-json-view-lite";
+import { collapseAllNested, darkStyles, JsonView } from "react-json-view-lite";
 import {
   updateFeedForm,
   useFeedForm,
@@ -34,7 +34,7 @@ function Summary({ onFormClose }: { onFormClose: () => void }) {
       <div className="text-[0.6em]">
         <JsonView
           data={state}
-          shouldExpandNode={allExpanded}
+          shouldExpandNode={collapseAllNested}
           style={darkStyles}
         />
       </div>

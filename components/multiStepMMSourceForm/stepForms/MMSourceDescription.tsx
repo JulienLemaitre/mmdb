@@ -1,10 +1,10 @@
 import SourceDescriptionEditForm from "@/components/entities/source-description/SourceDescriptionEditForm";
 import { SourceDescriptionInput } from "@/types/formTypes";
-import getSourceDescriptionStateFromInput from "@/utils/getSourceDescriptionStateFromInput";
+import getMMSourceDescriptionStateFromInput from "@/utils/getMMSourceDescriptionStateFromInput";
 import { updateFeedForm } from "@/components/context/feedFormContext";
 import { useFeedForm } from "@/components/context/feedFormContext";
 import { getStepByRank } from "@/components/multiStepMMSourceForm/stepsUtils";
-import getSourceDescriptionInputFromState from "@/utils/getSourceDescriptionInputFromState";
+import getMMSourceDescriptionInputFromState from "@/utils/getMMSourceDescriptionInputFromState";
 
 const MMSourceDescription = () => {
   const { dispatch, currentStepRank, state } = useFeedForm();
@@ -21,9 +21,8 @@ const MMSourceDescription = () => {
       (key) => sourceData[key] == null && delete sourceData[key],
     );
 
-    const sourceDescriptionState = getSourceDescriptionStateFromInput({
+    const sourceDescriptionState = getMMSourceDescriptionStateFromInput({
       ...sourceData,
-      // pieceVersions: [state.pieceVersion.id],
     });
 
     sourceDescriptionState.isNew = true;
@@ -37,7 +36,7 @@ const MMSourceDescription = () => {
     });
   };
 
-  const sourceDescriptionInput = getSourceDescriptionInputFromState(
+  const sourceDescriptionInput = getMMSourceDescriptionInputFromState(
     state?.mMSourceDescription,
   );
 

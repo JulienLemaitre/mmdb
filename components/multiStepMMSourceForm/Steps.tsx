@@ -1,12 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
-import {
-  JsonView,
-  allExpanded,
-  darkStyles,
-  defaultStyles,
-} from "react-json-view-lite";
+import { JsonView, collapseAllNested, darkStyles } from "react-json-view-lite";
 import "react-json-view-lite/dist/index.css";
 import {
   updateFeedForm,
@@ -60,7 +54,7 @@ const Steps = () => {
       <div className="text-[0.6em]">
         <JsonView
           data={state}
-          shouldExpandNode={allExpanded}
+          shouldExpandNode={collapseAllNested}
           style={darkStyles}
         />
       </div>

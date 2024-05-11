@@ -3,7 +3,7 @@ import {
   MMSourceDescriptionState,
 } from "@/types/formTypes";
 
-export default function getSourceDescriptionStateFromInput(
+export default function getMMSourceDescriptionStateFromInput(
   sourceDescriptionInput: SourceDescriptionInput,
 ): MMSourceDescriptionState {
   const { id, title, year, type, link, comment, references } =
