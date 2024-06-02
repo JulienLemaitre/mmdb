@@ -2,6 +2,7 @@ import {
   SourceDescriptionInput,
   MMSourceDescriptionState,
 } from "@/types/formTypes";
+import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
 
 export default function getMMSourceDescriptionInputFromState(
   sourceDescription?: MMSourceDescriptionState,
@@ -24,7 +25,10 @@ export default function getMMSourceDescriptionInputFromState(
     ...(references.length > 0
       ? {
           references: references.map((reference) => ({
-            type: { value: reference.type, label: reference.type },
+            type: {
+              value: reference.type,
+              label: getReferenceTypeLabel(reference.type),
+            },
             reference: reference.reference,
           })),
         }

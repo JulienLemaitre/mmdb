@@ -8,7 +8,8 @@ import { zodYear } from "@/utils/zodTypes";
 import { SOURCE_TYPE } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import ReferenceArray from "@/components/ReactHookForm/ReferenceArray";
-import StepNavigation from "@/components/multiStepMMSourceForm/StepNavigation";
+import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
+import formatToPhraseCase from "@/utils/formatToPhraseCase";
 
 const SourceSchema = z.object({
   title: z.string().optional(),
@@ -49,7 +50,7 @@ export default function SourceDescriptionEditForm(
     defaultValues: sourceDescription ?? {
       type: {
         value: SOURCE_TYPE.EDITION,
-        label: SOURCE_TYPE.EDITION,
+        label: formatToPhraseCase(SOURCE_TYPE.EDITION),
       },
     },
     resolver: zodResolver(SourceSchema),
@@ -75,7 +76,7 @@ export default function SourceDescriptionEditForm(
           control={control}
           options={Object.values(SOURCE_TYPE).map((category) => ({
             value: category,
-            label: category,
+            label: formatToPhraseCase(category),
           }))}
           isRequired={true}
           errors={errors}
@@ -101,7 +102,7 @@ export default function SourceDescriptionEditForm(
           defaultValue={``}
           {...{ register, errors }}
         />
-        <StepNavigation
+        <MMSourceFormStepNavigation
           isSubmitBtn
           isSubmitting={isSubmitting}
           submitTitle={submitTitle}

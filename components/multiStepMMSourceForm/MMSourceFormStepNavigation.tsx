@@ -4,7 +4,7 @@ import {
 } from "@/components/context/feedFormContext";
 import ArrowLeftIcon from "@/components/svg/ArrowLeftIcon";
 
-function StepNavigation(
+export default function MMSourceFormStepNavigation(
   props: Readonly<{
     isSubmitBtn?: boolean;
     isSubmitting?: boolean;
@@ -45,5 +45,3 @@ function StepNavigation(
     </div>
   );
 }
-
-export default StepNavigation;

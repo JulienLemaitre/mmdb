@@ -171,48 +171,56 @@ export default function SourceContributionSelectForm({
       </h1>
       <ul className="my-4">
         {selectedContributions.map((contribution, index) => {
+          let key: string;
+          let displayName: string;
+          let contributionType: "person" | "organization";
           if ("organization" in contribution) {
             // TypeScript now knows that contribution is OrganizationState in this block
-            return (
-              <li
-                key={`${index}-${contribution.role}-${contribution.organization.id}`}
-              >
-                <h4 className="mt-6 text-lg font-bold text-secondary">{`Contribution ${
-                  index + 1
-                }`}</h4>
-                <div className="flex gap-3 items-center">
-                  <div className="font-bold">{`${contribution.role}:`}</div>
-                  <div>{contribution.organization.name}</div>
-                  <div className="badge badge-primary">{`Organization`}</div>
-                </div>
-              </li>
-            );
+            key = `${index}-${contribution.role}-${contribution.organization.id}`;
+            displayName = contribution.organization.name;
+            contributionType = "organization";
           } else {
             // TypeScript now knows that contribution is PersonState in this block
-            return (
-              <li
-                key={`${index}-${contribution.role}-${contribution.person.id}`}
-              >
-                <h4 className="mt-6 text-lg font-bold text-secondary">{`Contribution ${
-                  index + 1
-                }`}</h4>
-                <div className="flex gap-3 items-center">
-                  <div className="font-bold">{`${contribution.role}:`}</div>
-                  <div>
-                    {contribution.person.firstName}{" "}
-                    {contribution.person.lastName}
-                  </div>
-                  <div className="badge badge-secondary">{`Person`}</div>
-                </div>
-              </li>
-            );
+            key = `${index}-${contribution.role}-${contribution.person.id}`;
+            displayName = `${contribution.person.firstName} ${contribution.person.lastName}`;
+            contributionType = "person";
           }
+
+          return (
+            <li key={key} className="mt-6 w-full max-w-md">
+              <div className="flex w-full justify-between gap-3 items-end">
+                <div>
+                  <h4 className="text-lg font-bold text-secondary">{`${
+                    index + 1
+                  }. ${getRoleLabel(contribution.role)}`}</h4>
+                  <div className="flex gap-3 items-center">
+                    <div>{displayName}</div>
+                    <div
+                      className={`badge badge-outline ${contributionType === "person" ? "badge-primary" : "badge-secondary"}`}
+                    >
+                      {contributionType === "person"
+                        ? "Person"
+                        : `Organization`}
+                    </div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-error"
+                  onClick={() => onRemoveContribution(index)}
+                >
+                  <TrashIcon className="w-4 h-4" />
+                </button>
+              </div>
+            </li>
+          );
         })}
       </ul>
 
       {isFormOpen ? (
         <SourceContributionSelect
           sourceContributionOptions={sourceContributionOptions}
+          onCancel={() => setIsFormOpen(false)}
           onAddPersonContribution={onAddPersonContribution}
           onAddOrganizationContribution={onAddOrganizationContribution}
         />
@@ -229,7 +237,7 @@ export default function SourceContributionSelectForm({
         </div>
       )}
 
-      <StepNavigation
+      <MMSourceFormStepNavigation
         onClick={() => onSubmit(selectedContributions)}
         isNextDisabled={!(selectedContributions.length > 0 && !isFormOpen)}
         submitTitle={submitTitle}

@@ -3,12 +3,8 @@ import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import TrashIcon from "@/components/svg/TrashIcon";
 import PlusIcon from "@/components/svg/PlusIcon";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
-
-const REFERENCE_TYPE = {
-  PLATE_NUMBER: "Plate number",
-  ISBN: "ISBN",
-  ISMN: "ISMN",
-} as const;
+import { REFERENCE_TYPE } from "@prisma/client";
+import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
 
 export default function ReferenceArray({ control, register, errors, watch }) {
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
@@ -34,12 +30,10 @@ export default function ReferenceArray({ control, register, errors, watch }) {
                   label={`Reference type`}
                   id={`references[${index}].type` as const}
                   control={control}
-                  options={Object.entries(REFERENCE_TYPE).map(
-                    ([key, value]) => ({
-                      value: key,
-                      label: value,
-                    }),
-                  )}
+                  options={Object.values(REFERENCE_TYPE).map((refType) => ({
+                    value: refType,
+                    label: getReferenceTypeLabel(refType),
+                  }))}
                   isRequired={true}
                   errors={errors}
                 />
@@ -52,7 +46,7 @@ export default function ReferenceArray({ control, register, errors, watch }) {
               />
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-error"
                 onClick={() => remove(index)}
               >
                 <TrashIcon />
