@@ -7,7 +7,7 @@ type DebugBoxProps = {
 };
 export default function DebugBox({
   stateObject,
-  expandAllNodes,
+  expandAllNodes = true,
 }: DebugBoxProps) {
   return (
     <div className="text-[0.6em]">

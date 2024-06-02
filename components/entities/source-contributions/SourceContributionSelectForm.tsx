@@ -8,7 +8,9 @@ import { useState } from "react";
 import PlusIcon from "@/components/svg/PlusIcon";
 import SourceContributionSelect from "@/components/entities/source-contributions/SourceContributionSelect";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
-import StepNavigation from "@/components/multiStepMMSourceForm/StepNavigation";
+import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
+import TrashIcon from "@/components/svg/TrashIcon";
+import getRoleLabel from "@/utils/getRoleLabel";
 
 type SourceContributionSelectFormProps = {
   contributions?: ContributionStateWithoutId[];
@@ -131,6 +133,12 @@ export default function SourceContributionSelectForm({
       { organization, role },
     ]);
     setIsFormOpen(false);
+  };
+
+  const onRemoveContribution = (index: number) => {
+    setSelectedContributions((prevList) =>
+      prevList.filter((contribution, idx) => idx !== index),
+    );
   };
 
   const personOptions: OptionInput[] = [...persons, ...createdPersons].map(

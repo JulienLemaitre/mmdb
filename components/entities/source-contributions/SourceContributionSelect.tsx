@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from "react";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
 import NewSourceContributionForm from "@/components/entities/source-contributions/NewSourceContributionForm";
 import Label from "@/components/Label";
+import getRoleLabel from "@/utils/getRoleLabel";
 
 type SourceContributionSelectProps = {
   sourceContributionOptions: OptionInput[];

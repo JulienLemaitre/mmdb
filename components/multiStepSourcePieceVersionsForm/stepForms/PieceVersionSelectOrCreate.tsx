@@ -5,6 +5,7 @@ import {
 } from "@/components/context/SourceOnPieceVersionFormContext";
 import { PieceVersionInput, PieceVersionState } from "@/types/formTypes";
 import {
+  getNewEntities,
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
@@ -25,7 +26,7 @@ function PieceVersionSelectOrCreate() {
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
   const selectedPieceId = state?.piece?.id;
   const selectedPieceVersionId = state?.piece?.id;
-  const newPieces = feedFormState.pieces;
+  const newPieces = getNewEntities(feedFormState, "pieces");
   const selectedPieceVersion: PieceVersionState | undefined =
     pieceVersions?.find(
       (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
@@ -116,6 +117,9 @@ function PieceVersionSelectOrCreate() {
   };
 
   const onPieceVersionSelect = (pieceVersion: PieceVersionInput) => {
+    updateFeedForm(feedFormDispatch, "pieceVersions", {
+      array: [pieceVersion],
+    });
     updateSourceOnPieceVersionsForm(dispatch, "pieceVersion", {
       value: {
         id: pieceVersion.id,

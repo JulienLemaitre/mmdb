@@ -20,6 +20,7 @@ export default function MMSourceContributions() {
     updateFeedForm(dispatch, "mMSourceContributions", {
       array: selectedContributions,
       next: true,
+      replace: true,
     });
   };
 
@@ -35,7 +36,7 @@ export default function MMSourceContributions() {
   if (isLoading) return <Loader />;
   if (!data)
     return <p>{`Oups, No data could be fetched. Can't continue...`}</p>;
-
+  console.log(`[] data :`, data);
   const { persons, organizations } = data;
 
   return (
