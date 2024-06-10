@@ -13,6 +13,7 @@ import type {
   MMSourcesOnPieceVersions,
   NOTE_VALUE,
   Contribution,
+  Collection,
 } from "@prisma/client";
 import {
   FeedFormState,
@@ -90,6 +91,8 @@ export type ContributionStateWithoutId =
       organization: OrganizationState;
       role: CONTRIBUTION_ROLE;
     };
+
+export type CollectionState = Pick<Collection, "id" | "title"> & IsNewProp;
 
 export type PieceState = Pick<
   Piece,
@@ -182,6 +185,7 @@ export type PersonInput = Pick<
   Person,
   "firstName" | "lastName" | "birthYear" | "deathYear"
 > & { id?: string };
+export type CollectionInput = Pick<Collection, "title"> & { id?: string };
 export type PieceInput = Pick<
   Piece,
   "nickname" | "yearOfComposition" | "title"
