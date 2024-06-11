@@ -9,7 +9,6 @@ import {
 
 function getSectionInputFromSectionState(sectionState: SectionState) {
   const sectionInput: SectionInput = {
-    rank: sectionState.rank,
     metreNumerator: sectionState.metreNumerator,
     metreDenominator: sectionState.metreDenominator,
     fastestStructuralNotesPerBar: sectionState.fastestStructuralNotesPerBar,
@@ -31,7 +30,6 @@ function getSectionInputFromSectionState(sectionState: SectionState) {
 
 function getMovementInputFromMovementState(movementState: MovementState) {
   const movementInput: MovementInput = {
-    rank: movementState.rank,
     key: { value: movementState.key, label: movementState.key },
     sections: movementState.sections.map(getSectionInputFromSectionState),
   };
