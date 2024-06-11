@@ -15,6 +15,7 @@ import {
 import getMetronomeMarkInputFromState from "@/utils/getMetronomeMarksInputFromState";
 import getMetronomeMarkStateFromInput from "@/utils/getMetronomeMarkStateFromInput";
 import { ONE_MM_REQUIRED } from "@/utils/constants";
+import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 
 const MetronomeMarkListSchema = z
   .object({
@@ -119,7 +120,10 @@ export default function MetronomeMarksForm({
   const isOneMMRequiredError = errors?.general?.message === ONE_MM_REQUIRED;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      onKeyDown={preventEnterKeySubmission}
+    >
       <MetronomeMarkArray
         {...{ control, register, errors, watch, getValues }}
         sectionList={sectionList}

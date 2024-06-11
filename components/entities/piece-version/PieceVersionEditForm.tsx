@@ -19,6 +19,7 @@ import {
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
+import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 
 const PieceVersionSchema = z.object({
   category: zodOption,
@@ -123,7 +124,10 @@ export default function PieceVersionEditForm({
         Create a piece{" "}
         <span className="block text-xl font-normal">Content details</span>
       </h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={preventEnterKeySubmission}
+      >
         <ControlledSelect
           name="category"
           label="Category"

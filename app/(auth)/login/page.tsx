@@ -7,6 +7,7 @@ import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import { Suspense } from "react";
+import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 
 const LoginSchema = z.object({
   email: z.string().email(),
@@ -45,6 +46,7 @@ function LoginPage() {
       <form
         // className="flex flex-col items-center justify-center w-full max-w-md mt-6"
         onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={preventEnterKeySubmission}
       >
         <FormInput
           name="email"

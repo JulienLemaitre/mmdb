@@ -5,6 +5,7 @@ import { PieceInput } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import ArrowLeftIcon from "@/components/svg/ArrowLeftIcon";
+import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 
 const PieceSchema = z.object({
   title: z.string().min(2),
@@ -40,7 +41,10 @@ export default function PieceEditForm({
         Create a piece{" "}
         <span className="block text-xl font-normal">General information</span>
       </h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={preventEnterKeySubmission}
+      >
         <FormInput name="title" isRequired {...{ register, watch, errors }} />
         <FormInput name="nickname" {...{ register, watch, errors }} />
         <FormInput name="yearOfComposition" {...{ register, watch, errors }} />

@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import { useEffect, useState } from "react";
+import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 
 const UserSchema = z
   .object({
@@ -103,6 +104,7 @@ export default function Register() {
         <form
           // className="flex flex-col items-center justify-center w-full max-w-md mt-6"
           onSubmit={handleSubmit(onSubmit)}
+          onKeyDown={preventEnterKeySubmission}
         >
           <FormInput
             name="name"

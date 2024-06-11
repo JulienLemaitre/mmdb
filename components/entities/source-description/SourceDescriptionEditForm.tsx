@@ -10,6 +10,7 @@ import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import ReferenceArray from "@/components/ReactHookForm/ReferenceArray";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
+import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 
 const SourceSchema = z.object({
   title: z.string().optional(),
@@ -68,7 +69,11 @@ export default function SourceDescriptionEditForm(
           </>
         )}
       </h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="max-w-md">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={preventEnterKeySubmission}
+        className="max-w-md"
+      >
         <ControlledSelect
           name="type"
           label="Source type"

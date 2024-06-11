@@ -12,6 +12,7 @@ import {
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
+import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 
 const SourceContributionsSchema = z.union([
   z.object({
@@ -35,7 +36,6 @@ const SourceContributionsSchema = z.union([
 export default function NewSourceContributionForm({ onContributionCreated }) {
   const {
     formState: { errors, isSubmitting },
-    getValues,
     handleSubmit,
     register,
     setValue,
@@ -112,7 +112,10 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
     <>
       <div>{`Create a new source contributor`}</div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={preventEnterKeySubmission}
+      >
         <ControlledSelect
           name="role"
           label="Role"
