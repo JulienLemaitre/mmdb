@@ -9,8 +9,8 @@ export default function getPieceVersionStateFromInput(
     ...pieceVersionInput,
     id: pieceVersionInput.id || uuidv4(),
     category: pieceVersionInput.category.value as PieceVersionState["category"],
-    movements: pieceVersionInput.movements.map((movementInput) =>
-      getMovementStateFromInput(movementInput),
+    movements: pieceVersionInput.movements.map((movementInput, index) =>
+      getMovementStateFromInput(movementInput, index),
     ),
   };
 }

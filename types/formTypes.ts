@@ -192,7 +192,6 @@ export type PieceInput = Pick<
 > & { id?: string; composerId?: string };
 export type SectionInput = Pick<
   Section,
-  | "rank"
   | "metreNumerator"
   | "metreDenominator"
   | "isCommonTime"
@@ -207,7 +206,7 @@ export type SectionInput = Pick<
   id?: string;
   tempoIndication: OptionInput;
 };
-export type MovementInput = Pick<Movement, "rank"> & {
+export type MovementInput = {
   id?: string;
   key: OptionInput;
   sections: SectionInput[];

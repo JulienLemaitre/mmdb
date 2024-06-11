@@ -4,13 +4,14 @@ import getSectionStateFromInput from "@/utils/getSectionStateFromInput";
 
 export default function getMovementStateFromInput(
   movementInput: MovementInput,
+  index: number,
 ): MovementState {
   return {
     id: movementInput.id || uuidv4(),
-    rank: movementInput.rank,
+    rank: index + 1,
     key: movementInput.key.value as MovementState["key"],
-    sections: movementInput.sections.map((sectionInput) =>
-      getSectionStateFromInput(sectionInput),
+    sections: movementInput.sections.map((sectionInput, index) =>
+      getSectionStateFromInput(sectionInput, index),
     ),
   };
 }

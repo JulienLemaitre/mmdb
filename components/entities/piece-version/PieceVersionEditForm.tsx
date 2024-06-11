@@ -26,13 +26,11 @@ const PieceVersionSchema = z.object({
     .array(
       z.object({
         id: z.string(),
-        rank: z.number(),
         key: zodOption,
         sections: z
           .array(
             z.object({
               id: z.string(),
-              rank: z.number(),
               metreNumerator: z.number(),
               metreDenominator: z.number(),
               isCommonTime: z.boolean().optional(),
