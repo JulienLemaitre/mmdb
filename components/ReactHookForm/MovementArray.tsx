@@ -18,116 +18,123 @@ export default function MovementArray({
   onTempoIndicationCreated,
   watch,
 }) {
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control,
-      name: "movements",
-    },
-  );
+  const { fields, append, remove, swap, insert } = useFieldArray({
+    control,
+    name: "movements",
+  });
 
   console.log(`[MovementArray] fields :`, fields);
 
   return (
     <>
       <ul>
-        {fields.map((item, index, mvtArray) => (
-          <li key={item.id}>
-            <h4 className="mt-6 text-2xl font-bold text-secondary">{`Movement ${
-              index + 1
-            }${
-              mvtArray.length === 1
-                ? ` (or whole piece if not divided in movements)`
-                : ""
-            }`}</h4>
-            <input
-              value={`movements[${index}].id` as const}
-              {...register(`movements[${index}].id` as const)}
-              hidden
-            />
-            <input
-              value={index + 1}
-              {...register(`movements[${index}].rank` as const)}
-              hidden
-            />
-            <ControlledSelect
-              name={`movements[${index}].key` as const}
-              label={`Key`}
-              id={`movements[${index}].key` as const}
-              control={control}
-              options={Object.values(KEY).map((key) => ({
-                value: key,
-                label: key,
-              }))}
-              isRequired={true}
-              errors={errors}
-            />
+        {fields.map((item, index, mvtArray) => {
+          const isLastItem = index === mvtArray.length - 1;
 
-            <SectionArray
-              nestIndex={index}
-              {...{ control, register, getValues, setValue, errors, watch }}
-              tempoIndicationList={tempoIndicationList}
-              onTempoIndicationCreated={onTempoIndicationCreated}
-            />
-            <section className="my-4 flex gap-2 w-full justify-between">
-              <div className="flex gap-2">
-                {index === mvtArray.length - 1 && (
-                  <>
+          return (
+            <li key={item.id}>
+              <h4 className="mt-6 text-2xl font-bold text-secondary">{`Movement ${
+                index + 1
+              }${
+                mvtArray.length === 1
+                  ? ` (or whole piece if not divided in movements)`
+                  : ""
+              }`}</h4>
+              <input
+                value={`movements[${index}].id` as const}
+                {...register(`movements[${index}].id` as const)}
+                hidden
+              />
+              <ControlledSelect
+                name={`movements[${index}].key` as const}
+                label={`Key`}
+                id={`movements[${index}].key` as const}
+                control={control}
+                options={Object.values(KEY).map((key) => ({
+                  value: key,
+                  label: key,
+                }))}
+                isRequired={true}
+                errors={errors}
+              />
+
+              <SectionArray
+                nestIndex={index}
+                {...{ control, register, getValues, setValue, errors, watch }}
+                tempoIndicationList={tempoIndicationList}
+                onTempoIndicationCreated={onTempoIndicationCreated}
+              />
+              <section className="my-4 flex gap-2 w-full justify-between">
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() =>
+                      isLastItem
+                        ? append(getMovementDefaultValues())
+                        : insert(index + 1, getMovementDefaultValues())
+                    }
+                  >
+                    <PlusIcon className="w-5 h-5" />
+                    Add Movement
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-error"
+                    onClick={() => remove(index)}
+                  >
+                    <TrashIcon className="w-5 h-5" />
+                    {`Delete Movement ${index + 1}`}
+                  </button>
+                </div>
+
+                <div className="flex gap-2">
+                  {index > 0 && (
                     <button
                       type="button"
-                      className="btn btn-secondary"
+                      className="btn btn-move"
                       onClick={() => {
-                        append(getMovementDefaultValues(index));
+                        swap(index, index - 1);
                       }}
                     >
-                      <PlusIcon className="w-5 h-5" />
-                      Add movement
+                      <ArrowUpIcon className="w-5 h-5" />
+                      Move Movement up
                     </button>
+                  )}
+
+                  {index < mvtArray.length - 1 && (
                     <button
                       type="button"
-                      className="btn btn-error"
-                      onClick={() => remove(index)}
+                      className="btn btn-move"
+                      onClick={() => {
+                        swap(index, index + 1);
+                      }}
                     >
-                      <TrashIcon className="w-5 h-5" />
-                      {`Delete Movement ${index + 1}`}
+                      <ArrowDownIcon className="w-5 h-5" />
+                      Move Movement down
                     </button>
-                  </>
-                )}
-              </div>
-
-              <div className="flex gap-2">
-                {index > 0 && (
-                  <button
-                    type="button"
-                    className="btn btn-move"
-                    onClick={() => {
-                      setValue(`mvtArray.${index - 1}.rank`, index + 1);
-                      setValue(`mvtArray.${index}.rank`, index);
-                      move(index, index - 1);
-                    }}
-                  >
-                    <ArrowUpIcon className="w-5 h-5" />
-                    Move up
-                  </button>
-                )}
-
-                {index < mvtArray.length - 1 && (
-                  <button
-                    type="button"
-                    className="btn btn-move"
-                    onClick={() => {
-                      setValue(`mvtArray.${index + 1}.rank`, index + 1);
-                      setValue(`mvtArray.${index}.rank`, index + 2);
-                      move(index, index + 1);
-                    }}
-                  >
-                    <ArrowDownIcon className="w-5 h-5" />
-                    Move down
-                  </button>
-                )}
-              </div>
-            </section>
-          </li>
-        ))}
+                  )}
+                </div>
+              </section>
+            </li>
+          );
+        })}
+        {fields.length === 0 && (
+          <section className="my-4 flex gap-2 w-full justify-between">
+            <div className="flex gap-2">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => {
+                  append(getMovementDefaultValues());
+                }}
+              >
+                <PlusIcon className="w-5 h-5" />
+                Add Movement
+              </button>
+            </div>
+          </section>
+        )}
       </ul>
     </>
   );

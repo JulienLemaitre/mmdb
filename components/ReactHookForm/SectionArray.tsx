@@ -18,12 +18,10 @@ export default function SectionArray({
   onTempoIndicationCreated,
   watch,
 }) {
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control,
-      name: `movements[${nestIndex}].sections`,
-    },
-  );
+  const { fields, append, remove, swap, insert } = useFieldArray({
+    control,
+    name: `movements[${nestIndex}].sections`,
+  });
 
   console.log(`[SectionArray] fields :`, fields);
 
@@ -31,6 +29,7 @@ export default function SectionArray({
     <div className="my-4">
       <ul>
         {fields.map((item, index, sectionArray) => {
+          const isLastItem = index === sectionArray.length - 1;
           const isMetreFieldDisabled =
             watch(`movements[${nestIndex}].sections[${index}].isCommonTime`) ||
             watch(`movements[${nestIndex}].sections[${index}].isCutTime`);
@@ -44,13 +43,6 @@ export default function SectionArray({
                 value={`movements[${nestIndex}].sections[${index}].id` as const}
                 {...register(
                   `movements[${nestIndex}].sections[${index}].id` as const,
-                )}
-                hidden
-              />
-              <input
-                value={index + 1}
-                {...register(
-                  `movements[${nestIndex}].sections[${index}].rank` as const,
                 )}
                 hidden
               />
@@ -230,28 +222,26 @@ export default function SectionArray({
               />
               <section className="my-4 flex gap-2 w-full justify-between">
                 <div className="flex gap-2">
-                  {index === sectionArray.length - 1 && (
-                    <>
-                      <button
-                        type="button"
-                        className="btn btn-accent"
-                        onClick={() => {
-                          append(getSectionDefaultValues(index));
-                        }}
-                      >
-                        <PlusIcon className="w-5 h-5" />
-                        Add section
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-error"
-                        onClick={() => remove(index)}
-                      >
-                        <TrashIcon className="w-5 h-5" />
-                        {`Delete section ${index + 1}`}
-                      </button>
-                    </>
-                  )}
+                  <button
+                    type="button"
+                    className="btn btn-accent"
+                    onClick={() =>
+                      isLastItem
+                        ? append(getSectionDefaultValues())
+                        : insert(index + 1, getSectionDefaultValues())
+                    }
+                  >
+                    <PlusIcon className="w-5 h-5" />
+                    Add Section
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-error"
+                    onClick={() => remove(index)}
+                  >
+                    <TrashIcon className="w-5 h-5" />
+                    {`Delete Section ${index + 1}`}
+                  </button>
                 </div>
 
                 <div className="flex gap-2">
@@ -260,13 +250,11 @@ export default function SectionArray({
                       type="button"
                       className="btn btn-move"
                       onClick={() => {
-                        setValue(`sectionArray.${index - 1}.rank`, index + 1);
-                        setValue(`sectionArray.${index}.rank`, index);
-                        move(index, index - 1);
+                        swap(index, index - 1);
                       }}
                     >
                       <ArrowUpIcon className="w-5 h-5" />
-                      Move up
+                      Move Section up
                     </button>
                   )}
 
@@ -275,13 +263,11 @@ export default function SectionArray({
                       type="button"
                       className="btn btn-move"
                       onClick={() => {
-                        setValue(`sectionArray.${index + 1}.rank`, index + 1);
-                        setValue(`sectionArray.${index}.rank`, index + 2);
-                        move(index, index + 1);
+                        swap(index, index + 1);
                       }}
                     >
                       <ArrowDownIcon className="w-5 h-5" />
-                      Move down
+                      Move Section down
                     </button>
                   )}
                 </div>
@@ -289,6 +275,22 @@ export default function SectionArray({
             </li>
           );
         })}
+        {fields.length === 0 && (
+          <section className="my-4 flex gap-2 w-full justify-between">
+            <div className="flex gap-2">
+              <button
+                type="button"
+                className="btn btn-accent"
+                onClick={() => {
+                  append(getSectionDefaultValues());
+                }}
+              >
+                <PlusIcon className="w-5 h-5" />
+                Add section
+              </button>
+            </div>
+          </section>
+        )}
       </ul>
     </div>
   );

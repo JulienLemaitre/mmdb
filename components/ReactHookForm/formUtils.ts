@@ -1,20 +1,16 @@
 import { v4 as uuidv4 } from "uuid";
 
-export function getMovementDefaultValues(indexAfterWhichAppend?: number) {
+export function getMovementDefaultValues() {
   return {
     id: uuidv4(),
-    rank:
-      typeof indexAfterWhichAppend === "number" ? indexAfterWhichAppend + 2 : 1,
     sections: [getSectionDefaultValues()],
   };
 }
-export function getSectionDefaultValues(indexAfterWhichAppend?: number) {
+export function getSectionDefaultValues() {
   return {
     id: uuidv4(),
     isCutTime: false,
     isCommonTime: false,
     isFastestStructuralNoteBelCanto: false,
-    rank:
-      typeof indexAfterWhichAppend === "number" ? indexAfterWhichAppend + 2 : 1,
   };
 }
