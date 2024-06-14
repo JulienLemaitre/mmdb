@@ -6,13 +6,20 @@ import { FormInput } from "@/components/ReactHookForm/FormInput";
 import { REFERENCE_TYPE } from "@prisma/client";
 import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
 
-export default function ReferenceArray({ control, register, errors, watch }) {
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control,
-      name: "references",
-    },
-  );
+export default function ReferenceArray({
+  control,
+  register,
+  errors,
+  watch,
+  onReferenceBlur,
+  onReferenceInputChange,
+  isCheckingReference,
+  isReferenceDirty,
+}) {
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "references",
+  });
 
   return (
     <>
@@ -27,7 +34,7 @@ export default function ReferenceArray({ control, register, errors, watch }) {
               <div className="flex-shrink-0 min-w-40">
                 <ControlledSelect
                   name={`references[${index}].type` as const}
-                  label={`Reference type`}
+                  label={`Type`}
                   id={`references[${index}].type` as const}
                   control={control}
                   options={Object.values(REFERENCE_TYPE).map((refType) => ({
@@ -41,8 +48,11 @@ export default function ReferenceArray({ control, register, errors, watch }) {
               <FormInput
                 name={`references[${index}].reference` as const}
                 isRequired
-                label="Reference"
+                label="Value"
+                onBlur={() => onReferenceBlur(index)}
+                onInputChange={() => onReferenceInputChange(index)}
                 {...{ register, watch, errors }}
+                isLoading={isCheckingReference}
               />
               <button
                 type="button"
@@ -56,7 +66,8 @@ export default function ReferenceArray({ control, register, errors, watch }) {
         ))}
         <button
           type="button"
-          className="btn btn-secondary mt-3"
+          className="btn btn-secondary mt-4"
+          disabled={isReferenceDirty}
           onClick={() => {
             append({});
           }}

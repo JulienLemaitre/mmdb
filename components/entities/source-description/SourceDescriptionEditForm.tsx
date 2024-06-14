@@ -11,6 +11,7 @@ import ReferenceArray from "@/components/ReactHookForm/ReferenceArray";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
+import { useState } from "react";
 
 const SourceSchema = z.object({
   title: z.string().optional(),
@@ -47,6 +48,9 @@ export default function SourceDescriptionEditForm(
     register,
     watch,
     control,
+    getValues,
+    setError,
+    clearErrors,
   } = useForm<SourceDescriptionInput>({
     defaultValues: sourceDescription ?? {
       type: {
@@ -56,6 +60,39 @@ export default function SourceDescriptionEditForm(
     },
     resolver: zodResolver(SourceSchema),
   });
+
+  const [isReferenceDirty, setIsReferenceDirty] = useState(false);
+  const [isCheckingReference, setIsCheckingReference] = useState(false);
+  const onReferenceInputChange = (index: number) => {
+    setIsReferenceDirty(true);
+    clearErrors(`references.${index}.reference`);
+  };
+  const onReferenceBlur = async (index: number) => {
+    setIsCheckingReference(true);
+    console.log(`[SourceDescriptionEditForm] onReferenceBlur`, index);
+    const references = getValues(`references`) || [];
+    const { reference, type } = references[index] || {};
+    if (!reference || !type?.value) {
+      console.log(
+        `[] reference and type value are needed to fetch existing reference`,
+      );
+      setIsCheckingReference(false);
+      return;
+    }
+    // Check if the reference is already in the database
+    const existingReference = await fetch(
+      `/api/reference/get?type=${type.value}&reference=${reference}`,
+    ).then((response) => response.json());
+    if (existingReference) {
+      setError(`references.${index}.reference`, {
+        type: "manual",
+        message: "This reference is already in the database",
+      });
+    } else {
+      setIsReferenceDirty(false);
+    }
+    setIsCheckingReference(false);
+  };
 
   return (
     <div>
@@ -100,7 +137,18 @@ export default function SourceDescriptionEditForm(
           label="Link to the online score"
           {...{ register, watch, errors }}
         />
-        <ReferenceArray {...{ control, register, errors, watch }} />
+        <ReferenceArray
+          {...{
+            control,
+            register,
+            errors,
+            watch,
+            onReferenceBlur,
+            onReferenceInputChange,
+            isCheckingReference,
+            isReferenceDirty,
+          }}
+        />
         <FormInput
           name="comment"
           label={`Comment`}
@@ -108,6 +156,7 @@ export default function SourceDescriptionEditForm(
           {...{ register, errors }}
         />
         <MMSourceFormStepNavigation
+          isNextDisabled={isReferenceDirty}
           isSubmitBtn
           isSubmitting={isSubmitting}
           submitTitle={submitTitle}
