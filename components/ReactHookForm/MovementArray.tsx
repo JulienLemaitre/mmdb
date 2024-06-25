@@ -7,6 +7,7 @@ import TrashIcon from "@/components/svg/TrashIcon";
 import { getMovementDefaultValues } from "@/components/ReactHookForm/formUtils";
 import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
 import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
+import formatToPhraseCase from "@/utils/formatToPhraseCase";
 
 export default function MovementArray({
   control,
@@ -52,7 +53,7 @@ export default function MovementArray({
                 control={control}
                 options={Object.values(KEY).map((key) => ({
                   value: key,
-                  label: key,
+                  label: formatToPhraseCase(key),
                 }))}
                 isRequired={true}
                 errors={errors}

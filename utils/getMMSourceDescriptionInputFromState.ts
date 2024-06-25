@@ -3,6 +3,7 @@ import {
   MMSourceDescriptionState,
 } from "@/types/formTypes";
 import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
+import formatToPhraseCase from "@/utils/formatToPhraseCase";
 
 export default function getMMSourceDescriptionInputFromState(
   sourceDescription?: MMSourceDescriptionState,
@@ -20,7 +21,7 @@ export default function getMMSourceDescriptionInputFromState(
     ...(title ? { title } : {}),
     year,
     link,
-    type: { value: type, label: type },
+    type: { value: type, label: formatToPhraseCase(type) },
     ...(comment ? { comment } : {}),
     ...(references.length > 0
       ? {

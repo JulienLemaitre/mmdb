@@ -10,19 +10,17 @@ import EyeIcon from "@/components/svg/EyeIcon";
 function getRegisterProps(name: string) {
   if (name.toLowerCase().includes("year")) {
     return {
-      setValueAs: (v) => (v ? parseInt(v) : null),
+      // setValueAs: (v) => (v ? parseInt(v, 10) : null),
+      // onChange: (e) => {
+      //   console.log(`[] e.target.value :`, e.target.value);
+      //   if (e.target.value < 1000) {
+      //     return 1000;
+      //   }
+      //   return e.target.value;
+      // },
     };
   }
   return {
-    birthYear: {
-      setValueAs: (v) => (v ? parseInt(v) : null),
-    },
-    deathYear: {
-      setValueAs: (v) => (v ? parseInt(v) : null),
-    },
-    yearOfComposition: {
-      setValueAs: (v) => (v ? parseInt(v) : null),
-    },
     // email: {
     //   onChange: (e) => {
     //     e.target.value = e.target.value.trim();
@@ -154,8 +152,9 @@ export function FormInput({
             ...(getRegisterProps(name) || {}),
             ...(isNumber ? { valueAsNumber: true } : {}),
             ...registerProps,
-            onChange: (e) => {},
+            // onChange: (e) => {},
           })}
+          {...(isNumber ? { onWheel: numberInputOnWheelPreventChange } : {})}
           onChange={onInputChange}
           {...(defaultValue ? { defaultValue } : {})}
           {...(disabled ? { disabled: true } : {})}
@@ -232,3 +231,16 @@ export function FormTextarea({
     </div>
   );
 }
+
+const numberInputOnWheelPreventChange = (e) => {
+  // Prevent the input value change
+  e.target.blur();
+
+  // Prevent the page/container scrolling
+  e.stopPropagation();
+
+  // Refocus immediately, on the next tick (after the current function is done)
+  setTimeout(() => {
+    e.target.focus();
+  }, 0);
+};

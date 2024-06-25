@@ -14,12 +14,13 @@ import { URL_API_GETALL_TEMPO_INDICATIONS } from "@/utils/routes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
 import { getMovementDefaultValues } from "@/components/ReactHookForm/formUtils";
 import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
-import { zodOption } from "@/utils/zodTypes";
+import { zodOption, zodPositiveNumber } from "@/utils/zodTypes";
 import {
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
+import formatToPhraseCase from "@/utils/formatToPhraseCase";
 
 const PieceVersionSchema = z.object({
   category: zodOption,
@@ -32,15 +33,15 @@ const PieceVersionSchema = z.object({
           .array(
             z.object({
               id: z.string(),
-              metreNumerator: z.number(),
-              metreDenominator: z.number(),
+              metreNumerator: zodPositiveNumber,
+              metreDenominator: zodPositiveNumber,
               isCommonTime: z.boolean().optional(),
               isCutTime: z.boolean().optional(),
-              fastestStructuralNotesPerBar: z.number(),
+              fastestStructuralNotesPerBar: zodPositiveNumber,
               isFastestStructuralNoteBelCanto: z.boolean().optional(),
-              fastestStaccatoNotesPerBar: z.number().or(z.nan()),
-              fastestRepeatedNotesPerBar: z.number().or(z.nan()),
-              fastestOrnamentalNotesPerBar: z.number().or(z.nan()),
+              fastestStaccatoNotesPerBar: zodPositiveNumber.or(z.nan()),
+              fastestRepeatedNotesPerBar: zodPositiveNumber.or(z.nan()),
+              fastestOrnamentalNotesPerBar: zodPositiveNumber.or(z.nan()),
               comment: z.string().optional(),
               tempoIndication: zodOption,
             }),
@@ -135,7 +136,7 @@ export default function PieceVersionEditForm({
           control={control}
           options={Object.values(PIECE_CATEGORY).map((category) => ({
             value: category,
-            label: category,
+            label: formatToPhraseCase(category),
           }))}
           isRequired={true}
           errors={errors}

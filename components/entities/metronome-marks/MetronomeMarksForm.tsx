@@ -7,7 +7,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import MetronomeMarkArray from "@/components/ReactHookForm/MetronomeMarkArray";
 import { z } from "zod";
-import { zodOption } from "@/utils/zodTypes";
+import { zodOption, zodPositiveNumber } from "@/utils/zodTypes";
 import {
   updateFeedForm,
   useFeedForm,
@@ -25,7 +25,7 @@ const MetronomeMarkListSchema = z
           noMM: z.boolean(),
           sectionId: z.string(),
           beatUnit: zodOption.optional(),
-          bpm: z.number().optional().or(z.nan()),
+          bpm: zodPositiveNumber.optional().or(z.nan()),
           comment: z.string().optional(),
         }),
       )
