@@ -1,6 +1,6 @@
 import { MMSourcePieceVersionsState } from "@/types/formTypes";
 import PlusIcon from "@/components/svg/PlusIcon";
-import StepNavigation from "@/components/multiStepMMSourceForm/StepNavigation";
+import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import SourceOnPieceVersionForm from "@/components/multiStepSourcePieceVersionsForm/SourceOnPieceVersionForm";
 import {
   updateFeedForm,
@@ -118,7 +118,7 @@ const SourceOnPieceVersionFormContainer = ({
       )}
 
       {!isFormOpen ? (
-        <StepNavigation
+        <MMSourceFormStepNavigation
           onClick={onSubmit}
           isNextDisabled={!(sourcePieceVersions.length > 0 && !isFormOpen)}
           submitTitle={submitTitle}

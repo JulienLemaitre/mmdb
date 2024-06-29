@@ -21,3 +21,5 @@ export const zodOption = z.object({
   value: z.string(),
   label: z.string(),
 });
+
+export const zodPositiveNumber = z.number().positive();

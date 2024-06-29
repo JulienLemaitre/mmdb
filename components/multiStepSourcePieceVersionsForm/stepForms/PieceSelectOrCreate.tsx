@@ -7,6 +7,7 @@ import { PieceInput, PieceState } from "@/types/formTypes";
 import getPieceStateFromInput from "@/utils/getPieceStateFromInput";
 import { Piece } from "@prisma/client";
 import {
+  getNewEntities,
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
@@ -23,7 +24,7 @@ function PieceSelectOrCreate() {
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
   const selectedComposerId = state?.composer?.id;
   const selectedPieceId = state?.piece?.id;
-  const newPieces = feedFormState.pieces;
+  const newPieces = getNewEntities(feedFormState, "pieces");
   const newSelectedPiece = newPieces?.find(
     (piece) => piece.id === selectedPieceId,
   );
@@ -40,7 +41,7 @@ function PieceSelectOrCreate() {
   }
 
   // If composer is newly created, we shift in creation mode directly
-  const newPersons = feedFormState.persons;
+  const newPersons = getNewEntities(feedFormState, "persons");
   const isNewComposer =
     selectedComposerId &&
     newPersons?.some((person) => person.id === selectedComposerId);
@@ -150,6 +151,7 @@ function PieceSelectOrCreate() {
     // If a piece is selected AND it is a newly created one present in the form state, we build a deletedIdArray with its id for it to be removed from state
     deleteSelectedPieceIfNew();
 
+    updateFeedForm(feedFormDispatch, "pieces", { array: [piece] });
     updateSourceOnPieceVersionsForm(dispatch, "piece", {
       value: {
         id: piece.id,

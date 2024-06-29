@@ -3,20 +3,23 @@ import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import TrashIcon from "@/components/svg/TrashIcon";
 import PlusIcon from "@/components/svg/PlusIcon";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
+import { REFERENCE_TYPE } from "@prisma/client";
+import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
 
-const REFERENCE_TYPE = {
-  PLATE_NUMBER: "Plate number",
-  ISBN: "ISBN",
-  ISMN: "ISMN",
-} as const;
-
-export default function ReferenceArray({ control, register, errors, watch }) {
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control,
-      name: "references",
-    },
-  );
+export default function ReferenceArray({
+  control,
+  register,
+  errors,
+  watch,
+  onReferenceBlur,
+  onReferenceInputChange,
+  isCheckingReference,
+  isReferenceDirty,
+}) {
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "references",
+  });
 
   return (
     <>
@@ -31,15 +34,13 @@ export default function ReferenceArray({ control, register, errors, watch }) {
               <div className="flex-shrink-0 min-w-40">
                 <ControlledSelect
                   name={`references[${index}].type` as const}
-                  label={`Reference type`}
+                  label={`Type`}
                   id={`references[${index}].type` as const}
                   control={control}
-                  options={Object.entries(REFERENCE_TYPE).map(
-                    ([key, value]) => ({
-                      value: key,
-                      label: value,
-                    }),
-                  )}
+                  options={Object.values(REFERENCE_TYPE).map((refType) => ({
+                    value: refType,
+                    label: getReferenceTypeLabel(refType),
+                  }))}
                   isRequired={true}
                   errors={errors}
                 />
@@ -47,12 +48,15 @@ export default function ReferenceArray({ control, register, errors, watch }) {
               <FormInput
                 name={`references[${index}].reference` as const}
                 isRequired
-                label="Reference"
+                label="Value"
+                onBlur={() => onReferenceBlur(index)}
+                onInputChange={() => onReferenceInputChange(index)}
                 {...{ register, watch, errors }}
+                isLoading={isCheckingReference}
               />
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-error"
                 onClick={() => remove(index)}
               >
                 <TrashIcon />
@@ -62,7 +66,8 @@ export default function ReferenceArray({ control, register, errors, watch }) {
         ))}
         <button
           type="button"
-          className="btn btn-secondary mt-3"
+          className="btn btn-secondary mt-4"
+          disabled={isReferenceDirty}
           onClick={() => {
             append({});
           }}

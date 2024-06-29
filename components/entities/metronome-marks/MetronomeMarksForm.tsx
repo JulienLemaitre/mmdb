@@ -7,7 +7,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import MetronomeMarkArray from "@/components/ReactHookForm/MetronomeMarkArray";
 import { z } from "zod";
-import { zodOption } from "@/utils/zodTypes";
+import { zodOption, zodPositiveNumber } from "@/utils/zodTypes";
 import {
   updateFeedForm,
   useFeedForm,
@@ -15,6 +15,7 @@ import {
 import getMetronomeMarkInputFromState from "@/utils/getMetronomeMarksInputFromState";
 import getMetronomeMarkStateFromInput from "@/utils/getMetronomeMarkStateFromInput";
 import { ONE_MM_REQUIRED } from "@/utils/constants";
+import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 
 const MetronomeMarkListSchema = z
   .object({
@@ -24,7 +25,7 @@ const MetronomeMarkListSchema = z
           noMM: z.boolean(),
           sectionId: z.string(),
           beatUnit: zodOption.optional(),
-          bpm: z.number().optional().or(z.nan()),
+          bpm: zodPositiveNumber.optional().or(z.nan()),
           comment: z.string().optional(),
         }),
       )
@@ -119,7 +120,10 @@ export default function MetronomeMarksForm({
   const isOneMMRequiredError = errors?.general?.message === ONE_MM_REQUIRED;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      onKeyDown={preventEnterKeySubmission}
+    >
       <MetronomeMarkArray
         {...{ control, register, errors, watch, getValues }}
         sectionList={sectionList}

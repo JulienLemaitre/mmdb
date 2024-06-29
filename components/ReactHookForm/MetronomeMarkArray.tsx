@@ -4,6 +4,8 @@ import TrashIcon from "@/components/svg/TrashIcon";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import { NOTE_VALUE } from "@prisma/client";
 import { Fragment, useState } from "react";
+import { useFeedForm } from "@/components/context/feedFormContext";
+import formatToPhraseCase from "@/utils/formatToPhraseCase";
 
 export default function MetronomeMarkArray({
   control,
@@ -19,6 +21,7 @@ export default function MetronomeMarkArray({
     name: "metronomeMarks",
   });
   const [commentToShow, setCommentToShow] = useState<number[]>([]);
+  const { state } = useFeedForm();
 
   const onRemoveComment = (index: number) => {
     setValue(`metronomeMarks[${index}].comment`, "");
@@ -42,12 +45,15 @@ export default function MetronomeMarkArray({
           const key = section.movement.key;
           const tempoIndication = section.tempoIndication?.text;
           const isNoMMChecked = !!watch(`metronomeMarks[${index}].noMM`);
+          const piece = state.pieces?.find(
+            (piece) => piece.id === section.pieceId,
+          );
 
           return (
             <Fragment key={section.pieceId + section.id}>
               {isPieceBeginning ? (
                 <h3 className="text-xl font-bold text-accent mt-6">
-                  {`Piece ${section.pieceId}`}
+                  {piece?.title}
                 </h3>
               ) : null}
               {section.rank === 1 ? (
@@ -102,7 +108,7 @@ export default function MetronomeMarkArray({
                     control={control}
                     options={Object.keys(NOTE_VALUE).map((key) => ({
                       value: key,
-                      label: key.replaceAll("_", " "),
+                      label: formatToPhraseCase(key),
                     }))}
                     isRequired={!isNoMMChecked}
                     isDisabled={isNoMMChecked}

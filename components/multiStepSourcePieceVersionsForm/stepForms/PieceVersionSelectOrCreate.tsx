@@ -5,6 +5,7 @@ import {
 } from "@/components/context/SourceOnPieceVersionFormContext";
 import { PieceVersionInput, PieceVersionState } from "@/types/formTypes";
 import {
+  getNewEntities,
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
@@ -24,10 +25,16 @@ function PieceVersionSelectOrCreate() {
 
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
   const selectedPieceId = state?.piece?.id;
-  const selectedPieceVersionId = state?.piece?.id;
-  const newPieces = feedFormState.pieces;
+  const selectedPieceVersionId = state?.pieceVersion?.id;
+  const newPieces = getNewEntities(feedFormState, "pieces");
+  const newPieceVersions = getNewEntities(feedFormState, "pieceVersions");
+  let pieceVersionFullList = [
+    ...(pieceVersions || []),
+    ...(newPieceVersions || []),
+  ];
+
   const selectedPieceVersion: PieceVersionState | undefined =
-    pieceVersions?.find(
+    pieceVersionFullList?.find(
       (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
     );
 
@@ -80,7 +87,7 @@ function PieceVersionSelectOrCreate() {
     if (typeof isNewPiece === "boolean" && isNewPiece) {
       setIsLoading(false);
     }
-  }, [isNewPiece]);
+  }, [isNewPiece, selectedPieceId]);
 
   const onPieceVersionCreated = (data: PieceVersionInput) => {
     // Front input values validation is successful at this point.
@@ -116,6 +123,9 @@ function PieceVersionSelectOrCreate() {
   };
 
   const onPieceVersionSelect = (pieceVersion: PieceVersionInput) => {
+    updateFeedForm(feedFormDispatch, "pieceVersions", {
+      array: [pieceVersion],
+    });
     updateSourceOnPieceVersionsForm(dispatch, "pieceVersion", {
       value: {
         id: pieceVersion.id,
@@ -140,7 +150,7 @@ function PieceVersionSelectOrCreate() {
 
   return (
     <PieceVersionSelectForm
-      pieceVersions={pieceVersions}
+      pieceVersions={pieceVersionFullList}
       value={selectedPieceVersion}
       onPieceVersionSelect={onPieceVersionSelect}
       onPieceVersionCreationClick={onPieceVersionCreationClick}

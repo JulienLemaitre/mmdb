@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from "react";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
 import NewSourceContributionForm from "@/components/entities/source-contributions/NewSourceContributionForm";
 import Label from "@/components/Label";
+import getRoleLabel from "@/utils/getRoleLabel";
 
 type SourceContributionSelectProps = {
   sourceContributionOptions: OptionInput[];
@@ -34,16 +35,18 @@ type SourceContributionSelectProps = {
           role: CONTRIBUTION_ROLE;
         },
   ) => void;
+  onCancel: () => void;
 };
 export default function SourceContributionSelect({
   sourceContributionOptions,
   onAddOrganizationContribution,
   onAddPersonContribution,
+  onCancel,
 }: Readonly<SourceContributionSelectProps>) {
   const contributionRoleOptions = Object.values(CONTRIBUTION_ROLE).map(
     (category) => ({
       value: category,
-      label: category,
+      label: getRoleLabel(category),
     }),
   );
   const [selectedPersonId, setSelectedPersonId] = useState<string>();
@@ -187,13 +190,18 @@ export default function SourceContributionSelect({
           onContributionCreated={onContributionCreated}
         />
       )}
-      <button
-        className="btn btn-primary mt-6 w-full max-w-xs"
-        disabled={!role || !(selectedOrganizationId ?? selectedPersonId)}
-        onClick={onAddContribution}
-      >
-        Add this contribution
-      </button>
+      <div className="flex gap-4 items-center mt-6">
+        <button className="btn btn-neutral" type="button" onClick={onCancel}>
+          Cancel
+        </button>
+        <button
+          className="btn btn-primary w-full max-w-xs"
+          disabled={!role || !(selectedOrganizationId ?? selectedPersonId)}
+          onClick={onAddContribution}
+        >
+          Add this contribution
+        </button>
+      </div>
     </div>
   );
 }

@@ -17,6 +17,7 @@ import {
   MMSourcePieceVersionsState,
   TempoIndicationState,
   OrganizationState,
+  CollectionState,
 } from "@/types/formTypes";
 import { steps } from "@/components/multiStepMMSourceForm/stepsUtils";
 import getFeedFormTestState from "@/utils/getFeedFormTestState";
@@ -27,6 +28,7 @@ type PieceFormAction =
   | { type: "goToStep"; payload: any }
   | { type: "formInfo"; payload: any }
   | { type: "organizations"; payload: any }
+  | { type: "collections"; payload: any }
   | { type: "persons"; payload: any }
   | { type: "pieces"; payload: any }
   | { type: "pieceVersions"; payload: any }
@@ -50,6 +52,7 @@ export type FeedFormState = {
   mMSourceContributions?: MMSourceContributionsState;
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
   organizations?: OrganizationState[];
+  collections?: CollectionState[];
   persons?: PersonState[];
   pieces?: PieceState[];
   pieceVersions?: NewPieceVersionState[];
@@ -141,41 +144,69 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
 
   // Entries created
   if (isActionAllowed) {
-    const { next, value, array, deleteIdArray, idKey } = action.payload || {};
+    const { array, deleteIdArray, idKey, next, replace, value } =
+      action.payload || {};
 
     let newState = state;
 
-    // If payload is an entity array, we update the state accordingly
-    if (array) {
+    // If payload is an entity array and replace = false, we update the state accordingly
+    if (array && !replace) {
       // For each entity in the array
       array.forEach((entity) => {
         const id = idKey || "id";
-        // If we find an entity in state with the same id, we update it
-        const isEntityInState = newState[action.type]?.find(
-          (stateEntity) => entity[id] && stateEntity[id] === entity[id],
-        );
-        if (isEntityInState) {
-          console.log(
-            `[] UPDATE entity in array with idKey [${id}] new value :`,
-            entity,
-          );
-          newState = {
-            ...newState,
-            [action.type]: newState[action.type].map((stateEntity) =>
-              stateEntity[id] === entity[id] ? entity : stateEntity,
-            ),
-          };
-        } else {
-          // otherwise, we push the entity to the array
-          console.log(`[] ADD new entity in array :`, entity);
-          newState = {
-            ...newState,
-            [action.type]: [...newState[action.type], entity],
-          };
+
+        newState = upsertEntityInState({
+          state: newState,
+          entityName: action.type,
+          entity,
+          idKey: id,
+        });
+
+        if (entity.person) {
+          newState = upsertEntityInState({
+            state: newState,
+            entityName: "persons",
+            entity: entity.person,
+          });
+        }
+        if (entity.organization) {
+          newState = upsertEntityInState({
+            state: newState,
+            entityName: "organizations",
+            entity: entity.organization,
+          });
         }
       });
     }
-    // If payload is an entity array, we update the state accordingly
+
+    // If payload is an entity array and replace = true, we replace the entity in state
+    if (array && replace) {
+      newState = {
+        ...newState,
+        [action.type]: array,
+      };
+      // For each entity in the array
+      array.forEach((entity) => {
+        if (entity.person) {
+          console.log(`[ADD IN CONTEXT] person:`, entity.person);
+          newState = upsertEntityInState({
+            state: newState,
+            entityName: "persons",
+            entity: entity.person,
+          });
+        }
+        if (entity.organization) {
+          console.log(`[ADD IN CONTEXT] organization:`, entity.organization);
+          newState = upsertEntityInState({
+            state: newState,
+            entityName: "organizations",
+            entity: entity.organization,
+          });
+        }
+      });
+    }
+
+    // If payload is a deleteIdArray, we update the state accordingly
     if (deleteIdArray) {
       // For each entity in the array
       deleteIdArray.forEach((idToDelete) => {
@@ -314,4 +345,46 @@ function getLastCompletedStep(state: FeedFormState): FeedFormStep | undefined {
   // console.groupEnd();
   // If none incomplete step found, we return the last step id
   return steps[steps.length - 1];
+}
+
+export function getNewEntities(state: FeedFormState, entityName: string) {
+  if (Array.isArray(state[entityName])) {
+    return state[entityName].filter((entity) => entity.isNew);
+  }
+  return [];
+}
+
+function upsertEntityInState({
+  state,
+  entityName,
+  entity,
+  idKey = "id",
+  replace = false,
+}) {
+  console.log("[upsertEntityInState]", { state, entityName, entity, idKey });
+  let newState = state;
+  // If we find an entity in state with the same id, we update it
+  const isEntityInState = newState[entityName]?.find(
+    (stateEntity) => entity[idKey] && stateEntity[idKey] === entity[idKey],
+  );
+  if (isEntityInState) {
+    console.log(
+      `[] UPDATE entity in array with idKey [${idKey}] new value :`,
+      entity,
+    );
+    newState = {
+      ...newState,
+      [entityName]: newState[entityName].map((stateEntity) =>
+        stateEntity[idKey] === entity[idKey] ? entity : stateEntity,
+      ),
+    };
+  } else {
+    // otherwise, we push the entity to the array
+    console.log(`[] ADD new entity in array :`, entity);
+    newState = {
+      ...newState,
+      [entityName]: [...newState[entityName], entity],
+    };
+  }
+  return newState;
 }

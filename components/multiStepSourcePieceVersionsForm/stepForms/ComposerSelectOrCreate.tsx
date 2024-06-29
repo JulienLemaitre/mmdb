@@ -12,6 +12,7 @@ import {
 import {
   useFeedForm,
   updateFeedForm,
+  getNewEntities,
 } from "@/components/context/feedFormContext";
 import { URL_API_GETALL_COMPOSERS } from "@/utils/routes";
 
@@ -22,7 +23,7 @@ const ComposerSelectOrCreate = () => {
   const { state, dispatch } = useSourceOnPieceVersionsForm();
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
   const selectedComposerId = state?.composer?.id;
-  const newPersons = feedFormState.persons;
+  const newPersons = getNewEntities(feedFormState, "persons");
   let composerFullList = [...(composers || []), ...(newPersons || [])];
 
   // If we have new composers, we need to sort the composerFullList
@@ -69,6 +70,7 @@ const ComposerSelectOrCreate = () => {
   };
 
   const onComposerSelect = (composer: PersonInput) => {
+    updateFeedForm(feedFormDispatch, "persons", { array: [composer] });
     updateSourceOnPieceVersionsForm(dispatch, "composer", {
       value: {
         id: composer.id,

@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonInput } from "@/types/formTypes";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import { zodPerson } from "@/utils/zodTypes";
+import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 
 const PersonSchema = zodPerson;
 
@@ -33,6 +34,7 @@ export default function ComposerEditForm({
       <form
         // className="flex flex-col items-center justify-center"
         onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={preventEnterKeySubmission}
       >
         <FormInput
           name="firstName"
