@@ -3,15 +3,15 @@ import {
   getAllStepStatus,
   getStepByRank,
   steps,
-} from "@/components/multiStepSourcePieceVersionsForm/stepsUtils";
+} from "@/components/multiStepSinglePieceVersionForm/stepsUtils";
 import {
-  updateSourceOnPieceVersionsForm,
-  useSourceOnPieceVersionsForm,
-} from "@/components/context/SourceOnPieceVersionFormContext";
+  updateSinglePieceVersionForm,
+  useSinglePieceVersionForm,
+} from "@/components/context/SinglePieceVersionFormContext";
 
-const SourceOnPieceVersionsSteps = () => {
+const SinglePieceVersionSteps = () => {
   const { state, currentStepRank, lastCompletedStepRank, dispatch } =
-    useSourceOnPieceVersionsForm();
+    useSinglePieceVersionForm();
   const completedSteps = getAllStepStatus(state);
   const currentStep = getStepByRank({ state, rank: currentStepRank });
   const formSteps = steps[state.formInfo.formType];
@@ -21,7 +21,7 @@ const SourceOnPieceVersionsSteps = () => {
       typeof lastCompletedStepRank === "number" &&
       stepRank <= lastCompletedStepRank + 1
     ) {
-      updateSourceOnPieceVersionsForm(dispatch, "goToStep", { stepRank });
+      updateSinglePieceVersionForm(dispatch, "goToStep", { stepRank });
     }
   };
 
@@ -60,4 +60,4 @@ const SourceOnPieceVersionsSteps = () => {
   );
 };
 
-export default SourceOnPieceVersionsSteps;
+export default SinglePieceVersionSteps;

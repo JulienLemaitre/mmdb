@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  updateSourceOnPieceVersionsForm,
-  useSourceOnPieceVersionsForm,
-} from "@/components/context/SourceOnPieceVersionFormContext";
-import { PieceInput, PieceState } from "@/types/formTypes";
-import getPieceStateFromInput from "@/utils/getPieceStateFromInput";
+import { PieceState } from "@/types/formTypes";
 import { Piece } from "@prisma/client";
 import {
   getNewEntities,
-  updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import Loader from "@/components/Loader";
@@ -16,12 +10,16 @@ import PieceEditForm from "@/components/entities/piece/PieceEditForm";
 import PieceSelectForm from "@/components/entities/piece/PieceSelectForm";
 import { URL_API_GETALL_COMPOSER_PIECES } from "@/utils/routes";
 
-function PieceSelectOrCreate() {
+function PieceSelectOrCreate({
+  state,
+  onPieceCreated,
+  onPieceSelect,
+  deleteSelectedPieceIfNew,
+}) {
   const [pieces, setPieces] = useState<Piece[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreation, setIsCreation] = useState(false);
-  const { dispatch, state } = useSourceOnPieceVersionsForm();
-  const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
+  const { state: feedFormState } = useFeedForm();
   const selectedComposerId = state?.composer?.id;
   const selectedPieceId = state?.piece?.id;
   const newPieces = getNewEntities(feedFormState, "pieces");
@@ -92,73 +90,6 @@ function PieceSelectOrCreate() {
       setIsLoading(false);
     }
   }, [isNewComposer]);
-
-  const onPieceCreated = async (data: PieceInput) => {
-    // Front input values validation is successful at this point.
-    console.log("[onPieceCreated] data", data);
-
-    const pieceData = data;
-    // Remove null values from pieceData
-    Object.keys(pieceData).forEach(
-      // '== null' is true for undefined AND null values
-      (key) => pieceData[key] == null && delete pieceData[key],
-    );
-
-    const composerId = pieceData.composerId || selectedComposerId;
-    if (!composerId) {
-      console.log(
-        "OUPS: No composerId in pieceData or form state to link to the piece",
-      );
-      // TODO: trigger a toast
-      return;
-    }
-
-    const pieceState = getPieceStateFromInput({
-      ...pieceData,
-      composerId,
-    });
-    pieceState.isNew = true;
-
-    // If a piece is selected AND it is a newly created one present in the form state, we build a deletedIdArray with its id for it to be removed from state
-    let deleteIdArray: string[] = [];
-    if (selectedPieceId && isPieceSelectedNew) {
-      deleteIdArray = [selectedPieceId];
-    }
-
-    updateFeedForm(feedFormDispatch, "pieces", {
-      array: [pieceState],
-      ...(deleteIdArray.length ? { deleteIdArray } : {}),
-    });
-    updateSourceOnPieceVersionsForm(dispatch, "piece", {
-      value: { id: pieceState.id },
-      next: true,
-    });
-  };
-
-  const deleteSelectedPieceIfNew = () => {
-    let deleteIdArray: string[] = [];
-    if (selectedPieceId && isPieceSelectedNew) {
-      deleteIdArray = [selectedPieceId];
-    }
-    if (deleteIdArray.length) {
-      updateFeedForm(feedFormDispatch, "pieces", {
-        deleteIdArray,
-      });
-    }
-  };
-
-  const onPieceSelect = (piece: PieceInput) => {
-    // If a piece is selected AND it is a newly created one present in the form state, we build a deletedIdArray with its id for it to be removed from state
-    deleteSelectedPieceIfNew();
-
-    updateFeedForm(feedFormDispatch, "pieces", { array: [piece] });
-    updateSourceOnPieceVersionsForm(dispatch, "piece", {
-      value: {
-        id: piece.id,
-      },
-      next: true,
-    });
-  };
 
   const onPieceCreationClick = () => {
     setIsCreation(true);

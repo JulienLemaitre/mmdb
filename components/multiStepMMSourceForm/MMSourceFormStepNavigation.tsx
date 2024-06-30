@@ -11,15 +11,25 @@ export default function MMSourceFormStepNavigation(
     isNextDisabled?: boolean;
     submitTitle?: string;
     onClick?: () => void;
+    onGoToPrevStep?: () => void;
   }>,
 ) {
-  const { isSubmitting, submitTitle, onClick, isSubmitBtn, isNextDisabled } =
-    props;
+  const {
+    isSubmitting,
+    submitTitle,
+    onClick,
+    onGoToPrevStep,
+    isSubmitBtn,
+    isNextDisabled,
+  } = props;
   if (!isSubmitBtn && !onClick) {
     console.log(`[StepNavigation] SHOULD receive isSubmitBtn or onClick`);
   }
   const { dispatch } = useFeedForm();
   const goToPrevStep = () => {
+    if (typeof onGoToPrevStep === "function") {
+      onGoToPrevStep();
+    }
     updateFeedForm(dispatch, "goToPrevStep", {});
   };
 

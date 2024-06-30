@@ -48,6 +48,15 @@ export type SourceOnPieceVersionsFormStep = {
   title: string;
   rank: number;
   isComplete: (state: SourceOnPieceVersionsFormState) => boolean;
+  Component?: FC<any>; // TODO precise type
+  // Component?: FC<{ onFormClose: () => void; state: any; dispatch: any }>; // TODO precise type
+  actionTypes: string[];
+};
+export type SinglePieceVersionFormStep = {
+  id: string;
+  title: string;
+  rank: number;
+  isComplete: (state: SourceOnPieceVersionsFormState) => boolean;
   Component?: FC<{ onFormClose: () => void }>;
   actionTypes: string[];
 };

@@ -353,6 +353,16 @@ export function getNewEntities(state: FeedFormState, entityName: string) {
   }
   return [];
 }
+export function getEntityByIdOrKey(
+  state: FeedFormState,
+  entityName: string,
+  id: string,
+  key = "id",
+) {
+  if (Array.isArray(state[entityName])) {
+    return state[entityName].find((entity) => entity[key] === id);
+  }
+}
 
 function upsertEntityInState({
   state,

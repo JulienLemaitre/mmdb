@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from "react";
-import {
-  updateSourceOnPieceVersionsForm,
-  useSourceOnPieceVersionsForm,
-} from "@/components/context/SourceOnPieceVersionFormContext";
-import { PieceVersionInput, PieceVersionState } from "@/types/formTypes";
+import { PieceVersionState } from "@/types/formTypes";
 import {
   getNewEntities,
-  updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import Loader from "@/components/Loader";
 import PieceVersionEditForm from "@/components/entities/piece-version/PieceVersionEditForm";
 import PieceVersionSelectForm from "@/components/entities/piece-version/PieceVersionSelectForm";
-import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput";
 import { URL_API_GETALL_PIECE_PIECE_VERSIONS } from "@/utils/routes";
 
-function PieceVersionSelectOrCreate() {
+function PieceVersionSelectOrCreate({
+  state,
+  onPieceVersionCreated,
+  onPieceVersionSelect,
+}) {
   const [pieceVersions, setPieceVersions] = useState<
     PieceVersionState[] | null
   >(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreation, setIsCreation] = useState(false);
-  const { dispatch, state } = useSourceOnPieceVersionsForm();
 
-  const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
+  const { state: feedFormState } = useFeedForm();
   const selectedPieceId = state?.piece?.id;
   const selectedPieceVersionId = state?.pieceVersion?.id;
   const newPieces = getNewEntities(feedFormState, "pieces");
@@ -88,51 +85,6 @@ function PieceVersionSelectOrCreate() {
       setIsLoading(false);
     }
   }, [isNewPiece, selectedPieceId]);
-
-  const onPieceVersionCreated = (data: PieceVersionInput) => {
-    // Front input values validation is successful at this point.
-    console.log("[onPieceVersionCreated] data", data);
-
-    if (!selectedPieceId) {
-      console.log(
-        `[onPieceVersionCreated] No selectedPieceId found - cannot create pieceVersion`,
-      );
-      return;
-    }
-
-    const pieceVersionData = data;
-    // Remove null values from pieceVersionData
-    Object.keys(pieceVersionData).forEach(
-      // '== null' is true for undefined AND null values
-      (key) => pieceVersionData[key] == null && delete pieceVersionData[key],
-    );
-
-    const pieceVersionState = getPieceVersionStateFromInput({
-      ...pieceVersionData,
-      pieceId: selectedPieceId,
-    });
-    pieceVersionState.isNew = true;
-    console.log("New pieceVersion to be stored in state", pieceVersionState);
-    updateFeedForm(feedFormDispatch, "pieceVersions", {
-      array: [pieceVersionState],
-    });
-    updateSourceOnPieceVersionsForm(dispatch, "pieceVersion", {
-      value: pieceVersionState,
-      next: true,
-    });
-  };
-
-  const onPieceVersionSelect = (pieceVersion: PieceVersionInput) => {
-    updateFeedForm(feedFormDispatch, "pieceVersions", {
-      array: [pieceVersion],
-    });
-    updateSourceOnPieceVersionsForm(dispatch, "pieceVersion", {
-      value: {
-        id: pieceVersion.id,
-      },
-      next: true,
-    });
-  };
 
   const onPieceVersionCreationClick = () => {
     setIsCreation(true);

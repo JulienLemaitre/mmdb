@@ -1,27 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Person } from "@prisma/client";
-import { v4 as uuidv4 } from "uuid";
 import Loader from "@/components/Loader";
 import ComposerSelectForm from "@/components/entities/composer/ComposerSelectForm";
 import ComposerEditForm from "@/components/entities/composer/ComposerEditForm";
-import { PersonInput, PersonState } from "@/types/formTypes";
-import {
-  useSourceOnPieceVersionsForm,
-  updateSourceOnPieceVersionsForm,
-} from "@/components/context/SourceOnPieceVersionFormContext";
+import { PersonState } from "@/types/formTypes";
 import {
   useFeedForm,
-  updateFeedForm,
   getNewEntities,
 } from "@/components/context/feedFormContext";
 import { URL_API_GETALL_COMPOSERS } from "@/utils/routes";
 
-const ComposerSelectOrCreate = () => {
+const ComposerSelectOrCreate = ({
+  state,
+  onComposerCreated,
+  onComposerSelect,
+}) => {
   const [composers, setComposers] = useState<Person[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreation, setIsCreation] = useState(false);
-  const { state, dispatch } = useSourceOnPieceVersionsForm();
-  const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
+  const { state: feedFormState } = useFeedForm();
   const selectedComposerId = state?.composer?.id;
   const newPersons = getNewEntities(feedFormState, "persons");
   let composerFullList = [...(composers || []), ...(newPersons || [])];
@@ -53,31 +50,6 @@ const ComposerSelectOrCreate = () => {
         setIsLoading(false);
       });
   }, []);
-
-  const onComposerCreated = (composer: PersonInput) => {
-    const newComposer: PersonState = {
-      ...composer,
-      id: composer.id || uuidv4(),
-      isNew: true,
-    };
-    updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
-    updateSourceOnPieceVersionsForm(dispatch, "composer", {
-      value: {
-        id: newComposer.id,
-      },
-      next: true,
-    });
-  };
-
-  const onComposerSelect = (composer: PersonInput) => {
-    updateFeedForm(feedFormDispatch, "persons", { array: [composer] });
-    updateSourceOnPieceVersionsForm(dispatch, "composer", {
-      value: {
-        id: composer.id,
-      },
-      next: true,
-    });
-  };
 
   const onComposerCreationClick = () => {
     setIsCreation(true);

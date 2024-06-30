@@ -4,7 +4,7 @@ import {
   useSourceOnPieceVersionsForm,
 } from "@/components/context/SourceOnPieceVersionFormContext";
 
-function SourceOnPieceVersionsFormStepNavigation(
+function SinglePieceVersionFormStepNavigation(
   props: Readonly<{
     isSubmitBtn?: boolean;
     isSubmitting?: boolean;
@@ -46,4 +46,4 @@ function SourceOnPieceVersionsFormStepNavigation(
   );
 }
 
-export default SourceOnPieceVersionsFormStepNavigation;
+export default SinglePieceVersionFormStepNavigation;

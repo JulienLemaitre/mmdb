@@ -1,9 +1,9 @@
 import { SourceOnPieceVersionsFormStep } from "@/types/formTypes";
-import ComposerSelectOrCreate from "@/components/multiStepSourcePieceVersionsForm/stepForms/ComposerSelectOrCreate";
+import ComposerSelectOrCreate from "@/components/multiStepSinglePieceVersionForm/stepForms/ComposerSelectOrCreate";
 import { SourceOnPieceVersionsFormState } from "@/components/context/SourceOnPieceVersionFormContext";
-import PieceSelectOrCreate from "@/components/multiStepSourcePieceVersionsForm/stepForms/PieceSelectOrCreate";
-import PieceVersionSelectOrCreate from "@/components/multiStepSourcePieceVersionsForm/stepForms/PieceVersionSelectOrCreate";
-import Summary from "@/components/multiStepSourcePieceVersionsForm/stepForms/Summary";
+import PieceSelectOrCreate from "@/components/multiStepSinglePieceVersionForm/stepForms/PieceSelectOrCreate";
+import PieceVersionSelectOrCreate from "@/components/multiStepSinglePieceVersionForm/stepForms/PieceVersionSelectOrCreate";
+import Summary from "@/components/multiStepSinglePieceVersionForm/stepForms/Summary";
 
 export const singleSteps: SourceOnPieceVersionsFormStep[] = [
   {
@@ -41,45 +41,45 @@ export const singleSteps: SourceOnPieceVersionsFormStep[] = [
   },
 ];
 
-export const collectionSteps: SourceOnPieceVersionsFormStep[] = [
-  {
-    id: "composer",
-    title: "Composer",
-    rank: 0,
-    isComplete: (state: SourceOnPieceVersionsFormState) => !!state.composer?.id,
-    Component: ComposerSelectOrCreate,
-    actionTypes: ["composer"],
-  },
-  {
-    id: "piece",
-    title: "Piece",
-    rank: 1,
-    isComplete: (state: SourceOnPieceVersionsFormState) => !!state.piece?.id,
-    Component: PieceSelectOrCreate,
-    actionTypes: ["piece"],
-  },
-  {
-    id: "pieceVersion",
-    title: "Piece Version",
-    rank: 2,
-    isComplete: (state: SourceOnPieceVersionsFormState) =>
-      !!state.pieceVersion?.id,
-    Component: PieceVersionSelectOrCreate,
-    actionTypes: ["pieceVersion"],
-  },
-  {
-    id: "summary",
-    title: "Summary",
-    rank: 3,
-    isComplete: (state: SourceOnPieceVersionsFormState) => false,
-    Component: Summary,
-    actionTypes: ["reset", "formInfo"],
-  },
-];
+// export const collectionSteps: SourceOnPieceVersionsFormStep[] = [
+//   {
+//     id: "composer",
+//     title: "Composer",
+//     rank: 0,
+//     isComplete: (state: SourceOnPieceVersionsFormState) => !!state.composer?.id,
+//     Component: ComposerSelectOrCreate,
+//     actionTypes: ["composer"],
+//   },
+//   {
+//     id: "piece",
+//     title: "Piece",
+//     rank: 1,
+//     isComplete: (state: SourceOnPieceVersionsFormState) => !!state.piece?.id,
+//     Component: PieceSelectOrCreate,
+//     actionTypes: ["piece"],
+//   },
+//   {
+//     id: "pieceVersion",
+//     title: "Piece Version",
+//     rank: 2,
+//     isComplete: (state: SourceOnPieceVersionsFormState) =>
+//       !!state.pieceVersion?.id,
+//     Component: PieceVersionSelectOrCreate,
+//     actionTypes: ["pieceVersion"],
+//   },
+//   {
+//     id: "summary",
+//     title: "Summary",
+//     rank: 3,
+//     isComplete: (state: SourceOnPieceVersionsFormState) => false,
+//     Component: Summary,
+//     actionTypes: ["reset", "formInfo"],
+//   },
+// ];
 
 export const steps = {
   single: singleSteps,
-  collection: collectionSteps,
+  // collection: collectionSteps,
 };
 
 export function getAllowedActions(state) {
