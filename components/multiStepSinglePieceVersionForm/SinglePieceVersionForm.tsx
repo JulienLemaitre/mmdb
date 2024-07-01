@@ -19,10 +19,9 @@ import {
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import getPieceStateFromInput from "@/utils/getPieceStateFromInput";
-import { updateSourceOnPieceVersionsForm } from "@/components/context/SourceOnPieceVersionFormContext";
 import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput";
 
-type SourceOnPieceVersionFormProps = {
+type SinglePieceVersionFormProps = {
   onFormClose: () => void;
 };
 
@@ -33,7 +32,7 @@ type SourceOnPieceVersionFormProps = {
  */
 const SinglePieceVersionForm = ({
   onFormClose,
-}: SourceOnPieceVersionFormProps) => {
+}: SinglePieceVersionFormProps) => {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
   const { dispatch, state, currentStepRank } = useSinglePieceVersionForm();
   const currentStep = getStepByRank({ state, rank: currentStepRank });
@@ -111,7 +110,7 @@ const SinglePieceVersionForm = ({
       array: [pieceState],
       ...(deleteIdArray.length ? { deleteIdArray } : {}),
     });
-    updateSourceOnPieceVersionsForm(dispatch, "piece", {
+    updateSinglePieceVersionForm(dispatch, "piece", {
       value: { id: pieceState.id },
       next: true,
     });
@@ -134,7 +133,7 @@ const SinglePieceVersionForm = ({
     deleteSelectedPieceIfNew();
 
     updateFeedForm(feedFormDispatch, "pieces", { array: [piece] });
-    updateSourceOnPieceVersionsForm(dispatch, "piece", {
+    updateSinglePieceVersionForm(dispatch, "piece", {
       value: {
         id: piece.id,
       },
@@ -171,7 +170,7 @@ const SinglePieceVersionForm = ({
     updateFeedForm(feedFormDispatch, "pieceVersions", {
       array: [pieceVersionState],
     });
-    updateSourceOnPieceVersionsForm(dispatch, "pieceVersion", {
+    updateSinglePieceVersionForm(dispatch, "pieceVersion", {
       value: pieceVersionState,
       next: true,
     });
@@ -185,7 +184,7 @@ const SinglePieceVersionForm = ({
     updateFeedForm(feedFormDispatch, "pieceVersions", {
       array: [pieceVersion],
     });
-    updateSourceOnPieceVersionsForm(dispatch, "pieceVersion", {
+    updateSinglePieceVersionForm(dispatch, "pieceVersion", {
       value: {
         id: pieceVersion.id,
       },

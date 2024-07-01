@@ -1,4 +1,7 @@
-import { MMSourcePieceVersionsState } from "@/types/formTypes";
+import {
+  MMSourcePieceVersionsState,
+  SourceOnPieceVersionsFormType,
+} from "@/types/formTypes";
 import PlusIcon from "@/components/svg/PlusIcon";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import SinglePieceVersionForm from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionForm";
@@ -7,15 +10,12 @@ import {
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
-import {
-  SourceOnPieceVersionsFormType,
-  updateSourceOnPieceVersionsForm,
-  useSourceOnPieceVersionsForm,
-} from "@/components/context/SourceOnPieceVersionFormContext";
 import TrashIcon from "@/components/svg/TrashIcon";
 import QuestionMarkCircleIcon from "@/components/svg/QuestionMarkCircleIcon";
 import CollectionPieceVersionForm from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionForm";
 import { SinglePieceVersionFormProvider } from "@/components/context/SinglePieceVersionFormContext";
+import { useState } from "react";
+import { CollectionPieceVersionsFormProvider } from "@/components/context/CollectionPieceVersionsFormContext";
 
 type SourcePieceVersionSelectFormProps = {
   sourcePieceVersions?: MMSourcePieceVersionsState[];
@@ -29,21 +29,14 @@ const SourceOnPieceVersionFormContainer = ({
   submitTitle,
 }: SourcePieceVersionSelectFormProps) => {
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
-  const {
-    dispatch: dispatchSourceOnPieceVersionsForm,
-    state: sourceOnPieceVersionsFormState,
-  } = useSourceOnPieceVersionsForm();
+  const [formType, setFormType] =
+    useState<SourceOnPieceVersionsFormType>("none");
   const isFormOpen = !!feedFormState.formInfo?.isSourceOnPieceVersionformOpen;
   const isIntro =
     feedFormState?.mMSourcePieceVersions?.length === 0 && !isFormOpen;
-  const formType = sourceOnPieceVersionsFormState?.formInfo?.formType;
 
-  const onFormOpen = (formType: SourceOnPieceVersionsFormType) => {
-    updateSourceOnPieceVersionsForm(
-      dispatchSourceOnPieceVersionsForm,
-      "formInfo",
-      { value: { formType } },
-    );
+  const onFormOpen = (formType: "single" | "collection") => {
+    setFormType(formType);
     updateFeedForm(feedFormDispatch, "formInfo", {
       value: { isSourceOnPieceVersionformOpen: true },
     });
@@ -51,7 +44,8 @@ const SourceOnPieceVersionFormContainer = ({
 
   const onFormClose = () => {
     // reset sourceOnPieceVersionForm
-    updateSourceOnPieceVersionsForm(dispatchSourceOnPieceVersionsForm, "init");
+    setFormType("none");
+
     // Close sourceOnPieceVersions form
     updateFeedForm(feedFormDispatch, "formInfo", {
       value: { isSourceOnPieceVersionformOpen: false },
@@ -100,7 +94,9 @@ const SourceOnPieceVersionFormContainer = ({
         </SinglePieceVersionFormProvider>
       )}
       {isFormOpen && formType === "collection" && (
-        <CollectionPieceVersionForm onFormClose={onFormClose} />
+        <CollectionPieceVersionsFormProvider>
+          <CollectionPieceVersionForm onFormClose={onFormClose} />
+        </CollectionPieceVersionsFormProvider>
       )}
       {!isFormOpen && (
         <>

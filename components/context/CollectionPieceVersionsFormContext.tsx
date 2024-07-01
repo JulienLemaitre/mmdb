@@ -9,27 +9,27 @@ import {
 import {
   getAllowedActions,
   steps,
-} from "@/components/multiStepSinglePieceVersionForm/stepsUtils";
-import { SourceOnPieceVersionsFormStep } from "@/types/formTypes";
+} from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
+import { CollectionPieceVersionsFormStep } from "@/types/formTypes";
 
-export type SourceOnPieceVersionsFormType = "single" | "collection";
-type SourceOnPieceVersionsFormInfo = {
-  formType: SourceOnPieceVersionsFormType;
+export type CollectionPieceVersionsFormType = "single" | "collection";
+type CollectionPieceVersionsFormInfo = {
+  formType: CollectionPieceVersionsFormType;
   currentStepRank: number;
   allSourcePieceVersionsDone?: boolean;
 };
 
-export type SourceOnPieceVersionsFormState = {
-  formInfo: SourceOnPieceVersionsFormInfo;
+export type CollectionPieceVersionsFormState = {
+  formInfo: CollectionPieceVersionsFormInfo;
   composer?: { id?: string };
   piece?: { id?: string };
   pieceVersion?: { id?: string };
 };
 
-type SourceOnPieceVersionsFormAction =
+type CollectionPieceVersionsFormAction =
   | {
       type: "init";
-      payload?: { value: SourceOnPieceVersionsFormState; next?: boolean };
+      payload?: { value: CollectionPieceVersionsFormState; next?: boolean };
     }
   | { type: "goToPrevStep" }
   | { type: "goToStep"; payload: { stepRank: number } }
@@ -48,28 +48,28 @@ type SourceOnPieceVersionsFormAction =
   | {
       type: "formInfo";
       payload: {
-        value: { formType: SourceOnPieceVersionsFormType };
+        value: { formType: CollectionPieceVersionsFormType };
         next?: boolean;
       };
     };
 
-type Dispatch = (action: SourceOnPieceVersionsFormAction) => void;
+type Dispatch = (action: CollectionPieceVersionsFormAction) => void;
 
-type SourceOnPieceVersionsFormProviderProps = { children: ReactNode };
+type CollectionPieceVersionsFormProviderProps = { children: ReactNode };
 
-const INITIAL_STATE: SourceOnPieceVersionsFormState = {
+const INITIAL_STATE: CollectionPieceVersionsFormState = {
   formInfo: {
     currentStepRank: 0,
     formType: "single",
   },
 };
 
-const LOCAL_STORAGE_KEY = "sourceOnPieceVersionsForm";
+const LOCAL_STORAGE_KEY = "sourceOnPieceVersionForm";
 const USE_LOCAL_STORAGE = false;
 
-const SourceOnPieceVersionsFormContext = createContext<
+const CollectionPieceVersionsFormContext = createContext<
   | {
-      state: SourceOnPieceVersionsFormState;
+      state: CollectionPieceVersionsFormState;
       dispatch: Dispatch;
     }
   | undefined
@@ -88,11 +88,11 @@ function localStorageGetItem(key: string) {
   }
 }
 
-function SourceOnPieceVersionsFormReducer(
-  state: SourceOnPieceVersionsFormState,
-  action: SourceOnPieceVersionsFormAction,
+function CollectionPieceVersionsFormReducer(
+  state: CollectionPieceVersionsFormState,
+  action: CollectionPieceVersionsFormAction,
 ): any {
-  console.group(`[SourceOnPieceVersionsFormReducer]`);
+  console.group(`[CollectionPieceVersionsFormReducer]`);
   console.log(`action.type :`, action.type);
 
   // Navigation back
@@ -217,11 +217,11 @@ function SourceOnPieceVersionsFormReducer(
   throw new Error(`Unhandled action type: ${action.type}`);
 }
 
-export function SourceOnPieceVersionsFormProvider({
+export function CollectionPieceVersionsFormProvider({
   children,
-}: Readonly<SourceOnPieceVersionsFormProviderProps>) {
+}: Readonly<CollectionPieceVersionsFormProviderProps>) {
   const [state, dispatch] = useReducer(
-    SourceOnPieceVersionsFormReducer,
+    CollectionPieceVersionsFormReducer,
     INITIAL_STATE,
   );
 
@@ -230,10 +230,13 @@ export function SourceOnPieceVersionsFormProvider({
       const localStorageValue = localStorageGetItem(LOCAL_STORAGE_KEY);
       if (localStorageValue) {
         console.log(
-          `[INIT] SourceOnPieceVersions from localStorage`,
+          `[INIT] CollectionPieceVersionss from localStorage`,
           localStorageValue,
         );
-        initSourceOnPieceVersionsForm(dispatch, JSON.parse(localStorageValue));
+        initCollectionPieceVersionsForm(
+          dispatch,
+          JSON.parse(localStorageValue),
+        );
       }
     } catch (error) {
       console.warn(
@@ -245,17 +248,17 @@ export function SourceOnPieceVersionsFormProvider({
 
   const value = { state, dispatch };
   return (
-    <SourceOnPieceVersionsFormContext.Provider value={value}>
+    <CollectionPieceVersionsFormContext.Provider value={value}>
       {children}
-    </SourceOnPieceVersionsFormContext.Provider>
+    </CollectionPieceVersionsFormContext.Provider>
   );
 }
 
-export function useSourceOnPieceVersionsForm() {
-  const context = useContext(SourceOnPieceVersionsFormContext);
+export function useCollectionPieceVersionsForm() {
+  const context = useContext(CollectionPieceVersionsFormContext);
   if (context === undefined) {
     throw new Error(
-      "useSourceOnPieceVersionsForm must be used within a SourceOnPieceVersionsFormProvider",
+      "useCollectionPieceVersionsForm must be used within a CollectionPieceVersionsFormProvider",
     );
   }
   const lastCompletedStep = getLastCompletedStep(context.state);
@@ -271,11 +274,11 @@ export function useSourceOnPieceVersionsForm() {
   };
 }
 
-export function updateSourceOnPieceVersionsForm(dispatch, type, value?: any) {
+export function updateCollectionPieceVersionsForm(dispatch, type, value?: any) {
   dispatch({ type, payload: value });
 }
 
-export function initSourceOnPieceVersionsForm(
+export function initCollectionPieceVersionsForm(
   dispatch,
   initialState = INITIAL_STATE,
 ) {
@@ -283,8 +286,8 @@ export function initSourceOnPieceVersionsForm(
 }
 
 function getLastCompletedStep(
-  state: SourceOnPieceVersionsFormState,
-): SourceOnPieceVersionsFormStep | undefined {
+  state: CollectionPieceVersionsFormState,
+): CollectionPieceVersionsFormStep | undefined {
   const formSteps = steps[state.formInfo.formType];
   // traversing the steps array, we return the step before the first incomplete one id
   // console.group(`SOPEVF getLastCompletedStep`);

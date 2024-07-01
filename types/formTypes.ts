@@ -20,7 +20,12 @@ import {
   PersistableFeedFormState,
 } from "@/components/context/feedFormContext";
 import { FC } from "react";
-import { SourceOnPieceVersionsFormState } from "@/components/context/SourceOnPieceVersionFormContext";
+import { SinglePieceVersionFormState } from "@/components/context/SinglePieceVersionFormContext";
+import { CollectionPieceVersionsFormState } from "@/components/context/CollectionPieceVersionsFormContext";
+
+// Related Types
+
+export type SourceOnPieceVersionsFormType = "single" | "collection" | "none";
 
 // Sub-Types
 
@@ -43,21 +48,20 @@ export type FeedFormStep = {
   isComplete: (state: FeedFormState) => boolean;
   Component?: FC;
 };
-export type SourceOnPieceVersionsFormStep = {
-  id: string;
-  title: string;
-  rank: number;
-  isComplete: (state: SourceOnPieceVersionsFormState) => boolean;
-  Component?: FC<any>; // TODO precise type
-  // Component?: FC<{ onFormClose: () => void; state: any; dispatch: any }>; // TODO precise type
-  actionTypes: string[];
-};
 export type SinglePieceVersionFormStep = {
   id: string;
   title: string;
   rank: number;
-  isComplete: (state: SourceOnPieceVersionsFormState) => boolean;
-  Component?: FC<{ onFormClose: () => void }>;
+  isComplete: (state: SinglePieceVersionFormState) => boolean;
+  Component?: FC<any>; // TODO precise type
+  actionTypes: string[];
+};
+export type CollectionPieceVersionsFormStep = {
+  id: string;
+  title: string;
+  rank: number;
+  isComplete: (state: CollectionPieceVersionsFormState) => boolean;
+  Component?: FC<any>; // TODO precise type
   actionTypes: string[];
 };
 export type IsNewProp = {
