@@ -8,13 +8,11 @@ import {
 } from "react";
 import {
   getAllowedActions,
-  steps,
+  singlePieceFormSteps,
 } from "@/components/multiStepSinglePieceVersionForm/stepsUtils";
 import { SinglePieceVersionFormStep } from "@/types/formTypes";
 
-export type SinglePieceVersionFormType = "single" | "collection";
 type SinglePieceVersionFormInfo = {
-  formType: SinglePieceVersionFormType;
   currentStepRank: number;
   allSourcePieceVersionsDone?: boolean;
 };
@@ -44,13 +42,6 @@ type SinglePieceVersionFormAction =
   | {
       type: "pieceVersion";
       payload: { value: { id: string }; next?: boolean };
-    }
-  | {
-      type: "formInfo";
-      payload: {
-        value: { formType: SinglePieceVersionFormType };
-        next?: boolean;
-      };
     };
 
 type Dispatch = (action: SinglePieceVersionFormAction) => void;
@@ -60,7 +51,6 @@ type SinglePieceVersionFormProviderProps = { children: ReactNode };
 const INITIAL_STATE: SinglePieceVersionFormState = {
   formInfo: {
     currentStepRank: 0,
-    formType: "single",
   },
 };
 
@@ -123,7 +113,7 @@ function SinglePieceVersionFormReducer(
     };
   }
 
-  const allowedActions = getAllowedActions(state);
+  const allowedActions = getAllowedActions();
   const isActionAllowed = allowedActions.has(action.type);
   console.log(`allowedActions :`, allowedActions);
   console.log(`isActionAllowed :`, isActionAllowed);
@@ -260,7 +250,8 @@ export function useSinglePieceVersionForm() {
   }
   const lastCompletedStep = getLastCompletedStep(context.state);
   // console.log(`[useFeedForm] lastCompletedStep :`, lastCompletedStep);
-  const nextStep = steps[lastCompletedStep ? lastCompletedStep?.rank + 1 : 0];
+  const nextStep =
+    singlePieceFormSteps[lastCompletedStep ? lastCompletedStep?.rank + 1 : 0];
   return {
     ...context,
     lastCompletedStepId: lastCompletedStep?.id,
@@ -285,17 +276,16 @@ export function initSinglePieceVersionForm(
 function getLastCompletedStep(
   state: SinglePieceVersionFormState,
 ): SinglePieceVersionFormStep | undefined {
-  const formSteps = steps[state.formInfo.formType];
-  // traversing the steps array, we return the step before the first incomplete one id
+  // traversing the steps array, we return the step before the first incomplete one
   // console.group(`SOPEVF getLastCompletedStep`);
-  for (let i = 0; i < formSteps.length; i++) {
+  for (let i = 0; i < singlePieceFormSteps.length; i++) {
     // console.log(`steps[${i}] isComplete :`, steps[i].isComplete(state));
-    if (!formSteps[i].isComplete(state)) {
+    if (!singlePieceFormSteps[i].isComplete(state)) {
       // console.groupEnd();
-      return formSteps[i - 1];
+      return singlePieceFormSteps[i - 1];
     }
   }
   // console.groupEnd();
-  // If none incomplete step found, we return the last step id
-  return formSteps[formSteps.length - 1];
+  // If none incomplete step found, we return the last step
+  return singlePieceFormSteps[singlePieceFormSteps.length - 1];
 }

@@ -23,15 +23,17 @@ import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
+  onSubmit?: (payload: any) => void;
+  initPayload?: any;
 };
 
 /**
- * This component will go throw the whole process of creating a sourceOnPieceVersion entity or a series of sourceOnPieceVersion entities.
+ * This component will go throw the process of creating a single PieceVersion that will be added to the feedForm.
  * If the composer, piece and pieceVersion pre-exist, they will just be selected. If not, the user will be able to create them.
- * @constructor
  */
 const SinglePieceVersionForm = ({
   onFormClose,
+  onSubmit,
 }: SinglePieceVersionFormProps) => {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
   const { dispatch, state, currentStepRank } = useSinglePieceVersionForm();
@@ -201,14 +203,26 @@ const SinglePieceVersionForm = ({
       );
       return;
     }
-    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
-      array: [
-        {
-          pieceVersionId: state.pieceVersion?.id,
-          rank: (feedFormState.mMSourcePieceVersions || []).length + 1,
-        },
-      ],
-    });
+    if (typeof onSubmit === "function") {
+      console.log(`[] submitting with provided onSubmit function`);
+      onSubmit({
+        array: [
+          {
+            pieceVersionId: state.pieceVersion?.id,
+            rank: (feedFormState.mMSourcePieceVersions || []).length + 1,
+          },
+        ],
+      });
+    } else {
+      updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+        array: [
+          {
+            pieceVersionId: state.pieceVersion?.id,
+            rank: (feedFormState.mMSourcePieceVersions || []).length + 1,
+          },
+        ],
+      });
+    }
 
     onFormClose();
   };

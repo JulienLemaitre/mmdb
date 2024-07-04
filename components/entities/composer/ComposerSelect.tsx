@@ -2,7 +2,6 @@
 import Select from "@/components/ReactSelect/Select";
 import { PersonState } from "@/types/formTypes";
 import { useRouter } from "next/navigation";
-import { URL_CREATE_COMPOSER } from "@/utils/routes";
 import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";
 
 type ComposerSelectProps = {

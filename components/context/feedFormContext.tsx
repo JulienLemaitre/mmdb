@@ -21,6 +21,7 @@ import {
 } from "@/types/formTypes";
 import { steps } from "@/components/multiStepMMSourceForm/stepsUtils";
 import getFeedFormTestState from "@/utils/getFeedFormTestState";
+import upsertEntityInState from "@/utils/upsertEntityInState";
 
 type PieceFormAction =
   | { type: "init"; payload: any }
@@ -278,7 +279,6 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
   throw new Error(`Unhandled action type: ${action.type}`);
 }
 
-// eslint-disable-next-line react/prop-types
 export function FeedFormProvider({
   children,
 }: Readonly<FeedFormProviderProps>) {
@@ -362,39 +362,4 @@ export function getEntityByIdOrKey(
   if (Array.isArray(state[entityName])) {
     return state[entityName].find((entity) => entity[key] === id);
   }
-}
-
-function upsertEntityInState({
-  state,
-  entityName,
-  entity,
-  idKey = "id",
-  replace = false,
-}) {
-  console.log("[upsertEntityInState]", { state, entityName, entity, idKey });
-  let newState = state;
-  // If we find an entity in state with the same id, we update it
-  const isEntityInState = newState[entityName]?.find(
-    (stateEntity) => entity[idKey] && stateEntity[idKey] === entity[idKey],
-  );
-  if (isEntityInState) {
-    console.log(
-      `[] UPDATE entity in array with idKey [${idKey}] new value :`,
-      entity,
-    );
-    newState = {
-      ...newState,
-      [entityName]: newState[entityName].map((stateEntity) =>
-        stateEntity[idKey] === entity[idKey] ? entity : stateEntity,
-      ),
-    };
-  } else {
-    // otherwise, we push the entity to the array
-    console.log(`[] ADD new entity in array :`, entity);
-    newState = {
-      ...newState,
-      [entityName]: [...newState[entityName], entity],
-    };
-  }
-  return newState;
 }

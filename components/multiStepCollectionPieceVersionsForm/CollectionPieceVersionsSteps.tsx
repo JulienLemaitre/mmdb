@@ -2,32 +2,32 @@ import React from "react";
 import {
   getAllStepStatus,
   getStepByRank,
-  singlePieceFormSteps,
-} from "@/components/multiStepSinglePieceVersionForm/stepsUtils";
+  collectionFormSteps,
+} from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
 import {
-  updateSinglePieceVersionForm,
-  useSinglePieceVersionForm,
-} from "@/components/context/SinglePieceVersionFormContext";
+  updateCollectionPieceVersionsForm,
+  useCollectionPieceVersionsForm,
+} from "@/components/context/CollectionPieceVersionsFormContext";
 
-const SinglePieceVersionSteps = () => {
+const CollectionPieceVersionsSteps = () => {
   const { state, currentStepRank, lastCompletedStepRank, dispatch } =
-    useSinglePieceVersionForm();
-  const completedSteps = getAllStepStatus(state);
-  const currentStep = getStepByRank({ state, rank: currentStepRank });
+    useCollectionPieceVersionsForm();
+  // const completedSteps = getAllStepStatus(state);
+  // const currentStep = getStepByRank({ state, rank: currentStepRank });
 
   const goToStep = (stepRank: number) => {
     if (
       typeof lastCompletedStepRank === "number" &&
       stepRank <= lastCompletedStepRank + 1
     ) {
-      updateSinglePieceVersionForm(dispatch, "goToStep", { stepRank });
+      updateCollectionPieceVersionsForm(dispatch, "goToStep", { stepRank });
     }
   };
 
   return (
     <div className="mb-4">
       <ul className="steps">
-        {singlePieceFormSteps.map((step, index) => {
+        {collectionFormSteps.map((step, index) => {
           // console.group(`STEP ${index}`);
           // console.log(`[] step.rank :`, step.rank);
           const stepClassName =
@@ -38,8 +38,8 @@ const SinglePieceVersionSteps = () => {
               : "";
           const setpBtnClassName =
             step.rank === (currentStepRank || 0) ? "btn-primary" : "btn-ghost";
-          const isStepCompleted = completedSteps[step.rank];
-          const isCurrentStep = currentStep.rank === step.rank;
+          // const isStepCompleted = completedSteps[step.rank];
+          // const isCurrentStep = currentStep.rank === step.rank;
           // console.log(`[] isStepCompleted :`, isStepCompleted);
           // console.log(`[] isCurrentStep :`, isCurrentStep);
           // console.groupEnd();
@@ -59,4 +59,4 @@ const SinglePieceVersionSteps = () => {
   );
 };
 
-export default SinglePieceVersionSteps;
+export default CollectionPieceVersionsSteps;
