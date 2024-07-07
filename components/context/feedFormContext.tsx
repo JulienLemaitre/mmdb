@@ -66,19 +66,20 @@ type FeedFormProviderProps = { children: ReactNode };
 // @ts-ignore
 const TEST_STATE: FeedFormState | null = getFeedFormTestState();
 
-const INITIAL_STATE: FeedFormState = {
-  // const INITIAL_STATE: FeedFormState = TEST_STATE || {
+// const INITIAL_STATE: FeedFormState = {
+const INITIAL_STATE: FeedFormState = TEST_STATE || {
   formInfo: {
     currentStepRank: 0,
   },
   mMSourceDescription: undefined,
   mMSourceContributions: [],
   mMSourcePieceVersions: [],
+  collections: [],
+  metronomeMarks: [],
   organizations: [],
   persons: [],
   pieces: [],
   pieceVersions: [],
-  metronomeMarks: [],
   tempoIndications: [],
 };
 const LOCAL_STORAGE_KEY = "feedForm";
@@ -276,7 +277,9 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
     return action.payload || INITIAL_STATE;
   }
   console.groupEnd();
-  throw new Error(`Unhandled action type: ${action.type}`);
+  throw new Error(
+    `[FeedFormContext] Unhandled${!isActionAllowed ? ` (Not allowed)` : ""} action type: ${action.type}`,
+  );
 }
 
 export function FeedFormProvider({

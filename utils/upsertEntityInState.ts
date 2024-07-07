@@ -3,10 +3,19 @@ export default function upsertEntityInState({
   entityName,
   entity,
   idKey = "id",
-  replace = false,
+  // replace = false,
 }) {
   console.log("[upsertEntityInState]", { state, entityName, entity, idKey });
   let newState = state;
+
+  if (!newState[entityName]) {
+    console.log(
+      `[upsertEntityInState] state[${entityName}] does not exist. return state:`,
+      state,
+    );
+    return state;
+  }
+
   // If we find an entity in state with the same id, we update it
   const isEntityInState = newState[entityName]?.find(
     (stateEntity) => entity[idKey] && stateEntity[idKey] === entity[idKey],
@@ -24,7 +33,7 @@ export default function upsertEntityInState({
     };
   } else {
     // otherwise, we push the entity to the array
-    console.log(`[] ADD new entity in array :`, entity);
+    console.log(`[] ADD new entity '${entityName}' in array :`, entity);
     newState = {
       ...newState,
       [entityName]: [...newState[entityName], entity],

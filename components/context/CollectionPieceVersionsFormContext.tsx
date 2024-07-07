@@ -13,7 +13,6 @@ import {
 import {
   CollectionPieceVersionsFormStep,
   CollectionState,
-  FeedFormStep,
   MMSourcePieceVersionsState,
   NewPieceVersionState,
   PersonState,
@@ -21,11 +20,7 @@ import {
   TempoIndicationState,
 } from "@/types/formTypes";
 import upsertEntityInState from "@/utils/upsertEntityInState";
-import { steps } from "@/components/multiStepMMSourceForm/stepsUtils";
-import {
-  FeedFormState,
-  initFeedForm,
-} from "@/components/context/feedFormContext";
+import { collectionFormSteps as steps } from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
 
 type CollectionPieceVersionsFormAction =
   | {
@@ -251,6 +246,17 @@ function collectionPieceVersionsFormReducer(
       };
     }
 
+    // We increment currentStep of we are told to with the property 'next = true' in any payload
+    if (next === true && typeof state?.formInfo?.currentStepRank === "number") {
+      newState = {
+        ...newState,
+        formInfo: {
+          ...newState.formInfo,
+          currentStepRank: state.formInfo.currentStepRank + 1,
+        },
+      };
+    }
+
     console.groupEnd();
     return newState;
   }
@@ -261,7 +267,7 @@ function collectionPieceVersionsFormReducer(
     return action.payload || INITIAL_STATE;
   }
   console.groupEnd();
-  throw new Error(`Unhandled action type: ${action.type}`);
+  throw new Error(`[CollectionContext] Unhandled action type: ${action.type}`);
 }
 
 export function CollectionPieceVersionsFormProvider({

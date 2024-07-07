@@ -1,10 +1,10 @@
 import CollectionSelect from "@/components/entities/collection/CollectionSelect";
 import { useEffect, useState } from "react";
-import { PersonState } from "@/types/formTypes";
+import { CollectionState } from "@/types/formTypes";
 
 type CollectionSelectFormProps = {
-  collections: PersonState[];
-  value?: PersonState;
+  collections: CollectionState[];
+  value?: CollectionState;
   onCollectionSelect: (event: any) => void;
   onCollectionCreationClick: () => void;
 };
@@ -14,20 +14,21 @@ export default function CollectionSelectForm({
   onCollectionSelect,
   onCollectionCreationClick,
 }: CollectionSelectFormProps) {
-  const [selectedCollection, setSelectedCollection] = useState<PersonState | null>(
-    value || null,
-  );
+  const [selectedCollection, setSelectedCollection] =
+    useState<CollectionState | null>(value || null);
 
   // Reset the form context when the component is mounted
   useEffect(() => {
     // Init the form with context value if exists
-    if (value) {
+    if (value?.id) {
       onSelect(value.id);
     }
-  }, []);
+  }, [value?.id]);
 
   const onSelect = (collectionId: string) => {
-    const collection = collections.find((collection) => collection.id === collectionId);
+    const collection = collections.find(
+      (collection) => collection.id === collectionId,
+    );
     console.log(`[CollectionSelectForm] onSelect:`, collection);
     if (!collection) return;
     setSelectedCollection(collection);

@@ -3,7 +3,7 @@ import { Collection } from "@prisma/client";
 import Loader from "@/components/Loader";
 import CollectionSelectForm from "@/components/entities/collection/CollectionSelectForm";
 import CollectionEditForm from "@/components/entities/collection/CollectionEditForm";
-import { PersonState } from "@/types/formTypes";
+import { CollectionState } from "@/types/formTypes";
 import {
   useFeedForm,
   getNewEntities,
@@ -21,23 +21,22 @@ const CollectionSelectOrCreate = ({
   const { state: feedFormState } = useFeedForm();
   const selectedCollectionId = state?.collection?.id;
   const selectedComposerId = state?.collection?.composerId;
-  const newPersons = getNewEntities(feedFormState, "persons");
-  let collectionFullList = [...(collections || []), ...(newPersons || [])];
+  const newCollections = getNewEntities(feedFormState, "collections");
+  let collectionFullList = [...(collections || []), ...(newCollections || [])];
 
   // If we have new collections, we need to sort the collectionFullList
-  if (newPersons?.length) {
+  if (newCollections?.length) {
     collectionFullList = collectionFullList.sort((a, b) => {
-      if (a.lastName < b.lastName) return -1;
-      if (a.lastName > b.lastName) return 1;
-      if (a.firstName < b.firstName) return -1;
-      if (a.firstName > b.firstName) return 1;
+      if (a.title < b.title) return -1;
+      if (a.title > b.title) return 1;
       return 0;
     });
   }
 
-  const selectedCollection: PersonState | undefined = collectionFullList.find(
-    (collection) => collection.id === selectedCollectionId,
-  );
+  const selectedCollection: CollectionState | undefined =
+    collectionFullList.find(
+      (collection) => collection.id === selectedCollectionId,
+    );
 
   useEffect(() => {
     if (selectedComposerId) {

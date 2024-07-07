@@ -35,9 +35,10 @@ export const steps: FeedFormStep[] = [
     rank: 3,
     id: "mMSourcePieceVersions",
     actionTypes: [
-      "mMSourcePieceVersions",
-      "formInfo",
+      "collections",
       "editedSourceOnPieceVersions",
+      "formInfo",
+      "mMSourcePieceVersions",
       "organizations",
       "persons",
       "pieces",

@@ -1,9 +1,12 @@
-import { useFeedForm } from "@/components/context/feedFormContext";
+import {
+  updateFeedForm,
+  useFeedForm,
+} from "@/components/context/feedFormContext";
 import {
   updateCollectionPieceVersionsForm,
   useCollectionPieceVersionsForm,
 } from "@/components/context/CollectionPieceVersionsFormContext";
-import { CollectionInput } from "@/types/formTypes";
+import { CollectionInput, PersonInput } from "@/types/formTypes";
 import getCollectionStateFromInput from "@/utils/getCollectionStateFromInput";
 import { getStepByRank } from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
 import DebugBox from "@/components/DebugBox";
@@ -22,6 +25,21 @@ function CollectionPieceVersionForm({
   const { dispatch, state, currentStepRank } = useCollectionPieceVersionsForm();
   const currentStep = getStepByRank({ state, rank: currentStepRank });
   const StepFormComponent = currentStep.Component;
+
+  const onComposerSelect = (composer: PersonInput) => {
+    updateFeedForm(feedFormDispatch, "persons", { array: [composer] });
+    updateCollectionPieceVersionsForm(dispatch, "collection", {
+      value: { composerId: composer.id },
+      next: true,
+    });
+  };
+  const onCollectionSelect = (collection: CollectionInput) => {
+    updateFeedForm(feedFormDispatch, "collections", { array: [collection] });
+    updateCollectionPieceVersionsForm(dispatch, "collection", {
+      value: { id: collection.id, title: collection.title },
+      next: true,
+    });
+  };
 
   const onAddSourceOnPieceVersion = async (payload) => {
     updateCollectionPieceVersionsForm(
@@ -56,6 +74,8 @@ function CollectionPieceVersionForm({
           onFormClose={onFormClose}
           state={state}
           onSubmit={onSubmit}
+          onComposerSelect={onComposerSelect}
+          onCollectionSelect={onCollectionSelect}
         />
       ) : (
         <div>Nothing to show...</div>

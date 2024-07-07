@@ -1,13 +1,13 @@
 // "use client";
 import Select from "@/components/ReactSelect/Select";
-import { PersonState } from "@/types/formTypes";
+import { CollectionState } from "@/types/formTypes";
 import { useRouter } from "next/navigation";
 import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";
 
 type CollectionSelectProps = {
-  collections: PersonState[];
+  collections: CollectionState[];
   onSelect: (collectionId: string) => void;
-  selectedCollection: PersonState | null;
+  selectedCollection: CollectionState | null;
   onCollectionCreationClick: () => void;
 };
 export default function CollectionSelect({
@@ -47,9 +47,9 @@ export default function CollectionSelect({
   );
 }
 
-function getCollectionOption(collection: PersonState) {
+function getCollectionOption(collection: CollectionState) {
   return {
     value: collection.id,
-    label: `${collection.firstName} ${collection.lastName}`,
+    label: `${collection.title}`,
   };
 }
