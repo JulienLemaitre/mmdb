@@ -107,6 +107,9 @@ export type ContributionStateWithoutId =
 
 export type CollectionState = Pick<Collection, "composerId" | "title"> & {
   id?: string;
+  _count?: {
+    pieces?: number;
+  };
 } & IsNewProp;
 
 export type PieceState = Pick<

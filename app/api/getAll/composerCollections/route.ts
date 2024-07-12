@@ -15,9 +15,9 @@ export async function GET(request: Request) {
     select: {
       id: true,
       title: true,
-      pieces: {
+      _count: {
         select: {
-          id: true,
+          pieces: true,
         },
       },
     },
