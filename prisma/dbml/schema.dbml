@@ -1,0 +1,403 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Collection {
+  id String [pk]
+  title String [not null]
+  composerId String [not null]
+  composer Person [not null]
+  pieces Piece [not null]
+  creator User
+  creatorId String
+
+  indexes {
+    (composerId, title) [unique]
+  }
+}
+
+Table Piece {
+  id String [pk]
+  title String [not null]
+  collection Collection
+  collectionId String
+  collectionRank Int
+  nickname String
+  composer Person [not null]
+  composerId String [not null]
+  yearOfComposition Int
+  creator User
+  creatorId String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  pieceVersions PieceVersion [not null]
+
+  indexes {
+    (composerId, title) [unique]
+    (collectionId, collectionRank) [unique]
+  }
+}
+
+Table PieceVersion {
+  id String [pk]
+  piece Piece [not null]
+  pieceId String [not null]
+  category PIECE_CATEGORY [not null]
+  movements Movement [not null]
+  mMSources MMSourcesOnPieceVersions [not null]
+  creator User
+  creatorId String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Movement {
+  id String [pk]
+  pieceVersion PieceVersion [not null]
+  pieceVersionId String [not null]
+  rank Int [not null]
+  key KEY [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  sections Section [not null]
+
+  indexes {
+    (pieceVersionId, rank) [unique]
+  }
+}
+
+Table Section {
+  id String [pk]
+  movement Movement [not null]
+  movementId String [not null]
+  rank Int [not null]
+  metreNumerator Int [not null]
+  metreDenominator Int [not null]
+  isCommonTime Boolean [not null, default: false]
+  isCutTime Boolean [not null, default: false]
+  fastestStructuralNotesPerBar Float [not null]
+  fastestStaccatoNotesPerBar Float
+  fastestRepeatedNotesPerBar Float
+  fastestOrnamentalNotesPerBar Float
+  isFastestStructuralNoteBelCanto Boolean [not null, default: false]
+  tempoIndication TempoIndication [not null]
+  tempoIndicationId String [not null]
+  metronomeMarks MetronomeMark [not null]
+  comment String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (movementId, rank) [unique]
+  }
+}
+
+Table TempoIndication {
+  id String [pk]
+  text String [unique, not null]
+  sections Section [not null]
+  creator User
+  creatorId String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table MetronomeMark {
+  id String [pk]
+  mMSource MMSource [not null]
+  mMSourceId String [not null]
+  beatUnit NOTE_VALUE [not null]
+  bpm Int [not null]
+  notesPerSecond Json
+  notesPerBar Json
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  section Section [not null]
+  sectionId String [not null]
+  comment String
+
+  indexes {
+    (mMSourceId, sectionId) [unique]
+  }
+}
+
+Table MMSourcesOnPieceVersions {
+  pieceVersion PieceVersion [not null]
+  pieceVersionId String [not null]
+  mMSource MMSource [not null]
+  mMSourceId String [not null]
+  rank Int [not null]
+
+  indexes {
+    (mMSourceId, rank) [pk]
+  }
+}
+
+Table MMSource {
+  id String [pk]
+  title String
+  pieceVersions MMSourcesOnPieceVersions [not null]
+  type SOURCE_TYPE [not null]
+  link String [not null]
+  year Int [not null]
+  references Reference [not null]
+  contributions Contribution [not null]
+  metronomeMarks MetronomeMark [not null]
+  creator User
+  creatorId String
+  comment String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Reference {
+  id String [pk]
+  mMSource MMSource [not null]
+  mMSourceId String [not null]
+  type REFERENCE_TYPE [not null]
+  reference String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (type, reference) [unique]
+  }
+}
+
+Table Contribution {
+  id String [pk]
+  mMSource MMSource [not null]
+  mMSourceId String [not null]
+  person Person
+  personId String
+  organization Organization
+  organizationId String
+  role CONTRIBUTION_ROLE [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Organization {
+  id String [pk]
+  name String [unique, not null]
+  contributions Contribution [not null]
+  creator User
+  creatorId String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Person {
+  id String [pk]
+  firstName String [not null]
+  lastName String [not null]
+  birthYear Int [not null]
+  deathYear Int
+  collections Collection [not null]
+  compositions Piece [not null]
+  contributions Contribution [not null]
+  creator User
+  creatorId String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (firstName, lastName) [unique]
+  }
+}
+
+Table Account {
+  id String [pk]
+  userId String [not null]
+  type String [not null]
+  provider String [not null]
+  providerAccountId String [not null]
+  refresh_token String
+  access_token String
+  expires_at Int
+  token_type String
+  scope String
+  id_token String
+  session_state String
+  user User [not null]
+
+  indexes {
+    (provider, providerAccountId) [unique]
+  }
+}
+
+Table Session {
+  id String [pk]
+  sessionToken String [unique, not null]
+  userId String [not null]
+  expires DateTime [not null]
+  user User [not null]
+}
+
+Table User {
+  id String [pk]
+  name String
+  email String [unique]
+  passwordHash String
+  role String [default: 'USER']
+  emailVerified DateTime
+  image String
+  accounts Account [not null]
+  sessions Session [not null]
+  mMSources MMSource [not null]
+  collections Collection [not null]
+  pieces Piece [not null]
+  pieceVersions PieceVersion [not null]
+  persons Person [not null]
+  organizations Organization [not null]
+  TempoIndications TempoIndication [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table VerificationToken {
+  identifier String [not null]
+  token String [unique, not null]
+  expires DateTime [not null]
+
+  indexes {
+    (identifier, token) [unique]
+  }
+}
+
+Enum PIECE_CATEGORY {
+  KEYBOARD
+  CHAMBER_INSTRUMENTAL
+  ORCHESTRAL
+  VOCAL
+  OTHER
+}
+
+Enum NOTE_VALUE {
+  WHOLE
+  HALF
+  DOTTED_HALF
+  QUARTER
+  DOTTED_QUARTER
+  EIGHTH
+  DOTTED_EIGHTH
+  SIXTEENTH
+  DOTTED_SIXTEENTH
+  THIRTYSECOND
+  DOTTED_THIRTYSECOND
+}
+
+Enum KEY {
+  A_FLAT_MAJOR
+  A_FLAT_MINOR
+  A_MAJOR
+  A_MINOR
+  A_SHARP_MAJOR
+  A_SHARP_MINOR
+  B_FLAT_MAJOR
+  B_FLAT_MINOR
+  B_MAJOR
+  B_MINOR
+  C_FLAT_MAJOR
+  C_FLAT_MINOR
+  C_MAJOR
+  C_MINOR
+  C_SHARP_MAJOR
+  C_SHARP_MINOR
+  D_FLAT_MAJOR
+  D_FLAT_MINOR
+  D_MAJOR
+  D_MINOR
+  D_SHARP_MAJOR
+  D_SHARP_MINOR
+  E_FLAT_MAJOR
+  E_FLAT_MINOR
+  E_MAJOR
+  E_MINOR
+  F_FLAT_MAJOR
+  F_FLAT_MINOR
+  F_MAJOR
+  F_MINOR
+  F_SHARP_MAJOR
+  F_SHARP_MINOR
+  G_FLAT_MAJOR
+  G_FLAT_MINOR
+  G_MAJOR
+  G_MINOR
+  G_SHARP_MAJOR
+  G_SHARP_MINOR
+}
+
+Enum SOURCE_TYPE {
+  ARTICLE
+  BOOK
+  DIARY
+  EDITION
+  LETTER
+  MANUSCRIPT
+  OTHER
+}
+
+Enum REFERENCE_TYPE {
+  ISBN
+  ISMN
+  PLATE_NUMBER
+}
+
+Enum CONTRIBUTION_ROLE {
+  ARRANGER
+  EDITOR
+  MM_PROVIDER
+  PUBLISHER
+  TRANSCRIBER
+  TRANSLATOR
+  OTHER
+}
+
+Ref: Collection.composerId > Person.id
+
+Ref: Collection.creatorId > User.id
+
+Ref: Piece.collectionId > Collection.id
+
+Ref: Piece.composerId > Person.id
+
+Ref: Piece.creatorId > User.id
+
+Ref: PieceVersion.pieceId > Piece.id
+
+Ref: PieceVersion.creatorId > User.id
+
+Ref: Movement.pieceVersionId > PieceVersion.id
+
+Ref: Section.movementId > Movement.id
+
+Ref: Section.tempoIndicationId > TempoIndication.id
+
+Ref: TempoIndication.creatorId > User.id
+
+Ref: MetronomeMark.mMSourceId > MMSource.id
+
+Ref: MetronomeMark.sectionId > Section.id
+
+Ref: MMSourcesOnPieceVersions.pieceVersionId > PieceVersion.id
+
+Ref: MMSourcesOnPieceVersions.mMSourceId > MMSource.id
+
+Ref: MMSource.creatorId > User.id
+
+Ref: Reference.mMSourceId > MMSource.id
+
+Ref: Contribution.mMSourceId > MMSource.id
+
+Ref: Contribution.personId > Person.id
+
+Ref: Contribution.organizationId > Organization.id
+
+Ref: Organization.creatorId > User.id
+
+Ref: Person.creatorId > User.id
+
+Ref: Account.userId > User.id [delete: Cascade]
+
+Ref: Session.userId > User.id [delete: Cascade]
