@@ -105,12 +105,8 @@ export type ContributionStateWithoutId =
       role: CONTRIBUTION_ROLE;
     };
 
-export type CollectionState = Pick<Collection, "composerId" | "title"> & {
-  id?: string;
-  _count?: {
-    pieces?: number;
-  };
-} & IsNewProp;
+export type CollectionState = Pick<Collection, "id" | "composerId" | "title"> &
+  IsNewProp;
 
 export type PieceState = Pick<
   Piece,

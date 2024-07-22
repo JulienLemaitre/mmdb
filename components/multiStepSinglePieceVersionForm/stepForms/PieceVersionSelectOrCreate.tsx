@@ -1,34 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { PieceVersionState } from "@/types/formTypes";
+import { PieceVersionInput, PieceVersionState } from "@/types/formTypes";
 import {
+  FeedFormState,
   getNewEntities,
-  useFeedForm,
 } from "@/components/context/feedFormContext";
 import Loader from "@/components/Loader";
 import PieceVersionEditForm from "@/components/entities/piece-version/PieceVersionEditForm";
 import PieceVersionSelectForm from "@/components/entities/piece-version/PieceVersionSelectForm";
 import { URL_API_GETALL_PIECE_PIECE_VERSIONS } from "@/utils/routes";
 
+type PieceVersionSelectOrCreateProps = {
+  selectedPieceId?: string;
+  selectedPieceVersionId?: string;
+  feedFormState: FeedFormState;
+  onPieceVersionCreated: (pieceVersion: PieceVersionInput) => void;
+  onPieceVersionSelect: (pieceVersion: PieceVersionInput) => void;
+};
+
 function PieceVersionSelectOrCreate({
-  state,
+  selectedPieceId,
+  selectedPieceVersionId,
+  feedFormState,
   onPieceVersionCreated,
   onPieceVersionSelect,
-}) {
+}: PieceVersionSelectOrCreateProps) {
   const [pieceVersions, setPieceVersions] = useState<
     PieceVersionState[] | null
   >(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreation, setIsCreation] = useState(false);
 
-  const { state: feedFormState } = useFeedForm();
-  const selectedPieceId = state?.piece?.id;
-  const selectedPieceVersionId = state?.pieceVersion?.id;
   const newPieces = getNewEntities(feedFormState, "pieces");
   const newPieceVersions = getNewEntities(feedFormState, "pieceVersions");
   let pieceVersionFullList = [
     ...(pieceVersions || []),
     ...(newPieceVersions || []),
-  ];
+  ].filter((pieceVersion) => pieceVersion.pieceId === selectedPieceId);
 
   const selectedPieceVersion: PieceVersionState | undefined =
     pieceVersionFullList?.find(

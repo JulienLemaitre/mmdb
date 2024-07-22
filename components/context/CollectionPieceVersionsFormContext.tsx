@@ -20,7 +20,10 @@ import {
   TempoIndicationState,
 } from "@/types/formTypes";
 import upsertEntityInState from "@/utils/upsertEntityInState";
+import getCollectionsPieceVersionsFormTestState from "@/utils/getCollectionsPieceVersionsFormTestState";
 import { collectionFormSteps as steps } from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
+
+const TEST_STATE = getCollectionsPieceVersionsFormTestState();
 
 type CollectionPieceVersionsFormAction =
   | {

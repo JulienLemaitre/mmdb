@@ -234,6 +234,9 @@ const SinglePieceVersionForm = ({
         <StepFormComponent
           onFormClose={onFormClose}
           state={state}
+          selectedPieceId={state?.piece?.id}
+          selectedPieceVersionId={state?.pieceVersion?.id}
+          contentState={feedFormState}
           onComposerSelect={onComposerSelect}
           onComposerCreated={onComposerCreated}
           onPieceCreated={onPieceCreated}

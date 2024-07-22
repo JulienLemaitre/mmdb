@@ -6,10 +6,17 @@ import {
   updateCollectionPieceVersionsForm,
   useCollectionPieceVersionsForm,
 } from "@/components/context/CollectionPieceVersionsFormContext";
-import { CollectionInput, PersonInput } from "@/types/formTypes";
+import {
+  CollectionInput,
+  CollectionState,
+  CollectionTitleInput,
+  PersonInput,
+  PersonState,
+} from "@/types/formTypes";
 import getCollectionStateFromInput from "@/utils/getCollectionStateFromInput";
 import { getStepByRank } from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
 import DebugBox from "@/components/DebugBox";
+import { v4 as uuidv4 } from "uuid";
 import CollectionPieceVersionsSteps from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsSteps";
 
 type CollectionPieceVersionFormProps = {
@@ -26,6 +33,20 @@ function CollectionPieceVersionForm({
   const currentStep = getStepByRank({ state, rank: currentStepRank });
   const StepFormComponent = currentStep.Component;
 
+  ////////////////// COMPOSER ////////////////////
+
+  const onComposerCreated = (composer: PersonInput) => {
+    const newComposer: PersonState = {
+      ...composer,
+      id: composer.id || uuidv4(),
+      isNew: true,
+    };
+    updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
+    updateCollectionPieceVersionsForm(dispatch, "collection", {
+      value: { composerId: composer.id },
+      next: true,
+    });
+  };
   const onComposerSelect = (composer: PersonInput) => {
     updateFeedForm(feedFormDispatch, "persons", { array: [composer] });
     updateCollectionPieceVersionsForm(dispatch, "collection", {
@@ -33,15 +54,47 @@ function CollectionPieceVersionForm({
       next: true,
     });
   };
-  const onCollectionSelect = (collection: CollectionInput) => {
-    updateFeedForm(feedFormDispatch, "collections", { array: [collection] });
+  const selectedComposerId = state?.collection?.composerId;
+
+  ////////////////// COLLECTION ////////////////////
+
+  const onCollectionCreated = (collection: CollectionTitleInput) => {
+    if (!selectedComposerId) {
+      console.error("[ERROR] No composer selected for collection creation.");
+      return;
+    }
+    const newCollection: CollectionState = {
+      ...collection,
+      composerId: selectedComposerId,
+      id: collection.id || uuidv4(),
+      isNew: true,
+    };
+    updateFeedForm(feedFormDispatch, "collections", { array: [newCollection] });
     updateCollectionPieceVersionsForm(dispatch, "collection", {
-      value: { id: collection.id, title: collection.title },
+      value: {
+        id: newCollection.id,
+        composerId: newCollection.composerId,
+        title: newCollection.title,
+      },
       next: true,
     });
   };
+  const onCollectionSelect = (collection: CollectionInput) => {
+    updateFeedForm(feedFormDispatch, "collections", { array: [collection] });
+    updateCollectionPieceVersionsForm(dispatch, "collection", {
+      value: {
+        id: collection.id,
+        composerId: collection.composerId,
+        title: collection.title,
+      },
+      next: true,
+    });
+  };
+  const selectedCollectionId = state?.collection?.id;
 
-  const onAddSourceOnPieceVersion = async (payload) => {
+  ////////////////// COLLECTION PIECE VERSIONS ////////////////////
+
+  const onAddSourceOnPieceVersion = (payload) => {
     updateCollectionPieceVersionsForm(
       dispatch,
       "mMSourcePieceVersions",
@@ -49,7 +102,7 @@ function CollectionPieceVersionForm({
     );
   };
 
-  const onCollectionSubmit = async (data: CollectionInput) => {
+  const onCollectionSubmit = (data: CollectionInput) => {
     // Front input values validation is successful at this point.
     console.log("data", data);
     const collectionData = data;
@@ -72,10 +125,14 @@ function CollectionPieceVersionForm({
       {StepFormComponent ? (
         <StepFormComponent
           onFormClose={onFormClose}
-          state={state}
+          feedFormState={feedFormState}
+          selectedComposerId={selectedComposerId}
+          selectedCollectionId={selectedCollectionId}
           onSubmit={onSubmit}
           onComposerSelect={onComposerSelect}
+          onComposerCreated={onComposerCreated}
           onCollectionSelect={onCollectionSelect}
+          onCollectionCreated={onCollectionCreated}
         />
       ) : (
         <div>Nothing to show...</div>

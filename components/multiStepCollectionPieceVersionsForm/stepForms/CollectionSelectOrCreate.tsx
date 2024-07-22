@@ -1,28 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { Collection } from "@prisma/client";
 import Loader from "@/components/Loader";
 import CollectionSelectForm from "@/components/entities/collection/CollectionSelectForm";
 import CollectionEditForm from "@/components/entities/collection/CollectionEditForm";
-import { CollectionState } from "@/types/formTypes";
+import { CollectionState, CollectionTitleInput } from "@/types/formTypes";
 import {
-  useFeedForm,
   getNewEntities,
+  FeedFormState,
 } from "@/components/context/feedFormContext";
 import { URL_API_GETALL_COMPOSER_COLLECTION } from "@/utils/routes";
 
+type CollectionSelectOrCreateProps = {
+  feedFormState: FeedFormState;
+  selectedCollectionId?: string;
+  selectedComposerId?: string;
+  onCollectionCreated: (collection: CollectionTitleInput) => void;
+  onCollectionSelect: (collection: CollectionState) => void;
+};
+
 const CollectionSelectOrCreate = ({
-  state,
+  feedFormState,
+  selectedCollectionId,
+  selectedComposerId,
   onCollectionCreated,
   onCollectionSelect,
-}) => {
-  const [collections, setCollections] = useState<Collection[] | null>(null);
+}: CollectionSelectOrCreateProps) => {
+  const [collections, setCollections] = useState<CollectionState[] | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [isCreation, setIsCreation] = useState(false);
-  const { state: feedFormState } = useFeedForm();
-  const selectedCollectionId = state?.collection?.id;
-  const selectedComposerId = state?.collection?.composerId;
   const newCollections = getNewEntities(feedFormState, "collections");
-  let collectionFullList = [...(collections || []), ...(newCollections || [])];
+  let collectionFullList = [
+    ...(collections || []),
+    ...(newCollections || []),
+  ]?.filter((collection) => collection.composerId === selectedComposerId);
 
   // If we have new collections, we need to sort the collectionFullList
   if (newCollections?.length) {
@@ -63,7 +74,11 @@ const CollectionSelectOrCreate = ({
   };
 
   if (isLoading) return <Loader />;
-  if (!collectionFullList)
+
+  if (!selectedComposerId) {
+    return <p>{`Please select a composer first...`}</p>;
+  }
+  if (!isCreation && !collectionFullList)
     return <p>{`Oups, No data could be fetched. Can't continue...`}</p>;
 
   return isCreation ? (

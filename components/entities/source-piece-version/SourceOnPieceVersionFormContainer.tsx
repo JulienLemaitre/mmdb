@@ -30,7 +30,8 @@ const SourceOnPieceVersionFormContainer = ({
 }: SourcePieceVersionSelectFormProps) => {
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
   const [formType, setFormType] =
-    useState<SourceOnPieceVersionsFormType>("none");
+    // useState<SourceOnPieceVersionsFormType>("none"); TODO: uncomment - for test only
+    useState<SourceOnPieceVersionsFormType>("collection");
   const isFormOpen = !!feedFormState.formInfo?.isSourceOnPieceVersionformOpen;
   const isIntro =
     feedFormState?.mMSourcePieceVersions?.length === 0 && !isFormOpen;

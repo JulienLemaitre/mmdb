@@ -16,7 +16,7 @@ const CollectionSchema = z.object({
 export default function CollectionEditForm(
   props: Readonly<{
     collection?: CollectionTitleInput;
-    onSubmit: (collection: CollectionTitleInput) => Promise<void>;
+    onSubmit: (collection: CollectionTitleInput) => void;
     submitTitle?: string;
     title?: string;
   }>,
