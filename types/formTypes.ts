@@ -365,3 +365,5 @@ export function assertsContributionHasPersonOrOrganization(
     );
   }
 }
+
+export type PiecePieceVersion = { pieceId: string; pieceVersionId: string };

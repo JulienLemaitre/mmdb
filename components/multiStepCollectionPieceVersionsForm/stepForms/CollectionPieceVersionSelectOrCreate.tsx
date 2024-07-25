@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
-// import { Piece } from "@prisma/client";
-// import { useFeedForm } from "@/components/context/feedFormContext";
-// import { getNewEntities } from "@/components/context/CollectionPieceVersionsFormContext";
-import { PieceState } from "@/types/formTypes";
-// import {
-//   getNewEntities,
-//   useCollectionPieceVersionsForm,
-// } from "@/components/context/CollectionPieceVersionsFormContext";
+import {
+  PiecePieceVersion,
+  PieceState,
+  PieceVersionState,
+} from "@/types/formTypes";
 import CollectionPieceVersionsSelectFormContainer from "@/components/entities/piece-version/CollectionPieceVersionsSelectFormContainer";
 import { URL_API_GETALL_COLLECTION_PIECES } from "@/utils/routes";
 import {
@@ -18,21 +15,30 @@ import {
 type CollectionPieceVersionSelectOrCreateProps = {
   feedFormState: FeedFormState;
   selectedCollectionId: string;
+  onAddPieces: (pieces: PieceState[]) => void;
   onAllPieceVersionsSelected: (pieceVersions: PieceState[]) => void;
+  onAddPieceVersion: (pieceVersion: PieceVersionState) => void;
+  onAddSourceOnPieceVersions: (piecePieceVersions: PiecePieceVersion[]) => void;
 };
 
 export default function CollectionPieceVersionSelectOrCreate({
   feedFormState,
-  onAllPieceVersionsSelected,
+  onAddPieces,
+  onAddPieceVersion,
+  onAddSourceOnPieceVersions,
   selectedCollectionId,
 }: CollectionPieceVersionSelectOrCreateProps) {
   const [pieces, setPieces] = useState<PieceState[]>();
   const [isLoading, setIsLoading] = useState(true);
   const [isCreation, setIsCreation] = useState(false);
-  // const { state: feedFormState } = useFeedForm();
   const isNewCollection = (
     getNewEntities(feedFormState, "collections") || []
   ).some((c) => c.id === selectedCollectionId && c.isNew);
+
+  const storePieces = (pieces: PieceState[]) => {
+    onAddPieces(pieces);
+    setPieces(pieces);
+  };
 
   useEffect(() => {
     if (isNewCollection) {
@@ -47,7 +53,7 @@ export default function CollectionPieceVersionSelectOrCreate({
       )
         .then((res) => res.json())
         .then((data) => {
-          setPieces(data.pieces);
+          storePieces(data.pieces);
           setIsLoading(false);
         })
         .catch((err) => {
@@ -84,6 +90,8 @@ export default function CollectionPieceVersionSelectOrCreate({
         <CollectionPieceVersionsSelectFormContainer
           pieces={pieces}
           feedFormState={feedFormState}
+          onAddPieceVersion={onAddPieceVersion}
+          onAddSourceOnPieceVersions={onAddSourceOnPieceVersions}
         />
       </>
     );

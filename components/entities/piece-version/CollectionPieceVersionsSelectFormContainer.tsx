@@ -1,16 +1,22 @@
 import React, { useState } from "react";
-import { PieceState } from "@/types/formTypes";
+import {
+  PiecePieceVersion,
+  PieceState,
+  PieceVersionInput,
+  PieceVersionState,
+} from "@/types/formTypes";
 import PieceVersionSelectOrCreate from "@/components/multiStepSinglePieceVersionForm/stepForms/PieceVersionSelectOrCreate";
-import { useCollectionPieceVersionsForm } from "@/components/context/CollectionPieceVersionsFormContext";
 import {
   FeedFormState,
-  getEntityByIdOrKey,
+  useFeedForm,
 } from "@/components/context/feedFormContext";
-import Badge from "@/components/Badge";
+import DebugBox from "@/components/DebugBox";
 
 type CollectionPieceVersionsSelectFormContainer = {
   feedFormState: FeedFormState;
   pieces: PieceState[];
+  onAddPieceVersion: (pieceVersion: PieceVersionState) => void;
+  onAddSourceOnPieceVersions: (piecePieceVersions: PiecePieceVersion[]) => void;
 };
 
 /**
@@ -19,21 +25,40 @@ type CollectionPieceVersionsSelectFormContainer = {
  * - Store the result and iterate to the next piece until all pieces' pieceVersions are defined.
  * @param feedFormState
  * @param pieces
+ * @param onAddPieceVersion
+ * @param onAddSourceOnPieceVersions
  * @constructor
  */
 export default function CollectionPieceVersionsSelectFormContainer({
   feedFormState,
   pieces,
+  onAddPieceVersion,
+  onAddSourceOnPieceVersions,
 }: CollectionPieceVersionsSelectFormContainer) {
   const piecesCount = pieces.length;
   const [piecePieceVersions, setPiecePieceVersions] = useState<
-    { pieceId: string; pieceVersionId: string }[]
+    PiecePieceVersion[]
   >([]);
   const [currentPieceIndex, setCurrentPieceIndex] = React.useState(0);
 
   const areAllPieceVersionDefined = piecePieceVersions.length === piecesCount;
 
-  const onPieceVersionCreated = (pieceVersion) => {
+  const onPieceVersionCreated = (pieceVersion: PieceVersionInput) => {
+    // setPiecePieceVersions([
+    //   ...piecePieceVersions,
+    //   {
+    //     pieceId: pieces[currentPieceIndex].id,
+    //     pieceVersionId: pieceVersion.id,
+    //   },
+    // ]);
+    // setCurrentPieceIndex(currentPieceIndex + 1);
+  };
+  const onPieceVersionSelect = (pieceVersion: PieceVersionState) => {
+    console.log(`[onPieceVersionSelect] pieceVersion :`, pieceVersion);
+    // Add the pieceVersion in feedForm state
+    onAddPieceVersion(pieceVersion);
+
+    // Add the pieceVersionId alongSide corresponding pieceId in local state piecePieceVersions list
     setPiecePieceVersions([
       ...piecePieceVersions,
       {
@@ -41,13 +66,8 @@ export default function CollectionPieceVersionsSelectFormContainer({
         pieceVersionId: pieceVersion.id,
       },
     ]);
-    setCurrentPieceIndex(currentPieceIndex + 1);
-  };
-  const onPieceVersionSelect = (pieceVersionId) => {
-    setPiecePieceVersions([
-      ...piecePieceVersions,
-      { pieceId: pieces[currentPieceIndex].id, pieceVersionId },
-    ]);
+
+    // Go to the next piece
     setCurrentPieceIndex(currentPieceIndex + 1);
   };
 
@@ -59,12 +79,20 @@ export default function CollectionPieceVersionsSelectFormContainer({
         return (
           <div key={ppv.pieceId}>
             {`${piece?.title}`}
-            <Badge text="Done" styles="ml-3" />
+            <span className="ml-3 text-accent">{`✔`}</span>
           </div>
         );
       })}
       {areAllPieceVersionDefined ? (
-        <div>{`All pieces' piece versions are defined.`}</div>
+        <>
+          <div className="my-2">{`All pieces has been defined, you can confirm below.`}</div>
+          <button
+            className="btn btn-primary"
+            onClick={() => onAddSourceOnPieceVersions(piecePieceVersions)}
+          >
+            {`Confirm adding this collection`}
+          </button>
+        </>
       ) : (
         <>
           <h2 className="text-2xl text-primary font-bold mb-4">
@@ -78,6 +106,11 @@ export default function CollectionPieceVersionsSelectFormContainer({
           />
         </>
       )}
+      <DebugBox
+        title="Local form state"
+        stateObject={piecePieceVersions}
+        shouldExpandNode={(level) => level < 3}
+      />
     </div>
   );
 }

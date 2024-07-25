@@ -179,10 +179,6 @@ const SinglePieceVersionForm = ({
   };
 
   const onPieceVersionSelect = (pieceVersion: PieceVersionInput) => {
-    console.log(
-      `[onPieceVersionSelect] onPieceVersionSelect :`,
-      onPieceVersionSelect,
-    );
     updateFeedForm(feedFormDispatch, "pieceVersions", {
       array: [pieceVersion],
     });
@@ -249,7 +245,7 @@ const SinglePieceVersionForm = ({
       ) : (
         <div>Nothing to show...</div>
       )}
-      <DebugBox stateObject={state} />
+      <DebugBox title="Single Piece Form state" stateObject={state} />
     </div>
   );
 };

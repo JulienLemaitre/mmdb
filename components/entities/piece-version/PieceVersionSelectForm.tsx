@@ -18,6 +18,11 @@ export default function PieceVersionSelectForm({
   const [selectedPieceVersion, setSelectedPieceVersion] =
     useState<PieceVersionState | null>(null);
 
+  // Empty PieceVersion selection on pieceVersions input change
+  useEffect(() => {
+    setSelectedPieceVersion(null);
+  }, [pieceVersions]);
+
   // Reset the form context when the component is mounted
   useEffect(() => {
     // Init the form with context value if exists
@@ -39,6 +44,8 @@ export default function PieceVersionSelectForm({
   if (value && !selectedPieceVersion) {
     return null;
   }
+
+  console.log(`[] selectedPieceVersion :`, selectedPieceVersion);
 
   return (
     <>

@@ -2,16 +2,22 @@ import React from "react";
 
 type BadgeProps = {
   text: string;
-  color?: string;
+  type?: "neutral" | "primary" | "secondary" | "accent" | "ghost";
+  outline?: boolean;
   styles?: string;
 };
 
-export default function Badge({ text, color = "blue", styles }: BadgeProps) {
+export default function Badge({
+  text,
+  type = "accent",
+  styles,
+  outline = false,
+}: BadgeProps) {
   return (
-    <span
-      className={`bg-${color}-100 text-${color}-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-${color}-900 dark:text-${color}-300 ${styles}`}
+    <div
+      className={`badge badge-${type} badge-outline ${outline ? "badge-outline" : ""} ${styles}`}
     >
       {text}
-    </span>
+    </div>
   );
 }

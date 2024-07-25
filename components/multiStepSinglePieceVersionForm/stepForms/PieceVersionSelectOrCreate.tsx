@@ -14,7 +14,7 @@ type PieceVersionSelectOrCreateProps = {
   selectedPieceVersionId?: string;
   feedFormState: FeedFormState;
   onPieceVersionCreated: (pieceVersion: PieceVersionInput) => void;
-  onPieceVersionSelect: (pieceVersion: PieceVersionInput) => void;
+  onPieceVersionSelect: (pieceVersion: PieceVersionState) => void;
 };
 
 function PieceVersionSelectOrCreate({
@@ -60,6 +60,7 @@ function PieceVersionSelectOrCreate({
 
     // If we selected an existing piece, we fetch all its pieceVersions
     if (typeof isNewPiece === "boolean" && !isNewPiece) {
+      setIsLoading(true);
       fetch(
         URL_API_GETALL_PIECE_PIECE_VERSIONS + "?pieceId=" + selectedPieceId,
         { cache: "no-store" },

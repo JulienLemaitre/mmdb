@@ -12,6 +12,10 @@ import {
   CollectionTitleInput,
   PersonInput,
   PersonState,
+  PiecePieceVersion,
+  PieceState,
+  PieceVersionInput,
+  PieceVersionState,
 } from "@/types/formTypes";
 import getCollectionStateFromInput from "@/utils/getCollectionStateFromInput";
 import { getStepByRank } from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
@@ -92,32 +96,68 @@ function CollectionPieceVersionForm({
   };
   const selectedCollectionId = state?.collection?.id;
 
-  ////////////////// COLLECTION PIECE VERSIONS ////////////////////
+  /////////////////// PIECE //////////////////////////////
 
-  const onAddSourceOnPieceVersion = (payload) => {
-    updateCollectionPieceVersionsForm(
-      dispatch,
-      "mMSourcePieceVersions",
-      payload,
-    );
-  };
-
-  const onCollectionSubmit = (data: CollectionInput) => {
-    // Front input values validation is successful at this point.
-    console.log("data", data);
-    const collectionData = data;
-    // Remove null values from collectionData
-    Object.keys(collectionData).forEach(
-      // '== null' is true for undefined AND null values
-      (key) => collectionData[key] == null && delete collectionData[key],
-    );
-    const collectionState = getCollectionStateFromInput({ ...collectionData });
-    collectionState.isNew = true;
-    console.log("collection to be stored in collection state", collectionState);
-    updateCollectionPieceVersionsForm(dispatch, "collection", {
-      value: collectionState,
+  const onAddPieces = (pieces: PieceState[]) => {
+    updateFeedForm(feedFormDispatch, "pieces", {
+      array: pieces,
     });
   };
+
+  /////////////////// PIECE VERSION //////////////////////////////
+
+  const onAddPieceVersion = (pieceVersion: PieceVersionState) => {
+    updateFeedForm(feedFormDispatch, "pieceVersions", {
+      array: [pieceVersion],
+    });
+  };
+
+  ////////////////// SUBMIT ////////////////////
+
+  const onAddSourceOnPieceVersions = (
+    piecePieceVersions: PiecePieceVersion[],
+  ) => {
+    // Check if all the pieceVersions are in feedFormState
+    if (
+      !piecePieceVersions.every((ppv) =>
+        feedFormState.pieceVersions?.some((pv) => pv.id === ppv.pieceVersionId),
+      )
+    ) {
+      console.error(
+        "[ERROR] At least one pieceVersion in piecePieceVersions does not exist in feedFormState.",
+      );
+      return;
+    }
+
+    const payloadArray = piecePieceVersions.map((ppv, index) => ({
+      pieceVersionId: ppv.pieceVersionId,
+      rank: (feedFormState.mMSourcePieceVersions || []).length + index + 1,
+    }));
+
+    console.log(`[onAddSourceOnPieceVersions] payloadArray :`, payloadArray);
+
+    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+      array: payloadArray,
+    });
+    onFormClose();
+  };
+
+  // const onCollectionSubmit = (data: CollectionInput) => {
+  //   // Front input values validation is successful at this point.
+  //   console.log("data", data);
+  //   const collectionData = data;
+  //   // Remove null values from collectionData
+  //   Object.keys(collectionData).forEach(
+  //     // '== null' is true for undefined AND null values
+  //     (key) => collectionData[key] == null && delete collectionData[key],
+  //   );
+  //   const collectionState = getCollectionStateFromInput({ ...collectionData });
+  //   collectionState.isNew = true;
+  //   console.log("collection to be stored in collection state", collectionState);
+  //   updateCollectionPieceVersionsForm(dispatch, "collection", {
+  //     value: collectionState,
+  //   });
+  // };
 
   return (
     <div>
@@ -133,11 +173,14 @@ function CollectionPieceVersionForm({
           onComposerCreated={onComposerCreated}
           onCollectionSelect={onCollectionSelect}
           onCollectionCreated={onCollectionCreated}
+          onAddPieces={onAddPieces}
+          onAddPieceVersion={onAddPieceVersion}
+          onAddSourceOnPieceVersions={onAddSourceOnPieceVersions}
         />
       ) : (
         <div>Nothing to show...</div>
       )}
-      <DebugBox stateObject={state} />
+      <DebugBox title="Collection form state" stateObject={state} />
     </div>
   );
 }
