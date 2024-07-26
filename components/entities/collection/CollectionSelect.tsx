@@ -50,6 +50,6 @@ export default function CollectionSelect({
 function getCollectionOption(collection: CollectionState) {
   return {
     value: collection.id,
-    label: `${collection.title}${collection?._count?.pieces ? ` (${collection?._count?.pieces} pieces)` : ""}`,
+    label: `${collection.title}`,
   };
 }
