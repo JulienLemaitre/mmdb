@@ -16,6 +16,7 @@ import CollectionPieceVersionForm from "@/components/multiStepCollectionPieceVer
 import { SinglePieceVersionFormProvider } from "@/components/context/SinglePieceVersionFormContext";
 import { useState } from "react";
 import { CollectionPieceVersionsFormProvider } from "@/components/context/CollectionPieceVersionsFormContext";
+import getPersonName from "@/components/entities/person/utils/getPersonName";
 
 type SourcePieceVersionSelectFormProps = {
   sourcePieceVersions?: MMSourcePieceVersionsState[];
@@ -113,6 +114,12 @@ const SourceOnPieceVersionFormContainer = ({
                 "pieces",
                 pieceVersion.pieceId,
               );
+              const composer = getEntityByIdOrKey(
+                feedFormState,
+                "persons",
+                piece.composerId,
+              );
+              console.log({ piece, composer });
 
               return (
                 <li
@@ -121,7 +128,7 @@ const SourceOnPieceVersionFormContainer = ({
                   <div className="mt-6 flex gap-4 items-end w-full">
                     <div className="flex-grow">
                       <h4 className="text-lg font-bold text-secondary">
-                        {`${sourcePieceVersion.rank} - ${piece.title}`}
+                        {`${sourcePieceVersion.rank} - ${piece.title}${!!composer && ` | ${getPersonName(composer)}`}`}
                       </h4>
                     </div>
                     <div>

@@ -23,7 +23,7 @@ import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
-  onSubmit?: (payload: any) => void;
+  // onSubmit?: (payload: any) => void;
   initPayload?: any;
 };
 
@@ -33,9 +33,10 @@ type SinglePieceVersionFormProps = {
  */
 const SinglePieceVersionForm = ({
   onFormClose,
-  onSubmit,
+  // onSubmit,
 }: SinglePieceVersionFormProps) => {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
+  console.log(`[SinglePieceVersionForm] feedFormState :`, feedFormState);
   const { dispatch, state, currentStepRank } = useSinglePieceVersionForm();
   const currentStep = getStepByRank({ state, rank: currentStepRank });
   const StepFormComponent = currentStep.Component;
@@ -199,26 +200,26 @@ const SinglePieceVersionForm = ({
       );
       return;
     }
-    if (typeof onSubmit === "function") {
-      console.log(`[] submitting with provided onSubmit function`);
-      onSubmit({
-        array: [
-          {
-            pieceVersionId: state.pieceVersion?.id,
-            rank: (feedFormState.mMSourcePieceVersions || []).length + 1,
-          },
-        ],
-      });
-    } else {
-      updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
-        array: [
-          {
-            pieceVersionId: state.pieceVersion?.id,
-            rank: (feedFormState.mMSourcePieceVersions || []).length + 1,
-          },
-        ],
-      });
-    }
+    // if (typeof onSubmit === "function") {
+    //   console.log(`[] submitting with provided onSubmit function`);
+    //   onSubmit({
+    //     array: [
+    //       {
+    //         pieceVersionId: state.pieceVersion?.id,
+    //         rank: (feedFormState.mMSourcePieceVersions || []).length + 1,
+    //       },
+    //     ],
+    //   });
+    // } else {
+    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+      array: [
+        {
+          pieceVersionId: state.pieceVersion?.id,
+          rank: (feedFormState.mMSourcePieceVersions || []).length + 1,
+        },
+      ],
+    });
+    // }
 
     onFormClose();
   };
@@ -229,10 +230,10 @@ const SinglePieceVersionForm = ({
       {StepFormComponent ? (
         <StepFormComponent
           onFormClose={onFormClose}
-          state={state}
+          feedFormState={feedFormState}
+          selectedComposerId={state?.composer?.id}
           selectedPieceId={state?.piece?.id}
           selectedPieceVersionId={state?.pieceVersion?.id}
-          contentState={feedFormState}
           onComposerSelect={onComposerSelect}
           onComposerCreated={onComposerCreated}
           onPieceCreated={onPieceCreated}

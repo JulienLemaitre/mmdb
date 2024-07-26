@@ -1,27 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { PieceState } from "@/types/formTypes";
+import { PieceInput, PieceState } from "@/types/formTypes";
 import { Piece } from "@prisma/client";
 import {
+  FeedFormState,
   getNewEntities,
-  useFeedForm,
 } from "@/components/context/feedFormContext";
 import Loader from "@/components/Loader";
 import PieceEditForm from "@/components/entities/piece/PieceEditForm";
 import PieceSelectForm from "@/components/entities/piece/PieceSelectForm";
 import { URL_API_GETALL_COMPOSER_PIECES } from "@/utils/routes";
 
+type PieceSelectOrCreate = {
+  feedFormState: FeedFormState;
+  onPieceCreated: (piece: PieceInput) => void;
+  onPieceSelect: (piece: PieceState) => void;
+  deleteSelectedPieceIfNew: () => void;
+  selectedComposerId?: string;
+  selectedPieceId?: string;
+};
+
 function PieceSelectOrCreate({
-  state,
+  feedFormState,
   onPieceCreated,
   onPieceSelect,
   deleteSelectedPieceIfNew,
-}) {
+  selectedComposerId,
+  selectedPieceId,
+}: PieceSelectOrCreate) {
   const [pieces, setPieces] = useState<Piece[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreation, setIsCreation] = useState(false);
-  const { state: feedFormState } = useFeedForm();
-  const selectedComposerId = state?.composer?.id;
-  const selectedPieceId = state?.piece?.id;
   const newPieces = getNewEntities(feedFormState, "pieces");
   const newSelectedPiece = newPieces?.find(
     (piece) => piece.id === selectedPieceId,
@@ -41,7 +49,7 @@ function PieceSelectOrCreate({
   // If composer is newly created, we shift in creation mode directly
   const newPersons = getNewEntities(feedFormState, "persons");
   const isNewComposer =
-    selectedComposerId &&
+    !!selectedComposerId &&
     newPersons?.some((person) => person.id === selectedComposerId);
   useEffect(() => {
     if (typeof isNewComposer !== "boolean")

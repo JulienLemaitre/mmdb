@@ -66,8 +66,8 @@ type FeedFormProviderProps = { children: ReactNode };
 // @ts-ignore
 const TEST_STATE: FeedFormState | null = getFeedFormTestState();
 
-// const INITIAL_STATE: FeedFormState = {
-const INITIAL_STATE: FeedFormState = TEST_STATE || {
+const INITIAL_STATE: FeedFormState = {
+  // const INITIAL_STATE: FeedFormState = TEST_STATE || {
   formInfo: {
     currentStepRank: 0,
   },
@@ -351,6 +351,10 @@ function getLastCompletedStep(state: FeedFormState): FeedFormStep | undefined {
 }
 
 export function getNewEntities(state: FeedFormState, entityName: string) {
+  if (!state) {
+    console.error(`[getNewEntities] NO state provided to find ${entityName}`);
+    return [];
+  }
   if (Array.isArray(state[entityName])) {
     return state[entityName].filter((entity) => entity.isNew);
   }
