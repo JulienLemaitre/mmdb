@@ -14,10 +14,10 @@ import {
   PersonState,
   PiecePieceVersion,
   PieceState,
-  PieceVersionInput,
+  // PieceVersionInput,
   PieceVersionState,
 } from "@/types/formTypes";
-import getCollectionStateFromInput from "@/utils/getCollectionStateFromInput";
+// import getCollectionStateFromInput from "@/utils/getCollectionStateFromInput";
 import { getStepByRank } from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
 import DebugBox from "@/components/DebugBox";
 import { v4 as uuidv4 } from "uuid";

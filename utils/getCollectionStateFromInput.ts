@@ -1,13 +1,12 @@
 import { CollectionInput, CollectionState } from "@/types/formTypes";
+import { v4 as uuidv4 } from "uuid";
 
 export default function getCollectionStateFromInput(
   collectionInput: CollectionInput,
 ): CollectionState {
-  const collectionState: CollectionState = {
-    id: collectionInput.id,
+  return {
+    id: uuidv4(),
     title: collectionInput.title,
     composerId: collectionInput.composerId,
   };
-
-  return collectionState;
 }
