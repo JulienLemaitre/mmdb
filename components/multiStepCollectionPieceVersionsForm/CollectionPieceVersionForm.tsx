@@ -47,7 +47,7 @@ function CollectionPieceVersionForm({
     };
     updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
     updateCollectionPieceVersionsForm(dispatch, "collection", {
-      value: { composerId: composer.id },
+      value: { composerId: newComposer.id },
       next: true,
     });
   };

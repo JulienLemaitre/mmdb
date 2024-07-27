@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  // initFeedForm,
+  initFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import { URL_API_FEEDFORM_SUBMIT } from "@/utils/routes";
@@ -11,7 +11,7 @@ import DebugBox from "@/components/DebugBox";
 function FeedSummary() {
   const [isSaveSuccess, setIsSaveSuccess] = useState<boolean>();
   const [savedValues, setSavedValues] = useState<any>();
-  const { state } = useFeedForm();
+  const { dispatch, state } = useFeedForm();
   const { data: session } = useSession();
 
   const saveAll = () => {
@@ -35,11 +35,18 @@ function FeedSummary() {
       });
   };
 
+  const onReset = () => {
+    initFeedForm(dispatch);
+  };
+
   if (isSaveSuccess === true) {
     return (
       <div>
         <div>Voilà ! All has been saved successfully.</div>
         <div>Thank you.</div>
+        <button className="btn btn-primary" onClick={onReset}>
+          Reset the form
+        </button>
         <DebugBox stateObject={savedValues} />
       </div>
     );

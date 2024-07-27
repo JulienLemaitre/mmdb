@@ -44,6 +44,19 @@ const CollectionSelectOrCreate = ({
     });
   }
 
+  // If composer is newly created, we shift in creation mode directly
+  const newPersons = getNewEntities(feedFormState, "persons");
+  const isNewComposer =
+    !!selectedComposerId &&
+    newPersons?.some((person) => person.id === selectedComposerId);
+  useEffect(() => {
+    if (typeof isNewComposer !== "boolean")
+      console.log(`[useEffect 1] isNewComposer not boolean:`, isNewComposer);
+    if (typeof isNewComposer === "boolean" && isNewComposer) {
+      setIsCreation(true);
+    }
+  }, [isNewComposer]);
+
   const selectedCollection: CollectionState | undefined =
     collectionFullList.find(
       (collection) => collection.id === selectedCollectionId,
