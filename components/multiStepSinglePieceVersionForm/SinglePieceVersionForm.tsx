@@ -1,6 +1,7 @@
+import React, { useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import SinglePieceVersionSteps from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionSteps";
 import { getStepByRank } from "@/components/multiStepSinglePieceVersionForm/stepsUtils";
-import React from "react";
 import DebugBox from "@/components/DebugBox";
 import {
   updateSinglePieceVersionForm,
@@ -12,7 +13,6 @@ import {
   PieceInput,
   PieceVersionInput,
 } from "@/types/formTypes";
-import { v4 as uuidv4 } from "uuid";
 import {
   getNewEntities,
   updateFeedForm,
@@ -23,8 +23,10 @@ import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
-  // onSubmit?: (payload: any) => void;
+  onSubmit?: (payload: any) => void;
   initPayload?: any;
+  isCollectionCreationMode?: boolean;
+  composerId?: string;
 };
 
 /**
@@ -33,13 +35,26 @@ type SinglePieceVersionFormProps = {
  */
 const SinglePieceVersionForm = ({
   onFormClose,
-  // onSubmit,
+  onSubmit,
+  isCollectionCreationMode,
+  composerId,
 }: SinglePieceVersionFormProps) => {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
-  console.log(`[SinglePieceVersionForm] feedFormState :`, feedFormState);
   const { dispatch, state, currentStepRank } = useSinglePieceVersionForm();
   const currentStep = getStepByRank({ state, rank: currentStepRank });
   const StepFormComponent = currentStep.Component;
+
+  // For Collection Form, we start by completing the "composer" step automatically and go to the second step = piece
+  useEffect(() => {
+    if (isCollectionCreationMode && composerId && currentStepRank === 0) {
+      updateSinglePieceVersionForm(dispatch, "composer", {
+        value: {
+          id: composerId,
+        },
+        next: true,
+      });
+    }
+  }, []);
 
   ////////////////// COMPOSER ////////////////////
 
@@ -200,33 +215,29 @@ const SinglePieceVersionForm = ({
       );
       return;
     }
-    // if (typeof onSubmit === "function") {
-    //   console.log(`[] submitting with provided onSubmit function`);
-    //   onSubmit({
-    //     array: [
-    //       {
-    //         pieceVersionId: state.pieceVersion?.id,
-    //         rank: (feedFormState.mMSourcePieceVersions || []).length + 1,
-    //       },
-    //     ],
-    //   });
-    // } else {
-    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+
+    const payload = {
       array: [
         {
           pieceVersionId: state.pieceVersion?.id,
           rank: (feedFormState.mMSourcePieceVersions || []).length + 1,
         },
       ],
-    });
-    // }
+    };
+    // This is useful for submitting a pieceVersion to a collection form instead of the general feedForm
+    if (typeof onSubmit === "function") {
+      console.log(`[SUBMIT] with provided onSubmit function`);
+      onSubmit(payload);
+    } else {
+      updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", payload);
+    }
 
     onFormClose();
   };
 
   return (
     <div>
-      <SinglePieceVersionSteps />
+      <SinglePieceVersionSteps isCollectionMode={isCollectionCreationMode} />
       {StepFormComponent ? (
         <StepFormComponent
           onFormClose={onFormClose}
@@ -242,11 +253,12 @@ const SinglePieceVersionForm = ({
           onPieceVersionCreated={onPieceVersionCreated}
           onPieceVersionSelect={onPieceVersionSelect}
           onAddSourceOnPieceVersions={onAddSourceOnPieceVersions}
+          isCollectionCreationMode={isCollectionCreationMode}
         />
       ) : (
         <div>Nothing to show...</div>
       )}
-      <DebugBox title="Single Piece Form state" stateObject={state} />
+      <DebugBox title="Single Piece form state" stateObject={state} />
     </div>
   );
 };

@@ -6,17 +6,14 @@ import {
   PieceVersionState,
 } from "@/types/formTypes";
 import PieceVersionSelectOrCreate from "@/components/multiStepSinglePieceVersionForm/stepForms/PieceVersionSelectOrCreate";
-import {
-  FeedFormState,
-  useFeedForm,
-} from "@/components/context/feedFormContext";
+import { FeedFormState } from "@/components/context/feedFormContext";
 import DebugBox from "@/components/DebugBox";
 
 type CollectionPieceVersionsSelectFormContainer = {
   feedFormState: FeedFormState;
   pieces: PieceState[];
   onAddPieceVersion: (pieceVersion: PieceVersionState) => void;
-  onAddSourceOnPieceVersions: (piecePieceVersions: PiecePieceVersion[]) => void;
+  onSubmitPiecePieceVersions: (piecePieceVersions: PiecePieceVersion[]) => void;
 };
 
 /**
@@ -26,14 +23,14 @@ type CollectionPieceVersionsSelectFormContainer = {
  * @param feedFormState
  * @param pieces
  * @param onAddPieceVersion
- * @param onAddSourceOnPieceVersions
+ * @param onSubmitSourceOnPieceVersions
  * @constructor
  */
 export default function CollectionPieceVersionsSelectFormContainer({
   feedFormState,
   pieces,
   onAddPieceVersion,
-  onAddSourceOnPieceVersions,
+  onSubmitPiecePieceVersions,
 }: CollectionPieceVersionsSelectFormContainer) {
   const piecesCount = pieces.length;
   const [piecePieceVersions, setPiecePieceVersions] = useState<
@@ -43,6 +40,7 @@ export default function CollectionPieceVersionsSelectFormContainer({
 
   const areAllPieceVersionDefined = piecePieceVersions.length === piecesCount;
 
+  // TODO: Single Piece - PieceVersion creation
   const onPieceVersionCreated = (pieceVersion: PieceVersionInput) => {
     // setPiecePieceVersions([
     //   ...piecePieceVersions,
@@ -88,7 +86,7 @@ export default function CollectionPieceVersionsSelectFormContainer({
           <div className="my-2">{`All pieces has been defined, you can confirm below.`}</div>
           <button
             className="btn btn-primary"
-            onClick={() => onAddSourceOnPieceVersions(piecePieceVersions)}
+            onClick={() => onSubmitPiecePieceVersions(piecePieceVersions)}
           >
             {`Confirm adding this collection`}
           </button>

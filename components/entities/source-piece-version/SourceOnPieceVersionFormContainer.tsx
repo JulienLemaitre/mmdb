@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   MMSourcePieceVersionsState,
   SourceOnPieceVersionsFormType,
@@ -12,11 +13,10 @@ import {
 } from "@/components/context/feedFormContext";
 import TrashIcon from "@/components/svg/TrashIcon";
 import QuestionMarkCircleIcon from "@/components/svg/QuestionMarkCircleIcon";
-import CollectionPieceVersionForm from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionForm";
 import { SinglePieceVersionFormProvider } from "@/components/context/SinglePieceVersionFormContext";
-import { useState } from "react";
 import { CollectionPieceVersionsFormProvider } from "@/components/context/CollectionPieceVersionsFormContext";
 import getPersonName from "@/components/entities/person/utils/getPersonName";
+import CollectionPieceVersionsForm from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsForm";
 
 type SourcePieceVersionSelectFormProps = {
   sourcePieceVersions?: MMSourcePieceVersionsState[];
@@ -97,7 +97,7 @@ const SourceOnPieceVersionFormContainer = ({
       )}
       {isFormOpen && formType === "collection" && (
         <CollectionPieceVersionsFormProvider>
-          <CollectionPieceVersionForm onFormClose={onFormClose} />
+          <CollectionPieceVersionsForm onFormClose={onFormClose} />
         </CollectionPieceVersionsFormProvider>
       )}
       {!isFormOpen && (

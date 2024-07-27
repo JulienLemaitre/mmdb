@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  MMSourcePieceVersionsState,
   PiecePieceVersion,
   PieceState,
   PieceVersionState,
@@ -11,6 +12,7 @@ import {
   FeedFormState,
   getEntityByIdOrKey,
 } from "@/components/context/feedFormContext";
+import CollectionPieceVersionsEditForm from "@/components/entities/piece-version/CollectionPieceVersionsEditForm";
 
 type CollectionPieceVersionSelectOrCreateProps = {
   feedFormState: FeedFormState;
@@ -18,14 +20,18 @@ type CollectionPieceVersionSelectOrCreateProps = {
   onAddPieces: (pieces: PieceState[]) => void;
   onAllPieceVersionsSelected: (pieceVersions: PieceState[]) => void;
   onAddPieceVersion: (pieceVersion: PieceVersionState) => void;
-  onAddSourceOnPieceVersions: (piecePieceVersions: PiecePieceVersion[]) => void;
+  onSubmitPiecePieceVersions: (piecePieceVersions: PiecePieceVersion[]) => void;
+  onSubmitSourceOnPieceVersions: (
+    piecePieceVersions: MMSourcePieceVersionsState[],
+  ) => void;
 };
 
 export default function CollectionPieceVersionSelectOrCreate({
   feedFormState,
   onAddPieces,
   onAddPieceVersion,
-  onAddSourceOnPieceVersions,
+  onSubmitPiecePieceVersions,
+  onSubmitSourceOnPieceVersions,
   selectedCollectionId,
 }: CollectionPieceVersionSelectOrCreateProps) {
   const [pieces, setPieces] = useState<PieceState[]>();
@@ -42,6 +48,7 @@ export default function CollectionPieceVersionSelectOrCreate({
 
   useEffect(() => {
     if (isNewCollection) {
+      setIsLoading(false);
       setIsCreation(true);
     }
   }, [isNewCollection]);
@@ -69,8 +76,12 @@ export default function CollectionPieceVersionSelectOrCreate({
   if (isLoading) return <div>Loading...</div>;
 
   if (isCreation) {
-    // We have a new Collection, so Every Pieces have to be created
-    return <div>No pieces found for this collection.</div>;
+    // We have a new Collection, so All of its Pieces must be created
+    return (
+      <CollectionPieceVersionsEditForm
+        onSubmitSourceOnPieceVersions={onSubmitSourceOnPieceVersions}
+      />
+    );
   }
 
   if (!isCreation) {
@@ -91,7 +102,7 @@ export default function CollectionPieceVersionSelectOrCreate({
           pieces={pieces}
           feedFormState={feedFormState}
           onAddPieceVersion={onAddPieceVersion}
-          onAddSourceOnPieceVersions={onAddSourceOnPieceVersions}
+          onSubmitPiecePieceVersions={onSubmitPiecePieceVersions}
         />
       </>
     );

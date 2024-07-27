@@ -17,6 +17,7 @@ type PieceSelectOrCreate = {
   deleteSelectedPieceIfNew: () => void;
   selectedComposerId?: string;
   selectedPieceId?: string;
+  isCollectionCreationMode?: boolean;
 };
 
 function PieceSelectOrCreate({
@@ -26,10 +27,11 @@ function PieceSelectOrCreate({
   deleteSelectedPieceIfNew,
   selectedComposerId,
   selectedPieceId,
+  isCollectionCreationMode,
 }: PieceSelectOrCreate) {
   const [pieces, setPieces] = useState<Piece[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isCreation, setIsCreation] = useState(false);
+  const [isCreation, setIsCreation] = useState(!!isCollectionCreationMode);
   const newPieces = getNewEntities(feedFormState, "pieces");
   const newSelectedPiece = newPieces?.find(
     (piece) => piece.id === selectedPieceId,
@@ -61,6 +63,10 @@ function PieceSelectOrCreate({
 
   // If composer is not new, we fetch all his composition pieces
   useEffect(() => {
+    if (isCollectionCreationMode) {
+      setIsLoading(false);
+      return;
+    }
     if (typeof isNewComposer !== "boolean")
       console.log(`[useEffect 2] isNewComposer not boolean:`, isNewComposer);
 
@@ -97,7 +103,7 @@ function PieceSelectOrCreate({
     if (typeof isNewComposer === "boolean" && isNewComposer) {
       setIsLoading(false);
     }
-  }, [isNewComposer]);
+  }, [isNewComposer, isCollectionCreationMode, selectedComposerId]);
 
   const onPieceCreationClick = () => {
     setIsCreation(true);

@@ -164,8 +164,15 @@ function SinglePieceVersionFormReducer(
       };
     }
 
-    // We increment currentStep of we are told to with the property 'next' in any payload
-    if (next === true && typeof state?.formInfo?.currentStepRank === "number") {
+    // We increment currentStep of we are told to with the property 'next' in any payload, AND if the present step is completed
+    const lastCompletedStep = getLastCompletedStep(newState);
+
+    if (
+      next === true &&
+      typeof state?.formInfo?.currentStepRank === "number" &&
+      lastCompletedStep &&
+      state?.formInfo?.currentStepRank <= lastCompletedStep?.rank
+    ) {
       console.log(
         `[SOPVFContext] NEXT - go to step:`,
         state.formInfo.currentStepRank + 1,

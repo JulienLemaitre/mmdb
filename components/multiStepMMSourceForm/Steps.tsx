@@ -51,7 +51,7 @@ const Steps = () => {
           );
         })}
       </ul>
-      <DebugBox stateObject={state} />
+      <DebugBox stateObject={state} title="Feed form state" />
     </>
   );
 };

@@ -10,6 +10,7 @@ import {
   CollectionInput,
   CollectionState,
   CollectionTitleInput,
+  MMSourcePieceVersionsState,
   PersonInput,
   PersonState,
   PiecePieceVersion,
@@ -28,7 +29,7 @@ type CollectionPieceVersionFormProps = {
   onSubmit?: (payload: any) => void;
 };
 
-function CollectionPieceVersionForm({
+function CollectionPieceVersionsForm({
   onFormClose,
   onSubmit,
 }: CollectionPieceVersionFormProps) {
@@ -114,7 +115,7 @@ function CollectionPieceVersionForm({
 
   ////////////////// SUBMIT ////////////////////
 
-  const onAddSourceOnPieceVersions = (
+  const onSubmitPiecePieceVersions = (
     piecePieceVersions: PiecePieceVersion[],
   ) => {
     // Check if all the pieceVersions are in feedFormState
@@ -142,22 +143,35 @@ function CollectionPieceVersionForm({
     onFormClose();
   };
 
-  // const onCollectionSubmit = (data: CollectionInput) => {
-  //   // Front input values validation is successful at this point.
-  //   console.log("data", data);
-  //   const collectionData = data;
-  //   // Remove null values from collectionData
-  //   Object.keys(collectionData).forEach(
-  //     // '== null' is true for undefined AND null values
-  //     (key) => collectionData[key] == null && delete collectionData[key],
-  //   );
-  //   const collectionState = getCollectionStateFromInput({ ...collectionData });
-  //   collectionState.isNew = true;
-  //   console.log("collection to be stored in collection state", collectionState);
-  //   updateCollectionPieceVersionsForm(dispatch, "collection", {
-  //     value: collectionState,
-  //   });
-  // };
+  const onSubmitSourceOnPieceVersions = (
+    sourceOnPieceVersions: MMSourcePieceVersionsState[],
+  ) => {
+    // Check if all the pieceVersions are in feedFormState
+    if (
+      !sourceOnPieceVersions.every((sopv) =>
+        feedFormState.pieceVersions?.some(
+          (pv) => pv.id === sopv.pieceVersionId,
+        ),
+      )
+    ) {
+      console.error(
+        "[ERROR] At least one pieceVersion in piecePieceVersions does not exist in feedFormState.",
+      );
+      return;
+    }
+
+    const payloadArray = sourceOnPieceVersions.map((sopv, index) => ({
+      pieceVersionId: sopv.pieceVersionId,
+      rank: (feedFormState.mMSourcePieceVersions || []).length + index + 1,
+    }));
+
+    console.log(`[onAddSourceOnPieceVersions] payloadArray :`, payloadArray);
+
+    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+      array: payloadArray,
+    });
+    onFormClose();
+  };
 
   return (
     <div>
@@ -175,7 +189,8 @@ function CollectionPieceVersionForm({
           onCollectionCreated={onCollectionCreated}
           onAddPieces={onAddPieces}
           onAddPieceVersion={onAddPieceVersion}
-          onAddSourceOnPieceVersions={onAddSourceOnPieceVersions}
+          onSubmitPiecePieceVersions={onSubmitPiecePieceVersions}
+          onSubmitSourceOnPieceVersions={onSubmitSourceOnPieceVersions}
         />
       ) : (
         <div>Nothing to show...</div>
@@ -220,4 +235,4 @@ function CollectionPieceVersionForm({
 //   </SinglePieceVersionFormProvider>
 // )}
 
-export default CollectionPieceVersionForm;
+export default CollectionPieceVersionsForm;

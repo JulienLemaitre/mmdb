@@ -95,7 +95,10 @@ const CollectionSelectOrCreate = ({
     return <p>{`Oups, No data could be fetched. Can't continue...`}</p>;
 
   return isCreation ? (
-    <CollectionEditForm onSubmit={onCollectionCreated} />
+    <CollectionEditForm
+      collection={selectedCollection}
+      onSubmit={onCollectionCreated}
+    />
   ) : (
     <CollectionSelectForm
       collections={collectionFullList}
