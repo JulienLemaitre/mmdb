@@ -13,6 +13,7 @@ import {
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
+import getRoleLabel from "@/utils/getRoleLabel";
 
 const SourceContributionsSchema = z.union([
   z.object({
@@ -123,7 +124,7 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
           control={control}
           options={Object.values(CONTRIBUTION_ROLE).map((category) => ({
             value: category,
-            label: category,
+            label: getRoleLabel(category),
           }))}
           isRequired={true}
           errors={errors}

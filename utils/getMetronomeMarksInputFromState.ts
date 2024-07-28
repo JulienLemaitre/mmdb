@@ -1,4 +1,5 @@
 import { MetronomeMarkInput, MetronomeMarkState } from "@/types/formTypes";
+import getNoteValueLabel from "@/utils/getNoteValueLabel";
 
 export default function getMetronomeMarkInputFromState(
   metronomeMark?: MetronomeMarkState,
@@ -9,7 +10,7 @@ export default function getMetronomeMarkInputFromState(
 
   const { sectionId, noMM } = metronomeMark;
 
-  const metronomeMarkInput: MetronomeMarkInput = noMM
+  return noMM
     ? {
         sectionId,
         noMM: true,
@@ -21,9 +22,7 @@ export default function getMetronomeMarkInputFromState(
         comment: metronomeMark.comment,
         beatUnit: {
           value: metronomeMark.beatUnit,
-          label: metronomeMark.beatUnit,
+          label: getNoteValueLabel(metronomeMark.beatUnit),
         },
       };
-
-  return metronomeMarkInput;
 }

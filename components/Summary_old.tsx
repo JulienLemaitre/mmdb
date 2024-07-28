@@ -17,6 +17,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import NewBadge from "@/components/NewBadge";
+import getKeyLabel from "@/utils/getKeyLabel";
 
 export default function Summary_old() {
   const { dispatch, state, nextStep } = useEditForm();
@@ -125,7 +126,7 @@ export default function Summary_old() {
                 {mvtArray.length > 1 ? (
                   <span className="font-bold text-xs">{`Mvt ${movement.rank}`}</span>
                 ) : null}
-                {`${mvtArray.length > 1 ? ` in ` : ""}${movement.key}`}
+                {`${mvtArray.length > 1 ? ` in ` : ""}${getKeyLabel(movement.key)}`}
               </h3>
               {movement.sections.map((section, sectionIndex) => {
                 const {

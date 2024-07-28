@@ -1,5 +1,6 @@
 import { PieceVersionState } from "@/types/formTypes";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
+import getKeyLabel from "@/utils/getKeyLabel";
 
 type PieceVersionDisplayProps = {
   pieceVersion: PieceVersionState;
@@ -16,7 +17,7 @@ export default function PieceVersionDisplay({
           <div key={movement.id} className="flex my-2 pt-2 first:pt-0">
             <div>
               {movementList.length > 1 ? `Mvt ${movement.rank} - ` : ""}
-              {movement.key}
+              {getKeyLabel(movement.key)}
             </div>
             <div>
               {movement.sections.map((section) => {

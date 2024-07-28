@@ -1,5 +1,6 @@
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import { Fragment } from "react";
+import getKeyLabel from "@/utils/getKeyLabel";
 
 export default function ComposerPiecesDetais({ person }) {
   return (
@@ -45,16 +46,7 @@ export default function ComposerPiecesDetais({ person }) {
                       .map((movement, movementIndex) => (
                         <div key={movement.id} className="flex">
                           <h3 className="text-xl my-1 flex-none pr-4">
-                            {movement.rank} -{" "}
-                            {movement.key
-                              .replaceAll("_FLAT", "b")
-                              .replaceAll("_SHARP", "#")
-                              .split("_")
-                              .map(
-                                (w) =>
-                                  w.charAt(0) + w.substring(1).toLowerCase(),
-                              )
-                              .join(" ")}
+                            {movement.rank} - {getKeyLabel(movement.key)}
                           </h3>
                           <div className="">
                             {

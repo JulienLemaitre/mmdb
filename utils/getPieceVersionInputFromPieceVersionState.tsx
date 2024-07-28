@@ -6,6 +6,7 @@ import {
   SectionState,
   MovementState,
 } from "@/types/formTypes";
+import getKeyLabel from "@/utils/getKeyLabel";
 
 function getSectionInputFromSectionState(sectionState: SectionState) {
   const sectionInput: SectionInput = {
@@ -30,7 +31,7 @@ function getSectionInputFromSectionState(sectionState: SectionState) {
 
 function getMovementInputFromMovementState(movementState: MovementState) {
   const movementInput: MovementInput = {
-    key: { value: movementState.key, label: movementState.key },
+    key: { value: movementState.key, label: getKeyLabel(movementState.key) },
     sections: movementState.sections.map(getSectionInputFromSectionState),
   };
   return movementInput;
@@ -39,7 +40,7 @@ function getMovementInputFromMovementState(movementState: MovementState) {
 export default function getPieceVersionInputFromPieceVersionState(
   pieceVersionState: PieceVersionState,
 ): PieceVersionInput {
-  const pieceVersionInput: PieceVersionInput = {
+  return {
     id: pieceVersionState.id,
     pieceId: pieceVersionState.pieceId,
     category: {
@@ -50,5 +51,4 @@ export default function getPieceVersionInputFromPieceVersionState(
       getMovementInputFromMovementState,
     ),
   };
-  return pieceVersionInput;
 }

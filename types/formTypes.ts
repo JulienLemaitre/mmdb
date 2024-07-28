@@ -192,7 +192,7 @@ export type OptionInput = {
 };
 export type OptionInputTyped<T> = {
   value: T;
-  label: T;
+  label: string;
 };
 
 export type PersonInput = Pick<
