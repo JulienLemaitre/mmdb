@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
   const state = (await request.json()) as FeedFormState;
   console.log(
     `[feedForm API route] body (FeedFormState) :`,
-    JSON.stringify(state, null, 2),
+    JSON.stringify(state),
   );
 
   // Checking mandatory fields
@@ -55,56 +55,18 @@ export async function POST(request: NextRequest) {
   const mMSourceInput: Prisma.MMSourceCreateInput =
     getMMSourceAndRelatedEntitiesDBInputFromState(state, creatorId);
 
+  console.log(`[] mMSourceInput`, JSON.stringify(mMSourceInput));
+
   // Execute all operations in a single transaction
   return await db
     .$transaction(async (tx) => {
       const mMSource = await tx.mMSource.create({
         data: mMSourceInput,
-        include: {
-          references: true,
-          pieceVersions: {
-            include: {
-              pieceVersion: {
-                include: {
-                  movements: {
-                    include: {
-                      sections: {
-                        include: {
-                          tempoIndication: true,
-                          metronomeMarks: {
-                            include: {
-                              mMSource: {
-                                include: {
-                                  contributions: {
-                                    include: {
-                                      person: true,
-                                      organization: true,
-                                    },
-                                  },
-                                  references: true,
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
       });
 
       console.log(`[] mMSource :`, JSON.stringify(mMSource));
       const mMSourceId = mMSource.id;
       console.log(`[] mMSourceId :`, mMSourceId);
-
-      console.log(
-        `[] mMSource pieceVersions id :`,
-        mMSource.pieceVersions.map((pv) => pv.pieceVersionId),
-      );
 
       const metronomeMarksInput: Prisma.MetronomeMarkCreateManyInput[] =
         state.metronomeMarks
@@ -124,10 +86,58 @@ export async function POST(request: NextRequest) {
 
       console.log(`[] metronomeMarks :`, metronomeMarks);
 
-      return { mMSource, metronomeMarks };
+      return { mMSourceInput, mMSource, metronomeMarks };
     })
-    .then((results) => {
-      return NextResponse.json(results);
+    .then(async (results) => {
+      // Fetch info for newly registered mMSource
+      const mMSourceFromDb = await db.mMSource.findUnique({
+        where: { id: results.mMSource.id },
+        include: {
+          references: true,
+          contributions: {
+            include: {
+              person: true,
+              organization: true,
+            },
+          },
+          pieceVersions: {
+            include: {
+              pieceVersion: {
+                include: {
+                  piece: true,
+                  // piece: {
+                  //   include: {
+                  //     composer,
+                  //     collection,
+                  //   },
+                  // },
+                  movements: {
+                    include: {
+                      sections: {
+                        include: {
+                          tempoIndication: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          metronomeMarks: true,
+          // metronomeMarks: {
+          //   select: {
+          //     id,
+          //     beatUnit,
+          //     bpm,
+          //     comment,
+          //   },
+          // },
+        },
+      });
+      console.log(`[] mMSourceFromDb`, JSON.stringify(mMSourceFromDb));
+
+      return NextResponse.json({ ...results, mMSourceFromDb });
     })
     .catch((error) => {
       return NextResponse.json(
