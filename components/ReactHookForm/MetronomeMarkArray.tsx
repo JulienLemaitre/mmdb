@@ -40,7 +40,10 @@ export default function MetronomeMarkArray({
         {sectionList.map((section, index) => {
           console.log(`[] section :`, section);
           const isPieceBeginning =
-            index === 0 || section.pieceId !== sectionList[index - 1].pieceId;
+            index === 0 ||
+            section.pieceId !== sectionList[index - 1].pieceId ||
+            section.mMSourceOnPieceVersion.pieceVersionId !==
+              sectionList[index - 1].mMSourceOnPieceVersion.pieceVersionId;
           const movementRank = section.movement.rank;
           const key = section.movement.key;
           const tempoIndication = section.tempoIndication?.text;

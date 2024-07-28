@@ -44,6 +44,6 @@ function getPieceOption(piece: PieceState) {
   const nickname = piece.nickname ? ` (${piece.nickname})` : "";
   return {
     value: piece.id,
-    label: `${piece.title}${nickname} (${piece.yearOfComposition})`,
+    label: `${piece.title}${nickname} (${typeof piece.yearOfComposition === "number" && !Number.isNaN(piece.yearOfComposition) ? piece.yearOfComposition : "no date"})`,
   };
 }
