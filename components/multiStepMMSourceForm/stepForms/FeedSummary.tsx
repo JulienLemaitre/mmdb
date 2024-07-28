@@ -54,7 +54,11 @@ function FeedSummary() {
         <button className="btn btn-primary" onClick={onReset}>
           Reset the form
         </button>
-        <DebugBox stateObject={submitResponse} />
+        <DebugBox
+          title="Submit success return"
+          stateObject={submitResponse}
+          shouldExpandNode={(level) => level < 3}
+        />
       </div>
     );
   }
@@ -66,7 +70,11 @@ function FeedSummary() {
         <div>
           We have been notified and we will try to fix the problem soon.
         </div>
-        <DebugBox stateObject={submitResponse} />
+        <DebugBox
+          title="Submit Error"
+          stateObject={submitResponse}
+          shouldExpandNode={(level) => level < 3}
+        />
       </div>
     );
   }

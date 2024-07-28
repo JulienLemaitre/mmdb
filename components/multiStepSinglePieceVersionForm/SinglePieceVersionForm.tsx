@@ -258,7 +258,11 @@ const SinglePieceVersionForm = ({
       ) : (
         <div>Nothing to show...</div>
       )}
-      <DebugBox title="Single Piece form state" stateObject={state} />
+      <DebugBox
+        title="Single Piece form state"
+        stateObject={state}
+        shouldExpandNode={(level) => level < 3}
+      />
     </div>
   );
 };

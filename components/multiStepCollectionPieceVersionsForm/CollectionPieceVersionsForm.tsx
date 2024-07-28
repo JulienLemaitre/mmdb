@@ -195,7 +195,11 @@ function CollectionPieceVersionsForm({
       ) : (
         <div>Nothing to show...</div>
       )}
-      <DebugBox title="Collection form state" stateObject={state} />
+      <DebugBox
+        title="Collection form state"
+        stateObject={state}
+        shouldExpandNode={(level) => level < 3}
+      />
     </div>
   );
 }
