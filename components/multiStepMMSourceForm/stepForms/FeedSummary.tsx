@@ -10,7 +10,7 @@ import DebugBox from "@/components/DebugBox";
 
 function FeedSummary() {
   const [isSaveSuccess, setIsSaveSuccess] = useState<boolean>();
-  const [savedValues, setSavedValues] = useState<any>();
+  const [submitResponse, setSubmitResponse] = useState<any>();
   const { dispatch, state } = useFeedForm();
   const { data: session } = useSession();
 
@@ -24,9 +24,16 @@ function FeedSummary() {
     )
       .then((response) => {
         console.log("response", response);
+
+        if (response.error) {
+          console.error("Error submitting form:", response.error);
+          setIsSaveSuccess(false);
+          return;
+        } else {
+          setIsSaveSuccess(true);
+        }
         // initFeedForm(dispatch);
-        setSavedValues(response);
-        setIsSaveSuccess(true);
+        setSubmitResponse(response);
       })
       .catch((error) => {
         console.log("error", error);
@@ -47,7 +54,7 @@ function FeedSummary() {
         <button className="btn btn-primary" onClick={onReset}>
           Reset the form
         </button>
-        <DebugBox stateObject={savedValues} />
+        <DebugBox stateObject={submitResponse} />
       </div>
     );
   }
@@ -59,6 +66,7 @@ function FeedSummary() {
         <div>
           We have been notified and we will try to fix the problem soon.
         </div>
+        <DebugBox stateObject={submitResponse} />
       </div>
     );
   }
