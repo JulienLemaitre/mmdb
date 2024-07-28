@@ -32,7 +32,9 @@ function PieceSelectOrCreate({
   const [pieces, setPieces] = useState<Piece[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreation, setIsCreation] = useState(!!isCollectionCreationMode);
-  const newPieces = getNewEntities(feedFormState, "pieces");
+  const newPieces = getNewEntities(feedFormState, "pieces").filter(
+    (piece) => piece.composerId === selectedComposerId,
+  );
   const newSelectedPiece = newPieces?.find(
     (piece) => piece.id === selectedPieceId,
   );

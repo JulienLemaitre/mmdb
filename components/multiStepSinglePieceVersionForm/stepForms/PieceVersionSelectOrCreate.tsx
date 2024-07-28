@@ -31,11 +31,14 @@ function PieceVersionSelectOrCreate({
   const [isCreation, setIsCreation] = useState(false);
 
   const newPieces = getNewEntities(feedFormState, "pieces");
-  const newPieceVersions = getNewEntities(feedFormState, "pieceVersions");
+  const newPieceVersions = getNewEntities(
+    feedFormState,
+    "pieceVersions",
+  ).filter((pieceVersion) => pieceVersion.pieceId === selectedPieceId);
   let pieceVersionFullList = [
     ...(pieceVersions || []),
     ...(newPieceVersions || []),
-  ].filter((pieceVersion) => pieceVersion.pieceId === selectedPieceId);
+  ];
 
   const selectedPieceVersion: PieceVersionState | undefined =
     pieceVersionFullList?.find(

@@ -29,11 +29,10 @@ const CollectionSelectOrCreate = ({
   );
   const [isLoading, setIsLoading] = useState(true);
   const [isCreation, setIsCreation] = useState(false);
-  const newCollections = getNewEntities(feedFormState, "collections");
-  let collectionFullList = [
-    ...(collections || []),
-    ...(newCollections || []),
-  ]?.filter((collection) => collection.composerId === selectedComposerId);
+  const newCollections = getNewEntities(feedFormState, "collections").filter(
+    (collection) => collection.composerId === selectedComposerId,
+  );
+  let collectionFullList = [...(collections || []), ...(newCollections || [])];
 
   // If we have new collections, we need to sort the collectionFullList
   if (newCollections?.length) {
