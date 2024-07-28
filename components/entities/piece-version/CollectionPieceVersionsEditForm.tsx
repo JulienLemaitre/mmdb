@@ -92,7 +92,7 @@ function CollectionPieceVersionsEditForm({
                   <div className="mt-6 flex gap-4 items-end w-full">
                     <div className="flex-grow">
                       <h4 className="text-lg font-bold text-secondary">
-                        {`${sourcePieceVersion.rank} - ${piece.title}${!!composer && ` | ${getPersonName(composer)}`}`}
+                        {`${index + 1} - ${piece.title}${!!composer && ` | ${getPersonName(composer)}`}`}
                       </h4>
                     </div>
                     <div>

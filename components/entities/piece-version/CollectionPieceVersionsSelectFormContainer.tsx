@@ -8,6 +8,7 @@ import {
 import PieceVersionSelectOrCreate from "@/components/multiStepSinglePieceVersionForm/stepForms/PieceVersionSelectOrCreate";
 import { FeedFormState } from "@/components/context/feedFormContext";
 import DebugBox from "@/components/DebugBox";
+import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput";
 
 type CollectionPieceVersionsSelectFormContainer = {
   feedFormState: FeedFormState;
@@ -40,17 +41,35 @@ export default function CollectionPieceVersionsSelectFormContainer({
 
   const areAllPieceVersionDefined = piecePieceVersions.length === piecesCount;
 
-  // TODO: Single Piece - PieceVersion creation
   const onPieceVersionCreated = (pieceVersion: PieceVersionInput) => {
-    // setPiecePieceVersions([
-    //   ...piecePieceVersions,
-    //   {
-    //     pieceId: pieces[currentPieceIndex].id,
-    //     pieceVersionId: pieceVersion.id,
-    //   },
-    // ]);
-    // setCurrentPieceIndex(currentPieceIndex + 1);
+    // Front input values validation is successful at this point.
+    console.log("[onPieceVersionCreated] pieceVersion", pieceVersion);
+
+    const selectedPieceId = pieces[currentPieceIndex].id;
+
+    if (!selectedPieceId) {
+      console.log(
+        `[onPieceVersionCreated] No pieces[${currentPieceIndex}].id found - cannot create pieceVersion`,
+      );
+      return;
+    }
+
+    const pieceVersionData = pieceVersion;
+    // Remove null values from pieceVersionData
+    Object.keys(pieceVersionData).forEach(
+      // '== null' is true for undefined AND null values
+      (key) => pieceVersionData[key] == null && delete pieceVersionData[key],
+    );
+
+    const pieceVersionState = getPieceVersionStateFromInput({
+      ...pieceVersionData,
+      pieceId: selectedPieceId,
+    });
+    pieceVersionState.isNew = true;
+    console.log("New pieceVersion to be stored in state", pieceVersionState);
+    onPieceVersionSelect(pieceVersionState);
   };
+
   const onPieceVersionSelect = (pieceVersion: PieceVersionState) => {
     console.log(`[onPieceVersionSelect] pieceVersion :`, pieceVersion);
     // Add the pieceVersion in feedForm state
