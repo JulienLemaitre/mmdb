@@ -21,5 +21,11 @@ export const zodOption = z.object({
   value: z.string(),
   label: z.string(),
 });
+export function getZodOptionFromEnum(enumObj: Record<string, string>) {
+  return z.object({
+    value: z.nativeEnum(enumObj),
+    label: z.string(),
+  });
+}
 
 export const zodPositiveNumber = z.number().positive();

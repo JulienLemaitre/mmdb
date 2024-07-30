@@ -5,7 +5,7 @@ import { SourceDescriptionInput } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import { zodYear } from "@/utils/zodTypes";
-import { SOURCE_TYPE } from "@prisma/client";
+import { REFERENCE_TYPE, SOURCE_TYPE } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import ReferenceArray from "@/components/ReactHookForm/ReferenceArray";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
@@ -16,7 +16,7 @@ import { useState } from "react";
 const SourceSchema = z.object({
   title: z.string().optional(),
   type: z.object({
-    value: z.string(),
+    value: z.nativeEnum(SOURCE_TYPE),
     label: z.string(),
   }),
   link: z.string().trim().url(),
@@ -24,7 +24,7 @@ const SourceSchema = z.object({
   references: z.array(
     z.object({
       type: z.object({
-        value: z.string(),
+        value: z.nativeEnum(REFERENCE_TYPE),
         label: z.string(),
       }),
       reference: z.string().min(2),

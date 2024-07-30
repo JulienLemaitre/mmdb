@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PIECE_CATEGORY } from "@prisma/client";
+import { KEY, PIECE_CATEGORY } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import {
   OptionInput,
@@ -14,7 +14,11 @@ import { URL_API_GETALL_TEMPO_INDICATIONS } from "@/utils/routes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
 import { getMovementDefaultValues } from "@/components/ReactHookForm/formUtils";
 import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
-import { zodOption, zodPositiveNumber } from "@/utils/zodTypes";
+import {
+  getZodOptionFromEnum,
+  zodOption,
+  zodPositiveNumber,
+} from "@/utils/zodTypes";
 import {
   updateFeedForm,
   useFeedForm,
@@ -23,12 +27,12 @@ import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 
 const PieceVersionSchema = z.object({
-  category: zodOption,
+  category: getZodOptionFromEnum(PIECE_CATEGORY),
   movements: z
     .array(
       z.object({
         id: z.string(),
-        key: zodOption,
+        key: getZodOptionFromEnum(KEY),
         sections: z
           .array(
             z.object({

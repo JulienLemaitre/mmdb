@@ -17,14 +17,6 @@ datasource db {
   extensions = [pgcrypto]
 }
 
-enum PIECE_CATEGORY {
-  KEYBOARD
-  CHAMBER_INSTRUMENTAL
-  ORCHESTRAL
-  VOCAL
-  OTHER
-}
-
 model Collection {
   id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title      String
@@ -330,6 +322,14 @@ enum KEY {
   G_MINOR
   G_SHARP_MAJOR
   G_SHARP_MINOR
+}
+
+enum PIECE_CATEGORY {
+  KEYBOARD
+  CHAMBER_INSTRUMENTAL
+  ORCHESTRAL
+  VOCAL
+  OTHER
 }
 
 enum SOURCE_TYPE {

@@ -20,7 +20,7 @@ const SourceContributionsSchema = z.union([
     person: zodPerson,
     role: z.object({
       value: z.nativeEnum(CONTRIBUTION_ROLE),
-      label: z.nativeEnum(CONTRIBUTION_ROLE),
+      label: z.string(),
     }),
   }),
   z.object({
@@ -29,7 +29,7 @@ const SourceContributionsSchema = z.union([
     }),
     role: z.object({
       value: z.nativeEnum(CONTRIBUTION_ROLE),
-      label: z.nativeEnum(CONTRIBUTION_ROLE),
+      label: z.string(),
     }),
   }),
 ]);

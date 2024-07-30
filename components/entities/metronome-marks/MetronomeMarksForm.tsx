@@ -7,7 +7,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import MetronomeMarkArray from "@/components/ReactHookForm/MetronomeMarkArray";
 import { z } from "zod";
-import { zodOption, zodPositiveNumber } from "@/utils/zodTypes";
+import { getZodOptionFromEnum, zodPositiveNumber } from "@/utils/zodTypes";
 import {
   updateFeedForm,
   useFeedForm,
@@ -16,6 +16,7 @@ import getMetronomeMarkInputFromState from "@/utils/getMetronomeMarksInputFromSt
 import getMetronomeMarkStateFromInput from "@/utils/getMetronomeMarkStateFromInput";
 import { ONE_MM_REQUIRED } from "@/utils/constants";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
+import { NOTE_VALUE } from "@prisma/client";
 
 const MetronomeMarkListSchema = z
   .object({
@@ -24,7 +25,7 @@ const MetronomeMarkListSchema = z
         z.object({
           noMM: z.boolean(),
           sectionId: z.string(),
-          beatUnit: zodOption.optional(),
+          beatUnit: getZodOptionFromEnum(NOTE_VALUE).optional(),
           bpm: zodPositiveNumber.optional().or(z.nan()),
           comment: z.string().optional(),
         }),
