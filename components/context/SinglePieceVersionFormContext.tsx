@@ -128,40 +128,31 @@ function SinglePieceVersionFormReducer(
 
     let newState = state;
 
-    // If payload is an entity array, we update the state accordingly
-    // if (array) {
-    //   // For each entity in the array
-    //   array.forEach((entity) => {
-    //     // If we find an entity in state with the same id, we update it
-    //     const isEntityInState = newState[action.type]?.find(
-    //       (stateEntity) => entity.id && stateEntity.id === entity.id,
-    //     );
-    //     console.log(`[] isEntityInState :`, isEntityInState);
-    //     if (isEntityInState) {
-    //       console.log(`[] UPDATE entity in array with new value :`, entity);
-    //       newState = {
-    //         ...newState,
-    //         [action.type]: newState[action.type].map((stateEntity) =>
-    //           stateEntity.id === entity.id ? entity : stateEntity,
-    //         ),
-    //       };
-    //     } else {
-    //       // otherwise, we push the entity to the array
-    //       console.log(`[] ADD new entity in array :`, entity);
-    //       newState = {
-    //         ...newState,
-    //         [action.type]: [...newState[action.type], entity],
-    //       };
-    //     }
-    //   });
-    // }
-
     // otherwise, the payload is an object, we update the state object accordingly
     if (value) {
       newState = {
         ...state,
         [action.type]: { ...(state[action.type] || {}), ...value },
       };
+    }
+
+    // Delete all values for entities depending on the present edited one, if the id of it has changed
+    const entitiesWithId = ["composer", "piece", "pieceVersion"];
+    if (
+      state[action.type]?.id &&
+      state[action.type]?.id !== (newState[action.type] || {}).id
+    ) {
+      for (const entity of entitiesWithId) {
+        if (entity === action.type) continue;
+        if (
+          entitiesWithId.indexOf(entity) >
+            entitiesWithId.indexOf(action.type) &&
+          newState[entity]
+        ) {
+          console.log(`[SinglePieceVersionFormReducer] DELETE entity:`, entity);
+          delete newState[entity];
+        }
+      }
     }
 
     // We increment currentStep of we are told to with the property 'next' in any payload, AND if the present step is completed
@@ -185,22 +176,6 @@ function SinglePieceVersionFormReducer(
         },
       };
     }
-
-    // Reset all entities after the current one if a new id is detected for current entity
-    // TODO this has to be refined because some steps are arrays of entity objects
-    // if (action.payload.id !== state[action.type]?.id) {
-    //   for (const entity of FEED_FORM_STATE_STEPS) {
-    //     if (entity === action.type) continue;
-    //     if (
-    //       FEED_FORM_STATE_STEPS.indexOf(entity) >
-    //         FEED_FORM_STATE_STEPS.indexOf(action.type) &&
-    //       newState[entity]
-    //     ) {
-    //       console.log(`[feedFormReducer] Resetting ${entity}`);
-    //       newState[entity] = undefined;
-    //     }
-    //   }
-    // }
 
     localStorageSetItem(LOCAL_STORAGE_KEY, newState);
     console.groupEnd();

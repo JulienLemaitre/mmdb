@@ -151,7 +151,7 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
 
     let newState = state;
 
-    // If payload is an entity array and replace = false, we update the state accordingly
+    // If payload is an entity array and replace = false, we update the entity in state if exists, or create it otherwise.
     if (array && !replace) {
       // For each entity in the array
       array.forEach((entity) => {
@@ -181,7 +181,7 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
       });
     }
 
-    // If payload is an entity array and replace = true, we replace the entity in state
+    // If payload is an entity array and replace = true, we replace the entity value in state with the given array
     if (array && replace) {
       newState = {
         ...newState,
@@ -250,22 +250,6 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
         },
       };
     }
-
-    // Reset all entities after the current one if a new id is detected for current entity
-    // TODO this has to be refined because some steps are arrays of entity objects
-    // if (action.payload.id !== state[action.type]?.id) {
-    //   for (const entity of FEED_FORM_STATE_STEPS) {
-    //     if (entity === action.type) continue;
-    //     if (
-    //       FEED_FORM_STATE_STEPS.indexOf(entity) >
-    //         FEED_FORM_STATE_STEPS.indexOf(action.type) &&
-    //       newState[entity]
-    //     ) {
-    //       console.log(`[feedFormReducer] Resetting ${entity}`);
-    //       newState[entity] = undefined;
-    //     }
-    //   }
-    // }
 
     localStorageSetItem(LOCAL_STORAGE_KEY, newState);
     console.groupEnd();
