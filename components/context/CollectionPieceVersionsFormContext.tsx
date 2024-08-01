@@ -34,11 +34,6 @@ type CollectionPieceVersionsFormAction =
   | { type: "goToPrevStep" }
   | { type: "goToStep"; payload: any }
   | {
-      type: "composer";
-      payload: any;
-      // payload: { value: { id: string }; next?: boolean };
-    }
-  | {
       type: "collection";
       payload: any;
     }
@@ -56,7 +51,7 @@ type CollectionPieceVersionsFormInfo = {
 
 export type CollectionPieceVersionsFormState = {
   formInfo: CollectionPieceVersionsFormInfo;
-  collection?: CollectionState;
+  collection?: Partial<CollectionState>;
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
   persons?: PersonState[];
   pieces?: PieceState[];
@@ -106,6 +101,14 @@ function localStorageGetItem(key: string) {
     return localStorage.getItem(key);
   }
 }
+
+const arrayEntities = [
+  "persons",
+  "pieces",
+  "pieceVersions",
+  "tempoIndications",
+  "mMSourcePieceVersions",
+];
 
 function collectionPieceVersionsFormReducer(
   state: CollectionPieceVersionsFormState,
@@ -247,6 +250,33 @@ function collectionPieceVersionsFormReducer(
         ...state,
         [action.type]: { ...(state[action.type] || {}), ...value },
       };
+      const hasComposerChanged =
+        newState.collection?.composerId !== state.collection?.composerId;
+      const hasCollectionIdChanged =
+        newState.collection?.id !== state.collection?.id;
+
+      if (
+        action.type === "collection" &&
+        (hasComposerChanged || hasCollectionIdChanged)
+      ) {
+        for (const entity of arrayEntities) {
+          if (newState[entity].length) {
+            console.log(
+              `[composer or collection Id changed] reset ${entity} -`,
+            );
+            newState[entity] = [];
+          }
+        }
+
+        // If composer has changed, we delete collection.id and collection.title if exists
+        if (hasComposerChanged && newState.collection?.id) {
+          console.log(
+            `[composer changed] delete collection.id and collection.title -`,
+          );
+          delete newState.collection.id;
+          delete newState.collection.title;
+        }
+      }
     }
 
     // We increment currentStep of we are told to with the property 'next = true' in any payload
