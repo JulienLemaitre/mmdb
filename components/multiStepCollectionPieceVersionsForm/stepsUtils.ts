@@ -3,7 +3,6 @@ import { CollectionPieceVersionsFormState } from "@/components/context/Collectio
 import { CollectionPieceVersionsFormStep } from "@/types/formTypes";
 import CollectionSelectOrCreate from "@/components/multiStepCollectionPieceVersionsForm/stepForms/CollectionSelectOrCreate";
 import CollectionPieceVersionSelectOrCreate from "@/components/multiStepCollectionPieceVersionsForm/stepForms/CollectionPieceVersionSelectOrCreate";
-import CollectionSummary from "@/components/multiStepCollectionPieceVersionsForm/stepForms/CollectionSummary";
 
 export const collectionFormSteps: CollectionPieceVersionsFormStep[] = [
   {
@@ -43,14 +42,6 @@ export const collectionFormSteps: CollectionPieceVersionsFormStep[] = [
       "tempoIndications",
     ],
   },
-  {
-    id: "summary",
-    title: "Summary",
-    rank: 3,
-    isComplete: (state: CollectionPieceVersionsFormState) => false,
-    Component: CollectionSummary,
-    actionTypes: ["reset", "formInfo"],
-  },
 ];
 
 export function getAllowedActions(state) {
@@ -69,7 +60,6 @@ export function getAllStepStatus(state: any) {
 //   return steps.find((step) => step.id === stepId) || steps[0];
 // }
 export function getStepByRank({
-  state,
   rank,
 }: {
   state: CollectionPieceVersionsFormState;
