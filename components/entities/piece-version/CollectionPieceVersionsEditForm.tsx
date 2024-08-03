@@ -27,6 +27,8 @@ function CollectionPieceVersionsEditForm({
   const [isFormOpen, setIsFormOpen] = useState(false);
   const { state, dispatch } = useCollectionPieceVersionsForm();
   const collectionPieceVersions = state.mMSourcePieceVersions || [];
+  const newPieceDefaultTitle = `${state?.collection?.title} No.${(state.mMSourcePieceVersions || []).length + 1}`;
+  const composerId = state?.collection?.composerId;
 
   const onDeletePieceVersionId = (pieceVersionId) => {
     updateCollectionPieceVersionsForm(dispatch, "mMSourcePieceVersions", {
@@ -61,7 +63,8 @@ function CollectionPieceVersionsEditForm({
             onFormClose={() => setIsFormOpen(false)}
             onSubmit={onSinglePieceSubmit}
             isCollectionCreationMode={true}
-            composerId={state?.collection?.composerId}
+            newPieceDefaultTitle={newPieceDefaultTitle}
+            composerId={composerId}
           />
         </SinglePieceVersionFormProvider>
       ) : (

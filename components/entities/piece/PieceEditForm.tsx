@@ -17,10 +17,12 @@ export default function PieceEditForm({
   piece,
   onSubmit,
   onCancel,
+  newPieceDefaultTitle,
 }: Readonly<{
   piece?: PieceInput;
   onSubmit: (piece: PieceInput) => void;
   onCancel: () => void;
+  newPieceDefaultTitle?: string;
 }>) {
   const {
     formState: { errors, isSubmitting },
@@ -29,7 +31,12 @@ export default function PieceEditForm({
     watch,
   } = useForm<PieceInput>({
     resolver: zodResolver(PieceSchema),
-    ...(piece && { defaultValues: piece }),
+    ...((piece || newPieceDefaultTitle) && {
+      defaultValues: {
+        ...piece,
+        ...(newPieceDefaultTitle ? { title: newPieceDefaultTitle } : {}),
+      },
+    }),
   });
 
   console.log(`[PieceEditForm] piece :`, piece);

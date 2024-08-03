@@ -18,6 +18,7 @@ type PieceSelectOrCreate = {
   selectedComposerId?: string;
   selectedPieceId?: string;
   isCollectionCreationMode?: boolean;
+  newPieceDefaultTitle?: string;
 };
 
 function PieceSelectOrCreate({
@@ -28,6 +29,7 @@ function PieceSelectOrCreate({
   selectedComposerId,
   selectedPieceId,
   isCollectionCreationMode,
+  newPieceDefaultTitle,
 }: PieceSelectOrCreate) {
   const [pieces, setPieces] = useState<Piece[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -128,6 +130,7 @@ function PieceSelectOrCreate({
         piece={newSelectedPiece}
         onSubmit={onPieceCreated}
         onCancel={onCancelPieceCreation}
+        newPieceDefaultTitle={newPieceDefaultTitle}
       />
     );
 

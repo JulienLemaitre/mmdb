@@ -27,6 +27,7 @@ type SinglePieceVersionFormProps = {
   initPayload?: any;
   isCollectionCreationMode?: boolean;
   composerId?: string;
+  newPieceDefaultTitle?: string;
 };
 
 /**
@@ -38,6 +39,7 @@ const SinglePieceVersionForm = ({
   onSubmit,
   isCollectionCreationMode,
   composerId,
+  newPieceDefaultTitle,
 }: SinglePieceVersionFormProps) => {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
   const { dispatch, state, currentStepRank } = useSinglePieceVersionForm();
@@ -254,6 +256,7 @@ const SinglePieceVersionForm = ({
           onPieceVersionSelect={onPieceVersionSelect}
           onAddSourceOnPieceVersions={onAddSourceOnPieceVersions}
           isCollectionCreationMode={isCollectionCreationMode}
+          newPieceDefaultTitle={newPieceDefaultTitle}
         />
       ) : (
         <div>Nothing to show...</div>
