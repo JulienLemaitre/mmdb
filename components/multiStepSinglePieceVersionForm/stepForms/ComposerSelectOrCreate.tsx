@@ -7,7 +7,7 @@ import {
   getNewEntities,
   FeedFormState,
 } from "@/components/context/feedFormContext";
-import { URL_API_GETALL_COMPOSERS } from "@/utils/routes";
+import getAllComposers from "@/utils/getAllComposers";
 
 type ComposerSelectOrCreateProps = {
   feedFormState: FeedFormState;
@@ -44,8 +44,7 @@ const ComposerSelectOrCreate = ({
   );
 
   useEffect(() => {
-    fetch(URL_API_GETALL_COMPOSERS, { cache: "no-store" })
-      .then((res) => res.json())
+    getAllComposers()
       .then((data) => {
         setComposers(data?.composers);
         setIsLoading(false);

@@ -10,10 +10,8 @@ import {
   PieceVersionInput,
   TempoIndicationState,
 } from "@/types/formTypes";
-import { URL_API_GETALL_TEMPO_INDICATIONS } from "@/utils/routes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
 import { getMovementDefaultValues } from "@/components/ReactHookForm/formUtils";
-import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
 import {
   getZodOptionFromEnum,
   zodOption,
@@ -25,6 +23,7 @@ import {
 } from "@/components/context/feedFormContext";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
+import getTempoIndicationSelectList from "@/utils/getTempoIndicationSelectList";
 
 const PieceVersionSchema = z.object({
   category: getZodOptionFromEnum(PIECE_CATEGORY),
@@ -83,24 +82,9 @@ export default function PieceVersionEditForm({
   >([]);
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
 
-  // Fetch tempoIndicationList from API
+  // Fetch tempoIndicationSelectList from API
   useEffect(() => {
-    fetch(URL_API_GETALL_TEMPO_INDICATIONS)
-      .then((res) => res.json())
-      .then((data) => {
-        // Get the index of tempoIndication with id === TEMPO_INDICATION_NONE_ID (text === "-- None --")
-        const noneIndex = data.findIndex(
-          (tempoIndication) => tempoIndication.id === TEMPO_INDICATION_NONE_ID,
-        );
-        // Copy the tempoIndication with text === "-- None --"
-        const noneTempoIndication = data[noneIndex];
-        // Remove the targeted tempoIndication from the list
-        data.splice(noneIndex, 1);
-        // put the tempoIndication with text === "-- None --" as the first element in the array
-        data.unshift(noneTempoIndication);
-
-        setTempoIndicationList(data);
-      });
+    getTempoIndicationSelectList().then((data) => setTempoIndicationList(data));
   }, []);
 
   const onTempoIndicationCreated = async (

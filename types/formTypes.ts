@@ -269,6 +269,13 @@ export type MetronomeMarkInput =
       noMM: true;
     });
 
+export type SearchFormInput = {
+  startYear: number;
+  endYear: number;
+  tempoIndication: OptionInput;
+  composer: OptionInput;
+};
+
 export function assertsIsPersistableFeedFormState(
   valueToTest: any,
 ): asserts valueToTest is PersistableFeedFormState {
