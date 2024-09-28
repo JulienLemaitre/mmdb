@@ -29,6 +29,8 @@ type SinglePieceVersionFormProps = {
   isCollectionCreationMode?: boolean;
   composerId?: string;
   newPieceDefaultTitle?: string;
+  collectionId?: string;
+  collectionFormState?: any;
 };
 
 /**
@@ -41,6 +43,8 @@ const SinglePieceVersionForm = ({
   isCollectionCreationMode,
   composerId,
   newPieceDefaultTitle,
+  collectionId,
+  collectionFormState,
 }: SinglePieceVersionFormProps) => {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
   const { dispatch, state, currentStepRank } = useSinglePieceVersionForm();
@@ -123,9 +127,21 @@ const SinglePieceVersionForm = ({
     if (selectedPieceId && isPieceSelectedNew) {
       deleteIdArray = [selectedPieceId];
     }
+    console.log(`[] pieceState :`, pieceState);
+    let piecesArray = [pieceState];
+
+    if (isCollectionCreationMode && collectionId && collectionFormState) {
+      piecesArray = piecesArray.map((piece) => ({
+        ...piece,
+        collectionId,
+        collectionRank:
+          (collectionFormState.mMSourcePieceVersions.length || 0) + 1,
+      }));
+    }
+    console.log(`[with potential collection value] piecesArray :`, piecesArray);
 
     updateFeedForm(feedFormDispatch, "pieces", {
-      array: [pieceState],
+      array: piecesArray,
       ...(deleteIdArray.length ? { deleteIdArray } : {}),
     });
     updateSinglePieceVersionForm(dispatch, "piece", {

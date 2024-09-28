@@ -254,6 +254,8 @@ function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
     localStorageSetItem(LOCAL_STORAGE_KEY, newState);
     console.groupEnd();
     return newState;
+  } else {
+    console.log(`[] Action not allowed: action.type`, action.type);
   }
   if (action.type === "init") {
     localStorageSetItem(LOCAL_STORAGE_KEY, action.payload || INITIAL_STATE);

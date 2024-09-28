@@ -106,9 +106,8 @@ function CollectionPieceVersionsForm({
   /////////////////// PIECE VERSION //////////////////////////////
 
   const onAddPieceVersion = (pieceVersion: PieceVersionState) => {
-    updateFeedForm(feedFormDispatch, "pieceVersions", {
-      array: [pieceVersion],
-    });
+    const payload = { array: [pieceVersion] };
+    updateFeedForm(feedFormDispatch, "pieceVersions", payload);
   };
 
   ////////////////// SUBMIT ////////////////////
@@ -201,40 +200,5 @@ function CollectionPieceVersionsForm({
     </div>
   );
 }
-// <h1 className="mb-4 text-4xl font-bold">
-//   Complete Collection
-//   <span className="block text-xl font-normal">of Pieces</span>
-// </h1>
-// <button className="btn btn-neutral" type="button" onClick={onFormClose}>
-//   <ArrowLeftIcon className="w-5 h-5 mr-2" />
-//   Back
-// </button>
-
-// {!isCollectionRegistered && (
-//   <CollectionEditForm
-//     onSubmit={onCollectionSubmit}
-//     submitTitle="collection info"
-//   />
-// )}
-// {isCollectionRegistered && (
-//   <button
-//     className="btn btn-primary"
-//     type="button"
-//     onClick={() => setIsPieceVersionFormOpen(true)}
-//   >
-//     Add a piece
-//   </button>
-// )}
-// {isPieceVersionFormOpen && (
-//   <SinglePieceVersionFormProvider>
-//     <SinglePieceVersionForm
-//       onFormClose={() => setIsPieceVersionFormOpen(false)}
-//       onSubmit={onAddSourceOnPieceVersion}
-//       initPayload={{
-//         composer: {},
-//       }}
-//     />
-//   </SinglePieceVersionFormProvider>
-// )}
 
 export default CollectionPieceVersionsForm;

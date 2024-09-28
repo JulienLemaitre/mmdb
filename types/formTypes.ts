@@ -123,8 +123,10 @@ export type CollectionState = Pick<Collection, "id" | "composerId" | "title"> &
 export type PieceState = Pick<
   Piece,
   "id" | "nickname" | "yearOfComposition" | "title" | "composerId"
-> &
-  IsNewProp;
+> & {
+  collectionId?: string;
+  collectionRank?: number;
+} & IsNewProp;
 
 export type SectionState = Pick<
   Section,
