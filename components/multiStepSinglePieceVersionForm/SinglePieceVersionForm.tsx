@@ -20,6 +20,7 @@ import {
 } from "@/components/context/feedFormContext";
 import getPieceStateFromInput from "@/utils/getPieceStateFromInput";
 import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput";
+import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
@@ -61,11 +62,8 @@ const SinglePieceVersionForm = ({
   ////////////////// COMPOSER ////////////////////
 
   const onComposerCreated = (composer: PersonInput) => {
-    const newComposer: PersonState = {
-      ...composer,
-      id: composer.id || uuidv4(),
-      isNew: true,
-    };
+    const newComposer: PersonState = getPersonStateFromPersonInput(composer);
+    newComposer.isNew = true;
     updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
     updateSinglePieceVersionForm(dispatch, "composer", {
       value: {

@@ -7,7 +7,9 @@ export default function getPieceInputFromPieceState(
     id: pieceState.id,
     title: pieceState.title,
     nickname: pieceState.nickname,
-    yearOfComposition: pieceState.yearOfComposition,
+    ...(pieceState.yearOfComposition
+      ? { yearOfComposition: pieceState.yearOfComposition.toString() }
+      : {}),
   };
   return pieceInput;
 }

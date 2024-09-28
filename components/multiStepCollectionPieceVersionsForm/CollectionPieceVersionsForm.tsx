@@ -23,6 +23,7 @@ import { getStepByRank } from "@/components/multiStepCollectionPieceVersionsForm
 import DebugBox from "@/components/DebugBox";
 import { v4 as uuidv4 } from "uuid";
 import CollectionPieceVersionsSteps from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsSteps";
+import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
 
 type CollectionPieceVersionFormProps = {
   onFormClose: () => void;
@@ -41,11 +42,8 @@ function CollectionPieceVersionsForm({
   ////////////////// COMPOSER ////////////////////
 
   const onComposerCreated = (composer: PersonInput) => {
-    const newComposer: PersonState = {
-      ...composer,
-      id: composer.id || uuidv4(),
-      isNew: true,
-    };
+    const newComposer: PersonState = getPersonStateFromPersonInput(composer);
+    newComposer.isNew = true;
     updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
     updateCollectionPieceVersionsForm(dispatch, "collection", {
       value: { composerId: newComposer.id },

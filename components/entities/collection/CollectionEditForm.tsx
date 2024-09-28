@@ -27,6 +27,7 @@ export default function CollectionEditForm(
     handleSubmit,
     register,
     watch,
+    control,
   } = useForm<CollectionTitleInput>({
     defaultValues: collection ?? {},
     resolver: zodResolver(CollectionSchema),
@@ -38,7 +39,7 @@ export default function CollectionEditForm(
       onKeyDown={preventEnterKeySubmission}
       className="max-w-md"
     >
-      <FormInput name="title" {...{ register, watch, errors }} />
+      <FormInput name="title" {...{ register, watch, errors, control }} />
       <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
         {submitTitle ? `Save ${submitTitle}` : "Next"}
       </button>

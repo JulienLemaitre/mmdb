@@ -20,7 +20,7 @@ import CollectionPieceVersionsForm from "@/components/multiStepCollectionPieceVe
 
 type SourcePieceVersionSelectFormProps = {
   sourcePieceVersions?: MMSourcePieceVersionsState[];
-  onSubmit: () => void;
+  onSubmit: (option: { goToNextStep: boolean }) => void;
   submitTitle?: string;
 };
 
@@ -31,8 +31,7 @@ const SourceOnPieceVersionFormContainer = ({
 }: SourcePieceVersionSelectFormProps) => {
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
   const [formType, setFormType] =
-    // useState<SourceOnPieceVersionsFormType>("none"); TODO: uncomment - for test only
-    useState<SourceOnPieceVersionsFormType>("collection");
+    useState<SourceOnPieceVersionsFormType>("none");
   const isFormOpen = !!feedFormState.formInfo?.isSourceOnPieceVersionformOpen;
   const isIntro =
     feedFormState?.mMSourcePieceVersions?.length === 0 && !isFormOpen;
@@ -172,7 +171,8 @@ const SourceOnPieceVersionFormContainer = ({
       )}
 
       <MMSourceFormStepNavigation
-        onClick={onSubmit}
+        onSave={() => onSubmit({ goToNextStep: false })}
+        onSaveAndGoToNextStep={() => onSubmit({ goToNextStep: true })}
         isNextDisabled={!(sourcePieceVersions.length > 0 && !isFormOpen)}
         submitTitle={submitTitle}
         onGoToPrevStep={onFormClose}

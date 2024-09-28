@@ -7,18 +7,14 @@ import { useState } from "react";
 import EyeSlashIcon from "@/components/svg/EyeSlashIcon";
 import EyeIcon from "@/components/svg/EyeIcon";
 import LoadingSpinIcon from "@/components/svg/LoadingSpinIcon";
+import { InputMethod } from "@/types/formTypes";
+import { Controller } from "react-hook-form";
 
-function getRegisterProps(name: string) {
-  if (name.toLowerCase().includes("year")) {
+function getRegisterProps(name: string, inputMode?: InputMethod) {
+  if (inputMode === "numeric") {
     return {
-      // setValueAs: (v) => (v ? parseInt(v, 10) : null),
-      // onChange: (e) => {
-      //   console.log(`[] e.target.value :`, e.target.value);
-      //   if (e.target.value < 1000) {
-      //     return 1000;
-      //   }
-      //   return e.target.value;
-      // },
+      pattern: /[0-9]{4}/,
+      setValueAs: (v) => (v ? v.replace(/\D/g, "") : v),
     };
   }
   return {
@@ -59,6 +55,39 @@ function getRegisterProps(name: string) {
   }[name];
 }
 
+const transformActions = {
+  numeric: (rawValue: string) => rawValue.replace(/\D/g, ""),
+  year: (rawValue: string) => rawValue.replace(/\D/g, "").substring(0, 4),
+};
+
+function getControllerProps(field, inputMode, onInputChange?: () => void) {
+  const registerProps = getRegisterProps(field.name, inputMode);
+  let controllerProps: any = {
+    rules: registerProps,
+  };
+  controllerProps.onChange = field.onChange;
+  controllerProps.value = field.value || "";
+
+  if (inputMode === "numeric") {
+    controllerProps.onChange = (event: Event | undefined) => {
+      // @ts-ignore
+      const rawValue = event?.target?.value;
+      const endValue = rawValue
+        ? transformActions[
+            field.name.toLowerCase().includes("year") ? "year" : "numeric"
+          ](rawValue)
+        : "";
+      field.onChange(endValue);
+    };
+
+    if (typeof onInputChange === "function") {
+      onInputChange();
+    }
+  }
+
+  return controllerProps;
+}
+
 export function getLabel(name: string) {
   return {
     firstName: "First Name",
@@ -74,6 +103,7 @@ export function getLabel(name: string) {
 
 type FormInputProps = {
   register: any;
+  control: any;
   name: string;
   label?: string;
   isRequired?: boolean;
@@ -84,6 +114,7 @@ type FormInputProps = {
   registerProps?: any;
   controlClassName?: string;
   inputClassName?: string;
+  inputMode?: InputMethod;
   // watch: any;
   // showPassword?: boolean;
   // toggleShowPassword?: () => void;
@@ -94,6 +125,7 @@ type FormInputProps = {
 
 export function FormInput({
   register,
+  control,
   name,
   label = "",
   isRequired = false,
@@ -104,8 +136,9 @@ export function FormInput({
   registerProps = {},
   controlClassName = "",
   inputClassName = "", // showPassword = false,
+  inputMode = "text",
   onBlur = () => {},
-  onInputChange = () => {},
+  onInputChange,
   isLoading = false,
   // watch,
   // showPassword = false,
@@ -126,14 +159,18 @@ export function FormInput({
   const type =
     (typeProp === "password" && showPassword ? "text" : null) ||
     typeProp ||
-    (name.toLowerCase().includes("year") ? "number" : "text");
-  const isNumber = type === "number";
+    "text";
+  // || (name.toLowerCase().includes("year") ? "number" : "text");
+  const isNumberType = type === "number";
+  if (isNumberType) {
+    console.log(`[] isNumberType -${name}- :`, isNumberType);
+  }
   const errorMessage = error?.message;
   // console.log(`[] error :`, error);
 
   return (
     <div
-      className={`relative form-control w-full max-w-xs ${controlClassName}${disabled ? ` opacity-50` : ""}`}
+      className={`relative form-control w-full max-w-xs mt-2 ${controlClassName}${disabled ? ` opacity-50` : ""}`}
     >
       {(label || getLabel(name)) && (
         <label className="label">
@@ -143,23 +180,50 @@ export function FormInput({
           </span>
         </label>
       )}
-      <div className="flex w-full relative" onBlur={onBlur}>
-        <input
+      <div className="flex w-full relative align-middle" onBlur={onBlur}>
+        <Controller
+          control={control}
+          name={name}
+          render={({ field }) => (
+            <input
+              className={`input input-sm input-bordered ${inputClassName} flex-1`}
+              inputMode={inputMode}
+              // value={field.value}
+              {...(getControllerProps(field, inputMode, onInputChange) || {})}
+              onBlur={field.onBlur}
+              ref={field.ref}
+              name={field.name}
+              // type={["password"].includes(name) && showPassword ? "text" : "password"}
+              type={type}
+              // onChange={onInputChange}
+              {...(defaultValue ? { defaultValue } : {})}
+              {...(disabled ? { disabled: true } : {})}
+            />
+          )}
+        />
+
+        {/*<input
           className={`input input-bordered ${inputClassName} flex-1`}
+          inputMode={inputMode}
           // type={["password"].includes(name) && showPassword ? "text" : "password"}
           type={type}
           {...register(name, {
             // ...(isRequired ? { required: "Info obligatoire" } : {}),
-            ...(getRegisterProps(name) || {}),
-            ...(isNumber ? { valueAsNumber: true } : {}),
+            ...(getRegisterProps(name, inputMode) || {}),
+            ...(isNumberType ? { valueAsNumber: true } : {}),
             ...registerProps,
             // onChange: (e) => {},
           })}
-          {...(isNumber ? { onWheel: numberInputOnWheelPreventChange } : {})}
-          onChange={onInputChange}
+          {...(isNumberType
+            ? { onWheel: numberInputOnWheelPreventChange }
+            : {})}
+          {...(typeof onInputChange === "function"
+            ? { onChange: onInputChange }
+            : {})}
+          // onChange={onInputChange}
           {...(defaultValue ? { defaultValue } : {})}
           {...(disabled ? { disabled: true } : {})}
-        />
+        />*/}
         {isLoading ? (
           <div className="absolute right-0 top-1/4">
             <LoadingSpinIcon />
@@ -167,7 +231,7 @@ export function FormInput({
         ) : null}
         {typeProp === "password" && (
           <button
-            className="btn btn-ghost ml-2 absolute right-0"
+            className="btn btn-xs btn-ghost ml-2 absolute right-0 top-[4px]"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? (
@@ -179,9 +243,9 @@ export function FormInput({
         )}
       </div>
       {GetErrorMessage(errorMessage) && (
-        <span className="label-text-alt text-red-500 absolute top-full">
+        <div className="label-text-alt text-red-500">
           {GetErrorMessage(errorMessage)}
-        </span>
+        </div>
       )}
     </div>
   );

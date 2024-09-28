@@ -26,7 +26,7 @@ function DataLossWarningModal({
     <dialog id={modalId} className="modal">
       <div className="modal-box">
         <h3 className="font-bold text-lg">{`Warning!`}</h3>
-        <p className="py-2">{`You're about to lose your changes in field${dirtyFieldsKeys.length > 1 ? "s" : ""} : ${Object.keys(dirtyFields).join(", ")}. Are you sure you want to proceed?`}</p>
+        <p className="py-2">{`You're about to lose your changes${dirtyFieldsKeys.length ? ` in field${dirtyFieldsKeys.length > 1 ? "s" : ""} : ${Object.keys(dirtyFields).join(", ")}` : ""}. Are you sure you want to proceed?`}</p>
         <div className="modal-action">
           <button className="btn" onClick={onClose}>
             Cancel

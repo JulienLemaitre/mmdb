@@ -16,10 +16,13 @@ export default function MMSourceContributions() {
   const { dispatch, currentStepRank, state } = useFeedForm();
   const step = getStepByRank(currentStepRank);
 
-  const onSubmit = (selectedContributions: ContributionStateWithoutId[]) => {
+  const onSubmit = (
+    selectedContributions: ContributionStateWithoutId[],
+    option: { goToNextStep: boolean },
+  ) => {
     updateFeedForm(dispatch, "mMSourceContributions", {
       array: selectedContributions,
-      next: true,
+      next: !!option?.goToNextStep,
       replace: true,
     });
   };
@@ -36,7 +39,6 @@ export default function MMSourceContributions() {
   if (isLoading) return <Loader />;
   if (!data)
     return <p>{`Oups, No data could be fetched. Can't continue...`}</p>;
-  console.log(`[] data :`, data);
   const { persons, organizations } = data;
 
   return (

@@ -11,12 +11,16 @@ import { CONTRIBUTION_ROLE } from "@prisma/client";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import TrashIcon from "@/components/svg/TrashIcon";
 import getRoleLabel from "@/utils/getRoleLabel";
+import _isEqual from "lodash/isEqual";
 
 type SourceContributionSelectFormProps = {
   contributions?: ContributionStateWithoutId[];
   persons: PersonState[];
   organizations: OrganizationState[];
-  onSubmit: (contributions: ContributionStateWithoutId[]) => void;
+  onSubmit: (
+    contributions: ContributionStateWithoutId[],
+    option: { goToNextStep: boolean },
+  ) => void;
   submitTitle?: string;
   title?: string;
 };
@@ -159,6 +163,17 @@ export default function SourceContributionSelectForm({
     ...organizationOptions,
   ].sort((a, b) => (a.label > b.label ? 1 : -1));
 
+  const isPresentFormDirty = !_isEqual(
+    selectedContributions,
+    contributions || [],
+  );
+  console.log(
+    `[] isPresentFormDirty :`,
+    isPresentFormDirty,
+    selectedContributions,
+    contributions || [],
+  );
+
   return (
     <>
       <h1 className="mb-4 text-4xl font-bold">
@@ -238,7 +253,12 @@ export default function SourceContributionSelectForm({
       )}
 
       <MMSourceFormStepNavigation
-        onClick={() => onSubmit(selectedContributions)}
+        onSave={() => onSubmit(selectedContributions, { goToNextStep: false })}
+        onSaveAndGoToNextStep={() =>
+          onSubmit(selectedContributions, { goToNextStep: true })
+        }
+        onResetForm={() => setSelectedContributions(contributions || [])}
+        isPresentFormDirty={isPresentFormDirty}
         isNextDisabled={!(selectedContributions.length > 0 && !isFormOpen)}
         submitTitle={submitTitle}
       />

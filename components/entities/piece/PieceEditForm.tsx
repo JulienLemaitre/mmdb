@@ -28,7 +28,7 @@ export default function PieceEditForm({
     formState: { errors, isSubmitting },
     handleSubmit,
     register,
-    watch,
+    control,
   } = useForm<PieceInput>({
     resolver: zodResolver(PieceSchema),
     ...((piece || newPieceDefaultTitle) && {
@@ -52,9 +52,13 @@ export default function PieceEditForm({
         onSubmit={handleSubmit(onSubmit)}
         onKeyDown={preventEnterKeySubmission}
       >
-        <FormInput name="title" isRequired {...{ register, watch, errors }} />
-        <FormInput name="nickname" {...{ register, watch, errors }} />
-        <FormInput name="yearOfComposition" {...{ register, watch, errors }} />
+        <FormInput name="title" isRequired {...{ register, control, errors }} />
+        <FormInput name="nickname" {...{ register, control, errors }} />
+        <FormInput
+          name="yearOfComposition"
+          inputMode="numeric"
+          {...{ register, control, errors }}
+        />
         <div className="flex gap-4 items-center mt-6">
           <button
             className="btn btn-neutral"

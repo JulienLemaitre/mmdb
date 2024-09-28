@@ -24,7 +24,7 @@ function LoginPage() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    watch,
+    control,
   } = useForm({
     resolver: zodResolver(LoginSchema),
   });
@@ -52,14 +52,14 @@ function LoginPage() {
           name="email"
           label="Email"
           isRequired
-          {...{ register, watch, errors }}
+          {...{ register, control, errors }}
         />
         <FormInput
           name="password"
           label="Password"
           type="password"
           isRequired
-          {...{ register, watch, errors }}
+          {...{ register, control, errors }}
         />
         <button
           className="btn btn-primary mt-6 w-full max-w-xs"
