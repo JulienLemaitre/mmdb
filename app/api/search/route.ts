@@ -46,6 +46,12 @@ export async function POST(req: NextRequest) {
       // },
     },
     include: {
+      piece: {
+        include: {
+          composer: true,
+          collection: true,
+        },
+      },
       movements: {
         include: {
           sections: {
