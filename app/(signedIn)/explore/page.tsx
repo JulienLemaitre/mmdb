@@ -75,14 +75,12 @@ function SearchPage() {
     fetch("/api/search", { method: "POST", body: JSON.stringify(data) })
       .then((res) => res.json())
       .then((data) => {
-        console.log(`[onSubmit] res :`, data);
-        if (data.ok) {
-          // Handle successful response
-          //...
-        } else {
-          // Handle error response
-          //...
-        }
+        console.log(`[onSubmit] data :`, data);
+        // Handle successful response
+      })
+      .catch((error) => {
+        console.error(`[onSubmit] error :`, error.message);
+        // Handle error
       });
   };
 
@@ -99,14 +97,14 @@ function SearchPage() {
           label="Start Date"
           type="number"
           isRequired
-          {...{ register, watch, errors }}
+          {...{ control, errors, register, watch }}
         />
         <FormInput
           name="endYear"
           label="End Date"
           type="number"
           isRequired
-          {...{ register, watch, errors }}
+          {...{ control, errors, register, watch }}
         />
         <ControlledSelect
           name={`tempoIndication` as const}
