@@ -7,6 +7,8 @@ import getMMSourceAndRelatedEntitiesDBInputFromState from "@/utils/getMMSourceAn
 import getMetronomeMarkDBInputFromState from "@/utils/getMetronomeMarkDBInputFromState";
 import isReqAuthorized from "@/utils/isReqAuthorized";
 import getDecodedTokenFromReq from "@/utils/getDecodedTokenFromReq";
+import getCollectionCreateInput from "@/utils/getCollectionCreateInput";
+import getComposerCreateInput from "@/utils/getComposerCreateInput";
 
 export async function POST(request: NextRequest) {
   if (!isReqAuthorized(request)) {
@@ -52,6 +54,18 @@ export async function POST(request: NextRequest) {
   // Type guard
   assertsIsPersistableFeedFormState(state);
 
+  // We need to persist new composers first, as it is used by collection and mMSource queries below
+  const composerInput: Prisma.PersonCreateInput[] = getComposerCreateInput(
+    state,
+    creatorId,
+  );
+  console.log(`[] composerInput`, JSON.stringify(composerInput, null, 2));
+
+  const collectionInput: Prisma.CollectionCreateInput[] =
+    getCollectionCreateInput(state, creatorId);
+
+  console.log(`[] collectionInput`, JSON.stringify(collectionInput, null, 2));
+
   const mMSourceInput: Prisma.MMSourceCreateInput =
     getMMSourceAndRelatedEntitiesDBInputFromState(state, creatorId);
 
@@ -60,6 +74,19 @@ export async function POST(request: NextRequest) {
   // Execute all operations in a single transaction
   return await db
     .$transaction(async (tx) => {
+      const composers = await tx.person.createMany({
+        data: composerInput,
+      });
+      console.log(`[] composers :`, JSON.stringify(composers));
+
+      // For each collection in collections, make a "create" mutation
+      for (const collection of collectionInput) {
+        const { id } = await tx.collection.create({
+          data: collection,
+        });
+        console.log(`[] collection created id :`, id);
+      }
+
       const mMSource = await tx.mMSource.create({
         data: mMSourceInput,
       });
@@ -104,13 +131,12 @@ export async function POST(request: NextRequest) {
             include: {
               pieceVersion: {
                 include: {
-                  piece: true,
-                  // piece: {
-                  //   include: {
-                  //     composer,
-                  //     collection,
-                  //   },
-                  // },
+                  piece: {
+                    include: {
+                      composer: true,
+                      collection: true,
+                    },
+                  },
                   movements: {
                     include: {
                       sections: {
@@ -125,14 +151,6 @@ export async function POST(request: NextRequest) {
             },
           },
           metronomeMarks: true,
-          // metronomeMarks: {
-          //   select: {
-          //     id,
-          //     beatUnit,
-          //     bpm,
-          //     comment,
-          //   },
-          // },
         },
       });
       console.log(`[] mMSourceFromDb`, JSON.stringify(mMSourceFromDb));

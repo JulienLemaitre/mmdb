@@ -1,5 +1,3 @@
-"use client";
-
 import MMSourceForm from "@/components/multiStepMMSourceForm/MMSourceForm";
 
 const FeedPage = () => {

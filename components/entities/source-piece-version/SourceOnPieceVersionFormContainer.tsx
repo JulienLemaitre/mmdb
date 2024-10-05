@@ -20,7 +20,7 @@ import CollectionPieceVersionsForm from "@/components/multiStepCollectionPieceVe
 
 type SourcePieceVersionSelectFormProps = {
   sourcePieceVersions?: MMSourcePieceVersionsState[];
-  onSubmit: () => void;
+  onSubmit: (option: { goToNextStep: boolean }) => void;
   submitTitle?: string;
 };
 
@@ -31,8 +31,7 @@ const SourceOnPieceVersionFormContainer = ({
 }: SourcePieceVersionSelectFormProps) => {
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
   const [formType, setFormType] =
-    // useState<SourceOnPieceVersionsFormType>("none"); TODO: uncomment - for test only
-    useState<SourceOnPieceVersionsFormType>("collection");
+    useState<SourceOnPieceVersionsFormType>("none");
   const isFormOpen = !!feedFormState.formInfo?.isSourceOnPieceVersionformOpen;
   const isIntro =
     feedFormState?.mMSourcePieceVersions?.length === 0 && !isFormOpen;
@@ -90,15 +89,29 @@ const SourceOnPieceVersionFormContainer = ({
           </p>
         </div>
       ) : null}
-      {isFormOpen && formType === "single" && (
-        <SinglePieceVersionFormProvider>
-          <SinglePieceVersionForm onFormClose={onFormClose} />
-        </SinglePieceVersionFormProvider>
-      )}
-      {isFormOpen && formType === "collection" && (
-        <CollectionPieceVersionsFormProvider>
-          <CollectionPieceVersionsForm onFormClose={onFormClose} />
-        </CollectionPieceVersionsFormProvider>
+      {isFormOpen && (
+        <>
+          {formType === "single" && (
+            <SinglePieceVersionFormProvider>
+              <SinglePieceVersionForm onFormClose={onFormClose} />
+            </SinglePieceVersionFormProvider>
+          )}
+          {formType === "collection" && (
+            <CollectionPieceVersionsFormProvider>
+              <CollectionPieceVersionsForm onFormClose={onFormClose} />
+            </CollectionPieceVersionsFormProvider>
+          )}
+          <div className="grid grid-cols-2 gap-4 items-center mt-6 w-full max-w-2xl">
+            <button
+              className="btn btn-accent"
+              type="button"
+              onClick={() => onFormClose()}
+            >
+              <TrashIcon className="w-5 h-5" />
+              {`Discard this ${formType === "single" ? "piece" : "collection"}`}
+            </button>
+          </div>
+        </>
       )}
       {!isFormOpen && (
         <>
@@ -168,15 +181,15 @@ const SourceOnPieceVersionFormContainer = ({
               Add a complete collection
             </button>
           </div>
+          <MMSourceFormStepNavigation
+            onSave={() => onSubmit({ goToNextStep: false })}
+            onSaveAndGoToNextStep={() => onSubmit({ goToNextStep: true })}
+            isNextDisabled={!(sourcePieceVersions.length > 0 && !isFormOpen)}
+            submitTitle={submitTitle}
+            onGoToPrevStep={onFormClose}
+          />
         </>
       )}
-
-      <MMSourceFormStepNavigation
-        onClick={onSubmit}
-        isNextDisabled={!(sourcePieceVersions.length > 0 && !isFormOpen)}
-        submitTitle={submitTitle}
-        onGoToPrevStep={onFormClose}
-      />
     </>
   );
 };

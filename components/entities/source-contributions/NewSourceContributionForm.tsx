@@ -149,24 +149,24 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
               name={`person.firstName` as const}
               label={getLabel("firstName")}
               isRequired
-              {...{ register, watch, errors }}
+              {...{ register, control, errors }}
             />
             <FormInput
               name={`person.lastName` as const}
               label={getLabel("lastName")}
               isRequired
-              {...{ register, watch, errors }}
+              {...{ register, control, errors }}
             />
             <FormInput
               name={`person.birthYear` as const}
               label={getLabel("birthYear")}
               isRequired
-              {...{ register, watch, errors }}
+              {...{ register, control, errors }}
             />
             <FormInput
               name={`person.deathYear` as const}
               label={getLabel("deathYear")}
-              {...{ register, watch, errors }}
+              {...{ register, control, errors }}
             />
           </>
         ) : (
@@ -174,7 +174,7 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
             name={`organization.name` as const}
             isRequired
             label="Organization name"
-            {...{ register, watch, errors }}
+            {...{ register, control, errors }}
           />
         )}
         <button

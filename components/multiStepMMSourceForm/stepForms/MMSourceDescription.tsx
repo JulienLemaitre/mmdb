@@ -10,9 +10,13 @@ const MMSourceDescription = () => {
   const { dispatch, currentStepRank, state } = useFeedForm();
   const step = getStepByRank(currentStepRank);
 
-  const onSubmit = async (data: SourceDescriptionInput) => {
+  const onSubmit = async (
+    data: SourceDescriptionInput,
+    option: { goToNextStep: boolean },
+  ) => {
     // Front input values validation is successful at this point.
-    console.log("data", data);
+    console.log("[MMSourceDescription onSubmit] data", data);
+    console.log(`[MMSourceDescription onSubmit] option :`, option);
 
     const sourceData = data;
     // Remove null values from sourceData
@@ -32,8 +36,12 @@ const MMSourceDescription = () => {
     );
     updateFeedForm(dispatch, "mMSourceDescription", {
       value: sourceDescriptionState,
-      next: true,
+      next: !!option?.goToNextStep,
     });
+
+    if (!option.goToNextStep) {
+      return sourceDescriptionState;
+    }
   };
 
   const sourceDescriptionInput = getMMSourceDescriptionInputFromState(

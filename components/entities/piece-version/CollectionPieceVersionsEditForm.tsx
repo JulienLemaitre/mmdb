@@ -63,6 +63,8 @@ function CollectionPieceVersionsEditForm({
             onFormClose={() => setIsFormOpen(false)}
             onSubmit={onSinglePieceSubmit}
             isCollectionCreationMode={true}
+            collectionId={state.collection?.id}
+            collectionFormState={state}
             newPieceDefaultTitle={newPieceDefaultTitle}
             composerId={composerId}
           />

@@ -20,6 +20,7 @@ import {
 } from "@/components/context/feedFormContext";
 import getPieceStateFromInput from "@/utils/getPieceStateFromInput";
 import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput";
+import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
@@ -28,6 +29,8 @@ type SinglePieceVersionFormProps = {
   isCollectionCreationMode?: boolean;
   composerId?: string;
   newPieceDefaultTitle?: string;
+  collectionId?: string;
+  collectionFormState?: any;
 };
 
 /**
@@ -40,6 +43,8 @@ const SinglePieceVersionForm = ({
   isCollectionCreationMode,
   composerId,
   newPieceDefaultTitle,
+  collectionId,
+  collectionFormState,
 }: SinglePieceVersionFormProps) => {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
   const { dispatch, state, currentStepRank } = useSinglePieceVersionForm();
@@ -61,11 +66,8 @@ const SinglePieceVersionForm = ({
   ////////////////// COMPOSER ////////////////////
 
   const onComposerCreated = (composer: PersonInput) => {
-    const newComposer: PersonState = {
-      ...composer,
-      id: composer.id || uuidv4(),
-      isNew: true,
-    };
+    const newComposer: PersonState = getPersonStateFromPersonInput(composer);
+    newComposer.isNew = true;
     updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
     updateSinglePieceVersionForm(dispatch, "composer", {
       value: {
@@ -125,9 +127,21 @@ const SinglePieceVersionForm = ({
     if (selectedPieceId && isPieceSelectedNew) {
       deleteIdArray = [selectedPieceId];
     }
+    console.log(`[] pieceState :`, pieceState);
+    let piecesArray = [pieceState];
+
+    if (isCollectionCreationMode && collectionId && collectionFormState) {
+      piecesArray = piecesArray.map((piece) => ({
+        ...piece,
+        collectionId,
+        collectionRank:
+          (collectionFormState.mMSourcePieceVersions.length || 0) + 1,
+      }));
+    }
+    console.log(`[with potential collection value] piecesArray :`, piecesArray);
 
     updateFeedForm(feedFormDispatch, "pieces", {
-      array: [pieceState],
+      array: piecesArray,
       ...(deleteIdArray.length ? { deleteIdArray } : {}),
     });
     updateSinglePieceVersionForm(dispatch, "piece", {

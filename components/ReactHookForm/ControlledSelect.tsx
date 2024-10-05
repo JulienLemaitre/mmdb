@@ -1,6 +1,7 @@
 import Select from "@/components/ReactSelect/Select";
 import labelOnlyFilterOption from "@/utils/labelOnlyFilterOption";
 import { useController } from "react-hook-form";
+import { ReactSelectStyles } from "@/components/ReactSelect/ReactSelectStyles";
 
 const ControlledSelect = ({
   control,
@@ -23,7 +24,7 @@ const ControlledSelect = ({
 
   return (
     <div
-      className={`relative form-control w-full max-w-xs${selectProps.isDisabled ? ` opacity-50 cursor-not-allowed` : ""}`}
+      className={`relative form-control mt-2 w-full max-w-xs${selectProps.isDisabled ? ` opacity-50 cursor-not-allowed` : ""}`}
     >
       {label && (
         <label className="label">
@@ -43,11 +44,10 @@ const ControlledSelect = ({
         onBlur={onBlur}
         value={value || defaultValue}
         filterOption={labelOnlyFilterOption}
+        styles={ReactSelectStyles}
         {...selectProps}
       />
-      <span className="absolute top-full label-text-alt text-red-500">
-        {error?.message}
-      </span>
+      <div className="label-text-alt text-red-500">{error?.message}</div>
     </div>
   );
 };

@@ -31,6 +31,18 @@ export type SourceOnPieceVersionsFormType = "single" | "collection" | "none";
 
 export type ReferenceTypeAndReference = Pick<Reference, "type" | "reference">;
 
+// More generic types
+
+export type InputMethod =
+  | "none"
+  | "text"
+  | "decimal"
+  | "numeric"
+  | "tel"
+  | "search"
+  | "email"
+  | "url";
+
 // Data in STATE
 
 export type StateEntity = {
@@ -111,8 +123,10 @@ export type CollectionState = Pick<Collection, "id" | "composerId" | "title"> &
 export type PieceState = Pick<
   Piece,
   "id" | "nickname" | "yearOfComposition" | "title" | "composerId"
-> &
-  IsNewProp;
+> & {
+  collectionId?: string;
+  collectionRank?: number;
+} & IsNewProp;
 
 export type SectionState = Pick<
   Section,
@@ -195,20 +209,22 @@ export type OptionInputTyped<T> = {
   label: string;
 };
 
-export type PersonInput = Pick<
-  Person,
-  "firstName" | "lastName" | "birthYear" | "deathYear"
-> & { id?: string };
+export type PersonInput = Pick<Person, "firstName" | "lastName"> & {
+  id?: string;
+  birthYear: string;
+  deathYear?: string;
+};
 export type CollectionInput = Pick<Collection, "composerId" | "title"> & {
   id?: string;
 };
 export type CollectionTitleInput = Pick<Collection, "title"> & {
   id?: string;
 };
-export type PieceInput = Pick<
-  Piece,
-  "nickname" | "yearOfComposition" | "title"
-> & { id?: string; composerId?: string };
+export type PieceInput = Pick<Piece, "nickname" | "title"> & {
+  id?: string;
+  composerId?: string;
+  yearOfComposition?: string;
+};
 export type SectionInput = Pick<
   Section,
   | "metreNumerator"
@@ -241,10 +257,11 @@ export type ReferenceInput = {
   reference: string;
 };
 
-export type SourceDescriptionInput = Pick<MMSource, "link" | "year"> & {
+export type SourceDescriptionInput = Pick<MMSource, "link"> & {
   id?: string;
   comment?: string;
   title?: string;
+  year: string;
   references?: ReferenceInput[];
   type: OptionInput;
 };

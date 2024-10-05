@@ -123,7 +123,7 @@ export default function MetronomeMarkArray({
                     disabled={isNoMMChecked}
                     label="BPM"
                     type="number"
-                    {...{ register, watch, errors }}
+                    {...{ register, control, errors }}
                   />
                   {!commentToShow.includes(index) && (
                     <button
@@ -145,7 +145,7 @@ export default function MetronomeMarkArray({
                       label={`Comment`}
                       controlClassName="max-w-xl"
                       defaultValue={``}
-                      {...{ register, errors }}
+                      {...{ register, control, errors }}
                     />
                     <button
                       type="button"

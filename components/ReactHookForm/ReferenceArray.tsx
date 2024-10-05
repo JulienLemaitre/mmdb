@@ -51,7 +51,7 @@ export default function ReferenceArray({
                 label="Value"
                 onBlur={() => onReferenceBlur(index)}
                 onInputChange={() => onReferenceInputChange(index)}
-                {...{ register, watch, errors }}
+                {...{ register, control, errors }}
                 isLoading={isCheckingReference}
               />
               <button

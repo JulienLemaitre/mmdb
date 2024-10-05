@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Providers from "@/components/Providers";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import { MODAL_AREA_ID } from "@/utils/constants";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({
         </Providers>
         <SpeedInsights />
         <Analytics />
+        <div id={MODAL_AREA_ID}></div>
       </body>
     </html>
   );

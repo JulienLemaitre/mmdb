@@ -23,6 +23,7 @@ import { getStepByRank } from "@/components/multiStepCollectionPieceVersionsForm
 import DebugBox from "@/components/DebugBox";
 import { v4 as uuidv4 } from "uuid";
 import CollectionPieceVersionsSteps from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsSteps";
+import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
 
 type CollectionPieceVersionFormProps = {
   onFormClose: () => void;
@@ -41,11 +42,8 @@ function CollectionPieceVersionsForm({
   ////////////////// COMPOSER ////////////////////
 
   const onComposerCreated = (composer: PersonInput) => {
-    const newComposer: PersonState = {
-      ...composer,
-      id: composer.id || uuidv4(),
-      isNew: true,
-    };
+    const newComposer: PersonState = getPersonStateFromPersonInput(composer);
+    newComposer.isNew = true;
     updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
     updateCollectionPieceVersionsForm(dispatch, "collection", {
       value: { composerId: newComposer.id },
@@ -108,9 +106,8 @@ function CollectionPieceVersionsForm({
   /////////////////// PIECE VERSION //////////////////////////////
 
   const onAddPieceVersion = (pieceVersion: PieceVersionState) => {
-    updateFeedForm(feedFormDispatch, "pieceVersions", {
-      array: [pieceVersion],
-    });
+    const payload = { array: [pieceVersion] };
+    updateFeedForm(feedFormDispatch, "pieceVersions", payload);
   };
 
   ////////////////// SUBMIT ////////////////////
@@ -203,40 +200,5 @@ function CollectionPieceVersionsForm({
     </div>
   );
 }
-// <h1 className="mb-4 text-4xl font-bold">
-//   Complete Collection
-//   <span className="block text-xl font-normal">of Pieces</span>
-// </h1>
-// <button className="btn btn-neutral" type="button" onClick={onFormClose}>
-//   <ArrowLeftIcon className="w-5 h-5 mr-2" />
-//   Back
-// </button>
-
-// {!isCollectionRegistered && (
-//   <CollectionEditForm
-//     onSubmit={onCollectionSubmit}
-//     submitTitle="collection info"
-//   />
-// )}
-// {isCollectionRegistered && (
-//   <button
-//     className="btn btn-primary"
-//     type="button"
-//     onClick={() => setIsPieceVersionFormOpen(true)}
-//   >
-//     Add a piece
-//   </button>
-// )}
-// {isPieceVersionFormOpen && (
-//   <SinglePieceVersionFormProvider>
-//     <SinglePieceVersionForm
-//       onFormClose={() => setIsPieceVersionFormOpen(false)}
-//       onSubmit={onAddSourceOnPieceVersion}
-//       initPayload={{
-//         composer: {},
-//       }}
-//     />
-//   </SinglePieceVersionFormProvider>
-// )}
 
 export default CollectionPieceVersionsForm;

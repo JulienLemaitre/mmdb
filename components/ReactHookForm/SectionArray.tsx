@@ -60,7 +60,7 @@ export default function SectionArray({
                     inputClassName="w-20"
                     disabled={isMetreFieldDisabled}
                     // defaultValue={``}
-                    {...{ register, errors }}
+                    {...{ register, control, errors }}
                   />
                   <div className="divider border-black my-0" />
                   <FormInput
@@ -72,7 +72,7 @@ export default function SectionArray({
                     inputClassName="w-20"
                     disabled={isMetreFieldDisabled}
                     // defaultValue={``}
-                    {...{ register, errors }}
+                    {...{ register, control, errors }}
                   />
                 </div>
                 <label className="text-5xl flex items-center">
@@ -172,7 +172,7 @@ export default function SectionArray({
                 }
                 label={`Fastest structural notes per bar`}
                 type="number"
-                {...{ register, errors }}
+                {...{ register, control, errors }}
               />
               <label>
                 <input
@@ -194,7 +194,7 @@ export default function SectionArray({
                 }
                 label={`Fastest staccato notes per bar`}
                 type="number"
-                {...{ register, errors }}
+                {...{ register, control, errors }}
               />
               <FormInput
                 name={
@@ -202,7 +202,7 @@ export default function SectionArray({
                 }
                 label={`Fastest repeated notes per bar`}
                 type="number"
-                {...{ register, errors }}
+                {...{ register, control, errors }}
               />
               <FormInput
                 name={
@@ -210,7 +210,7 @@ export default function SectionArray({
                 }
                 label={`Fastest ornamental notes per bar`}
                 type="number"
-                {...{ register, errors }}
+                {...{ register, control, errors }}
               />
               <FormInput // TODO: button "add a comment" and a textarea
                 name={
@@ -218,7 +218,7 @@ export default function SectionArray({
                 }
                 label={`Comment`}
                 defaultValue={``}
-                {...{ register, errors }}
+                {...{ register, control, errors }}
               />
               <section className="my-4 flex gap-2 w-full justify-between">
                 <div className="flex gap-2">
