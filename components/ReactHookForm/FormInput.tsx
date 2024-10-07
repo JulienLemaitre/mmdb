@@ -1,6 +1,3 @@
-// import { emailRegex, excludedEmailDomain, mobileRegex } from "@/utils/regex";
-// import formatPhoneInput from "@/utils/formatPhoneInput";
-
 import get from "just-safe-get";
 import { GetErrorMessage } from "@/utils/GetErrorMessage";
 import { useState } from "react";
@@ -10,49 +7,19 @@ import LoadingSpinIcon from "@/components/svg/LoadingSpinIcon";
 import { InputMethod } from "@/types/formTypes";
 import { Controller } from "react-hook-form";
 
-function getRegisterProps(name: string, inputMode?: InputMethod) {
+function getRegisterProps({
+  name,
+  inputMode,
+}: {
+  name: string;
+  inputMode?: InputMethod;
+}) {
   if (inputMode === "numeric") {
     return {
       pattern: /[0-9]{4}/,
       setValueAs: (v) => (v ? v.replace(/\D/g, "") : v),
     };
   }
-  return {
-    // email: {
-    //   onChange: (e) => {
-    //     e.target.value = e.target.value.trim();
-    //   },
-    //   pattern: {
-    //     value: emailRegex,
-    //     message: "Veuillez entrer un email valide",
-    //   },
-    //   validate: (v) =>
-    //     excludedEmailDomain.test(v) ||
-    //     "Impossible d'utiliser un email éphémère",
-    // },
-    // mobile: {
-    //   onChange: (e) => {
-    //     e.target.value = formatPhoneInput(e.target.value);
-    //   },
-    //   pattern: {
-    //     value: mobileRegex,
-    //     message: "Numéro de mobile invalide",
-    //   },
-    // },
-    // password: {
-    //   onChange: (e) => {
-    //     e.target.value = e.target.value.trim();
-    //   },
-    //   minLength: {
-    //     value: 6,
-    //     message: "Minimum 6 caractères",
-    //   },
-    //   maxLength: {
-    //     value: 60,
-    //     message: "Maximum 60 caractères",
-    //   },
-    // },
-  }[name];
 }
 
 const transformActions = {
@@ -61,7 +28,7 @@ const transformActions = {
 };
 
 function getControllerProps(field, inputMode, onInputChange?: () => void) {
-  const registerProps = getRegisterProps(field.name, inputMode);
+  const registerProps = getRegisterProps({ name: field.name, inputMode });
   let controllerProps: any = {
     rules: registerProps,
   };
@@ -115,16 +82,12 @@ type FormInputProps = {
   controlClassName?: string;
   inputClassName?: string;
   inputMode?: InputMethod;
-  // watch: any;
-  // showPassword?: boolean;
-  // toggleShowPassword?: () => void;
   onBlur?: () => void;
   onInputChange?: () => void;
   isLoading?: boolean;
 };
 
 export function FormInput({
-  register,
   control,
   name,
   label = "",
@@ -133,40 +96,22 @@ export function FormInput({
   defaultValue,
   disabled = false,
   type: typeProp,
-  registerProps = {},
   controlClassName = "",
   inputClassName = "", // showPassword = false,
   inputMode = "text",
   onBlur = () => {},
   onInputChange,
   isLoading = false,
-  // watch,
-  // showPassword = false,
-  // toggleShowPassword = () => {},
 }: FormInputProps) {
   const [showPassword, setShowPassword] = useState(false);
 
-  // Create a version of name with every array index as [index]. replaced by .index.
-  // This is to be able to use getValues() with arrays.
   const nameWithDotIndex = name.replace(/\[(\d+)\]\./g, ".$1.");
-
-  // console.log(
-  //   `[] get(errors, ${nameWithDotIndex}) :`,
-  //   get(errors, nameWithDotIndex),
-  // );
   const error = get(errors, nameWithDotIndex);
-  const isInvalid = !!error;
   const type =
     (typeProp === "password" && showPassword ? "text" : null) ||
     typeProp ||
     "text";
-  // || (name.toLowerCase().includes("year") ? "number" : "text");
-  const isNumberType = type === "number";
-  if (isNumberType) {
-    console.log(`[] isNumberType -${name}- :`, isNumberType);
-  }
   const errorMessage = error?.message;
-  // console.log(`[] error :`, error);
 
   return (
     <div
@@ -188,42 +133,16 @@ export function FormInput({
             <input
               className={`input input-sm input-bordered ${inputClassName} flex-1`}
               inputMode={inputMode}
-              // value={field.value}
               {...(getControllerProps(field, inputMode, onInputChange) || {})}
               onBlur={field.onBlur}
               ref={field.ref}
               name={field.name}
-              // type={["password"].includes(name) && showPassword ? "text" : "password"}
               type={type}
-              // onChange={onInputChange}
               {...(defaultValue ? { defaultValue } : {})}
               {...(disabled ? { disabled: true } : {})}
             />
           )}
         />
-
-        {/*<input
-          className={`input input-bordered ${inputClassName} flex-1`}
-          inputMode={inputMode}
-          // type={["password"].includes(name) && showPassword ? "text" : "password"}
-          type={type}
-          {...register(name, {
-            // ...(isRequired ? { required: "Info obligatoire" } : {}),
-            ...(getRegisterProps(name, inputMode) || {}),
-            ...(isNumberType ? { valueAsNumber: true } : {}),
-            ...registerProps,
-            // onChange: (e) => {},
-          })}
-          {...(isNumberType
-            ? { onWheel: numberInputOnWheelPreventChange }
-            : {})}
-          {...(typeof onInputChange === "function"
-            ? { onChange: onInputChange }
-            : {})}
-          // onChange={onInputChange}
-          {...(defaultValue ? { defaultValue } : {})}
-          {...(disabled ? { disabled: true } : {})}
-        />*/}
         {isLoading ? (
           <div className="absolute right-0 top-1/4">
             <LoadingSpinIcon />
@@ -257,10 +176,7 @@ export function FormTextarea({
   label = "",
   isRequired = false,
   errors,
-  // watch,
   noValidation = false,
-  isDisabled = false,
-  value = undefined,
 }) {
   return (
     <div className="form-control w-full max-w-xs">
@@ -271,7 +187,7 @@ export function FormTextarea({
         className="textarea h-24 textarea-bordered"
         {...register(name, {
           ...(isRequired ? { required: "Info obligatoire" } : {}),
-          ...((!noValidation && getRegisterProps(name)) || {}),
+          ...((!noValidation && getRegisterProps({ name })) || {}),
         })}
       />
       <span className="label-text-alt text-red-500">
@@ -280,16 +196,3 @@ export function FormTextarea({
     </div>
   );
 }
-
-const numberInputOnWheelPreventChange = (e) => {
-  // Prevent the input value change
-  e.target.blur();
-
-  // Prevent the page/container scrolling
-  e.stopPropagation();
-
-  // Refocus immediately, on the next tick (after the current function is done)
-  setTimeout(() => {
-    e.target.focus();
-  }, 0);
-};
