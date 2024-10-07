@@ -19,6 +19,7 @@ import { zodOption, zodYear } from "@/utils/zodTypes";
 import getKeyLabel from "@/utils/getKeyLabel";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
+import GlobalShart from "@/components/GlobalShart";
 
 // zod schema for the search form
 const searchFormSchema = z.object({
@@ -42,6 +43,9 @@ function SearchPage() {
   const [tempoIndications, setTempoIndications] = useState<
     TempoIndicationState[]
   >([]);
+  const [lastSearch, setLastSearch] = useState<SearchFormInput>();
+  const [isPieceVersionExtended, setIsPieceVersionExtended] =
+    useState<boolean>(false);
   const [isTempoIndicationsLoading, setIsTempoIndicationsLoading] =
     useState(true);
   const [composers, setComposers] = useState<PersonState[]>([]);
@@ -76,6 +80,7 @@ function SearchPage() {
 
   const onSubmit = async (data: SearchFormInput) => {
     console.log(`[onSubmit] data :`, data);
+    setLastSearch(data);
     await fetch("/api/search", { method: "POST", body: JSON.stringify(data) })
       .then((res) => res.json())
       .then((res) => {
@@ -91,60 +96,75 @@ function SearchPage() {
   return (
     <div className="w-full p-8">
       <h1 className="mb-4 text-4xl font-bold">{`Search for scores`}</h1>
-      <form
-        // className="flex flex-col items-center justify-center"
-        onSubmit={handleSubmit(onSubmit)}
-        onKeyDown={preventEnterKeySubmission}
-      >
-        <FormInput
-          name="startYear"
-          label="Start Date"
-          type="number"
-          isRequired
-          {...{ control, errors, register, watch }}
-        />
-        <FormInput
-          name="endYear"
-          label="End Date"
-          type="number"
-          isRequired
-          {...{ control, errors, register, watch }}
-        />
-        <ControlledSelect
-          name={`tempoIndication` as const}
-          label={`Tempo Indication`}
-          id={`tempoIndication` as const}
-          control={control}
-          options={tempoIndications.map((tempoIndication) => ({
-            value: tempoIndication.id,
-            label: tempoIndication.text,
-          }))}
-          isRequired={false}
-          errors={errors}
-        />
-        <ControlledSelect
-          name={`composer` as const}
-          label={`Composer`}
-          id={`composer` as const}
-          control={control}
-          options={composers.map((composer) => ({
-            value: composer.id,
-            label: getPersonName(composer),
-          }))}
-          isRequired={false}
-          errors={errors}
-        />
-        <button
-          className="btn btn-primary mt-6 w-full max-w-xs"
-          type="submit"
-          disabled={isSubmitting}
+      <div className="flex">
+        <form
+          className="w-1/2"
+          onSubmit={handleSubmit(onSubmit)}
+          onKeyDown={preventEnterKeySubmission}
         >
-          Submit
-          {isSubmitting && (
-            <span className="loading loading-spinner loading-md"></span>
-          )}
-        </button>
-      </form>
+          <FormInput
+            name="startYear"
+            label="Start Date of composition"
+            type="number"
+            isRequired
+            {...{ control, errors, register, watch }}
+          />
+          <FormInput
+            name="endYear"
+            label="End Date of composition"
+            type="number"
+            isRequired
+            {...{ control, errors, register, watch }}
+          />
+          <ControlledSelect
+            name={`tempoIndication` as const}
+            label={`Tempo Indication`}
+            id={`tempoIndication` as const}
+            control={control}
+            options={tempoIndications.map((tempoIndication) => ({
+              value: tempoIndication.id,
+              label: tempoIndication.text,
+            }))}
+            isRequired={false}
+            errors={errors}
+          />
+          <ControlledSelect
+            name={`composer` as const}
+            label={`Composer`}
+            id={`composer` as const}
+            control={control}
+            options={composers.map((composer) => ({
+              value: composer.id,
+              label: getPersonName(composer),
+            }))}
+            isRequired={false}
+            errors={errors}
+          />
+          <button
+            className="btn btn-primary mt-6 w-full max-w-xs"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            Submit
+            {isSubmitting && (
+              <span className="loading loading-spinner loading-md"></span>
+            )}
+          </button>
+        </form>
+        <div className="w-1/2">
+          <h2>Last search</h2>
+          <pre>
+            {JSON.stringify(lastSearch, null, 2) || "no search history"}
+          </pre>
+        </div>
+      </div>
+
+      {lastSearch ? (
+        <div className="w-full h-[800px] text-slate-900 dark:text-white">
+          <GlobalShart pieceVersions={pieceVersionResults} />
+        </div>
+      ) : null}
+
       <div>
         {pieceVersionResults.length > 0 && (
           <div>
@@ -353,50 +373,50 @@ function SearchPage() {
                                                                 computedNotesPerSecondFromNotesPerBar);
 
                                                             /*if (
+                                          isOriginalNotesPerSecondAndComputedDiff
+                                        ) {
+                                          console.log(
+                                            `--------------------------------------------------`,
+                                          );
+                                          console.group(
+                                            `-- HOME ERROR -- ${
                                               isOriginalNotesPerSecondAndComputedDiff
-                                            ) {
-                                              console.log(
-                                                `--------------------------------------------------`,
-                                              );
-                                              console.group(
-                                                `-- HOME ERROR -- ${
-                                                  isOriginalNotesPerSecondAndComputedDiff
-                                                    ? "isOriginalNotesPerSecondAndComputedDiff"
-                                                    : "BPM = 108 DEBUG"
-                                                } --`,
-                                              );
-                                              console.log(
-                                                `[] ${person.firstName} ${person.lastName}: ${piece.title} - mvt#${movement.rank} - section#${section.rank}`,
-                                              );
-                                              console.log(
-                                                `[] mm.notesPerSecond :`,
-                                                mm.notesPerSecond,
-                                              );
-                                              console.log(
-                                                `[] mm.notesPerBar :`,
-                                                mm.notesPerBar,
-                                              );
-                                              console.log(
-                                                `[] mm.notesPerSecond?.[${
-                                                  keyBase +
-                                                  "PerSecond"
-                                                }] (originalNotesPerSecond) :`,
-                                                originalNotesPerSecond,
-                                              );
-                                              console.log(
-                                                `[] computedNotesPerSecondFromNotesPerBar :`,
-                                                computedNotesPerSecondFromNotesPerBar,
-                                              );
-                                              console.log(
-                                                `[] section`,
-                                                JSON.stringify(
-                                                  section,
-                                                  null,
-                                                  2,
-                                                ),
-                                              );
-                                              console.groupEnd();
-                                            }*/
+                                                ? "isOriginalNotesPerSecondAndComputedDiff"
+                                                : "BPM = 108 DEBUG"
+                                            } --`,
+                                          );
+                                          console.log(
+                                            `[] ${person.firstName} ${person.lastName}: ${piece.title} - mvt#${movement.rank} - section#${section.rank}`,
+                                          );
+                                          console.log(
+                                            `[] mm.notesPerSecond :`,
+                                            mm.notesPerSecond,
+                                          );
+                                          console.log(
+                                            `[] mm.notesPerBar :`,
+                                            mm.notesPerBar,
+                                          );
+                                          console.log(
+                                            `[] mm.notesPerSecond?.[${
+                                              keyBase +
+                                              "PerSecond"
+                                            }] (originalNotesPerSecond) :`,
+                                            originalNotesPerSecond,
+                                          );
+                                          console.log(
+                                            `[] computedNotesPerSecondFromNotesPerBar :`,
+                                            computedNotesPerSecondFromNotesPerBar,
+                                          );
+                                          console.log(
+                                            `[] section`,
+                                            JSON.stringify(
+                                              section,
+                                              null,
+                                              2,
+                                            ),
+                                          );
+                                          console.groupEnd();
+                                        }*/
 
                                                             return (
                                                               <Fragment

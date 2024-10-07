@@ -1,6 +1,6 @@
 import { db } from "@/utils/db";
 import ComposersPiecesDetails from "@/components/ComposersPiecesDetails";
-import GlobalShart from "@/components/GlobalShart";
+import GlobalShartByPersons from "@/components/GlobalShartByPersons";
 
 const getData = async () => {
   const persons = await db.person.findMany({
@@ -67,7 +67,7 @@ export default async function Page() {
   return (
     <main className="p-8">
       <div className="w-full h-[800px] text-slate-900 dark:text-white">
-        <GlobalShart persons={persons} />
+        <GlobalShartByPersons persons={persons} />
       </div>
       <ComposersPiecesDetails persons={persons} />
     </main>

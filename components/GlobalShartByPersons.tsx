@@ -3,15 +3,7 @@ import { ResponsiveScatterPlot } from "@nivo/scatterplot";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import { useCallback, useRef, useState } from "react";
 
-type GlobalShartProps = {
-  persons?: any[];
-  pieceVersions?: any[];
-};
-
-export default function GlobalShart({
-  persons,
-  pieceVersions,
-}: GlobalShartProps) {
+export default function GlobalShartByPersons({ persons }) {
   const [selectedNode, setSelectedNode] = useState<any | null>(null);
   console.log(`[GlobalShart] selectedNode :`, selectedNode);
 
@@ -27,71 +19,9 @@ export default function GlobalShart({
     staccato: [],
   };
   const mmList: any[] = [];
-  if (pieceVersions) {
-    pieceVersions.forEach((pv) => {
-      const piece = pv.piece;
-      if (piece.yearOfComposition < minDate) {
-        minDate = piece.yearOfComposition;
-      }
-      const composer = piece.composer;
-      const personDataId = composer.firstName + " " + composer.lastName;
-      const personData: { x: number; y: number; meta?: any }[] = [];
-      const hasMultipleMovements = pv.movements.length > 1;
-      pv.movements.forEach((mvt) => {
-        const hasMultipleSections = mvt.sections.length > 1;
-        mvt.sections.forEach((section) => {
-          // console.log(`[GlobalShart] section :`, section);
-
-          section?.metronomeMarks?.forEach((MM) => {
-            const notesPerSecond =
-              getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM({
-                metronomeMark: MM,
-                section,
-              });
-            for (const notesPerSecondElement in notesPerSecond) {
-              const noteType = notesPerSecondElement
-                .replace(/fastest/g, "")
-                .replace(/NotesPerSecond/g, "")
-                .toLowerCase();
-              // const mmData: any = { x: mmList.length + 1 };
-              const mmData: any = { x: piece.yearOfComposition };
-              mmData.y = notesPerSecond[notesPerSecondElement];
-              mmData.meta = {
-                noteType,
-                composer: personDataId,
-                piece: {
-                  title: piece.title,
-                },
-                movement: {
-                  ...(hasMultipleMovements ? { rank: mvt.rank } : {}),
-                },
-                section: {
-                  ...(hasMultipleSections ? { rank: section.rank } : {}),
-                  metreNumerator: section.metreNumerator,
-                  metreDenominator: section.metreDenominator,
-                  isCommonTime: section.isCommonTime,
-                  isCutTime: section.isCutTime,
-                  comment: section.comment,
-                  tempoIndication: section.tempoIndication,
-                },
-                mm: MM,
-              };
-              mmList.push(mmData);
-              dataGroupedPerNoteTypeObject[noteType].push(mmData);
-              personData.push(mmData);
-            }
-          });
-        });
-      });
-
-      return {
-        id: personDataId,
-        data: personData,
-      };
-    });
-  }
-  if (persons) {
-    persons.forEach((person) => {
+  const dataGroupedPerCompositor = persons
+    // Sort persons by birth date
+    .map((person) => {
       const personDataId = person.firstName + " " + person.lastName;
       const personData: { x: number; y: number; meta?: any }[] = [];
       person.compositions.forEach((piece) => {
@@ -155,7 +85,6 @@ export default function GlobalShart({
         data: personData,
       };
     });
-  }
   // console.log(
   //   `[GlobalShart] dataGroupedPerCompositor :`,
   //   dataGroupedPerCompositor,
@@ -166,8 +95,8 @@ export default function GlobalShart({
     id: key,
     data: value,
   }));
-  console.log(`[GlobalShart] dataGroupedPerNoteType :`, dataGroupedPerNoteType);
-  console.log(`[GlobalShart] minDate :`, minDate);
+  // console.log(`[GlobalShart] dataGroupedPerNoteType :`, dataGroupedPerNoteType);
+  // console.log(`[GlobalShart] minDate :`, minDate);
 
   // axis: Partial<{domain: Partial<{line: Partial<Partial<CSSProperties>>}>, ticks: Partial<...>, legend: Partial<...>}
   const theme = {
@@ -203,10 +132,11 @@ export default function GlobalShart({
       data={dataGroupedPerNoteType}
       theme={theme}
       margin={{ top: 60, right: 140, bottom: 70, left: 90 }}
-      xScale={{ type: "linear", min: minDate - 10, max: "auto" }}
-      xFormat="^-.0"
+      xScale={{ type: "linear", min: 0, max: "auto" }}
+      // xScale={{ type: "linear", min: minDate - 10, max: "auto" }}
+      // xFormat=">-.2f"
       yScale={{ type: "linear", min: 0, max: "auto" }}
-      yFormat="^-.0"
+      yFormat=">-.2r"
       blendMode="soft-light"
       axisTop={null}
       axisRight={null}
@@ -258,10 +188,8 @@ export default function GlobalShart({
   );
 }
 
-const Tooltip = ({ node }) => {
-  const { data } = node || {};
-  const { meta } = data || {};
-  if (!meta) return null;
+const Tooltip = ({ node: { data } }) => {
+  const { meta } = data;
   // console.log(`[Tooltip] meta :`, meta);
   const { noteType, composer, piece, movement, section, mm } = meta;
   const { isCommonTime, isCutTime } = section;
@@ -293,7 +221,7 @@ const Tooltip = ({ node }) => {
       <div>
         source: {mMSource.year} - {mMSource.type.toLowerCase()}
       </div>
-      {mMSource.title && <div className="">{mMSource.title}</div>}
+      {mMSource.title && <div className="">{mMSource.mMSource.title}</div>}
       {mMSource.contributions.map((contribution) => (
         <div key={contribution.id} className="flex">
           <div className="mr-2">{contribution.role.toLowerCase()}:</div>
