@@ -6,12 +6,20 @@ import { useCallback, useRef, useState } from "react";
 type GlobalShartProps = {
   persons?: any[];
   pieceVersions?: any[];
+  filter?: {
+    tempoIndicationId?: string;
+  };
 };
 
 export default function GlobalShart({
   persons,
   pieceVersions,
+  filter,
 }: GlobalShartProps) {
+  console.log(
+    `[GlobalShart] filter?.tempoIndicationId :`,
+    filter?.tempoIndicationId,
+  );
   const [selectedNode, setSelectedNode] = useState<any | null>(null);
   console.log(`[GlobalShart] selectedNode :`, selectedNode);
 
@@ -40,6 +48,12 @@ export default function GlobalShart({
       pv.movements.forEach((mvt) => {
         const hasMultipleSections = mvt.sections.length > 1;
         mvt.sections.forEach((section) => {
+          if (
+            filter?.tempoIndicationId &&
+            section.tempoIndication.id !== filter.tempoIndicationId
+          ) {
+            return;
+          }
           // console.log(`[GlobalShart] section :`, section);
 
           section?.metronomeMarks?.forEach((MM) => {

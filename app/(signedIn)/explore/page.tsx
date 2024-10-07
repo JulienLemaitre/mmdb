@@ -51,6 +51,9 @@ function SearchPage() {
   const [composers, setComposers] = useState<PersonState[]>([]);
   const [isComposersLoading, setIsComposersLoading] = useState(true);
   const [pieceVersionResults, setPieceVersionResults] = useState<any[]>([]);
+  console.log(`[] pieceVersionResults :`, pieceVersionResults);
+
+  const tempoIndicationId = lastSearch?.tempoIndication?.value;
 
   // Fetch tempoIndicationSelectList from API
   useEffect(() => {
@@ -161,7 +164,10 @@ function SearchPage() {
 
       {lastSearch ? (
         <div className="w-full h-[800px] text-slate-900 dark:text-white">
-          <GlobalShart pieceVersions={pieceVersionResults} />
+          <GlobalShart
+            pieceVersions={pieceVersionResults}
+            filter={{ tempoIndicationId }}
+          />
         </div>
       ) : null}
 
