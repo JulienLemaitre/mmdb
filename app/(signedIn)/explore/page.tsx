@@ -20,6 +20,7 @@ import getKeyLabel from "@/utils/getKeyLabel";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 import GlobalShart from "@/components/GlobalShart";
+import Link from "next/link";
 
 // zod schema for the search form
 const searchFormSchema = z.object({
@@ -98,7 +99,15 @@ function SearchPage() {
 
   return (
     <div className="w-full p-8">
-      <h1 className="mb-4 text-4xl font-bold">{`Search for scores`}</h1>
+      <div className="flex">
+        <h1 className="flex-1 mb-4 text-4xl font-bold">{`Search for scores`}</h1>
+        <Link href="/explore/allByComposer" className={`link link-primary`}>
+          See all data per composer
+        </Link>
+        {/*<Link href="/explore/allBySource" className={`link link-primary`}>
+          See all data per source
+        </Link>*/}
+      </div>
       <div className="flex">
         <form
           className="w-1/2"

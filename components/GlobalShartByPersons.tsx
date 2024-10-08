@@ -18,7 +18,7 @@ export default function GlobalShartByPersons({ persons }) {
     ornamental: [],
     staccato: [],
   };
-  const mmList: any[] = [];
+  // const mmList: any[] = [];
   const dataGroupedPerCompositor = persons
     // Sort persons by birth date
     .map((person) => {
@@ -26,8 +26,9 @@ export default function GlobalShartByPersons({ persons }) {
       const personData: { x: number; y: number; meta?: any }[] = [];
       person.compositions.forEach((piece) => {
         // console.log(`[] piece :`, piece)
-        if (piece.yearOfComposition < minDate) {
+        if (piece.yearOfComposition && piece.yearOfComposition < minDate) {
           minDate = piece.yearOfComposition;
+          console.log(`[piece ${piece.id}] minDate :`, minDate);
         }
         piece.pieceVersions.forEach((pv) => {
           const hasMultipleMovements = pv.movements.length > 1;
@@ -47,8 +48,8 @@ export default function GlobalShartByPersons({ persons }) {
                     .replace(/fastest/g, "")
                     .replace(/NotesPerSecond/g, "")
                     .toLowerCase();
-                  const mmData: any = { x: mmList.length + 1 };
-                  // const mmData: any = { x: piece.yearOfComposition };
+                  // const mmData: any = { x: mmList.length + 1 };
+                  const mmData: any = { x: piece.yearOfComposition };
                   mmData.y = notesPerSecond[notesPerSecondElement];
                   mmData.meta = {
                     noteType,
@@ -70,7 +71,7 @@ export default function GlobalShartByPersons({ persons }) {
                     },
                     mm: MM,
                   };
-                  mmList.push(mmData);
+                  // mmList.push(mmData);
                   dataGroupedPerNoteTypeObject[noteType].push(mmData);
                   personData.push(mmData);
                 }
@@ -132,11 +133,15 @@ export default function GlobalShartByPersons({ persons }) {
       data={dataGroupedPerNoteType}
       theme={theme}
       margin={{ top: 60, right: 140, bottom: 70, left: 90 }}
-      xScale={{ type: "linear", min: 0, max: "auto" }}
-      // xScale={{ type: "linear", min: minDate - 10, max: "auto" }}
-      // xFormat=">-.2f"
+      xScale={{ type: "linear", min: minDate - 10, max: "auto" }}
+      xFormat="^-.0"
       yScale={{ type: "linear", min: 0, max: "auto" }}
-      yFormat=">-.2r"
+      yFormat="^-.0"
+      // xScale={{ type: "linear", min: 0, max: "auto" }}
+      // // xScale={{ type: "linear", min: minDate - 10, max: "auto" }}
+      // // xFormat=">-.2f"
+      // yScale={{ type: "linear", min: 0, max: "auto" }}
+      // yFormat=">-.2r"
       blendMode="soft-light"
       axisTop={null}
       axisRight={null}
@@ -221,7 +226,7 @@ const Tooltip = ({ node: { data } }) => {
       <div>
         source: {mMSource.year} - {mMSource.type.toLowerCase()}
       </div>
-      {mMSource.title && <div className="">{mMSource.mMSource.title}</div>}
+      {mMSource.title && <div className="">{mMSource.title}</div>}
       {mMSource.contributions.map((contribution) => (
         <div key={contribution.id} className="flex">
           <div className="mr-2">{contribution.role.toLowerCase()}:</div>
