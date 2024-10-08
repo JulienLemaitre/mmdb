@@ -99,14 +99,14 @@ function SearchPage() {
 
   return (
     <div className="w-full p-8">
-      <div className="flex">
+      <div className="flex gap-4">
         <h1 className="flex-1 mb-4 text-4xl font-bold">{`Search for scores`}</h1>
         <Link href="/explore/allByComposer" className={`link link-primary`}>
           See all data per composer
         </Link>
-        {/*<Link href="/explore/allBySource" className={`link link-primary`}>
+        <Link href="/explore/allBySource" className={`link link-primary`}>
           See all data per source
-        </Link>*/}
+        </Link>
       </div>
       <div className="flex">
         <form
