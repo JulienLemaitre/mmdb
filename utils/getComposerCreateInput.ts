@@ -5,7 +5,7 @@ import { Prisma } from "@prisma/client";
 export default function getComposerCreateInput(
   state: PersistableFeedFormState,
   creatorId: string,
-): Prisma.PersonCreateInput[] {
+): Prisma.PersonCreateManyInput[] {
   // Find all the new composer to persist in db.
   // We don't check explicitly for collection because the composer of a collection will be the composer of its pieces by definition and by design.
   const newPersons = state.persons.filter((person) => {
@@ -43,17 +43,13 @@ export default function getComposerCreateInput(
     JSON.stringify(newPersons, null, 2),
   );
 
-  const personsInput: Prisma.PersonCreateInput[] = newPersons.map(
+  const personsInput: Prisma.PersonCreateManyInput[] = newPersons.map(
     (newPerson) => ({
       id: newPerson.id,
       firstName: newPerson.firstName,
       lastName: newPerson.lastName,
       birthYear: newPerson.birthYear,
-      creator: {
-        connect: {
-          id: creatorId,
-        },
-      },
+      creatorId,
     }),
   );
 

@@ -8,6 +8,7 @@ import { fetchAPI } from "@/utils/fetchAPI";
 import { useSession } from "next-auth/react";
 import DebugBox from "@/components/DebugBox";
 import LoadingSpinIcon from "@/components/svg/LoadingSpinIcon";
+import MMSourceDetails from "@/components/MMSourceDetails";
 
 function FeedSummary() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,6 +60,8 @@ function FeedSummary() {
         <button className="btn btn-primary" onClick={onReset}>
           Reset the form
         </button>
+        <div>Here is the data you saved :</div>
+        <MMSourceDetails mMSource={submitResponse.mMSourceFromDb} />
         <DebugBox
           title="Submit success return"
           stateObject={submitResponse}
@@ -87,13 +90,17 @@ function FeedSummary() {
   return (
     <div className="flex items-center">
       <button
-        className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 border border-gray-400 rounded"
+        className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 border border-gray-400 rounded mr-4"
         type="button"
         onClick={saveAll}
       >
         Save the complete Metronome Mark Source
       </button>
-      {isSubmitting ? <LoadingSpinIcon className="ml-3" /> : null}
+      {isSubmitting ? (
+        <div className="w-6">
+          <LoadingSpinIcon />
+        </div>
+      ) : null}
     </div>
   );
 }

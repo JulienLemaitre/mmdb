@@ -32,21 +32,6 @@ const getData = async () => {
                   },
                 },
               },
-              // mMSources: {
-              //   include: {
-              //     mMSource: {
-              //       include: {
-              //         contributions: {
-              //           include: {
-              //             person: true,
-              //             organization: true,
-              //           },
-              //         },
-              //         references: true,
-              //       },
-              //     },
-              //   },
-              // },
             },
           },
         },

@@ -55,16 +55,20 @@ export async function POST(request: NextRequest) {
   assertsIsPersistableFeedFormState(state);
 
   // We need to persist new composers first, as it is used by collection and mMSource queries below
-  const composerInput: Prisma.PersonCreateInput[] = getComposerCreateInput(
-    state,
-    creatorId,
+  const composerCreateManyInput: Prisma.PersonCreateManyInput[] =
+    getComposerCreateInput(state, creatorId);
+  console.log(
+    `[] composerCreateManyInput`,
+    JSON.stringify(composerCreateManyInput, null, 2),
   );
-  console.log(`[] composerInput`, JSON.stringify(composerInput, null, 2));
 
-  const collectionInput: Prisma.CollectionCreateInput[] =
+  const collectionCreateManyInput: Prisma.CollectionCreateManyInput[] =
     getCollectionCreateInput(state, creatorId);
 
-  console.log(`[] collectionInput`, JSON.stringify(collectionInput, null, 2));
+  console.log(
+    `[] collectionCreateManyInput`,
+    JSON.stringify(collectionCreateManyInput, null, 2),
+  );
 
   const mMSourceInput: Prisma.MMSourceCreateInput =
     getMMSourceAndRelatedEntitiesDBInputFromState(state, creatorId);
@@ -75,17 +79,14 @@ export async function POST(request: NextRequest) {
   return await db
     .$transaction(async (tx) => {
       const composers = await tx.person.createMany({
-        data: composerInput,
+        data: composerCreateManyInput,
       });
       console.log(`[] composers :`, JSON.stringify(composers));
 
-      // For each collection in collections, make a "create" mutation
-      for (const collection of collectionInput) {
-        const { id } = await tx.collection.create({
-          data: collection,
-        });
-        console.log(`[] collection created id :`, id);
-      }
+      const collections = await tx.collection.createMany({
+        data: collectionCreateManyInput,
+      });
+      console.log(`[] collections :`, JSON.stringify(collections));
 
       const mMSource = await tx.mMSource.create({
         data: mMSourceInput,
@@ -142,6 +143,7 @@ export async function POST(request: NextRequest) {
                       sections: {
                         include: {
                           tempoIndication: true,
+                          metronomeMarks: true,
                         },
                       },
                     },
@@ -150,7 +152,6 @@ export async function POST(request: NextRequest) {
               },
             },
           },
-          metronomeMarks: true,
         },
       });
       console.log(`[] mMSourceFromDb`, JSON.stringify(mMSourceFromDb));
