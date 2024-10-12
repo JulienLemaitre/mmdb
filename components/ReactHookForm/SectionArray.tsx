@@ -64,17 +64,19 @@ export default function SectionArray({
                     {...{ register, control, errors }}
                   />
                   <div className="divider border-black my-0" />
-                  <FormInput
-                    name={
-                      `movements[${nestIndex}].sections[${index}].metreDenominator` as const
-                    }
-                    // label="Metre denominator"
-                    inputMode="numeric"
-                    inputClassName="w-20"
-                    disabled={isMetreFieldDisabled}
-                    // defaultValue={``}
-                    {...{ register, control, errors }}
-                  />
+                  <div className="mt-[-0.5rem]">
+                    <FormInput
+                      name={
+                        `movements[${nestIndex}].sections[${index}].metreDenominator` as const
+                      }
+                      // label="Metre denominator"
+                      inputMode="numeric"
+                      inputClassName="w-20"
+                      disabled={isMetreFieldDisabled}
+                      // defaultValue={``}
+                      {...{ register, control, errors }}
+                    />
+                  </div>
                 </div>
                 <label className="text-5xl flex items-center">
                   <input
@@ -227,7 +229,7 @@ export default function SectionArray({
                 <div className="flex gap-2">
                   <button
                     type="button"
-                    className="btn btn-accent"
+                    className="btn btn-accent btn-sm"
                     onClick={() =>
                       isLastItem
                         ? append(getSectionDefaultValues())
@@ -239,7 +241,7 @@ export default function SectionArray({
                   </button>
                   <button
                     type="button"
-                    className="btn btn-error"
+                    className="btn btn-error btn-sm"
                     onClick={() => remove(index)}
                   >
                     <TrashIcon className="w-5 h-5" />
@@ -251,7 +253,7 @@ export default function SectionArray({
                   {index > 0 && (
                     <button
                       type="button"
-                      className="btn btn-move"
+                      className="btn btn-move btn-sm"
                       onClick={() => {
                         swap(index, index - 1);
                       }}
@@ -264,7 +266,7 @@ export default function SectionArray({
                   {index < sectionArray.length - 1 && (
                     <button
                       type="button"
-                      className="btn btn-move"
+                      className="btn btn-move btn-sm"
                       onClick={() => {
                         swap(index, index + 1);
                       }}
@@ -283,7 +285,7 @@ export default function SectionArray({
             <div className="flex gap-2">
               <button
                 type="button"
-                className="btn btn-accent"
+                className="btn btn-accent btn-sm"
                 onClick={() => {
                   append(getSectionDefaultValues());
                 }}

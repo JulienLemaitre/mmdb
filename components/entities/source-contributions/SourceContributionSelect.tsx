@@ -10,6 +10,7 @@ import { CONTRIBUTION_ROLE } from "@prisma/client";
 import NewSourceContributionForm from "@/components/entities/source-contributions/NewSourceContributionForm";
 import Label from "@/components/Label";
 import getRoleLabel from "@/utils/getRoleLabel";
+import { ReactSelectStyles } from "@/components/ReactSelect/ReactSelectStyles";
 
 type SourceContributionSelectProps = {
   sourceContributionOptions: OptionInput[];
@@ -166,6 +167,7 @@ export default function SourceContributionSelect({
               }
             }}
             noOptionsMessage={noOptionsMessage}
+            styles={ReactSelectStyles}
           />
           <Label label={`role`} isRequired />
           <Select
@@ -183,6 +185,7 @@ export default function SourceContributionSelect({
               if (!contributionRoleOption) return;
               setRole(contributionRoleOption.value);
             }}
+            styles={ReactSelectStyles}
           />
         </>
       ) : (

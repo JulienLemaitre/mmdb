@@ -70,7 +70,7 @@ export default function PieceEditForm({
             Cancel
           </button>
           <button
-            className="btn btn-primary mt-6 w-full max-w-xs"
+            className="btn btn-primary w-full max-w-xs"
             type="submit"
             disabled={isSubmitting}
           >

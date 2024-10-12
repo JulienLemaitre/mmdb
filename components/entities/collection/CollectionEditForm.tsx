@@ -36,7 +36,11 @@ export default function CollectionEditForm(
       className="max-w-md"
     >
       <FormInput name="title" {...{ register, errors, control }} />
-      <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
+      <button
+        className="btn btn-primary mt-6"
+        type="submit"
+        disabled={isSubmitting}
+      >
         {submitTitle ? `Save ${submitTitle}` : "Next"}
       </button>
     </form>

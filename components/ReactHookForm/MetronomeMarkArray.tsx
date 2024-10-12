@@ -80,7 +80,7 @@ export default function MetronomeMarkArray({
                     type="hidden"
                   />
                   <div className="flex items-end gap-3">
-                    <label className="text-md flex items-center btn btn-outline mt-9">
+                    <label className="text-md flex items-center btn btn-outline btn-sm mt-9">
                       <input
                         {...register(
                           `metronomeMarks[${index}].noMM` as const,
@@ -130,7 +130,7 @@ export default function MetronomeMarkArray({
                     {!commentToShow.includes(index) && (
                       <button
                         type="button"
-                        className="btn btn-secondary mt-9"
+                        className="btn btn-secondary btn-sm mt-9"
                         disabled={isNoMMChecked}
                         onClick={() =>
                           setCommentToShow((prev) => [...prev, index])
@@ -151,10 +151,10 @@ export default function MetronomeMarkArray({
                       />
                       <button
                         type="button"
-                        className="btn btn-error"
+                        className="btn btn-error btn-sm"
                         onClick={() => onRemoveComment(index)}
                       >
-                        <TrashIcon className="w-5 h-5" />
+                        <TrashIcon className="w-4 h-4" />
                       </button>
                     </div>
                   )}

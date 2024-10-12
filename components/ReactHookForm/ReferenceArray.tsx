@@ -55,17 +55,17 @@ export default function ReferenceArray({
               />
               <button
                 type="button"
-                className="btn btn-error"
+                className="btn btn-error btn-sm"
                 onClick={() => remove(index)}
               >
-                <TrashIcon />
+                <TrashIcon className="w-4 h-4" />
               </button>
             </div>
           </li>
         ))}
         <button
           type="button"
-          className="btn btn-secondary mt-4"
+          className="btn btn-secondary btn-sm mt-4"
           disabled={isReferenceDirty}
           onClick={() => {
             append({});

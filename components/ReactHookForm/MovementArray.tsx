@@ -69,7 +69,7 @@ export default function MovementArray({
                 <div className="flex gap-2">
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    className="btn btn-secondary btn-sm"
                     onClick={() =>
                       isLastItem
                         ? append(getMovementDefaultValues())
@@ -81,7 +81,7 @@ export default function MovementArray({
                   </button>
                   <button
                     type="button"
-                    className="btn btn-error"
+                    className="btn btn-error btn-sm"
                     onClick={() => remove(index)}
                   >
                     <TrashIcon className="w-5 h-5" />
@@ -93,7 +93,7 @@ export default function MovementArray({
                   {index > 0 && (
                     <button
                       type="button"
-                      className="btn btn-move"
+                      className="btn btn-move btn-sm"
                       onClick={() => {
                         swap(index, index - 1);
                       }}
@@ -106,7 +106,7 @@ export default function MovementArray({
                   {index < mvtArray.length - 1 && (
                     <button
                       type="button"
-                      className="btn btn-move"
+                      className="btn btn-move btn-sm"
                       onClick={() => {
                         swap(index, index + 1);
                       }}
@@ -125,7 +125,7 @@ export default function MovementArray({
             <div className="flex gap-2">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-secondary btn-sm"
                 onClick={() => {
                   append(getMovementDefaultValues());
                 }}
