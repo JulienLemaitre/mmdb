@@ -5,10 +5,10 @@ import EyeSlashIcon from "@/components/svg/EyeSlashIcon";
 import EyeIcon from "@/components/svg/EyeIcon";
 import LoadingSpinIcon from "@/components/svg/LoadingSpinIcon";
 import { InputMethod } from "@/types/formTypes";
-import { Controller } from "react-hook-form";
+import { Controller, ControllerRenderProps } from "react-hook-form";
 
 function getRegisterProps({
-  name,
+  // name,
   inputMode,
 }: {
   name: string;
@@ -17,7 +17,7 @@ function getRegisterProps({
   if (inputMode === "numeric") {
     return {
       pattern: /[0-9]{4}/,
-      setValueAs: (v) => (v ? v.replace(/\D/g, "") : v),
+      setValueAs: (v: string) => (v ? v.replace(/\D/g, "") : v),
     };
   }
 }
@@ -27,7 +27,11 @@ const transformActions = {
   year: (rawValue: string) => rawValue.replace(/\D/g, "").substring(0, 4),
 };
 
-function getControllerProps(field, inputMode, onInputChange?: () => void) {
+function getControllerProps(
+  field: ControllerRenderProps,
+  inputMode: InputMethod,
+  onInputChange?: () => void,
+) {
   const registerProps = getRegisterProps({ name: field.name, inputMode });
   let controllerProps: any = {
     rules: registerProps,
@@ -69,43 +73,43 @@ export function getLabel(name: string) {
 }
 
 type FormInputProps = {
-  register: any;
   control: any;
-  name: string;
-  label?: string;
-  isRequired?: boolean;
-  errors: any;
+  controlClassName?: string;
   defaultValue?: any;
   disabled?: boolean;
-  type?: string;
-  registerProps?: any;
-  controlClassName?: string;
+  errors: any;
   inputClassName?: string;
   inputMode?: InputMethod;
+  isLoading?: boolean;
+  isRequired?: boolean;
+  label?: string;
+  name: string;
   onBlur?: () => void;
   onInputChange?: () => void;
-  isLoading?: boolean;
+  register: any;
+  registerProps?: any;
+  type?: string;
 };
 
 export function FormInput({
   control,
-  name,
-  label = "",
-  isRequired = false,
-  errors,
+  controlClassName = "",
   defaultValue,
   disabled = false,
-  type: typeProp,
-  controlClassName = "",
+  errors,
   inputClassName = "", // showPassword = false,
   inputMode = "text",
+  isLoading = false,
+  isRequired = false,
+  label = "",
+  name,
   onBlur = () => {},
   onInputChange,
-  isLoading = false,
+  type: typeProp,
 }: FormInputProps) {
   const [showPassword, setShowPassword] = useState(false);
 
-  const nameWithDotIndex = name.replace(/\[(\d+)\]\./g, ".$1.");
+  const nameWithDotIndex = name.replace(/\[(\d+)]\./g, ".$1.");
   const error = get(errors, nameWithDotIndex);
   const type =
     (typeProp === "password" && showPassword ? "text" : null) ||
@@ -170,29 +174,29 @@ export function FormInput({
   );
 }
 
-export function FormTextarea({
-  register,
-  name,
-  label = "",
-  isRequired = false,
-  errors,
-  noValidation = false,
-}) {
-  return (
-    <div className="form-control w-full max-w-xs">
-      <label className="label">
-        <span className="label-text">{label || getLabel(name)}</span>
-      </label>
-      <textarea
-        className="textarea h-24 textarea-bordered"
-        {...register(name, {
-          ...(isRequired ? { required: "Info obligatoire" } : {}),
-          ...((!noValidation && getRegisterProps({ name })) || {}),
-        })}
-      />
-      <span className="label-text-alt text-red-500">
-        {errors[name] && errors[name].message}
-      </span>
-    </div>
-  );
-}
+// export function FormTextarea({
+//   register,
+//   name,
+//   label = "",
+//   isRequired = false,
+//   errors,
+//   noValidation = false,
+// }) {
+//   return (
+//     <div className="form-control w-full max-w-xs">
+//       <label className="label">
+//         <span className="label-text">{label || getLabel(name)}</span>
+//       </label>
+//       <textarea
+//         className="textarea h-24 textarea-bordered"
+//         {...register(name, {
+//           ...(isRequired ? { required: "Info obligatoire" } : {}),
+//           ...((!noValidation && getRegisterProps({ name })) || {}),
+//         })}
+//       />
+//       <span className="label-text-alt text-red-500">
+//         {errors[name] && errors[name].message}
+//       </span>
+//     </div>
+//   );
+// }

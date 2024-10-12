@@ -6,6 +6,7 @@ import { getSectionDefaultValues } from "@/components/ReactHookForm/formUtils";
 import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
 import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
 import ControlledCreatableSelect from "@/components/ReactHookForm/ControlledCreatableSelect";
+import { TempoIndicationState } from "@/types/formTypes";
 
 export default function SectionArray({
   control,
@@ -56,7 +57,7 @@ export default function SectionArray({
                       `movements[${nestIndex}].sections[${index}].metreNumerator` as const
                     }
                     // label="Metre numerator"
-                    type="number"
+                    inputMode="numeric"
                     inputClassName="w-20"
                     disabled={isMetreFieldDisabled}
                     // defaultValue={``}
@@ -68,7 +69,7 @@ export default function SectionArray({
                       `movements[${nestIndex}].sections[${index}].metreDenominator` as const
                     }
                     // label="Metre denominator"
-                    type="number"
+                    inputMode="numeric"
                     inputClassName="w-20"
                     disabled={isMetreFieldDisabled}
                     // defaultValue={``}
@@ -158,10 +159,12 @@ export default function SectionArray({
                   `movements[${nestIndex}].sections[${index}].tempoIndication` as const
                 }
                 control={control}
-                options={tempoIndicationList.map((ti) => ({
-                  value: ti.id,
-                  label: ti.text,
-                }))}
+                options={tempoIndicationList.map(
+                  (ti: TempoIndicationState) => ({
+                    value: ti.id,
+                    label: ti.text,
+                  }),
+                )}
                 onOptionCreated={onTempoIndicationCreated}
                 errors={errors}
               />
@@ -171,7 +174,7 @@ export default function SectionArray({
                   `movements[${nestIndex}].sections[${index}].fastestStructuralNotesPerBar` as const
                 }
                 label={`Fastest structural notes per bar`}
-                type="number"
+                inputMode="numeric"
                 {...{ register, control, errors }}
               />
               <label>
@@ -193,7 +196,7 @@ export default function SectionArray({
                   `movements[${nestIndex}].sections[${index}].fastestStaccatoNotesPerBar` as const
                 }
                 label={`Fastest staccato notes per bar`}
-                type="number"
+                inputMode="numeric"
                 {...{ register, control, errors }}
               />
               <FormInput
@@ -201,7 +204,7 @@ export default function SectionArray({
                   `movements[${nestIndex}].sections[${index}].fastestRepeatedNotesPerBar` as const
                 }
                 label={`Fastest repeated notes per bar`}
-                type="number"
+                inputMode="numeric"
                 {...{ register, control, errors }}
               />
               <FormInput
@@ -209,7 +212,7 @@ export default function SectionArray({
                   `movements[${nestIndex}].sections[${index}].fastestOrnamentalNotesPerBar` as const
                 }
                 label={`Fastest ornamental notes per bar`}
-                type="number"
+                inputMode="numeric"
                 {...{ register, control, errors }}
               />
               <FormInput // TODO: button "add a comment" and a textarea

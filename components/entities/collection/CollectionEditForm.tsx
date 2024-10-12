@@ -4,10 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
-import { CollectionInput, CollectionTitleInput } from "@/types/formTypes";
-import { NOTE_VALUE } from "@prisma/client";
-import formatToPhraseCase from "@/utils/formatToPhraseCase";
-import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
+import { CollectionTitleInput } from "@/types/formTypes";
 
 const CollectionSchema = z.object({
   title: z.string().min(2),
@@ -26,7 +23,6 @@ export default function CollectionEditForm(
     formState: { errors, isSubmitting },
     handleSubmit,
     register,
-    watch,
     control,
   } = useForm<CollectionTitleInput>({
     defaultValues: collection ?? {},
@@ -39,7 +35,7 @@ export default function CollectionEditForm(
       onKeyDown={preventEnterKeySubmission}
       className="max-w-md"
     >
-      <FormInput name="title" {...{ register, watch, errors, control }} />
+      <FormInput name="title" {...{ register, errors, control }} />
       <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
         {submitTitle ? `Save ${submitTitle}` : "Next"}
       </button>

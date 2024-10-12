@@ -40,7 +40,6 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
     handleSubmit,
     register,
     setValue,
-    watch,
     control,
   } = useForm<ContributionInput>({
     // defaultValues: {},

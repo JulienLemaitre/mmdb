@@ -10,7 +10,6 @@ export default function ReferenceArray({
   control,
   register,
   errors,
-  watch,
   onReferenceBlur,
   onReferenceInputChange,
   isCheckingReference,

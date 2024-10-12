@@ -34,7 +34,6 @@ function SearchPage() {
   const {
     register,
     handleSubmit,
-    watch,
     control,
     formState: { errors, isSubmitting },
   } = useForm<SearchFormInput>({
@@ -45,8 +44,8 @@ function SearchPage() {
     TempoIndicationState[]
   >([]);
   const [lastSearch, setLastSearch] = useState<SearchFormInput>();
-  const [isPieceVersionExtended, setIsPieceVersionExtended] =
-    useState<boolean>(false);
+  // const [isPieceVersionExtended, setIsPieceVersionExtended] =
+  //   useState<boolean>(false);
   const [isTempoIndicationsLoading, setIsTempoIndicationsLoading] =
     useState(true);
   const [composers, setComposers] = useState<PersonState[]>([]);
@@ -117,16 +116,16 @@ function SearchPage() {
           <FormInput
             name="startYear"
             label="Start Date of composition"
-            type="number"
+            inputMode="numeric"
             isRequired
-            {...{ control, errors, register, watch }}
+            {...{ control, errors, register }}
           />
           <FormInput
             name="endYear"
             label="End Date of composition"
-            type="number"
+            inputMode="numeric"
             isRequired
-            {...{ control, errors, register, watch }}
+            {...{ control, errors, register }}
           />
           <ControlledSelect
             name={`tempoIndication` as const}
@@ -212,7 +211,7 @@ function SearchPage() {
                           // Movements
                           pieceVersion.movements
                             .sort((a, b) => a.rank - b.rank)
-                            .map((movement, movementIndex) => (
+                            .map((movement, movementIndex: number) => (
                               <div key={movement.id} className="flex">
                                 <h3 className="text-xl my-1 flex-none pr-4">
                                   {movement.rank} - {getKeyLabel(movement.key)}
@@ -351,7 +350,10 @@ function SearchPage() {
                                                           "fastestOrnamentalNotes",
                                                           "fastestRepeatedNotes",
                                                         ].map(
-                                                          (keyBase, index) => {
+                                                          (
+                                                            keyBase,
+                                                            index: number,
+                                                          ) => {
                                                             const originalNotesPerSecond =
                                                               mm
                                                                 .notesPerSecond?.[
