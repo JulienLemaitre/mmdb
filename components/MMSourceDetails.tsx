@@ -29,7 +29,9 @@ export default function MMSourceDetails({ mMSource }) {
             const shouldCollectionBeenDisplayed = !!(
               collection && alreadyDisplayedCollections.includes(collection.id)
             );
-            alreadyDisplayedCollections.push(collection.id);
+            if (collection) {
+              alreadyDisplayedCollections.push(collection.id);
+            }
             const composerName =
               piece.composer.firstName + " " + piece.composer.lastName;
             // const pieceSource = mMSource;
@@ -70,7 +72,7 @@ export default function MMSourceDetails({ mMSource }) {
                       // Movements
                       pieceVersion.movements
                         .sort((a, b) => a.rank - b.rank)
-                        .map((movement, movementIndex) => (
+                        .map((movement) => (
                           <div key={movement.id} className="flex">
                             <h4 className="text-xl my-1 flex-none pr-4">
                               {movement.rank} - {getKeyLabel(movement.key)}
@@ -80,7 +82,7 @@ export default function MMSourceDetails({ mMSource }) {
                                 // sections
                                 movement.sections
                                   .sort((a, b) => a.rank - b.rank)
-                                  .map((section, sectionIndex, sectionList) => {
+                                  .map((section, _, sectionList) => {
                                     const { isCommonTime, isCutTime } = section;
                                     const isCommonOrCutTime =
                                       isCommonTime || isCutTime;
@@ -197,7 +199,7 @@ export default function MMSourceDetails({ mMSource }) {
                                                   "fastestStaccatoNotes",
                                                   "fastestOrnamentalNotes",
                                                   "fastestRepeatedNotes",
-                                                ].map((keyBase, index) => {
+                                                ].map((keyBase) => {
                                                   const originalNotesPerSecond =
                                                     mm.notesPerSecond?.[
                                                       keyBase + "PerSecond"
