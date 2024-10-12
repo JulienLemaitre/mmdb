@@ -1,6 +1,8 @@
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import { Fragment } from "react";
 import getKeyLabel from "@/utils/getKeyLabel";
+import getKeyBaseString from "@/utils/getKeyBaseString";
+import { KeyBase } from "@/types/formTypes";
 
 export default function MMSourceDetails({ mMSource }) {
   // Gather collections
@@ -283,7 +285,10 @@ export default function MMSourceDetails({ mMSource }) {
                                                     >
                                                       {computedNotesPerSecondFromNotesPerBar && (
                                                         <div className="mr-4">
-                                                          {keyBase}:
+                                                          {getKeyBaseString(
+                                                            keyBase as KeyBase,
+                                                          )}
+                                                          :
                                                           <span
                                                             // className={`${isNotesPerSecondFromNotesPerBarDiff ? "bg-red-500 text-white px-2" : ""} ml-1`}>
                                                             className={`${
@@ -297,7 +302,7 @@ export default function MMSourceDetails({ mMSource }) {
                                                                       8
                                                                     ? "bg-amber-200"
                                                                     : "bg-white"
-                                                            } px-2`}
+                                                            } px-2 text-black`}
                                                           >
                                                             {
                                                               computedNotesPerSecondFromNotesPerBar

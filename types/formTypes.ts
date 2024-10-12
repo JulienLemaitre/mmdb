@@ -43,6 +43,12 @@ export type InputMethod =
   | "email"
   | "url";
 
+export type KeyBase =
+  | "fastestStructuralNotes"
+  | "fastestStaccatoNotes"
+  | "fastestOrnamentalNotes"
+  | "fastestRepeatedNotes";
+
 // Data in STATE
 
 export type StateEntity = {
