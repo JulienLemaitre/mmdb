@@ -4,38 +4,34 @@ import getKeyLabel from "@/utils/getKeyLabel";
 
 export default function MMSourceDetails({ mMSource }) {
   // Gather collections
-  const collections: any[] = [];
-  mMSource.pieceVersions.forEach((pvs) => {
+  const collectionIds: any[] = [];
+  const pieceVersionWithCollectionField = mMSource.pieceVersions.map((pvs) => {
     const collection = pvs.pieceVersion.piece.collection;
-    if (collection) {
-      collections.push(collection);
+    const isCollectionAlreadyDisplayed = !!(
+      collection && collectionIds.includes(collection.id)
+    );
+    if (collection && !isCollectionAlreadyDisplayed) {
+      collectionIds.push(collection.id);
     }
+    return {
+      ...pvs,
+      ...(!isCollectionAlreadyDisplayed ? { collection } : {}),
+    };
   });
-  console.log(`[MMSourceDetails] collections :`, collections);
-
-  const alreadyDisplayedCollections: any[] = [];
 
   return (
     <div className="my-16">
       {
         // Pieces
-        mMSource.pieceVersions
+        pieceVersionWithCollectionField
           .sort((a, b) => a.rank - b.rank)
           .map((pvs, index) => {
             // Piece versions
             const pieceVersion = pvs.pieceVersion;
             const piece = pieceVersion.piece;
-            const collection = piece.collection;
-            const shouldCollectionBeenDisplayed = !!(
-              collection && alreadyDisplayedCollections.includes(collection.id)
-            );
-            if (collection) {
-              alreadyDisplayedCollections.push(collection.id);
-            }
+            const collection = pvs.collection;
             const composerName =
               piece.composer.firstName + " " + piece.composer.lastName;
-            // const pieceSource = mMSource;
-            // const pieceSource = pieceVersion?.mMSources[0];
 
             if (!pieceVersion) {
               return (
@@ -43,31 +39,32 @@ export default function MMSourceDetails({ mMSource }) {
                   key={piece.id}
                   className="my-8 border-solid border-l-4 border-l-emerald-500 pl-2"
                 >
-                  {shouldCollectionBeenDisplayed ? (
-                    <h2 className="text-3xl font-bold primary">
-                      {collection.title}
-                    </h2>
-                  ) : null}
                   <h3 className="text-2xl font-bold">{piece.title}</h3>
                   <div>{`No Piece version found`}</div>
                 </div>
               );
             }
             return (
-              <div
-                key={pieceVersion.id}
-                className="my-8 border-solid border-l-4 border-l-emerald-500 pl-2"
-              >
-                <h2 className="text-2xl font-bold">{piece.title}</h2>
-                <div className="flex mb-4">
-                  <div className="mr-4">
-                    yearOfComposition: {piece.yearOfComposition}
-                  </div>
-                  <div className="mr-4">|</div>
-                  <div className="mr-4">category: {pieceVersion?.category}</div>
-                </div>
-                <div className="flex mb-4">
-                  <div className="w-1/2">
+              <div className="flex" key={pieceVersion.id}>
+                <div className="w-1/2">
+                  {collection ? (
+                    <div className="my-8 border-solid border-l-8 border-l-primary pl-2">
+                      <h2 className="text-3xl font-bold primary">
+                        {collection.title}
+                      </h2>
+                    </div>
+                  ) : null}
+                  <div className="my-8 border-solid border-l-4 border-l-emerald-500 pl-2">
+                    <h3 className="text-2xl font-bold">{piece.title}</h3>
+                    <div className="flex mb-4">
+                      <div className="mr-4">
+                        yearOfComposition: {piece.yearOfComposition}
+                      </div>
+                      <div className="mr-4">|</div>
+                      <div className="mr-4">
+                        category: {pieceVersion?.category}
+                      </div>
+                    </div>
                     {
                       // Movements
                       pieceVersion.movements
@@ -395,50 +392,52 @@ export default function MMSourceDetails({ mMSource }) {
                         ))
                     }
                   </div>
-                  {index === 0 ? (
-                    <div className="w-1/2">
-                      <div className="ml-4 border-2 border-gray-300 rounded-2xl p-4">
-                        <div className="flex">
-                          <div className="mr-4">Source:</div>
-                          <div>
-                            <div className="">
-                              {mMSource.year} - {mMSource.type.toLowerCase()}
+                </div>
+                {index === 0 ? (
+                  <div className="w-1/2">
+                    <div className="ml-4 border-2 border-gray-300 rounded-2xl p-4">
+                      <div className="flex">
+                        <div className="mr-4">Source:</div>
+                        <div>
+                          <div className="">
+                            {mMSource.year} - {mMSource.type.toLowerCase()}
+                          </div>
+                          {mMSource.title && (
+                            <div className="">{mMSource.title}</div>
+                          )}
+                          {mMSource.link && (
+                            <div className="break-all">
+                              <a href={mMSource.link} target="_blank">
+                                {mMSource.link}
+                              </a>
                             </div>
-                            {mMSource.title && (
-                              <div className="">{mMSource.title}</div>
-                            )}
-                            {mMSource.link && (
-                              <div className=" break-all">
-                                <a href={mMSource.link} target="_blank">
-                                  {mMSource.link}
-                                </a>
+                          )}
+                          {mMSource.references &&
+                            mMSource.references.length > 0 &&
+                            mMSource.references.map((refItem) => (
+                              <div key={refItem.value} className="break-all">
+                                <b>{`${refItem.type}: `}</b>
+                                {refItem.reference}
                               </div>
-                            )}
-                            {mMSource.references &&
-                              mMSource.references.length > 0 && (
-                                <div className="">
-                                  {JSON.stringify(mMSource.references)}
-                                </div>
-                              )}
+                            ))}
+                        </div>
+                      </div>
+                      {mMSource.contributions.map((contribution) => (
+                        <div key={contribution.id} className="flex">
+                          <div className="mr-4">
+                            {contribution.role.toLowerCase()}:
+                          </div>
+                          <div className="mr-4">
+                            {contribution.person?.firstName
+                              ? contribution.person?.firstName +
+                                contribution.person?.lastName
+                              : contribution.organization?.name}
                           </div>
                         </div>
-                        {mMSource.contributions.map((contribution) => (
-                          <div key={contribution.id} className="flex">
-                            <div className="mr-4">
-                              {contribution.role.toLowerCase()}:
-                            </div>
-                            <div className="mr-4">
-                              {contribution.person?.firstName
-                                ? contribution.person?.firstName +
-                                  contribution.person?.lastName
-                                : contribution.organization?.name}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                      ))}
                     </div>
-                  ) : null}
-                </div>
+                  </div>
+                ) : null}
               </div>
             );
           })
