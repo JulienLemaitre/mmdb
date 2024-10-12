@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import DebugBox from "@/components/DebugBox";
 import LoadingSpinIcon from "@/components/svg/LoadingSpinIcon";
 import MMSourceDetails from "@/components/MMSourceDetails";
+import computeMMSourceToPersistFromState from "@/utils/computeMMSourceToPersistFromState";
 
 function FeedSummary() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -16,6 +17,9 @@ function FeedSummary() {
   const [submitResponse, setSubmitResponse] = useState<any>();
   const { dispatch, state } = useFeedForm();
   const { data: session } = useSession();
+
+  const mMSourceToPersist = computeMMSourceToPersistFromState(state);
+  console.log(`[FeedSummary] mMSourceToPersist :`, mMSourceToPersist);
 
   const saveAll = () => {
     setIsSubmitting(true);
@@ -88,20 +92,37 @@ function FeedSummary() {
   }
 
   return (
-    <div className="flex items-center">
-      <button
-        className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 border border-gray-400 rounded mr-4"
-        type="button"
-        onClick={saveAll}
-      >
-        Save the complete Metronome Mark Source
-      </button>
-      {isSubmitting ? (
-        <div className="w-6">
-          <LoadingSpinIcon />
-        </div>
-      ) : null}
-    </div>
+    <>
+      <div className="flex items-center">
+        <button
+          className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 border border-gray-400 rounded mr-4"
+          type="button"
+          onClick={saveAll}
+        >
+          Save the complete Metronome Mark Source
+        </button>
+        {isSubmitting ? (
+          <div className="w-6">
+            <LoadingSpinIcon />
+          </div>
+        ) : null}
+      </div>
+      <MMSourceDetails mMSource={mMSourceToPersist} />
+      <div className="flex items-center">
+        <button
+          className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 border border-gray-400 rounded mr-4"
+          type="button"
+          onClick={saveAll}
+        >
+          Save the complete Metronome Mark Source
+        </button>
+        {isSubmitting ? (
+          <div className="w-6">
+            <LoadingSpinIcon />
+          </div>
+        ) : null}
+      </div>
+    </>
   );
 }
 

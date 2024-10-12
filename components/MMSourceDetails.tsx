@@ -432,6 +432,7 @@ export default function MMSourceDetails({ mMSource }) {
                         <div className="mr-4">
                           {contribution.person?.firstName
                             ? contribution.person?.firstName +
+                              " " +
                               contribution.person?.lastName
                             : contribution.organization?.name}
                         </div>
