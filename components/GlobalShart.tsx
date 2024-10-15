@@ -6,20 +6,22 @@ import { useCallback, useRef, useState } from "react";
 type GlobalShartProps = {
   persons?: any[];
   pieceVersions?: any[];
-  filter?: {
-    tempoIndicationId?: string;
-  };
+  // filter?: {
+  //   tempoIndicationId?: string;
+  // };
+  sectionFilterFn?: (section: any) => boolean;
 };
 
 export default function GlobalShart({
   persons,
   pieceVersions,
-  filter,
+  // filter,
+  sectionFilterFn,
 }: GlobalShartProps) {
-  console.log(
-    `[GlobalShart] filter?.tempoIndicationId :`,
-    filter?.tempoIndicationId,
-  );
+  // console.log(
+  //   `[GlobalShart] filter?.tempoIndicationId :`,
+  //   filter?.tempoIndicationId,
+  // );
   const [selectedNode, setSelectedNode] = useState<any | null>(null);
   console.log(`[GlobalShart] selectedNode :`, selectedNode);
 
@@ -28,6 +30,7 @@ export default function GlobalShart({
   }, []);
 
   let minDate: number = 2000;
+  let maxDate: number = 1000;
   const dataGroupedPerNoteTypeObject = {
     structural: [],
     repeated: [],
@@ -41,6 +44,9 @@ export default function GlobalShart({
       if (piece.yearOfComposition < minDate) {
         minDate = piece.yearOfComposition;
       }
+      if (piece.yearOfComposition > maxDate) {
+        maxDate = piece.yearOfComposition;
+      }
       const composer = piece.composer;
       const personDataId = composer.firstName + " " + composer.lastName;
       const personData: { x: number; y: number; meta?: any }[] = [];
@@ -49,8 +55,10 @@ export default function GlobalShart({
         const hasMultipleSections = mvt.sections.length > 1;
         mvt.sections.forEach((section) => {
           if (
-            filter?.tempoIndicationId &&
-            section.tempoIndication.id !== filter.tempoIndicationId
+            typeof sectionFilterFn === "function" &&
+            !sectionFilterFn(section)
+            // filter?.tempoIndicationId &&
+            // section.tempoIndication.id !== filter.tempoIndicationId
           ) {
             return;
           }
@@ -112,6 +120,9 @@ export default function GlobalShart({
         // console.log(`[] piece :`, piece)
         if (piece.yearOfComposition < minDate) {
           minDate = piece.yearOfComposition;
+        }
+        if (piece.yearOfComposition > maxDate) {
+          maxDate = piece.yearOfComposition;
         }
         piece.pieceVersions.forEach((pv) => {
           const hasMultipleMovements = pv.movements.length > 1;
@@ -182,6 +193,7 @@ export default function GlobalShart({
   }));
   console.log(`[GlobalShart] dataGroupedPerNoteType :`, dataGroupedPerNoteType);
   console.log(`[GlobalShart] minDate :`, minDate);
+  console.log(`[GlobalShart] maxDate :`, maxDate);
 
   // axis: Partial<{domain: Partial<{line: Partial<Partial<CSSProperties>>}>, ticks: Partial<...>, legend: Partial<...>}
   const theme = {
@@ -217,7 +229,7 @@ export default function GlobalShart({
       data={dataGroupedPerNoteType}
       theme={theme}
       margin={{ top: 60, right: 140, bottom: 70, left: 90 }}
-      xScale={{ type: "linear", min: minDate - 10, max: "auto" }}
+      xScale={{ type: "linear", min: minDate - 2, max: maxDate + 2 }}
       xFormat="^-.0"
       yScale={{ type: "linear", min: 0, max: "auto" }}
       yFormat="^-.0"

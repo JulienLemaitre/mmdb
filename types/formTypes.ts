@@ -295,7 +295,8 @@ export type MetronomeMarkInput =
 export type SearchFormInput = {
   startYear: number;
   endYear: number;
-  tempoIndication: OptionInput;
+  tempoIndicationIds: string[];
+  // tempoIndication: OptionInput;
   composer: OptionInput;
 };
 
