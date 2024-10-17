@@ -143,7 +143,6 @@ export async function POST(request: NextRequest) {
                       sections: {
                         include: {
                           tempoIndication: true,
-                          metronomeMarks: true,
                         },
                       },
                     },
@@ -152,11 +151,40 @@ export async function POST(request: NextRequest) {
               },
             },
           },
+          metronomeMarks: true,
         },
       });
-      console.log(`[] mMSourceFromDb`, JSON.stringify(mMSourceFromDb));
 
-      return NextResponse.json({ ...results, mMSourceFromDb });
+      const mMSourceFromDBWithMMs = mMSourceFromDb
+        ? {
+            ...mMSourceFromDb,
+            pieceVersions: mMSourceFromDb.pieceVersions.map((pvs) => ({
+              ...pvs,
+              pieceVersion: {
+                ...pvs.pieceVersion,
+                movements: pvs.pieceVersion.movements.map((mv) => ({
+                  ...mv,
+                  sections: mv.sections.map((section) => ({
+                    ...section,
+                    metronomeMarks: mMSourceFromDb.metronomeMarks.filter(
+                      (mm) => mm.sectionId === section.id,
+                    ),
+                  })),
+                })),
+              },
+            })),
+          }
+        : null;
+
+      console.log(
+        `[] mMSourceFromDBWithMMs`,
+        JSON.stringify(mMSourceFromDBWithMMs),
+      );
+
+      return NextResponse.json({
+        ...results,
+        mMSourceFromDb: mMSourceFromDBWithMMs,
+      });
     })
     .catch((error) => {
       return NextResponse.json(

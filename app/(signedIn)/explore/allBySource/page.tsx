@@ -27,7 +27,6 @@ const getData = async () => {
                   sections: {
                     include: {
                       tempoIndication: true,
-                      metronomeMarks: true,
                     },
                   },
                 },
@@ -36,12 +35,34 @@ const getData = async () => {
           },
         },
       },
+      metronomeMarks: true,
     },
     orderBy: {
       createdAt: "desc",
     },
   });
-  return { mMSources };
+
+  // Get each section metronomeMark from the source's ones only
+  return {
+    mMSources: mMSources.map((mMSource) => ({
+      ...mMSource,
+      pieceVersions: mMSource.pieceVersions.map((pvs) => ({
+        ...pvs,
+        pieceVersion: {
+          ...pvs.pieceVersion,
+          movements: pvs.pieceVersion.movements.map((mv) => ({
+            ...mv,
+            sections: mv.sections.map((section) => ({
+              ...section,
+              metronomeMarks: mMSource.metronomeMarks.filter(
+                (mm) => mm.sectionId === section.id,
+              ),
+            })),
+          })),
+        },
+      })),
+    })),
+  };
 };
 
 export default async function Page() {
