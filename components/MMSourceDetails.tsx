@@ -1,5 +1,5 @@
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import getKeyLabel from "@/utils/getKeyLabel";
 import getKeyBaseString from "@/utils/getKeyBaseString";
 import { KeyBase } from "@/types/formTypes";
@@ -41,13 +41,14 @@ export default function MMSourceDetails({ mMSource }) {
                 key={piece.id}
                 className="my-8 border-solid border-l-4 border-l-emerald-500 pl-2"
               >
+                <div>{`${composerName}`}</div>
                 <h3 className="text-2xl font-bold">{piece.title}</h3>
                 <div>{`No Piece version found`}</div>
               </div>
             );
           }
           return (
-            <div className="flex" key={pieceVersion.id}>
+            <div className="my-8 flex" key={pieceVersion.id}>
               <div className="w-1/2">
                 {collection ? (
                   <div className="my-8 border-solid border-l-8 border-l-primary pl-2">
@@ -56,7 +57,8 @@ export default function MMSourceDetails({ mMSource }) {
                     </h2>
                   </div>
                 ) : null}
-                <div className="my-8 border-solid border-l-4 border-l-emerald-500 pl-2">
+                <div className="border-solid border-l-4 border-l-emerald-500 pl-2">
+                  <div>{`${composerName}`}</div>
                   <h3 className="text-2xl font-bold">{piece.title}</h3>
                   <div className="flex mb-4">
                     <div className="mr-4">
