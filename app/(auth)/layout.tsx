@@ -1,6 +1,3 @@
-import NavBar from "@/app/NavBar";
-import SignInButton from "@/components/SignInButton";
-
 export default function AuthLayout({ children }) {
   return (
     <>
