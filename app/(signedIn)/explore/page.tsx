@@ -45,14 +45,11 @@ function SearchPage() {
     TempoIndicationState[]
   >([]);
   const [lastSearch, setLastSearch] = useState<SearchFormInput>();
-  // const [isPieceVersionExtended, setIsPieceVersionExtended] =
-  //   useState<boolean>(false);
   const [isTempoIndicationsLoading, setIsTempoIndicationsLoading] =
     useState(true);
   const [composers, setComposers] = useState<PersonState[]>([]);
   const [isComposersLoading, setIsComposersLoading] = useState(true);
   const [pieceVersionResults, setPieceVersionResults] = useState<any[]>([]);
-  console.log(`[] pieceVersionResults :`, pieceVersionResults);
   const [selectedTempoIndications, setSelectedTempoIndications] = useState<
     { id: string; text: string }[]
   >([]);
@@ -60,8 +57,12 @@ function SearchPage() {
   const handleTempoIndicationSelect = (
     selected: { id: string; text: string }[],
   ) => {
-    console.log(`[handleTempoIndicationSelect] selected :`, selected);
     setSelectedTempoIndications(selected);
+  };
+
+  const handleDeselectAll = (e) => {
+    e.preventDefault();
+    setSelectedTempoIndications([]);
   };
 
   // const tempoIndicationId = lastSearch?.tempoIndication?.value;
@@ -93,7 +94,7 @@ function SearchPage() {
   }, []);
 
   const onSubmit = async (data: SearchFormInput) => {
-    console.log(`[onSubmit] data :`, data);
+    // console.log(`[onSubmit] data :`, data);
     const selectedTempoIndicationIds = selectedTempoIndications.map(
       (indication) => indication.id,
     );
@@ -102,6 +103,7 @@ function SearchPage() {
       tempoIndicationIds: selectedTempoIndicationIds,
     };
     setLastSearch(requestData);
+    console.log(`[NEW Search] requestData :`, requestData);
     await fetch("/api/search", {
       method: "POST",
       body: JSON.stringify(requestData),
@@ -128,12 +130,12 @@ function SearchPage() {
           See all data per source
         </Link>
       </div>
-      <div className="flex">
-        <form
-          className="w-1/2"
-          onSubmit={handleSubmit(onSubmit)}
-          onKeyDown={preventEnterKeySubmission}
-        >
+      <form
+        className="flex"
+        onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={preventEnterKeySubmission}
+      >
+        <div className="w-1/3">
           <FormInput
             name="startYear"
             label="Start Date of composition"
@@ -147,22 +149,6 @@ function SearchPage() {
             inputMode="numeric"
             isRequired
             {...{ control, errors, register }}
-          />
-          {/*<ControlledSelect
-            name={`tempoIndication` as const}
-            label={`Tempo Indication`}
-            id={`tempoIndication` as const}
-            control={control}
-            options={tempoIndications.map((tempoIndication) => ({
-              value: tempoIndication.id,
-              label: tempoIndication.text,
-            }))}
-            isRequired={false}
-            errors={errors}
-          />*/}
-          <TempoIndicationSearch
-            tempoIndications={tempoIndications}
-            onSelect={handleTempoIndicationSelect}
           />
           <ControlledSelect
             name={`composer` as const}
@@ -186,28 +172,75 @@ function SearchPage() {
               <span className="loading loading-spinner loading-md"></span>
             )}
           </button>
-        </form>
-        <div className="w-1/2">
-          <h2>Last search</h2>
-          <pre>
-            {JSON.stringify(lastSearch, null, 2) || "no search history"}
-          </pre>
         </div>
-      </div>
+        <div className="w-2/3">
+          <TempoIndicationSearch
+            tempoIndications={tempoIndications}
+            selectedTempoIndications={selectedTempoIndications}
+            onSelect={handleTempoIndicationSelect}
+          />
+          {selectedTempoIndications.length > 0 ? (
+            <div className="w-full border-t-2 border-gray-300 dark:border-gray-900 dark:text-gray-300 py-1 mt-2">
+              <div className="flex items-center gap-4 my-1">
+                <label className="text-sm text-gray-600 dark:text-gray-400">
+                  {`Currently selected tempo indications :`}
+                </label>
+                <button
+                  onClick={handleDeselectAll}
+                  className="btn btn-accent btn-xs"
+                >
+                  Deselect All
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {selectedTempoIndications.map((tempoIndication) => (
+                  <div
+                    key={tempoIndication.id}
+                    className="flex items-center badge badge-neutral pr-0"
+                  >
+                    <span>{tempoIndication.text}</span>
+                    <button
+                      className="btn btn-circle btn-ghost h-[1.2rem] min-h-[1.2rem] w-[1.2rem] min-w-[1.2rem] ml-2"
+                      onClick={() => {
+                        setSelectedTempoIndications((cur) =>
+                          cur.filter((ti) => ti.id !== tempoIndication.id),
+                        );
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </form>
 
       {lastSearch ? (
-        <div className="w-full h-[800px] text-slate-900 dark:text-white">
-          <GlobalShart
-            pieceVersions={pieceVersionResults}
-            sectionFilterFn={(section: any) =>
-              selectedTempoIndications.length === 0 ||
-              selectedTempoIndications.some(
-                (tempoIndication) =>
-                  tempoIndication.id === section?.tempoIndication?.id,
-              )
-            }
-          />
-        </div>
+        <GlobalShart
+          pieceVersions={pieceVersionResults}
+          sectionFilterFn={(section: any) =>
+            selectedTempoIndications.length === 0 ||
+            selectedTempoIndications.some(
+              (tempoIndication) =>
+                tempoIndication.id === section?.tempoIndication?.id,
+            )
+          }
+        />
       ) : null}
 
       <div>
@@ -448,50 +481,50 @@ function SearchPage() {
                                                               //   computedNotesPerSecondFromNotesPerBar);
 
                                                               /*if (
+                                    isOriginalNotesPerSecondAndComputedDiff
+                                  ) {
+                                    console.log(
+                                      `--------------------------------------------------`,
+                                    );
+                                    console.group(
+                                      `-- HOME ERROR -- ${
                                         isOriginalNotesPerSecondAndComputedDiff
-                                      ) {
-                                        console.log(
-                                          `--------------------------------------------------`,
-                                        );
-                                        console.group(
-                                          `-- HOME ERROR -- ${
-                                            isOriginalNotesPerSecondAndComputedDiff
-                                              ? "isOriginalNotesPerSecondAndComputedDiff"
-                                              : "BPM = 108 DEBUG"
-                                          } --`,
-                                        );
-                                        console.log(
-                                          `[] ${person.firstName} ${person.lastName}: ${piece.title} - mvt#${movement.rank} - section#${section.rank}`,
-                                        );
-                                        console.log(
-                                          `[] mm.notesPerSecond :`,
-                                          mm.notesPerSecond,
-                                        );
-                                        console.log(
-                                          `[] mm.notesPerBar :`,
-                                          mm.notesPerBar,
-                                        );
-                                        console.log(
-                                          `[] mm.notesPerSecond?.[${
-                                            keyBase +
-                                            "PerSecond"
-                                          }] (originalNotesPerSecond) :`,
-                                          originalNotesPerSecond,
-                                        );
-                                        console.log(
-                                          `[] computedNotesPerSecondFromNotesPerBar :`,
-                                          computedNotesPerSecondFromNotesPerBar,
-                                        );
-                                        console.log(
-                                          `[] section`,
-                                          JSON.stringify(
-                                            section,
-                                            null,
-                                            2,
-                                          ),
-                                        );
-                                        console.groupEnd();
-                                      }*/
+                                          ? "isOriginalNotesPerSecondAndComputedDiff"
+                                          : "BPM = 108 DEBUG"
+                                      } --`,
+                                    );
+                                    console.log(
+                                      `[] ${person.firstName} ${person.lastName}: ${piece.title} - mvt#${movement.rank} - section#${section.rank}`,
+                                    );
+                                    console.log(
+                                      `[] mm.notesPerSecond :`,
+                                      mm.notesPerSecond,
+                                    );
+                                    console.log(
+                                      `[] mm.notesPerBar :`,
+                                      mm.notesPerBar,
+                                    );
+                                    console.log(
+                                      `[] mm.notesPerSecond?.[${
+                                        keyBase +
+                                        "PerSecond"
+                                      }] (originalNotesPerSecond) :`,
+                                      originalNotesPerSecond,
+                                    );
+                                    console.log(
+                                      `[] computedNotesPerSecondFromNotesPerBar :`,
+                                      computedNotesPerSecondFromNotesPerBar,
+                                    );
+                                    console.log(
+                                      `[] section`,
+                                      JSON.stringify(
+                                        section,
+                                        null,
+                                        2,
+                                      ),
+                                    );
+                                    console.groupEnd();
+                                  }*/
 
                                                               return (
                                                                 <Fragment

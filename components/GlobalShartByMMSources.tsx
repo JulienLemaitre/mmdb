@@ -7,6 +7,13 @@ export default function GlobalShartByMMSources({ mMSources }) {
   const [selectedNode, setSelectedNode] = useState<any | null>(null);
   console.log(`[GlobalShart] selectedNode :`, selectedNode);
 
+  const [notesToShow, setNotesToShow] = useState({
+    structural: true,
+    repeated: true,
+    ornamental: true,
+    staccato: true,
+  });
+
   const onClick = useCallback((node, event) => {
     setSelectedNode(node);
   }, []);
@@ -90,20 +97,14 @@ export default function GlobalShartByMMSources({ mMSources }) {
         data: mMSourceData,
       };
     });
-  // console.log(
-  //   `[GlobalShart] dataGroupedPerCompositor :`,
-  //   dataGroupedPerCompositor,
-  // );
-  const dataGroupedPerNoteType = Object.entries(
-    dataGroupedPerNoteTypeObject,
-  ).map(([key, value]) => ({
-    id: key,
-    data: value,
-  }));
-  // console.log(`[GlobalShart] dataGroupedPerNoteType :`, dataGroupedPerNoteType);
-  // console.log(`[GlobalShart] minDate :`, minDate);
+  const dataGroupedPerNoteType = Object.entries(dataGroupedPerNoteTypeObject)
+    .filter((noteType) => notesToShow[noteType[0]])
+    .map(([key, value]) => ({
+      id: key,
+      data: value,
+    }));
+  console.log(`[GlobalShart] dataGroupedPerNoteType :`, dataGroupedPerNoteType);
 
-  // axis: Partial<{domain: Partial<{line: Partial<Partial<CSSProperties>>}>, ticks: Partial<...>, legend: Partial<...>}
   const theme = {
     text: {
       fill: "#aaaaaa",
@@ -133,67 +134,94 @@ export default function GlobalShartByMMSources({ mMSources }) {
   };
 
   return (
-    <ResponsiveScatterPlot
-      data={dataGroupedPerNoteType}
-      theme={theme}
-      margin={{ top: 60, right: 140, bottom: 70, left: 90 }}
-      xScale={{ type: "linear", min: minDate - 10, max: "auto" }}
-      xFormat="^-.0"
-      yScale={{ type: "linear", min: 0, max: "auto" }}
-      yFormat="^-.0"
-      // xScale={{ type: "linear", min: 0, max: "auto" }}
-      // // xScale={{ type: "linear", min: minDate - 10, max: "auto" }}
-      // // xFormat=">-.2f"
-      // yScale={{ type: "linear", min: 0, max: "auto" }}
-      // yFormat=">-.2r"
-      blendMode="soft-light"
-      axisTop={null}
-      axisRight={null}
-      axisBottom={{
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: "Metronome Marks",
-        legendPosition: "middle",
-        legendOffset: 46,
-        truncateTickAt: 0,
-      }}
-      axisLeft={{
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: "nb notes per second",
-        legendPosition: "middle",
-        legendOffset: -60,
-        truncateTickAt: 0,
-      }}
-      legends={[
-        {
-          anchor: "bottom-right",
-          direction: "column",
-          justify: false,
-          translateX: 130,
-          translateY: 0,
-          itemWidth: 100,
-          itemHeight: 12,
-          itemsSpacing: 5,
-          itemDirection: "left-to-right",
-          symbolSize: 12,
-          symbolShape: "circle",
-          effects: [
+    <>
+      <div className="w-full h-[800px] text-slate-900 dark:text-white">
+        <ResponsiveScatterPlot
+          data={dataGroupedPerNoteType}
+          theme={theme}
+          margin={{ top: 60, right: 140, bottom: 70, left: 90 }}
+          xScale={{ type: "linear", min: minDate - 10, max: "auto" }}
+          xFormat="^-.0"
+          yScale={{ type: "linear", min: 0, max: "auto" }}
+          yFormat="^-.0"
+          // xScale={{ type: "linear", min: 0, max: "auto" }}
+          // // xScale={{ type: "linear", min: minDate - 10, max: "auto" }}
+          // // xFormat=">-.2f"
+          // yScale={{ type: "linear", min: 0, max: "auto" }}
+          // yFormat=">-.2r"
+          blendMode="soft-light"
+          axisTop={null}
+          axisRight={null}
+          axisBottom={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: "Date of composition",
+            legendPosition: "middle",
+            legendOffset: 46,
+            truncateTickAt: 0,
+          }}
+          axisLeft={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: "Notes per second",
+            legendPosition: "middle",
+            legendOffset: -60,
+            truncateTickAt: 0,
+          }}
+          legends={[
             {
-              on: "hover",
-              style: {
-                itemOpacity: 1,
-              },
+              anchor: "bottom-right",
+              direction: "column",
+              justify: false,
+              translateX: 130,
+              translateY: 0,
+              itemWidth: 100,
+              itemHeight: 12,
+              itemsSpacing: 5,
+              itemDirection: "left-to-right",
+              symbolSize: 12,
+              symbolShape: "circle",
+              effects: [
+                {
+                  on: "hover",
+                  style: {
+                    itemOpacity: 1,
+                  },
+                },
+              ],
             },
-          ],
-        },
-      ]}
-      tooltip={Tooltip}
-      onClick={onClick}
-      motionConfig="stiff"
-    />
+          ]}
+          tooltip={Tooltip}
+          onClick={onClick}
+          motionConfig="stiff"
+        />
+      </div>
+      <div className="flex w-full border-2 border-gray-300 dark:border-gray-900 dark:text-gray-300 px-4 py-2 mt-0 mb-4 gap-3 items-center">
+        <div>{`Note types filter :`}</div>
+        {["Structural", "Repeated", "Ornamental", "Staccato"].map(
+          (noteType) => (
+            <div className="form-control" key={noteType}>
+              <label className="label cursor-pointer p-0">
+                <span className="label-text mr-2">{noteType}</span>
+                <input
+                  type="checkbox"
+                  checked={notesToShow[noteType.toLowerCase()]}
+                  className="checkbox checkbox-sm"
+                  onChange={(e) => {
+                    setNotesToShow((cur) => ({
+                      ...cur,
+                      [noteType.toLowerCase()]: e.target.checked,
+                    }));
+                  }}
+                />
+              </label>
+            </div>
+          ),
+        )}
+      </div>
+    </>
   );
 }
 

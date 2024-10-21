@@ -70,9 +70,7 @@ export default async function Page() {
 
   return (
     <main className="p-8">
-      <div className="w-full h-[800px] text-slate-900 dark:text-white">
-        <GlobalShartByMMSources mMSources={mMSources} />
-      </div>
+      <GlobalShartByMMSources mMSources={mMSources} />
       <MMSourcesDetails mMSources={mMSources} />
     </main>
   );

@@ -22,13 +22,8 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
   console.log(`[POST search] body :`, body);
-  const {
-    startYear,
-    endYear,
-    // tempoIndication,
-    tempoIndicationIds,
-    composer,
-  } = body as SearchFormInput;
+  const { startYear, endYear, tempoIndicationIds, composer } =
+    body as SearchFormInput;
 
   const pieceVersions = await db.pieceVersion.findMany({
     where: {
@@ -36,23 +31,27 @@ export async function POST(req: NextRequest) {
         yearOfComposition: { gte: startYear, lte: endYear },
         ...(composer ? { composer: { id: composer.value } } : {}),
       },
-      movements: {
-        some: {
-          sections: {
-            some: {
-              tempoIndication: {
-                id: {
-                  in: tempoIndicationIds,
+      ...(tempoIndicationIds.length > 0
+        ? {
+            movements: {
+              some: {
+                sections: {
+                  some: {
+                    tempoIndication: {
+                      id: {
+                        in: tempoIndicationIds,
+                      },
+                      // text: {
+                      //   contains: "Allegro",
+                      //   // contains: tempoIndication.label,
+                      // },
+                    },
+                  },
                 },
-                // text: {
-                //   contains: "Allegro",
-                //   // contains: tempoIndication.label,
-                // },
               },
             },
-          },
-        },
-      },
+          }
+        : {}),
     },
     include: {
       piece: {
