@@ -22,6 +22,16 @@ import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 import GlobalShart from "@/components/GlobalShart";
 import Link from "next/link";
 import TempoIndicationSearch from "@/components/TempoIndicationSearch";
+// import ScatterPlotChart from "@/components/ScatterPlotChart";
+
+// What do we want in addition to what is already there:
+//   1. Show all mms that result in speeds of more / less than X notes per second with a selection of note type (strutural, repeated etc.) e.g. show me all Sources that have MMs that result in more than 15 nps (structural)
+// 2. Selection by source contribution and role (e.g. give me all MMs for which Czerny has been the MM provider)
+// 3. Select for piece / collection give me all MMs for Beethoven's Sonata Op. 10 No. 1
+// 4. Select for Category of piece e.g. show me all MMs for vocal pieces
+//
+// What I think we don't need to have in our explore interface:
+// 5. Key Signature, metre
 
 // zod schema for the search form
 const searchFormSchema = z.object({
@@ -39,6 +49,11 @@ function SearchPage() {
     formState: { errors, isSubmitting },
   } = useForm<SearchFormInput>({
     resolver: zodResolver(searchFormSchema),
+    // defaultValues: {
+    //   startYear: 1800,
+    //   endYear: 1850,
+    //   tempoIndicationIds: undefined,
+    // },
   });
 
   const [tempoIndications, setTempoIndications] = useState<
