@@ -2,6 +2,9 @@ import { db } from "@/utils/db";
 import GlobalShartByMMSources from "@/components/GlobalShartByMMSources";
 import MMSourcesDetails from "@/components/MMSourcesDetails";
 
+const dynamic = "force-dynamic";
+const revalidate = 0;
+
 const getData = async () => {
   const mMSources = await db.mMSource.findMany({
     include: {

@@ -29,8 +29,6 @@ import TempoIndicationSearch from "@/components/TempoIndicationSearch";
 // 2. Selection by source contribution and role (e.g. give me all MMs for which Czerny has been the MM provider)
 // 3. Select for piece / collection give me all MMs for Beethoven's Sonata Op. 10 No. 1
 // 4. Select for Category of piece e.g. show me all MMs for vocal pieces
-//
-// What I think we don't need to have in our explore interface:
 // 5. Key Signature, metre
 
 // zod schema for the search form
@@ -60,10 +58,9 @@ function SearchPage() {
     TempoIndicationState[]
   >([]);
   const [lastSearch, setLastSearch] = useState<SearchFormInput>();
-  const [isTempoIndicationsLoading, setIsTempoIndicationsLoading] =
-    useState(true);
+  // const [isTempoIndicationsLoading, setIsTempoIndicationsLoading] = useState(true);
   const [composers, setComposers] = useState<PersonState[]>([]);
-  const [isComposersLoading, setIsComposersLoading] = useState(true);
+  // const [isComposersLoading, setIsComposersLoading] = useState(true);
   const [pieceVersionResults, setPieceVersionResults] = useState<any[]>([]);
   const [selectedTempoIndications, setSelectedTempoIndications] = useState<
     { id: string; text: string }[]
@@ -87,11 +84,11 @@ function SearchPage() {
     getTempoIndicationSelectList()
       .then((data) => {
         setTempoIndications(data);
-        setIsTempoIndicationsLoading(false);
+        // setIsTempoIndicationsLoading(false);
       })
       .catch((err) => {
         console.log(`[getTempoIndicationSelectList] err :`, err);
-        setIsTempoIndicationsLoading(false);
+        // setIsTempoIndicationsLoading(false);
       });
   }, []);
 
@@ -100,11 +97,11 @@ function SearchPage() {
     getAllComposers()
       .then((data) => {
         setComposers(data?.composers);
-        setIsComposersLoading(false);
+        // setIsComposersLoading(false);
       })
       .catch((err) => {
         console.log(`[getAllComposers] err :`, err);
-        setIsComposersLoading(false);
+        // setIsComposersLoading(false);
       });
   }, []);
 
