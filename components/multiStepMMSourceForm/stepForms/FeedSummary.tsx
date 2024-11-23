@@ -19,9 +19,13 @@ function FeedSummary() {
   const { data: session } = useSession();
 
   const mMSourceToPersist = computeMMSourceToPersistFromState(state);
-  console.log(`[FeedSummary] mMSourceToPersist :`, mMSourceToPersist);
 
   const saveAll = () => {
+    console.log(
+      `[FeedSummary] saveAll mMSourceToPersist :`,
+      JSON.stringify(mMSourceToPersist),
+    );
+    console.log(`[FeedSummary] saveAll state :`, JSON.stringify(state));
     setIsSubmitting(true);
     fetchAPI(
       URL_API_FEEDFORM_SUBMIT,
@@ -31,10 +35,10 @@ function FeedSummary() {
       session?.user?.accessToken,
     )
       .then((response) => {
-        console.log("response", response);
+        // console.log("response", response);
 
         if (response.error) {
-          console.error("Error submitting form:", response.error);
+          console.error("Error submitting form:", JSON.stringify(response));
           setIsSaveSuccess(false);
           return;
         } else {
@@ -69,7 +73,7 @@ function FeedSummary() {
         <DebugBox
           title="Submit success return"
           stateObject={submitResponse}
-          shouldExpandNode={(level) => level < 3}
+          // shouldExpandNode={(level) => level < 3}
         />
       </div>
     );

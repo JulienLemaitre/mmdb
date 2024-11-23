@@ -75,26 +75,33 @@ export async function POST(request: NextRequest) {
 
   console.log(`[] mMSourceInput`, JSON.stringify(mMSourceInput));
 
+  // Transaction debug object
+  const txDebug: any = {};
+
   // Execute all operations in a single transaction
   return await db
     .$transaction(async (tx) => {
       const composers = await tx.person.createMany({
         data: composerCreateManyInput,
       });
-      console.log(`[] composers :`, JSON.stringify(composers));
+      console.log(`[tx] composers :`, JSON.stringify(composers));
+      txDebug.composers = composers;
 
       const collections = await tx.collection.createMany({
         data: collectionCreateManyInput,
       });
-      console.log(`[] collections :`, JSON.stringify(collections));
+      console.log(`[tx] collections :`, JSON.stringify(collections));
+      txDebug.collections = collections;
 
       const mMSource = await tx.mMSource.create({
         data: mMSourceInput,
       });
 
-      console.log(`[] mMSource :`, JSON.stringify(mMSource));
+      console.log(`[tx] mMSource :`, JSON.stringify(mMSource));
+      txDebug.mMSource = mMSource;
       const mMSourceId = mMSource.id;
-      console.log(`[] mMSourceId :`, mMSourceId);
+      console.log(`[tx] mMSourceId :`, mMSourceId);
+      txDebug.mMSourceId = mMSourceId;
 
       const metronomeMarksInput: Prisma.MetronomeMarkCreateManyInput[] =
         state.metronomeMarks
@@ -104,15 +111,17 @@ export async function POST(request: NextRequest) {
           );
 
       console.log(
-        `[] metronomeMarksInput sectionId`,
+        `[tx] metronomeMarksInput sectionId`,
         metronomeMarksInput.map((m) => m.sectionId),
       );
+      txDebug.metronomeMarksInput = metronomeMarksInput;
 
       const metronomeMarks = await tx.metronomeMark.createMany({
         data: metronomeMarksInput,
       });
 
-      console.log(`[] metronomeMarks :`, metronomeMarks);
+      console.log(`[tx] metronomeMarks :`, metronomeMarks);
+      txDebug.metronomeMarks = metronomeMarks;
 
       return { mMSourceInput, mMSource, metronomeMarks };
     })
@@ -188,7 +197,13 @@ export async function POST(request: NextRequest) {
     })
     .catch((error) => {
       return NextResponse.json(
-        { error: `Error during DB persistence: ${error.message}` },
+        {
+          error: `Error during DB persistence: ${error.message}`,
+          composerCreateManyInput,
+          collectionCreateManyInput,
+          mMSourceInput,
+          txDebug,
+        },
         { status: 500 },
       );
     });
