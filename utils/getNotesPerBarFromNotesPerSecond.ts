@@ -59,17 +59,17 @@ export default function getNotesPerBarFromNotesPerSecond({
     console.log(`secondsPerBar :`, secondsPerBar);
     console.log(`notesPerBar :`, notesPerBar);
     console.groupEnd();
+    console.log(
+      `[gNPBFNPS RESULT] notesPerBar: ${notesPerBar} |`,
+      JSON.stringify({
+        notesPerSecond,
+        metreNumerator,
+        metreDenominator,
+        bpm,
+        beatUnit,
+      }),
+    );
   }
-  console.log(
-    `[gNPBFNPS RESULT] notesPerBar: ${notesPerBar} |`,
-    JSON.stringify({
-      notesPerSecond,
-      metreNumerator,
-      metreDenominator,
-      bpm,
-      beatUnit,
-    }),
-  );
 
   return notesPerBar;
 }

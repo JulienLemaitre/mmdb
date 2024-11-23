@@ -29,14 +29,22 @@ export default function getNotesPerSecondFromNotesPerBar({
     !bpm ||
     !beatUnit
   ) {
-    console.log(`[] ERROR :`, {
-      notesPerBar,
-      metreNumerator,
-      metreDenominator,
-      bpm,
-      beatUnit,
-    });
-    throw new Error("[gNPSFNPB] Invalid or missing parameter");
+    // console.log(`[] ERROR :`, {
+    //   notesPerBar,
+    //   metreNumerator,
+    //   metreDenominator,
+    //   bpm,
+    //   beatUnit,
+    // });
+    throw new Error(
+      `[gNPSFNPB] Invalid or missing parameter: ${JSON.stringify({
+        notesPerBar,
+        metreNumerator,
+        metreDenominator,
+        bpm,
+        beatUnit,
+      })}`,
+    );
   }
   // Calculate the duration of one beat in seconds
   const beatDuration = 60 / bpm;
