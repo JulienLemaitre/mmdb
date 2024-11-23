@@ -138,7 +138,7 @@ function SearchPage() {
         <Link href="/explore/allByComposer" className={`link link-primary`}>
           See all data per composer
         </Link>
-        <Link href="/explore/allBySource" className={`link link-primary`}>
+        <Link href="/explore/allBySource/30" className={`link link-primary`}>
           See all data per source
         </Link>
       </div>
