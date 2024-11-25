@@ -1,8 +1,8 @@
-// Prepare the data for persistence in DB of new Collections
+// Prepare the data for persistence in DB of new Persons
 import { PersistableFeedFormState } from "@/components/context/feedFormContext";
 import { Prisma } from "@prisma/client";
 
-export default function getComposerCreateInput(
+export default function getPersonCreateInput(
   state: PersistableFeedFormState,
   creatorId: string,
 ): Prisma.PersonCreateManyInput[] {
@@ -17,26 +17,38 @@ export default function getComposerCreateInput(
     }
 
     const piece = state.pieces.find((p) => p.composerId === person.id);
-    if (!piece) {
+    const contribution = state.mMSourceContributions.find(
+      // @ts-ignore
+      (c) => c?.person?.id === person.id,
+    );
+    if (!(piece || contribution)) {
       console.log(
-        `[getComposerCreateInput] No piece pointing to the new person ${person.id}`,
+        `[getComposerCreateInput] No piece or contribution pointing to the new person ${person.id}`,
       );
       return false;
     }
 
-    const pieceVersion = state.pieceVersions.find(
-      (pv) => pv.pieceId === piece.id,
-    );
-    if (!pieceVersion) {
-      console.log(
-        `[getComposerCreateInput] No pieceVersion for the piece ${piece.id} pointing to the new composer ${person.id}`,
-      );
-      return false;
+    if (contribution) {
+      return true;
     }
 
-    return state.mMSourcePieceVersions.some(
-      (mms) => mms.pieceVersionId === pieceVersion.id,
-    );
+    if (person) {
+      const pieceVersion = state.pieceVersions.find(
+        // @ts-ignore
+        (pv) => pv.pieceId === piece.id,
+      );
+      if (!pieceVersion) {
+        console.log(
+          // @ts-ignore
+          `[getComposerCreateInput] No pieceVersion for the piece ${piece.id} pointing to the new composer ${person.id}`,
+        );
+        return false;
+      }
+
+      return state.mMSourcePieceVersions.some(
+        (mms) => mms.pieceVersionId === pieceVersion.id,
+      );
+    }
   });
   console.log(
     `[getComposerCreateInput] newPersons`,
@@ -49,6 +61,7 @@ export default function getComposerCreateInput(
       firstName: newPerson.firstName,
       lastName: newPerson.lastName,
       birthYear: newPerson.birthYear,
+      deathYear: newPerson.deathYear,
       creatorId,
     }),
   );

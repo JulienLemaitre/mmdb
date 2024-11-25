@@ -23,8 +23,10 @@ export default function MMSourceDetails({ mMSource }) {
       };
     });
 
+  // console.log(`top-${mMSource.id}`);
+
   return (
-    <div className="my-16">
+    <div className="my-16" key={`top-${mMSource.id}`}>
       {
         // Pieces
         pieceVersionWithCollectionField.map((pvs, index) => {
@@ -34,11 +36,12 @@ export default function MMSourceDetails({ mMSource }) {
           const collection = pvs.collection;
           const composerName =
             piece.composer.firstName + " " + piece.composer.lastName;
+          // console.log(piece.id + `-pv`);
 
           if (!pieceVersion) {
             return (
               <div
-                key={piece.id}
+                key={piece.id + `-pv`}
                 className="my-8 border-solid border-l-4 border-l-emerald-500 pl-2"
               >
                 <div>{`${composerName}`}</div>
@@ -47,8 +50,11 @@ export default function MMSourceDetails({ mMSource }) {
               </div>
             );
           }
+
+          // console.log(pieceVersion.id + "-nopv");
+
           return (
-            <div className="my-8 flex" key={pieceVersion.id}>
+            <div className="my-8 flex" key={pieceVersion.id + "-nopv"}>
               <div className="w-1/2">
                 {collection ? (
                   <div className="my-8 border-solid border-l-8 border-l-primary pl-2">
@@ -404,7 +410,13 @@ export default function MMSourceDetails({ mMSource }) {
                       <div className="mr-4">Source:</div>
                       <div>
                         <div className="">
-                          {mMSource.year} - {mMSource.type.toLowerCase()}
+                          {`${mMSource.year} - ${mMSource.type.toLowerCase()} ${
+                            mMSource?.createdAt
+                              ? `[
+                            created ${mMSource?.createdAt?.toLocaleString()} ]`
+                              : ""
+                          }
+                          `}
                         </div>
                         {mMSource.title && (
                           <div className="">{mMSource.title}</div>

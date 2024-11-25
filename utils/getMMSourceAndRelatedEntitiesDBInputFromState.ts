@@ -33,7 +33,7 @@ export default function getMMSourceAndRelatedEntitiesDBInputFromState(
       : {}),
     contributions: {
       create: state.mMSourceContributions.map((contribution) =>
-        getMMSourceContributionDBInputFromState(contribution, state, creatorId),
+        getMMSourceContributionDBInputFromState(contribution),
       ),
     },
     pieceVersions: {

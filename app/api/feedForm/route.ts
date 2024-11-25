@@ -8,7 +8,8 @@ import getMetronomeMarkDBInputFromState from "@/utils/getMetronomeMarkDBInputFro
 import isReqAuthorized from "@/utils/isReqAuthorized";
 import getDecodedTokenFromReq from "@/utils/getDecodedTokenFromReq";
 import getCollectionCreateInput from "@/utils/getCollectionCreateInput";
-import getComposerCreateInput from "@/utils/getComposerCreateInput";
+import getPersonCreateInput from "@/utils/getPersonCreateInput";
+import getOrganizationCreateInput from "@/utils/getOrganizationCreateInput";
 
 export async function POST(request: NextRequest) {
   if (!isReqAuthorized(request)) {
@@ -55,11 +56,18 @@ export async function POST(request: NextRequest) {
   assertsIsPersistableFeedFormState(state);
 
   // We need to persist new composers first, as it is used by collection and mMSource queries below
-  const composerCreateManyInput: Prisma.PersonCreateManyInput[] =
-    getComposerCreateInput(state, creatorId);
+  const personCreateManyInput: Prisma.PersonCreateManyInput[] =
+    getPersonCreateInput(state, creatorId);
   console.log(
-    `[] composerCreateManyInput`,
-    JSON.stringify(composerCreateManyInput, null, 2),
+    `[] personCreateManyInput`,
+    JSON.stringify(personCreateManyInput, null, 2),
+  );
+
+  const organizationCreateManyInput: Prisma.OrganizationCreateManyInput[] =
+    getOrganizationCreateInput(state, creatorId);
+  console.log(
+    `[] organizationCreateManyInput`,
+    JSON.stringify(organizationCreateManyInput, null, 2),
   );
 
   const collectionCreateManyInput: Prisma.CollectionCreateManyInput[] =
@@ -81,11 +89,17 @@ export async function POST(request: NextRequest) {
   // Execute all operations in a single transaction
   return await db
     .$transaction(async (tx) => {
-      const composers = await tx.person.createMany({
-        data: composerCreateManyInput,
+      const persons = await tx.person.createMany({
+        data: personCreateManyInput,
       });
-      console.log(`[tx] composers :`, JSON.stringify(composers));
-      txDebug.composers = composers;
+      console.log(`[tx] persons :`, JSON.stringify(persons));
+      txDebug.persons = persons;
+
+      const organizations = await tx.organization.createMany({
+        data: organizationCreateManyInput,
+      });
+      console.log(`[tx] organizations`, JSON.stringify(organizations));
+      txDebug.organizations = organizations;
 
       const collections = await tx.collection.createMany({
         data: collectionCreateManyInput,
@@ -199,7 +213,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: `Error during DB persistence: ${error.message}`,
-          composerCreateManyInput,
+          personCreateManyInput,
+          organizationCreateManyInput,
           collectionCreateManyInput,
           mMSourceInput,
           txDebug,
