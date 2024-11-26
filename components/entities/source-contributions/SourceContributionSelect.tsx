@@ -129,11 +129,11 @@ export default function SourceContributionSelect({
         type="button"
         className="btn btn-primary"
         onClick={() => {
-          console.log("Create a new sourceContribution");
+          console.log("Create New Source Contribution");
           setIsContributionCreation(true);
         }}
       >
-        Create a new sourceContribution
+        Create New Source Contribution
       </button>
     </div>
   );
@@ -169,7 +169,7 @@ export default function SourceContributionSelect({
             noOptionsMessage={noOptionsMessage}
             styles={ReactSelectStyles}
           />
-          <Label label={`role`} isRequired />
+          <Label label={`Role`} isRequired />
           <Select
             className="react-select-container"
             classNamePrefix="react-select"
