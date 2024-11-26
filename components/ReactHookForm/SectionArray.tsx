@@ -49,7 +49,7 @@ export default function SectionArray({
               />
               <div className="flex gap-2 items-center">
                 <div className="text-lg font-bold">
-                  Metre :<span className="text-red-500 ml-1">*</span>
+                  Time Signature :<span className="text-red-500 ml-1">*</span>
                 </div>
                 <div className="flex flex-col gap-1">
                   <FormInput

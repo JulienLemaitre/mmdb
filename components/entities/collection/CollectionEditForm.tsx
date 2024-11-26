@@ -35,7 +35,12 @@ export default function CollectionEditForm(
       onKeyDown={preventEnterKeySubmission}
       className="max-w-md"
     >
-      <FormInput name="title" {...{ register, errors, control }} />
+      <FormInput
+        name="title"
+        label="Title of the collection"
+        isRequired={true}
+        {...{ register, errors, control }}
+      />
       <button
         className="btn btn-primary mt-6"
         type="submit"
