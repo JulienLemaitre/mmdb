@@ -72,12 +72,12 @@ const HelpDrawer = () => {
                     <abbr title="Metronome Mark">MM</abbr>
                   </dfn>
                 </strong>
-                ) is a combination of a <i>note value</i> and a pace expressed
-                as{" "}
+                ) is a combination of <i>note value</i> and corresponding
+                frequency per minute, measured in beats per minute (
                 <i>
-                  <abbr title="Beat Per Minute">BPM</abbr>
+                  <abbr title="Beats Per Minute">BPM</abbr>
                 </i>
-                .
+                ).
               </p>
               <p>
                 A{" "}
@@ -86,46 +86,62 @@ const HelpDrawer = () => {
                     <abbr title="Metronome Mark">MM</abbr> Source
                   </dfn>
                 </strong>{" "}
-                is any document that includes a <i>Metronome Mark</i>. It will
-                mostly be editions, but it can be a letter or a diary for
-                example.
+                is any document that provides a <i>metronome mark</i> for a
+                given piece. In most cases, it will be editions of scores, but
+                it can also be a letter or dairy in which the{" "}
+                <i>metronome mark</i> is mentioned.
               </p>
               <p>
                 A <abbr title="Metronome Mark">MM</abbr> Source{" "}
                 <strong>
                   <dfn>Contribution</dfn>
                 </strong>{" "}
-                is a person or a company involved in the MM Source. It must have
-                a specific role from this list : MM provider, arranger, editor,
-                publisher, transcriber, translator. The MM Provider role is
-                important and give the possibility to indicate that the composer
-                or any other person is the provider of the MM Source.
+                is any person or organization involved in the MM Source. One of
+                the following roles needs to be selected: MM provider, arranger,
+                editor, publisher, transcriber, translator. The most important
+                role is the MM provider, who is the person that gave the MM to
+                the piece in question.
               </p>
               <p>
                 A{" "}
                 <strong>
                   <dfn>Piece Version</dfn>
                 </strong>{" "}
-                is the structure of a the piece in terms of movements (if any)
-                and sections.
+                is the structure of a piece, which consists of one or more
+                movements (e.g., movements of a sonata or symphony). Each
+                movement, in turn, is made up of one or more sections (e.g., the
+                introduction of a movement and the main part)
               </p>
               <p>
                 A{" "}
                 <strong>
                   <dfn>Section</dfn>
                 </strong>{" "}
-                is defined by three characteristics:
+                is defined by the following three characteristics:
               </p>
               <ul>
-                <li>time signature</li>
-                <li>tempo indication</li>
-                <li>metronome mark</li>
+                <li>- Time signature</li>
+                <li>- Tempo indication</li>
+                <li>- Metronome mark</li>
               </ul>
               <p>
-                Each time one of them changes, you need to define a new section.
-                For each section created, you will register the maximum number
-                of notes per bar concerning structural, staccato, repeated and
-                ornamental notes.
+                If any of the three characteristics above change, a new section
+                must be entered. For each section created, the maximum number of
+                notes per bar for each structural, staccato, repeated and
+                ornamental notes is entered. If the tempo indication changes
+                within a sonata movement, but no new metronome mark is given,
+                the section in question should be entered without a metronome
+                mark.
+              </p>
+              <p>
+                A{" "}
+                <strong>
+                  <dfn>Collection</dfn>
+                </strong>{" "}
+                consists of multiple pieces with the same opus number, e.g.,
+                Beethoven’s Op.10 or Schumann’s Kinderszenen. The pieces in a
+                collection are either separated by numbering (e.g., Op.10 No.1,
+                Op.10 No.2, etc.) or by other means such as names
               </p>
             </div>
           </div>
