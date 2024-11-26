@@ -47,7 +47,7 @@ export default function ReferenceArray({
               <FormInput
                 name={`references[${index}].reference` as const}
                 isRequired
-                label="Value"
+                label="Reference Value"
                 onBlur={() => onReferenceBlur(index)}
                 onInputChange={() => onReferenceInputChange(index)}
                 {...{ register, control, errors }}

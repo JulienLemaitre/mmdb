@@ -188,7 +188,11 @@ export default function SourceDescriptionEditForm(
           inputMode="numeric"
           {...{ register, errors, control }}
         />
-        <FormInput name="title" {...{ register, errors, control }} />
+        <FormInput
+          name="title"
+          label="Title of the source"
+          {...{ register, errors, control }}
+        />
         <FormInput
           name="link"
           type="url"
