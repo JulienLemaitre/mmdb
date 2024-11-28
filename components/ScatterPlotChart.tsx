@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useCallback, useMemo, useState } from "react";
+import React, { MutableRefObject, useMemo, useState } from "react";
 import useD3 from "@/components/hooks/useD3";
 import * as d3 from "d3";
 import Tooltip from "@/components/Tooltip";
@@ -34,12 +34,16 @@ function ScatterPlotChart({
       data.reduce(
         (minMaxArray, dataNode) => {
           const yearOfComposition = dataNode.meta?.piece?.yearOfComposition;
-          const min = minMaxArray[0]
-            ? Math.min(minMaxArray[0], yearOfComposition)
-            : yearOfComposition;
-          const max = minMaxArray[1]
-            ? Math.max(minMaxArray[1], yearOfComposition)
-            : yearOfComposition;
+          let min = minMaxArray[0];
+          let max = minMaxArray[1];
+          if (typeof yearOfComposition === "number") {
+            min = minMaxArray[0]
+              ? Math.min(minMaxArray[0], yearOfComposition)
+              : yearOfComposition;
+            max = minMaxArray[1]
+              ? Math.max(minMaxArray[1], yearOfComposition)
+              : yearOfComposition;
+          }
           const maxNotesPerSecond = Math.max(minMaxArray[2], dataNode.yVal);
           return [min, max, maxNotesPerSecond];
         },

@@ -1,9 +1,12 @@
 import { db } from "@/utils/db";
-import GlobalShartByMMSources from "@/components/GlobalShartByMMSources";
 import MMSourcesDetails from "@/components/MMSourcesDetails";
+import ShartWithNoteTypeFilter from "@/components/ShartWithNoteTypeFilter";
+import React from "react";
+import getChartDataFromMMSources from "@/utils/getChartDataFromMMSources";
 
-const dynamic = "force-dynamic";
-const revalidate = 0;
+// TODO remove these lines if it updates properly when a new piece is registered, without them.
+// const dynamic = "force-dynamic";
+// const revalidate = 0;
 
 const getData = async ({ last }) => {
   // compute a number from string last argument
@@ -20,9 +23,6 @@ const getData = async ({ last }) => {
     today.getMonth(),
     today.getDate() - lastNumber,
   );
-  // const lastDateString = lastDate.toISOString().slice(0, 10);
-  console.log(`[allBySource] getData lastDate :`, lastDate);
-  // console.log(`[allBySource] getData lastDateString :`, lastDateString);
 
   const mMSources = await db.mMSource.findMany({
     where: {
@@ -95,11 +95,12 @@ export default async function Page({
   params: { last: string };
 }) {
   const { mMSources } = await getData({ last });
+  const chartData = getChartDataFromMMSources({ mMSources });
 
   return (
     <main className="p-8">
       <div>{`Data created in the last ${last} day${Number(last) > 1 ? "s" : ""}.`}</div>
-      <GlobalShartByMMSources mMSources={mMSources} />
+      <ShartWithNoteTypeFilter chartData={chartData} />
       <MMSourcesDetails mMSources={mMSources} />
     </main>
   );

@@ -19,17 +19,18 @@ import { zodOption, zodYear } from "@/utils/zodTypes";
 import getKeyLabel from "@/utils/getKeyLabel";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
-import GlobalShart from "@/components/GlobalShart";
+import ShartWithNoteTypeFilter from "@/components/ShartWithNoteTypeFilter";
 import Link from "next/link";
 import TempoIndicationSearch from "@/components/TempoIndicationSearch";
-// import ScatterPlotChart from "@/components/ScatterPlotChart";
+import { ChartDatum } from "@/types/chartTypes";
+import GetChartDataFromPieceVersions from "@/utils/getChartDataFromPieceVersions";
 
-// What do we want in addition to what is already there:
-//   1. Show all mms that result in speeds of more / less than X notes per second with a selection of note type (strutural, repeated etc.) e.g. show me all Sources that have MMs that result in more than 15 nps (structural)
-// 2. Selection by source contribution and role (e.g. give me all MMs for which Czerny has been the MM provider)
-// 3. Select for piece / collection give me all MMs for Beethoven's Sonata Op. 10 No. 1
-// 4. Select for Category of piece e.g. show me all MMs for vocal pieces
-// 5. Key Signature, metre
+// TODO: What do we want in addition to what is already there:
+//  1. Show all mms that result in speeds of more / less than X notes per second with a selection of note type (strutural, repeated etc.) e.g. show me all Sources that have MMs that result in more than 15 nps (structural)
+//  2. Selection by source contribution and role (e.g. give me all MMs for which Czerny has been the MM provider)
+//  3. Select for piece / collection give me all MMs for Beethoven's Sonata Op. 10 No. 1
+//  4. Select for Category of piece e.g. show me all MMs for vocal pieces
+//  5. Key Signature, metre
 
 // zod schema for the search form
 const searchFormSchema = z.object({
@@ -58,10 +59,9 @@ function SearchPage() {
     TempoIndicationState[]
   >([]);
   const [lastSearch, setLastSearch] = useState<SearchFormInput>();
-  // const [isTempoIndicationsLoading, setIsTempoIndicationsLoading] = useState(true);
   const [composers, setComposers] = useState<PersonState[]>([]);
-  // const [isComposersLoading, setIsComposersLoading] = useState(true);
   const [pieceVersionResults, setPieceVersionResults] = useState<any[]>([]);
+  const [chartData, setChartData] = useState<ChartDatum[]>([]);
   const [selectedTempoIndications, setSelectedTempoIndications] = useState<
     { id: string; text: string }[]
   >([]);
@@ -77,18 +77,14 @@ function SearchPage() {
     setSelectedTempoIndications([]);
   };
 
-  // const tempoIndicationId = lastSearch?.tempoIndication?.value;
-
   // Fetch tempoIndicationSelectList from API
   useEffect(() => {
     getTempoIndicationSelectList()
       .then((data) => {
         setTempoIndications(data);
-        // setIsTempoIndicationsLoading(false);
       })
       .catch((err) => {
         console.log(`[getTempoIndicationSelectList] err :`, err);
-        // setIsTempoIndicationsLoading(false);
       });
   }, []);
 
@@ -97,16 +93,13 @@ function SearchPage() {
     getAllComposers()
       .then((data) => {
         setComposers(data?.composers);
-        // setIsComposersLoading(false);
       })
       .catch((err) => {
         console.log(`[getAllComposers] err :`, err);
-        // setIsComposersLoading(false);
       });
   }, []);
 
   const onSubmit = async (data: SearchFormInput) => {
-    // console.log(`[onSubmit] data :`, data);
     const selectedTempoIndicationIds = selectedTempoIndications.map(
       (indication) => indication.id,
     );
@@ -115,19 +108,30 @@ function SearchPage() {
       tempoIndicationIds: selectedTempoIndicationIds,
     };
     setLastSearch(requestData);
-    console.log(`[NEW Search] requestData :`, requestData);
-    await fetch("/api/search", {
+    const searchVariables = {
       method: "POST",
       body: JSON.stringify(requestData),
-    })
+    };
+    console.log(`[onSubmit api/search] searchVariables :`, searchVariables);
+    await fetch("/api/search", searchVariables)
       .then((res) => res.json())
       .then((res) => {
-        console.log(`[onSubmit] res :`, res);
+        console.log(`[onSubmit api/search] res :`, res);
         setPieceVersionResults(res);
+        setChartData(
+          GetChartDataFromPieceVersions({
+            pieceVersions: res,
+            sectionFilterFn: (section: any) =>
+              selectedTempoIndications.length === 0 ||
+              selectedTempoIndications.some(
+                (tempoIndication) =>
+                  tempoIndication.id === section?.tempoIndication?.id,
+              ),
+          }),
+        );
       })
       .catch((error) => {
-        console.error(`[onSubmit] error :`, error.message);
-        // Handle error
+        console.error(`[onSubmit api/search] error :`, error.message);
       });
   };
 
@@ -135,11 +139,8 @@ function SearchPage() {
     <div className="w-full p-8">
       <div className="flex gap-4">
         <h1 className="flex-1 mb-4 text-4xl font-bold">{`Search for scores`}</h1>
-        <Link href="/explore/allByComposer" className={`link link-primary`}>
-          See all data per composer
-        </Link>
         <Link href="/explore/allBySource/30" className={`link link-primary`}>
-          See all data per source
+          See latest data in the database
         </Link>
       </div>
       <form
@@ -242,18 +243,7 @@ function SearchPage() {
         </div>
       </form>
 
-      {lastSearch ? (
-        <GlobalShart
-          pieceVersions={pieceVersionResults}
-          sectionFilterFn={(section: any) =>
-            selectedTempoIndications.length === 0 ||
-            selectedTempoIndications.some(
-              (tempoIndication) =>
-                tempoIndication.id === section?.tempoIndication?.id,
-            )
-          }
-        />
-      ) : null}
+      {lastSearch ? <ShartWithNoteTypeFilter chartData={chartData} /> : null}
 
       <div>
         {pieceVersionResults.length > 0 && (
@@ -284,9 +274,7 @@ function SearchPage() {
                         </div>
                       </div>
                       <div className="flex mb-4">
-                        <div
-                        // className="w-1/2"
-                        >
+                        <div>
                           {
                             // Movements
                             pieceVersion.movements
@@ -420,10 +408,6 @@ function SearchPage() {
                                                               metronomeMark: mm,
                                                             },
                                                           );
-                                                        // console.log(
-                                                        //   `[Home] notesPerSecondComputedFromNotesPerBar :`,
-                                                        //   notesPerSecondCollectionComputedFromNotesPerBarCollection,
-                                                        // );
                                                       } catch (e: any) {
                                                         console.log(
                                                           `--------------------------------------------------`,
