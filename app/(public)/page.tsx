@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { URL_EXPLORE, URL_FEED } from "@/utils/routes";
 import NavBar from "@/app/NavBar";
+import Metronome from "@/components/Metronome";
 
 export const metadata: Metadata = {
   title: "The Metronome Mark Database",
@@ -20,9 +21,12 @@ export default function Home() {
   return (
     <>
       <NavBar isHome />
-      <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      <div className="flex flex-col items-center justify-center py-2 flex-1">
         <h1 className="mb-8 text-4xl font-bold">The Metronome Mark Database</h1>
         <div className="flex flex-col items-stretch gap-6 w-full max-w-xs">
+          <div className="flex justify-center">
+            <Metronome />
+          </div>
           <Link href={URL_EXPLORE} className="btn btn-primary">
             Explore data
           </Link>
