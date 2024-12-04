@@ -72,6 +72,16 @@
   .react-select-container .react-select__dropdown-indicator .css-tj5bde-Svg {
     @apply fill-current;
   }
+
+  .react-select-container .react-select__option--is-focused {
+    @apply bg-neutral-200
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .react-select-container .react-select__option--is-focused {
+      @apply bg-neutral-800
+    }
+  }
 }
 
 * {
