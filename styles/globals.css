@@ -162,7 +162,7 @@
   background: var(--color);
   position: relative;
   transform-origin: 7px bottom;
-  animation: moveIt 2.2s ease-in-out infinite;
+  animation: moveIt 2s ease-in-out infinite;
 }
 .metronome-container .hole {
   width: 42px;

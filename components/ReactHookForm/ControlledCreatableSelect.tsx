@@ -50,6 +50,7 @@ const ControlledCreatableSelect = ({
         instanceId={`composer-select-${id}`}
         name={name}
         ref={ref}
+        placeholder="Type here or select existing"
         isDisabled={isLoading}
         isLoading={isLoading}
         onChange={onChange}
