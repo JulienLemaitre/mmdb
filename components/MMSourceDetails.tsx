@@ -93,6 +93,7 @@ export default function MMSourceDetails({ mMSource }) {
                                   const { isCommonTime, isCutTime } = section;
                                   const isCommonOrCutTime =
                                     isCommonTime || isCutTime;
+
                                   return (
                                     <div key={section.id}>
                                       <h5 className="text-lg my-1 italic">{`${
@@ -165,6 +166,15 @@ export default function MMSourceDetails({ mMSource }) {
                                         section.metronomeMarks.map((mm) => {
                                           let notesPerSecondCollectionComputedFromNotesPerBarCollection: any =
                                             null;
+                                          const hasNoMM = !!mm.noMM;
+
+                                          if (hasNoMM) {
+                                            return (
+                                              <div
+                                                key={mm.id}
+                                              >{`No Metronome Mark`}</div>
+                                            );
+                                          }
 
                                           try {
                                             // notesPerSecondComputed = getNotesPerSecondsFromNoteValues({metronomeMark: mm})
