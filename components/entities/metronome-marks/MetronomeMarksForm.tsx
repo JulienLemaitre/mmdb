@@ -115,8 +115,11 @@ export default function MetronomeMarksForm({
   const onResetForm = () => {
     sectionList.forEach((section, index) => {
       setValue(`metronomeMarks.${index}.sectionId`, section.id);
+      // @ts-ignore => I don't know how to allow resetting the value to undefined without implying the correct MetronomeMArkInput type accepting this value and screwing the getMetronomeMarkStateFromInput type checking before persisting feedForm data.
       setValue(`metronomeMarks.${index}.bpm`, undefined);
+      // @ts-ignore
       setValue(`metronomeMarks.${index}.beatUnit`, undefined);
+      // @ts-ignore
       setValue(`metronomeMarks.${index}.comment`, undefined);
       setValue(`metronomeMarks.${index}.noMM`, false);
     });
@@ -128,7 +131,7 @@ export default function MetronomeMarksForm({
             ),
           }
         : {
-            metronomeMarks: sectionList.map((s, index) => ({
+            metronomeMarks: sectionList.map((s) => ({
               beatUnit: undefined,
               bpm: undefined,
               comment: undefined,

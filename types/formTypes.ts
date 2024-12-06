@@ -290,13 +290,6 @@ export type MetronomeMarkInput =
     })
   | (Pick<MetronomeMark, "sectionId"> & {
       noMM: true;
-    })
-  // Form Reset
-  | (Pick<MetronomeMark, "sectionId"> & {
-      noMM: false;
-      bpm: undefined;
-      comment: undefined;
-      beatUnit: undefined;
     });
 
 export type SearchFormInput = {
