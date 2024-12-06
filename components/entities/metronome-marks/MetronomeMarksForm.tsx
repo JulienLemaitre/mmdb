@@ -17,6 +17,9 @@ import getMetronomeMarkStateFromInput from "@/utils/getMetronomeMarkStateFromInp
 import { ONE_MM_REQUIRED } from "@/utils/constants";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 import { NOTE_VALUE } from "@prisma/client";
+import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
+import checkAreFieldsDirty from "@/utils/checkAreFieldsDirty";
+import { getStepByRank } from "@/components/multiStepMMSourceForm/stepsUtils";
 
 const MetronomeMarkListSchema = z
   .object({
@@ -84,15 +87,18 @@ export default function MetronomeMarksForm({
   metronomeMarks,
   sectionList,
 }: MetronomeMarksFormProps) {
-  const { dispatch } = useFeedForm();
+  const { dispatch, currentStepRank } = useFeedForm();
+  const step = getStepByRank(currentStepRank);
   const {
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, dirtyFields },
     control,
     register,
     handleSubmit,
     setValue,
     getValues,
     watch,
+    trigger,
+    reset,
   } = useForm<{ metronomeMarks: MetronomeMarkInput[] }>({
     defaultValues: metronomeMarks
       ? {
@@ -104,17 +110,60 @@ export default function MetronomeMarksForm({
     resolver: zodResolver(MetronomeMarkListSchema),
   });
 
-  const onSubmit = async (data: { metronomeMarks: MetronomeMarkInput[] }) => {
-    console.log(`[] data :`, data);
-    const array = getMetronomeMarkStateFromInput(
-      data.metronomeMarks,
-      sectionList,
-    );
-    updateFeedForm(dispatch, "metronomeMarks", {
-      array,
-      idKey: "sectionId",
-      next: true,
+  const computedIsDirty = checkAreFieldsDirty(dirtyFields);
+
+  const onResetForm = () => {
+    sectionList.forEach((section, index) => {
+      setValue(`metronomeMarks.${index}.sectionId`, section.id);
+      setValue(`metronomeMarks.${index}.bpm`, undefined);
+      setValue(`metronomeMarks.${index}.beatUnit`, undefined);
+      setValue(`metronomeMarks.${index}.comment`, undefined);
+      setValue(`metronomeMarks.${index}.noMM`, false);
     });
+    reset(
+      metronomeMarks
+        ? {
+            metronomeMarks: metronomeMarks.map((metronomeMark) =>
+              getMetronomeMarkInputFromState(metronomeMark),
+            ),
+          }
+        : {
+            metronomeMarks: sectionList.map((s, index) => ({
+              beatUnit: undefined,
+              bpm: undefined,
+              comment: undefined,
+              sectionId: s.id,
+              noMM: false,
+            })),
+          },
+    );
+  };
+
+  // const submitForm = async (data: { metronomeMarks: MetronomeMarkInput[] }) => {
+  const submitForm = async (option: { goToNextStep: boolean }) => {
+    // Trigger validations before submitting
+    const isValid = await trigger();
+
+    if (!isValid) {
+      console.log(`[submitForm !isValid] getValues :`, getValues());
+      console.log(`[submitForm !isValid] errors :`, errors);
+    }
+
+    if (isValid) {
+      console.log(`[submitForm] submitForm after validation successful`);
+      await handleSubmit(async (data) => {
+        console.log(`[submitForm] data :`, data);
+        const array = getMetronomeMarkStateFromInput(
+          data.metronomeMarks,
+          sectionList,
+        );
+        updateFeedForm(dispatch, "metronomeMarks", {
+          array,
+          idKey: "sectionId",
+          next: option.goToNextStep,
+        });
+      })();
+    }
   };
 
   // @ts-ignore
@@ -122,7 +171,10 @@ export default function MetronomeMarksForm({
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={() => {
+        console.warn(`[react-hook-form] form onSubmit - SHOULD NOT HAPPEN`);
+        // Form is submitted programmatically
+      }}
       onKeyDown={preventEnterKeySubmission}
     >
       <MetronomeMarkArray
@@ -148,16 +200,14 @@ export default function MetronomeMarksForm({
           <span>{ONE_MM_REQUIRED}</span>
         </div>
       )}
-      <button
-        className="btn btn-primary mt-6 w-full max-w-xs"
-        type="submit"
-        disabled={isSubmitting}
-      >
-        Submit
-        {isSubmitting && (
-          <span className="loading loading-spinner loading-sm"></span>
-        )}
-      </button>
+      <MMSourceFormStepNavigation
+        onSave={() => submitForm({ goToNextStep: false })}
+        onSaveAndGoToNextStep={() => submitForm({ goToNextStep: true })}
+        onResetForm={onResetForm}
+        isPresentFormDirty={computedIsDirty}
+        isNextDisabled={!computedIsDirty}
+        submitTitle={step.title}
+      />
     </form>
   );
 }

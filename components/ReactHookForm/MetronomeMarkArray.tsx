@@ -40,7 +40,7 @@ export default function MetronomeMarkArray({
       <ul>
         {sectionList.map(
           (section: SectionStateExtendedForMMForm, index: number) => {
-            console.log(`[] section :`, section);
+            const sectionValue = getValues(`metronomeMarks[${index}]`);
             const isPieceBeginning =
               index === 0 ||
               section.pieceId !== sectionList[index - 1].pieceId ||
@@ -115,6 +115,7 @@ export default function MetronomeMarkArray({
                         value: key,
                         label: formatToPhraseCase(key),
                       }))}
+                      value={sectionValue?.beatUnit ?? null}
                       isRequired={!isNoMMChecked}
                       isDisabled={isNoMMChecked}
                       errors={errors}
