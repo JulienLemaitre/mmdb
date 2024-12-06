@@ -47,7 +47,9 @@ const ControlledSelect = ({
         styles={ReactSelectStyles}
         {...selectProps}
       />
-      <div className="label-text-alt text-red-500">{error?.message}</div>
+      <div className="label-text-alt text-red-500 absolute top-[100%]">
+        {error?.message}
+      </div>
     </div>
   );
 };
