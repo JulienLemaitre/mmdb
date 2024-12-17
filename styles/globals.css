@@ -131,6 +131,146 @@
   display: contents;
 }
 
+/* Snowball */
+
+@keyframes fall {
+  to {
+    transform: translateY(300px);
+  }
+}
+
+/*
+body {
+  !*   background-color: #f1faee; *!
+  justify-content: center;
+  align-items: center;
+  height: 100svh;
+  display: flex;
+}
+*/
+.snowball {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.ball {
+  background-color: rgba(189,224,254,0.15);
+  /*background-color: rgba(189,224,254,0.1);*/
+  border: 8px solid #4A525EFF;
+  border-radius: 50%;
+  width: 350px;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 10px 10px #959eae;
+}
+/*.holder {
+  background-color: #2a9d8f;
+  border: 8px solid #4A525EFF;
+  border-radius: 20px 20px 0 0;
+  width: 350px;
+  height: 55px;
+  position: absolute;
+  top: 345px;
+  left: 0;
+}
+.holder:before {
+  content: "";
+  background-color: #4A525EFF;
+  width: 500px;
+  height: 8px;
+  position: absolute;
+  top: 40px;
+  left: -85px;
+}
+.text {
+  text-shadow: 1px 1px 1px #fff, 1.5px 1.5px 0.6px #fff;
+  color: #a5acba;
+  !*color: #ef233c;*!
+  font-family: Brush Script MT, cursive;
+  font-size: 35px;
+  position: absolute;
+  top: -10px;
+  left: 50px;
+}*/
+.fall {
+  z-index: 15;
+  position: absolute;
+}
+.snowFlakes1,
+.snowFlakes2,
+.snowFlakes3,
+.snowFlakes4,
+.snowFlakes5,
+.snowFlakes6,
+.snowFlakes7,
+.snowFlakes8,
+.snowFlakes9,
+.snowFlakes10 {
+  background-color: #fff;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+}
+.snowFlakes1 {
+  animation: 7s linear infinite fall;
+  top: 10px;
+  left: 92px;
+}
+.snowFlakes2 {
+  animation: 5s linear infinite fall;
+  top: 10px;
+  left: 162px;
+  transform: scale(2.2);
+}
+.snowFlakes3 {
+  animation: 5s linear infinite fall;
+  top: 10px;
+  left: 81px;
+}
+.snowFlakes4 {
+  animation: 9s linear infinite fall;
+  top: 10px;
+  left: 46px;
+  transform: scale(1.8);
+}
+.snowFlakes5 {
+  animation: 9.5s linear infinite fall;
+  top: 10px;
+  left: 220px;
+}
+.snowFlakes6 {
+  animation: 4s linear infinite fall;
+  top: 10px;
+  left: 255px;
+}
+.snowFlakes7 {
+  animation: 13s linear infinite fall;
+  top: 10px;
+  left: 290px;
+  transform: scale(2);
+}
+.snowFlakes8 {
+  animation: 3s linear infinite fall;
+  top: 10px;
+  left: 35px;
+}
+.snowFlakes9 {
+  animation: 7s linear infinite fall;
+  top: 10px;
+  left: 150px;
+}
+.snowFlakes10 {
+  animation: 5s linear infinite fall;
+  top: 10px;
+  left: 270px;
+}
+
+.ball .metronome-container {
+  margin-top: 41px;
+}
+
 /* Metronome */
 
 .metronome-container {
