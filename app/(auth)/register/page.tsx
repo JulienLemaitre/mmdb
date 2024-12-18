@@ -54,7 +54,7 @@ export default function Register() {
       },
       body: JSON.stringify(data),
     });
-    console.log(`[] response :`, response);
+    // console.log(`[] response :`, response);
 
     if (response.ok) {
       router.push("/register/success");
