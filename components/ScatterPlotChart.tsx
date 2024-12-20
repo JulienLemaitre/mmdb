@@ -413,7 +413,16 @@ function ScatterPlotChart({
             ? `${tooltipPosition.x + 10}px`
             : `${tooltipPosition.x - tooltipWidth - 70}px`
         }
-        top={`${tooltipPosition.y - propHeight + 150}px`}
+        top={
+          tooltipPosition.y < (height + margin.top) / 2
+            ? `${tooltipPosition.y - 150}px`
+            : undefined
+        }
+        bottom={
+          tooltipPosition.y < (height + margin.top) / 2
+            ? undefined
+            : `${propHeight - tooltipPosition.y + 50}px`
+        }
         opacity={tooltipOpacity}
       />
     </>

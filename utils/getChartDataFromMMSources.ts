@@ -80,7 +80,7 @@ export default function getChartDataFromMMSources({
                   comment: section.comment,
                   tempoIndication: section.tempoIndication,
                 },
-                mm: MM,
+                mm: { ...MM, mMSource },
               };
               chartData.push({
                 noteType,
