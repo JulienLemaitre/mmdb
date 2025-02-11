@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   MMSourcePieceVersionsState,
   PiecePieceVersion,
@@ -41,10 +41,13 @@ export default function CollectionPieceVersionSelectOrCreate({
     getNewEntities(feedFormState, "collections") || []
   ).some((c) => c.id === selectedCollectionId && c.isNew);
 
-  const storePieces = (pieces: PieceState[]) => {
-    onAddPieces(pieces);
-    setPieces(pieces);
-  };
+  const storePieces = useCallback(
+    (pieces: PieceState[]) => {
+      onAddPieces(pieces);
+      setPieces(pieces);
+    },
+    [onAddPieces],
+  );
 
   useEffect(() => {
     if (isNewCollection) {
@@ -71,7 +74,7 @@ export default function CollectionPieceVersionSelectOrCreate({
           setIsLoading(false);
         });
     }
-  }, []);
+  }, [isNewCollection, selectedCollectionId, storePieces]);
 
   if (isLoading) return <div>Loading...</div>;
 

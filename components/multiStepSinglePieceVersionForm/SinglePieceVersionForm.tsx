@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 import SinglePieceVersionSteps from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionSteps";
 import { getStepByRank } from "@/components/multiStepSinglePieceVersionForm/stepsUtils";
 import DebugBox from "@/components/DebugBox";
@@ -54,6 +53,9 @@ const SinglePieceVersionForm = ({
   // For Collection Form, we start by completing the "composer" step automatically and go to the second step = piece
   useEffect(() => {
     if (isCollectionCreationMode && composerId && currentStepRank === 0) {
+      console.log(
+        `[SinglePieceVersionForm] auto-complete the "composer" step and go to the next step = piece`,
+      );
       updateSinglePieceVersionForm(dispatch, "composer", {
         value: {
           id: composerId,
@@ -61,7 +63,7 @@ const SinglePieceVersionForm = ({
         next: true,
       });
     }
-  }, []);
+  }, [composerId, currentStepRank, dispatch, isCollectionCreationMode]);
 
   ////////////////// COMPOSER ////////////////////
 

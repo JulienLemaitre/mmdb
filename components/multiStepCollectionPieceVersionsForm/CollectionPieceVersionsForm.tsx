@@ -24,6 +24,7 @@ import DebugBox from "@/components/DebugBox";
 import { v4 as uuidv4 } from "uuid";
 import CollectionPieceVersionsSteps from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsSteps";
 import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
+import { useCallback } from "react";
 
 type CollectionPieceVersionFormProps = {
   onFormClose: () => void;
@@ -97,11 +98,14 @@ function CollectionPieceVersionsForm({
 
   /////////////////// PIECE //////////////////////////////
 
-  const onAddPieces = (pieces: PieceState[]) => {
-    updateFeedForm(feedFormDispatch, "pieces", {
-      array: pieces,
-    });
-  };
+  const onAddPieces = useCallback(
+    (pieces: PieceState[]) => {
+      updateFeedForm(feedFormDispatch, "pieces", {
+        array: pieces,
+      });
+    },
+    [feedFormDispatch],
+  );
 
   /////////////////// PIECE VERSION //////////////////////////////
 
