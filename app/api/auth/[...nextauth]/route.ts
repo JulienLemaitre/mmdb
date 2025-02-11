@@ -6,6 +6,7 @@ const API_URL = process.env.VERCEL_URL
   : "http://localhost:3000/api";
 
 const handler = NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
