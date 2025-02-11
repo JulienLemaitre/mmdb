@@ -1,6 +1,7 @@
 import SignInButton from "@/components/SignInButton";
 import React from "react";
 import QuestionMarkCircleIcon from "@/components/svg/QuestionMarkCircleIcon";
+import Link from "next/link";
 
 export default function NavBar({
   title,
@@ -18,9 +19,9 @@ export default function NavBar({
       </div>
       <div className="flex-1 px-2 mx-2 text-center flex justify-center">
         {isHome ? null : (
-          <a className="btn btn-ghost normal-case text-xl" href="/">
+          <Link className="btn btn-ghost normal-case text-xl" href="/">
             MM Database
-          </a>
+          </Link>
         )}
       </div>
 
