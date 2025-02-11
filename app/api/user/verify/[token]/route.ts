@@ -3,10 +3,8 @@ import { NextRequest } from "next/server";
 import { verifyJwt } from "@/utils/jwt";
 import { redirect } from "next/navigation";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { token: string } },
-) {
+export async function GET(req: NextRequest, props: { params: Promise<{ token: string }> }) {
+  const params = await props.params;
   const decodedToken = verifyJwt(params.token) as {
     user: { id: string };
   } | null;

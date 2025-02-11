@@ -89,11 +89,17 @@ const getData = async ({ last }) => {
   };
 };
 
-export default async function Page({
-  params: { last },
-}: {
-  params: { last: string };
-}) {
+export default async function Page(
+  props: {
+    params: Promise<{ last: string }>;
+  }
+) {
+  const params = await props.params;
+
+  const {
+    last
+  } = params;
+
   const { mMSources } = await getData({ last });
   const chartData = getChartDataFromMMSources({ mMSources });
 
