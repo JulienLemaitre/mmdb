@@ -24,8 +24,6 @@ export default function SectionArray({
     name: `movements[${nestIndex}].sections`,
   });
 
-  console.log(`[SectionArray] fields :`, fields);
-
   return (
     <div className="my-4">
       <ul>

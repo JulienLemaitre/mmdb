@@ -47,7 +47,7 @@ function getControllerProps(
         ? transformActions[
             field.name.toLowerCase().includes("year") ? "year" : "numeric"
           ](rawValue)
-        : "";
+        : undefined;
       field.onChange(endValue);
     };
 

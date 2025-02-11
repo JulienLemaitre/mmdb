@@ -24,8 +24,6 @@ export default function MovementArray({
     name: "movements",
   });
 
-  console.log(`[MovementArray] fields :`, fields);
-
   return (
     <>
       <ul>
