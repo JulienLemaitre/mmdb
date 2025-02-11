@@ -1,5 +1,5 @@
 import ComposerSelect from "@/components/entities/composer/ComposerSelect";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PersonState } from "@/types/formTypes";
 
 type ComposerSelectFormProps = {
@@ -18,20 +18,23 @@ export default function ComposerSelectForm({
     value || null,
   );
 
+  const onSelect = useCallback(
+    (composerId: string) => {
+      const composer = composers.find((composer) => composer.id === composerId);
+      console.log(`[ComposerSelectForm] onSelect:`, composer);
+      if (!composer) return;
+      setSelectedComposer(composer);
+    },
+    [composers],
+  );
+
   // Reset the form context when the component is mounted
   useEffect(() => {
     // Init the form with context value if exists
-    if (value) {
+    if (value?.id) {
       onSelect(value.id);
     }
-  }, []);
-
-  const onSelect = (composerId: string) => {
-    const composer = composers.find((composer) => composer.id === composerId);
-    console.log(`[ComposerSelectForm] onSelect:`, composer);
-    if (!composer) return;
-    setSelectedComposer(composer);
-  };
+  }, [onSelect, value?.id]);
 
   // If we have a default value to set, we prevent an initial render of react-select that would prevent its use
   if (value && !selectedComposer) {
