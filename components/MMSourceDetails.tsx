@@ -23,8 +23,6 @@ export default function MMSourceDetails({ mMSource }) {
       };
     });
 
-  // console.log(`top-${mMSource.id}`);
-
   return (
     <div className="my-16" key={`top-${mMSource.id}`}>
       {
@@ -36,7 +34,6 @@ export default function MMSourceDetails({ mMSource }) {
           const collection = pvs.collection;
           const composerName =
             piece.composer.firstName + " " + piece.composer.lastName;
-          // console.log(piece.id + `-pv`);
 
           if (!pieceVersion) {
             return (
@@ -50,8 +47,6 @@ export default function MMSourceDetails({ mMSource }) {
               </div>
             );
           }
-
-          // console.log(pieceVersion.id + "-nopv");
 
           return (
             <div className="my-8 flex" key={pieceVersion.id + "-nopv"}>
@@ -79,178 +74,180 @@ export default function MMSourceDetails({ mMSource }) {
                     // Movements
                     pieceVersion.movements
                       .sort((a, b) => a.rank - b.rank)
-                      .map((movement) => (
-                        <div key={movement.id} className="flex">
-                          <h4 className="text-xl my-1 flex-none pr-4">
-                            {movement.rank} - {getKeyLabel(movement.key)}
-                          </h4>
-                          <div className="">
-                            {
-                              // sections
-                              movement.sections
-                                .sort((a, b) => a.rank - b.rank)
-                                .map((section, _, sectionList) => {
-                                  const { isCommonTime, isCutTime } = section;
-                                  const isCommonOrCutTime =
-                                    isCommonTime || isCutTime;
+                      .map((movement) => {
+                        return (
+                          <div key={movement.id} className="flex">
+                            <h4 className="text-xl my-1 flex-none pr-4">
+                              {movement.rank} - {getKeyLabel(movement.key)}
+                            </h4>
+                            <div className="">
+                              {
+                                // sections
+                                movement.sections
+                                  .sort((a, b) => a.rank - b.rank)
+                                  .map((section, _, sectionList) => {
+                                    const { isCommonTime, isCutTime } = section;
+                                    const isCommonOrCutTime =
+                                      isCommonTime || isCutTime;
 
-                                  return (
-                                    <div key={section.id}>
-                                      <h5 className="text-lg my-1 italic">{`${
-                                        sectionList.length > 1
-                                          ? `${section.rank} - `
-                                          : ""
-                                      }${section.tempoIndication?.text}`}</h5>
-                                      <div className="border-b-2 border-gray-200">
-                                        <div className="">
-                                          metre :{" "}
-                                          <b>
-                                            {isCommonOrCutTime ? (
-                                              <>
-                                                <span className="common-time align-middle">
-                                                  {isCommonTime
-                                                    ? `\u{1D134}`
-                                                    : `\u{1D135}`}
-                                                </span>
-                                                {` (${section.metreNumerator}/${section.metreDenominator})`}
-                                              </>
-                                            ) : (
-                                              `${section.metreNumerator}/${section.metreDenominator}`
-                                            )}
-                                          </b>
-                                        </div>
-                                        {section.fastestStructuralNotesPerBar && (
+                                    return (
+                                      <div key={section.id}>
+                                        <h5 className="text-lg my-1 italic">{`${
+                                          sectionList.length > 1
+                                            ? `${section.rank} - `
+                                            : ""
+                                        }${section.tempoIndication?.text}`}</h5>
+                                        <div className="border-b-2 border-gray-200">
                                           <div className="">
-                                            fastest structural note per bar:{" "}
+                                            metre :{" "}
                                             <b>
-                                              {
-                                                section.fastestStructuralNotesPerBar
-                                              }
+                                              {isCommonOrCutTime ? (
+                                                <>
+                                                  <span className="common-time align-middle">
+                                                    {isCommonTime
+                                                      ? `\u{1D134}`
+                                                      : `\u{1D135}`}
+                                                  </span>
+                                                  {` (${section.metreNumerator}/${section.metreDenominator})`}
+                                                </>
+                                              ) : (
+                                                `${section.metreNumerator}/${section.metreDenominator}`
+                                              )}
                                             </b>
                                           </div>
-                                        )}
-                                        {section.fastestRepeatedNotesPerBar && (
-                                          <div className="">
-                                            fastest repeated note per bar:{" "}
-                                            <b>
-                                              {
-                                                section.fastestRepeatedNotesPerBar
-                                              }
-                                            </b>
-                                          </div>
-                                        )}
-                                        {section.fastestStaccatoNotesPerBar && (
-                                          <div className="">
-                                            fastest staccato note per bar:{" "}
-                                            <b>
-                                              {
-                                                section.fastestStaccatoNotesPerBar
-                                              }
-                                            </b>
-                                          </div>
-                                        )}
-                                        {section.fastestOrnamentalNotesPerBar && (
-                                          <div className="">
-                                            fastest ornamental note per bar:{" "}
-                                            <b>
-                                              {
-                                                section.fastestOrnamentalNotesPerBar
-                                              }
-                                            </b>
-                                          </div>
-                                        )}
-                                      </div>
-
-                                      {
-                                        // Metronome marks
-                                        section.metronomeMarks.map((mm) => {
-                                          let notesPerSecondCollectionComputedFromNotesPerBarCollection: any =
-                                            null;
-                                          const hasNoMM = !!mm.noMM;
-
-                                          if (hasNoMM) {
-                                            return (
-                                              <div
-                                                key={mm.id}
-                                              >{`No Metronome Mark`}</div>
-                                            );
-                                          }
-
-                                          try {
-                                            // notesPerSecondComputed = getNotesPerSecondsFromNoteValues({metronomeMark: mm})
-                                            notesPerSecondCollectionComputedFromNotesPerBarCollection =
-                                              getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM(
+                                          {section.fastestStructuralNotesPerBar && (
+                                            <div className="">
+                                              fastest structural note per bar:{" "}
+                                              <b>
                                                 {
-                                                  section,
-                                                  metronomeMark: mm,
-                                                },
+                                                  section.fastestStructuralNotesPerBar
+                                                }
+                                              </b>
+                                            </div>
+                                          )}
+                                          {section.fastestRepeatedNotesPerBar && (
+                                            <div className="">
+                                              fastest repeated note per bar:{" "}
+                                              <b>
+                                                {
+                                                  section.fastestRepeatedNotesPerBar
+                                                }
+                                              </b>
+                                            </div>
+                                          )}
+                                          {section.fastestStaccatoNotesPerBar && (
+                                            <div className="">
+                                              fastest staccato note per bar:{" "}
+                                              <b>
+                                                {
+                                                  section.fastestStaccatoNotesPerBar
+                                                }
+                                              </b>
+                                            </div>
+                                          )}
+                                          {section.fastestOrnamentalNotesPerBar && (
+                                            <div className="">
+                                              fastest ornamental note per bar:{" "}
+                                              <b>
+                                                {
+                                                  section.fastestOrnamentalNotesPerBar
+                                                }
+                                              </b>
+                                            </div>
+                                          )}
+                                        </div>
+
+                                        {
+                                          // Metronome marks
+                                          section.metronomeMarks.map((mm) => {
+                                            let notesPerSecondCollectionComputedFromNotesPerBarCollection: any =
+                                              null;
+                                            const hasNoMM = !!mm.noMM;
+
+                                            if (hasNoMM) {
+                                              return (
+                                                <div
+                                                  key={mm.id + "-hasNoMM"}
+                                                >{`No Metronome Mark`}</div>
                                               );
-                                            // console.log(
-                                            //   `[Home] notesPerSecondComputedFromNotesPerBar :`,
-                                            //   notesPerSecondCollectionComputedFromNotesPerBarCollection,
-                                            // );
-                                          } catch (e: any) {
-                                            console.log(
-                                              `--------------------------------------------------`,
-                                            );
-                                            console.log(
-                                              `[getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM ERROR] mm :`,
-                                              e?.message,
-                                            );
-                                            console.log(
-                                              `[] ${composerName}: ${piece.title} - mvt#${movement.rank} - section#${section.rank}`,
-                                            );
-                                            console.log(
-                                              `[] mm`,
-                                              JSON.stringify(mm),
-                                            );
-                                            // notesPerSecondComputed = e?.message
-                                          }
+                                            }
 
-                                          return (
-                                            <div key={mm.id}>
-                                              <div className="mr-4">{`${mm.beatUnit} = ${mm.bpm}`}</div>
+                                            try {
+                                              // notesPerSecondComputed = getNotesPerSecondsFromNoteValues({metronomeMark: mm})
+                                              notesPerSecondCollectionComputedFromNotesPerBarCollection =
+                                                getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM(
+                                                  {
+                                                    section,
+                                                    metronomeMark: mm,
+                                                  },
+                                                );
+                                              // console.log(
+                                              //   `[Home] notesPerSecondComputedFromNotesPerBar :`,
+                                              //   notesPerSecondCollectionComputedFromNotesPerBarCollection,
+                                              // );
+                                            } catch (e: any) {
+                                              console.log(
+                                                `--------------------------------------------------`,
+                                              );
+                                              console.log(
+                                                `[getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM ERROR] mm :`,
+                                                e?.message,
+                                              );
+                                              console.log(
+                                                `[] ${composerName}: ${piece.title} - mvt#${movement.rank} - section#${section.rank}`,
+                                              );
+                                              console.log(
+                                                `[] mm`,
+                                                JSON.stringify(mm),
+                                              );
+                                              // notesPerSecondComputed = e?.message
+                                            }
 
-                                              {[
-                                                "fastestStructuralNotes",
-                                                "fastestStaccatoNotes",
-                                                "fastestOrnamentalNotes",
-                                                "fastestRepeatedNotes",
-                                              ].map((keyBase) => {
-                                                const originalNotesPerSecond =
-                                                  mm.notesPerSecond?.[
-                                                    keyBase + "PerSecond"
-                                                  ];
-                                                // const originalNotesPerSecond: any = mm.notesPerSecond
-                                                // const computedNotesPerSecond = notesPerSecondComputed?.[keyBase + 'PerSecond'] ? Math.round(notesPerSecondComputed[keyBase + 'PerSecond'] * 100) / 100 : null
-                                                // const isNotesPerSecondDiff = computedNotesPerSecond && Math.abs(mm.notesPerSecond?.[keyBase + 'PerSecond'] - computedNotesPerSecond) > 0.01
+                                            return (
+                                              <div key={mm.id}>
+                                                <div className="mr-4">{`${mm.beatUnit} = ${mm.bpm}`}</div>
 
-                                                const computedNotesPerSecondFromNotesPerBar =
-                                                  notesPerSecondCollectionComputedFromNotesPerBarCollection?.[
-                                                    keyBase + "PerSecond"
-                                                  ]
-                                                    ? Math.round(
-                                                        notesPerSecondCollectionComputedFromNotesPerBarCollection[
-                                                          keyBase + "PerSecond"
-                                                        ] * 100,
-                                                      ) / 100
-                                                    : null;
-                                                const isOriginalNotesPerSecondAndComputedDiff =
-                                                  originalNotesPerSecond &&
-                                                  computedNotesPerSecondFromNotesPerBar &&
-                                                  Math.abs(
-                                                    computedNotesPerSecondFromNotesPerBar -
-                                                      originalNotesPerSecond,
-                                                  ) > 0.01;
-                                                const hasDataInconsistency =
-                                                  false;
-                                                // const hasDataInconsistency =
-                                                //   (originalNotesPerSecond &&
-                                                //     !computedNotesPerSecondFromNotesPerBar) ||
-                                                //   (!originalNotesPerSecond &&
-                                                //     computedNotesPerSecondFromNotesPerBar);
+                                                {[
+                                                  "fastestStructuralNotes",
+                                                  "fastestStaccatoNotes",
+                                                  "fastestOrnamentalNotes",
+                                                  "fastestRepeatedNotes",
+                                                ].map((keyBase) => {
+                                                  const originalNotesPerSecond =
+                                                    mm.notesPerSecond?.[
+                                                      keyBase + "PerSecond"
+                                                    ];
+                                                  // const originalNotesPerSecond: any = mm.notesPerSecond
+                                                  // const computedNotesPerSecond = notesPerSecondComputed?.[keyBase + 'PerSecond'] ? Math.round(notesPerSecondComputed[keyBase + 'PerSecond'] * 100) / 100 : null
+                                                  // const isNotesPerSecondDiff = computedNotesPerSecond && Math.abs(mm.notesPerSecond?.[keyBase + 'PerSecond'] - computedNotesPerSecond) > 0.01
 
-                                                /*if (
+                                                  const computedNotesPerSecondFromNotesPerBar =
+                                                    notesPerSecondCollectionComputedFromNotesPerBarCollection?.[
+                                                      keyBase + "PerSecond"
+                                                    ]
+                                                      ? Math.round(
+                                                          notesPerSecondCollectionComputedFromNotesPerBarCollection[
+                                                            keyBase +
+                                                              "PerSecond"
+                                                          ] * 100,
+                                                        ) / 100
+                                                      : null;
+                                                  const isOriginalNotesPerSecondAndComputedDiff =
+                                                    originalNotesPerSecond &&
+                                                    computedNotesPerSecondFromNotesPerBar &&
+                                                    Math.abs(
+                                                      computedNotesPerSecondFromNotesPerBar -
+                                                        originalNotesPerSecond,
+                                                    ) > 0.01;
+                                                  const hasDataInconsistency =
+                                                    false;
+                                                  // const hasDataInconsistency =
+                                                  //   (originalNotesPerSecond &&
+                                                  //     !computedNotesPerSecondFromNotesPerBar) ||
+                                                  //   (!originalNotesPerSecond &&
+                                                  //     computedNotesPerSecondFromNotesPerBar);
+
+                                                  /*if (
                                             isOriginalNotesPerSecondAndComputedDiff
                                           ) {
                                             console.log(
@@ -296,120 +293,123 @@ export default function MMSourceDetails({ mMSource }) {
                                             console.groupEnd();
                                           }*/
 
-                                                return (
-                                                  <Fragment
-                                                    key={mm.id + keyBase}
-                                                  >
-                                                    {computedNotesPerSecondFromNotesPerBar && (
-                                                      <div className="mr-4">
-                                                        {getKeyBaseString(
-                                                          keyBase as KeyBase,
-                                                        )}
-                                                        :
-                                                        <span
-                                                          // className={`${isNotesPerSecondFromNotesPerBarDiff ? "bg-red-500 text-white px-2" : ""} ml-1`}>
-                                                          className={`${
-                                                            computedNotesPerSecondFromNotesPerBar >=
-                                                            15
-                                                              ? "bg-red-500"
-                                                              : computedNotesPerSecondFromNotesPerBar >=
-                                                                  11
-                                                                ? "bg-orange-400"
+                                                  return (
+                                                    <Fragment
+                                                      key={mm.id + keyBase}
+                                                    >
+                                                      {computedNotesPerSecondFromNotesPerBar && (
+                                                        <div className="mr-4">
+                                                          {getKeyBaseString(
+                                                            keyBase as KeyBase,
+                                                          )}
+                                                          :
+                                                          <span
+                                                            // className={`${isNotesPerSecondFromNotesPerBarDiff ? "bg-red-500 text-white px-2" : ""} ml-1`}>
+                                                            className={`${
+                                                              computedNotesPerSecondFromNotesPerBar >=
+                                                              15
+                                                                ? "bg-red-500"
                                                                 : computedNotesPerSecondFromNotesPerBar >=
-                                                                    8
-                                                                  ? "bg-amber-200"
-                                                                  : "bg-white"
-                                                          } px-2 text-black`}
-                                                        >
-                                                          {
-                                                            computedNotesPerSecondFromNotesPerBar
-                                                          }{" "}
-                                                          /s
-                                                        </span>
-                                                      </div>
-                                                    )}
-                                                    {hasDataInconsistency && (
-                                                      <div className="mr-4 bg-red-500 py-4">
-                                                        {`${keyBase}: INCONSISTENCY originalNotesPerSecond: ${JSON.stringify(
-                                                          originalNotesPerSecond,
-                                                        )} | computedNotesPerSecondFromNotesPerBar: ${JSON.stringify(
-                                                          computedNotesPerSecondFromNotesPerBar,
-                                                        )}`}
-                                                      </div>
-                                                    )}
-                                                    {hasDataInconsistency ||
-                                                    isOriginalNotesPerSecondAndComputedDiff ? (
-                                                      <div className="mr-4 text-gray-400">
-                                                        ORIGINAL:
-                                                        <span
-                                                          className={`${
-                                                            originalNotesPerSecond >=
-                                                            15
-                                                              ? "bg-red-500"
-                                                              : originalNotesPerSecond >=
-                                                                  11
-                                                                ? "bg-orange-400"
-                                                                : originalNotesPerSecond >=
-                                                                    8
-                                                                  ? "bg-amber-200"
-                                                                  : "bg-white"
-                                                          } px-2`}
-                                                        >
-                                                          {
-                                                            mm.notesPerSecond?.[
-                                                              keyBase +
-                                                                "PerSecond"
-                                                            ]
-                                                          }
-                                                        </span>
-                                                        (
-                                                        <span
-                                                          className={
-                                                            !mm.notesPerBar?.[
-                                                              keyBase + "PerBar"
-                                                            ]
-                                                              ? "text-red-500"
-                                                              : ""
-                                                          }
-                                                        >
-                                                          {mm.notesPerBar?.[
-                                                            keyBase + "PerBar"
-                                                          ] ||
-                                                            "Unable to find computed note per bar"}
-                                                        </span>
-                                                        {originalNotesPerSecond && (
-                                                          <span className="ml-1">
-                                                            Originally{" "}
-                                                            <span
-                                                              className={`${
-                                                                isOriginalNotesPerSecondAndComputedDiff
-                                                                  ? "bg-red-500 text-white px-2"
-                                                                  : ""
-                                                              } ml-1`}
-                                                            >
-                                                              {
-                                                                originalNotesPerSecond
-                                                              }
-                                                            </span>
+                                                                    11
+                                                                  ? "bg-orange-400"
+                                                                  : computedNotesPerSecondFromNotesPerBar >=
+                                                                      8
+                                                                    ? "bg-amber-200"
+                                                                    : "bg-white"
+                                                            } px-2 text-black`}
+                                                          >
+                                                            {
+                                                              computedNotesPerSecondFromNotesPerBar
+                                                            }{" "}
+                                                            /s
                                                           </span>
-                                                        )}
-                                                        )
-                                                      </div>
-                                                    ) : null}
-                                                  </Fragment>
-                                                );
-                                              })}
-                                            </div>
-                                          );
-                                        })
-                                      }
-                                    </div>
-                                  );
-                                })
-                            }
+                                                        </div>
+                                                      )}
+                                                      {hasDataInconsistency && (
+                                                        <div className="mr-4 bg-red-500 py-4">
+                                                          {`${keyBase}: INCONSISTENCY originalNotesPerSecond: ${JSON.stringify(
+                                                            originalNotesPerSecond,
+                                                          )} | computedNotesPerSecondFromNotesPerBar: ${JSON.stringify(
+                                                            computedNotesPerSecondFromNotesPerBar,
+                                                          )}`}
+                                                        </div>
+                                                      )}
+                                                      {hasDataInconsistency ||
+                                                      isOriginalNotesPerSecondAndComputedDiff ? (
+                                                        <div className="mr-4 text-gray-400">
+                                                          ORIGINAL:
+                                                          <span
+                                                            className={`${
+                                                              originalNotesPerSecond >=
+                                                              15
+                                                                ? "bg-red-500"
+                                                                : originalNotesPerSecond >=
+                                                                    11
+                                                                  ? "bg-orange-400"
+                                                                  : originalNotesPerSecond >=
+                                                                      8
+                                                                    ? "bg-amber-200"
+                                                                    : "bg-white"
+                                                            } px-2`}
+                                                          >
+                                                            {
+                                                              mm
+                                                                .notesPerSecond?.[
+                                                                keyBase +
+                                                                  "PerSecond"
+                                                              ]
+                                                            }
+                                                          </span>
+                                                          (
+                                                          <span
+                                                            className={
+                                                              !mm.notesPerBar?.[
+                                                                keyBase +
+                                                                  "PerBar"
+                                                              ]
+                                                                ? "text-red-500"
+                                                                : ""
+                                                            }
+                                                          >
+                                                            {mm.notesPerBar?.[
+                                                              keyBase + "PerBar"
+                                                            ] ||
+                                                              "Unable to find computed note per bar"}
+                                                          </span>
+                                                          {originalNotesPerSecond && (
+                                                            <span className="ml-1">
+                                                              Originally{" "}
+                                                              <span
+                                                                className={`${
+                                                                  isOriginalNotesPerSecondAndComputedDiff
+                                                                    ? "bg-red-500 text-white px-2"
+                                                                    : ""
+                                                                } ml-1`}
+                                                              >
+                                                                {
+                                                                  originalNotesPerSecond
+                                                                }
+                                                              </span>
+                                                            </span>
+                                                          )}
+                                                          )
+                                                        </div>
+                                                      ) : null}
+                                                    </Fragment>
+                                                  );
+                                                })}
+                                              </div>
+                                            );
+                                          })
+                                        }
+                                      </div>
+                                    );
+                                  })
+                              }
+                            </div>
                           </div>
-                        </div>
-                      ))
+                        );
+                      })
                   }
                 </div>
               </div>
@@ -440,28 +440,32 @@ export default function MMSourceDetails({ mMSource }) {
                         )}
                         {mMSource.references &&
                           mMSource.references.length > 0 &&
-                          mMSource.references.map((refItem) => (
-                            <div key={refItem.value} className="break-all">
-                              <b>{`${refItem.type}: `}</b>
-                              {refItem.reference}
-                            </div>
-                          ))}
+                          mMSource.references.map((refItem) => {
+                            return (
+                              <div key={refItem.id} className="break-all">
+                                <b>{`${refItem.type}: `}</b>
+                                {refItem.reference}
+                              </div>
+                            );
+                          })}
                       </div>
                     </div>
-                    {mMSource.contributions.map((contribution) => (
-                      <div key={contribution.id} className="flex">
-                        <div className="mr-4">
-                          {contribution.role.toLowerCase()}:
+                    {mMSource.contributions.map((contribution) => {
+                      return (
+                        <div key={contribution.id} className="flex">
+                          <div className="mr-4">
+                            {contribution.role.toLowerCase()}:
+                          </div>
+                          <div className="mr-4">
+                            {contribution.person?.firstName
+                              ? contribution.person?.firstName +
+                                " " +
+                                contribution.person?.lastName
+                              : contribution.organization?.name}
+                          </div>
                         </div>
-                        <div className="mr-4">
-                          {contribution.person?.firstName
-                            ? contribution.person?.firstName +
-                              " " +
-                              contribution.person?.lastName
-                            : contribution.organization?.name}
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               ) : null}
