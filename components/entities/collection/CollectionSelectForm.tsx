@@ -1,5 +1,5 @@
 import CollectionSelect from "@/components/entities/collection/CollectionSelect";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CollectionState } from "@/types/formTypes";
 
 type CollectionSelectFormProps = {
@@ -17,22 +17,25 @@ export default function CollectionSelectForm({
   const [selectedCollection, setSelectedCollection] =
     useState<CollectionState | null>(value || null);
 
+  const onSelect = useCallback(
+    (collectionId: string) => {
+      const collection = collections.find(
+        (collection) => collection.id === collectionId,
+      );
+      console.log(`[CollectionSelectForm] onSelect:`, collection);
+      if (!collection) return;
+      setSelectedCollection(collection);
+    },
+    [collections],
+  );
+
   // Reset the form context when the component is mounted
   useEffect(() => {
     // Init the form with context value if exists
     if (value?.id) {
       onSelect(value.id);
     }
-  }, [value?.id]);
-
-  const onSelect = (collectionId: string) => {
-    const collection = collections.find(
-      (collection) => collection.id === collectionId,
-    );
-    console.log(`[CollectionSelectForm] onSelect:`, collection);
-    if (!collection) return;
-    setSelectedCollection(collection);
-  };
+  }, [onSelect, value?.id]);
 
   // If we have a default value to set, we prevent an initial render of react-select that would prevent its use
   if (value && !selectedCollection) {
