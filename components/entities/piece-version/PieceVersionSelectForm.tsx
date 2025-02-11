@@ -1,6 +1,6 @@
 import PieceVersionSelect from "@/components/entities/piece-version/PieceVersionSelect";
 import { PieceVersionState } from "@/types/formTypes";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import PlusIcon from "@/components/svg/PlusIcon";
 
 type PieceVersionSelectFormProps = {
@@ -23,22 +23,25 @@ export default function PieceVersionSelectForm({
     setSelectedPieceVersion(null);
   }, [pieceVersions]);
 
+  const onSelect = useCallback(
+    (pieceVersionId: string) => {
+      const pieceVersion = pieceVersions.find(
+        (pieceVersion) => pieceVersion.id === pieceVersionId,
+      );
+      console.log(`[PieceVersionSelectForm] onSelect: ${pieceVersionId}`);
+      if (!pieceVersion) return;
+      setSelectedPieceVersion(pieceVersion);
+    },
+    [pieceVersions],
+  );
+
   // Reset the form context when the component is mounted
   useEffect(() => {
     // Init the form with context value if exists
-    if (value) {
+    if (value?.id) {
       onSelect(value.id);
     }
-  }, []);
-
-  const onSelect = (pieceVersionId: string) => {
-    const pieceVersion = pieceVersions.find(
-      (pieceVersion) => pieceVersion.id === pieceVersionId,
-    );
-    console.log(`[PieceVersionSelectForm] onSelect: ${pieceVersionId}`);
-    if (!pieceVersion) return;
-    setSelectedPieceVersion(pieceVersion);
-  };
+  }, [onSelect, value?.id]);
 
   // If we have a default value to set, we prevent an initial render of react-select that would prevent its use
   if (value && !selectedPieceVersion) {
