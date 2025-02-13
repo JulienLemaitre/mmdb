@@ -10,6 +10,8 @@ import getDecodedTokenFromReq from "@/utils/getDecodedTokenFromReq";
 import getCollectionCreateInput from "@/utils/getCollectionCreateInput";
 import getPersonCreateInput from "@/utils/getPersonCreateInput";
 import getOrganizationCreateInput from "@/utils/getOrganizationCreateInput";
+import { fetchAPI } from "@/utils/fetchAPI";
+import getAccessTokenFromReq from "@/utils/getAccessTokenFromReq";
 
 export async function POST(request: NextRequest) {
   if (!isReqAuthorized(request)) {
@@ -82,6 +84,30 @@ export async function POST(request: NextRequest) {
     getMMSourceAndRelatedEntitiesDBInputFromState(state, creatorId);
 
   console.log(`[] mMSourceInput`, JSON.stringify(mMSourceInput));
+
+  // Send techLog email
+  await fetchAPI(
+    "/sendEmail",
+    {
+      serverSide: true,
+      variables: {
+        type: "techLog",
+        state,
+        personCreateManyInput,
+        organizationCreateManyInput,
+        collectionCreateManyInput,
+        mMSourceInput,
+        author: decodedToken?.email,
+      },
+    },
+    getAccessTokenFromReq(request),
+  )
+    .then((result) =>
+      console.log(`[api/feedForm] result from sendEmail :`, result),
+    )
+    .catch((reason) =>
+      console.error(`[api/feedForm] error reason from sendEmail :`, reason),
+    );
 
   // Transaction debug object
   const txDebug: any = {};

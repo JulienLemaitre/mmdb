@@ -23,6 +23,8 @@ export default function MMSourceDetails({ mMSource }) {
       };
     });
 
+  // console.log(`[] top-${mMSource.id} :`, `top-${mMSource.id}`);
+
   return (
     <div className="my-16" key={`top-${mMSource.id}`}>
       {
@@ -34,6 +36,8 @@ export default function MMSourceDetails({ mMSource }) {
           const collection = pvs.collection;
           const composerName =
             piece.composer.firstName + " " + piece.composer.lastName;
+
+          // console.log(`[] piece.id + "-pv" :`, piece.id + `-pv`);
 
           if (!pieceVersion) {
             return (
@@ -47,6 +51,11 @@ export default function MMSourceDetails({ mMSource }) {
               </div>
             );
           }
+
+          // console.log(
+          //   `[] pieceVersion.id + "-nopv" :`,
+          //   pieceVersion.id + "-nopv",
+          // );
 
           return (
             <div className="my-8 flex" key={pieceVersion.id + "-nopv"}>
@@ -75,6 +84,8 @@ export default function MMSourceDetails({ mMSource }) {
                     pieceVersion.movements
                       .sort((a, b) => a.rank - b.rank)
                       .map((movement) => {
+                        // console.log(`[] movement.id :`, movement.id);
+
                         return (
                           <div key={movement.id} className="flex">
                             <h4 className="text-xl my-1 flex-none pr-4">
@@ -89,6 +100,8 @@ export default function MMSourceDetails({ mMSource }) {
                                     const { isCommonTime, isCutTime } = section;
                                     const isCommonOrCutTime =
                                       isCommonTime || isCutTime;
+
+                                    // console.log(`[] section.id :`, section.id);
 
                                     return (
                                       <div key={section.id}>
@@ -163,11 +176,19 @@ export default function MMSourceDetails({ mMSource }) {
                                             let notesPerSecondCollectionComputedFromNotesPerBarCollection: any =
                                               null;
                                             const hasNoMM = !!mm.noMM;
+                                            const mmKey =
+                                              mm.sectionId +
+                                              mm.pieceVersionRank;
 
                                             if (hasNoMM) {
+                                              // console.log(
+                                              //   `[] mmKey + "-hasNoMM" :`,
+                                              //   mmKey + "-hasNoMM",
+                                              // );
+
                                               return (
                                                 <div
-                                                  key={mm.id + "-hasNoMM"}
+                                                  key={mmKey + "-hasNoMM"}
                                                 >{`No Metronome Mark`}</div>
                                               );
                                             }
@@ -196,15 +217,11 @@ export default function MMSourceDetails({ mMSource }) {
                                               console.log(
                                                 `[] ${composerName}: ${piece.title} - mvt#${movement.rank} - section#${section.rank}`,
                                               );
-                                              console.log(
-                                                `[] mm`,
-                                                JSON.stringify(mm),
-                                              );
                                               // notesPerSecondComputed = e?.message
                                             }
 
                                             return (
-                                              <div key={mm.id}>
+                                              <div key={mmKey}>
                                                 <div className="mr-4">{`${mm.beatUnit} = ${mm.bpm}`}</div>
 
                                                 {[
@@ -293,9 +310,14 @@ export default function MMSourceDetails({ mMSource }) {
                                             console.groupEnd();
                                           }*/
 
+                                                  // console.log(
+                                                  //   `[] mmKey + keyBase :`,
+                                                  //   mmKey + keyBase,
+                                                  // );
+
                                                   return (
                                                     <Fragment
-                                                      key={mm.id + keyBase}
+                                                      key={mmKey + keyBase}
                                                     >
                                                       {computedNotesPerSecondFromNotesPerBar && (
                                                         <div className="mr-4">
@@ -441,8 +463,16 @@ export default function MMSourceDetails({ mMSource }) {
                         {mMSource.references &&
                           mMSource.references.length > 0 &&
                           mMSource.references.map((refItem) => {
+                            // console.log(
+                            //   `[] refItem.type + refItem.reference :`,
+                            //   refItem.type + refItem.reference,
+                            // );
+
                             return (
-                              <div key={refItem.id} className="break-all">
+                              <div
+                                key={refItem.type + refItem.reference}
+                                className="break-all"
+                              >
                                 <b>{`${refItem.type}: `}</b>
                                 {refItem.reference}
                               </div>
@@ -451,8 +481,22 @@ export default function MMSourceDetails({ mMSource }) {
                       </div>
                     </div>
                     {mMSource.contributions.map((contribution) => {
+                      // console.log(
+                      //   `[] contribution.role + (contribution?.person?.id || contribution?.organization?.id) :`,
+                      //   contribution.role +
+                      //     (contribution?.person?.id ||
+                      //       contribution?.organization?.id),
+                      // );
+
                       return (
-                        <div key={contribution.id} className="flex">
+                        <div
+                          key={
+                            contribution.role +
+                            (contribution?.person?.id ||
+                              contribution?.organization?.id)
+                          }
+                          className="flex"
+                        >
                           <div className="mr-4">
                             {contribution.role.toLowerCase()}:
                           </div>

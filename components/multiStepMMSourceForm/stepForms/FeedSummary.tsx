@@ -40,6 +40,29 @@ function FeedSummary() {
         if (response.error) {
           console.error("Error submitting form:", JSON.stringify(response));
           setIsSaveSuccess(false);
+          // Send techLog email
+          fetchAPI(
+            "/api/sendEmail",
+            {
+              variables: {
+                type: "techLog",
+                mMSourceToPersist,
+                state,
+                message: `Error submitting form`,
+                error: response,
+              },
+            },
+            session?.user?.accessToken,
+          )
+            .then((result) =>
+              console.log(`[FeedSummary] result from sendEmail :`, result),
+            )
+            .catch((reason) =>
+              console.error(
+                `[FeedSummary] error reason from sendEmail :`,
+                reason,
+              ),
+            );
           return;
         } else {
           setIsSaveSuccess(true);
@@ -49,7 +72,7 @@ function FeedSummary() {
         setIsSubmitting(false);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log("error in /api/feedForm", error);
         // initFeedForm(dispatch);
         setIsSaveSuccess(false);
         setIsSubmitting(false);
