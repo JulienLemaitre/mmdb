@@ -60,9 +60,10 @@ export default function SourceContributionSelectForm({
     );
     const { role } = personContribution;
     let person: PersonState;
+
     // Case of selection of existing person
     if ("personId" in personContribution) {
-      const foundPerson = persons.find(
+      const foundPerson = [...persons, ...createdPersons].find(
         (person) => person.id === personContribution.personId,
       );
       console.log(
@@ -78,6 +79,7 @@ export default function SourceContributionSelectForm({
         return;
       }
     }
+
     // Case of creation of a new person
     if ("person" in personContribution) {
       person = personContribution.person;
@@ -103,9 +105,13 @@ export default function SourceContributionSelectForm({
   ) => {
     const { role } = organizationContribution;
     let organization: OrganizationState;
+
     // Case of selection of existing organization
     if ("organizationId" in organizationContribution) {
-      const foundOrganization = organizations.find(
+      const foundOrganization = [
+        ...organizations,
+        ...createdOrganizations,
+      ].find(
         (organization) =>
           organization.id === organizationContribution.organizationId,
       );
@@ -122,6 +128,7 @@ export default function SourceContributionSelectForm({
         return;
       }
     }
+
     // Case of creation of a new organization
     if ("organization" in organizationContribution) {
       organization = organizationContribution.organization;
