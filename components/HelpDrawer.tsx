@@ -20,7 +20,7 @@ const HelpDrawer = () => {
   const SectionHelp = stepHelpContent[currentStepRank];
 
   return (
-    <div className="drawer-side">
+    <div className="drawer-side" tabIndex={-1}>
       <label
         htmlFor="my-drawer-4"
         aria-label="close sidebar"
@@ -48,6 +48,7 @@ const HelpDrawer = () => {
             checked={isSectonHelpChecked}
             onChange={toggleSectionHelp}
             disabled={!SectionHelp}
+            tabIndex={-1}
           />
           <div role="tabpanel" className="tab-content py-6">
             <div className="prose w-full">{SectionHelp}</div>
@@ -62,6 +63,7 @@ const HelpDrawer = () => {
             aria-label="Glossary"
             checked={!isSectonHelpChecked}
             onChange={toggleSectionHelp}
+            tabIndex={-1}
           />
           <div role="tabpanel" className="tab-content py-6">
             <div className="prose">
