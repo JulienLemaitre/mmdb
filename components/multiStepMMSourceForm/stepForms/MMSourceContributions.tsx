@@ -40,11 +40,13 @@ export default function MMSourceContributions() {
   if (!data)
     return <p>{`Oups, No data could be fetched. Can't continue...`}</p>;
   const { persons, organizations } = data;
+  const newPersonsInState =
+    state?.persons?.filter((person) => person.isNew) || [];
 
   return (
     <SourceContributionSelectForm
       contributions={state.mMSourceContributions}
-      persons={persons}
+      persons={[...persons, ...newPersonsInState]}
       organizations={organizations}
       onSubmit={onSubmit}
       title={step.title}
