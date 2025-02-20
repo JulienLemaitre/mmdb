@@ -114,57 +114,63 @@ export async function POST(request: NextRequest) {
 
   // Execute all operations in a single transaction
   return await db
-    .$transaction(async (tx) => {
-      const persons = await tx.person.createMany({
-        data: personCreateManyInput,
-      });
-      console.log(`[tx] persons :`, JSON.stringify(persons));
-      txDebug.persons = persons;
+    .$transaction(
+      async (tx) => {
+        const persons = await tx.person.createMany({
+          data: personCreateManyInput,
+        });
+        console.log(`[tx] persons :`, JSON.stringify(persons));
+        txDebug.persons = persons;
 
-      const organizations = await tx.organization.createMany({
-        data: organizationCreateManyInput,
-      });
-      console.log(`[tx] organizations`, JSON.stringify(organizations));
-      txDebug.organizations = organizations;
+        const organizations = await tx.organization.createMany({
+          data: organizationCreateManyInput,
+        });
+        console.log(`[tx] organizations`, JSON.stringify(organizations));
+        txDebug.organizations = organizations;
 
-      const collections = await tx.collection.createMany({
-        data: collectionCreateManyInput,
-      });
-      console.log(`[tx] collections :`, JSON.stringify(collections));
-      txDebug.collections = collections;
+        const collections = await tx.collection.createMany({
+          data: collectionCreateManyInput,
+        });
+        console.log(`[tx] collections :`, JSON.stringify(collections));
+        txDebug.collections = collections;
 
-      const mMSource = await tx.mMSource.create({
-        data: mMSourceInput,
-      });
+        const mMSource = await tx.mMSource.create({
+          data: mMSourceInput,
+        });
 
-      console.log(`[tx] mMSource :`, JSON.stringify(mMSource));
-      txDebug.mMSource = mMSource;
-      const mMSourceId = mMSource.id;
-      console.log(`[tx] mMSourceId :`, mMSourceId);
-      txDebug.mMSourceId = mMSourceId;
+        console.log(`[tx] mMSource :`, JSON.stringify(mMSource));
+        txDebug.mMSource = mMSource;
+        const mMSourceId = mMSource.id;
+        console.log(`[tx] mMSourceId :`, mMSourceId);
+        txDebug.mMSourceId = mMSourceId;
 
-      const metronomeMarksInput: Prisma.MetronomeMarkCreateManyInput[] =
-        state.metronomeMarks
-          .filter((metronomeMark) => !metronomeMark.noMM)
-          .map((metronomeMark) =>
-            getMetronomeMarkDBInputFromState(metronomeMark, mMSourceId),
-          );
+        const metronomeMarksInput: Prisma.MetronomeMarkCreateManyInput[] =
+          state.metronomeMarks
+            .filter((metronomeMark) => !metronomeMark.noMM)
+            .map((metronomeMark) =>
+              getMetronomeMarkDBInputFromState(metronomeMark, mMSourceId),
+            );
 
-      console.log(
-        `[tx] metronomeMarksInput sectionId`,
-        metronomeMarksInput.map((m) => m.sectionId),
-      );
-      txDebug.metronomeMarksInput = metronomeMarksInput;
+        console.log(
+          `[tx] metronomeMarksInput sectionId`,
+          metronomeMarksInput.map((m) => m.sectionId),
+        );
+        txDebug.metronomeMarksInput = metronomeMarksInput;
 
-      const metronomeMarks = await tx.metronomeMark.createMany({
-        data: metronomeMarksInput,
-      });
+        const metronomeMarks = await tx.metronomeMark.createMany({
+          data: metronomeMarksInput,
+        });
 
-      console.log(`[tx] metronomeMarks :`, metronomeMarks);
-      txDebug.metronomeMarks = metronomeMarks;
+        console.log(`[tx] metronomeMarks :`, metronomeMarks);
+        txDebug.metronomeMarks = metronomeMarks;
 
-      return { mMSourceInput, mMSource, metronomeMarks };
-    })
+        return { mMSourceInput, mMSource, metronomeMarks };
+      },
+      {
+        maxWait: 5000,
+        timeout: 60000,
+      },
+    )
     .then(async (results) => {
       // Fetch info for newly registered mMSource
       const mMSourceFromDb = await db.mMSource.findUnique({
