@@ -4,7 +4,10 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const resend = new Resend(RESEND_API_KEY);
 
 export default async function sendEmail({ type, content }) {
-  console.log(`[sendEmail] ${type} | content`, JSON.stringify(content));
+  console.log(
+    `[sendEmail] ${type} | content`,
+    JSON.stringify(content).substring(0, 500) + "...",
+  );
 
   const { data, error } = await resend.emails.send({
     from: "mmdb@colibriazulejos.com",

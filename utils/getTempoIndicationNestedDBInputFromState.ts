@@ -19,11 +19,16 @@ export default function getTempoIndicationNestedDBInputFromState(
   }
 
   return {
-    create: {
-      text: newTempoIndication.text,
-      creator: {
-        connect: {
-          id: creatorId,
+    connectOrCreate: {
+      where: {
+        text: newTempoIndication.text,
+      },
+      create: {
+        text: newTempoIndication.text,
+        creator: {
+          connect: {
+            id: creatorId,
+          },
         },
       },
     },

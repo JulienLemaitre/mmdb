@@ -28,17 +28,20 @@ export async function POST(request: NextRequest) {
   }
 
   const state = (await request.json()) as FeedFormState;
-  console.log(
-    `[feedForm API route] body (FeedFormState) :`,
-    JSON.stringify(state),
-  );
+  console.log(`[feedForm API route] ---------- BEGIN ----------`);
 
   // Checking mandatory fields
   const mandatoryFields = [
+    "formInfo",
     "mMSourceDescription",
     "mMSourceContributions",
     "mMSourcePieceVersions",
     "metronomeMarks",
+    "organizations",
+    "persons",
+    "pieces",
+    "pieceVersions",
+    "tempoIndications",
   ];
   const missingMandatoryFields = mandatoryFields.filter(
     (field) => !state[field] || state[field].length === 0,
@@ -236,12 +239,14 @@ export async function POST(request: NextRequest) {
         JSON.stringify(mMSourceFromDBWithMMs),
       );
 
+      console.log(`[feedForm API route] ---------- END / Success ----------`);
       return NextResponse.json({
         ...results,
         mMSourceFromDb: mMSourceFromDBWithMMs,
       });
     })
     .catch((error) => {
+      console.log(`[feedForm API route] ---------- END / Error ----------`);
       return NextResponse.json(
         {
           error: `Error during DB persistence: ${error.message}`,
