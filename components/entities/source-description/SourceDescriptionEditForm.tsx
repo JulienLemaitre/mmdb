@@ -78,12 +78,14 @@ export default function SourceDescriptionEditForm(
     resolver: zodResolver(SourceSchema),
   });
 
+  console.group(`MMSourceDescriptionEditForm`);
   console.log(`[] isDirty :`, isDirty);
   console.log(`[] dirtyFields :`, dirtyFields);
   const computedIsDirty = checkAreFieldsDirty(dirtyFields);
   // const computedIsDirty = Object.keys(dirtyFields).length > 0;
   console.log(`[] computedIsDirty :`, computedIsDirty);
   console.log(`[] errors :`, errors);
+  console.groupEnd();
 
   const [isReferenceDirty, setIsReferenceDirty] = useState(false);
   const [isCheckingReference, setIsCheckingReference] = useState(false);

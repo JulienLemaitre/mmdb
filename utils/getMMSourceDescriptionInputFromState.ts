@@ -33,7 +33,9 @@ export default function getMMSourceDescriptionInputFromState(
             reference: reference.reference,
           })),
         }
-      : {}),
+      : {
+          references: [],
+        }),
   };
 
   return sourceDescriptionInput;
