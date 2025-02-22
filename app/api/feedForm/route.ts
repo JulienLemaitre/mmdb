@@ -32,16 +32,10 @@ export async function POST(request: NextRequest) {
 
   // Checking mandatory fields
   const mandatoryFields = [
-    "formInfo",
     "mMSourceDescription",
     "mMSourceContributions",
     "mMSourcePieceVersions",
     "metronomeMarks",
-    "organizations",
-    "persons",
-    "pieces",
-    "pieceVersions",
-    "tempoIndications",
   ];
   const missingMandatoryFields = mandatoryFields.filter(
     (field) => !state[field] || state[field].length === 0,
