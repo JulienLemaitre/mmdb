@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import get from "just-safe-get";
 import { GetErrorMessage } from "@/utils/GetErrorMessage";
 import { useState } from "react";
@@ -36,12 +37,21 @@ function getControllerProps(
   let controllerProps: any = {
     rules: registerProps,
   };
-  controllerProps.onChange = field.onChange;
+  controllerProps.onChange = (
+    event: ChangeEvent<HTMLInputElement> | undefined,
+  ) => {
+    field.onChange(event?.target?.value);
+
+    if (typeof onInputChange === "function") {
+      onInputChange();
+    }
+  };
   controllerProps.value = field.value || "";
 
   if (inputMode === "numeric") {
-    controllerProps.onChange = (event: Event | undefined) => {
-      // @ts-ignore
+    controllerProps.onChange = (
+      event: ChangeEvent<HTMLInputElement> | undefined,
+    ) => {
       const rawValue = event?.target?.value;
       const endValue = rawValue
         ? transformActions[
