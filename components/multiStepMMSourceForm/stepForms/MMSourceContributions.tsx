@@ -42,12 +42,14 @@ export default function MMSourceContributions() {
   const { persons, organizations } = data;
   const newPersonsInState =
     state?.persons?.filter((person) => person.isNew) || [];
+  const newOrganizationsInState =
+    state?.organizations?.filter((organization) => organization.isNew) || [];
 
   return (
     <SourceContributionSelectForm
       contributions={state.mMSourceContributions}
       persons={[...persons, ...newPersonsInState]}
-      organizations={organizations}
+      organizations={[...organizations, ...newOrganizationsInState]}
       onSubmit={onSubmit}
       title={step.title}
       submitTitle={step.title}

@@ -152,19 +152,31 @@ export default function SourceContributionSelectForm({
     );
   };
 
-  const personOptions: OptionInput[] = [...persons, ...createdPersons].map(
-    (person: PersonState) => ({
+  const personOptions: OptionInput[] = [...persons, ...createdPersons]
+    .reduce((list: PersonState[], currentPerson: PersonState) => {
+      if (list.some((person) => person.id === currentPerson.id)) {
+        return list;
+      }
+      return [...list, currentPerson];
+    }, [])
+    .map((person: PersonState) => ({
       value: person.id,
       label: `${person.firstName} ${person.lastName} [person]`,
-    }),
-  );
+    }));
   const organizationOptions: OptionInput[] = [
     ...organizations,
     ...createdOrganizations,
-  ].map((organization: OrganizationState) => ({
-    value: organization.id,
-    label: `${organization.name} [organization]`,
-  }));
+  ]
+    .reduce((list: OrganizationState[], currentOrg: OrganizationState) => {
+      if (list.some((org) => org.id === currentOrg.id)) {
+        return list;
+      }
+      return [...list, currentOrg];
+    }, [])
+    .map((organization: OrganizationState) => ({
+      value: organization.id,
+      label: `${organization.name} [organization]`,
+    }));
   const sourceContributionOptions = [
     ...personOptions,
     ...organizationOptions,
@@ -174,12 +186,12 @@ export default function SourceContributionSelectForm({
     selectedContributions,
     contributions || [],
   );
-  console.log(
-    `[] isPresentFormDirty :`,
-    isPresentFormDirty,
-    selectedContributions,
-    contributions || [],
-  );
+  // console.log(
+  //   `[] isPresentFormDirty :`,
+  //   isPresentFormDirty,
+  //   selectedContributions,
+  //   contributions || [],
+  // );
 
   return (
     <>
