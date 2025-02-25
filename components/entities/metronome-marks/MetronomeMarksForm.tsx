@@ -106,7 +106,15 @@ export default function MetronomeMarksForm({
             getMetronomeMarkInputFromState(metronomeMark),
           ),
         }
-      : {},
+      : {
+          metronomeMarks: sectionList.map((s) => ({
+            beatUnit: undefined,
+            bpm: undefined,
+            comment: undefined,
+            sectionId: s.id,
+            noMM: false,
+          })),
+        },
     resolver: zodResolver(MetronomeMarkListSchema),
   });
 
@@ -156,15 +164,21 @@ export default function MetronomeMarksForm({
       console.log(`[submitForm] submitForm after validation successful`);
       await handleSubmit(async (data) => {
         console.log(`[submitForm] data :`, data);
-        const array = getMetronomeMarkStateFromInput(
+        const mMStateList = getMetronomeMarkStateFromInput(
           data.metronomeMarks,
           sectionList,
         );
         updateFeedForm(dispatch, "metronomeMarks", {
-          array,
+          array: mMStateList,
           idKey: "sectionId",
           next: option.goToNextStep,
         });
+        if (!option.goToNextStep) {
+          const newMMStateInput = mMStateList.map((mMState) =>
+            getMetronomeMarkInputFromState(mMState),
+          );
+          reset({ metronomeMarks: newMMStateInput });
+        }
       })();
     }
   };
@@ -208,8 +222,8 @@ export default function MetronomeMarksForm({
         onSaveAndGoToNextStep={() => submitForm({ goToNextStep: true })}
         onResetForm={onResetForm}
         isPresentFormDirty={computedIsDirty}
-        isNextDisabled={!computedIsDirty}
         submitTitle={step.title}
+        dirtyFields={dirtyFields}
       />
     </form>
   );

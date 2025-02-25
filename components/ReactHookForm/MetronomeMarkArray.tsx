@@ -115,7 +115,6 @@ export default function MetronomeMarkArray({
                         value: key,
                         label: formatToPhraseCase(key),
                       }))}
-                      value={sectionValue?.beatUnit ?? null}
                       isRequired={!isNoMMChecked}
                       isDisabled={isNoMMChecked}
                       errors={errors}

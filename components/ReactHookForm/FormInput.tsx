@@ -25,7 +25,8 @@ function getRegisterProps({
 
 const transformActions = {
   numeric: (rawValue: string) => rawValue.replace(/\D/g, ""),
-  year: (rawValue: string) => rawValue.replace(/\D/g, "").substring(0, 4),
+  year: (rawValue: string) =>
+    rawValue.replace(/^0+/, "").replace(/\D/g, "").substring(0, 4),
 };
 
 function getControllerProps(
@@ -58,7 +59,7 @@ function getControllerProps(
             field.name.toLowerCase().includes("year") ? "year" : "numeric"
           ](rawValue)
         : undefined;
-      field.onChange(endValue);
+      field.onChange(endValue || "");
     };
 
     if (typeof onInputChange === "function") {
@@ -147,12 +148,12 @@ export function FormInput({
             <input
               className={`input input-sm input-bordered ${inputClassName} flex-1`}
               inputMode={inputMode}
+              {...(defaultValue ? { defaultValue } : {})}
               {...(getControllerProps(field, inputMode, onInputChange) || {})}
               onBlur={field.onBlur}
               ref={field.ref}
               name={field.name}
               type={type}
-              {...(defaultValue ? { defaultValue } : {})}
               {...(disabled ? { disabled: true } : {})}
             />
           )}
