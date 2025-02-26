@@ -18,25 +18,50 @@ import { useState } from "react";
 import getMMSourceDescriptionInputFromState from "@/utils/getMMSourceDescriptionInputFromState";
 import checkAreFieldsDirty from "@/utils/checkAreFieldsDirty";
 
-const SourceSchema = z.object({
-  title: z.string().optional(),
-  type: z.object({
-    value: z.nativeEnum(SOURCE_TYPE),
-    label: z.string(),
-  }),
-  link: z.string().trim().url(),
-  year: zodYear,
-  references: z.array(
-    z.object({
-      type: z.object({
-        value: z.nativeEnum(REFERENCE_TYPE),
-        label: z.string(),
-      }),
-      reference: z.string().min(2),
+const SourceSchema = z
+  .object({
+    title: z.string().optional(),
+    type: z.object({
+      value: z.nativeEnum(SOURCE_TYPE),
+      label: z.string(),
     }),
-  ),
-  comment: z.string().optional(),
-});
+    link: z.string().trim().url(),
+    year: zodYear,
+    references: z.array(
+      z.object({
+        type: z.object({
+          value: z.nativeEnum(REFERENCE_TYPE),
+          label: z.string(),
+        }),
+        reference: z.string().min(2),
+      }),
+    ),
+    comment: z.string().optional(),
+  })
+  .superRefine(({ references }, ctx) => {
+    // If we find two reference with same type.value and reference, we add an error
+    const errors = references.reduce<any>((acc, reference, currentIndex) => {
+      // Determine if the same ref exists in references
+      const isDuplicate = references.some(
+        (existingRef, refIndex) =>
+          refIndex !== currentIndex &&
+          existingRef.type.value === reference.type.value &&
+          existingRef.reference === reference.reference,
+      );
+      if (isDuplicate) {
+        acc.push({
+          code: "custom",
+          path: ["references", currentIndex, "reference"],
+          message: "Duplicate reference",
+        });
+      }
+      return acc;
+    }, []);
+
+    if (errors.length > 0) {
+      errors.forEach((error) => ctx.addIssue(error));
+    }
+  });
 
 const DEFAULT_VALUES = {
   type: {
@@ -105,6 +130,24 @@ export default function SourceDescriptionEditForm(
       setIsCheckingReference(false);
       return;
     }
+    // Check if the reference already exists in new values
+    const currentReferences = getValues("references");
+    if (
+      currentReferences?.some(
+        (ref, i) =>
+          i !== index &&
+          ref.type.value === type.value &&
+          ref.reference === reference,
+      )
+    ) {
+      setError(`references.${index}.reference`, {
+        type: "manual",
+        message: "This reference already exists here around",
+      });
+      setIsCheckingReference(false);
+      return;
+    }
+
     // Check if the reference is already in the database
     const existingReference = await fetch(
       `/api/reference/get?type=${type.value}&reference=${reference}`,
