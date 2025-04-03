@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { URL_EXPLORE, URL_FEED } from "@/utils/routes";
 import NavBar from "@/app/NavBar";
-// import Metronome from "@/components/Metronome";
-import SnowballMetronome from "@/components/SnowballMetronome";
+import Metronome from "@/components/Metronome";
+// import SnowballMetronome from "@/components/SnowballMetronome";
 
 export const metadata: Metadata = {
   title: "The Metronome Mark Database",
@@ -26,7 +26,7 @@ export default function Home() {
         <h1 className="mb-8 text-4xl font-bold">The Metronome Mark Database</h1>
         <div className="flex flex-col items-stretch gap-6 w-full max-w-xs">
           <div className="flex justify-center">
-            <SnowballMetronome />
+            <Metronome />
           </div>
           <Link href={URL_EXPLORE} className="btn btn-primary">
             Explore data
