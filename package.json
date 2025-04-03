@@ -30,7 +30,6 @@
     "daisyui": "4.12.24",
     "eslint": "~8.x",
     "eslint-config-next": "15.2.4",
-    "jose": "5.10.0",
     "jsonwebtoken": "9.0.2",
     "just-safe-get": "4.2.0",
     "lodash": "4.17.21",
