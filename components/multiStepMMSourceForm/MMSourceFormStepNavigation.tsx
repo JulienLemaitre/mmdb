@@ -4,8 +4,14 @@ import {
 } from "@/components/context/feedFormContext";
 import ArrowLeftIcon from "@/components/svg/ArrowLeftIcon";
 import ResetIcon from "@/components/svg/ResetIcon";
-import DataLossWarningModal from "@/components/DataLossWarningModal";
+// import DataLossWarningModal from "@/components/DataLossWarningModal";
 import ArrowRightIcon from "@/components/svg/ArrowRightIcon";
+import dynamic from "next/dynamic";
+
+const DataLossWarningModal = dynamic(
+  () => import("@/components/DataLossWarningModal"),
+  { ssr: false },
+);
 
 export default function MMSourceFormStepNavigation(
   props: Readonly<{

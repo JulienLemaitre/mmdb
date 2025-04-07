@@ -1,6 +1,6 @@
 import React from "react";
 import { createPortal } from "react-dom";
-import { MODAL_AREA_ID } from "@/utils/constants";
+import { usePortal } from "@/components/hooks/usePortal";
 
 type DataLossWarningModalProps = {
   modalId: string;
@@ -13,12 +13,12 @@ function DataLossWarningModal({
   action,
   dirtyFields = {},
 }: DataLossWarningModalProps) {
-  const portalDomNode = document.getElementById(MODAL_AREA_ID);
+  const portalContainer = usePortal();
   const onClose = () => {
     //@ts-ignore
     document.getElementById(modalId)?.close();
   };
-  if (!portalDomNode) return null;
+  if (!portalContainer) return null;
 
   const dirtyFieldsKeys = Object.keys(dirtyFields);
 
@@ -37,7 +37,7 @@ function DataLossWarningModal({
         </div>
       </div>
     </dialog>,
-    portalDomNode,
+    portalContainer,
   );
 }
 
