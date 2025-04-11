@@ -1,6 +1,7 @@
 import "react-json-view-lite/dist/index.css";
 import { darkStyles, JsonView, allExpanded } from "react-json-view-lite";
 import { useSearchParams } from "next/navigation";
+import ClipboardIcon from "@/components/svg/ClipboardIcon";
 
 type DebugBoxProps = {
   title?: string;
@@ -23,7 +24,18 @@ export default function DebugBox({
 
   return (
     <div className="text-[0.6em] my-3">
-      {title ? <h2 className="font-bold">{title}</h2> : null}
+      <div className="flex justify-between flex-row-reverse items-center">
+        <button
+          type="button"
+          className="btn btn-ghost m-0"
+          onClick={() => {
+            navigator.clipboard.writeText(JSON.stringify(stateObject));
+          }}
+        >
+          <ClipboardIcon className="w-4 h-4" />
+        </button>
+        {title ? <h2 className="font-bold">{title}</h2> : null}
+      </div>
       <JsonView
         data={stateObject}
         shouldExpandNode={
