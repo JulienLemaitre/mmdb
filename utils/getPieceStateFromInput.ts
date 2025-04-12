@@ -7,7 +7,7 @@ export default function getPieceStateFromInput(
   return {
     ...pieceInput,
     yearOfComposition: pieceInput.yearOfComposition
-      ? parseInt(pieceInput.yearOfComposition, 10)
+      ? pieceInput.yearOfComposition
       : null,
     id: pieceInput.id || uuidv4(),
   };

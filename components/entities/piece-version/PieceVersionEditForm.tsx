@@ -8,6 +8,7 @@ import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import {
   OptionInput,
   PieceVersionInput,
+  PieceVersionState,
   TempoIndicationState,
 } from "@/types/formTypes";
 import MovementArray from "@/components/ReactHookForm/MovementArray";
@@ -24,42 +25,52 @@ import {
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import getTempoIndicationSelectList from "@/utils/getTempoIndicationSelectList";
+import ArrowLeftIcon from "@/components/svg/ArrowLeftIcon";
+import getPieceVersionInputFromPieceVersionState from "@/utils/getPieceVersionInputFromPieceVersionState";
 
 const PieceVersionSchema = z.object({
   category: getZodOptionFromEnum(PIECE_CATEGORY),
   movements: z
     .array(
       z.object({
-        id: z.string(),
+        id: z.string().optional(),
         key: getZodOptionFromEnum(KEY),
         sections: z
           .array(
             z.object({
-              id: z.string(),
+              id: z.string().optional(),
               metreNumerator: zodPositiveNumber,
               metreDenominator: zodPositiveNumber,
               isCommonTime: z.boolean().optional(),
               isCutTime: z.boolean().optional(),
               fastestStructuralNotesPerBar: zodPositiveNumber,
               isFastestStructuralNoteBelCanto: z.boolean().optional(),
-              fastestStaccatoNotesPerBar: zodPositiveNumber.optional(),
-              fastestRepeatedNotesPerBar: zodPositiveNumber.optional(),
-              fastestOrnamentalNotesPerBar: zodPositiveNumber.optional(),
-              comment: z.string().optional(),
+              fastestStaccatoNotesPerBar: zodPositiveNumber
+                .optional()
+                .nullable(),
+              fastestRepeatedNotesPerBar: zodPositiveNumber
+                .optional()
+                .nullable(),
+              fastestOrnamentalNotesPerBar: zodPositiveNumber
+                .optional()
+                .nullable(),
+              comment: z.string().optional().nullable(),
               tempoIndication: zodOption,
             }),
           )
-          .nonempty(),
+          .min(1),
       }),
     )
-    .nonempty(),
+    .min(1),
 });
 
 export default function PieceVersionEditForm({
   pieceVersion,
   onSubmit,
+  onCancel,
 }: Readonly<{
-  pieceVersion?: PieceVersionInput;
+  pieceVersion?: PieceVersionState;
+  onCancel: () => void;
   onSubmit: (pieceVersion: PieceVersionInput) => void;
 }>) {
   const {
@@ -70,10 +81,13 @@ export default function PieceVersionEditForm({
     getValues,
     setValue,
     watch,
-  } = useForm<PieceVersionInput>({
-    defaultValues: pieceVersion ?? {
-      movements: [getMovementDefaultValues()],
-    },
+  } = useForm({
+    defaultValues: pieceVersion
+      ? getPieceVersionInputFromPieceVersionState(pieceVersion)
+      : {
+          category: { value: undefined, label: undefined },
+          movements: [getMovementDefaultValues()],
+        },
     resolver: zodResolver(PieceVersionSchema),
   });
 
@@ -107,11 +121,14 @@ export default function PieceVersionEditForm({
     ...(feedFormState.tempoIndications || []),
   ];
 
+  // @ts-ignore
   return (
     <div>
       <h1 className="mb-4 text-4xl font-bold">
         Create a piece{" "}
-        <span className="block text-xl font-normal">Content details</span>
+        <span className="block text-xl font-normal">
+          Content details (a.k.a. piece version)
+        </span>
       </h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -136,16 +153,27 @@ export default function PieceVersionEditForm({
           tempoIndicationList={fullTempoIndicationList}
           onTempoIndicationCreated={onTempoIndicationCreated}
         />
-        <button
-          className="btn btn-primary mt-4"
-          type="submit"
-          disabled={isSubmitting}
-        >
-          Submit
-          {isSubmitting && (
-            <span className="loading loading-spinner loading-md"></span>
-          )}
-        </button>
+        <div className="flex gap-4 items-center mt-6">
+          <button
+            className="btn btn-neutral"
+            type="button"
+            disabled={isSubmitting}
+            onClick={onCancel}
+          >
+            <ArrowLeftIcon className="w-5 h-5 mr-2" />
+            Cancel
+          </button>
+          <button
+            className="btn btn-primary w-full max-w-xs"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            Submit
+            {isSubmitting && (
+              <span className="loading loading-spinner loading-md"></span>
+            )}
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import {
-  MetronomeMarkInput,
   MetronomeMarkState,
   SectionStateExtendedForMMForm,
 } from "@/types/formTypes";
@@ -21,54 +20,33 @@ import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSou
 import checkAreFieldsDirty from "@/utils/checkAreFieldsDirty";
 import { getStepByRank } from "@/components/multiStepMMSourceForm/stepsUtils";
 
+const MetronomeMarkSchema = z.discriminatedUnion("noMM", [
+  z.object({
+    noMM: z.literal(true),
+    sectionId: z.string(),
+    comment: z.string().optional().nullable(),
+  }),
+  z.object({
+    noMM: z.literal(false),
+    sectionId: z.string(),
+    beatUnit: getZodOptionFromEnum(NOTE_VALUE),
+    bpm: zodPositiveNumber,
+    comment: z.string().optional().nullable(),
+  }),
+]);
+
 const MetronomeMarkListSchema = z
   .object({
-    metronomeMarks: z
-      .array(
-        z.object({
-          noMM: z.boolean(),
-          sectionId: z.string(),
-          beatUnit: getZodOptionFromEnum(NOTE_VALUE).optional(),
-          bpm: zodPositiveNumber.optional().or(z.nan()),
-          comment: z.string().optional(),
-        }),
-      )
-      .nonempty(),
+    metronomeMarks: z.array(MetronomeMarkSchema).nonempty(),
   })
   .superRefine(({ metronomeMarks }, ctx) => {
-    // for each metronomeMark, if noMM is not checked and bpm or beatUnit is not filled, we add an error
-    const errors = metronomeMarks.reduce<any>(
-      (acc, metronomeMark, currentIndex) => {
-        if (!metronomeMark.noMM) {
-          if (!metronomeMark.bpm) {
-            acc.push({
-              code: "custom",
-              path: ["metronomeMarks", currentIndex, "bpm"],
-              message: "This is required",
-            });
-          }
-          if (!metronomeMark.beatUnit) {
-            acc.push({
-              code: "custom",
-              path: ["metronomeMarks", currentIndex, "beatUnit"],
-              message: "This is required",
-            });
-          }
-        }
-        return acc;
-      },
-      [],
-    );
-    if (errors.length > 0) {
-      errors.forEach((error) => ctx.addIssue(error));
-    }
-
     // If there is no metronomeMark with beatUnit and bpm, we add an error
     if (
-      errors.length === 0 &&
       !metronomeMarks.some(
         (metronomeMark) =>
-          !metronomeMark.noMM && metronomeMark.beatUnit && metronomeMark.bpm,
+          !metronomeMark.noMM &&
+          metronomeMark.beatUnit?.value &&
+          metronomeMark.bpm,
       )
     ) {
       ctx.addIssue({
@@ -99,7 +77,7 @@ export default function MetronomeMarksForm({
     watch,
     trigger,
     reset,
-  } = useForm<{ metronomeMarks: MetronomeMarkInput[] }>({
+  } = useForm<z.infer<typeof MetronomeMarkListSchema>>({
     defaultValues: metronomeMarks
       ? {
           metronomeMarks: metronomeMarks.map((metronomeMark) =>

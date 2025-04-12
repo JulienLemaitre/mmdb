@@ -7,9 +7,7 @@ export default function getPieceNestedDBInputFromState(
   state: PersistableFeedFormState,
   creatorId: string,
 ): Prisma.PieceCreateNestedOneWithoutPieceVersionsInput {
-  const newPiece:
-    | (PieceState & { collectionId?: string; collectionRank?: number })
-    | undefined = state.pieces.find(
+  const newPiece: PieceState | undefined = state.pieces.find(
     (piece) => piece.id === pieceId && piece.isNew,
   );
 

@@ -68,8 +68,7 @@ const DEFAULT_VALUES = {
     value: SOURCE_TYPE.EDITION,
     label: formatToPhraseCase(SOURCE_TYPE.EDITION),
   },
-  // type: undefined,
-  year: "",
+  year: undefined,
   title: "",
   link: "",
   comment: "",
@@ -98,7 +97,7 @@ export default function SourceDescriptionEditForm(
     clearErrors,
     reset,
     trigger,
-  } = useForm<SourceDescriptionInput>({
+  } = useForm({
     defaultValues: sourceDescription ?? DEFAULT_VALUES,
     resolver: zodResolver(SourceSchema),
   });

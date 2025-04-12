@@ -29,7 +29,7 @@ export default function PieceEditForm({
     handleSubmit,
     register,
     control,
-  } = useForm<PieceInput>({
+  } = useForm({
     resolver: zodResolver(PieceSchema),
     ...((piece || newPieceDefaultTitle) && {
       defaultValues: {

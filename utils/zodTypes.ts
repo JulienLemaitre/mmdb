@@ -18,9 +18,11 @@ export const zodOption = z.object({
   value: z.string(),
   label: z.string(),
 });
-export function getZodOptionFromEnum(enumObj: Record<string, string>) {
+export function getZodOptionFromEnum<T extends Record<string, string>>(
+  enumObj: T,
+) {
   return z.object({
-    value: z.nativeEnum(enumObj),
+    value: z.nativeEnum(enumObj) as z.ZodNativeEnum<T>,
     label: z.string(),
   });
 }

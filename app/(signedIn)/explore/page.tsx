@@ -36,8 +36,8 @@ import GetChartDataFromPieceVersions from "@/utils/getChartDataFromPieceVersions
 const searchFormSchema = z.object({
   startYear: zodYear,
   endYear: zodYear,
-  tempoIndication: zodOption.optional(),
-  composer: zodOption.optional(),
+  tempoIndicationIds: z.array(z.string()),
+  composer: zodOption,
 });
 
 function SearchPage() {
@@ -46,7 +46,7 @@ function SearchPage() {
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
-  } = useForm<SearchFormInput>({
+  } = useForm({
     resolver: zodResolver(searchFormSchema),
     // defaultValues: {
     //   startYear: 1800,

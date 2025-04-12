@@ -15,6 +15,7 @@ type PieceVersionSelectOrCreateProps = {
   feedFormState: FeedFormState;
   onPieceVersionCreated: (pieceVersion: PieceVersionInput) => void;
   onPieceVersionSelect: (pieceVersion: PieceVersionState) => void;
+  deleteSelectedPieceVersionIfNew?: () => void;
 };
 
 function PieceVersionSelectOrCreate({
@@ -23,6 +24,7 @@ function PieceVersionSelectOrCreate({
   feedFormState,
   onPieceVersionCreated,
   onPieceVersionSelect,
+  deleteSelectedPieceVersionIfNew,
 }: PieceVersionSelectOrCreateProps) {
   const [pieceVersions, setPieceVersions] = useState<
     PieceVersionState[] | null
@@ -31,10 +33,14 @@ function PieceVersionSelectOrCreate({
   const [isCreation, setIsCreation] = useState(false);
 
   const newPieces = getNewEntities(feedFormState, "pieces");
-  const newPieceVersions = getNewEntities(
+  const newPieceVersions: PieceVersionState[] = getNewEntities(
     feedFormState,
     "pieceVersions",
   ).filter((pieceVersion) => pieceVersion.pieceId === selectedPieceId);
+  const newSelectedPieceVersion = newPieceVersions?.find(
+    (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
+  );
+  const isPieceVersionSelectedNew = !!newSelectedPieceVersion;
   let pieceVersionFullList = [
     ...(pieceVersions || []),
     ...(newPieceVersions || []),
@@ -101,10 +107,23 @@ function PieceVersionSelectOrCreate({
     setIsCreation(true);
   };
 
+  const onCancelPieceCreation = () => {
+    if (typeof deleteSelectedPieceVersionIfNew === "function") {
+      deleteSelectedPieceVersionIfNew();
+    }
+    setIsCreation(false);
+  };
+
   if (isLoading) return <Loader />;
 
-  if (isCreation)
-    return <PieceVersionEditForm onSubmit={onPieceVersionCreated} />;
+  if (isCreation || isPieceVersionSelectedNew)
+    return (
+      <PieceVersionEditForm
+        pieceVersion={newSelectedPieceVersion}
+        onSubmit={onPieceVersionCreated}
+        onCancel={onCancelPieceCreation}
+      />
+    );
 
   if (!pieceVersions)
     return (

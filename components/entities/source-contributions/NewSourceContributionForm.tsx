@@ -41,7 +41,7 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
     register,
     setValue,
     control,
-  } = useForm<ContributionInput>({
+  } = useForm({
     // defaultValues: {},
     resolver: zodResolver(SourceContributionsSchema),
   });

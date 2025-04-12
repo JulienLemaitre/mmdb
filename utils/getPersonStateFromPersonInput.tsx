@@ -8,10 +8,8 @@ export default function getPersonStateFromPersonInput(
     id: personInput.id || uuidv4(),
     firstName: personInput.firstName,
     lastName: personInput.lastName,
-    birthYear: parseInt(personInput.birthYear, 10),
-    deathYear: personInput.deathYear
-      ? parseInt(personInput.deathYear, 10)
-      : null,
+    birthYear: personInput.birthYear,
+    deathYear: personInput.deathYear ? personInput.deathYear : null,
   };
   return personState;
 }

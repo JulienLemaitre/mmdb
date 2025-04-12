@@ -72,9 +72,7 @@ const SinglePieceVersionForm = ({
     newComposer.isNew = true;
     updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
     updateSinglePieceVersionForm(dispatch, "composer", {
-      value: {
-        id: newComposer.id,
-      },
+      value: { id: newComposer.id },
       next: true,
     });
   };
@@ -82,16 +80,14 @@ const SinglePieceVersionForm = ({
   const onComposerSelect = (composer: PersonInput) => {
     updateFeedForm(feedFormDispatch, "persons", { array: [composer] });
     updateSinglePieceVersionForm(dispatch, "composer", {
-      value: {
-        id: composer.id,
-      },
+      value: { id: composer.id },
       next: true,
     });
   };
+  const selectedComposerId = state?.composer?.id;
 
   //////////////////// PIECE ////////////////////
 
-  const selectedComposerId = state?.composer?.id;
   const selectedPieceId = state?.piece?.id;
   const newPieces = getNewEntities(feedFormState, "pieces");
   const newSelectedPiece = newPieces?.find(
@@ -179,6 +175,13 @@ const SinglePieceVersionForm = ({
 
   /////////////////// PIECE VERSION ////////////////////
 
+  const selectedPieceVersionId = state?.pieceVersion?.id;
+  const newPieceVersions = getNewEntities(feedFormState, "pieceVersions");
+  const newSelectedPieceVersion = newPieceVersions?.find(
+    (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
+  );
+  const isPieceVersionSelectedNew = !!newSelectedPieceVersion;
+
   const onPieceVersionCreated = (data: PieceVersionInput) => {
     // Front input values validation is successful at this point.
     console.log("[onPieceVersionCreated] data", data);
@@ -198,7 +201,7 @@ const SinglePieceVersionForm = ({
     );
 
     const pieceVersionState = getPieceVersionStateFromInput({
-      ...pieceVersionData,
+      pieceVersionInput: pieceVersionData,
       pieceId: selectedPieceId,
     });
     pieceVersionState.isNew = true;
@@ -210,6 +213,21 @@ const SinglePieceVersionForm = ({
       value: pieceVersionState,
       next: true,
     });
+  };
+
+  const deleteSelectedPieceVersionIfNew = () => {
+    let deleteIdArray: string[] = [];
+    if (selectedPieceVersionId && isPieceVersionSelectedNew) {
+      deleteIdArray = [selectedPieceVersionId];
+    }
+    if (deleteIdArray.length) {
+      updateFeedForm(feedFormDispatch, "pieceVersions", {
+        deleteIdArray,
+      });
+    }
+    // if (isCollectionCreationMode) {
+    //   onFormClose();
+    // }
   };
 
   const onPieceVersionSelect = (pieceVersion: PieceVersionInput) => {
@@ -268,6 +286,7 @@ const SinglePieceVersionForm = ({
           onPieceCreated={onPieceCreated}
           onPieceSelect={onPieceSelect}
           deleteSelectedPieceIfNew={deleteSelectedPieceIfNew}
+          deleteSelectedPieceVersionIfNew={deleteSelectedPieceVersionIfNew}
           onPieceVersionCreated={onPieceVersionCreated}
           onPieceVersionSelect={onPieceVersionSelect}
           onAddSourceOnPieceVersions={onAddSourceOnPieceVersions}
