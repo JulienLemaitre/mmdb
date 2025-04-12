@@ -39,11 +39,7 @@ export default function MovementArray({
                   ? ` (or whole piece if not divided in movements)`
                   : ""
               }`}</h4>
-              <input
-                value={`movements[${index}].id` as const}
-                {...register(`movements[${index}].id` as const)}
-                hidden
-              />
+              <input {...register(`movements[${index}].id` as const)} hidden />
               <ControlledSelect
                 name={`movements[${index}].key` as const}
                 label={`Key`}

@@ -62,13 +62,32 @@ export default function CollectionPieceVersionsSelectFormContainer({
     );
 
     const pieceVersionState = getPieceVersionStateFromInput({
-      ...pieceVersionData,
+      pieceVersionInput: pieceVersionData,
       pieceId: selectedPieceId,
     });
     pieceVersionState.isNew = true;
     console.log("New pieceVersion to be stored in state", pieceVersionState);
     onPieceVersionSelect(pieceVersionState);
   };
+  //
+  // const selectedPieceVersionId = state?.pieceVersion?.id;
+  // const newPieceVersions = getNewEntities(feedFormState, "pieceVersions");
+  // const newSelectedPieceVersion = newPieceVersions?.find(
+  //   (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
+  // );
+  // const isPieceVersionSelectedNew = !!newSelectedPieceVersion;
+  //
+  // const deleteSelectedPieceVersionIfNew = () => {
+  //   let deleteIdArray: string[] = [];
+  //   if (selectedPieceVersionId && isPieceVersionSelectedNew) {
+  //     deleteIdArray = [selectedPieceVersionId];
+  //   }
+  //   if (deleteIdArray.length) {
+  //     updateFeedForm(feedFormDispatch, "pieceVersions", {
+  //       deleteIdArray,
+  //     });
+  //   }
+  // };
 
   const onPieceVersionSelect = (pieceVersion: PieceVersionState) => {
     console.log(`[onPieceVersionSelect] pieceVersion :`, pieceVersion);
@@ -120,6 +139,7 @@ export default function CollectionPieceVersionsSelectFormContainer({
             feedFormState={feedFormState}
             onPieceVersionCreated={onPieceVersionCreated}
             onPieceVersionSelect={onPieceVersionSelect}
+            // deleteSelectedPieceVersionIfNew={deleteSelectedPieceVersionIfNew}
           />
         </>
       )}

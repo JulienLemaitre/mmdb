@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   MMSourcePieceVersionsState,
   PiecePieceVersion,
@@ -13,6 +13,7 @@ import {
   getEntityByIdOrKey,
 } from "@/components/context/feedFormContext";
 import CollectionPieceVersionsEditForm from "@/components/entities/piece-version/CollectionPieceVersionsEditForm";
+import Loader from "@/components/Loader";
 
 type CollectionPieceVersionSelectOrCreateProps = {
   feedFormState: FeedFormState;
@@ -76,7 +77,7 @@ export default function CollectionPieceVersionSelectOrCreate({
     }
   }, [isNewCollection, selectedCollectionId, storePieces]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loader />;
 
   if (isCreation) {
     // We have a new Collection, so All of its Pieces must be created

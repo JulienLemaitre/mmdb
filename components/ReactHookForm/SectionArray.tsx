@@ -39,7 +39,6 @@ export default function SectionArray({
                 index + 1
               }`}</h4>
               <input
-                value={`movements[${nestIndex}].sections[${index}].id` as const}
                 {...register(
                   `movements[${nestIndex}].sections[${index}].id` as const,
                 )}

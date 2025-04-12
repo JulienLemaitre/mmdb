@@ -7,6 +7,7 @@ import {
   MovementState,
 } from "@/types/formTypes";
 import getKeyLabel from "@/utils/getKeyLabel";
+import formatToPhraseCase from "@/utils/formatToPhraseCase";
 
 function getSectionInputFromSectionState(sectionState: SectionState) {
   const sectionInput: SectionInput = {
@@ -17,7 +18,7 @@ function getSectionInputFromSectionState(sectionState: SectionState) {
     fastestRepeatedNotesPerBar: sectionState.fastestRepeatedNotesPerBar,
     fastestOrnamentalNotesPerBar: sectionState.fastestOrnamentalNotesPerBar,
     tempoIndication: {
-      value: sectionState.tempoIndication.text,
+      value: sectionState.tempoIndication.id,
       label: sectionState.tempoIndication.text,
     },
     isCommonTime: sectionState.isCommonTime,
@@ -42,10 +43,9 @@ export default function getPieceVersionInputFromPieceVersionState(
 ): PieceVersionInput {
   return {
     id: pieceVersionState.id,
-    pieceId: pieceVersionState.pieceId,
     category: {
       value: pieceVersionState.category,
-      label: pieceVersionState.category,
+      label: formatToPhraseCase(pieceVersionState.category),
     },
     movements: pieceVersionState.movements.map(
       getMovementInputFromMovementState,

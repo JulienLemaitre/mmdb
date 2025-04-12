@@ -125,7 +125,6 @@ const SinglePieceVersionForm = ({
     if (selectedPieceId && isPieceSelectedNew) {
       deleteIdArray = [selectedPieceId];
     }
-    console.log(`[] pieceState :`, pieceState);
     let piecesArray = [pieceState];
 
     if (isCollectionCreationMode && collectionId && collectionFormState) {
