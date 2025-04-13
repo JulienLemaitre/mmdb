@@ -42,7 +42,11 @@ const ControlledSelect = ({
         innerRef={ref}
         onChange={onChange}
         onBlur={onBlur}
-        value={value || defaultValue}
+        value={
+          value && typeof value?.value === "undefined" // avoid "changing an uncontrolled input to be controlled" error
+            ? { value: "", label: "" }
+            : value || defaultValue
+        }
         filterOption={labelOnlyFilterOption}
         styles={ReactSelectStyles}
         {...selectProps}
