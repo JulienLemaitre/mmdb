@@ -1,8 +1,8 @@
 import { MMSourcePieceVersionsState } from "@/types/formTypes";
 import { Prisma } from "@prisma/client";
-import { PersistableFeedFormState } from "@/components/context/feedFormContext";
 import getPieceNestedDBInputFromState from "@/utils/getPieceNestedDBInputFromState";
 import getTempoIndicationNestedDBInputFromState from "@/utils/getTempoIndicationNestedDBInputFromState";
+import { PersistableFeedFormState } from "@/types/feedFormTypes";
 
 export default function getMMSourcesOnPieceVersionsDBInputFromState(
   mMSourcesOnPieceVersion: MMSourcePieceVersionsState,

@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { PieceInput, PieceState } from "@/types/formTypes";
 import { Piece } from "@prisma/client";
-import {
-  FeedFormState,
-  getNewEntities,
-} from "@/components/context/feedFormContext";
+import { getNewEntities } from "@/components/context/feedFormContext";
 import Loader from "@/components/Loader";
 import PieceEditForm from "@/components/entities/piece/PieceEditForm";
 import PieceSelectForm from "@/components/entities/piece/PieceSelectForm";
 import { URL_API_GETALL_COMPOSER_PIECES } from "@/utils/routes";
+import { FeedFormState } from "@/types/feedFormTypes";
 
 type PieceSelectOrCreate = {
   feedFormState: FeedFormState;

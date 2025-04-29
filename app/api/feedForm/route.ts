@@ -1,5 +1,4 @@
 import { db } from "@/utils/db";
-import { FeedFormState } from "@/components/context/feedFormContext";
 import { assertsIsPersistableFeedFormState } from "@/types/formTypes";
 import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
@@ -12,6 +11,7 @@ import getPersonCreateInput from "@/utils/getPersonCreateInput";
 import getOrganizationCreateInput from "@/utils/getOrganizationCreateInput";
 import { fetchAPI } from "@/utils/fetchAPI";
 import getAccessTokenFromReq from "@/utils/getAccessTokenFromReq";
+import { FeedFormState } from "@/types/feedFormTypes";
 
 export async function POST(request: NextRequest) {
   if (!isReqAuthorized(request)) {

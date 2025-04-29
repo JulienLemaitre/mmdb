@@ -1,11 +1,8 @@
 import React from "react";
-import DebugBox from "@/components/DebugBox";
-import {
-  FeedFormState,
-  getEntityByIdOrKey,
-} from "@/components/context/feedFormContext";
+import { getEntityByIdOrKey } from "@/components/context/feedFormContext";
 import PieceVersionDisplay from "@/components/entities/piece-version/PieceVersionDisplay";
 import getPersonName from "@/components/entities/person/utils/getPersonName";
+import { FeedFormState } from "@/types/feedFormTypes";
 
 type SummaryProps = {
   feedFormState: FeedFormState;

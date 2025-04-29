@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { PersistableFeedFormState } from "@/components/context/feedFormContext";
+import { PersistableFeedFormState } from "@/types/feedFormTypes";
 
 export default function getCollectionNestedDBInputFromState(
   collectionId: string,

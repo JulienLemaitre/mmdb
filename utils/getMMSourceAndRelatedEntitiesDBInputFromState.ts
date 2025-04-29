@@ -1,8 +1,8 @@
 import { Prisma } from ".prisma/client";
 import { SOURCE_TYPE } from "@prisma/client";
-import { PersistableFeedFormState } from "@/components/context/feedFormContext";
 import getMMSourceContributionDBInputFromState from "@/utils/getMMSourceContributionDBInputFromState";
 import getMMSourcesOnPieceVersionsDBInputFromState from "@/utils/getMMSourcesOnPieceVersionsDBInputFromState";
+import { PersistableFeedFormState } from "@/types/feedFormTypes";
 
 // Prepare the data for persistence in DB of MMSource, References, Contributions, MMSourcesOnPieceVersions, MetronomeMarks
 export default function getMMSourceAndRelatedEntitiesDBInputFromState(

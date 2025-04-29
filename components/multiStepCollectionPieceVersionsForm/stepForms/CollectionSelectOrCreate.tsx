@@ -3,10 +3,8 @@ import Loader from "@/components/Loader";
 import CollectionSelectForm from "@/components/entities/collection/CollectionSelectForm";
 import CollectionEditForm from "@/components/entities/collection/CollectionEditForm";
 import { CollectionState, CollectionTitleInput } from "@/types/formTypes";
-import {
-  getNewEntities,
-  FeedFormState,
-} from "@/components/context/feedFormContext";
+import { getNewEntities } from "@/components/context/feedFormContext";
+import { FeedFormState } from "@/types/feedFormTypes";
 import { URL_API_GETALL_COMPOSER_COLLECTION } from "@/utils/routes";
 
 type CollectionSelectOrCreateProps = {

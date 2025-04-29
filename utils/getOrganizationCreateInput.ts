@@ -1,7 +1,7 @@
-// Prepare the data for persistence in DB of new Organizations
-import { PersistableFeedFormState } from "@/components/context/feedFormContext";
 import { Prisma } from "@prisma/client";
+import { PersistableFeedFormState } from "@/types/feedFormTypes";
 
+// Prepare the data for persistence in DB of new Organizations
 export default function getOrganizationCreateInput(
   state: PersistableFeedFormState,
   creatorId: string,

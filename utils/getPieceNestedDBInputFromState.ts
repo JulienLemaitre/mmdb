@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
-import { PersistableFeedFormState } from "@/components/context/feedFormContext";
 import { PieceState } from "@/types/formTypes";
+import { PersistableFeedFormState } from "@/types/feedFormTypes";
 
 export default function getPieceNestedDBInputFromState(
   pieceId: string,

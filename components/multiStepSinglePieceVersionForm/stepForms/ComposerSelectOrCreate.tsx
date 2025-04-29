@@ -3,10 +3,8 @@ import Loader from "@/components/Loader";
 import ComposerSelectForm from "@/components/entities/composer/ComposerSelectForm";
 import ComposerEditForm from "@/components/entities/composer/ComposerEditForm";
 import { PersonInput, PersonState } from "@/types/formTypes";
-import {
-  getNewEntities,
-  FeedFormState,
-} from "@/components/context/feedFormContext";
+import { getNewEntities } from "@/components/context/feedFormContext";
+import { FeedFormState } from "@/types/feedFormTypes";
 import getAllComposers from "@/utils/getAllComposers";
 
 type ComposerSelectOrCreateProps = {

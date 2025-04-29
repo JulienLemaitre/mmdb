@@ -1,4 +1,4 @@
-import { FeedFormState } from "@/components/context/feedFormContext";
+import { FeedFormState } from "@/types/feedFormTypes";
 
 export default function computeMMSourceToPersistFromState(
   state: FeedFormState,

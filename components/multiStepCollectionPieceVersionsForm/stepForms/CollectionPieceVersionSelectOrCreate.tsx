@@ -9,11 +9,11 @@ import CollectionPieceVersionsSelectFormContainer from "@/components/entities/pi
 import { URL_API_GETALL_COLLECTION_PIECES } from "@/utils/routes";
 import {
   getNewEntities,
-  FeedFormState,
   getEntityByIdOrKey,
 } from "@/components/context/feedFormContext";
 import CollectionPieceVersionsEditForm from "@/components/entities/piece-version/CollectionPieceVersionsEditForm";
 import Loader from "@/components/Loader";
+import { FeedFormState } from "@/types/feedFormTypes";
 
 type CollectionPieceVersionSelectOrCreateProps = {
   feedFormState: FeedFormState;

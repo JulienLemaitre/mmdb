@@ -6,7 +6,7 @@ import {
   PieceVersionState,
 } from "@/types/formTypes";
 import PieceVersionSelectOrCreate from "@/components/multiStepSinglePieceVersionForm/stepForms/PieceVersionSelectOrCreate";
-import { FeedFormState } from "@/components/context/feedFormContext";
+import { FeedFormState } from "@/types/feedFormTypes";
 import DebugBox from "@/components/DebugBox";
 import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput";
 
