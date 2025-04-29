@@ -7,7 +7,7 @@ import {
 } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
-import { zodYear } from "@/utils/zodTypes";
+import { getZodOptionFromEnum, zodYear } from "@/types/zodTypes";
 import { REFERENCE_TYPE, SOURCE_TYPE } from "@prisma/client";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import ReferenceArray from "@/components/ReactHookForm/ReferenceArray";
@@ -21,25 +21,19 @@ import checkAreFieldsDirty from "@/utils/checkAreFieldsDirty";
 const SourceSchema = z
   .object({
     title: z.string().optional(),
-    type: z.object({
-      value: z.nativeEnum(SOURCE_TYPE),
-      label: z.string(),
-    }),
+    type: getZodOptionFromEnum(SOURCE_TYPE),
     link: z.string().trim().url(),
     year: zodYear,
     references: z.array(
       z.object({
-        type: z.object({
-          value: z.nativeEnum(REFERENCE_TYPE),
-          label: z.string(),
-        }),
+        type: getZodOptionFromEnum(REFERENCE_TYPE),
         reference: z.string().min(2),
       }),
     ),
     comment: z.string().optional(),
   })
   .superRefine(({ references }, ctx) => {
-    // If we find two reference with same type.value and reference, we add an error
+    // If we find two references with the same type.value and reference, we add an error
     const errors = references.reduce<any>((acc, reference, currentIndex) => {
       // Determine if the same ref exists in references
       const isDuplicate = references.some(
@@ -63,7 +57,7 @@ const SourceSchema = z
     }
   });
 
-const DEFAULT_VALUES = {
+const DEFAULT_VALUES: Partial<SourceDescriptionInput> = {
   type: {
     value: SOURCE_TYPE.EDITION,
     label: formatToPhraseCase(SOURCE_TYPE.EDITION),
@@ -88,79 +82,21 @@ export default function SourceDescriptionEditForm(
 ) {
   const { sourceDescription, onSubmit, submitTitle, title } = props;
   const {
-    formState: { errors, isSubmitting, isDirty, dirtyFields },
+    formState: { errors, isSubmitting, dirtyFields },
     handleSubmit,
     register,
     control,
     getValues,
-    setError,
-    clearErrors,
     reset,
     trigger,
-  } = useForm({
+  } = useForm<SourceDescriptionInput>({
     defaultValues: sourceDescription ?? DEFAULT_VALUES,
     resolver: zodResolver(SourceSchema),
   });
 
-  console.group(`MMSourceDescriptionEditForm`);
-  console.log(`[] isDirty :`, isDirty);
-  console.log(`[] dirtyFields :`, dirtyFields);
   const computedIsDirty = checkAreFieldsDirty(dirtyFields);
-  // const computedIsDirty = Object.keys(dirtyFields).length > 0;
-  console.log(`[] computedIsDirty :`, computedIsDirty);
-  console.log(`[] errors :`, errors);
-  console.groupEnd();
 
-  const [isReferenceDirty, setIsReferenceDirty] = useState(false);
-  const [isCheckingReference, setIsCheckingReference] = useState(false);
-  const onReferenceInputChange = (index: number) => {
-    setIsReferenceDirty(true);
-    clearErrors(`references.${index}.reference`);
-  };
-  const onReferenceBlur = async (index: number) => {
-    setIsCheckingReference(true);
-    console.log(`[SourceDescriptionEditForm] onReferenceBlur`, index);
-    const references = getValues(`references`) || [];
-    const { reference, type } = references[index] || {};
-    if (!reference || !type?.value) {
-      console.log(
-        `[] reference and type value are needed to fetch existing reference`,
-      );
-      setIsCheckingReference(false);
-      return;
-    }
-    // Check if the reference already exists in new values
-    const currentReferences = getValues("references");
-    if (
-      currentReferences?.some(
-        (ref, i) =>
-          i !== index &&
-          ref.type.value === type.value &&
-          ref.reference === reference,
-      )
-    ) {
-      setError(`references.${index}.reference`, {
-        type: "manual",
-        message: "This reference already exists here around",
-      });
-      setIsCheckingReference(false);
-      return;
-    }
-
-    // Check if the reference is already in the database
-    const existingReference = await fetch(
-      `/api/reference/get?type=${type.value}&reference=${reference}`,
-    ).then((response) => response.json());
-    if (existingReference) {
-      setError(`references.${index}.reference`, {
-        type: "manual",
-        message: "This reference is already in the database",
-      });
-    } else {
-      setIsReferenceDirty(false);
-    }
-    setIsCheckingReference(false);
-  };
+  const [isReferenceFormOpen, setIsReferenceFormOpen] = useState(false);
 
   const onResetForm = () => {
     reset(sourceDescription ?? DEFAULT_VALUES);
@@ -245,15 +181,11 @@ export default function SourceDescriptionEditForm(
           {...{ register, errors, control }}
         />
         <ReferenceArray
-          {...{
-            control,
-            register,
-            errors,
-            onReferenceBlur,
-            onReferenceInputChange,
-            isCheckingReference,
-            isReferenceDirty,
-          }}
+          control={control}
+          currentReferences={getValues(`references`) || []}
+          isReferenceFormOpen={isReferenceFormOpen}
+          onReferenceFormOpen={() => setIsReferenceFormOpen(true)}
+          onReferenceFormClose={() => setIsReferenceFormOpen(false)}
         />
         <FormInput
           name="comment"
@@ -266,8 +198,8 @@ export default function SourceDescriptionEditForm(
           onSaveAndGoToNextStep={() => submitForm({ goToNextStep: true })}
           onResetForm={onResetForm}
           isPresentFormDirty={computedIsDirty}
-          isNextDisabled={isReferenceDirty}
-          isSubmitting={isSubmitting}
+          isNextDisabled={isReferenceFormOpen}
+          isSubmitting={isSubmitting || isReferenceFormOpen}
           submitTitle={submitTitle}
           dirtyFields={dirtyFields}
         />

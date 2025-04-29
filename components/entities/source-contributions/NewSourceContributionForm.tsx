@@ -4,7 +4,7 @@ import { ContributionInput } from "@/types/formTypes";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { zodPerson } from "@/utils/zodTypes";
+import { getZodOptionFromEnum, zodPerson } from "@/types/zodTypes";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import { FormInput, getLabel } from "@/components/ReactHookForm/FormInput";
 import { ChangeEvent, useState } from "react";
@@ -18,19 +18,13 @@ import getRoleLabel from "@/utils/getRoleLabel";
 const SourceContributionsSchema = z.union([
   z.object({
     person: zodPerson,
-    role: z.object({
-      value: z.nativeEnum(CONTRIBUTION_ROLE),
-      label: z.string(),
-    }),
+    role: getZodOptionFromEnum(CONTRIBUTION_ROLE),
   }),
   z.object({
     organization: z.object({
       name: z.string().min(2),
     }),
-    role: z.object({
-      value: z.nativeEnum(CONTRIBUTION_ROLE),
-      label: z.string(),
-    }),
+    role: getZodOptionFromEnum(CONTRIBUTION_ROLE),
   }),
 ]);
 

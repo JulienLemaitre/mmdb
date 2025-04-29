@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonInput } from "@/types/formTypes";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
-import { zodPerson } from "@/utils/zodTypes";
+import { zodPerson } from "@/types/zodTypes";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 
 const PersonSchema = zodPerson;

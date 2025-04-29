@@ -6,7 +6,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import MetronomeMarkArray from "@/components/ReactHookForm/MetronomeMarkArray";
 import { z } from "zod";
-import { getZodOptionFromEnum, zodPositiveNumber } from "@/utils/zodTypes";
+import { getZodOptionFromEnum, zodPositiveNumber } from "@/types/zodTypes";
 import {
   updateFeedForm,
   useFeedForm,
@@ -128,7 +128,6 @@ export default function MetronomeMarksForm({
     );
   };
 
-  // const submitForm = async (data: { metronomeMarks: MetronomeMarkInput[] }) => {
   const submitForm = async (option: { goToNextStep: boolean }) => {
     // Trigger validations before submitting
     const isValid = await trigger();

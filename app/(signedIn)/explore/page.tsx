@@ -15,7 +15,7 @@ import getAllComposers from "@/utils/getAllComposers";
 import getPersonName from "@/components/entities/person/utils/getPersonName";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { zodOption, zodYear } from "@/utils/zodTypes";
+import { zodOption, zodYear } from "@/types/zodTypes";
 import getKeyLabel from "@/utils/getKeyLabel";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";

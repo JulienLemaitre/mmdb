@@ -7,14 +7,11 @@ import type {
   REFERENCE_TYPE,
   SOURCE_TYPE,
 } from "@prisma/client";
-import {
-  FeedFormState,
-  PersistableFeedFormState,
-} from "@/components/context/feedFormContext";
 import { FC } from "react";
 import { SinglePieceVersionFormState } from "@/components/context/SinglePieceVersionFormContext";
 import { CollectionPieceVersionsFormState } from "@/components/context/CollectionPieceVersionsFormContext";
-import { WithRequiredId } from "@/utils/typescriptUtils";
+import { WithRequiredId } from "@/types/typescriptUtils";
+import { FeedFormState, PersistableFeedFormState } from "@/types/feedFormTypes";
 
 // Related Types
 
@@ -214,7 +211,6 @@ export type MetronomeMarkState =
       pieceVersionRank: number;
       pieceVersionId: string;
       noMM: false;
-      // beatUnit: string;
     })
   | (Pick<Prisma.MetronomeMarkUncheckedCreateInput, "sectionId"> & {
       id?: string;
@@ -258,7 +254,6 @@ export type PieceInput = Pick<
 > & {
   id?: string;
   composerId?: string;
-  // yearOfComposition?: string;
 };
 export type SectionInput = Omit<
   Prisma.SectionCreateWithoutMovementInput,
@@ -312,9 +307,7 @@ export type MetronomeMarkInput =
       Prisma.MetronomeMarkUncheckedCreateInput,
       "sectionId" | "bpm" | "comment"
     > & {
-      // beatUnit: NOTE_VALUE;
       beatUnit: OptionInputTyped<NOTE_VALUE>;
-      // beatUnit: OptionInput;
       noMM: false;
     })
   | (Pick<Prisma.MetronomeMarkUncheckedCreateInput, "sectionId" | "comment"> & {
@@ -325,7 +318,6 @@ export type SearchFormInput = {
   startYear: number;
   endYear: number;
   tempoIndicationIds: string[];
-  // tempoIndication: OptionInput;
   composer: OptionInput;
 };
 

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zodYearOptional } from "@/utils/zodTypes";
+import { zodYearOptional } from "@/types/zodTypes";
 import { useForm } from "react-hook-form";
 import { PieceInput } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";

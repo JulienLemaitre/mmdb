@@ -17,7 +17,7 @@ import {
   getZodOptionFromEnum,
   zodOption,
   zodPositiveNumber,
-} from "@/utils/zodTypes";
+} from "@/types/zodTypes";
 import {
   updateFeedForm,
   useFeedForm,
