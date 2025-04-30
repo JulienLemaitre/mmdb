@@ -139,6 +139,7 @@ Table MMSource {
   pieceVersions MMSourcesOnPieceVersions [not null]
   type SOURCE_TYPE [not null]
   link String [not null]
+  permalink String [not null]
   year Int [not null]
   references Reference [not null]
   contributions Contribution [not null]

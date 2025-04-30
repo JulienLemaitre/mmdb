@@ -143,6 +143,7 @@ model MMSource {
   pieceVersions  MMSourcesOnPieceVersions[] // A source is composed of one or more pieceVersions
   type           SOURCE_TYPE
   link           String
+  permalink      String
   year           Int
   references     Reference[] // A source can have many references
   contributions  Contribution[] // A source can have many Contributions
