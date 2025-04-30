@@ -5,6 +5,7 @@ import parseValueRemoveParenthesis from "@/utils/parseValueRemoveParenthesis";
 import getNotesPerBarCollectionFromNotesPerSecondCollection
   from "@/utils/getNotesPerBarCollectionFromNotesPerSecondCollection";
 import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
+import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 
 function logTestError(bpm, ...props) {
   if (bpm === 108) {
@@ -283,7 +284,10 @@ async function processDataFromXlsx(dataSheetList: any) {
         // NEW source
         const source = {
           type: SOURCE_TYPE.EDITION,
-          ...(rowData.link && {link: rowData.link}),
+          ...(rowData.link && {
+            link: rowData.link,
+            permalink: getIMSLPPermaLink(rowData.link),
+          }),
           year: typeof rowData.yearOfPublication === 'number' ? rowData.yearOfPublication : parseInt(rowData.yearOfPublication),
           ...(rowData.additionalNotes && {comment: rowData.additionalNotes}),
           contributions: [],
@@ -893,6 +897,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
           },
           type: source.type,
           link: source.link,
+          permalink: source.permalink,
           year: source.year,
           ...(source.comment && { comment: source.comment }),
           pieceVersions: {

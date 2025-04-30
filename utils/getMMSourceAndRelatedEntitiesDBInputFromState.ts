@@ -3,6 +3,7 @@ import { SOURCE_TYPE } from "@prisma/client";
 import getMMSourceContributionDBInputFromState from "@/utils/getMMSourceContributionDBInputFromState";
 import getMMSourcesOnPieceVersionsDBInputFromState from "@/utils/getMMSourcesOnPieceVersionsDBInputFromState";
 import { PersistableFeedFormState } from "@/types/feedFormTypes";
+import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 
 // Prepare the data for persistence in DB of MMSource, References, Contributions, MMSourcesOnPieceVersions, MetronomeMarks
 export default function getMMSourceAndRelatedEntitiesDBInputFromState(
@@ -19,6 +20,7 @@ export default function getMMSourceAndRelatedEntitiesDBInputFromState(
     ...(title ? { title } : {}),
     year,
     link,
+    permalink: getIMSLPPermaLink(link),
     type: type as SOURCE_TYPE,
     ...(comment ? { comment } : {}),
     ...(references.length > 0
