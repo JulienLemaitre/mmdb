@@ -17,6 +17,7 @@ import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 import { useState } from "react";
 import getMMSourceDescriptionInputFromState from "@/utils/getMMSourceDescriptionInputFromState";
 import checkAreFieldsDirty from "@/utils/checkAreFieldsDirty";
+import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 
 const SourceSchema = z
   .object({
@@ -116,9 +117,9 @@ export default function SourceDescriptionEditForm(
       return;
     }
     // Check if the link is already in the database
-    const existingLink = await fetch(`/api/link/get?url=${link}`).then(
-      (response) => response.json(),
-    );
+    const existingLink = await fetch(
+      `/api/permalink/get?url=${getIMSLPPermaLink(link)}`,
+    ).then((response) => response.json());
     if (existingLink) {
       setError(`link`, {
         type: "manual",

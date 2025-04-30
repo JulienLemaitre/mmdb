@@ -10,7 +10,7 @@ export async function GET(request: Request) {
     });
   const mMSourceResult = await db.mMSource.findFirst({
     where: {
-      link: url,
+      permalink: url,
     },
     select: {
       id: true,
