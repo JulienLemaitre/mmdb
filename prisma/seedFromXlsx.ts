@@ -661,6 +661,27 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
         role: "EDITOR",
         emailVerified: now,
         passwordHash: "$2a$10$xa0I2y70qbNl3yC7AZepXuEO07WAcyNX2nRx4/dqWvHz5CdsbZ6uS",
+      },
+      {
+        name: "Johan Van Kerckhoven",
+        email: "johan.vankerckhoven@gmail.com",
+        role: "EDITOR",
+        emailVerified: now,
+        passwordHash: "$2b$10$8WUBFEwrTadSwzKCOT8FjuQk63QAM.vQi8Kjyu6xHtJ7WnYx/.zmO",
+      },
+      {
+        name: "Glenn H Tiedemann",
+        email: "rollinglenn@gmail.com",
+        role: "EDITOR",
+        emailVerified: now,
+        passwordHash: "$2b$10$9i1/KcuUJU7X40DZ4GvPVOM.E6jS7oUPRbOYf/tuVoEQGlRVgGhfe",
+      },
+      {
+        name: "John Citron",
+        email: "jcitron@krpartners.com",
+        role: "EDITOR",
+        emailVerified: now,
+        passwordHash: "$2b$10$MzyyBYDN9laDrVzGuYkbZuNuZOkmptdA8tp4DExQ/2tYOQPIm6ivS",
       }
     ],
   })
