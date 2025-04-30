@@ -89,6 +89,8 @@ export default function SourceDescriptionEditForm(
     getValues,
     reset,
     trigger,
+    clearErrors,
+    setError,
   } = useForm<SourceDescriptionInput>({
     defaultValues: sourceDescription ?? DEFAULT_VALUES,
     resolver: zodResolver(SourceSchema),
@@ -97,6 +99,36 @@ export default function SourceDescriptionEditForm(
   const computedIsDirty = checkAreFieldsDirty(dirtyFields);
 
   const [isReferenceFormOpen, setIsReferenceFormOpen] = useState(false);
+
+  const [isLinkDirty, setIsLinkDirty] = useState(false);
+  const [isCheckingLink, setIsCheckingLink] = useState(false);
+  const onLinkInputChange = () => {
+    setIsLinkDirty(true);
+    clearErrors(`link`);
+  };
+  const onLinkBlur = async () => {
+    setIsCheckingLink(true);
+    console.log(`[SourceDescriptionEditForm] onLinkBlur`);
+    const link = getValues(`link`);
+    if (!link) {
+      console.log(`[] link value is needed to fetch existing link`);
+      setIsCheckingLink(false);
+      return;
+    }
+    // Check if the link is already in the database
+    const existingLink = await fetch(`/api/link/get?url=${link}`).then(
+      (response) => response.json(),
+    );
+    if (existingLink) {
+      setError(`link`, {
+        type: "manual",
+        message: "This link is already in the database",
+      });
+    } else {
+      setIsLinkDirty(false);
+    }
+    setIsCheckingLink(false);
+  };
 
   const onResetForm = () => {
     reset(sourceDescription ?? DEFAULT_VALUES);
@@ -178,6 +210,9 @@ export default function SourceDescriptionEditForm(
           type="url"
           isRequired
           label="Link to the online score"
+          isLoading={isCheckingLink}
+          onBlur={onLinkBlur}
+          onInputChange={onLinkInputChange}
           {...{ register, errors, control }}
         />
         <ReferenceArray
@@ -198,7 +233,7 @@ export default function SourceDescriptionEditForm(
           onSaveAndGoToNextStep={() => submitForm({ goToNextStep: true })}
           onResetForm={onResetForm}
           isPresentFormDirty={computedIsDirty}
-          isNextDisabled={isReferenceFormOpen}
+          isNextDisabled={isReferenceFormOpen || isLinkDirty}
           isSubmitting={isSubmitting || isReferenceFormOpen}
           submitTitle={submitTitle}
           dirtyFields={dirtyFields}
