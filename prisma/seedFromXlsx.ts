@@ -918,7 +918,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
           },
           type: source.type,
           link: source.link,
-          permalink: source.permalink,
+          permalink: source.permalink || getIMSLPPermaLink(source.link),
           year: source.year,
           ...(source.comment && { comment: source.comment }),
           pieceVersions: {
