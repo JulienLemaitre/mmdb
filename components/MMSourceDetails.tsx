@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 import getKeyLabel from "@/utils/getKeyLabel";
 import getKeyBaseString from "@/utils/getKeyBaseString";
 import { KeyBase } from "@/types/formTypes";
+import getNoteValueLabel from "@/utils/getNoteValueLabel";
 
 export default function MMSourceDetails({ mMSource }) {
   // Gather collections
@@ -222,7 +223,7 @@ export default function MMSourceDetails({ mMSource }) {
 
                                             return (
                                               <div key={mmKey}>
-                                                <div className="mr-4">{`${mm.beatUnit} = ${mm.bpm}`}</div>
+                                                <div className="mr-4">{`${getNoteValueLabel(mm.beatUnit)} = ${mm.bpm}`}</div>
 
                                                 {[
                                                   "fastestStructuralNotes",

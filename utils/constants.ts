@@ -12,7 +12,7 @@ export const FEED_FORM_LOCAL_STORAGE_KEY = "feedForm";
 const TEST_STATE: FeedFormState | null = getFeedFormTestState();
 
 export const FEED_FORM_INITIAL_STATE: FeedFormState = {
-  // const FEED_FORM_INITIAL_STATE: FeedFormState = TEST_STATE || {
+  // export const FEED_FORM_INITIAL_STATE: FeedFormState = TEST_STATE || {
   formInfo: {
     currentStepRank: 0,
   },
