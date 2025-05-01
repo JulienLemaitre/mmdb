@@ -93,6 +93,7 @@ model Section {
   tempoIndicationId               String          @db.Uuid
   metronomeMarks                  MetronomeMark[] // A movement can have many metronome marks
   comment                         String?
+  commentForReview                String?
   createdAt                       DateTime        @default(now())
   updatedAt                       DateTime        @updatedAt
 
