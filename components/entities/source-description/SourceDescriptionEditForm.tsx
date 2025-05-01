@@ -14,10 +14,13 @@ import ReferenceArray from "@/components/ReactHookForm/ReferenceArray";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
-import { useState } from "react";
+import React, { useState } from "react";
 import getMMSourceDescriptionInputFromState from "@/utils/getMMSourceDescriptionInputFromState";
 import checkAreFieldsDirty from "@/utils/checkAreFieldsDirty";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
+import XMarkIcon from "@/components/svg/XMarkIcon";
+import LoadingSpinIcon from "@/components/svg/LoadingSpinIcon";
+import CheckIcon from "@/components/svg/CheckIcon";
 
 const SourceSchema = z
   .object({
@@ -103,6 +106,7 @@ export default function SourceDescriptionEditForm(
 
   const [isLinkDirty, setIsLinkDirty] = useState(false);
   const [isCheckingLink, setIsCheckingLink] = useState(false);
+  const hasLinkValue = !!getValues("link");
   const onLinkInputChange = () => {
     setIsLinkDirty(true);
     clearErrors(`link`);
@@ -111,12 +115,27 @@ export default function SourceDescriptionEditForm(
     setIsCheckingLink(true);
     console.log(`[SourceDescriptionEditForm] onLinkBlur`);
     const link = getValues(`link`);
+
     if (!link) {
-      console.log(`[] link value is needed to fetch existing link`);
+      console.warn(`[] link value is needed to fetch existing link`);
       setIsCheckingLink(false);
       return;
     }
-    // Check if the link is already in the database
+
+    // Validate URL using Zod
+    const urlSchema = z.string().trim().url();
+    const urlResult = urlSchema.safeParse(link);
+
+    if (!urlResult.success) {
+      setError(`link`, {
+        type: "manual",
+        message: "Please enter a valid URL",
+      });
+      setIsCheckingLink(false);
+      return;
+    }
+
+    // If URL is valid, proceed with checking if it exists in the database
     const existingLink = await fetch(
       `/api/permalink/get?url=${getIMSLPPermaLink(link)}`,
     ).then((response) => response.json());
@@ -206,16 +225,46 @@ export default function SourceDescriptionEditForm(
           label="Title of the source"
           {...{ register, errors, control }}
         />
-        <FormInput
-          name="link"
-          type="url"
-          isRequired
-          label="Link to the online score"
-          isLoading={isCheckingLink}
-          onBlur={onLinkBlur}
-          onInputChange={onLinkInputChange}
-          {...{ register, errors, control }}
-        />
+        <div className="flex items-end gap-2">
+          <FormInput
+            name="link"
+            type="url"
+            isRequired
+            label="Link to the online score"
+            controlClassName="flex-none"
+            onBlur={onLinkBlur}
+            onInputChange={onLinkInputChange}
+            {...{ register, errors, control }}
+          />
+          <div
+            className={`badge badge-outline py-3.5 gap-1 ${!hasLinkValue ? "badge-disabled" : isLinkDirty ? (isCheckingLink ? "badge-neutral" : "badge-warning") : "badge-success"}`}
+            onClick={(e) => e.preventDefault()}
+          >
+            {!hasLinkValue ? (
+              <>
+                <XMarkIcon className="w-7 h-7" />
+                Unchecked
+              </>
+            ) : isLinkDirty ? (
+              isCheckingLink ? (
+                <>
+                  <LoadingSpinIcon className="w-7 h-7" />
+                  checking
+                </>
+              ) : (
+                <>
+                  <XMarkIcon className="w-7 h-7" />
+                  Unchecked
+                </>
+              )
+            ) : (
+              <>
+                <CheckIcon className="w-7 h-7" />
+                checked
+              </>
+            )}
+          </div>
+        </div>
         <ReferenceArray
           control={control}
           currentReferences={getValues(`references`) || []}
@@ -234,7 +283,7 @@ export default function SourceDescriptionEditForm(
           onSaveAndGoToNextStep={() => submitForm({ goToNextStep: true })}
           onResetForm={onResetForm}
           isPresentFormDirty={computedIsDirty}
-          isNextDisabled={isReferenceFormOpen || isLinkDirty}
+          isNextDisabled={isReferenceFormOpen || (hasLinkValue && isLinkDirty)}
           isSubmitting={isSubmitting || isReferenceFormOpen}
           submitTitle={submitTitle}
           dirtyFields={dirtyFields}
