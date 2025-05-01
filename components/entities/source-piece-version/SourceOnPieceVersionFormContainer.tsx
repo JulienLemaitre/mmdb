@@ -127,6 +127,11 @@ const SourceOnPieceVersionFormContainer = ({
                 "pieces",
                 pieceVersion.pieceId,
               );
+              const collection = getEntityByIdOrKey(
+                feedFormState,
+                "collections",
+                piece.collectionId,
+              );
               const composer = getEntityByIdOrKey(
                 feedFormState,
                 "persons",
@@ -140,6 +145,9 @@ const SourceOnPieceVersionFormContainer = ({
                 >
                   <div className="mt-6 flex gap-4 items-end w-full">
                     <div className="flex-grow">
+                      {collection ? (
+                        <div className="text-sm">{collection.title}</div>
+                      ) : null}
                       <h4 className="text-lg font-bold text-secondary">
                         {`${sourcePieceVersion.rank} - ${piece.title}${!!composer && ` | ${getPersonName(composer)}`}`}
                       </h4>

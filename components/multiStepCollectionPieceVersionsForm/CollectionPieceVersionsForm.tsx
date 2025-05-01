@@ -15,16 +15,15 @@ import {
   PersonState,
   PiecePieceVersion,
   PieceState,
-  // PieceVersionInput,
   PieceVersionState,
 } from "@/types/formTypes";
-// import getCollectionStateFromInput from "@/utils/getCollectionStateFromInput";
 import { getStepByRank } from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
 import DebugBox from "@/components/DebugBox";
 import { v4 as uuidv4 } from "uuid";
 import CollectionPieceVersionsSteps from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsSteps";
 import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
 import { useCallback } from "react";
+import CollectionPieceVersionFormSummary from "@/components/multiStepSinglePieceVersionForm/CollectionPieceVersionFormSummary";
 
 type CollectionPieceVersionFormProps = {
   onFormClose: () => void;
@@ -177,6 +176,7 @@ function CollectionPieceVersionsForm({
   return (
     <div>
       <CollectionPieceVersionsSteps />
+      <CollectionPieceVersionFormSummary />
       {StepFormComponent ? (
         <StepFormComponent
           onFormClose={onFormClose}

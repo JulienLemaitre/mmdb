@@ -6,7 +6,13 @@ import {
 import { useSinglePieceVersionForm } from "@/components/context/SinglePieceVersionFormContext";
 import { getStepByRank } from "@/components/multiStepSinglePieceVersionForm/stepsUtils";
 
-function SinglePieceVersionFormSummary(props) {
+type SinglePieceVersionFormSummaryProps = {
+  isCollectionMode?: boolean;
+};
+
+function SinglePieceVersionFormSummary({
+  isCollectionMode,
+}: SinglePieceVersionFormSummaryProps) {
   const { state: feedFormState } = useFeedForm();
   const { state, currentStepRank } = useSinglePieceVersionForm();
   const composer =
@@ -17,9 +23,8 @@ function SinglePieceVersionFormSummary(props) {
     state.piece?.id &&
     getEntityByIdOrKey(feedFormState, "pieces", state.piece.id);
   const currentStep = getStepByRank({ state, rank: currentStepRank });
-  const displayComposerInfo = ["piece", "pieceVersion"].includes(
-    currentStep.id,
-  );
+  const displayComposerInfo =
+    !isCollectionMode && ["piece", "pieceVersion"].includes(currentStep.id);
   const displayPieceInfo = ["pieceVersion"].includes(currentStep.id);
   return (
     <div className="mb-6">
