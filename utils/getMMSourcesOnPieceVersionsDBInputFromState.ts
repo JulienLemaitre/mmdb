@@ -69,6 +69,11 @@ export default function getMMSourcesOnPieceVersionsDBInputFromState(
                                 comment: section.comment,
                               }
                             : {}),
+                          ...(section.commentForReview
+                            ? {
+                                commentForReview: section.commentForReview,
+                              }
+                            : {}),
                         })),
                     },
                   })),

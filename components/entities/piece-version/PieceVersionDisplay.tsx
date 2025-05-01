@@ -52,6 +52,11 @@ export default function PieceVersionDisplay({
                           Comment : {section.comment}
                         </div>
                       )}
+                      {section.commentForReview && (
+                        <div className="italic px-2">
+                          Comment for review : {section.commentForReview}
+                        </div>
+                      )}
                     </div>
                   </div>
                 );

@@ -4,6 +4,8 @@ import getKeyLabel from "@/utils/getKeyLabel";
 import getKeyBaseString from "@/utils/getKeyBaseString";
 import { KeyBase } from "@/types/formTypes";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
+import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
+import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
 
 export default function MMSourceDetails({ mMSource }) {
   // Gather collections
@@ -73,11 +75,11 @@ export default function MMSourceDetails({ mMSource }) {
                   <h3 className="text-2xl font-bold">{piece.title}</h3>
                   <div className="flex mb-4">
                     <div className="mr-4">
-                      yearOfComposition: {piece.yearOfComposition}
+                      Year of composition: {piece.yearOfComposition}
                     </div>
                     <div className="mr-4">|</div>
                     <div className="mr-4">
-                      category: {pieceVersion?.category}
+                      Category: {pieceVersion?.category}
                     </div>
                   </div>
                   {
@@ -113,7 +115,7 @@ export default function MMSourceDetails({ mMSource }) {
                                         }${section.tempoIndication?.text}`}</h5>
                                         <div className="border-b-2 border-gray-200">
                                           <div className="">
-                                            metre :{" "}
+                                            Metre :{" "}
                                             <b>
                                               {isCommonOrCutTime ? (
                                                 <>
@@ -131,7 +133,7 @@ export default function MMSourceDetails({ mMSource }) {
                                           </div>
                                           {section.fastestStructuralNotesPerBar && (
                                             <div className="">
-                                              fastest structural note per bar:{" "}
+                                              Fastest structural note per bar:{" "}
                                               <b>
                                                 {
                                                   section.fastestStructuralNotesPerBar
@@ -141,7 +143,7 @@ export default function MMSourceDetails({ mMSource }) {
                                           )}
                                           {section.fastestRepeatedNotesPerBar && (
                                             <div className="">
-                                              fastest repeated note per bar:{" "}
+                                              Fastest repeated note per bar:{" "}
                                               <b>
                                                 {
                                                   section.fastestRepeatedNotesPerBar
@@ -151,7 +153,7 @@ export default function MMSourceDetails({ mMSource }) {
                                           )}
                                           {section.fastestStaccatoNotesPerBar && (
                                             <div className="">
-                                              fastest staccato note per bar:{" "}
+                                              Fastest staccato note per bar:{" "}
                                               <b>
                                                 {
                                                   section.fastestStaccatoNotesPerBar
@@ -161,12 +163,23 @@ export default function MMSourceDetails({ mMSource }) {
                                           )}
                                           {section.fastestOrnamentalNotesPerBar && (
                                             <div className="">
-                                              fastest ornamental note per bar:{" "}
+                                              Fastest ornamental note per bar:{" "}
                                               <b>
                                                 {
                                                   section.fastestOrnamentalNotesPerBar
                                                 }
                                               </b>
+                                            </div>
+                                          )}
+                                          {section.comment && (
+                                            <div className="italic">
+                                              Comment : {section.comment}
+                                            </div>
+                                          )}
+                                          {section.commentForReview && (
+                                            <div className="italic">
+                                              Comment for review :{" "}
+                                              {section.commentForReview}
                                             </div>
                                           )}
                                         </div>
@@ -223,7 +236,7 @@ export default function MMSourceDetails({ mMSource }) {
 
                                             return (
                                               <div key={mmKey}>
-                                                <div className="mr-4">{`${getNoteValueLabel(mm.beatUnit)} = ${mm.bpm}`}</div>
+                                                <div className="mr-4">{`${getNoteValueLabel(mm.beatUnit)} note = ${mm.bpm}`}</div>
 
                                                 {[
                                                   "fastestStructuralNotes",
@@ -443,7 +456,7 @@ export default function MMSourceDetails({ mMSource }) {
                       <div className="mr-4">Source:</div>
                       <div>
                         <div className="">
-                          {`${mMSource.year} - ${mMSource.type.toLowerCase()} ${
+                          {`${mMSource.year} - ${getSourceTypeLabel(mMSource.type)} ${
                             mMSource?.createdAt
                               ? `[
                             created ${mMSource?.createdAt?.toLocaleString()} ]`
@@ -474,7 +487,7 @@ export default function MMSourceDetails({ mMSource }) {
                                 key={refItem.type + refItem.reference}
                                 className="break-all"
                               >
-                                <b>{`${refItem.type}: `}</b>
+                                <b>{`${getReferenceTypeLabel(refItem.type)}: `}</b>
                                 {refItem.reference}
                               </div>
                             );

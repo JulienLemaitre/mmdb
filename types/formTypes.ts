@@ -145,6 +145,7 @@ export type SectionState = WithRequiredId<
     | "isCommonTime"
     | "isCutTime"
     | "comment"
+    | "commentForReview"
     | "fastestStructuralNotesPerBar"
     | "fastestStaccatoNotesPerBar"
     | "fastestRepeatedNotesPerBar"

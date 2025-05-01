@@ -24,6 +24,8 @@ import Link from "next/link";
 import TempoIndicationSearch from "@/components/TempoIndicationSearch";
 import { ChartDatum } from "@/types/chartTypes";
 import GetChartDataFromPieceVersions from "@/utils/getChartDataFromPieceVersions";
+import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
+import getNoteValueLabel from "@/utils/getNoteValueLabel";
 
 // TODO: What do we want in addition to what is already there:
 //  1. Show all mms that result in speeds of more / less than X notes per second with a selection of note type (strutural, repeated etc.) e.g. show me all Sources that have MMs that result in more than 15 nps (structural)
@@ -428,7 +430,7 @@ function SearchPage() {
 
                                                       return (
                                                         <div key={mm.id}>
-                                                          <div className="mr-4">{`${mm.beatUnit} = ${mm.bpm}`}</div>
+                                                          <div className="mr-4">{`${getNoteValueLabel(mm.beatUnit)} = ${mm.bpm}`}</div>
 
                                                           {[
                                                             "fastestStructuralNotes",
@@ -655,7 +657,8 @@ function SearchPage() {
                             <div className="mr-4">Source:</div>
                             <div>
                               <div className="">
-                                {mMSource.year} - {mMSource.type.toLowerCase()}
+                                {mMSource.year} -{" "}
+                                {getSourceTypeLabel(mMSource.type)}
                               </div>
                               {mMSource.title && (
                                 <div className="">{mMSource.title}</div>

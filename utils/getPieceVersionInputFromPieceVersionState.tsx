@@ -26,6 +26,7 @@ function getSectionInputFromSectionState(sectionState: SectionState) {
     isFastestStructuralNoteBelCanto:
       sectionState.isFastestStructuralNoteBelCanto,
     comment: sectionState.comment,
+    commentForReview: sectionState.commentForReview,
   };
   return sectionInput;
 }

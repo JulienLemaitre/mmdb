@@ -1,6 +1,7 @@
 import { createPortal } from "react-dom";
 import { usePortal } from "@/components/hooks/usePortal";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
+import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 
 type DuplicatePlateNumberWarningModalProps = {
   modalId: string;
@@ -41,7 +42,7 @@ function DuplicatePlateNumberWarningModal({
           <div key={index} className="border-t py-2">
             <h4 className="font-bold text-sm">{`MMSource ${index + 1}:`}</h4>
             <p>{`Title: ${mMSource.title}`}</p>
-            <p>{`Type: ${mMSource.type}`}</p>
+            <p>{`Type: ${getSourceTypeLabel(mMSource.type)}`}</p>
             <p>{`Year: ${mMSource.year}`}</p>
             <p>
               {`Link: `}

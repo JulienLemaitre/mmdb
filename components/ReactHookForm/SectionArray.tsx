@@ -66,11 +66,9 @@ export default function SectionArray({
                       name={
                         `movements[${nestIndex}].sections[${index}].metreDenominator` as const
                       }
-                      // label="Metre denominator"
                       inputMode="numeric"
                       inputClassName="w-20"
                       disabled={isMetreFieldDisabled}
-                      // defaultValue={``}
                       {...{ register, control, errors }}
                     />
                   </div>
@@ -184,7 +182,6 @@ export default function SectionArray({
                   name={
                     `movements[${nestIndex}].sections[${index}].isFastestStructuralNoteBelCanto` as const
                   }
-                  // value={true}
                   type="checkbox"
                   className="mr-2"
                 />
@@ -214,11 +211,19 @@ export default function SectionArray({
                 inputMode="numeric"
                 {...{ register, control, errors }}
               />
-              <FormInput // TODO: button "add a comment" and a textarea
+              <FormInput
                 name={
                   `movements[${nestIndex}].sections[${index}].comment` as const
                 }
                 label={`Comment`}
+                defaultValue={``}
+                {...{ register, control, errors }}
+              />
+              <FormInput
+                name={
+                  `movements[${nestIndex}].sections[${index}].commentForReview` as const
+                }
+                label={`Comment for review`}
                 defaultValue={``}
                 {...{ register, control, errors }}
               />

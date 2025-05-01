@@ -126,6 +126,11 @@ export async function POST(req: NextRequest) {
               comment: section.comment,
             }
           : {}),
+        ...(section.commentForReview
+          ? {
+              commentForReview: section.commentForReview,
+            }
+          : {}),
       };
       // Upsert each section
       operations.push(
@@ -145,7 +150,6 @@ export async function POST(req: NextRequest) {
       data: {
         piece: { connect: { id: body.pieceId } },
         category: category.value,
-        // creator: { connect: { id: creatorId } },
         movements: {
           connect: movements.map((movement) => ({ id: movement.id })),
         },
@@ -172,6 +176,7 @@ export async function POST(req: NextRequest) {
                 fastestOrnamentalNotesPerBar: true,
                 isFastestStructuralNoteBelCanto: true,
                 comment: true,
+                commentForReview: true,
                 tempoIndication: {
                   select: {
                     id: true,

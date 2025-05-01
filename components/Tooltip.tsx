@@ -1,4 +1,7 @@
 import React from "react";
+import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
+import getRoleLabel from "@/utils/getRoleLabel";
+import getNoteValueLabel from "@/utils/getNoteValueLabel";
 
 const Tooltip = ({
   node,
@@ -47,14 +50,14 @@ const Tooltip = ({
           )}
         </b>
       </div>
-      <div>{`bpm: ${mm.beatUnit} = ${mm.bpm}`}</div>
+      <div>{`bpm: ${getNoteValueLabel(mm.beatUnit)} = ${mm.bpm}`}</div>
       <div>
-        source: {mMSource.year} - {mMSource.type.toLowerCase()}
+        source: {mMSource.year} - {getSourceTypeLabel(mMSource.type)}
       </div>
       {mMSource.title && <div className="">{mMSource.title}</div>}
       {mMSource.contributions.map((contribution) => (
         <div key={contribution.id} className="flex">
-          <div className="mr-2">{contribution.role.toLowerCase()}:</div>
+          <div className="mr-2">{getRoleLabel(contribution.role)}:</div>
           <div className="mr-2">
             {contribution.person?.firstName
               ? contribution.person?.firstName + contribution.person?.lastName
@@ -62,7 +65,6 @@ const Tooltip = ({
           </div>
         </div>
       ))}
-      {/*<div className="text-xs">{JSON.stringify(data, null, 2)}</div>*/}
     </div>
   );
 };

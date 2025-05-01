@@ -78,6 +78,7 @@ export default function getChartDataFromMMSources({
                   isCommonTime: section.isCommonTime,
                   isCutTime: section.isCutTime,
                   comment: section.comment,
+                  commentForReview: section.commentForReview,
                   tempoIndication: section.tempoIndication,
                 },
                 mm: { ...MM, mMSource },

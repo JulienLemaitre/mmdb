@@ -55,6 +55,7 @@ const PieceVersionSchema = z.object({
                 .optional()
                 .nullable(),
               comment: z.string().optional().nullable(),
+              commentForReview: z.string().optional().nullable(),
               tempoIndication: zodOption,
             }),
           )
