@@ -5,23 +5,19 @@ export const stepHelpContent = {
   1: (
     <>
       <h2>
-        1 - Describe the{" "}
+        2 -{" "}
         <i>
           <abbr title="Metronome Mark">MM</abbr> Source
-        </i>
+        </i>{" "}
+        description
       </h2>
       <p>
-        A simple form with basic informations about the{" "}
-        <i>
-          <abbr title="Metronome Mark">MM</abbr> Source
-        </i>
-        .
-      </p>
-      <p>
-        Concerning the <strong>Link to the online score</strong>, if you take it
-        from IMSLP, make sure to indicate the link to the PDF of the specific
-        score you used and not the related piece page url. The link should be
-        like this:
+        In this interface, you enter information about the source that provided
+        the metronome mark, such as the type of source, the year of publication,
+        the link to the online score, and possible references like an ISBN
+        number. If possible, please use a link to IMSLP. Ensure the link leads
+        directly to the score you are using to enter the data. The link should
+        work as in the example provided here:
         https://ks.imslp.info/files/imglnks/usimg/3/34/IMSLP677693-PMLP4920-Grand_septuor_0001-converted-compressed.pdf
       </p>
     </>
@@ -30,52 +26,72 @@ export const stepHelpContent = {
   2: (
     <>
       <h2>
-        2 - List the <i>contributors</i> to the{" "}
+        3 -{" "}
         <i>
-          <abbr title="Metronome Mark">MM</abbr> Source
+          <abbr title="Metronome Mark">MM</abbr> Source contributors
         </i>
       </h2>
       <p>
-        You will list peoples or companies which contributed to the{" "}
+        In this interface, you enter information about the{" "}
         <i>
           <abbr title="Metronome Mark">MM</abbr> Source
         </i>{" "}
-        and their respective <i>role</i> (editor, publisher, etc.).
+        contributors and their respective roles. A contributor can either be a
+        person or an organization and can have different roles, such as editor,
+        publisher, etc. Composers are not included in this overview unless they
+        fulfill another role, such as metronome mark provider
       </p>
     </>
   ),
   // Pieces and versions
   3: (
     <>
-      <h2>
-        3 - Pieces and Versions contained in the{" "}
-        <i>
-          <abbr title="Metronome Mark">MM</abbr> Source
-        </i>
-      </h2>
+      <h2>4 - Pieces and Versions</h2>
       <p>
-        In this section you will describe, in order, the <i>pieces</i> that are
-        part of your{" "}
+        In this interface, you enter information about the pieces that are part
+        of your{" "}
         <i>
           <abbr title="Metronome Mark">MM</abbr> Source.
         </i>
       </p>
-      <h3>For a given piece</h3>
+      <h3>For each piece, follow these steps:</h3>
       <ol>
+        <li>{`1. Search for the piece in the existing data.`}</li>
         <li>
-          {/*<p>*/}
-          {`- You will first search for it in the data we already have. If you don't find it there, you will have to register it.`}
-          {/*</p>*/}
+          {`2. If it does not exist yet, please register the piece you have in front of you as a new piece in the database.`}
         </li>
         <li>
-          {/*<p>*/}
-          {`- Then, the piece already exist in the database, you will be presented with a list of versions that are already registered for it. If one correspond to your case, select it. If none of them correspond, or if the piece itself was not present in the database, you will describe the version you have in hand.`}
-          {/*</p>*/}
+          {`3. If it already exists, you will be presented with all versions in which this piece has been entered. If one of the existing versions corresponds with the score in front of you, select it. If none of them represent your score, enter a new piece version based on the score in front of you.`}
         </li>
       </ol>
+      <p>Approach similarly for the composer.</p>
     </>
   ),
-  4: <>Section 4 help</>,
-  5: <>Section 5 help</>,
-  6: <>Section 6 help</>,
+  4: (
+    <>
+      <h2>5 - Enter metronome marks</h2>
+      <p>
+        In this interface, you enter information about the metronome marks
+        provided for the piece. Select the note value and enter the beats per
+        minute for each metronome mark from the score. Each movement and section
+        entered for the piece is listed separately with the corresponding tempo
+        indication. If a section has no metronome mark, select “No Metronome
+        Mark”.
+      </p>
+    </>
+  ),
+  5: (
+    <>
+      <h2>6 - Summary</h2>
+      <p>
+        In this interface, you are shown a summary of the data that you have
+        entered in the previous interfaces, along with the calculated notes per
+        second for the different fastest notes you have entered. Please
+        double-check if everything has been entered correctly. Afterwards press
+        the “Save the complete Metronome Mark Source” button to save the data in
+        the database
+      </p>
+    </>
+  ),
+  // 6: <>Section 6 help</>,
 };

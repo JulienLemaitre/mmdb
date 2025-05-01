@@ -6,66 +6,80 @@ import {
   useEffect,
   useReducer,
 } from "react";
+// import {
+//   getAllowedActions,
+//   steps,
+// } from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
 import {
-  getAllowedActions,
-  steps,
-} from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
-import { CollectionPieceVersionsFormStep } from "@/types/formTypes";
+  CollectionPieceVersionsFormStep,
+  CollectionState,
+  MMSourcePieceVersionsState,
+  NewPieceVersionState,
+  PersonState,
+  PieceState,
+  TempoIndicationState,
+} from "@/types/formTypes";
+import upsertEntityInState from "@/utils/upsertEntityInState";
+import getCollectionsPieceVersionsFormTestState from "@/utils/getCollectionsPieceVersionsFormTestState";
+import { collectionFormSteps as steps } from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
 
-export type CollectionPieceVersionsFormType = "single" | "collection";
+const TEST_STATE = getCollectionsPieceVersionsFormTestState();
+
+type CollectionPieceVersionsFormAction =
+  | {
+      type: "init";
+      payload: any;
+      // payload: { value: CollectionState; next?: boolean };
+    }
+  | { type: "goToPrevStep" }
+  | { type: "goToStep"; payload: any }
+  | {
+      type: "collection";
+      payload: any;
+    }
+  | { type: "persons"; payload: any }
+  | { type: "pieces"; payload: any }
+  | { type: "pieceVersions"; payload: any }
+  | { type: "tempoIndications"; payload: any }
+  | { type: "mMSourcePieceVersions"; payload: any };
+type Dispatch = (action: CollectionPieceVersionsFormAction) => void;
 type CollectionPieceVersionsFormInfo = {
-  formType: CollectionPieceVersionsFormType;
   currentStepRank: number;
+  isSinglePieceVersionformOpen?: boolean;
   allSourcePieceVersionsDone?: boolean;
 };
 
 export type CollectionPieceVersionsFormState = {
   formInfo: CollectionPieceVersionsFormInfo;
-  composer?: { id?: string };
-  piece?: { id?: string };
-  pieceVersion?: { id?: string };
+  collection?: Partial<CollectionState>;
+  mMSourcePieceVersions?: MMSourcePieceVersionsState[];
+  persons?: PersonState[];
+  pieces?: PieceState[];
+  pieceVersions?: NewPieceVersionState[];
+  tempoIndications?: TempoIndicationState[];
 };
-
-type CollectionPieceVersionsFormAction =
-  | {
-      type: "init";
-      payload?: { value: CollectionPieceVersionsFormState; next?: boolean };
-    }
-  | { type: "goToPrevStep" }
-  | { type: "goToStep"; payload: { stepRank: number } }
-  | {
-      type: "composer";
-      payload: { value: { id: string }; next?: boolean };
-    }
-  | {
-      type: "piece";
-      payload: { value: { id: string }; next?: boolean };
-    }
-  | {
-      type: "pieceVersion";
-      payload: { value: { id: string }; next?: boolean };
-    }
-  | {
-      type: "formInfo";
-      payload: {
-        value: { formType: CollectionPieceVersionsFormType };
-        next?: boolean;
-      };
-    };
-
-type Dispatch = (action: CollectionPieceVersionsFormAction) => void;
-
+export type PersistableCollectionPieceVersionsFormState =
+  Required<CollectionPieceVersionsFormState>;
 type CollectionPieceVersionsFormProviderProps = { children: ReactNode };
 
 const INITIAL_STATE: CollectionPieceVersionsFormState = {
+  // const INITIAL_STATE: CollectionPieceVersionsFormState = TEST_STATE || {
   formInfo: {
     currentStepRank: 0,
-    formType: "single",
   },
+  collection: undefined,
+  mMSourcePieceVersions: [],
+  persons: [],
+  pieces: [],
+  pieceVersions: [],
+  tempoIndications: [],
 };
-
-const LOCAL_STORAGE_KEY = "sourceOnPieceVersionForm";
+const LOCAL_STORAGE_KEY = "collectionPieceVersionsForm";
 const USE_LOCAL_STORAGE = false;
+const allowedActions = new Set();
+steps.forEach((step) =>
+  step.actionTypes.forEach((actionType) => allowedActions.add(actionType)),
+);
 
 const CollectionPieceVersionsFormContext = createContext<
   | {
@@ -88,12 +102,20 @@ function localStorageGetItem(key: string) {
   }
 }
 
-function CollectionPieceVersionsFormReducer(
+const arrayEntities = [
+  "persons",
+  "pieces",
+  "pieceVersions",
+  "tempoIndications",
+  "mMSourcePieceVersions",
+];
+
+function collectionPieceVersionsFormReducer(
   state: CollectionPieceVersionsFormState,
   action: CollectionPieceVersionsFormAction,
-): any {
-  console.group(`[CollectionPieceVersionsFormReducer]`);
-  console.log(`action.type :`, action.type);
+) {
+  console.group(`[collectionPieceVersionsFormReducer]`);
+  console.log(`[] action.type :`, action.type);
 
   // Navigation back
   if (action.type === "goToPrevStep") {
@@ -108,7 +130,7 @@ function CollectionPieceVersionsFormReducer(
     };
   }
 
-  console.log(`action.payload :`, action.payload);
+  console.log(`[] action.payload :`, action.payload);
 
   // Navigation to specific step
   if (action.type === "goToStep") {
@@ -123,48 +145,104 @@ function CollectionPieceVersionsFormReducer(
     };
   }
 
-  const allowedActions = getAllowedActions(state);
+  // if (action.type === "collection") {
+  //   console.log(`[] UPDATE collection :`, action.payload);
+  //   console.groupEnd();
+  //   return {
+  //     ...state,
+  //     collection: action.payload,
+  //   };
+  // }
+
   const isActionAllowed = allowedActions.has(action.type);
-  console.log(`allowedActions :`, allowedActions);
-  console.log(`isActionAllowed :`, isActionAllowed);
 
   // Entries created
   if (isActionAllowed) {
-    const {
-      next,
-      value,
-      // array,
-    } = action.payload || {};
+    const { array, deleteIdArray, idKey, next, replace, value } =
+      action.payload || {};
 
     let newState = state;
 
-    // If payload is an entity array, we update the state accordingly
-    // if (array) {
-    //   // For each entity in the array
-    //   array.forEach((entity) => {
-    //     // If we find an entity in state with the same id, we update it
-    //     const isEntityInState = newState[action.type]?.find(
-    //       (stateEntity) => entity.id && stateEntity.id === entity.id,
-    //     );
-    //     console.log(`[] isEntityInState :`, isEntityInState);
-    //     if (isEntityInState) {
-    //       console.log(`[] UPDATE entity in array with new value :`, entity);
-    //       newState = {
-    //         ...newState,
-    //         [action.type]: newState[action.type].map((stateEntity) =>
-    //           stateEntity.id === entity.id ? entity : stateEntity,
-    //         ),
-    //       };
-    //     } else {
-    //       // otherwise, we push the entity to the array
-    //       console.log(`[] ADD new entity in array :`, entity);
-    //       newState = {
-    //         ...newState,
-    //         [action.type]: [...newState[action.type], entity],
-    //       };
-    //     }
-    //   });
-    // }
+    // If payload is an entity array and replace = false, we update the state accordingly
+    if (array && !replace) {
+      // For each entity in the array
+      array.forEach((entity) => {
+        const id = idKey || "id";
+
+        newState = upsertEntityInState({
+          state: newState,
+          entityName: action.type,
+          entity,
+          idKey: id,
+        });
+
+        if (entity.person) {
+          newState = upsertEntityInState({
+            state: newState,
+            entityName: "persons",
+            entity: entity.person,
+          });
+        }
+        if (entity.organization) {
+          newState = upsertEntityInState({
+            state: newState,
+            entityName: "organizations",
+            entity: entity.organization,
+          });
+        }
+      });
+    }
+
+    // If payload is an entity array and replace = true, we replace the entity in state
+    if (array && replace) {
+      newState = {
+        ...newState,
+        [action.type]: array,
+      };
+      // For each entity in the array
+      array.forEach((entity) => {
+        if (entity.person) {
+          console.log(`[ADD IN CONTEXT] person:`, entity.person);
+          newState = upsertEntityInState({
+            state: newState,
+            entityName: "persons",
+            entity: entity.person,
+          });
+        }
+        if (entity.organization) {
+          console.log(`[ADD IN CONTEXT] organization:`, entity.organization);
+          newState = upsertEntityInState({
+            state: newState,
+            entityName: "organizations",
+            entity: entity.organization,
+          });
+        }
+      });
+    }
+
+    // If payload is a deleteIdArray, we update the state accordingly
+    if (deleteIdArray) {
+      // For each entity in the array
+      deleteIdArray.forEach((idToDelete) => {
+        const id = idKey || "id";
+        // If we find an entity in state with the same id, we remove it
+        const isEntityInState = newState[action.type]?.find(
+          (stateEntity) => idToDelete && stateEntity[id] === idToDelete,
+        );
+        if (isEntityInState) {
+          console.log(`[] REMOVE entity in array with id :`, idToDelete);
+          newState = {
+            ...newState,
+            [action.type]: newState[action.type]!.filter(
+              (stateEntity) => stateEntity[id] !== idToDelete,
+            ),
+          };
+        } else {
+          // otherwise, we warn entity was not found
+          console.log(`[] NOT FOUND - entity to REMOVE with id :`, idToDelete);
+        }
+      });
+    }
 
     // otherwise, the payload is an object, we update the state object accordingly
     if (value) {
@@ -172,14 +250,37 @@ function CollectionPieceVersionsFormReducer(
         ...state,
         [action.type]: { ...(state[action.type] || {}), ...value },
       };
+      const hasComposerChanged =
+        newState.collection?.composerId !== state.collection?.composerId;
+      const hasCollectionIdChanged =
+        newState.collection?.id !== state.collection?.id;
+
+      if (
+        action.type === "collection" &&
+        (hasComposerChanged || hasCollectionIdChanged)
+      ) {
+        for (const entity of arrayEntities) {
+          if (newState[entity].length) {
+            console.log(
+              `[composer or collection Id changed] reset ${entity} -`,
+            );
+            newState[entity] = [];
+          }
+        }
+
+        // If composer has changed, we delete collection.id and collection.title if exists
+        if (hasComposerChanged && newState.collection?.id) {
+          console.log(
+            `[composer changed] delete collection.id and collection.title -`,
+          );
+          delete newState.collection.id;
+          delete newState.collection.title;
+        }
+      }
     }
 
-    // We increment currentStep of we are told to with the property 'next' in any payload
+    // We increment currentStep of we are told to with the property 'next = true' in any payload
     if (next === true && typeof state?.formInfo?.currentStepRank === "number") {
-      console.log(
-        `[SOPVFContext] NEXT - go to step:`,
-        state.formInfo.currentStepRank + 1,
-      );
       newState = {
         ...newState,
         formInfo: {
@@ -189,39 +290,24 @@ function CollectionPieceVersionsFormReducer(
       };
     }
 
-    // Reset all entities after the current one if a new id is detected for current entity
-    // TODO this has to be refined because some steps are arrays of entity objects
-    // if (action.payload.id !== state[action.type]?.id) {
-    //   for (const entity of FEED_FORM_STATE_STEPS) {
-    //     if (entity === action.type) continue;
-    //     if (
-    //       FEED_FORM_STATE_STEPS.indexOf(entity) >
-    //         FEED_FORM_STATE_STEPS.indexOf(action.type) &&
-    //       newState[entity]
-    //     ) {
-    //       console.log(`[feedFormReducer] Resetting ${entity}`);
-    //       newState[entity] = undefined;
-    //     }
-    //   }
-    // }
-
-    localStorageSetItem(LOCAL_STORAGE_KEY, newState);
     console.groupEnd();
     return newState;
   }
+
   if (action.type === "init") {
-    localStorageSetItem(LOCAL_STORAGE_KEY, action.payload || INITIAL_STATE);
+    console.log(`[] INIT state :`, action.payload);
     console.groupEnd();
     return action.payload || INITIAL_STATE;
   }
-  throw new Error(`Unhandled action type: ${action.type}`);
+  console.groupEnd();
+  throw new Error(`[CollectionContext] Unhandled action type: ${action.type}`);
 }
 
 export function CollectionPieceVersionsFormProvider({
   children,
 }: Readonly<CollectionPieceVersionsFormProviderProps>) {
   const [state, dispatch] = useReducer(
-    CollectionPieceVersionsFormReducer,
+    collectionPieceVersionsFormReducer,
     INITIAL_STATE,
   );
 
@@ -230,7 +316,7 @@ export function CollectionPieceVersionsFormProvider({
       const localStorageValue = localStorageGetItem(LOCAL_STORAGE_KEY);
       if (localStorageValue) {
         console.log(
-          `[INIT] CollectionPieceVersionss from localStorage`,
+          `[INIT] collectionPieceVersionsForm from localStorage`,
           localStorageValue,
         );
         initCollectionPieceVersionsForm(
@@ -246,9 +332,8 @@ export function CollectionPieceVersionsFormProvider({
     }
   }, []);
 
-  const value = { state, dispatch };
   return (
-    <CollectionPieceVersionsFormContext.Provider value={value}>
+    <CollectionPieceVersionsFormContext.Provider value={{ state, dispatch }}>
       {children}
     </CollectionPieceVersionsFormContext.Provider>
   );
@@ -262,19 +347,18 @@ export function useCollectionPieceVersionsForm() {
     );
   }
   const lastCompletedStep = getLastCompletedStep(context.state);
-  // console.log(`[useFeedForm] lastCompletedStep :`, lastCompletedStep);
   const nextStep = steps[lastCompletedStep ? lastCompletedStep?.rank + 1 : 0];
   return {
     ...context,
     lastCompletedStepId: lastCompletedStep?.id,
     lastCompletedStepRank: lastCompletedStep?.rank,
-    nextStepToCompleteId: nextStep?.id,
-    nextStepToCompleteRank: nextStep?.rank || 0,
+    nextStepToCompleteId: nextStep.id,
+    nextStepToCompleteRank: nextStep.rank || 0,
     currentStepRank: context.state.formInfo?.currentStepRank || 0,
   };
 }
 
-export function updateCollectionPieceVersionsForm(dispatch, type, value?: any) {
+export function updateCollectionPieceVersionsForm(dispatch, type, value) {
   dispatch({ type, payload: value });
 }
 
@@ -288,17 +372,36 @@ export function initCollectionPieceVersionsForm(
 function getLastCompletedStep(
   state: CollectionPieceVersionsFormState,
 ): CollectionPieceVersionsFormStep | undefined {
-  const formSteps = steps[state.formInfo.formType];
   // traversing the steps array, we return the step before the first incomplete one id
-  // console.group(`SOPEVF getLastCompletedStep`);
-  for (let i = 0; i < formSteps.length; i++) {
+  // console.group(`getLastCompletedStep`);
+  for (let i = 0; i < steps.length; i++) {
     // console.log(`steps[${i}] isComplete :`, steps[i].isComplete(state));
-    if (!formSteps[i].isComplete(state)) {
+    if (!steps[i].isComplete(state)) {
       // console.groupEnd();
-      return formSteps[i - 1];
+      return steps[i - 1];
     }
   }
   // console.groupEnd();
   // If none incomplete step found, we return the last step id
-  return formSteps[formSteps.length - 1];
+  return steps[steps.length - 1];
+}
+
+export function getNewEntities(
+  state: CollectionPieceVersionsFormState,
+  entityName: string,
+) {
+  if (Array.isArray(state[entityName])) {
+    return state[entityName].filter((entity) => entity.isNew);
+  }
+  return [];
+}
+export function getEntityByIdOrKey(
+  state: CollectionPieceVersionsFormState,
+  entityName: string,
+  id: string,
+  key = "id",
+) {
+  if (Array.isArray(state[entityName])) {
+    return state[entityName].find((entity) => entity[key] === id);
+  }
 }

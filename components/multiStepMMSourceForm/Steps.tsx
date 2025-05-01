@@ -51,7 +51,12 @@ const Steps = () => {
           );
         })}
       </ul>
-      <DebugBox stateObject={state} />
+      <DebugBox
+        stateObject={state}
+        title="Feed form state"
+        // shouldExpandNode={(level) => level < 3}
+        expandAllNodes
+      />
     </>
   );
 };

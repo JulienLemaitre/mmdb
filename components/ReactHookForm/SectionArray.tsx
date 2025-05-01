@@ -6,6 +6,7 @@ import { getSectionDefaultValues } from "@/components/ReactHookForm/formUtils";
 import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
 import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
 import ControlledCreatableSelect from "@/components/ReactHookForm/ControlledCreatableSelect";
+import { TempoIndicationState } from "@/types/formTypes";
 
 export default function SectionArray({
   control,
@@ -23,8 +24,6 @@ export default function SectionArray({
     name: `movements[${nestIndex}].sections`,
   });
 
-  console.log(`[SectionArray] fields :`, fields);
-
   return (
     <div className="my-4">
       <ul>
@@ -40,7 +39,6 @@ export default function SectionArray({
                 index + 1
               }`}</h4>
               <input
-                value={`movements[${nestIndex}].sections[${index}].id` as const}
                 {...register(
                   `movements[${nestIndex}].sections[${index}].id` as const,
                 )}
@@ -48,7 +46,7 @@ export default function SectionArray({
               />
               <div className="flex gap-2 items-center">
                 <div className="text-lg font-bold">
-                  Metre :<span className="text-red-500 ml-1">*</span>
+                  Time Signature :<span className="text-red-500 ml-1">*</span>
                 </div>
                 <div className="flex flex-col gap-1">
                   <FormInput
@@ -56,24 +54,24 @@ export default function SectionArray({
                       `movements[${nestIndex}].sections[${index}].metreNumerator` as const
                     }
                     // label="Metre numerator"
-                    type="number"
+                    inputMode="numeric"
                     inputClassName="w-20"
                     disabled={isMetreFieldDisabled}
                     // defaultValue={``}
-                    {...{ register, errors }}
+                    {...{ register, control, errors }}
                   />
                   <div className="divider border-black my-0" />
-                  <FormInput
-                    name={
-                      `movements[${nestIndex}].sections[${index}].metreDenominator` as const
-                    }
-                    // label="Metre denominator"
-                    type="number"
-                    inputClassName="w-20"
-                    disabled={isMetreFieldDisabled}
-                    // defaultValue={``}
-                    {...{ register, errors }}
-                  />
+                  <div className="mt-[-0.5rem]">
+                    <FormInput
+                      name={
+                        `movements[${nestIndex}].sections[${index}].metreDenominator` as const
+                      }
+                      inputMode="numeric"
+                      inputClassName="w-20"
+                      disabled={isMetreFieldDisabled}
+                      {...{ register, control, errors }}
+                    />
+                  </div>
                 </div>
                 <label className="text-5xl flex items-center">
                   <input
@@ -158,10 +156,12 @@ export default function SectionArray({
                   `movements[${nestIndex}].sections[${index}].tempoIndication` as const
                 }
                 control={control}
-                options={tempoIndicationList.map((ti) => ({
-                  value: ti.id,
-                  label: ti.text,
-                }))}
+                options={tempoIndicationList.map(
+                  (ti: TempoIndicationState) => ({
+                    value: ti.id,
+                    label: ti.text,
+                  }),
+                )}
                 onOptionCreated={onTempoIndicationCreated}
                 errors={errors}
               />
@@ -171,8 +171,8 @@ export default function SectionArray({
                   `movements[${nestIndex}].sections[${index}].fastestStructuralNotesPerBar` as const
                 }
                 label={`Fastest structural notes per bar`}
-                type="number"
-                {...{ register, errors }}
+                inputMode="numeric"
+                {...{ register, control, errors }}
               />
               <label>
                 <input
@@ -182,7 +182,6 @@ export default function SectionArray({
                   name={
                     `movements[${nestIndex}].sections[${index}].isFastestStructuralNoteBelCanto` as const
                   }
-                  // value={true}
                   type="checkbox"
                   className="mr-2"
                 />
@@ -193,38 +192,46 @@ export default function SectionArray({
                   `movements[${nestIndex}].sections[${index}].fastestStaccatoNotesPerBar` as const
                 }
                 label={`Fastest staccato notes per bar`}
-                type="number"
-                {...{ register, errors }}
+                inputMode="numeric"
+                {...{ register, control, errors }}
               />
               <FormInput
                 name={
                   `movements[${nestIndex}].sections[${index}].fastestRepeatedNotesPerBar` as const
                 }
                 label={`Fastest repeated notes per bar`}
-                type="number"
-                {...{ register, errors }}
+                inputMode="numeric"
+                {...{ register, control, errors }}
               />
               <FormInput
                 name={
                   `movements[${nestIndex}].sections[${index}].fastestOrnamentalNotesPerBar` as const
                 }
                 label={`Fastest ornamental notes per bar`}
-                type="number"
-                {...{ register, errors }}
+                inputMode="numeric"
+                {...{ register, control, errors }}
               />
-              <FormInput // TODO: button "add a comment" and a textarea
+              <FormInput
                 name={
                   `movements[${nestIndex}].sections[${index}].comment` as const
                 }
                 label={`Comment`}
                 defaultValue={``}
-                {...{ register, errors }}
+                {...{ register, control, errors }}
+              />
+              <FormInput
+                name={
+                  `movements[${nestIndex}].sections[${index}].commentForReview` as const
+                }
+                label={`Comment for review`}
+                defaultValue={``}
+                {...{ register, control, errors }}
               />
               <section className="my-4 flex gap-2 w-full justify-between">
                 <div className="flex gap-2">
                   <button
                     type="button"
-                    className="btn btn-accent"
+                    className="btn btn-accent btn-sm"
                     onClick={() =>
                       isLastItem
                         ? append(getSectionDefaultValues())
@@ -236,7 +243,7 @@ export default function SectionArray({
                   </button>
                   <button
                     type="button"
-                    className="btn btn-error"
+                    className="btn btn-error btn-sm"
                     onClick={() => remove(index)}
                   >
                     <TrashIcon className="w-5 h-5" />
@@ -248,7 +255,7 @@ export default function SectionArray({
                   {index > 0 && (
                     <button
                       type="button"
-                      className="btn btn-move"
+                      className="btn btn-move btn-sm"
                       onClick={() => {
                         swap(index, index - 1);
                       }}
@@ -261,7 +268,7 @@ export default function SectionArray({
                   {index < sectionArray.length - 1 && (
                     <button
                       type="button"
-                      className="btn btn-move"
+                      className="btn btn-move btn-sm"
                       onClick={() => {
                         swap(index, index + 1);
                       }}
@@ -280,7 +287,7 @@ export default function SectionArray({
             <div className="flex gap-2">
               <button
                 type="button"
-                className="btn btn-accent"
+                className="btn btn-accent btn-sm"
                 onClick={() => {
                   append(getSectionDefaultValues());
                 }}

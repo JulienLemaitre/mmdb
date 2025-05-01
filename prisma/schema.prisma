@@ -6,19 +6,15 @@ generator client {
   previewFeatures = ["postgresqlExtensions"]
 }
 
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
 datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
   directUrl  = env("DIRECT_URL")
   extensions = [pgcrypto]
-}
-
-enum PIECE_CATEGORY {
-  KEYBOARD
-  CHAMBER_INSTRUMENTAL
-  ORCHESTRAL
-  VOCAL
-  OTHER
 }
 
 model Collection {
@@ -97,6 +93,7 @@ model Section {
   tempoIndicationId               String          @db.Uuid
   metronomeMarks                  MetronomeMark[] // A movement can have many metronome marks
   comment                         String?
+  commentForReview                String?
   createdAt                       DateTime        @default(now())
   updatedAt                       DateTime        @updatedAt
 
@@ -147,6 +144,7 @@ model MMSource {
   pieceVersions  MMSourcesOnPieceVersions[] // A source is composed of one or more pieceVersions
   type           SOURCE_TYPE
   link           String
+  permalink      String
   year           Int
   references     Reference[] // A source can have many references
   contributions  Contribution[] // A source can have many Contributions
@@ -326,6 +324,14 @@ enum KEY {
   G_MINOR
   G_SHARP_MAJOR
   G_SHARP_MINOR
+}
+
+enum PIECE_CATEGORY {
+  KEYBOARD
+  CHAMBER_INSTRUMENTAL
+  ORCHESTRAL
+  VOCAL
+  OTHER
 }
 
 enum SOURCE_TYPE {

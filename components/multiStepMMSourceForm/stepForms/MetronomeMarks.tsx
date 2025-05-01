@@ -52,7 +52,7 @@ function MetronomeMarks() {
     } else {
       setPieceVersions(pieceVersionsFromState);
     }
-  }, []);
+  }, [state.mMSourcePieceVersions, state.pieceVersions]);
 
   if (!pieceVersions || pieceVersions.length === 0) {
     return <Loader />;
@@ -76,7 +76,7 @@ function MetronomeMarks() {
         (sectionList, movement) => {
           return [
             ...sectionList,
-            ...movement.sections.map((section, index) => {
+            ...movement.sections.map((section) => {
               // Insert in section the properties of movement except "sections"
               return {
                 ...section,

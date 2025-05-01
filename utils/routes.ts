@@ -1,4 +1,7 @@
+export const URL_API_GETALL_COLLECTION_PIECES = "/api/getAll/collectionPieces";
 export const URL_API_GETALL_COMPOSERS = "/api/getAll/composers";
+export const URL_API_GETALL_COMPOSER_COLLECTION =
+  "/api/getAll/composerCollections";
 export const URL_API_GETALL_COMPOSER_PIECES = "/api/getAll/composerPieces";
 export const URL_API_GETALL_PIECE_PIECE_VERSIONS =
   "/api/getAll/piecePieceVersions";

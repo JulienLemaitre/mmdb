@@ -9,10 +9,10 @@ const MMSourcePieceVersions = () => {
   const { dispatch, currentStepRank, state } = useFeedForm();
   const step = getStepByRank(currentStepRank);
 
-  const onSubmit = () => {
+  const onSubmit = (option: { goToNextStep: boolean }) => {
     updateFeedForm(dispatch, "formInfo", {
       value: { allSourcePieceVersionsDone: true },
-      next: true,
+      next: option.goToNextStep,
     });
   };
 

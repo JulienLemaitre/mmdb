@@ -1,28 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { PieceState } from "@/types/formTypes";
+import { PieceInput, PieceState } from "@/types/formTypes";
 import { Piece } from "@prisma/client";
-import {
-  getNewEntities,
-  useFeedForm,
-} from "@/components/context/feedFormContext";
+import { getNewEntities } from "@/components/context/feedFormContext";
 import Loader from "@/components/Loader";
 import PieceEditForm from "@/components/entities/piece/PieceEditForm";
 import PieceSelectForm from "@/components/entities/piece/PieceSelectForm";
 import { URL_API_GETALL_COMPOSER_PIECES } from "@/utils/routes";
+import { FeedFormState } from "@/types/feedFormTypes";
+
+type PieceSelectOrCreate = {
+  feedFormState: FeedFormState;
+  onPieceCreated: (piece: PieceInput) => void;
+  onPieceSelect: (piece: PieceState) => void;
+  deleteSelectedPieceIfNew: () => void;
+  selectedComposerId?: string;
+  selectedPieceId?: string;
+  isCollectionCreationMode?: boolean;
+  newPieceDefaultTitle?: string;
+};
 
 function PieceSelectOrCreate({
-  state,
+  feedFormState,
   onPieceCreated,
   onPieceSelect,
   deleteSelectedPieceIfNew,
-}) {
+  selectedComposerId,
+  selectedPieceId,
+  isCollectionCreationMode,
+  newPieceDefaultTitle,
+}: PieceSelectOrCreate) {
   const [pieces, setPieces] = useState<Piece[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isCreation, setIsCreation] = useState(false);
-  const { state: feedFormState } = useFeedForm();
-  const selectedComposerId = state?.composer?.id;
-  const selectedPieceId = state?.piece?.id;
-  const newPieces = getNewEntities(feedFormState, "pieces");
+  const [isCreation, setIsCreation] = useState(!!isCollectionCreationMode);
+  const newPieces = getNewEntities(feedFormState, "pieces").filter(
+    (piece) => piece.composerId === selectedComposerId,
+  );
   const newSelectedPiece = newPieces?.find(
     (piece) => piece.id === selectedPieceId,
   );
@@ -41,7 +53,7 @@ function PieceSelectOrCreate({
   // If composer is newly created, we shift in creation mode directly
   const newPersons = getNewEntities(feedFormState, "persons");
   const isNewComposer =
-    selectedComposerId &&
+    !!selectedComposerId &&
     newPersons?.some((person) => person.id === selectedComposerId);
   useEffect(() => {
     if (typeof isNewComposer !== "boolean")
@@ -53,6 +65,10 @@ function PieceSelectOrCreate({
 
   // If composer is not new, we fetch all his composition pieces
   useEffect(() => {
+    if (isCollectionCreationMode) {
+      setIsLoading(false);
+      return;
+    }
     if (typeof isNewComposer !== "boolean")
       console.log(`[useEffect 2] isNewComposer not boolean:`, isNewComposer);
 
@@ -89,7 +105,7 @@ function PieceSelectOrCreate({
     if (typeof isNewComposer === "boolean" && isNewComposer) {
       setIsLoading(false);
     }
-  }, [isNewComposer]);
+  }, [isNewComposer, isCollectionCreationMode, selectedComposerId]);
 
   const onPieceCreationClick = () => {
     setIsCreation(true);
@@ -112,6 +128,7 @@ function PieceSelectOrCreate({
         piece={newSelectedPiece}
         onSubmit={onPieceCreated}
         onCancel={onCancelPieceCreation}
+        newPieceDefaultTitle={newPieceDefaultTitle}
       />
     );
 

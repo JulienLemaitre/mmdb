@@ -1,81 +1,84 @@
-import { useFieldArray } from "react-hook-form";
-import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
+import { Control, useFieldArray } from "react-hook-form";
 import TrashIcon from "@/components/svg/TrashIcon";
 import PlusIcon from "@/components/svg/PlusIcon";
-import { FormInput } from "@/components/ReactHookForm/FormInput";
-import { REFERENCE_TYPE } from "@prisma/client";
-import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
+import NewReferenceForm from "@/components/entities/reference/NewReferenceForm";
+import { ReferenceInput, SourceDescriptionInput } from "@/types/formTypes";
+
+type FormValues = SourceDescriptionInput;
+type ReferenceArrayProps<TFormValues extends { references: ReferenceInput[] }> =
+  {
+    control: Control<TFormValues>;
+    currentReferences: ReferenceInput[];
+    isReferenceFormOpen: boolean;
+    onReferenceFormOpen: () => void;
+    onReferenceFormClose: () => void;
+  };
 
 export default function ReferenceArray({
   control,
-  register,
-  errors,
-  watch,
-  onReferenceBlur,
-  onReferenceInputChange,
-  isCheckingReference,
-  isReferenceDirty,
-}) {
-  const { fields, append, remove } = useFieldArray({
+  currentReferences,
+  onReferenceFormOpen,
+  onReferenceFormClose,
+  isReferenceFormOpen,
+}: ReferenceArrayProps<FormValues>) {
+  const { fields, append, remove } = useFieldArray<FormValues>({
     control,
     name: "references",
   });
+
+  const onReferenceCreated = (reference: ReferenceInput) => {
+    append(reference as any);
+    onReferenceFormClose();
+  };
+
+  const onCancelReferenceCreation = () => {
+    onReferenceFormClose();
+  };
 
   return (
     <>
       <h3 className="text-xl font-bold text-accent mt-4">References</h3>
       <ul>
-        {fields.map((item, index) => (
-          <li key={item.id}>
-            <h4 className="mt-6 text-lg font-bold text-secondary">{`Reference ${
-              index + 1
-            }`}</h4>
-            <div className="flex items-end gap-3">
-              <div className="flex-shrink-0 min-w-40">
-                <ControlledSelect
-                  name={`references[${index}].type` as const}
-                  label={`Type`}
-                  id={`references[${index}].type` as const}
-                  control={control}
-                  options={Object.values(REFERENCE_TYPE).map((refType) => ({
-                    value: refType,
-                    label: getReferenceTypeLabel(refType),
-                  }))}
-                  isRequired={true}
-                  errors={errors}
-                />
+        {fields.map((field, index) => (
+          <li key={field.id} className="mt-6 w-full max-w-md">
+            <div className="flex w-full justify-between gap-3 items-end">
+              <div>
+                <h4 className="mt-6 text-lg font-bold text-secondary">{`Reference ${
+                  index + 1
+                }`}</h4>
+                <div className="flex gap-3 items-center">
+                  <div>{(field as ReferenceInput).type?.value}</div>
+                  <div>{(field as ReferenceInput).reference}</div>
+                </div>
               </div>
-              <FormInput
-                name={`references[${index}].reference` as const}
-                isRequired
-                label="Value"
-                onBlur={() => onReferenceBlur(index)}
-                onInputChange={() => onReferenceInputChange(index)}
-                {...{ register, watch, errors }}
-                isLoading={isCheckingReference}
-              />
               <button
                 type="button"
-                className="btn btn-error"
+                className="btn btn-error btn-sm"
                 onClick={() => remove(index)}
               >
-                <TrashIcon />
+                <TrashIcon className="w-4 h-4" />
               </button>
             </div>
           </li>
         ))}
+      </ul>
+      {isReferenceFormOpen ? (
+        <NewReferenceForm
+          currentReferences={currentReferences}
+          onCancel={onCancelReferenceCreation}
+          onReferenceCreated={onReferenceCreated}
+        />
+      ) : (
         <button
           type="button"
-          className="btn btn-secondary mt-4"
-          disabled={isReferenceDirty}
-          onClick={() => {
-            append({});
-          }}
+          className="btn btn-secondary btn-sm mt-4"
+          disabled={isReferenceFormOpen}
+          onClick={onReferenceFormOpen}
         >
           <PlusIcon className="w-5 h-5" />
           Add a reference (plate number, ISBN, ISMN...)
         </button>
-      </ul>
+      )}
     </>
   );
 }

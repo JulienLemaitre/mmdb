@@ -1,6 +1,6 @@
 import PieceSelect from "@/components/entities/piece/PieceSelect";
 import { PieceState } from "@/types/formTypes";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type PieceSelectFormProps = {
   pieces: PieceState[];
@@ -17,20 +17,23 @@ export default function PieceSelectForm({
   console.log(`[PieceSelectForm] pieces :`, pieces);
   const [selectedPiece, setSelectedPiece] = useState<PieceState | null>(null);
 
+  const onSelect = useCallback(
+    (pieceId: string) => {
+      const piece = pieces.find((piece) => piece.id === pieceId);
+      console.log(`[PieceSelectForm] piece: `, piece);
+      if (!piece) return;
+      setSelectedPiece(piece);
+    },
+    [pieces],
+  );
+
   // Reset the form context when the component is mounted
   useEffect(() => {
     // Init the form with context value if exists
-    if (value) {
+    if (value?.id) {
       onSelect(value.id);
     }
-  }, []);
-
-  const onSelect = (pieceId: string) => {
-    const piece = pieces.find((piece) => piece.id === pieceId);
-    console.log(`[PieceSelectForm] piece: `, piece);
-    if (!piece) return;
-    setSelectedPiece(piece);
-  };
+  }, [onSelect, value?.id]);
 
   // If we have a default value to set, we prevent an initial render of react-select that would prevent its use
   if (value && !selectedPiece) {

@@ -1,20 +1,32 @@
 import React, { useState } from "react";
 import {
-  // initFeedForm,
+  initFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import { URL_API_FEEDFORM_SUBMIT } from "@/utils/routes";
 import { fetchAPI } from "@/utils/fetchAPI";
 import { useSession } from "next-auth/react";
 import DebugBox from "@/components/DebugBox";
+import LoadingSpinIcon from "@/components/svg/LoadingSpinIcon";
+import MMSourceDetails from "@/components/MMSourceDetails";
+import computeMMSourceToPersistFromState from "@/utils/computeMMSourceToPersistFromState";
 
 function FeedSummary() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSaveSuccess, setIsSaveSuccess] = useState<boolean>();
-  const [savedValues, setSavedValues] = useState<any>();
-  const { state } = useFeedForm();
+  const [submitResponse, setSubmitResponse] = useState<any>();
+  const { dispatch, state } = useFeedForm();
   const { data: session } = useSession();
 
+  const mMSourceToPersist = computeMMSourceToPersistFromState(state);
+
   const saveAll = () => {
+    console.log(
+      `[FeedSummary] saveAll mMSourceToPersist :`,
+      JSON.stringify(mMSourceToPersist),
+    );
+    console.log(`[FeedSummary] saveAll state :`, JSON.stringify(state));
+    setIsSubmitting(true);
     fetchAPI(
       URL_API_FEEDFORM_SUBMIT,
       {
@@ -23,16 +35,52 @@ function FeedSummary() {
       session?.user?.accessToken,
     )
       .then((response) => {
-        console.log("response", response);
+        // console.log("response", response);
+
+        if (response.error) {
+          console.error("Error submitting form:", JSON.stringify(response));
+          setIsSaveSuccess(false);
+          // Send techLog email
+          fetchAPI(
+            "/api/sendEmail",
+            {
+              variables: {
+                type: "techLog",
+                mMSourceToPersist,
+                state,
+                message: `Error submitting form`,
+                error: response,
+              },
+            },
+            session?.user?.accessToken,
+          )
+            .then((result) =>
+              console.log(`[FeedSummary] result from sendEmail :`, result),
+            )
+            .catch((reason) =>
+              console.error(
+                `[FeedSummary] error reason from sendEmail :`,
+                reason,
+              ),
+            );
+          return;
+        } else {
+          setIsSaveSuccess(true);
+        }
         // initFeedForm(dispatch);
-        setSavedValues(response);
-        setIsSaveSuccess(true);
+        setSubmitResponse(response);
+        setIsSubmitting(false);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log("error in /api/feedForm", error);
         // initFeedForm(dispatch);
         setIsSaveSuccess(false);
+        setIsSubmitting(false);
       });
+  };
+
+  const onReset = () => {
+    initFeedForm(dispatch);
   };
 
   if (isSaveSuccess === true) {
@@ -40,7 +88,16 @@ function FeedSummary() {
       <div>
         <div>Voilà ! All has been saved successfully.</div>
         <div>Thank you.</div>
-        <DebugBox stateObject={savedValues} />
+        <button className="btn btn-primary" onClick={onReset}>
+          Reset the form
+        </button>
+        {/*<div>Here is the data you saved :</div>*/}
+        {/*<MMSourceDetails mMSource={submitResponse.mMSourceFromDb} />*/}
+        <DebugBox
+          title="Submit success return"
+          stateObject={submitResponse}
+          // shouldExpandNode={(level) => level < 3}
+        />
       </div>
     );
   }
@@ -52,18 +109,33 @@ function FeedSummary() {
         <div>
           We have been notified and we will try to fix the problem soon.
         </div>
+        <DebugBox
+          title="Submit Error"
+          stateObject={submitResponse}
+          shouldExpandNode={(level) => level < 3}
+        />
       </div>
     );
   }
 
   return (
-    <button
-      className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 border border-gray-400 rounded"
-      type="button"
-      onClick={saveAll}
-    >
-      Save the complete Metronome Mark Source
-    </button>
+    <>
+      <MMSourceDetails mMSource={mMSourceToPersist} />
+      <div className="flex items-center">
+        <button
+          className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 border border-gray-400 rounded mr-4"
+          type="button"
+          onClick={saveAll}
+        >
+          Save the complete Metronome Mark Source
+        </button>
+        {isSubmitting ? (
+          <div className="w-6">
+            <LoadingSpinIcon />
+          </div>
+        ) : null}
+      </div>
+    </>
   );
 }
 

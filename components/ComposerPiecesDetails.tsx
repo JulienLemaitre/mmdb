@@ -1,5 +1,8 @@
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import { Fragment } from "react";
+import getKeyLabel from "@/utils/getKeyLabel";
+import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
+import getNoteValueLabel from "@/utils/getNoteValueLabel";
 
 export default function ComposerPiecesDetais({ person }) {
   return (
@@ -45,16 +48,7 @@ export default function ComposerPiecesDetais({ person }) {
                       .map((movement, movementIndex) => (
                         <div key={movement.id} className="flex">
                           <h3 className="text-xl my-1 flex-none pr-4">
-                            {movement.rank} -{" "}
-                            {movement.key
-                              .replaceAll("_FLAT", "b")
-                              .replaceAll("_SHARP", "#")
-                              .split("_")
-                              .map(
-                                (w) =>
-                                  w.charAt(0) + w.substring(1).toLowerCase(),
-                              )
-                              .join(" ")}
+                            {movement.rank} - {getKeyLabel(movement.key)}
                           </h3>
                           <div className="">
                             {
@@ -171,7 +165,7 @@ export default function ComposerPiecesDetais({ person }) {
 
                                           return (
                                             <div key={mm.id}>
-                                              <div className="mr-4">{`${mm.beatUnit} = ${mm.bpm}`}</div>
+                                              <div className="mr-4">{`${getNoteValueLabel(mm.beatUnit)} = ${mm.bpm}`}</div>
 
                                               {[
                                                 "fastestStructuralNotes",
@@ -377,7 +371,7 @@ export default function ComposerPiecesDetais({ person }) {
                         <div>
                           <div className="">
                             {pieceSource.mMSource.year} -{" "}
-                            {pieceSource.mMSource.type.toLowerCase()}
+                            {getSourceTypeLabel(pieceSource.mMSource.type)}
                           </div>
                           {pieceSource.mMSource.title && (
                             <div className="">{pieceSource.mMSource.title}</div>

@@ -8,13 +8,11 @@ import {
 } from "react";
 import {
   getAllowedActions,
-  steps,
+  singlePieceFormSteps,
 } from "@/components/multiStepSinglePieceVersionForm/stepsUtils";
 import { SinglePieceVersionFormStep } from "@/types/formTypes";
 
-export type SinglePieceVersionFormType = "single" | "collection";
 type SinglePieceVersionFormInfo = {
-  formType: SinglePieceVersionFormType;
   currentStepRank: number;
   allSourcePieceVersionsDone?: boolean;
 };
@@ -44,13 +42,6 @@ type SinglePieceVersionFormAction =
   | {
       type: "pieceVersion";
       payload: { value: { id: string }; next?: boolean };
-    }
-  | {
-      type: "formInfo";
-      payload: {
-        value: { formType: SinglePieceVersionFormType };
-        next?: boolean;
-      };
     };
 
 type Dispatch = (action: SinglePieceVersionFormAction) => void;
@@ -60,7 +51,6 @@ type SinglePieceVersionFormProviderProps = { children: ReactNode };
 const INITIAL_STATE: SinglePieceVersionFormState = {
   formInfo: {
     currentStepRank: 0,
-    formType: "single",
   },
 };
 
@@ -123,7 +113,7 @@ function SinglePieceVersionFormReducer(
     };
   }
 
-  const allowedActions = getAllowedActions(state);
+  const allowedActions = getAllowedActions();
   const isActionAllowed = allowedActions.has(action.type);
   console.log(`allowedActions :`, allowedActions);
   console.log(`isActionAllowed :`, isActionAllowed);
@@ -138,34 +128,6 @@ function SinglePieceVersionFormReducer(
 
     let newState = state;
 
-    // If payload is an entity array, we update the state accordingly
-    // if (array) {
-    //   // For each entity in the array
-    //   array.forEach((entity) => {
-    //     // If we find an entity in state with the same id, we update it
-    //     const isEntityInState = newState[action.type]?.find(
-    //       (stateEntity) => entity.id && stateEntity.id === entity.id,
-    //     );
-    //     console.log(`[] isEntityInState :`, isEntityInState);
-    //     if (isEntityInState) {
-    //       console.log(`[] UPDATE entity in array with new value :`, entity);
-    //       newState = {
-    //         ...newState,
-    //         [action.type]: newState[action.type].map((stateEntity) =>
-    //           stateEntity.id === entity.id ? entity : stateEntity,
-    //         ),
-    //       };
-    //     } else {
-    //       // otherwise, we push the entity to the array
-    //       console.log(`[] ADD new entity in array :`, entity);
-    //       newState = {
-    //         ...newState,
-    //         [action.type]: [...newState[action.type], entity],
-    //       };
-    //     }
-    //   });
-    // }
-
     // otherwise, the payload is an object, we update the state object accordingly
     if (value) {
       newState = {
@@ -174,8 +136,34 @@ function SinglePieceVersionFormReducer(
       };
     }
 
-    // We increment currentStep of we are told to with the property 'next' in any payload
-    if (next === true && typeof state?.formInfo?.currentStepRank === "number") {
+    // Delete all values for entities depending on the present edited one, if the id of it has changed
+    const entitiesWithId = ["composer", "piece", "pieceVersion"];
+    if (
+      state[action.type]?.id &&
+      state[action.type]?.id !== (newState[action.type] || {}).id
+    ) {
+      for (const entity of entitiesWithId) {
+        if (entity === action.type) continue;
+        if (
+          entitiesWithId.indexOf(entity) >
+            entitiesWithId.indexOf(action.type) &&
+          newState[entity]
+        ) {
+          console.log(`[SinglePieceVersionFormReducer] DELETE entity:`, entity);
+          delete newState[entity];
+        }
+      }
+    }
+
+    // We increment currentStep of we are told to with the property 'next' in any payload, AND if the present step is completed
+    const lastCompletedStep = getLastCompletedStep(newState);
+
+    if (
+      next === true &&
+      typeof state?.formInfo?.currentStepRank === "number" &&
+      lastCompletedStep &&
+      state?.formInfo?.currentStepRank <= lastCompletedStep?.rank
+    ) {
       console.log(
         `[SOPVFContext] NEXT - go to step:`,
         state.formInfo.currentStepRank + 1,
@@ -188,22 +176,6 @@ function SinglePieceVersionFormReducer(
         },
       };
     }
-
-    // Reset all entities after the current one if a new id is detected for current entity
-    // TODO this has to be refined because some steps are arrays of entity objects
-    // if (action.payload.id !== state[action.type]?.id) {
-    //   for (const entity of FEED_FORM_STATE_STEPS) {
-    //     if (entity === action.type) continue;
-    //     if (
-    //       FEED_FORM_STATE_STEPS.indexOf(entity) >
-    //         FEED_FORM_STATE_STEPS.indexOf(action.type) &&
-    //       newState[entity]
-    //     ) {
-    //       console.log(`[feedFormReducer] Resetting ${entity}`);
-    //       newState[entity] = undefined;
-    //     }
-    //   }
-    // }
 
     localStorageSetItem(LOCAL_STORAGE_KEY, newState);
     console.groupEnd();
@@ -260,7 +232,8 @@ export function useSinglePieceVersionForm() {
   }
   const lastCompletedStep = getLastCompletedStep(context.state);
   // console.log(`[useFeedForm] lastCompletedStep :`, lastCompletedStep);
-  const nextStep = steps[lastCompletedStep ? lastCompletedStep?.rank + 1 : 0];
+  const nextStep =
+    singlePieceFormSteps[lastCompletedStep ? lastCompletedStep?.rank + 1 : 0];
   return {
     ...context,
     lastCompletedStepId: lastCompletedStep?.id,
@@ -285,17 +258,16 @@ export function initSinglePieceVersionForm(
 function getLastCompletedStep(
   state: SinglePieceVersionFormState,
 ): SinglePieceVersionFormStep | undefined {
-  const formSteps = steps[state.formInfo.formType];
-  // traversing the steps array, we return the step before the first incomplete one id
+  // traversing the steps array, we return the step before the first incomplete one
   // console.group(`SOPEVF getLastCompletedStep`);
-  for (let i = 0; i < formSteps.length; i++) {
+  for (let i = 0; i < singlePieceFormSteps.length; i++) {
     // console.log(`steps[${i}] isComplete :`, steps[i].isComplete(state));
-    if (!formSteps[i].isComplete(state)) {
+    if (!singlePieceFormSteps[i].isComplete(state)) {
       // console.groupEnd();
-      return formSteps[i - 1];
+      return singlePieceFormSteps[i - 1];
     }
   }
   // console.groupEnd();
-  // If none incomplete step found, we return the last step id
-  return formSteps[formSteps.length - 1];
+  // If none incomplete step found, we return the last step
+  return singlePieceFormSteps[singlePieceFormSteps.length - 1];
 }

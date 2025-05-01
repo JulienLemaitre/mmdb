@@ -6,6 +6,7 @@ const API_URL = process.env.VERCEL_URL
   : "http://localhost:3000/api";
 
 const handler = NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
@@ -29,7 +30,6 @@ const handler = NextAuth({
         // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
-        // console.log(`[Credentials authorize] API_URL :`, API_URL);
         const res = await fetch(`${API_URL}/login`, {
           method: "POST",
           body: JSON.stringify({
@@ -38,10 +38,7 @@ const handler = NextAuth({
           }),
           headers: { "Content-Type": "application/json" },
         });
-        // console.log(`[auth authorize] res :`, res);
-        // console.log(`[auth authorize] res.ok :`, res.ok);
         const user = await res.json();
-        // console.log(`[auth authorize] user :`, user);
         if (user.error) {
           // Return null if user data could not be retrieved
           console.log(`[auth authorize] user.error :`, user.error);
@@ -59,10 +56,7 @@ const handler = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      // console.log(
-      //   `[signIn cb] { user, account, profile, email, credentials }`,
-      //   JSON.stringify({ user, account, profile, email, credentials }, null, 2),
-      // );
+      // We can manage blacklist here for example
       const isAllowedToSignIn = true;
       if (isAllowedToSignIn) {
         return true;
@@ -73,12 +67,41 @@ const handler = NextAuth({
         // return '/unauthorized'
       }
     },
-    async session({ session, token }) {
-      session.user = token as any;
-      return session;
+    async jwt({ token, account, user }) {
+      console.log(`[jwt cb] token`, JSON.stringify(token));
+      console.log(`[jwt cb] account`, JSON.stringify(account));
+      console.log(`[jwt cb] user`, JSON.stringify(user));
+      if (account && user) {
+        console.log(`[jwt cb] -- First-time login --`);
+        token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
+        token.role = user.role;
+        token.image = user.image;
+        token.accessToken = user.accessToken;
+      }
+
+      return token;
     },
-    async jwt({ token, user }) {
-      return { ...token, ...user };
+    async session({ session, token }) {
+      // session.user = token as any;
+      // console.log(`[session cb] session`, JSON.stringify(session));
+      // console.log(`[session cb] token`, JSON.stringify(token));
+      // return session;
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id as string,
+          name: token.name as string,
+          email: token.email as string,
+          role: token.role as string,
+          image: token.image as string,
+          accessToken: token.accessToken as string,
+          accessTokenExpires: token.accessTokenExpires as number,
+        },
+        error: token.error,
+      };
     },
   },
   pages: {

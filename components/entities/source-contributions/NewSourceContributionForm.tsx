@@ -4,7 +4,7 @@ import { ContributionInput } from "@/types/formTypes";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { zodPerson } from "@/utils/zodTypes";
+import { getZodOptionFromEnum, zodPerson } from "@/types/zodTypes";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import { FormInput, getLabel } from "@/components/ReactHookForm/FormInput";
 import { ChangeEvent, useState } from "react";
@@ -13,23 +13,18 @@ import {
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
+import getRoleLabel from "@/utils/getRoleLabel";
 
 const SourceContributionsSchema = z.union([
   z.object({
     person: zodPerson,
-    role: z.object({
-      value: z.nativeEnum(CONTRIBUTION_ROLE),
-      label: z.nativeEnum(CONTRIBUTION_ROLE),
-    }),
+    role: getZodOptionFromEnum(CONTRIBUTION_ROLE),
   }),
   z.object({
     organization: z.object({
       name: z.string().min(2),
     }),
-    role: z.object({
-      value: z.nativeEnum(CONTRIBUTION_ROLE),
-      label: z.nativeEnum(CONTRIBUTION_ROLE),
-    }),
+    role: getZodOptionFromEnum(CONTRIBUTION_ROLE),
   }),
 ]);
 
@@ -39,9 +34,8 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
     handleSubmit,
     register,
     setValue,
-    watch,
     control,
-  } = useForm<ContributionInput>({
+  } = useForm({
     // defaultValues: {},
     resolver: zodResolver(SourceContributionsSchema),
   });
@@ -123,7 +117,7 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
           control={control}
           options={Object.values(CONTRIBUTION_ROLE).map((category) => ({
             value: category,
-            label: category,
+            label: getRoleLabel(category),
           }))}
           isRequired={true}
           errors={errors}
@@ -148,24 +142,24 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
               name={`person.firstName` as const}
               label={getLabel("firstName")}
               isRequired
-              {...{ register, watch, errors }}
+              {...{ register, control, errors }}
             />
             <FormInput
               name={`person.lastName` as const}
               label={getLabel("lastName")}
               isRequired
-              {...{ register, watch, errors }}
+              {...{ register, control, errors }}
             />
             <FormInput
               name={`person.birthYear` as const}
               label={getLabel("birthYear")}
               isRequired
-              {...{ register, watch, errors }}
+              {...{ register, control, errors }}
             />
             <FormInput
               name={`person.deathYear` as const}
               label={getLabel("deathYear")}
-              {...{ register, watch, errors }}
+              {...{ register, control, errors }}
             />
           </>
         ) : (
@@ -173,7 +167,7 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
             name={`organization.name` as const}
             isRequired
             label="Organization name"
-            {...{ register, watch, errors }}
+            {...{ register, control, errors }}
           />
         )}
         <button

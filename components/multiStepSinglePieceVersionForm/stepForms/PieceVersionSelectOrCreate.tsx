@@ -1,30 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { PieceVersionState } from "@/types/formTypes";
-import {
-  getNewEntities,
-  useFeedForm,
-} from "@/components/context/feedFormContext";
+import { PieceVersionInput, PieceVersionState } from "@/types/formTypes";
+import { getNewEntities } from "@/components/context/feedFormContext";
 import Loader from "@/components/Loader";
 import PieceVersionEditForm from "@/components/entities/piece-version/PieceVersionEditForm";
 import PieceVersionSelectForm from "@/components/entities/piece-version/PieceVersionSelectForm";
 import { URL_API_GETALL_PIECE_PIECE_VERSIONS } from "@/utils/routes";
+import { FeedFormState } from "@/types/feedFormTypes";
+
+type PieceVersionSelectOrCreateProps = {
+  selectedPieceId?: string;
+  selectedPieceVersionId?: string;
+  feedFormState: FeedFormState;
+  onPieceVersionCreated: (pieceVersion: PieceVersionInput) => void;
+  onPieceVersionSelect: (pieceVersion: PieceVersionState) => void;
+  deleteSelectedPieceVersionIfNew?: () => void;
+};
 
 function PieceVersionSelectOrCreate({
-  state,
+  selectedPieceId,
+  selectedPieceVersionId,
+  feedFormState,
   onPieceVersionCreated,
   onPieceVersionSelect,
-}) {
+  deleteSelectedPieceVersionIfNew,
+}: PieceVersionSelectOrCreateProps) {
   const [pieceVersions, setPieceVersions] = useState<
     PieceVersionState[] | null
   >(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreation, setIsCreation] = useState(false);
 
-  const { state: feedFormState } = useFeedForm();
-  const selectedPieceId = state?.piece?.id;
-  const selectedPieceVersionId = state?.pieceVersion?.id;
   const newPieces = getNewEntities(feedFormState, "pieces");
-  const newPieceVersions = getNewEntities(feedFormState, "pieceVersions");
+  const newPieceVersions: PieceVersionState[] = getNewEntities(
+    feedFormState,
+    "pieceVersions",
+  ).filter((pieceVersion) => pieceVersion.pieceId === selectedPieceId);
+  const newSelectedPieceVersion = newPieceVersions?.find(
+    (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
+  );
+  const isPieceVersionSelectedNew = !!newSelectedPieceVersion;
   let pieceVersionFullList = [
     ...(pieceVersions || []),
     ...(newPieceVersions || []),
@@ -53,6 +67,7 @@ function PieceVersionSelectOrCreate({
 
     // If we selected an existing piece, we fetch all its pieceVersions
     if (typeof isNewPiece === "boolean" && !isNewPiece) {
+      setIsLoading(true);
       fetch(
         URL_API_GETALL_PIECE_PIECE_VERSIONS + "?pieceId=" + selectedPieceId,
         { cache: "no-store" },
@@ -90,10 +105,23 @@ function PieceVersionSelectOrCreate({
     setIsCreation(true);
   };
 
+  const onCancelPieceCreation = () => {
+    if (typeof deleteSelectedPieceVersionIfNew === "function") {
+      deleteSelectedPieceVersionIfNew();
+    }
+    setIsCreation(false);
+  };
+
   if (isLoading) return <Loader />;
 
-  if (isCreation)
-    return <PieceVersionEditForm onSubmit={onPieceVersionCreated} />;
+  if (isCreation || isPieceVersionSelectedNew)
+    return (
+      <PieceVersionEditForm
+        pieceVersion={newSelectedPieceVersion}
+        onSubmit={onPieceVersionCreated}
+        onCancel={onCancelPieceCreation}
+      />
+    );
 
   if (!pieceVersions)
     return (

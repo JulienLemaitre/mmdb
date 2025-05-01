@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonInput } from "@/types/formTypes";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
-import { zodPerson } from "@/utils/zodTypes";
+import { zodPerson } from "@/types/zodTypes";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 
 const PersonSchema = zodPerson;
@@ -18,8 +18,8 @@ export default function ComposerEditForm({
     formState: { errors, isSubmitting },
     handleSubmit,
     register,
-    watch,
-  } = useForm<PersonInput>({
+    control,
+  } = useForm({
     resolver: zodResolver(PersonSchema),
     ...(composer && { defaultValues: composer }),
   });
@@ -39,19 +39,19 @@ export default function ComposerEditForm({
         <FormInput
           name="firstName"
           isRequired
-          {...{ register, watch, errors }}
+          {...{ register, control, errors }}
         />
         <FormInput
           name="lastName"
           isRequired
-          {...{ register, watch, errors }}
+          {...{ register, control, errors }}
         />
         <FormInput
           name="birthYear"
           isRequired
-          {...{ register, watch, errors }}
+          {...{ register, control, errors }}
         />
-        <FormInput name="deathYear" {...{ register, watch, errors }} />
+        <FormInput name="deathYear" {...{ register, control, errors }} />
         <button
           className="btn btn-primary mt-6 w-full max-w-xs"
           type="submit"

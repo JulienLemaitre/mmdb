@@ -86,6 +86,11 @@ export async function POST(req: NextRequest) {
                         comment: section.comment,
                       }
                     : {}),
+                  ...(section.commentForReview
+                    ? {
+                        commentForReview: section.commentForReview,
+                      }
+                    : {}),
                 })),
             },
           })),
@@ -113,6 +118,7 @@ export async function POST(req: NextRequest) {
               fastestOrnamentalNotesPerBar: true,
               isFastestStructuralNoteBelCanto: true,
               comment: true,
+              commentForReview: true,
               tempoIndication: {
                 select: {
                   id: true,

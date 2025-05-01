@@ -52,7 +52,6 @@ export async function POST(request: Request) {
     );
   }
 
-  // Send confirmation email to verify the email address
   const token = signJwtAccessToken(
     { user: { id: createdUser.id } },
     {
@@ -61,7 +60,7 @@ export async function POST(request: Request) {
   );
   const verifyLink = `${API_URL}/user/verify/${token}`;
   console.log(`[register] verifyLink :`, verifyLink);
-  // TODO: send an email with the link to verify the email address
+  // TODO: send an email with a link to verify the email address
 
   return new Response(JSON.stringify(createdUser), {
     headers: { "Content-Type": "application/json" },

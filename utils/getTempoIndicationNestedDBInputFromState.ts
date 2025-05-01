@@ -1,5 +1,5 @@
-import { PersistableFeedFormState } from "@/components/context/feedFormContext";
 import { Prisma } from "@prisma/client";
+import { PersistableFeedFormState } from "@/types/feedFormTypes";
 
 export default function getTempoIndicationNestedDBInputFromState(
   tempoIndicationId: string,
@@ -19,11 +19,16 @@ export default function getTempoIndicationNestedDBInputFromState(
   }
 
   return {
-    create: {
-      text: newTempoIndication.text,
-      creator: {
-        connect: {
-          id: creatorId,
+    connectOrCreate: {
+      where: {
+        text: newTempoIndication.text,
+      },
+      create: {
+        text: newTempoIndication.text,
+        creator: {
+          connect: {
+            id: creatorId,
+          },
         },
       },
     },

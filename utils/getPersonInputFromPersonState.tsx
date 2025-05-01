@@ -8,7 +8,7 @@ export default function getPersonInputFromPersonState(
     firstName: personState.firstName,
     lastName: personState.lastName,
     birthYear: personState.birthYear,
-    deathYear: personState.deathYear,
+    ...(personState.deathYear ? { deathYear: personState.deathYear } : {}),
   };
   return personInput;
 }

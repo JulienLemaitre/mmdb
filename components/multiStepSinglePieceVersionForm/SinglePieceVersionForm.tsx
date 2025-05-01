@@ -1,6 +1,6 @@
+import React, { useEffect } from "react";
 import SinglePieceVersionSteps from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionSteps";
 import { getStepByRank } from "@/components/multiStepSinglePieceVersionForm/stepsUtils";
-import React from "react";
 import DebugBox from "@/components/DebugBox";
 import {
   updateSinglePieceVersionForm,
@@ -12,7 +12,6 @@ import {
   PieceInput,
   PieceVersionInput,
 } from "@/types/formTypes";
-import { v4 as uuidv4 } from "uuid";
 import {
   getNewEntities,
   updateFeedForm,
@@ -20,37 +19,61 @@ import {
 } from "@/components/context/feedFormContext";
 import getPieceStateFromInput from "@/utils/getPieceStateFromInput";
 import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput";
+import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
+import SinglePieceVersionFormSummary from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionFormSummary";
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
+  onSubmit?: (payload: any) => void;
+  initPayload?: any;
+  isCollectionCreationMode?: boolean;
+  composerId?: string;
+  newPieceDefaultTitle?: string;
+  collectionId?: string;
+  collectionFormState?: any;
 };
 
 /**
- * This component will go throw the whole process of creating a sourceOnPieceVersion entity or a series of sourceOnPieceVersion entities.
+ * This component will go throw the process of creating a single PieceVersion that will be added to the feedForm.
  * If the composer, piece and pieceVersion pre-exist, they will just be selected. If not, the user will be able to create them.
- * @constructor
  */
 const SinglePieceVersionForm = ({
   onFormClose,
+  onSubmit,
+  isCollectionCreationMode,
+  composerId,
+  newPieceDefaultTitle,
+  collectionId,
+  collectionFormState,
 }: SinglePieceVersionFormProps) => {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
   const { dispatch, state, currentStepRank } = useSinglePieceVersionForm();
   const currentStep = getStepByRank({ state, rank: currentStepRank });
   const StepFormComponent = currentStep.Component;
 
+  // For Collection Form, we start by completing the "composer" step automatically and go to the second step = piece
+  useEffect(() => {
+    if (isCollectionCreationMode && composerId && currentStepRank === 0) {
+      console.log(
+        `[SinglePieceVersionForm] auto-complete the "composer" step and go to the next step = piece`,
+      );
+      updateSinglePieceVersionForm(dispatch, "composer", {
+        value: {
+          id: composerId,
+        },
+        next: true,
+      });
+    }
+  }, [composerId, currentStepRank, dispatch, isCollectionCreationMode]);
+
   ////////////////// COMPOSER ////////////////////
 
   const onComposerCreated = (composer: PersonInput) => {
-    const newComposer: PersonState = {
-      ...composer,
-      id: composer.id || uuidv4(),
-      isNew: true,
-    };
+    const newComposer: PersonState = getPersonStateFromPersonInput(composer);
+    newComposer.isNew = true;
     updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
     updateSinglePieceVersionForm(dispatch, "composer", {
-      value: {
-        id: newComposer.id,
-      },
+      value: { id: newComposer.id },
       next: true,
     });
   };
@@ -58,16 +81,14 @@ const SinglePieceVersionForm = ({
   const onComposerSelect = (composer: PersonInput) => {
     updateFeedForm(feedFormDispatch, "persons", { array: [composer] });
     updateSinglePieceVersionForm(dispatch, "composer", {
-      value: {
-        id: composer.id,
-      },
+      value: { id: composer.id },
       next: true,
     });
   };
+  const selectedComposerId = state?.composer?.id;
 
   //////////////////// PIECE ////////////////////
 
-  const selectedComposerId = state?.composer?.id;
   const selectedPieceId = state?.piece?.id;
   const newPieces = getNewEntities(feedFormState, "pieces");
   const newSelectedPiece = newPieces?.find(
@@ -105,9 +126,20 @@ const SinglePieceVersionForm = ({
     if (selectedPieceId && isPieceSelectedNew) {
       deleteIdArray = [selectedPieceId];
     }
+    let piecesArray = [pieceState];
+
+    if (isCollectionCreationMode && collectionId && collectionFormState) {
+      piecesArray = piecesArray.map((piece) => ({
+        ...piece,
+        collectionId,
+        collectionRank:
+          (collectionFormState.mMSourcePieceVersions.length || 0) + 1,
+      }));
+    }
+    console.log(`[with potential collection value] piecesArray :`, piecesArray);
 
     updateFeedForm(feedFormDispatch, "pieces", {
-      array: [pieceState],
+      array: piecesArray,
       ...(deleteIdArray.length ? { deleteIdArray } : {}),
     });
     updateSinglePieceVersionForm(dispatch, "piece", {
@@ -143,6 +175,13 @@ const SinglePieceVersionForm = ({
 
   /////////////////// PIECE VERSION ////////////////////
 
+  const selectedPieceVersionId = state?.pieceVersion?.id;
+  const newPieceVersions = getNewEntities(feedFormState, "pieceVersions");
+  const newSelectedPieceVersion = newPieceVersions?.find(
+    (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
+  );
+  const isPieceVersionSelectedNew = !!newSelectedPieceVersion;
+
   const onPieceVersionCreated = (data: PieceVersionInput) => {
     // Front input values validation is successful at this point.
     console.log("[onPieceVersionCreated] data", data);
@@ -162,7 +201,7 @@ const SinglePieceVersionForm = ({
     );
 
     const pieceVersionState = getPieceVersionStateFromInput({
-      ...pieceVersionData,
+      pieceVersionInput: pieceVersionData,
       pieceId: selectedPieceId,
     });
     pieceVersionState.isNew = true;
@@ -176,11 +215,22 @@ const SinglePieceVersionForm = ({
     });
   };
 
+  const deleteSelectedPieceVersionIfNew = () => {
+    let deleteIdArray: string[] = [];
+    if (selectedPieceVersionId && isPieceVersionSelectedNew) {
+      deleteIdArray = [selectedPieceVersionId];
+    }
+    if (deleteIdArray.length) {
+      updateFeedForm(feedFormDispatch, "pieceVersions", {
+        deleteIdArray,
+      });
+    }
+    // if (isCollectionCreationMode) {
+    //   onFormClose();
+    // }
+  };
+
   const onPieceVersionSelect = (pieceVersion: PieceVersionInput) => {
-    console.log(
-      `[onPieceVersionSelect] onPieceVersionSelect :`,
-      onPieceVersionSelect,
-    );
     updateFeedForm(feedFormDispatch, "pieceVersions", {
       array: [pieceVersion],
     });
@@ -201,38 +251,59 @@ const SinglePieceVersionForm = ({
       );
       return;
     }
-    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+
+    const payload = {
       array: [
         {
           pieceVersionId: state.pieceVersion?.id,
           rank: (feedFormState.mMSourcePieceVersions || []).length + 1,
         },
       ],
-    });
+    };
+    // This is useful for submitting a pieceVersion to a collection form instead of the general feedForm
+    if (typeof onSubmit === "function") {
+      console.log(`[SUBMIT] with provided onSubmit function`);
+      onSubmit(payload);
+    } else {
+      updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", payload);
+    }
 
     onFormClose();
   };
 
   return (
     <div>
-      <SinglePieceVersionSteps />
+      <SinglePieceVersionSteps isCollectionMode={isCollectionCreationMode} />
+      <SinglePieceVersionFormSummary
+        isCollectionMode={isCollectionCreationMode}
+      />
       {StepFormComponent ? (
         <StepFormComponent
           onFormClose={onFormClose}
-          state={state}
+          feedFormState={feedFormState}
+          selectedComposerId={state?.composer?.id}
+          selectedPieceId={state?.piece?.id}
+          selectedPieceVersionId={state?.pieceVersion?.id}
           onComposerSelect={onComposerSelect}
           onComposerCreated={onComposerCreated}
           onPieceCreated={onPieceCreated}
           onPieceSelect={onPieceSelect}
           deleteSelectedPieceIfNew={deleteSelectedPieceIfNew}
+          deleteSelectedPieceVersionIfNew={deleteSelectedPieceVersionIfNew}
           onPieceVersionCreated={onPieceVersionCreated}
           onPieceVersionSelect={onPieceVersionSelect}
           onAddSourceOnPieceVersions={onAddSourceOnPieceVersions}
+          isCollectionCreationMode={isCollectionCreationMode}
+          newPieceDefaultTitle={newPieceDefaultTitle}
         />
       ) : (
         <div>Nothing to show...</div>
       )}
-      <DebugBox stateObject={state} />
+      <DebugBox
+        title="Single Piece form state"
+        stateObject={state}
+        shouldExpandNode={(level) => level < 3}
+      />
     </div>
   );
 };

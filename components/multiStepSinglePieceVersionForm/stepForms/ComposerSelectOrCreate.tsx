@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Person } from "@prisma/client";
 import Loader from "@/components/Loader";
 import ComposerSelectForm from "@/components/entities/composer/ComposerSelectForm";
 import ComposerEditForm from "@/components/entities/composer/ComposerEditForm";
-import { PersonState } from "@/types/formTypes";
-import {
-  useFeedForm,
-  getNewEntities,
-} from "@/components/context/feedFormContext";
-import { URL_API_GETALL_COMPOSERS } from "@/utils/routes";
+import { PersonInput, PersonState } from "@/types/formTypes";
+import { getNewEntities } from "@/components/context/feedFormContext";
+import { FeedFormState } from "@/types/feedFormTypes";
+import getAllComposers from "@/utils/getAllComposers";
+
+type ComposerSelectOrCreateProps = {
+  feedFormState: FeedFormState;
+  onComposerCreated: (composer: PersonInput) => void;
+  onComposerSelect: (composer: PersonInput) => void;
+  selectedComposerId: number | null;
+};
 
 const ComposerSelectOrCreate = ({
-  state,
+  feedFormState,
   onComposerCreated,
   onComposerSelect,
-}) => {
-  const [composers, setComposers] = useState<Person[] | null>(null);
+  selectedComposerId,
+}: ComposerSelectOrCreateProps) => {
+  const [composers, setComposers] = useState<PersonState[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreation, setIsCreation] = useState(false);
-  const { state: feedFormState } = useFeedForm();
-  const selectedComposerId = state?.composer?.id;
   const newPersons = getNewEntities(feedFormState, "persons");
   let composerFullList = [...(composers || []), ...(newPersons || [])];
 
@@ -39,8 +42,7 @@ const ComposerSelectOrCreate = ({
   );
 
   useEffect(() => {
-    fetch(URL_API_GETALL_COMPOSERS, { cache: "no-store" })
-      .then((res) => res.json())
+    getAllComposers()
       .then((data) => {
         setComposers(data?.composers);
         setIsLoading(false);

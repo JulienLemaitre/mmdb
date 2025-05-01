@@ -19,7 +19,7 @@ export default function getMMSourceDescriptionInputFromState(
   const sourceDescriptionInput: SourceDescriptionInput = {
     id,
     ...(title ? { title } : {}),
-    year,
+    year: year,
     link,
     type: { value: type, label: formatToPhraseCase(type) },
     ...(comment ? { comment } : {}),
@@ -33,7 +33,9 @@ export default function getMMSourceDescriptionInputFromState(
             reference: reference.reference,
           })),
         }
-      : {}),
+      : {
+          references: [],
+        }),
   };
 
   return sourceDescriptionInput;

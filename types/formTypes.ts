@@ -1,27 +1,17 @@
 import type {
   CONTRIBUTION_ROLE,
-  MetronomeMark,
-  Movement,
-  Organization,
-  Person,
-  Piece,
-  PieceVersion,
-  Reference,
-  Section,
-  MMSource,
-  TempoIndication,
-  MMSourcesOnPieceVersions,
+  KEY,
   NOTE_VALUE,
-  Contribution,
-  Collection,
+  PIECE_CATEGORY,
+  Prisma,
+  REFERENCE_TYPE,
+  SOURCE_TYPE,
 } from "@prisma/client";
-import {
-  FeedFormState,
-  PersistableFeedFormState,
-} from "@/components/context/feedFormContext";
 import { FC } from "react";
 import { SinglePieceVersionFormState } from "@/components/context/SinglePieceVersionFormContext";
 import { CollectionPieceVersionsFormState } from "@/components/context/CollectionPieceVersionsFormContext";
+import { WithRequiredId } from "@/types/typescriptUtils";
+import { FeedFormState, PersistableFeedFormState } from "@/types/feedFormTypes";
 
 // Related Types
 
@@ -29,7 +19,28 @@ export type SourceOnPieceVersionsFormType = "single" | "collection" | "none";
 
 // Sub-Types
 
-export type ReferenceTypeAndReference = Pick<Reference, "type" | "reference">;
+export type ReferenceTypeAndReference = Pick<
+  Prisma.ReferenceCreateInput,
+  "type" | "reference"
+>;
+
+// More generic types
+
+export type InputMethod =
+  | "none"
+  | "text"
+  | "decimal"
+  | "numeric"
+  | "tel"
+  | "search"
+  | "email"
+  | "url";
+
+export type KeyBase =
+  | "fastestStructuralNotes"
+  | "fastestStaccatoNotes"
+  | "fastestOrnamentalNotes"
+  | "fastestRepeatedNotes";
 
 // Data in STATE
 
@@ -105,30 +116,46 @@ export type ContributionStateWithoutId =
       role: CONTRIBUTION_ROLE;
     };
 
-export type CollectionState = Pick<Collection, "id" | "title"> & IsNewProp;
-
-export type PieceState = Pick<
-  Piece,
-  "id" | "nickname" | "yearOfComposition" | "title" | "composerId"
+export type CollectionState = WithRequiredId<
+  Pick<Prisma.CollectionUncheckedCreateInput, "id" | "composerId" | "title">
 > &
   IsNewProp;
 
-export type SectionState = Pick<
-  Section,
-  | "id"
-  | "rank"
-  | "metreNumerator"
-  | "metreDenominator"
-  | "isCommonTime"
-  | "isCutTime"
-  | "comment"
-  | "fastestStructuralNotesPerBar"
-  | "fastestStaccatoNotesPerBar"
-  | "fastestRepeatedNotesPerBar"
-  | "fastestOrnamentalNotesPerBar"
-  | "isFastestStructuralNoteBelCanto"
+export type PieceState = WithRequiredId<
+  Pick<
+    Prisma.PieceUncheckedCreateInput,
+    | "id"
+    | "nickname"
+    | "yearOfComposition"
+    | "title"
+    | "composerId"
+    | "collectionId"
+    | "collectionRank"
+  >
+> &
+  IsNewProp;
+
+export type SectionState = WithRequiredId<
+  Pick<
+    Prisma.SectionUncheckedCreateInput,
+    | "id"
+    | "rank"
+    | "metreNumerator"
+    | "metreDenominator"
+    | "isCommonTime"
+    | "isCutTime"
+    | "comment"
+    | "commentForReview"
+    | "fastestStructuralNotesPerBar"
+    | "fastestStaccatoNotesPerBar"
+    | "fastestRepeatedNotesPerBar"
+    | "fastestOrnamentalNotesPerBar"
+    | "isFastestStructuralNoteBelCanto"
+  >
 > & {
-  tempoIndication: Pick<TempoIndication, "id" | "text">;
+  tempoIndication: WithRequiredId<
+    Pick<Prisma.TempoIndicationUncheckedCreateInput, "id" | "text">
+  >;
 };
 export type SectionStateExtendedForMMForm = SectionState & {
   movement: Omit<MovementState, "sections">;
@@ -136,24 +163,32 @@ export type SectionStateExtendedForMMForm = SectionState & {
   pieceId: string;
 };
 
-export type MovementState = Pick<Movement, "id" | "rank" | "key"> & {
+export type MovementState = WithRequiredId<
+  Pick<Prisma.MovementUncheckedCreateInput, "id" | "rank" | "key">
+> & {
   sections: SectionState[];
 };
 
-export type TempoIndicationState = Pick<TempoIndication, "id" | "text"> &
+export type TempoIndicationState = WithRequiredId<
+  Pick<Prisma.TempoIndicationUncheckedCreateInput, "id" | "text">
+> &
   IsNewProp;
 
 export type PieceVersionState = Pick<
-  PieceVersion,
-  "id" | "category" | "pieceId"
+  Prisma.PieceVersionUncheckedCreateInput,
+  "category" | "pieceId"
 > & {
+  id: string;
   movements: MovementState[];
 } & IsNewProp;
-export type NewPieceVersionState = PieceVersionState & IsNewProp;
+export type NewPieceVersionState = PieceVersionState;
 
-export type ReferenceState = Pick<Reference, "type" | "reference">;
+export type ReferenceState = Pick<
+  Prisma.ReferenceUncheckedCreateInput,
+  "type" | "reference"
+>;
 export type MMSourceDescriptionState = Pick<
-  MMSource,
+  Prisma.MMSourceUncheckedCreateInput,
   "title" | "type" | "link" | "year" | "comment"
 > & {
   id?: string;
@@ -163,20 +198,22 @@ export type MMSourceDescriptionState = Pick<
   GoNextProp;
 
 export type MMSourcePieceVersionsState = Pick<
-  MMSourcesOnPieceVersions,
-  "rank"
-> & {
-  pieceVersionId: string;
-} & IsNewProp;
+  Prisma.MMSourcesOnPieceVersionsUncheckedCreateInput,
+  "rank" | "pieceVersionId"
+> &
+  IsNewProp;
 
 export type MetronomeMarkState =
-  | (Pick<MetronomeMark, "sectionId" | "bpm" | "comment" | "beatUnit"> & {
+  | (Pick<
+      Prisma.MetronomeMarkUncheckedCreateInput,
+      "sectionId" | "bpm" | "comment" | "beatUnit"
+    > & {
       id?: string;
       pieceVersionRank: number;
       pieceVersionId: string;
       noMM: false;
     })
-  | (Pick<MetronomeMark, "sectionId"> & {
+  | (Pick<Prisma.MetronomeMarkUncheckedCreateInput, "sectionId"> & {
       id?: string;
       pieceVersionRank: number;
       pieceVersionId: string;
@@ -191,77 +228,99 @@ export type OptionInput = {
 };
 export type OptionInputTyped<T> = {
   value: T;
-  label: T;
+  label: string;
 };
 
 export type PersonInput = Pick<
-  Person,
+  Prisma.PersonUncheckedCreateInput,
   "firstName" | "lastName" | "birthYear" | "deathYear"
-> & { id?: string };
-export type CollectionInput = Pick<Collection, "title"> & { id?: string };
-export type PieceInput = Pick<
-  Piece,
-  "nickname" | "yearOfComposition" | "title"
-> & { id?: string; composerId?: string };
-export type SectionInput = Pick<
-  Section,
-  | "metreNumerator"
-  | "metreDenominator"
-  | "isCommonTime"
-  | "isCutTime"
-  | "fastestStructuralNotesPerBar"
-  | "fastestStaccatoNotesPerBar"
-  | "fastestRepeatedNotesPerBar"
-  | "fastestOrnamentalNotesPerBar"
-  | "isFastestStructuralNoteBelCanto"
-  | "comment"
 > & {
   id?: string;
+};
+export type CollectionInput = Pick<
+  Prisma.CollectionUncheckedCreateInput,
+  "composerId" | "title"
+> & {
+  id?: string;
+};
+export type CollectionTitleInput = Pick<
+  Prisma.CollectionUncheckedCreateInput,
+  "title"
+> & {
+  id?: string;
+};
+export type PieceInput = Pick<
+  Prisma.PieceUncheckedCreateInput,
+  "nickname" | "title" | "yearOfComposition"
+> & {
+  id?: string;
+  composerId?: string;
+};
+export type SectionInput = Omit<
+  Prisma.SectionCreateWithoutMovementInput,
+  "tempoIndication" | "metronomeMarks" | "rank"
+> & {
   tempoIndication: OptionInput;
 };
 export type MovementInput = {
   id?: string;
-  key: OptionInput;
+  key: OptionInputTyped<KEY>;
   sections: SectionInput[];
 };
 export type PieceVersionInput = {
   id?: string;
-  pieceId: string;
-  category: OptionInput;
+  category: OptionInputTyped<PIECE_CATEGORY>;
   movements: MovementInput[];
 };
 export type ReferenceInput = {
-  type: OptionInput;
+  type: OptionInputTyped<REFERENCE_TYPE>;
   reference: string;
 };
 
-export type SourceDescriptionInput = Pick<MMSource, "link" | "year"> & {
+export type SourceDescriptionInput = Pick<
+  Prisma.MMSourceUncheckedCreateInput,
+  "link"
+> & {
   id?: string;
   comment?: string;
   title?: string;
-  references?: ReferenceInput[];
-  type: OptionInput;
+  year: number;
+  references: ReferenceInput[];
+  type: OptionInputTyped<SOURCE_TYPE>;
 };
 
 export type ContributionInput = {
-  role: OptionInput;
+  role: OptionInputTyped<CONTRIBUTION_ROLE>;
 } & (
   | {
       person: PersonInput;
     }
   | {
-      organization: Pick<Organization, "id" | "name">;
+      organization: Pick<
+        Prisma.OrganizationUncheckedCreateInput,
+        "id" | "name"
+      >;
     }
 );
 
 export type MetronomeMarkInput =
-  | (Pick<MetronomeMark, "sectionId" | "bpm" | "comment"> & {
+  | (Pick<
+      Prisma.MetronomeMarkUncheckedCreateInput,
+      "sectionId" | "bpm" | "comment"
+    > & {
       beatUnit: OptionInputTyped<NOTE_VALUE>;
       noMM: false;
     })
-  | (Pick<MetronomeMark, "sectionId"> & {
+  | (Pick<Prisma.MetronomeMarkUncheckedCreateInput, "sectionId" | "comment"> & {
       noMM: true;
     });
+
+export type SearchFormInput = {
+  startYear: number;
+  endYear: number;
+  tempoIndicationIds: string[];
+  composer: OptionInput;
+};
 
 export function assertsIsPersistableFeedFormState(
   valueToTest: any,
@@ -325,7 +384,10 @@ export function assertsIsMetronomeMarkWithValue(
   }
 }
 
-type PersistableContribution = Pick<Contribution, "role"> & {
+type PersistableContribution = Pick<
+  Prisma.ContributionUncheckedCreateInput,
+  "role"
+> & {
   id?: string;
   personId: string;
   organizationId: null;
@@ -359,3 +421,5 @@ export function assertsContributionHasPersonOrOrganization(
     );
   }
 }
+
+export type PiecePieceVersion = { pieceId: string; pieceVersionId: string };

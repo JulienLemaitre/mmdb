@@ -12,7 +12,7 @@ export default function getMMSourceDescriptionStateFromInput(
   const sourceDescriptionState: MMSourceDescriptionState = {
     id,
     title: title ?? null,
-    year,
+    year: year,
     type: type.value as MMSourceDescriptionState["type"],
     link,
     comment: comment ?? null,

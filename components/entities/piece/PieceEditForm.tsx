@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zodYearOptional } from "@/utils/zodTypes";
+import { zodYearOptional } from "@/types/zodTypes";
 import { useForm } from "react-hook-form";
 import { PieceInput } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,19 +17,26 @@ export default function PieceEditForm({
   piece,
   onSubmit,
   onCancel,
+  newPieceDefaultTitle,
 }: Readonly<{
   piece?: PieceInput;
   onSubmit: (piece: PieceInput) => void;
   onCancel: () => void;
+  newPieceDefaultTitle?: string;
 }>) {
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
     register,
-    watch,
-  } = useForm<PieceInput>({
+    control,
+  } = useForm({
     resolver: zodResolver(PieceSchema),
-    ...(piece && { defaultValues: piece }),
+    ...((piece || newPieceDefaultTitle) && {
+      defaultValues: {
+        ...piece,
+        ...(newPieceDefaultTitle ? { title: newPieceDefaultTitle } : {}),
+      },
+    }),
   });
 
   console.log(`[PieceEditForm] piece :`, piece);
@@ -45,9 +52,13 @@ export default function PieceEditForm({
         onSubmit={handleSubmit(onSubmit)}
         onKeyDown={preventEnterKeySubmission}
       >
-        <FormInput name="title" isRequired {...{ register, watch, errors }} />
-        <FormInput name="nickname" {...{ register, watch, errors }} />
-        <FormInput name="yearOfComposition" {...{ register, watch, errors }} />
+        <FormInput name="title" isRequired {...{ register, control, errors }} />
+        <FormInput name="nickname" {...{ register, control, errors }} />
+        <FormInput
+          name="yearOfComposition"
+          inputMode="numeric"
+          {...{ register, control, errors }}
+        />
         <div className="flex gap-4 items-center mt-6">
           <button
             className="btn btn-neutral"
@@ -59,7 +70,7 @@ export default function PieceEditForm({
             Cancel
           </button>
           <button
-            className="btn btn-primary mt-6 w-full max-w-xs"
+            className="btn btn-primary w-full max-w-xs"
             type="submit"
             disabled={isSubmitting}
           >

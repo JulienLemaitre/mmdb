@@ -72,6 +72,16 @@
   .react-select-container .react-select__dropdown-indicator .css-tj5bde-Svg {
     @apply fill-current;
   }
+
+  .react-select-container .react-select__option--is-focused {
+    @apply bg-neutral-200
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .react-select-container .react-select__option--is-focused {
+      @apply bg-neutral-800
+    }
+  }
 }
 
 * {
@@ -119,4 +129,281 @@
 
 [data-nextjs-scroll-focus-boundary] {
   display: contents;
+}
+
+/* Snowball */
+
+@keyframes fall {
+  to {
+    transform: translateY(300px);
+  }
+}
+
+/*
+body {
+  !*   background-color: #f1faee; *!
+  justify-content: center;
+  align-items: center;
+  height: 100svh;
+  display: flex;
+}
+*/
+.snowball {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.ball {
+  background-color: rgba(189,224,254,0.15);
+  /*background-color: rgba(189,224,254,0.1);*/
+  border: 8px solid #4A525EFF;
+  border-radius: 50%;
+  width: 350px;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 10px 10px #959eae;
+}
+/*.holder {
+  background-color: #2a9d8f;
+  border: 8px solid #4A525EFF;
+  border-radius: 20px 20px 0 0;
+  width: 350px;
+  height: 55px;
+  position: absolute;
+  top: 345px;
+  left: 0;
+}
+.holder:before {
+  content: "";
+  background-color: #4A525EFF;
+  width: 500px;
+  height: 8px;
+  position: absolute;
+  top: 40px;
+  left: -85px;
+}
+.text {
+  text-shadow: 1px 1px 1px #fff, 1.5px 1.5px 0.6px #fff;
+  color: #a5acba;
+  !*color: #ef233c;*!
+  font-family: Brush Script MT, cursive;
+  font-size: 35px;
+  position: absolute;
+  top: -10px;
+  left: 50px;
+}*/
+.fall {
+  z-index: 15;
+  position: absolute;
+}
+.snowFlakes1,
+.snowFlakes2,
+.snowFlakes3,
+.snowFlakes4,
+.snowFlakes5,
+.snowFlakes6,
+.snowFlakes7,
+.snowFlakes8,
+.snowFlakes9,
+.snowFlakes10 {
+  background-color: #fff;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+}
+.snowFlakes1 {
+  animation: 7s linear infinite fall;
+  top: 10px;
+  left: 92px;
+}
+.snowFlakes2 {
+  animation: 5s linear infinite fall;
+  top: 10px;
+  left: 162px;
+  transform: scale(2.2);
+}
+.snowFlakes3 {
+  animation: 5s linear infinite fall;
+  top: 10px;
+  left: 81px;
+}
+.snowFlakes4 {
+  animation: 9s linear infinite fall;
+  top: 10px;
+  left: 46px;
+  transform: scale(1.8);
+}
+.snowFlakes5 {
+  animation: 9.5s linear infinite fall;
+  top: 10px;
+  left: 220px;
+}
+.snowFlakes6 {
+  animation: 4s linear infinite fall;
+  top: 10px;
+  left: 255px;
+}
+.snowFlakes7 {
+  animation: 13s linear infinite fall;
+  top: 10px;
+  left: 290px;
+  transform: scale(2);
+}
+.snowFlakes8 {
+  animation: 3s linear infinite fall;
+  top: 10px;
+  left: 35px;
+}
+.snowFlakes9 {
+  animation: 7s linear infinite fall;
+  top: 10px;
+  left: 150px;
+}
+.snowFlakes10 {
+  animation: 5s linear infinite fall;
+  top: 10px;
+  left: 270px;
+}
+
+.ball .metronome-container {
+  margin-top: 41px;
+}
+
+/* Metronome */
+
+.metronome-container {
+  width: 250px;
+  height: 262px;
+  position: relative;
+  margin: auto;
+
+  --width: 14px;
+  --minus-width: -14px;
+  --color: oklch(0.746477 0.0216 264.436);
+
+}
+.metronome-container .stick-container {
+  width: 250px;
+  margin: auto;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  bottom: 30px;
+  padding: 50px 0 0;
+  clip-path: inset(0px 0px 80px 0px);
+}
+.metronome-container .stick {
+  display: inline-block;
+  vertical-align: bottom;
+  width: var(--width);
+  height: 180px;
+  background: var(--color);
+  position: relative;
+  transform-origin: 7px bottom;
+  animation: moveIt 2s ease-in-out infinite;
+}
+.metronome-container .hole {
+  width: 42px;
+  height: 42px;
+  background: transparent;
+  position: absolute;
+  border-radius: 50%;
+  top: -30px;
+  left: var(--minus-width);
+  border: var(--width) solid var(--color);
+}
+.metronome-container .top {
+  width: var(--width);
+  height: var(--width);
+  background: var(--color);
+  position: absolute;
+  top: -42px;
+  left: 0;
+}
+.metronome-container .bar {
+  background-color: var(--color);
+  position: absolute;
+}
+.metronome-container .bar-bottom {
+  width: 234px;
+  height: var(--width);
+  bottom: 22px;
+  left: 8px;
+}
+.metronome-container .bar-bottom::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -8px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent var(--color) transparent transparent;
+  border-width: 0 9px 11px 0;
+}
+.metronome-container .bar-bottom::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: -8px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: var(--color) transparent transparent transparent;
+  border-width: 11px 9px 0 0;
+}
+.metronome-container .wheel {
+  width: 42px;
+  height: 42px;
+  background: transparent;
+  position: absolute;
+  border-radius: 50%;
+  bottom: 0;
+  border: var(--width) solid var(--color);
+  border-top: var(--width) solid transparent;
+}
+.metronome-container .w-right {
+  left: 12px;
+}
+.metronome-container .w-left {
+  right: 12px;
+}
+.metronome-container .bar-right {
+  width: var(--width);
+  height: 244px;
+  transform: rotate(-22deg);
+  transform-origin: bottom right;
+  bottom: 33px;
+  right: 0;
+}
+.metronome-container .bar-left {
+  width: var(--width);
+  height: 244px;
+  transform: rotate(22deg);
+  transform-origin: bottom left;
+  bottom: 33px;
+  left: 0;
+}
+.metronome-container .bar-top {
+  height: var(--width);
+  width: 66px;
+  top: 2px;
+  left: 92px;
+}
+.metronome-container .bar-middle {
+  height: var(--width);
+  width: 170px;
+  bottom: 100px;
+  left: 40px;
+}
+@keyframes moveIt {
+  0%,
+  100% {
+    transform: rotate(33deg);
+  }
+  50% {
+    transform: rotate(-33deg);
+  }
 }

@@ -1,20 +1,19 @@
 import React from "react";
-import {
-  getAllStepStatus,
-  getStepByRank,
-  steps,
-} from "@/components/multiStepSinglePieceVersionForm/stepsUtils";
+import { singlePieceFormSteps } from "@/components/multiStepSinglePieceVersionForm/stepsUtils";
 import {
   updateSinglePieceVersionForm,
   useSinglePieceVersionForm,
 } from "@/components/context/SinglePieceVersionFormContext";
 
-const SinglePieceVersionSteps = () => {
-  const { state, currentStepRank, lastCompletedStepRank, dispatch } =
+type SinglePieceVersionStepsProps = {
+  isCollectionMode?: boolean;
+};
+
+const SinglePieceVersionSteps = ({
+  isCollectionMode,
+}: SinglePieceVersionStepsProps) => {
+  const { currentStepRank, lastCompletedStepRank, dispatch } =
     useSinglePieceVersionForm();
-  const completedSteps = getAllStepStatus(state);
-  const currentStep = getStepByRank({ state, rank: currentStepRank });
-  const formSteps = steps[state.formInfo.formType];
 
   const goToStep = (stepRank: number) => {
     if (
@@ -25,12 +24,13 @@ const SinglePieceVersionSteps = () => {
     }
   };
 
+  // skip the first "composer" step if we are in collectionMode
+  const formSteps = singlePieceFormSteps.toSpliced(0, isCollectionMode ? 1 : 0);
+
   return (
     <div className="mb-4">
       <ul className="steps">
-        {formSteps.map((step, index) => {
-          // console.group(`STEP ${index}`);
-          // console.log(`[] step.rank :`, step.rank);
+        {formSteps.map((step) => {
           const stepClassName =
             step.rank === 0 ||
             (typeof lastCompletedStepRank === "number" &&
@@ -39,11 +39,7 @@ const SinglePieceVersionSteps = () => {
               : "";
           const setpBtnClassName =
             step.rank === (currentStepRank || 0) ? "btn-primary" : "btn-ghost";
-          const isStepCompleted = completedSteps[step.rank];
-          const isCurrentStep = currentStep.rank === step.rank;
-          // console.log(`[] isStepCompleted :`, isStepCompleted);
-          // console.log(`[] isCurrentStep :`, isCurrentStep);
-          // console.groupEnd();
+
           return (
             <li className={`step ${stepClassName}`} key={step.title}>
               <div

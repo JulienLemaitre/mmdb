@@ -11,12 +11,16 @@ import { CONTRIBUTION_ROLE } from "@prisma/client";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import TrashIcon from "@/components/svg/TrashIcon";
 import getRoleLabel from "@/utils/getRoleLabel";
+import _isEqual from "lodash/isEqual";
 
 type SourceContributionSelectFormProps = {
   contributions?: ContributionStateWithoutId[];
   persons: PersonState[];
   organizations: OrganizationState[];
-  onSubmit: (contributions: ContributionStateWithoutId[]) => void;
+  onSubmit: (
+    contributions: ContributionStateWithoutId[],
+    option: { goToNextStep: boolean },
+  ) => void;
   submitTitle?: string;
   title?: string;
 };
@@ -56,9 +60,10 @@ export default function SourceContributionSelectForm({
     );
     const { role } = personContribution;
     let person: PersonState;
+
     // Case of selection of existing person
     if ("personId" in personContribution) {
-      const foundPerson = persons.find(
+      const foundPerson = [...persons, ...createdPersons].find(
         (person) => person.id === personContribution.personId,
       );
       console.log(
@@ -74,6 +79,7 @@ export default function SourceContributionSelectForm({
         return;
       }
     }
+
     // Case of creation of a new person
     if ("person" in personContribution) {
       person = personContribution.person;
@@ -99,9 +105,13 @@ export default function SourceContributionSelectForm({
   ) => {
     const { role } = organizationContribution;
     let organization: OrganizationState;
+
     // Case of selection of existing organization
     if ("organizationId" in organizationContribution) {
-      const foundOrganization = organizations.find(
+      const foundOrganization = [
+        ...organizations,
+        ...createdOrganizations,
+      ].find(
         (organization) =>
           organization.id === organizationContribution.organizationId,
       );
@@ -118,6 +128,7 @@ export default function SourceContributionSelectForm({
         return;
       }
     }
+
     // Case of creation of a new organization
     if ("organization" in organizationContribution) {
       organization = organizationContribution.organization;
@@ -141,23 +152,46 @@ export default function SourceContributionSelectForm({
     );
   };
 
-  const personOptions: OptionInput[] = [...persons, ...createdPersons].map(
-    (person: PersonState) => ({
+  const personOptions: OptionInput[] = [...persons, ...createdPersons]
+    .reduce((list: PersonState[], currentPerson: PersonState) => {
+      if (list.some((person) => person.id === currentPerson.id)) {
+        return list;
+      }
+      return [...list, currentPerson];
+    }, [])
+    .map((person: PersonState) => ({
       value: person.id,
       label: `${person.firstName} ${person.lastName} [person]`,
-    }),
-  );
+    }));
   const organizationOptions: OptionInput[] = [
     ...organizations,
     ...createdOrganizations,
-  ].map((organization: OrganizationState) => ({
-    value: organization.id,
-    label: `${organization.name} [organization]`,
-  }));
+  ]
+    .reduce((list: OrganizationState[], currentOrg: OrganizationState) => {
+      if (list.some((org) => org.id === currentOrg.id)) {
+        return list;
+      }
+      return [...list, currentOrg];
+    }, [])
+    .map((organization: OrganizationState) => ({
+      value: organization.id,
+      label: `${organization.name} [organization]`,
+    }));
   const sourceContributionOptions = [
     ...personOptions,
     ...organizationOptions,
   ].sort((a, b) => (a.label > b.label ? 1 : -1));
+
+  const isPresentFormDirty = !_isEqual(
+    selectedContributions,
+    contributions || [],
+  );
+  // console.log(
+  //   `[] isPresentFormDirty :`,
+  //   isPresentFormDirty,
+  //   selectedContributions,
+  //   contributions || [],
+  // );
 
   return (
     <>
@@ -238,7 +272,12 @@ export default function SourceContributionSelectForm({
       )}
 
       <MMSourceFormStepNavigation
-        onClick={() => onSubmit(selectedContributions)}
+        onSave={() => onSubmit(selectedContributions, { goToNextStep: false })}
+        onSaveAndGoToNextStep={() =>
+          onSubmit(selectedContributions, { goToNextStep: true })
+        }
+        onResetForm={() => setSelectedContributions(contributions || [])}
+        isPresentFormDirty={isPresentFormDirty}
         isNextDisabled={!(selectedContributions.length > 0 && !isFormOpen)}
         submitTitle={submitTitle}
       />

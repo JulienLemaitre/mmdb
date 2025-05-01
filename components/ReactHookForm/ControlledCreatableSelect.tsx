@@ -1,6 +1,7 @@
 import CreatableSelect from "react-select/creatable";
 import { useController } from "react-hook-form";
 import { useState } from "react";
+import { ReactSelectStyles } from "@/components/ReactSelect/ReactSelectStyles";
 
 const ControlledCreatableSelect = ({
   control,
@@ -34,7 +35,7 @@ const ControlledCreatableSelect = ({
   };
 
   return (
-    <div className="form-control w-full max-w-xs">
+    <div className="form-control w-full max-w-xs mt-2">
       {label && (
         <label className="label">
           <span className="label-text">
@@ -49,17 +50,19 @@ const ControlledCreatableSelect = ({
         instanceId={`composer-select-${id}`}
         name={name}
         ref={ref}
+        placeholder="Type here or select existing"
         isDisabled={isLoading}
         isLoading={isLoading}
         onChange={onChange}
         onCreateOption={handleCreateOption}
         onBlur={onBlur}
         value={value || defaultValue}
+        styles={ReactSelectStyles}
         {...selectProps}
       />
-      <span className="label-text-alt text-red-500">
+      <div className="label-text-alt text-red-500">
         {error && error.message}
-      </span>
+      </div>
     </div>
   );
 };

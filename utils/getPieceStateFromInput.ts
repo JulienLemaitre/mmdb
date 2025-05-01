@@ -6,6 +6,9 @@ export default function getPieceStateFromInput(
 ): PieceState {
   return {
     ...pieceInput,
+    yearOfComposition: pieceInput.yearOfComposition
+      ? pieceInput.yearOfComposition
+      : null,
     id: pieceInput.id || uuidv4(),
   };
 }

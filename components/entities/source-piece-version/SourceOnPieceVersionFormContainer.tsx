@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   MMSourcePieceVersionsState,
   SourceOnPieceVersionsFormType,
@@ -12,14 +13,14 @@ import {
 } from "@/components/context/feedFormContext";
 import TrashIcon from "@/components/svg/TrashIcon";
 import QuestionMarkCircleIcon from "@/components/svg/QuestionMarkCircleIcon";
-import CollectionPieceVersionForm from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionForm";
 import { SinglePieceVersionFormProvider } from "@/components/context/SinglePieceVersionFormContext";
-import { useState } from "react";
 import { CollectionPieceVersionsFormProvider } from "@/components/context/CollectionPieceVersionsFormContext";
+import getPersonName from "@/components/entities/person/utils/getPersonName";
+import CollectionPieceVersionsForm from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsForm";
 
 type SourcePieceVersionSelectFormProps = {
   sourcePieceVersions?: MMSourcePieceVersionsState[];
-  onSubmit: () => void;
+  onSubmit: (option: { goToNextStep: boolean }) => void;
   submitTitle?: string;
 };
 
@@ -88,15 +89,29 @@ const SourceOnPieceVersionFormContainer = ({
           </p>
         </div>
       ) : null}
-      {isFormOpen && formType === "single" && (
-        <SinglePieceVersionFormProvider>
-          <SinglePieceVersionForm onFormClose={onFormClose} />
-        </SinglePieceVersionFormProvider>
-      )}
-      {isFormOpen && formType === "collection" && (
-        <CollectionPieceVersionsFormProvider>
-          <CollectionPieceVersionForm onFormClose={onFormClose} />
-        </CollectionPieceVersionsFormProvider>
+      {isFormOpen && (
+        <>
+          {formType === "single" && (
+            <SinglePieceVersionFormProvider>
+              <SinglePieceVersionForm onFormClose={onFormClose} />
+            </SinglePieceVersionFormProvider>
+          )}
+          {formType === "collection" && (
+            <CollectionPieceVersionsFormProvider>
+              <CollectionPieceVersionsForm onFormClose={onFormClose} />
+            </CollectionPieceVersionsFormProvider>
+          )}
+          <div className="grid grid-cols-2 gap-4 items-center mt-6 w-full max-w-2xl">
+            <button
+              className="btn btn-accent"
+              type="button"
+              onClick={() => onFormClose()}
+            >
+              <TrashIcon className="w-5 h-5" />
+              {`Discard this ${formType === "single" ? "piece" : "collection"}`}
+            </button>
+          </div>
+        </>
       )}
       {!isFormOpen && (
         <>
@@ -112,6 +127,17 @@ const SourceOnPieceVersionFormContainer = ({
                 "pieces",
                 pieceVersion.pieceId,
               );
+              const collection = getEntityByIdOrKey(
+                feedFormState,
+                "collections",
+                piece.collectionId,
+              );
+              const composer = getEntityByIdOrKey(
+                feedFormState,
+                "persons",
+                piece.composerId,
+              );
+              console.log({ piece, composer });
 
               return (
                 <li
@@ -119,8 +145,11 @@ const SourceOnPieceVersionFormContainer = ({
                 >
                   <div className="mt-6 flex gap-4 items-end w-full">
                     <div className="flex-grow">
+                      {collection ? (
+                        <div className="text-sm">{collection.title}</div>
+                      ) : null}
                       <h4 className="text-lg font-bold text-secondary">
-                        {`${sourcePieceVersion.rank} - ${piece.title}`}
+                        {`${sourcePieceVersion.rank} - ${piece.title}${!!composer && ` | ${getPersonName(composer)}`}`}
                       </h4>
                     </div>
                     <div>
@@ -160,15 +189,15 @@ const SourceOnPieceVersionFormContainer = ({
               Add a complete collection
             </button>
           </div>
+          <MMSourceFormStepNavigation
+            onSave={() => onSubmit({ goToNextStep: false })}
+            onSaveAndGoToNextStep={() => onSubmit({ goToNextStep: true })}
+            isNextDisabled={!(sourcePieceVersions.length > 0 && !isFormOpen)}
+            submitTitle={submitTitle}
+            onGoToPrevStep={onFormClose}
+          />
         </>
       )}
-
-      <MMSourceFormStepNavigation
-        onClick={onSubmit}
-        isNextDisabled={!(sourcePieceVersions.length > 0 && !isFormOpen)}
-        submitTitle={submitTitle}
-        onGoToPrevStep={onFormClose}
-      />
     </>
   );
 };

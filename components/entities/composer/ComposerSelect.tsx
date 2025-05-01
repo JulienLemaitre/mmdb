@@ -2,8 +2,8 @@
 import Select from "@/components/ReactSelect/Select";
 import { PersonState } from "@/types/formTypes";
 import { useRouter } from "next/navigation";
-import { URL_CREATE_COMPOSER } from "@/utils/routes";
 import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";
+import getPersonName from "@/components/entities/person/utils/getPersonName";
 
 type ComposerSelectProps = {
   composers: PersonState[];
@@ -51,6 +51,6 @@ export default function ComposerSelect({
 function getComposerOption(composer: PersonState) {
   return {
     value: composer.id,
-    label: `${composer.firstName} ${composer.lastName}`,
+    label: getPersonName(composer),
   };
 }
