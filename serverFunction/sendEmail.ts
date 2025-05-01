@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const VERCEL_ENV = process.env.VERCEL_ENV;
 const resend = new Resend(RESEND_API_KEY);
 
 export default async function sendEmail({ type, content }) {
@@ -13,7 +14,7 @@ export default async function sendEmail({ type, content }) {
     from: "mmdb@colibriazulejos.com",
     // from: "notification@mmdb.com",
     to: "julem80+resend@pm.me",
-    subject: "techLog from mmdb",
+    subject: `techLog from mmdb [${VERCEL_ENV}]`,
     html: `<p>content: ${typeof content === "string" ? content : JSON.stringify(content)}</p>`,
   });
 
