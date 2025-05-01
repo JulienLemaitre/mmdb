@@ -35,19 +35,19 @@ function Summary({
   return (
     <div>
       {composer ? (
-        <div className="h3 mb-3">{`Composer: ${getPersonName(composer)}`}</div>
+        <div className="mb-3">{`Composer: ${getPersonName(composer)}`}</div>
       ) : (
-        <div className="h3 mb-3">{`- Composer not found -`}</div>
+        <div className="mb-3">{`- Composer not found -`}</div>
       )}
       {piece ? (
-        <div className="h3 mb-3">{`Piece: ${piece.title}`}</div>
+        <div className="mb-3">{`Piece: ${piece.title} (${piece.yearOfComposition || "no date"})`}</div>
       ) : (
-        <div className="h3 mb-3">{`- Piece not found -`}</div>
+        <div className="mb-3">{`- Piece not found -`}</div>
       )}
       {pieceVersion ? (
         <PieceVersionDisplay pieceVersion={pieceVersion} />
       ) : (
-        <div className="h3 mb-3">{`- Piece Version not found -`}</div>
+        <div className="mb-3">{`- Piece Version not found -`}</div>
       )}
       <button
         onClick={onAddSourceOnPieceVersions}

@@ -20,6 +20,7 @@ import {
 import getPieceStateFromInput from "@/utils/getPieceStateFromInput";
 import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput";
 import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
+import SinglePieceVersionFormSummary from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionFormSummary";
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
@@ -273,6 +274,9 @@ const SinglePieceVersionForm = ({
   return (
     <div>
       <SinglePieceVersionSteps isCollectionMode={isCollectionCreationMode} />
+      <SinglePieceVersionFormSummary
+        isCollectionMode={isCollectionCreationMode}
+      />
       {StepFormComponent ? (
         <StepFormComponent
           onFormClose={onFormClose}
