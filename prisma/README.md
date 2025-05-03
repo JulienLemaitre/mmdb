@@ -32,3 +32,6 @@ npx prisma db seed
 npx prisma migrate reset
 ```
 
+## Trigger in the database
+
+There are now triggers implemented in the database to store the changes operated through the review process. Details will be explained below.
