@@ -22,3 +22,8 @@ First, run the development server:
 ```bash
 npm run dev --turbo
 ```
+
+## webstorm db extension connexion string
+jdbc:postgresql://ep-wandering-mouse-79213592-pooler.eu-central-1.aws.neon.tech:5432/mmdb
+
+jdbc:postgresql://ep-twilight-union-a2tu4xqs-pooler.eu-central-1.aws.neon.tech:5432/mmdb
