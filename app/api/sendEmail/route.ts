@@ -7,7 +7,7 @@ interface RequestBody {
   type: string;
 }
 
-const emailTypeList = ["techLog"];
+const emailTypeList = ["FeedForm submit", "FeedForm ERROR", "FeedForm SUCCESS"];
 
 export async function POST(request: NextRequest) {
   if (!isReqAuthorized(request)) {

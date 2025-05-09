@@ -5,12 +5,12 @@ const API_URL = process.env.VERCEL_URL
 export async function fetchAPI(
   apiRoute: string,
   {
-    variables,
+    body,
     method = "POST",
     cache, // default to no cache if = "no-store"
     serverSide = false,
   }: {
-    variables: any;
+    body: any;
     method?: "POST" | "GET";
     cache?: "no-store" | "force-cache";
     serverSide?: boolean;
@@ -23,9 +23,17 @@ export async function fetchAPI(
       "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify(variables),
+    body: JSON.stringify(body),
     cache,
   })
-    .then((res) => res.json())
-    .catch((err) => console.log(err));
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`${res.status} ${res.statusText}`);
+      }
+      return res.json();
+    })
+    .catch((err) => {
+      console.log(err);
+      return { error: err.message };
+    });
 }

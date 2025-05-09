@@ -14,7 +14,7 @@ export default async function sendEmail({ type, content }) {
     from: "mmdb@colibriazulejos.com",
     // from: "notification@mmdb.com",
     to: "julem80+resend@pm.me",
-    subject: `techLog from mmdb [${VERCEL_ENV}]`,
+    subject: `Mmdb [${VERCEL_ENV}] ${type}`,
     html: `<p>content: ${typeof content === "string" ? content : JSON.stringify(content)}</p>`,
   });
 

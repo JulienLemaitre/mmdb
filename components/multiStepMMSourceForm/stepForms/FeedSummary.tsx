@@ -30,22 +30,22 @@ function FeedSummary() {
     fetchAPI(
       URL_API_FEEDFORM_SUBMIT,
       {
-        variables: state,
+        body: state,
       },
       session?.user?.accessToken,
     )
-      .then((response) => {
-        // console.log("response", response);
+      .then(async (response) => {
+        console.log("response", response);
 
         if (response.error) {
           console.error("Error submitting form:", JSON.stringify(response));
           setIsSaveSuccess(false);
-          // Send techLog email
-          fetchAPI(
+          // Send log email
+          await fetchAPI(
             "/api/sendEmail",
             {
-              variables: {
-                type: "techLog",
+              body: {
+                type: "FeedForm ERROR",
                 mMSourceToPersist,
                 state,
                 message: `Error submitting form`,
@@ -66,6 +66,26 @@ function FeedSummary() {
           return;
         } else {
           setIsSaveSuccess(true);
+          // Send log email
+          await fetchAPI(
+            "/api/sendEmail",
+            {
+              body: {
+                type: "FeedForm SUCCESS",
+                mMSourceFromDb: response.mMSourceFromDb,
+              },
+            },
+            session?.user?.accessToken,
+          )
+            .then((result) =>
+              console.log(`[FeedSummary] result from sendEmail :`, result),
+            )
+            .catch((reason) =>
+              console.error(
+                `[FeedSummary] error reason from sendEmail :`,
+                reason,
+              ),
+            );
         }
         // initFeedForm(dispatch);
         setSubmitResponse(response);

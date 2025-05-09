@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
 
   const state = (await request.json()) as FeedFormState;
   console.log(`[feedForm API route] ---------- BEGIN ----------`);
+  console.log(`[api/feedForm] state`, JSON.stringify(state));
 
   // Checking mandatory fields
   const mandatoryFields = [
@@ -57,38 +58,23 @@ export async function POST(request: NextRequest) {
   // We need to persist new composers first, as it is used by collection and mMSource queries below
   const personCreateManyInput: Prisma.PersonCreateManyInput[] =
     getPersonCreateInput(state, creatorId);
-  console.log(
-    `[] personCreateManyInput`,
-    JSON.stringify(personCreateManyInput, null, 2),
-  );
 
   const organizationCreateManyInput: Prisma.OrganizationCreateManyInput[] =
     getOrganizationCreateInput(state, creatorId);
-  console.log(
-    `[] organizationCreateManyInput`,
-    JSON.stringify(organizationCreateManyInput, null, 2),
-  );
 
   const collectionCreateManyInput: Prisma.CollectionCreateManyInput[] =
     getCollectionCreateInput(state, creatorId);
 
-  console.log(
-    `[] collectionCreateManyInput`,
-    JSON.stringify(collectionCreateManyInput, null, 2),
-  );
-
   const mMSourceInput: Prisma.MMSourceCreateInput =
     getMMSourceAndRelatedEntitiesDBInputFromState(state, creatorId);
 
-  console.log(`[] mMSourceInput`, JSON.stringify(mMSourceInput));
-
-  // Send techLog email
+  // Send log email
   await fetchAPI(
     "/sendEmail",
     {
       serverSide: true,
-      variables: {
-        type: "techLog",
+      body: {
+        type: "FeedForm submit",
         state,
         personCreateManyInput,
         organizationCreateManyInput,
@@ -99,11 +85,19 @@ export async function POST(request: NextRequest) {
     },
     getAccessTokenFromReq(request),
   )
-    .then((result) =>
-      console.log(`[api/feedForm] result from sendEmail :`, result),
-    )
-    .catch((reason) =>
-      console.error(`[api/feedForm] error reason from sendEmail :`, reason),
+    .then((result) => {
+      if (result.error) {
+        console.error(`[api/feedForm] sendEmail ERROR :`, result.error);
+      } else {
+        console.log(`[api/feedForm] sendEmail result :`, result);
+      }
+    })
+    .catch((err) =>
+      console.error(
+        `[api/feedForm] sendEmail ERROR :`,
+        err.status,
+        err.message,
+      ),
     );
 
   // Transaction debug object
@@ -113,32 +107,24 @@ export async function POST(request: NextRequest) {
   return await db
     .$transaction(
       async (tx) => {
-        const persons = await tx.person.createMany({
+        txDebug.persons = await tx.person.createMany({
           data: personCreateManyInput,
         });
-        console.log(`[tx] persons :`, JSON.stringify(persons));
-        txDebug.persons = persons;
 
-        const organizations = await tx.organization.createMany({
+        txDebug.organizations = await tx.organization.createMany({
           data: organizationCreateManyInput,
         });
-        console.log(`[tx] organizations`, JSON.stringify(organizations));
-        txDebug.organizations = organizations;
 
-        const collections = await tx.collection.createMany({
+        txDebug.collections = await tx.collection.createMany({
           data: collectionCreateManyInput,
         });
-        console.log(`[tx] collections :`, JSON.stringify(collections));
-        txDebug.collections = collections;
 
         const mMSource = await tx.mMSource.create({
           data: mMSourceInput,
         });
 
-        console.log(`[tx] mMSource :`, JSON.stringify(mMSource));
         txDebug.mMSource = mMSource;
         const mMSourceId = mMSource.id;
-        console.log(`[tx] mMSourceId :`, mMSourceId);
         txDebug.mMSourceId = mMSourceId;
 
         const metronomeMarksInput: Prisma.MetronomeMarkCreateManyInput[] =
@@ -148,17 +134,12 @@ export async function POST(request: NextRequest) {
               getMetronomeMarkDBInputFromState(metronomeMark, mMSourceId),
             );
 
-        console.log(
-          `[tx] metronomeMarksInput sectionId`,
-          metronomeMarksInput.map((m) => m.sectionId),
-        );
         txDebug.metronomeMarksInput = metronomeMarksInput;
 
         const metronomeMarks = await tx.metronomeMark.createMany({
           data: metronomeMarksInput,
         });
 
-        console.log(`[tx] metronomeMarks :`, metronomeMarks);
         txDebug.metronomeMarks = metronomeMarks;
 
         return { mMSourceInput, mMSource, metronomeMarks };
@@ -228,11 +209,6 @@ export async function POST(request: NextRequest) {
           }
         : null;
 
-      console.log(
-        `[] mMSourceFromDBWithMMs`,
-        JSON.stringify(mMSourceFromDBWithMMs),
-      );
-
       console.log(`[feedForm API route] ---------- END / Success ----------`);
       return NextResponse.json({
         ...results,
@@ -240,6 +216,7 @@ export async function POST(request: NextRequest) {
       });
     })
     .catch((error) => {
+      console.log(`[api/feedForm] ERROR txDebug`, JSON.stringify(txDebug));
       console.log(`[feedForm API route] ---------- END / Error ----------`);
       return NextResponse.json(
         {
