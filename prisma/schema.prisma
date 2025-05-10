@@ -165,7 +165,8 @@ model Reference {
   createdAt  DateTime       @default(now())
   updatedAt  DateTime       @updatedAt
 
-  @@unique([type, reference])
+  // A constraint Reference_type_reference_isbn_ismn_key directly in DB makes a unique index (type, reference) for type = ISBN | ISMN.
+  // We can have multiple PLATE_NUMBER references.
 }
 
 model Contribution {
