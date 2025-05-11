@@ -35,17 +35,19 @@ function DuplicatePlateNumberWarningModal({
         <p className="py-2">
           {`The Plate Number `}
           <em>{refValue}</em>
-          {` you entered is already used in the database.`}
+          {` you entered is already in use within the database.`}
         </p>
-        <p>{`Please check the existing piece informations here below, and be sure you are not registering a duplicate of the same piece. Cancel or continue your reference submission, accordingly.`}</p>
+        <p>{`Please review the details of the existing entries listed below to ensure that you are not registering a duplicate of the same piece. Based on the information provided, you can choose to cancel or proceed with your submission accordingly.`}</p>
+        {(mMSourceListToCheck || []).length === 0 ? (
+          <p>{`An Metronome Mark Source exists in the database with this plate number, but a technical problem prevented us from fetching its details.`}</p>
+        ) : null}
         {mMSourceListToCheck?.map((mMSource: any, index) => (
-          <div key={index} className="border-t py-2">
-            <h4 className="font-bold text-sm">{`MMSource ${index + 1}:`}</h4>
-            <p>{`Title: ${mMSource.title}`}</p>
-            <p>{`Type: ${getSourceTypeLabel(mMSource.type)}`}</p>
-            <p>{`Year: ${mMSource.year}`}</p>
-            <p>
-              {`Link: `}
+          <div key={"mmSourceCheck" + index} className="border-t py-2">
+            <h4 className="font-bold text-sm">{`${index + 1} - ${mMSource.title || `Untitled MMSource`}`}</h4>
+            <div>{`Type: ${getSourceTypeLabel(mMSource.type)}`}</div>
+            <div>{`Year: ${mMSource.year}`}</div>
+            <div>
+              {`Online score: `}
               <a
                 className="link"
                 href={getIMSLPPermaLink(mMSource.link)}
@@ -53,8 +55,10 @@ function DuplicatePlateNumberWarningModal({
               >
                 {getIMSLPPermaLink(mMSource.link)}
               </a>
-            </p>
-            <p>{`Comment: ${mMSource.comment}`}</p>
+            </div>
+            {mMSource.comment ? (
+              <div>{`Comment: ${mMSource.comment}`}</div>
+            ) : null}
           </div>
         ))}
         <div className="modal-action">

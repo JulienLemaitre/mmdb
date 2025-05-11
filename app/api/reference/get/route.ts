@@ -13,35 +13,13 @@ export async function GET(request: Request) {
         status: 400,
       },
     );
-  const referenceResult = await db.reference.findUnique({
+  const referenceResult = await db.reference.findFirst({
     where: {
-      type_reference: {
-        type: type,
-        reference: reference,
-      },
+      type: type,
+      reference: reference,
     },
     select: {
       id: true,
-      // mMSource: {
-      //   select: {
-      //     id: true,
-      //     title: true,
-      //     type: true,
-      //     link: true,
-      //     year: true,
-      //     comment: true,
-      //     contributions: true,
-      //     pieceVersions: {
-      //       select: {
-      //         pieceVersion: {
-      //           select: {
-      //             piece: true,
-      //           },
-      //         },
-      //       },
-      //     },
-      //   },
-      // },
     },
   });
   const finalReference = referenceResult

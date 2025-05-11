@@ -237,7 +237,7 @@ export default function SourceDescriptionEditForm(
             {...{ register, errors, control }}
           />
           <div
-            className={`badge badge-outline py-3.5 gap-1 ${!hasLinkValue ? "badge-disabled" : isLinkDirty ? (isCheckingLink ? "badge-neutral" : "badge-warning") : "badge-success"}`}
+            className={`badge badge-outline py-3.5 gap-1 ${!hasLinkValue ? "badge-neutral" : isLinkDirty ? (isCheckingLink ? "badge-disabled" : "badge-warning") : "badge-success"}`}
             onClick={(e) => e.preventDefault()}
           >
             {!hasLinkValue ? (

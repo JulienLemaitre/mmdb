@@ -3,6 +3,7 @@ import TrashIcon from "@/components/svg/TrashIcon";
 import PlusIcon from "@/components/svg/PlusIcon";
 import NewReferenceForm from "@/components/entities/reference/NewReferenceForm";
 import { ReferenceInput, SourceDescriptionInput } from "@/types/formTypes";
+import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
 
 type FormValues = SourceDescriptionInput;
 type ReferenceArrayProps<TFormValues extends { references: ReferenceInput[] }> =
@@ -47,7 +48,11 @@ export default function ReferenceArray({
                   index + 1
                 }`}</h4>
                 <div className="flex gap-3 items-center">
-                  <div>{(field as ReferenceInput).type?.value}</div>
+                  <div>
+                    {getReferenceTypeLabel(
+                      (field as ReferenceInput).type?.value,
+                    )}
+                  </div>
                   <div>{(field as ReferenceInput).reference}</div>
                 </div>
               </div>

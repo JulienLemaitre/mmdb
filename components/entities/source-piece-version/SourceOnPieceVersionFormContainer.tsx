@@ -58,6 +58,13 @@ const SourceOnPieceVersionFormContainer = ({
       deleteIdArray: [pieceVersionId],
       idKey: "pieceVersionId",
     });
+
+    // Delete all related metronomeMarks if exists
+    updateFeedForm(feedFormDispatch, "metronomeMarks", {
+      deleteIdArray: [pieceVersionId],
+      idKey: "pieceVersionId",
+    });
+
     // Delete new PieceVersion as well if exists
     updateFeedForm(feedFormDispatch, "pieceVersions", {
       deleteIdArray: [pieceVersionId],

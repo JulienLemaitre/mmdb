@@ -46,7 +46,6 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
 
   const isActionAllowed = allowedActions.has(action.type);
 
-  // Entries created
   if (isActionAllowed) {
     const { array, deleteIdArray, idKey, next, replace, value } =
       action.payload || {};

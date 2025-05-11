@@ -128,16 +128,31 @@ function NewReferenceForm({
         }
         if (refType === REFERENCE_TYPE.PLATE_NUMBER) {
           await fetch(`/api/mMSource/getForPlateNumber?plateNumber=${refValue}`)
-            .then((response) => response.json())
+            .then((response) => {
+              if (!response.ok)
+                throw new Error(
+                  `Error ${response.status} when fetching mMSource for plate number ${refValue}`,
+                );
+              return response.json();
+            })
             .then((mMSourceList) => {
               if (mMSourceList && mMSourceList.length > 0) {
                 setMMSourceListToCheck(mMSourceList);
                 onDuplicatePlateNumberModalWarning();
               } else {
                 console.warn(
-                  `[useEffect] No mMSource found for plate number ${refValue}...`,
+                  `[useEffect] No mMSource found for plate number ${refValue}`,
                 );
               }
+            })
+            .catch((error) => {
+              console.error(
+                `[useEffect] Error when fetching mMSource for plate number ${refValue}`,
+                error.status,
+                error.statusMessage,
+              );
+              setMMSourceListToCheck([]);
+              onDuplicatePlateNumberModalWarning();
             });
         }
 
