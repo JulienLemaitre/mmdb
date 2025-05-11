@@ -139,21 +139,24 @@ model MMSourcesOnPieceVersions {
 }
 
 model MMSource {
-  id             String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  title          String? // ?? Is it usefull ?
-  pieceVersions  MMSourcesOnPieceVersions[] // A source is composed of one or more pieceVersions
-  type           SOURCE_TYPE
-  link           String
-  permalink      String
-  year           Int
-  references     Reference[] // A source can have many references
-  contributions  Contribution[] // A source can have many Contributions
-  metronomeMarks MetronomeMark[] // A source can have many metronome marks
-  creator        User?                      @relation(fields: [creatorId], references: [id])
-  creatorId      String?                    @db.Uuid
-  comment        String?
-  createdAt      DateTime                   @default(now())
-  updatedAt      DateTime                   @updatedAt
+  id              String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title           String? // ?? Is it usefull ?
+  pieceVersions   MMSourcesOnPieceVersions[] // A source is composed of one or more pieceVersions
+  type            SOURCE_TYPE
+  link            String
+  permalink       String
+  year            Int
+  references      Reference[] // A source can have many references
+  contributions   Contribution[] // A source can have many Contributions
+  metronomeMarks  MetronomeMark[] // A source can have many metronome marks
+  creator         User?                      @relation(fields: [creatorId], references: [id])
+  creatorId       String?                    @db.Uuid
+  comment         String?
+  reviewState     REVIEW_STATE               @default(PENDING)
+  reviews         Review[] // A source can have multiple reviews in principle
+  currentReviewId String?                    @db.Uuid
+  createdAt       DateTime                   @default(now())
+  updatedAt       DateTime                   @updatedAt
 }
 
 model Reference {
@@ -260,6 +263,8 @@ model User {
   TempoIndications TempoIndication[] // A user can have created many tempoIndications
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
+  Review           Review[]
+  AuditLog         AuditLog[]
 }
 
 model VerificationToken {
@@ -268,6 +273,33 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Review {
+  id          String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  mMSource    MMSource      @relation(fields: [mMSourceId], references: [id], onDelete: Cascade)
+  mMSourceId  String        @unique @db.Uuid // ensures only one open review per source
+  reviewer    User          @relation(fields: [reviewerId], references: [id])
+  reviewerId  String        @db.Uuid
+  startedAt   DateTime      @default(now())
+  completedAt DateTime?
+  outcome     REVIEW_STATE?
+  comments    String?
+  auditLogs   AuditLog[]
+}
+
+model AuditLog {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  review     Review?  @relation(fields: [reviewId], references: [id])
+  reviewId   String?  @db.Uuid
+  actor      User     @relation(fields: [actorId], references: [id])
+  actorId    String   @db.Uuid
+  entityType String // e.g. "Section"
+  entityId   String // primary-key value of the affected row
+  operation  AUDIT_OP
+  before     Json?    @db.JsonB // snapshot *before* the change
+  after      Json?    @db.JsonB // snapshot *after*  the change
+  timestamp  DateTime @default(now())
 }
 
 // Enums
@@ -359,4 +391,17 @@ enum CONTRIBUTION_ROLE {
   TRANSCRIBER
   TRANSLATOR
   OTHER
+}
+
+enum REVIEW_STATE {
+  PENDING // freshly created, awaits a reviewer
+  IN_REVIEW // currently locked by a reviewer
+  APPROVED // validated, ready for analytics
+  REJECTED // reviewer found issues – author must fix
+}
+
+enum AUDIT_OP {
+  CREATE
+  UPDATE
+  DELETE
 }
