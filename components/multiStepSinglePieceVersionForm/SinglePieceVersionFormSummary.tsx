@@ -28,11 +28,17 @@ function SinglePieceVersionFormSummary({
   const displayPieceInfo = ["pieceVersion"].includes(currentStep.id);
   return (
     <div className="mb-6">
+      {displayComposerInfo || displayPieceInfo ? (
+        <div className="text-sm primary text-primary">{`Piece context`}</div>
+      ) : null}
       {displayComposerInfo && (
-        <div className="text-sm mb-0">{`Composer: ${composerName}`}</div>
+        <div className="text-sm">{`Composer: ${composerName}`}</div>
       )}
       {displayPieceInfo && (
-        <h3 className="text-sm">{`Piece: ${piece.title} (${piece.yearOfComposition || "no date"})`}</h3>
+        <>
+          <div className="text-sm">{`Title: ${piece.title}`}</div>
+          <div className="text-sm">{`Year of composition: ${piece.yearOfComposition || "no date"}`}</div>
+        </>
       )}
     </div>
   );

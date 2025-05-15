@@ -125,7 +125,7 @@ const SourceOnPieceVersionFormContainer = ({
       )}
       {!isFormOpen && (
         <>
-          <h1 className="mb-4 text-4xl font-bold">{title}</h1>
+          {!isIntro && <h1 className="mb-4 text-4xl font-bold">{title}</h1>}
           <ul className="my-4 max-w-[65ch]">
             {sourcePieceVersions.map((sourcePieceVersion, index) => {
               const pieceVersion = getEntityByIdOrKey(
