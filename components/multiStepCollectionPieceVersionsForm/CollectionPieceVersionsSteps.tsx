@@ -21,7 +21,7 @@ const CollectionPieceVersionsSteps = () => {
   return (
     <div className="mb-4">
       <ul className="steps">
-        {collectionFormSteps.map((step, index) => {
+        {collectionFormSteps.map((step) => {
           const stepClassName =
             step.rank === 0 ||
             (typeof lastCompletedStepRank === "number" &&
