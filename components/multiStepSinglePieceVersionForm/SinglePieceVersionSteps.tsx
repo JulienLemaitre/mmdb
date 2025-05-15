@@ -43,7 +43,7 @@ const SinglePieceVersionSteps = ({
           return (
             <li className={`step ${stepClassName}`} key={step.title}>
               <div
-                className={`step-title btn h-[50px] ${setpBtnClassName}`}
+                className={`step-title btn btn-sm ${setpBtnClassName}`}
                 onClick={() => goToStep(step.rank)}
               >
                 {step.title}
