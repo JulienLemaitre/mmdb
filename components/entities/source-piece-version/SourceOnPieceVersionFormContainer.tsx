@@ -22,12 +22,14 @@ type SourcePieceVersionSelectFormProps = {
   sourcePieceVersions?: MMSourcePieceVersionsState[];
   onSubmit: (option: { goToNextStep: boolean }) => void;
   submitTitle?: string;
+  title?: string;
 };
 
 const SourceOnPieceVersionFormContainer = ({
   sourcePieceVersions = [],
   onSubmit,
   submitTitle,
+  title,
 }: SourcePieceVersionSelectFormProps) => {
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
   const [formType, setFormType] =
@@ -75,7 +77,7 @@ const SourceOnPieceVersionFormContainer = ({
     <>
       {isIntro ? (
         <div className="w-full prose">
-          <h1>Pieces and Versions</h1>
+          <h1>{title}</h1>
           <p>
             {`In this section you will describe, in order, the pieces that are part of your MM Source.`}
           </p>
@@ -98,6 +100,7 @@ const SourceOnPieceVersionFormContainer = ({
       ) : null}
       {isFormOpen && (
         <>
+          <h1 className="mb-4 text-4xl font-bold">{title}</h1>
           {formType === "single" && (
             <SinglePieceVersionFormProvider>
               <SinglePieceVersionForm onFormClose={onFormClose} />
@@ -122,6 +125,7 @@ const SourceOnPieceVersionFormContainer = ({
       )}
       {!isFormOpen && (
         <>
+          {!isIntro && <h1 className="mb-4 text-4xl font-bold">{title}</h1>}
           <ul className="my-4 max-w-[65ch]">
             {sourcePieceVersions.map((sourcePieceVersion, index) => {
               const pieceVersion = getEntityByIdOrKey(

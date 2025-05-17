@@ -22,7 +22,7 @@ import DebugBox from "@/components/DebugBox";
 import { v4 as uuidv4 } from "uuid";
 import CollectionPieceVersionsSteps from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsSteps";
 import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import CollectionPieceVersionFormSummary from "@/components/multiStepSinglePieceVersionForm/CollectionPieceVersionFormSummary";
 
 type CollectionPieceVersionFormProps = {
@@ -175,8 +175,16 @@ function CollectionPieceVersionsForm({
 
   return (
     <div>
-      <CollectionPieceVersionsSteps />
-      <CollectionPieceVersionFormSummary />
+      <div className="flex w-full gap-3 max-w-3xl">
+        <div className="flex-1">
+          <h2 className="mb-3 text-2xl font-bold">{`Add a complete collection`}</h2>
+          <CollectionPieceVersionsSteps />
+        </div>
+        <div className="width-1/3 pt-2">
+          <CollectionPieceVersionFormSummary />
+        </div>
+      </div>
+
       {StepFormComponent ? (
         <StepFormComponent
           onFormClose={onFormClose}
