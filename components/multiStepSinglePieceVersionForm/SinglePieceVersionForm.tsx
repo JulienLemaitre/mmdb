@@ -273,10 +273,20 @@ const SinglePieceVersionForm = ({
 
   return (
     <div>
-      <SinglePieceVersionSteps isCollectionMode={isCollectionCreationMode} />
-      <SinglePieceVersionFormSummary
-        isCollectionMode={isCollectionCreationMode}
-      />
+      <div className="flex w-full gap-3 max-w-3xl">
+        <div className="flex-1">
+          <h2 className="mb-3 text-2xl font-bold">{`Add a single Piece`}</h2>
+          <SinglePieceVersionSteps
+            isCollectionMode={isCollectionCreationMode}
+          />
+        </div>
+        <div className="width-1/3 pt-2">
+          <SinglePieceVersionFormSummary
+            isCollectionMode={isCollectionCreationMode}
+          />
+        </div>
+      </div>
+
       {StepFormComponent ? (
         <StepFormComponent
           onFormClose={onFormClose}
@@ -299,6 +309,7 @@ const SinglePieceVersionForm = ({
       ) : (
         <div>Nothing to show...</div>
       )}
+
       <DebugBox
         title="Single Piece form state"
         stateObject={state}

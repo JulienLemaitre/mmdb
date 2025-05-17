@@ -125,12 +125,9 @@ export default function PieceVersionEditForm({
   // @ts-ignore
   return (
     <div>
-      <h1 className="mb-4 text-4xl font-bold">
-        Create a piece{" "}
-        <span className="block text-xl font-normal">
-          Content details (a.k.a. piece version)
-        </span>
-      </h1>
+      <h3 className="mb-4 text-xl font-normal">
+        Content details (a.k.a. piece version)
+      </h3>
       <form
         onSubmit={handleSubmit(onSubmit)}
         onKeyDown={preventEnterKeySubmission}

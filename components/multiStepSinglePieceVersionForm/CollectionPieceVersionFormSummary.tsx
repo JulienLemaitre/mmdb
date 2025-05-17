@@ -20,8 +20,11 @@ function CollectionPieceVersionFormSummary() {
   );
   return (
     <div className="mb-6">
+      {displayComposerInfo || collectionTitle ? (
+        <div className="text-sm primary text-primary">{`Collection context`}</div>
+      ) : null}
       {displayComposerInfo && (
-        <div className="text-sm mb-0">{`Composer: ${composerName}`}</div>
+        <div className="text-sm">{`Composer: ${composerName}`}</div>
       )}
 
       {collectionTitle && (

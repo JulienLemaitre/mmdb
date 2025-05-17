@@ -44,10 +44,7 @@ export default function PieceEditForm({
 
   return (
     <div>
-      <h1 className="mb-4 text-4xl font-bold">
-        Create a piece{" "}
-        <span className="block text-xl font-normal">General information</span>
-      </h1>
+      <h3 className="mb-4 text-xl font-normal">General information</h3>
       <form
         onSubmit={handleSubmit(onSubmit)}
         onKeyDown={preventEnterKeySubmission}

@@ -20,6 +20,7 @@ const MMSourcePieceVersions = () => {
     <SourceOnPieceVersionFormContainer
       sourcePieceVersions={state.mMSourcePieceVersions}
       onSubmit={onSubmit}
+      title={step.title}
       submitTitle={step.title}
     />
   );
