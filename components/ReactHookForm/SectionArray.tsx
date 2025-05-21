@@ -7,6 +7,9 @@ import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
 import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
 import ControlledCreatableSelect from "@/components/ReactHookForm/ControlledCreatableSelect";
 import { TempoIndicationState } from "@/types/formTypes";
+import CommonTimeIcon from "@/components/svg/CommonTimeIcon";
+import React from "react";
+import CutTimeIcon from "@/components/svg/CutTimeIcon";
 
 export default function SectionArray({
   control,
@@ -107,7 +110,7 @@ export default function SectionArray({
                     type="checkbox"
                     className="mr-2"
                   />
-                  {`\u{1D134}`}
+                  <CommonTimeIcon className="h-6" />
                 </label>
                 <label className="text-5xl flex items-center">
                   <input
@@ -143,7 +146,7 @@ export default function SectionArray({
                     type="checkbox"
                     className="mr-2 ml-4"
                   />
-                  <span>{`\u{1D135}`}</span>
+                  <CutTimeIcon className="h-8" />
                 </label>
               </div>
               <ControlledCreatableSelect
