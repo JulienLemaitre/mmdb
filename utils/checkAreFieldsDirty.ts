@@ -29,6 +29,5 @@ export default function checkAreFieldsDirty(
     return result;
   };
   const endObject = flattenObject(fields);
-  console.log(`[checkAreFieldsDirty] endObject :`, endObject);
   return Object.keys(endObject).length > 0;
 }

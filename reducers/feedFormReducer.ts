@@ -13,11 +13,9 @@ steps.forEach((step) =>
 );
 
 export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
-  console.group(`[feedFormReducer]`);
-  console.log(`[] action.type :`, action.type);
-
   // Navigation back
   if (action.type === "goToPrevStep") {
+    console.log(`[feedFormReducer]`, action.type);
     const currentStepRank = state?.formInfo?.currentStepRank || 1;
     console.groupEnd();
     return {
@@ -29,7 +27,7 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
     };
   }
 
-  console.log(`[] action.payload :`, action.payload);
+  console.log(`[feedFormReducer]`, action.type, action.payload);
 
   // Navigation to specific step
   if (action.type === "goToStep") {

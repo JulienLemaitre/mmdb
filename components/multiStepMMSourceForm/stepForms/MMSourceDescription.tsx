@@ -15,8 +15,6 @@ const MMSourceDescription = () => {
     option: { goToNextStep: boolean },
   ) => {
     // Front input values validation is successful at this point.
-    console.log("[MMSourceDescription onSubmit] data", data);
-    console.log(`[MMSourceDescription onSubmit] option :`, option);
 
     const sourceData = data;
     // Remove null values from sourceData
@@ -28,12 +26,7 @@ const MMSourceDescription = () => {
     const sourceDescriptionState = getMMSourceDescriptionStateFromInput({
       ...sourceData,
     });
-
     sourceDescriptionState.isNew = true;
-    console.log(
-      "source description to be stored in state",
-      sourceDescriptionState,
-    );
     updateFeedForm(dispatch, "mMSourceDescription", {
       value: sourceDescriptionState,
       next: !!option?.goToNextStep,

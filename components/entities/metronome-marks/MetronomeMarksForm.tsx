@@ -138,9 +138,7 @@ export default function MetronomeMarksForm({
     }
 
     if (isValid) {
-      console.log(`[submitForm] submitForm after validation successful`);
       await handleSubmit(async (data) => {
-        console.log(`[submitForm] data :`, data);
         const mMStateList = getMetronomeMarkStateFromInput(
           data.metronomeMarks,
           sectionList,

@@ -21,7 +21,6 @@ export default function ComposerSelectForm({
   const onSelect = useCallback(
     (composerId: string) => {
       const composer = composers.find((composer) => composer.id === composerId);
-      console.log(`[ComposerSelectForm] onSelect:`, composer);
       if (!composer) return;
       setSelectedComposer(composer);
     },

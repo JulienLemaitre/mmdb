@@ -14,13 +14,11 @@ export default function PieceSelectForm({
   onPieceSelect,
   onPieceCreationClick,
 }: PieceSelectFormProps) {
-  console.log(`[PieceSelectForm] pieces :`, pieces);
   const [selectedPiece, setSelectedPiece] = useState<PieceState | null>(null);
 
   const onSelect = useCallback(
     (pieceId: string) => {
       const piece = pieces.find((piece) => piece.id === pieceId);
-      console.log(`[PieceSelectForm] piece: `, piece);
       if (!piece) return;
       setSelectedPiece(piece);
     },

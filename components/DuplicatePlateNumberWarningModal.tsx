@@ -19,8 +19,6 @@ function DuplicatePlateNumberWarningModal({
   mMSourceListToCheck,
 }: DuplicatePlateNumberWarningModalProps) {
   const portalContainer = usePortal();
-  console.log(`[] refValue :`, refValue);
-  console.log(`[] mMSourceListToCheck :`, mMSourceListToCheck);
 
   const onClose = () => {
     //@ts-ignore

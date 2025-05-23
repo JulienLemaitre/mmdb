@@ -165,13 +165,8 @@ export default function SourceDescriptionEditForm(
     }
 
     if (isValid) {
-      console.log(`[submitForm] submitForm after validation successful`);
       await handleSubmit(async (data) => {
         const newSourceDescriptionState = await onSubmit(data, option);
-        console.log(
-          `[submitForm] newSourceDescriptionState :`,
-          newSourceDescriptionState,
-        );
         if (!option.goToNextStep && newSourceDescriptionState) {
           const newSourceDescriptionInput =
             getMMSourceDescriptionInputFromState(newSourceDescriptionState);

@@ -28,7 +28,6 @@ export default function PieceVersionSelectForm({
       const pieceVersion = pieceVersions.find(
         (pieceVersion) => pieceVersion.id === pieceVersionId,
       );
-      console.log(`[PieceVersionSelectForm] onSelect: ${pieceVersionId}`);
       if (!pieceVersion) return;
       setSelectedPieceVersion(pieceVersion);
     },
@@ -47,8 +46,6 @@ export default function PieceVersionSelectForm({
   if (value && !selectedPieceVersion) {
     return null;
   }
-
-  console.log(`[] selectedPieceVersion :`, selectedPieceVersion);
 
   return (
     <>
