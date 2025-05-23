@@ -166,7 +166,10 @@ export default function SectionArray({
                   }),
                 )}
                 onOptionCreated={onTempoIndicationCreated}
-                errors={errors}
+                fieldError={
+                  errors?.movements?.[nestIndex]?.sections?.[index]
+                    ?.tempoIndication
+                }
               />
               <FormInput
                 isRequired={true}

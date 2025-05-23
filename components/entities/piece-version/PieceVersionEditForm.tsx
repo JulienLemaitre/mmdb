@@ -86,7 +86,6 @@ export default function PieceVersionEditForm({
     defaultValues: pieceVersion
       ? getPieceVersionInputFromPieceVersionState(pieceVersion)
       : {
-          category: { value: undefined, label: undefined },
           movements: [getMovementDefaultValues()],
         },
     resolver: zodResolver(PieceVersionSchema),
@@ -142,7 +141,7 @@ export default function PieceVersionEditForm({
             label: formatToPhraseCase(category),
           }))}
           isRequired={true}
-          errors={errors}
+          fieldError={errors?.category}
         />
 
         <h2 className="my-4 text-3xl font-bold">Piece structure</h2>

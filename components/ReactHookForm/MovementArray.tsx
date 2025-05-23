@@ -50,7 +50,7 @@ export default function MovementArray({
                   label: formatToPhraseCase(key),
                 }))}
                 isRequired={true}
-                errors={errors}
+                fieldError={errors?.movements?.[index]?.key}
               />
 
               <SectionArray

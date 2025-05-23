@@ -120,7 +120,6 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
             label: getRoleLabel(category),
           }))}
           isRequired={true}
-          errors={errors}
         />
 
         <div className="form-control w-52">

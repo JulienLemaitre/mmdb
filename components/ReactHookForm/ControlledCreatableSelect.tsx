@@ -11,6 +11,7 @@ const ControlledCreatableSelect = ({
   rules = {},
   isRequired = false,
   onOptionCreated,
+  fieldError,
   ...props
 }) => {
   const { defaultValue, hasOptionsGrouped, optionKeys, ...selectProps } = props;
@@ -22,6 +23,13 @@ const ControlledCreatableSelect = ({
     control,
     rules,
   });
+  if (JSON.stringify(error) !== JSON.stringify(fieldError)) {
+    console.warn(
+      `[${name}] error and fieldError are different`,
+      error,
+      fieldError,
+    );
+  }
   const [isLoading, setIsLoading] = useState(false);
 
   const handleCreateOption = async (inputValue: string) => {
@@ -56,12 +64,12 @@ const ControlledCreatableSelect = ({
         onChange={onChange}
         onCreateOption={handleCreateOption}
         onBlur={onBlur}
-        value={value || defaultValue}
+        value={value || defaultValue || null}
         styles={ReactSelectStyles}
         {...selectProps}
       />
       <div className="label-text-alt text-red-500">
-        {error && error.message}
+        {fieldError?.message || fieldError?.value?.message}
       </div>
     </div>
   );

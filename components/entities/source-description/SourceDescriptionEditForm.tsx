@@ -113,11 +113,9 @@ export default function SourceDescriptionEditForm(
   };
   const onLinkBlur = async () => {
     setIsCheckingLink(true);
-    console.log(`[SourceDescriptionEditForm] onLinkBlur`);
     const link = getValues(`link`);
 
     if (!link) {
-      console.warn(`[] link value is needed to fetch existing link`);
       setIsCheckingLink(false);
       return;
     }
@@ -157,7 +155,6 @@ export default function SourceDescriptionEditForm(
   const submitForm = async (option: { goToNextStep: boolean }) => {
     // Trigger validations before submitting
     const isValid = await trigger();
-    console.log(`[submitForm] isValid :`, isValid);
 
     if (!isValid) {
       console.log(`[] getValues :`, getValues());
@@ -206,7 +203,7 @@ export default function SourceDescriptionEditForm(
             label: formatToPhraseCase(category),
           }))}
           isRequired={true}
-          errors={errors}
+          fieldError={errors.type}
         />
         <FormInput
           name="year"

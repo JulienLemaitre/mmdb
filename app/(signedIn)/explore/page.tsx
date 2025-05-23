@@ -177,7 +177,7 @@ function SearchPage() {
               label: getPersonName(composer),
             }))}
             isRequired={false}
-            errors={errors}
+            fieldError={errors?.composer}
           />
           <button
             className="btn btn-primary mt-6 w-full max-w-xs"
