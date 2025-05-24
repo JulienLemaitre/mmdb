@@ -48,6 +48,7 @@ export default function getPieceNestedDBInputFromState(
                 id: newCollection.id,
               },
             },
+            collectionRank: newPiece.collectionRank,
           }
         : {}),
     },
