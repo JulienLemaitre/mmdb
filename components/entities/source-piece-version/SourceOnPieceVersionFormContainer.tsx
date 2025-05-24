@@ -13,20 +13,24 @@ import {
 } from "@/components/context/feedFormContext";
 import TrashIcon from "@/components/svg/TrashIcon";
 import QuestionMarkCircleIcon from "@/components/svg/QuestionMarkCircleIcon";
-import { SinglePieceVersionFormProvider } from "@/components/context/SinglePieceVersionFormContext";
+import {
+  SinglePieceVersionFormProvider,
+  SinglePieceVersionFormState,
+} from "@/components/context/SinglePieceVersionFormContext";
 import { CollectionPieceVersionsFormProvider } from "@/components/context/CollectionPieceVersionsFormContext";
 import getPersonName from "@/components/entities/person/utils/getPersonName";
 import CollectionPieceVersionsForm from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsForm";
+import EditIcon from "@/components/svg/EditIcon";
 
 type SourcePieceVersionSelectFormProps = {
-  sourcePieceVersions?: MMSourcePieceVersionsState[];
+  mMSourcePieceVersions?: MMSourcePieceVersionsState[];
   onSubmit: (option: { goToNextStep: boolean }) => void;
   submitTitle?: string;
   title?: string;
 };
 
 const SourceOnPieceVersionFormContainer = ({
-  sourcePieceVersions = [],
+  mMSourcePieceVersions = [],
   onSubmit,
   submitTitle,
   title,
@@ -34,6 +38,9 @@ const SourceOnPieceVersionFormContainer = ({
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
   const [formType, setFormType] =
     useState<SourceOnPieceVersionsFormType>("none");
+  const [editionInitState, setEditionInitState] =
+    useState<SinglePieceVersionFormState | null>(null);
+  const isEditMode = !!editionInitState;
   const isFormOpen = !!feedFormState.formInfo?.isSourceOnPieceVersionformOpen;
   const isIntro =
     feedFormState?.mMSourcePieceVersions?.length === 0 && !isFormOpen;
@@ -46,13 +53,55 @@ const SourceOnPieceVersionFormContainer = ({
   };
 
   const onFormClose = () => {
-    // reset sourceOnPieceVersionForm
+    // reset sourceOnPieceVersionForm and editionInitState
     setFormType("none");
+    setEditionInitState(null);
 
     // Close sourceOnPieceVersions form
     updateFeedForm(feedFormDispatch, "formInfo", {
       value: { isSourceOnPieceVersionformOpen: false },
     });
+  };
+
+  const onEditMMSourcePieceVersion = (
+    mmSourceOnPieceVersion: MMSourcePieceVersionsState,
+  ) => {
+    const { pieceVersionId, rank } = mmSourceOnPieceVersion;
+
+    // Build singlePieceVersionFormState
+    const pieceVersion = getEntityByIdOrKey(
+      feedFormState,
+      "pieceVersions",
+      pieceVersionId,
+    );
+    const piece = getEntityByIdOrKey(
+      feedFormState,
+      "pieces",
+      pieceVersion.pieceId,
+    );
+    const composer = getEntityByIdOrKey(
+      feedFormState,
+      "persons",
+      piece.composerId,
+    );
+
+    const singlePieceVersionFormEditState: SinglePieceVersionFormState = {
+      formInfo: {
+        currentStepRank: 0,
+        mMSourcePieceVersionRank: rank,
+      },
+      composer: {
+        id: composer.id,
+      },
+      piece: {
+        id: piece.id,
+      },
+      pieceVersion: {
+        id: pieceVersion.id,
+      },
+    };
+    setEditionInitState(singlePieceVersionFormEditState);
+    onFormOpen("single");
   };
 
   const onDeletePieceVersionId = (pieceVersionId) => {
@@ -102,8 +151,11 @@ const SourceOnPieceVersionFormContainer = ({
         <>
           <h1 className="mb-4 text-4xl font-bold">{title}</h1>
           {formType === "single" && (
-            <SinglePieceVersionFormProvider>
-              <SinglePieceVersionForm onFormClose={onFormClose} />
+            <SinglePieceVersionFormProvider initialState={editionInitState}>
+              <SinglePieceVersionForm
+                onFormClose={onFormClose}
+                isEditMode={isEditMode}
+              />
             </SinglePieceVersionFormProvider>
           )}
           {formType === "collection" && (
@@ -118,7 +170,7 @@ const SourceOnPieceVersionFormContainer = ({
               onClick={() => onFormClose()}
             >
               <TrashIcon className="w-5 h-5" />
-              {`Discard this ${formType === "single" ? "piece" : "collection"}`}
+              {`Discard${isEditMode ? `updating ` : ""} this ${formType === "single" ? "piece" : "collection"}`}
             </button>
           </div>
         </>
@@ -127,11 +179,11 @@ const SourceOnPieceVersionFormContainer = ({
         <>
           {!isIntro && <h1 className="mb-4 text-4xl font-bold">{title}</h1>}
           <ul className="my-4 max-w-[65ch]">
-            {sourcePieceVersions.map((sourcePieceVersion, index) => {
+            {mMSourcePieceVersions.map((mMSourcePieceVersion, index) => {
               const pieceVersion = getEntityByIdOrKey(
                 feedFormState,
                 "pieceVersions",
-                sourcePieceVersion.pieceVersionId,
+                mMSourcePieceVersion.pieceVersionId,
               );
               const piece = getEntityByIdOrKey(
                 feedFormState,
@@ -148,11 +200,10 @@ const SourceOnPieceVersionFormContainer = ({
                 "persons",
                 piece.composerId,
               );
-              console.log({ piece, composer });
 
               return (
                 <li
-                  key={`${index}-${sourcePieceVersion.pieceVersionId}-${sourcePieceVersion.rank}`}
+                  key={`${index}-${mMSourcePieceVersion.pieceVersionId}-${mMSourcePieceVersion.rank}`}
                 >
                   <div className="mt-6 flex gap-4 items-end w-full">
                     <div className="flex-grow">
@@ -160,8 +211,19 @@ const SourceOnPieceVersionFormContainer = ({
                         <div className="text-sm">{collection.title}</div>
                       ) : null}
                       <h4 className="text-lg font-bold text-secondary">
-                        {`${sourcePieceVersion.rank} - ${piece.title}${!!composer && ` | ${getPersonName(composer)}`}`}
+                        {`${mMSourcePieceVersion.rank} - ${piece.title}${!!composer && ` | ${getPersonName(composer)}`}`}
                       </h4>
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-neutral hover:btn-accent"
+                        onClick={() =>
+                          onEditMMSourcePieceVersion(mMSourcePieceVersion)
+                        }
+                      >
+                        <EditIcon className="w-4 h-4" />
+                      </button>
                     </div>
                     <div>
                       <button
@@ -169,7 +231,7 @@ const SourceOnPieceVersionFormContainer = ({
                         className="btn btn-sm btn-neutral hover:btn-error"
                         onClick={() =>
                           onDeletePieceVersionId(
-                            sourcePieceVersion.pieceVersionId,
+                            mMSourcePieceVersion.pieceVersionId,
                           )
                         }
                       >
@@ -203,7 +265,7 @@ const SourceOnPieceVersionFormContainer = ({
           <MMSourceFormStepNavigation
             onSave={() => onSubmit({ goToNextStep: false })}
             onSaveAndGoToNextStep={() => onSubmit({ goToNextStep: true })}
-            isNextDisabled={!(sourcePieceVersions.length > 0 && !isFormOpen)}
+            isNextDisabled={!(mMSourcePieceVersions.length > 0 && !isFormOpen)}
             submitTitle={submitTitle}
             onGoToPrevStep={onFormClose}
           />

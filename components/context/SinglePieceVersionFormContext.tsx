@@ -15,6 +15,7 @@ import { SinglePieceVersionFormStep } from "@/types/formTypes";
 type SinglePieceVersionFormInfo = {
   currentStepRank: number;
   allSourcePieceVersionsDone?: boolean;
+  mMSourcePieceVersionRank?: number;
 };
 
 export type SinglePieceVersionFormState = {
@@ -46,7 +47,10 @@ type SinglePieceVersionFormAction =
 
 type Dispatch = (action: SinglePieceVersionFormAction) => void;
 
-type SinglePieceVersionFormProviderProps = { children: ReactNode };
+type SinglePieceVersionFormProviderProps = {
+  children: ReactNode;
+  initialState?: SinglePieceVersionFormState | null;
+};
 
 const INITIAL_STATE: SinglePieceVersionFormState = {
   formInfo: {
@@ -191,10 +195,11 @@ function SinglePieceVersionFormReducer(
 
 export function SinglePieceVersionFormProvider({
   children,
+  initialState,
 }: Readonly<SinglePieceVersionFormProviderProps>) {
   const [state, dispatch] = useReducer(
     SinglePieceVersionFormReducer,
-    INITIAL_STATE,
+    initialState || INITIAL_STATE,
   );
 
   useEffect(() => {

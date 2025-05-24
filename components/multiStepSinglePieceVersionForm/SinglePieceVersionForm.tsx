@@ -31,6 +31,7 @@ type SinglePieceVersionFormProps = {
   newPieceDefaultTitle?: string;
   collectionId?: string;
   collectionFormState?: any;
+  isEditMode?: boolean;
 };
 
 /**
@@ -45,6 +46,7 @@ const SinglePieceVersionForm = ({
   newPieceDefaultTitle,
   collectionId,
   collectionFormState,
+  isEditMode,
 }: SinglePieceVersionFormProps) => {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
   const { dispatch, state, currentStepRank } = useSinglePieceVersionForm();
@@ -244,7 +246,7 @@ const SinglePieceVersionForm = ({
 
   /////////////////// SUMMARY ////////////////////
 
-  const onAddSourceOnPieceVersions = () => {
+  const onSubmitSourceOnPieceVersions = (isUpdate: boolean) => {
     if (!state.pieceVersion?.id) {
       console.log(
         `[onAddPieceVersionOnSource] ERROR: state.pieceVersion?.id SHOULD BE DEFINED`,
@@ -252,11 +254,18 @@ const SinglePieceVersionForm = ({
       return;
     }
 
+    // In case of update, we need to keep the existing rank of the mMSourceOnPieceVersion
+    const mMSourcePieceVersionRank = state.formInfo.mMSourcePieceVersionRank;
+
     const payload = {
+      idKey: "rank", // items with the same idKey value will be replaced by the payload corresponding items.
       array: [
         {
           pieceVersionId: state.pieceVersion?.id,
-          rank: (feedFormState.mMSourcePieceVersions || []).length + 1,
+          rank:
+            isUpdate && typeof mMSourcePieceVersionRank === "number"
+              ? mMSourcePieceVersionRank
+              : (feedFormState.mMSourcePieceVersions || []).length + 1,
         },
       ],
     };
@@ -275,7 +284,7 @@ const SinglePieceVersionForm = ({
     <div>
       <div className="flex w-full gap-3 max-w-3xl">
         <div className="flex-1">
-          <h2 className="mb-3 text-2xl font-bold">{`Add a single Piece`}</h2>
+          <h2 className="mb-3 text-2xl font-bold">{`${isEditMode ? `Edit` : `Add`} a single Piece`}</h2>
           <SinglePieceVersionSteps
             isCollectionMode={isCollectionCreationMode}
           />
@@ -290,6 +299,7 @@ const SinglePieceVersionForm = ({
       {StepFormComponent ? (
         <StepFormComponent
           onFormClose={onFormClose}
+          isEditMode={isEditMode}
           feedFormState={feedFormState}
           selectedComposerId={state?.composer?.id}
           selectedPieceId={state?.piece?.id}
@@ -302,7 +312,7 @@ const SinglePieceVersionForm = ({
           deleteSelectedPieceVersionIfNew={deleteSelectedPieceVersionIfNew}
           onPieceVersionCreated={onPieceVersionCreated}
           onPieceVersionSelect={onPieceVersionSelect}
-          onAddSourceOnPieceVersions={onAddSourceOnPieceVersions}
+          onSubmitSourceOnPieceVersions={onSubmitSourceOnPieceVersions}
           isCollectionCreationMode={isCollectionCreationMode}
           newPieceDefaultTitle={newPieceDefaultTitle}
         />
