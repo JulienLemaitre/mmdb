@@ -27,12 +27,10 @@ import CollectionPieceVersionFormSummary from "@/components/multiStepSinglePiece
 
 type CollectionPieceVersionFormProps = {
   onFormClose: () => void;
-  onSubmit?: (payload: any) => void;
 };
 
 function CollectionPieceVersionsForm({
   onFormClose,
-  onSubmit,
 }: CollectionPieceVersionFormProps) {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
   const { dispatch, state, currentStepRank } = useCollectionPieceVersionsForm();
@@ -160,10 +158,12 @@ function CollectionPieceVersionsForm({
       return;
     }
 
-    const payloadArray = sourceOnPieceVersions.map((sopv, index) => ({
-      pieceVersionId: sopv.pieceVersionId,
-      rank: (feedFormState.mMSourcePieceVersions || []).length + index + 1,
-    }));
+    const payloadArray = sourceOnPieceVersions
+      .toSorted((a, b) => (a.rank > b.rank ? 1 : -1))
+      .map((sopv) => ({
+        pieceVersionId: sopv.pieceVersionId,
+        rank: (feedFormState.mMSourcePieceVersions || []).length + sopv.rank,
+      }));
 
     console.log(`[onAddSourceOnPieceVersions] payloadArray :`, payloadArray);
 
@@ -191,7 +191,6 @@ function CollectionPieceVersionsForm({
           feedFormState={feedFormState}
           selectedComposerId={selectedComposerId}
           selectedCollectionId={selectedCollectionId}
-          onSubmit={onSubmit}
           onComposerSelect={onComposerSelect}
           onComposerCreated={onComposerCreated}
           onCollectionSelect={onCollectionSelect}

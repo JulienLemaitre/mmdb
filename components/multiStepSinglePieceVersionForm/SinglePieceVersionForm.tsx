@@ -21,6 +21,7 @@ import getPieceStateFromInput from "@/utils/getPieceStateFromInput";
 import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput";
 import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
 import SinglePieceVersionFormSummary from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionFormSummary";
+import { CollectionPieceVersionsFormState } from "@/components/context/CollectionPieceVersionsFormContext";
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
@@ -30,7 +31,7 @@ type SinglePieceVersionFormProps = {
   composerId?: string;
   newPieceDefaultTitle?: string;
   collectionId?: string;
-  collectionFormState?: any;
+  collectionFormState?: CollectionPieceVersionsFormState;
   isEditMode?: boolean;
 };
 
@@ -135,7 +136,7 @@ const SinglePieceVersionForm = ({
         ...piece,
         collectionId,
         collectionRank:
-          (collectionFormState.mMSourcePieceVersions.length || 0) + 1,
+          ((collectionFormState.mMSourcePieceVersions || []).length || 0) + 1,
       }));
     }
     console.log(`[with potential collection value] piecesArray :`, piecesArray);
@@ -265,7 +266,9 @@ const SinglePieceVersionForm = ({
           rank:
             isUpdate && typeof mMSourcePieceVersionRank === "number"
               ? mMSourcePieceVersionRank
-              : (feedFormState.mMSourcePieceVersions || []).length + 1,
+              : isCollectionCreationMode && collectionFormState
+                ? (collectionFormState.mMSourcePieceVersions || []).length + 1 // Rank if added in a collection
+                : (feedFormState.mMSourcePieceVersions || []).length + 1, // Rank if added as singlePiece in feedForm
         },
       ],
     };

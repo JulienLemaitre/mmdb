@@ -48,6 +48,10 @@ function CollectionPieceVersionsEditForm({
   };
   const onSinglePieceSubmit = (payload: any) => {
     console.log(`[onSinglePieceSubmit] payload :`, payload);
+    // For normal piece addition, we delete the idKey provided to avoid replacing the first piece forever
+    delete payload.idKey;
+
+    // TODO: if we are updating a piece, the idKey should be provided
     updateCollectionPieceVersionsForm(
       dispatch,
       "mMSourcePieceVersions",
