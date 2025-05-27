@@ -386,22 +386,22 @@ function getLastCompletedStep(
   return steps[steps.length - 1];
 }
 
-export function getNewEntities(
-  state: CollectionPieceVersionsFormState,
-  entityName: string,
-) {
-  if (Array.isArray(state[entityName])) {
-    return state[entityName].filter((entity) => entity.isNew);
-  }
-  return [];
-}
-export function getEntityByIdOrKey(
-  state: CollectionPieceVersionsFormState,
-  entityName: string,
-  id: string,
-  key = "id",
-) {
-  if (Array.isArray(state[entityName])) {
-    return state[entityName].find((entity) => entity[key] === id);
-  }
-}
+// export function getNewEntities(
+//   state: CollectionPieceVersionsFormState,
+//   entityName: string,
+// ) {
+//   if (Array.isArray(state[entityName])) {
+//     return state[entityName].filter((entity) => entity.isNew);
+//   }
+//   return [];
+// }
+// export function getEntityByIdOrKey(
+//   state: CollectionPieceVersionsFormState,
+//   entityName: string,
+//   id: string,
+//   key = "id",
+// ) {
+//   if (Array.isArray(state[entityName])) {
+//     return state[entityName].find((entity) => entity[key] === id);
+//   }
+// }

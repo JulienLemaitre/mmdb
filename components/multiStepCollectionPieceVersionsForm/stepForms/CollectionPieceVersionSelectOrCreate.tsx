@@ -40,7 +40,7 @@ export default function CollectionPieceVersionSelectOrCreate({
   const [isCreation, setIsCreation] = useState(false);
   const isNewCollection = (
     getNewEntities(feedFormState, "collections") || []
-  ).some((c) => c.id === selectedCollectionId && c.isNew);
+  ).some((c) => c.id === selectedCollectionId);
 
   const storePieces = useCallback(
     (pieces: PieceState[]) => {

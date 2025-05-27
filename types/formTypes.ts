@@ -78,6 +78,9 @@ export type CollectionPieceVersionsFormStep = {
 export type IsNewProp = {
   isNew?: boolean;
 };
+export type IsNewTrue = {
+  isNew: true;
+};
 export type GoNextProp = {
   next?: boolean;
 };

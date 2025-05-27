@@ -11,7 +11,7 @@ type ComposerSelectOrCreateProps = {
   feedFormState: FeedFormState;
   onComposerCreated: (composer: PersonInput) => void;
   onComposerSelect: (composer: PersonInput) => void;
-  selectedComposerId: number | null;
+  selectedComposerId: string | null;
 };
 
 const ComposerSelectOrCreate = ({

@@ -1,6 +1,14 @@
 "use client";
 import { createContext, useContext, useReducer, useEffect } from "react";
-import { FeedFormStep } from "@/types/formTypes";
+import {
+  CollectionState,
+  FeedFormStep,
+  IsNewTrue,
+  OrganizationState,
+  PersonState,
+  PieceState,
+  PieceVersionState,
+} from "@/types/formTypes";
 import { steps } from "@/components/multiStepMMSourceForm/stepsUtils";
 import {
   Dispatch,
@@ -95,16 +103,106 @@ function getLastCompletedStep(state: FeedFormState): FeedFormStep | undefined {
   return steps[steps.length - 1];
 }
 
-export function getNewEntities(state: FeedFormState, entityName: string) {
+export function getNewEntities(
+  state: FeedFormState,
+  entityName: "pieces",
+): (PieceState & IsNewTrue)[];
+export function getNewEntities(
+  state: FeedFormState,
+  entityName: "pieceVersions",
+): (PieceVersionState & IsNewTrue)[];
+export function getNewEntities(
+  state: FeedFormState,
+  entityName: "collections",
+): (CollectionState & IsNewTrue)[];
+export function getNewEntities(
+  state: FeedFormState,
+  entityName: "persons",
+): (PersonState & IsNewTrue)[];
+export function getNewEntities(
+  state: FeedFormState,
+  entityName: "organizations",
+): (OrganizationState & IsNewTrue)[];
+export function getNewEntities(
+  state: FeedFormState,
+  entityName:
+    | "pieces"
+    | "pieceVersions"
+    | "collections"
+    | "persons"
+    | "organizations",
+) {
   if (!state) {
     console.error(`[getNewEntities] NO state provided to find ${entityName}`);
     return [];
   }
   if (Array.isArray(state[entityName])) {
-    return state[entityName].filter((entity) => entity.isNew);
+    return state[entityName].filter(
+      (entity) => entity.isNew && isEntityUsed(entity, entityName, state),
+    );
   }
   return [];
 }
+
+function isEntityUsed(
+  entity:
+    | PieceState
+    | PieceVersionState
+    | CollectionState
+    | PersonState
+    | OrganizationState,
+  entityName:
+    | "pieces"
+    | "pieceVersions"
+    | "collections"
+    | "persons"
+    | "organizations",
+  state: FeedFormState,
+): boolean {
+  if (entityName === "pieces") {
+    return (state.pieceVersions || []).some(
+      (pieceVersion) =>
+        pieceVersion.pieceId === entity.id &&
+        isEntityUsed(pieceVersion, "pieceVersions", state),
+    );
+  }
+  if (entityName === "pieceVersions") {
+    return (state.mMSourcePieceVersions || []).some(
+      (mMSourcePieceVersion) =>
+        mMSourcePieceVersion.pieceVersionId === entity.id,
+    );
+  }
+  if (entityName === "collections") {
+    return (state.pieces || []).some(
+      (piece) =>
+        piece.collectionId === entity.id &&
+        isEntityUsed(piece, "pieces", state),
+    );
+  }
+  if (entityName === "persons") {
+    return (state.pieces || []).some(
+      (piece) =>
+        (piece.composerId === entity.id &&
+          isEntityUsed(piece, "pieces", state)) ||
+        (state.mMSourceContributions || []).some((mMSourceContribution) => {
+          if ("person" in mMSourceContribution) {
+            return mMSourceContribution.person?.id === entity.id;
+          }
+          return false;
+        }),
+    );
+  }
+  if (entityName === "organizations") {
+    return (state.mMSourceContributions || []).some((mMSourceContribution) => {
+      if ("organization" in mMSourceContribution) {
+        return mMSourceContribution.organization?.id === entity.id;
+      }
+      return false;
+    });
+  }
+  return false;
+}
+
 export function getEntityByIdOrKey(
   state: FeedFormState,
   entityName: string,
