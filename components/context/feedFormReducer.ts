@@ -6,6 +6,7 @@ import {
   FEED_FORM_INITIAL_STATE,
   FEED_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
+import { cleanFeedFormState } from "@/components/context/cleanFeedFormState";
 
 const allowedActions = new Set();
 steps.forEach((step) =>
@@ -17,7 +18,6 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
   if (action.type === "goToPrevStep") {
     console.log(`[feedFormReducer]`, action.type);
     const currentStepRank = state?.formInfo?.currentStepRank || 1;
-    console.groupEnd();
     return {
       ...state,
       formInfo: {
@@ -29,17 +29,27 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
 
   console.log(`[feedFormReducer]`, action.type, action.payload);
 
+  // Reset
+  if (action.type === "init") {
+    localStorageSetItem(
+      FEED_FORM_LOCAL_STORAGE_KEY,
+      action.payload || FEED_FORM_INITIAL_STATE,
+    );
+    return action.payload || FEED_FORM_INITIAL_STATE;
+  }
+
   // Navigation to specific step
   if (action.type === "goToStep") {
     const { stepRank } = action.payload;
-    console.groupEnd();
-    return {
+    const newState = {
       ...state,
       formInfo: {
         ...state.formInfo,
         currentStepRank: stepRank,
       },
     };
+    localStorageSetItem(FEED_FORM_LOCAL_STORAGE_KEY, newState);
+    return;
   }
 
   const isActionAllowed = allowedActions.has(action.type);
@@ -80,7 +90,7 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
       });
     }
 
-    // If payload is an entity array and replace = true, we replace the entity value in state with the given array
+    // If payload is an entity array and replace = true, we replace the entity array in state with the given array
     if (array && replace) {
       newState = {
         ...newState,
@@ -150,21 +160,46 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
       };
     }
 
+    // Cleaning the state from unused entities, except while adding a piece or collection form is opened
+    const isSourceOnPieceVersionFormOpen =
+      state?.formInfo?.isSourceOnPieceVersionformOpen;
+    const closeSourceOnPieceVersionFormAction =
+      action.type === "formInfo" &&
+      action.payload?.value?.isSourceOnPieceVersionformOpen === false;
+    const otherFormInfoAction =
+      action.type === "formInfo" &&
+      action.payload?.value?.isSourceOnPieceVersionformOpen === undefined;
+    if (
+      !otherFormInfoAction &&
+      // We don't clean state during single or collection piece version form, except at its closing.
+      (!isSourceOnPieceVersionFormOpen || closeSourceOnPieceVersionFormAction)
+    ) {
+      newState = cleanFeedFormState(newState);
+    } else {
+      console.log(`NOT Cleaning state`, {
+        condition1: !otherFormInfoAction,
+        condition2:
+          !isSourceOnPieceVersionFormOpen ||
+          closeSourceOnPieceVersionFormAction,
+      });
+    }
+
+    // Make sure mMSourcePieceVersions ranks are continuous and begin at 1
+    newState.mMSourcePieceVersions = (newState.mMSourcePieceVersions || []).map(
+      (mMSourcePieceVersion, index) => ({
+        ...mMSourcePieceVersion,
+        rank: index + 1,
+      }),
+    );
+
+    // TODO: Make sure pieces from a same collection ranks are continuous and begin at 1
+    //  OR prevent the suppression of a piece from a collection, only single piece or whole collection can be deleted
+
     localStorageSetItem(FEED_FORM_LOCAL_STORAGE_KEY, newState);
-    console.groupEnd();
     return newState;
   } else {
     console.log(`[] Action not allowed: action.type`, action.type);
   }
-  if (action.type === "init") {
-    localStorageSetItem(
-      FEED_FORM_LOCAL_STORAGE_KEY,
-      action.payload || FEED_FORM_INITIAL_STATE,
-    );
-    console.groupEnd();
-    return action.payload || FEED_FORM_INITIAL_STATE;
-  }
-  console.groupEnd();
   throw new Error(
     `[FeedFormContext] Unhandled${!isActionAllowed ? ` (Not allowed)` : ""} action type: ${action.type}`,
   );
