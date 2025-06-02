@@ -32,13 +32,13 @@ export default function MovementArray({
 
           return (
             <li key={item.id}>
-              <h4 className="mt-6 text-2xl font-bold text-secondary">{`Movement ${
+              <h5 className="mt-6 text-xl font-normal text-secondary">{`Movement ${
                 index + 1
               }${
                 mvtArray.length === 1
                   ? ` (or whole piece if not divided in movements)`
                   : ""
-              }`}</h4>
+              }`}</h5>
               <input {...register(`movements[${index}].id` as const)} hidden />
               <ControlledSelect
                 name={`movements[${index}].key` as const}

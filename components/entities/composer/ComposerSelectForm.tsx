@@ -6,13 +6,13 @@ type ComposerSelectFormProps = {
   composers: PersonState[];
   value?: PersonState;
   onComposerSelect: (event: any) => void;
-  onComposerCreationClick: () => void;
+  onInitComposerCreation: () => void;
 };
 export default function ComposerSelectForm({
   composers,
   value,
   onComposerSelect,
-  onComposerCreationClick,
+  onInitComposerCreation,
 }: ComposerSelectFormProps) {
   const [selectedComposer, setSelectedComposer] = useState<PersonState | null>(
     value || null,
@@ -46,7 +46,7 @@ export default function ComposerSelectForm({
         composers={composers}
         onSelect={onSelect}
         selectedComposer={selectedComposer}
-        onComposerCreationClick={onComposerCreationClick}
+        onInitComposerCreation={onInitComposerCreation}
       />
       <button
         className="btn btn-primary mt-4"

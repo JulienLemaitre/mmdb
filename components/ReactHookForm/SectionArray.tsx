@@ -38,9 +38,9 @@ export default function SectionArray({
 
           return (
             <li key={item.id} className="px-4 border-accent border-2 my-3">
-              <h4 className="my-4 text-xl font-bold text-accent">{`Section ${
+              <h6 className="my-4 text-lg font-normal text-accent">{`Section ${
                 index + 1
-              }`}</h4>
+              }`}</h6>
               <input
                 {...register(
                   `movements[${nestIndex}].sections[${index}].id` as const,
@@ -48,7 +48,7 @@ export default function SectionArray({
                 hidden
               />
               <div className="flex gap-2 items-center">
-                <div className="text-lg font-bold">
+                <div>
                   Time Signature :<span className="text-red-500 ml-1">*</span>
                 </div>
                 <div className="flex flex-col gap-1">

@@ -7,13 +7,13 @@ type PieceVersionSelectFormProps = {
   pieceVersions: PieceVersionState[];
   value?: PieceVersionState;
   onPieceVersionSelect: (event: any) => void;
-  onPieceVersionCreationClick: () => void;
+  onInitPieceVersionCreation: () => void;
 };
 export default function PieceVersionSelectForm({
   pieceVersions,
   value,
   onPieceVersionSelect,
-  onPieceVersionCreationClick,
+  onInitPieceVersionCreation,
 }: Readonly<PieceVersionSelectFormProps>) {
   const [selectedPieceVersion, setSelectedPieceVersion] =
     useState<PieceVersionState | null>(null);
@@ -58,7 +58,7 @@ export default function PieceVersionSelectForm({
         <button
           type="button"
           className="btn btn-secondary"
-          onClick={() => onPieceVersionCreationClick()}
+          onClick={onInitPieceVersionCreation}
         >
           <PlusIcon className="w-5 h-5" />
           New piece version

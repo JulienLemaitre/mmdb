@@ -6,7 +6,7 @@ import { FeedFormState } from "@/types/feedFormTypes";
 
 type SummaryProps = {
   feedFormState: FeedFormState;
-  onSubmitSourceOnPieceVersions: (isUpdate: boolean) => void;
+  onSubmitSourceOnPieceVersions: () => void;
   selectedComposerId: string;
   selectedPieceId: string;
   selectedPieceVersionId: string;
@@ -52,7 +52,7 @@ function Summary({
         <div className="mb-3">{`- Piece Version not found -`}</div>
       )}
       <button
-        onClick={() => onSubmitSourceOnPieceVersions(!!isEditMode)}
+        onClick={onSubmitSourceOnPieceVersions}
         className="btn btn-primary mt-4"
       >
         {`Confirm ${isEditMode ? `your changes` : `adding this piece`}`}

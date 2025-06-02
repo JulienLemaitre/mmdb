@@ -6,13 +6,13 @@ type PieceSelectFormProps = {
   pieces: PieceState[];
   value?: PieceState;
   onPieceSelect: (event: any) => void;
-  onPieceCreationClick: () => void;
+  onInitPieceCreation: () => void;
 };
 export default function PieceSelectForm({
   pieces,
   value,
   onPieceSelect,
-  onPieceCreationClick,
+  onInitPieceCreation,
 }: PieceSelectFormProps) {
   const [selectedPiece, setSelectedPiece] = useState<PieceState | null>(null);
 
@@ -44,7 +44,7 @@ export default function PieceSelectForm({
         pieces={pieces}
         onSelect={onSelect}
         selectedPiece={selectedPiece}
-        onPieceCreationClick={onPieceCreationClick}
+        onInitPieceCreation={onInitPieceCreation}
       />
       <button
         onClick={() => onPieceSelect(selectedPiece)}

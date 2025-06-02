@@ -6,24 +6,40 @@ import { PersonInput, PersonState } from "@/types/formTypes";
 import { getNewEntities } from "@/components/context/feedFormContext";
 import { FeedFormState } from "@/types/feedFormTypes";
 import getAllComposers from "@/utils/getAllComposers";
+import { SinglePieceVersionFormState } from "@/components/context/SinglePieceVersionFormContext";
 
 type ComposerSelectOrCreateProps = {
   feedFormState: FeedFormState;
+  singlePieceVersionFormState: SinglePieceVersionFormState;
   onComposerCreated: (composer: PersonInput) => void;
   onComposerSelect: (composer: PersonInput) => void;
   selectedComposerId: string | null;
+  onInitComposerCreation: () => void;
+  onCancelComposerCreation: () => void;
 };
 
 const ComposerSelectOrCreate = ({
   feedFormState,
+  singlePieceVersionFormState,
   onComposerCreated,
   onComposerSelect,
   selectedComposerId,
+  onInitComposerCreation: onInitComposerCreationFn,
+  onCancelComposerCreation,
 }: ComposerSelectOrCreateProps) => {
+  // Composer has just been created in the present form
+  const hasComposerJustBeenCreated =
+    !!singlePieceVersionFormState.composer?.isNew;
   const [composers, setComposers] = useState<PersonState[] | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isCreation, setIsCreation] = useState(false);
-  const newPersons = getNewEntities(feedFormState, "persons");
+  const [isLoading, setIsLoading] = useState(!hasComposerJustBeenCreated);
+  const [isCreation, setIsCreation] = useState(hasComposerJustBeenCreated);
+  const newPersons = getNewEntities(feedFormState, "persons", {
+    includeUnusedInFeedForm: true,
+  });
+  const newSelectedComposer = newPersons?.find(
+    (person) => person.id === selectedComposerId,
+  );
+
   let composerFullList = [...(composers || []), ...(newPersons || [])];
 
   // If we have new composers, we need to sort the composerFullList
@@ -42,6 +58,8 @@ const ComposerSelectOrCreate = ({
   );
 
   useEffect(() => {
+    if (!isLoading) return;
+
     getAllComposers()
       .then((data) => {
         setComposers(data?.composers);
@@ -51,10 +69,18 @@ const ComposerSelectOrCreate = ({
         console.log(`[fetch(URL_API_GETALL_COMPOSERS)] err :`, err);
         setIsLoading(false);
       });
-  }, []);
+  }, [isLoading]);
 
-  const onComposerCreationClick = () => {
+  const onInitComposerCreation = () => {
+    onInitComposerCreationFn();
     setIsCreation(true);
+  };
+  const onCancelComposerEdition = () => {
+    if (hasComposerJustBeenCreated) {
+      onCancelComposerCreation();
+    }
+    setIsLoading(true);
+    setIsCreation(false);
   };
 
   if (isLoading) return <Loader />;
@@ -62,13 +88,17 @@ const ComposerSelectOrCreate = ({
     return <p>{`Oups, No data could be fetched. Can't continue...`}</p>;
 
   return isCreation ? (
-    <ComposerEditForm onSubmit={onComposerCreated} />
+    <ComposerEditForm
+      composer={newSelectedComposer}
+      onCancel={onCancelComposerEdition}
+      onSubmit={onComposerCreated}
+    />
   ) : (
     <ComposerSelectForm
       composers={composerFullList}
       value={selectedComposer}
       onComposerSelect={onComposerSelect}
-      onComposerCreationClick={onComposerCreationClick}
+      onInitComposerCreation={onInitComposerCreation}
     />
   );
 };
