@@ -6,30 +6,27 @@ import { PersonInput, PersonState } from "@/types/formTypes";
 import { getNewEntities } from "@/components/context/feedFormContext";
 import { FeedFormState } from "@/types/feedFormTypes";
 import getAllComposers from "@/utils/getAllComposers";
-import { SinglePieceVersionFormState } from "@/components/context/SinglePieceVersionFormContext";
 
 type ComposerSelectOrCreateProps = {
   feedFormState: FeedFormState;
-  singlePieceVersionFormState: SinglePieceVersionFormState;
   onComposerCreated: (composer: PersonInput) => void;
   onComposerSelect: (composer: PersonInput) => void;
   selectedComposerId: string | null;
   onInitComposerCreation: () => void;
   onCancelComposerCreation: () => void;
+  hasComposerJustBeenCreated: boolean;
 };
 
 const ComposerSelectOrCreate = ({
   feedFormState,
-  singlePieceVersionFormState,
   onComposerCreated,
   onComposerSelect,
   selectedComposerId,
   onInitComposerCreation: onInitComposerCreationFn,
   onCancelComposerCreation,
+  hasComposerJustBeenCreated,
 }: ComposerSelectOrCreateProps) => {
   // Composer has just been created in the present form
-  const hasComposerJustBeenCreated =
-    !!singlePieceVersionFormState.composer?.isNew;
   const [composers, setComposers] = useState<PersonState[] | null>(null);
   const [isLoading, setIsLoading] = useState(!hasComposerJustBeenCreated);
   const [isCreation, setIsCreation] = useState(hasComposerJustBeenCreated);
@@ -39,7 +36,6 @@ const ComposerSelectOrCreate = ({
   const newSelectedComposer = newPersons?.find(
     (person) => person.id === selectedComposerId,
   );
-
   let composerFullList = [...(composers || []), ...(newPersons || [])];
 
   // If we have new composers, we need to sort the composerFullList
@@ -66,7 +62,7 @@ const ComposerSelectOrCreate = ({
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(`[fetch(URL_API_GETALL_COMPOSERS)] err :`, err);
+        console.log(`[fetch getAllComposers()] err :`, err);
         setIsLoading(false);
       });
   }, [isLoading]);

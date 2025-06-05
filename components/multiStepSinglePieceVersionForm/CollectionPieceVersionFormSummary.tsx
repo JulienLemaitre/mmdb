@@ -5,6 +5,7 @@ import {
 } from "@/components/context/feedFormContext";
 import { getStepByRank } from "@/components/multiStepSinglePieceVersionForm/stepsUtils";
 import { useCollectionPieceVersionsForm } from "@/components/context/CollectionPieceVersionsFormContext";
+import { getPersonDates } from "@/utils/getPersonDates";
 
 function CollectionPieceVersionFormSummary() {
   const { state: feedFormState } = useFeedForm();
@@ -13,6 +14,7 @@ function CollectionPieceVersionFormSummary() {
     state.collection?.composerId &&
     getEntityByIdOrKey(feedFormState, "persons", state.collection?.composerId);
   const composerName = composer?.firstName + " " + composer?.lastName;
+  const composerDates = composer ? getPersonDates(composer) : "";
   const collectionTitle = state.collection?.title;
   const currentStep = getStepByRank({ state, rank: currentStepRank });
   const displayComposerInfo = ["piece", "pieceVersion"].includes(
@@ -24,7 +26,7 @@ function CollectionPieceVersionFormSummary() {
         <div className="text-sm primary text-primary">{`Collection context`}</div>
       ) : null}
       {displayComposerInfo && (
-        <div className="text-sm">{`Composer: ${composerName}`}</div>
+        <div className="text-sm">{`Composer: ${composerName} (${composerDates})`}</div>
       )}
 
       {collectionTitle && (

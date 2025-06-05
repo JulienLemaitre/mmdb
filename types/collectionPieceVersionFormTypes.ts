@@ -34,7 +34,7 @@ export type CollectionPieceVersionsFormInfo = {
 
 export type CollectionPieceVersionsFormState = {
   formInfo: CollectionPieceVersionsFormInfo;
-  collection?: Partial<CollectionState>;
+  collection?: Partial<CollectionState & { isComposerNew?: boolean }>;
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
   persons?: PersonState[];
   pieces?: PieceState[];

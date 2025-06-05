@@ -5,7 +5,7 @@ import {
 } from "@/types/formTypes";
 import PlusIcon from "@/components/svg/PlusIcon";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
-import SinglePieceVersionForm from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionForm";
+import SinglePieceVersionFormContainer from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer";
 import {
   getEntityByIdOrKey,
   updateFeedForm,
@@ -19,7 +19,7 @@ import {
 } from "@/components/context/SinglePieceVersionFormContext";
 import { CollectionPieceVersionsFormProvider } from "@/components/context/CollectionPieceVersionsFormContext";
 import getPersonName from "@/components/entities/person/utils/getPersonName";
-import CollectionPieceVersionsForm from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsForm";
+import CollectionPieceVersionsFormContainer from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsFormContainer";
 import EditIcon from "@/components/svg/EditIcon";
 
 type SourcePieceVersionSelectFormProps = {
@@ -141,7 +141,7 @@ const SourceOnPieceVersionFormContainer = ({
           <h1 className="mb-4 text-4xl font-bold">{title}</h1>
           {formType === "single" && (
             <SinglePieceVersionFormProvider initialState={editionInitState}>
-              <SinglePieceVersionForm
+              <SinglePieceVersionFormContainer
                 onFormClose={onFormClose}
                 isEditMode={isEditMode}
               />
@@ -149,7 +149,7 @@ const SourceOnPieceVersionFormContainer = ({
           )}
           {formType === "collection" && (
             <CollectionPieceVersionsFormProvider>
-              <CollectionPieceVersionsForm onFormClose={onFormClose} />
+              <CollectionPieceVersionsFormContainer onFormClose={onFormClose} />
             </CollectionPieceVersionsFormProvider>
           )}
           <div className="grid grid-cols-2 gap-4 items-center mt-6 w-full max-w-2xl">

@@ -10,7 +10,7 @@ import { SinglePieceVersionFormState } from "@/components/context/SinglePieceVer
 
 type PieceVersionSelectOrCreateProps = {
   feedFormState: FeedFormState;
-  singlePieceVersionFormState: SinglePieceVersionFormState;
+  singlePieceVersionFormState?: SinglePieceVersionFormState;
   selectedPieceId?: string;
   selectedPieceVersionId?: string;
   onPieceVersionCreated: (pieceVersion: PieceVersionInput) => void;
@@ -32,10 +32,10 @@ function PieceVersionSelectOrCreate({
   isCollectionCreationMode,
 }: PieceVersionSelectOrCreateProps) {
   const hasComposerJustBeenCreated =
-    !!singlePieceVersionFormState.composer?.isNew;
-  const hasPieceJustBeenCreated = !!singlePieceVersionFormState.piece?.isNew;
+    !!singlePieceVersionFormState?.composer?.isNew;
+  const hasPieceJustBeenCreated = !!singlePieceVersionFormState?.piece?.isNew;
   const hasPieceVersionJustBeenCreated =
-    !!singlePieceVersionFormState.pieceVersion?.isNew;
+    !!singlePieceVersionFormState?.pieceVersion?.isNew;
   console.log(
     `[] hasPieceVersionJustBeenCreated :`,
     hasPieceVersionJustBeenCreated,

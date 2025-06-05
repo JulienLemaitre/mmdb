@@ -8,7 +8,7 @@ import {
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import { SinglePieceVersionFormProvider } from "@/components/context/SinglePieceVersionFormContext";
-import SinglePieceVersionForm from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionForm";
+import SinglePieceVersionFormContainer from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer";
 import getPersonName from "@/components/entities/person/utils/getPersonName";
 import TrashIcon from "@/components/svg/TrashIcon";
 import PlusIcon from "@/components/svg/PlusIcon";
@@ -35,6 +35,7 @@ function CollectionPieceVersionsEditForm({
       deleteIdArray: [pieceVersionId],
       idKey: "pieceVersionId",
     });
+    // TODO copy feedFormReducer behavior in this form context reducer
     // Delete new PieceVersion as well if exists
     updateCollectionPieceVersionsForm(dispatch, "pieceVersions", {
       deleteIdArray: [pieceVersionId],
@@ -63,7 +64,7 @@ function CollectionPieceVersionsEditForm({
     <>
       {isFormOpen ? (
         <SinglePieceVersionFormProvider>
-          <SinglePieceVersionForm
+          <SinglePieceVersionFormContainer
             onFormClose={() => setIsFormOpen(false)}
             onSubmit={onSinglePieceSubmit}
             isCollectionCreationMode={true}

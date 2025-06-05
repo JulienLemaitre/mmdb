@@ -29,22 +29,43 @@ type CollectionPieceVersionFormProps = {
   onFormClose: () => void;
 };
 
-function CollectionPieceVersionsForm({
+function CollectionPieceVersionsFormContainer({
   onFormClose,
 }: CollectionPieceVersionFormProps) {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
-  const { dispatch, state, currentStepRank } = useCollectionPieceVersionsForm();
-  const currentStep = getStepByRank({ state, rank: currentStepRank });
+  const {
+    dispatch,
+    state: collectionPieceVersionFormState,
+    currentStepRank,
+  } = useCollectionPieceVersionsForm();
+  const currentStep = getStepByRank({
+    state: collectionPieceVersionFormState,
+    rank: currentStepRank,
+  });
   const StepFormComponent = currentStep.Component;
 
   ////////////////// COMPOSER ////////////////////
 
+  const selectedComposerId =
+    collectionPieceVersionFormState?.collection?.composerId;
+
+  const onInitComposerCreation = () => {
+    updateCollectionPieceVersionsForm(dispatch, "collection", {
+      value: { composerId: null },
+    });
+  };
+
   const onComposerCreated = (composer: PersonInput) => {
-    const newComposer: PersonState = getPersonStateFromPersonInput(composer);
+    const newComposer: PersonState = getPersonStateFromPersonInput({
+      ...(selectedComposerId
+        ? feedFormState.persons?.find((p) => p.id === selectedComposerId)
+        : {}),
+      ...composer,
+    });
     newComposer.isNew = true;
     updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
     updateCollectionPieceVersionsForm(dispatch, "collection", {
-      value: { composerId: newComposer.id },
+      value: { composerId: newComposer.id, isComposerNew: true },
       next: true,
     });
   };
@@ -55,10 +76,47 @@ function CollectionPieceVersionsForm({
       next: true,
     });
   };
-  const selectedComposerId = state?.collection?.composerId;
+
+  const onCancelComposerCreation = () => {
+    if (collectionPieceVersionFormState.collection?.isComposerNew) {
+      // Case: coming back after having first submitted the new composer and cancel it. All in the same collectionPieceVersionsForm.
+      // => The composer's data is in the feedFormState; we delete it there too.
+      updateCollectionPieceVersionsForm(dispatch, "collection", {
+        value: {
+          composerId: null,
+        },
+      });
+      updateFeedForm(feedFormDispatch, "persons", {
+        deleteIdArray: [selectedComposerId],
+      });
+    }
+  };
 
   ////////////////// COLLECTION ////////////////////
 
+  const selectedCollectionId = collectionPieceVersionFormState?.collection?.id;
+
+  const onInitCollectionCreation = () => {
+    updateCollectionPieceVersionsForm(dispatch, "collection", {
+      value: {
+        id: null,
+      },
+    });
+  };
+  const onCancelCollectionCreation = () => {
+    if (collectionPieceVersionFormState.collection?.isNew) {
+      // Case: coming back after having first submitted the new collection and cancel it. All in the same collectionPieceVersionsForm.
+      // => The collection's data is in the feedFormState; we delete it there too.
+      updateCollectionPieceVersionsForm(dispatch, "collection", {
+        value: {
+          id: null,
+        },
+      });
+      updateFeedForm(feedFormDispatch, "collections", {
+        deleteIdArray: [selectedCollectionId],
+      });
+    }
+  };
   const onCollectionCreated = (collection: CollectionTitleInput) => {
     if (!selectedComposerId) {
       console.error("[ERROR] No composer selected for collection creation.");
@@ -76,6 +134,7 @@ function CollectionPieceVersionsForm({
         id: newCollection.id,
         composerId: newCollection.composerId,
         title: newCollection.title,
+        isNew: true,
       },
       next: true,
     });
@@ -91,7 +150,6 @@ function CollectionPieceVersionsForm({
       next: true,
     });
   };
-  const selectedCollectionId = state?.collection?.id;
 
   /////////////////// PIECE //////////////////////////////
 
@@ -189,10 +247,22 @@ function CollectionPieceVersionsForm({
         <StepFormComponent
           onFormClose={onFormClose}
           feedFormState={feedFormState}
+          // Composer
           selectedComposerId={selectedComposerId}
-          selectedCollectionId={selectedCollectionId}
+          hasComposerJustBeenCreated={
+            !!collectionPieceVersionFormState.collection?.isComposerNew
+          }
           onComposerSelect={onComposerSelect}
+          onInitComposerCreation={onInitComposerCreation}
+          onCancelComposerCreation={onCancelComposerCreation}
           onComposerCreated={onComposerCreated}
+          // Collection
+          selectedCollectionId={selectedCollectionId}
+          hasCollectionJustBeenCreated={
+            !!collectionPieceVersionFormState.collection?.isNew
+          }
+          onInitCollectionCreation={onInitCollectionCreation}
+          onCancelCollectionCreation={onCancelCollectionCreation}
           onCollectionSelect={onCollectionSelect}
           onCollectionCreated={onCollectionCreated}
           onAddPieces={onAddPieces}
@@ -205,11 +275,11 @@ function CollectionPieceVersionsForm({
       )}
       <DebugBox
         title="Collection form state"
-        stateObject={state}
+        stateObject={collectionPieceVersionFormState}
         shouldExpandNode={(level) => level < 3}
       />
     </div>
   );
 }
 
-export default CollectionPieceVersionsForm;
+export default CollectionPieceVersionsFormContainer;

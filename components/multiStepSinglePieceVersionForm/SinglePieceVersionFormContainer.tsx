@@ -42,7 +42,7 @@ type SinglePieceVersionFormProps = {
  * - in the collectionPieceVersionsForm, when the user clicks on the "Add a single Piece" button.
  * Composer, piece and pieceVersion can be selected among existing values from the database, or created if it does not exist yet.
  */
-const SinglePieceVersionForm = ({
+const SinglePieceVersionFormContainer = ({
   onFormClose,
   onSubmit,
   isCollectionCreationMode,
@@ -89,7 +89,12 @@ const SinglePieceVersionForm = ({
     });
   };
   const onComposerCreated = (composer: PersonInput) => {
-    const newComposer: PersonState = getPersonStateFromPersonInput(composer);
+    const newComposer: PersonState = getPersonStateFromPersonInput({
+      ...(selectedComposerId
+        ? feedFormState.persons?.find((p) => p.id === selectedComposerId)
+        : {}),
+      ...composer,
+    });
     newComposer.isNew = true;
     updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
     updateSinglePieceVersionForm(dispatch, "composer", {
@@ -152,7 +157,7 @@ const SinglePieceVersionForm = ({
     }
 
     const pieceState = getPieceStateFromInput({
-      ...(isEditMode
+      ...(selectedPieceId
         ? feedFormState.pieces?.find((piece) => piece.id === selectedPieceId)
         : {}),
       ...pieceData,
@@ -346,6 +351,9 @@ const SinglePieceVersionForm = ({
           singlePieceVersionFormState={singlePieceVersionFormState}
           // Composer
           selectedComposerId={singlePieceVersionFormState?.composer?.id}
+          hasComposerJustBeenCreated={
+            !!singlePieceVersionFormState?.composer?.isNew
+          }
           onComposerSelect={onComposerSelect}
           onInitComposerCreation={onInitComposerCreation}
           onCancelComposerCreation={onCancelComposerCreation}
@@ -380,4 +388,4 @@ const SinglePieceVersionForm = ({
   );
 };
 
-export default SinglePieceVersionForm;
+export default SinglePieceVersionFormContainer;

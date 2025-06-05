@@ -6,13 +6,13 @@ type CollectionSelectFormProps = {
   collections: CollectionState[];
   value?: CollectionState;
   onCollectionSelect: (event: any) => void;
-  onCollectionCreationClick: () => void;
+  onInitCollectionCreation: () => void;
 };
 export default function CollectionSelectForm({
   collections,
   value,
   onCollectionSelect,
-  onCollectionCreationClick,
+  onInitCollectionCreation,
 }: CollectionSelectFormProps) {
   const [selectedCollection, setSelectedCollection] =
     useState<CollectionState | null>(value || null);
@@ -48,7 +48,7 @@ export default function CollectionSelectForm({
         collections={collections}
         onSelect={onSelect}
         selectedCollection={selectedCollection}
-        onCollectionCreationClick={onCollectionCreationClick}
+        onInitCollectionCreation={onInitCollectionCreation}
       />
       <button
         className="btn btn-primary mt-4"
