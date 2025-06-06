@@ -331,7 +331,7 @@ const SinglePieceVersionFormContainer = ({
     <div>
       <div className="flex w-full gap-3 max-w-3xl">
         <div className="flex-1">
-          <h2 className="mb-3 text-3xl font-bold">{`${isEditMode ? `Edit` : `Add`} a single Piece`}</h2>
+          <h2 className="mb-3 text-3xl font-bold">{`${isEditMode ? `Edit` : `Add`} a ${isCollectionCreationMode ? `piece to the collection` : `single piece`}`}</h2>
           <SinglePieceVersionSteps
             isCollectionMode={isCollectionCreationMode}
           />

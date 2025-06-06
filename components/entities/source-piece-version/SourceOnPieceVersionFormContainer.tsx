@@ -159,7 +159,7 @@ const SourceOnPieceVersionFormContainer = ({
               onClick={() => onFormClose()}
             >
               <TrashIcon className="w-5 h-5" />
-              {`Discard${isEditMode ? `updating ` : ""} this ${formType === "single" ? "piece" : "collection"}`}
+              {`Discard${isEditMode ? `updating ` : ""} this ${formType === "single" ? "piece" : "whole collection"}`}
             </button>
           </div>
         </>

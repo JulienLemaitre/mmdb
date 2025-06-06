@@ -235,7 +235,7 @@ function CollectionPieceVersionsFormContainer({
     <div>
       <div className="flex w-full gap-3 max-w-3xl">
         <div className="flex-1">
-          <h2 className="mb-3 text-2xl font-bold">{`Add a complete collection`}</h2>
+          <h2 className="mb-3 text-3xl font-bold">{`Add a complete collection`}</h2>
           <CollectionPieceVersionsSteps />
         </div>
         <div className="width-1/3 pt-2">
@@ -265,6 +265,7 @@ function CollectionPieceVersionsFormContainer({
           onCancelCollectionCreation={onCancelCollectionCreation}
           onCollectionSelect={onCollectionSelect}
           onCollectionCreated={onCollectionCreated}
+          // Piece and PieceVersion
           onAddPieces={onAddPieces}
           onAddPieceVersion={onAddPieceVersion}
           onSubmitPiecePieceVersions={onSubmitPiecePieceVersions}

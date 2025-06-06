@@ -20,6 +20,7 @@ type PieceSelectOrCreate = {
   selectedPieceId?: string;
   isCollectionCreationMode?: boolean;
   newPieceDefaultTitle?: string;
+  isEditMode?: boolean;
 };
 
 function PieceSelectOrCreate({
@@ -33,6 +34,7 @@ function PieceSelectOrCreate({
   selectedPieceId,
   isCollectionCreationMode,
   newPieceDefaultTitle,
+  isEditMode,
 }: PieceSelectOrCreate) {
   const hasComposerJustBeenCreated =
     !!singlePieceVersionFormState.composer?.isNew;
@@ -143,7 +145,7 @@ function PieceSelectOrCreate({
         piece={newSelectedPiece}
         onSubmit={onPieceCreated}
         onCancel={onCancelPieceEdition}
-        newPieceDefaultTitle={newPieceDefaultTitle}
+        {...(!isEditMode && { newPieceDefaultTitle })}
       />
     );
 

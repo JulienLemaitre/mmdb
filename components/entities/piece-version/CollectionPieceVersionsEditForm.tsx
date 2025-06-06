@@ -7,12 +7,16 @@ import {
   getEntityByIdOrKey,
   useFeedForm,
 } from "@/components/context/feedFormContext";
-import { SinglePieceVersionFormProvider } from "@/components/context/SinglePieceVersionFormContext";
+import {
+  SinglePieceVersionFormProvider,
+  SinglePieceVersionFormState,
+} from "@/components/context/SinglePieceVersionFormContext";
 import SinglePieceVersionFormContainer from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer";
 import getPersonName from "@/components/entities/person/utils/getPersonName";
 import TrashIcon from "@/components/svg/TrashIcon";
 import PlusIcon from "@/components/svg/PlusIcon";
 import { MMSourcePieceVersionsState } from "@/types/formTypes";
+import EditIcon from "@/components/svg/EditIcon";
 
 type CollectionPieceVersionsEditFormProps = {
   onSubmitSourceOnPieceVersions: (
@@ -24,18 +28,67 @@ function CollectionPieceVersionsEditForm({
   onSubmitSourceOnPieceVersions,
 }: CollectionPieceVersionsEditFormProps) {
   const { state: feedFormState } = useFeedForm();
-  const [isFormOpen, setIsFormOpen] = useState(false);
   const { state, dispatch } = useCollectionPieceVersionsForm();
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [editionInitState, setEditionInitState] =
+    useState<SinglePieceVersionFormState | null>(null);
+  const isEditMode = !!editionInitState;
   const collectionPieceVersions = state.mMSourcePieceVersions || [];
   const newPieceDefaultTitle = `${state?.collection?.title} No.${(state.mMSourcePieceVersions || []).length + 1}`;
   const composerId = state?.collection?.composerId;
+
+  const onFormClose = () => {
+    setEditionInitState(null);
+    setIsFormOpen(false);
+  };
+
+  const onEditCollectionPieceVersion = (
+    collectionPieceVersion: MMSourcePieceVersionsState,
+  ) => {
+    const { pieceVersionId, rank } = collectionPieceVersion;
+
+    // Build singlePieceVersionFormState
+    const pieceVersion = getEntityByIdOrKey(
+      feedFormState,
+      "pieceVersions",
+      pieceVersionId,
+    );
+    const piece = getEntityByIdOrKey(
+      feedFormState,
+      "pieces",
+      pieceVersion.pieceId,
+    );
+    const composer = getEntityByIdOrKey(
+      feedFormState,
+      "persons",
+      piece.composerId,
+    );
+
+    const singlePieceVersionFormEditState: SinglePieceVersionFormState = {
+      formInfo: {
+        currentStepRank: 0,
+        mMSourcePieceVersionRank: rank,
+      },
+      composer: {
+        id: composer.id,
+      },
+      piece: {
+        id: piece.id,
+      },
+      pieceVersion: {
+        id: pieceVersion.id,
+      },
+    };
+    setEditionInitState(singlePieceVersionFormEditState);
+    setIsFormOpen(true);
+  };
 
   const onDeletePieceVersionId = (pieceVersionId) => {
     updateCollectionPieceVersionsForm(dispatch, "mMSourcePieceVersions", {
       deleteIdArray: [pieceVersionId],
       idKey: "pieceVersionId",
     });
-    // TODO copy feedFormReducer behavior in this form context reducer
+    // TODO copy feedFormReducer cleaning behavior in collectionPieceVersionsFormContext reducer instead of the following
     // Delete new PieceVersion as well if exists
     updateCollectionPieceVersionsForm(dispatch, "pieceVersions", {
       deleteIdArray: [pieceVersionId],
@@ -49,10 +102,13 @@ function CollectionPieceVersionsEditForm({
   };
   const onSinglePieceSubmit = (payload: any) => {
     console.log(`[onSinglePieceSubmit] payload :`, payload);
-    // For normal piece addition, we delete the idKey provided to avoid replacing the first piece forever
-    delete payload.idKey;
 
-    // TODO: if we are updating a piece, the idKey should be provided
+    // idKey = "rank is used to replace value in place when updating
+    // For normal piece addition, we delete the idKey provided to avoid replacing the first piece forever
+    if (!isEditMode) {
+      delete payload.idKey;
+    }
+
     updateCollectionPieceVersionsForm(
       dispatch,
       "mMSourcePieceVersions",
@@ -63,25 +119,38 @@ function CollectionPieceVersionsEditForm({
   return (
     <>
       {isFormOpen ? (
-        <SinglePieceVersionFormProvider>
-          <SinglePieceVersionFormContainer
-            onFormClose={() => setIsFormOpen(false)}
-            onSubmit={onSinglePieceSubmit}
-            isCollectionCreationMode={true}
-            collectionId={state.collection?.id}
-            collectionFormState={state}
-            newPieceDefaultTitle={newPieceDefaultTitle}
-            composerId={composerId}
-          />
-        </SinglePieceVersionFormProvider>
+        <>
+          <SinglePieceVersionFormProvider initialState={editionInitState}>
+            <SinglePieceVersionFormContainer
+              onFormClose={onFormClose}
+              onSubmit={onSinglePieceSubmit}
+              isCollectionCreationMode={true}
+              collectionId={state.collection?.id}
+              collectionFormState={state}
+              newPieceDefaultTitle={newPieceDefaultTitle}
+              composerId={composerId}
+              isEditMode={isEditMode}
+            />
+          </SinglePieceVersionFormProvider>
+          <div className="grid grid-cols-2 gap-4 items-center mt-6 w-full max-w-2xl">
+            <button
+              className="btn btn-accent"
+              type="button"
+              onClick={() => onFormClose()}
+            >
+              <TrashIcon className="w-5 h-5" />
+              {`Discard${isEditMode ? `updating ` : ""} this piece`}
+            </button>
+          </div>
+        </>
       ) : (
         <>
           <ul className="my-4 max-w-[65ch]">
-            {collectionPieceVersions.map((sourcePieceVersion, index) => {
+            {collectionPieceVersions.map((collectionPieceVersion, index) => {
               const pieceVersion = getEntityByIdOrKey(
                 feedFormState,
                 "pieceVersions",
-                sourcePieceVersion.pieceVersionId,
+                collectionPieceVersion.pieceVersionId,
               );
               const piece = getEntityByIdOrKey(
                 feedFormState,
@@ -93,11 +162,10 @@ function CollectionPieceVersionsEditForm({
                 "persons",
                 piece.composerId,
               );
-              console.log({ piece, composer });
 
               return (
                 <li
-                  key={`${index}-${sourcePieceVersion.pieceVersionId}-${sourcePieceVersion.rank}`}
+                  key={`${index}-${collectionPieceVersion.pieceVersionId}-${collectionPieceVersion.rank}`}
                 >
                   <div className="mt-6 flex gap-4 items-end w-full">
                     <div className="flex-grow">
@@ -108,10 +176,21 @@ function CollectionPieceVersionsEditForm({
                     <div>
                       <button
                         type="button"
+                        className="btn btn-sm btn-neutral hover:btn-accent"
+                        onClick={() =>
+                          onEditCollectionPieceVersion(collectionPieceVersion)
+                        }
+                      >
+                        <EditIcon className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <div>
+                      <button
+                        type="button"
                         className="btn btn-sm btn-neutral hover:btn-error"
                         onClick={() =>
                           onDeletePieceVersionId(
-                            sourcePieceVersion.pieceVersionId,
+                            collectionPieceVersion.pieceVersionId,
                           )
                         }
                       >
