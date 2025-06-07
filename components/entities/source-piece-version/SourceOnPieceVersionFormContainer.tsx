@@ -21,6 +21,7 @@ import { CollectionPieceVersionsFormProvider } from "@/components/context/Collec
 import getPersonName from "@/components/entities/person/utils/getPersonName";
 import CollectionPieceVersionsFormContainer from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsFormContainer";
 import EditIcon from "@/components/svg/EditIcon";
+import dynamic from "next/dynamic";
 
 type SourcePieceVersionSelectFormProps = {
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
@@ -28,6 +29,12 @@ type SourcePieceVersionSelectFormProps = {
   submitTitle?: string;
   title?: string;
 };
+
+const needConfirmationModalId = "need-confirmation-modal";
+const NeedConfirmationModal = dynamic(
+  () => import("@/components/NeedConfirmationModal"),
+  { ssr: false },
+);
 
 const SourceOnPieceVersionFormContainer = ({
   mMSourcePieceVersions = [],
@@ -44,6 +51,12 @@ const SourceOnPieceVersionFormContainer = ({
   const isFormOpen = !!feedFormState.formInfo?.isSourceOnPieceVersionformOpen;
   const isIntro =
     feedFormState?.mMSourcePieceVersions?.length === 0 && !isFormOpen;
+
+  // For needConfirmation modal
+  const [pieceVersionToDiscardId, setPieceVersionToDiscardId] = useState<
+    string | null
+  >();
+  const isConfirmationModalOpened = !!pieceVersionToDiscardId;
 
   const onFormOpen = (formType: "single" | "collection") => {
     setFormType(formType);
@@ -103,12 +116,15 @@ const SourceOnPieceVersionFormContainer = ({
     setEditionInitState(singlePieceVersionFormEditState);
     onFormOpen("single");
   };
-
+  const onDeletePieceVersionInit = (pieceVersionId: string) => {
+    setPieceVersionToDiscardId(pieceVersionId);
+  };
   const onDeletePieceVersionId = (pieceVersionId) => {
     updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
       deleteIdArray: [pieceVersionId],
       idKey: "pieceVersionId",
     });
+    setPieceVersionToDiscardId(null);
   };
 
   return (
@@ -219,7 +235,7 @@ const SourceOnPieceVersionFormContainer = ({
                         type="button"
                         className="btn btn-sm btn-neutral hover:btn-error"
                         onClick={() =>
-                          onDeletePieceVersionId(
+                          onDeletePieceVersionInit(
                             mMSourcePieceVersion.pieceVersionId,
                           )
                         }
@@ -257,6 +273,13 @@ const SourceOnPieceVersionFormContainer = ({
             isNextDisabled={!(mMSourcePieceVersions.length > 0 && !isFormOpen)}
             submitTitle={submitTitle}
             onGoToPrevStep={onFormClose}
+          />
+          <NeedConfirmationModal
+            modalId={needConfirmationModalId}
+            onConfirm={() => onDeletePieceVersionId(pieceVersionToDiscardId)}
+            onCancel={() => setPieceVersionToDiscardId(null)}
+            description={`Delete a piece version from the source`}
+            isOpened={isConfirmationModalOpened}
           />
         </>
       )}
