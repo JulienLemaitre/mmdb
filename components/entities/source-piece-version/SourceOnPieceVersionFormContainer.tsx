@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   MMSourcePieceVersionsState,
   SourceOnPieceVersionsFormType,
@@ -183,69 +183,134 @@ const SourceOnPieceVersionFormContainer = ({
       {!isFormOpen && (
         <>
           {!isIntro && <h1 className="mb-4 text-4xl font-bold">{title}</h1>}
-          <ul className="my-4 max-w-[65ch]">
-            {mMSourcePieceVersions.map((mMSourcePieceVersion, index) => {
-              const pieceVersion = getEntityByIdOrKey(
-                feedFormState,
-                "pieceVersions",
-                mMSourcePieceVersion.pieceVersionId,
-              );
-              const piece = getEntityByIdOrKey(
-                feedFormState,
-                "pieces",
-                pieceVersion.pieceId,
-              );
-              const collection = getEntityByIdOrKey(
-                feedFormState,
-                "collections",
-                piece.collectionId,
-              );
-              const composer = getEntityByIdOrKey(
-                feedFormState,
-                "persons",
-                piece.composerId,
-              );
+          <ul className="my-4 max-w-[65ch] space-y-6">
+            {processMMSourcePieceVersionsForDisplay(
+              mMSourcePieceVersions,
+              feedFormState,
+            ).map((group, groupIndex) => {
+              if (group.type === "collection") {
+                // Get composer from the first piece (since all pieces in collection have same composer)
+                const composer = group.items[0]?.composer;
 
-              return (
-                <li
-                  key={`${index}-${mMSourcePieceVersion.pieceVersionId}-${mMSourcePieceVersion.rank}`}
-                >
-                  <div className="mt-6 flex gap-4 items-end w-full">
-                    <div className="flex-grow">
-                      {collection ? (
-                        <div className="text-sm">{collection.title}</div>
-                      ) : null}
-                      <h4 className="text-lg font-bold text-secondary">
-                        {`${mMSourcePieceVersion.rank} - ${piece.title}${!!composer && ` | ${getPersonName(composer)}`}`}
-                      </h4>
+                return (
+                  <li key={`collection-${group.collection.id}-${groupIndex}`}>
+                    {/* Collection Container with unified border */}
+                    <div className="border-l-4 border-primary bg-gradient-to-r from-primary/5 to-transparent rounded-r-lg overflow-hidden">
+                      {/* Collection Header */}
+                      <div className="p-4 bg-primary/10 border-b border-primary/20">
+                        <div className="flex gap-4 items-center justify-between">
+                          <div>
+                            <h3 className="text-xl font-bold text-primary mb-1">
+                              {group.collection.title}
+                              <span className="text-lg font-normal">
+                                {composer && ` - ${getPersonName(composer)}`}
+                              </span>
+                            </h3>
+                            <div className="text-sm text-primary/70 font-medium">
+                              Collection • {group.items.length} piece
+                              {group.items.length > 1 ? "s" : ""}
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-primary hover:btn-primary-focus"
+                              onClick={() => {
+                                // TODO: Implement collection edit functionality
+                                console.log(
+                                  "Edit collection:",
+                                  group.collection.id,
+                                );
+                              }}
+                            >
+                              <EditIcon className="w-4 h-4" />
+                              Edit Collection
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-outline btn-error hover:btn-error"
+                              onClick={() => {
+                                // TODO: Implement collection deletion functionality
+                                console.log(
+                                  "Delete collection:",
+                                  group.collection.id,
+                                );
+                              }}
+                            >
+                              <TrashIcon className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Collection Pieces */}
+                      <div className="py-2">
+                        {group.items.map((item, itemIndex) => (
+                          <div
+                            key={`${groupIndex}-${item.mMSourcePieceVersion.pieceVersionId}-${item.mMSourcePieceVersion.rank}`}
+                            className="px-6 py-2 hover:bg-primary/5 transition-colors duration-150"
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="w-2 h-2 bg-primary/40 rounded-full flex-shrink-0"></div>
+                              <div className="flex-grow">
+                                <h4 className="text-base font-medium text-secondary">
+                                  {`${item.mMSourcePieceVersion.rank} - ${item.piece.title}`}
+                                </h4>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                    <div>
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-neutral hover:btn-accent"
-                        onClick={() =>
-                          onEditMMSourcePieceVersion(mMSourcePieceVersion)
-                        }
-                      >
-                        <EditIcon className="w-4 h-4" />
-                      </button>
+                  </li>
+                );
+              } else {
+                // Single piece (not part of a collection)
+                const item = group.items[0];
+                return (
+                  <li
+                    key={`single-${item.mMSourcePieceVersion.pieceVersionId}-${item.mMSourcePieceVersion.rank}`}
+                  >
+                    <div className="p-4 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-sm transition-all duration-150">
+                      <div className="flex gap-4 items-center justify-between">
+                        <div className="flex-grow">
+                          <h4 className="text-lg font-bold text-secondary">
+                            {`${item.mMSourcePieceVersion.rank} - ${item.piece.title}`}
+                            <span className="text-lg font-normal">
+                              {!!item.composer &&
+                                ` - ${getPersonName(item.composer)}`}
+                            </span>
+                          </h4>
+                        </div>
+                        <div className="flex gap-2 flex-shrink-0">
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-neutral hover:btn-accent"
+                            onClick={() =>
+                              onEditMMSourcePieceVersion(
+                                item.mMSourcePieceVersion,
+                              )
+                            }
+                          >
+                            <EditIcon className="w-4 h-4" />
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-neutral hover:btn-error"
+                            onClick={() =>
+                              onDeletePieceVersionInit(
+                                item.mMSourcePieceVersion.pieceVersionId,
+                              )
+                            }
+                          >
+                            <TrashIcon className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-neutral hover:btn-error"
-                        onClick={() =>
-                          onDeletePieceVersionInit(
-                            mMSourcePieceVersion.pieceVersionId,
-                          )
-                        }
-                      >
-                        <TrashIcon className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                </li>
-              );
+                  </li>
+                );
+              }
             })}
           </ul>
 
@@ -288,3 +353,85 @@ const SourceOnPieceVersionFormContainer = ({
 };
 
 export default SourceOnPieceVersionFormContainer;
+
+// First, let's create a utility function to process the data
+function processMMSourcePieceVersionsForDisplay(
+  mMSourcePieceVersions: MMSourcePieceVersionsState[],
+  feedFormState: any,
+) {
+  const processedGroups: Array<{
+    type: "collection" | "single";
+    collection?: any;
+    items: Array<{
+      mMSourcePieceVersion: MMSourcePieceVersionsState;
+      pieceVersion: any;
+      piece: any;
+      composer: any;
+      collection?: any;
+    }>;
+  }> = [];
+
+  let currentGroup: (typeof processedGroups)[0] | null = null;
+
+  mMSourcePieceVersions.forEach((mMSourcePieceVersion) => {
+    const pieceVersion = getEntityByIdOrKey(
+      feedFormState,
+      "pieceVersions",
+      mMSourcePieceVersion.pieceVersionId,
+    );
+    const piece = getEntityByIdOrKey(
+      feedFormState,
+      "pieces",
+      pieceVersion.pieceId,
+    );
+    const collection = getEntityByIdOrKey(
+      feedFormState,
+      "collections",
+      piece.collectionId,
+    );
+    const composer = getEntityByIdOrKey(
+      feedFormState,
+      "persons",
+      piece.composerId,
+    );
+
+    const item = {
+      mMSourcePieceVersion,
+      pieceVersion,
+      piece,
+      composer,
+      collection,
+    };
+
+    // If this piece has a collection
+    if (collection) {
+      // If we don't have a current group or the current group is for a different collection
+      if (
+        !currentGroup ||
+        currentGroup.type !== "collection" ||
+        currentGroup.collection?.id !== collection.id
+      ) {
+        // Start a new collection group
+        currentGroup = {
+          type: "collection",
+          collection,
+          items: [item],
+        };
+        processedGroups.push(currentGroup);
+      } else {
+        // Add to the existing collection group
+        currentGroup.items.push(item);
+      }
+    } else {
+      // This is a single piece (no collection)
+      currentGroup = {
+        type: "single",
+        items: [item],
+      };
+      processedGroups.push(currentGroup);
+      currentGroup = null; // Reset since single pieces don't continue grouping
+    }
+  });
+
+  return processedGroups;
+}
