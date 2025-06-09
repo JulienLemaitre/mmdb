@@ -123,7 +123,7 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
       deleteIdArray.forEach((idToDelete) => {
         const id = idKey || "id";
         // If we find an entity in state with the same id, we remove it
-        const isEntityInState = newState[action.type]?.find(
+        const isEntityInState = newState[action.type]?.some(
           (stateEntity) => idToDelete && stateEntity[id] === idToDelete,
         );
         if (isEntityInState) {

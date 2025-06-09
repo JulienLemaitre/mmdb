@@ -56,7 +56,11 @@ const SourceOnPieceVersionFormContainer = ({
   const [pieceVersionToDiscardId, setPieceVersionToDiscardId] = useState<
     string | null
   >();
-  const isConfirmationModalOpened = !!pieceVersionToDiscardId;
+  const [collectionToDiscardId, setCollectionToDiscardId] = useState<
+    string | null
+  >();
+  const isConfirmationModalOpened =
+    !!pieceVersionToDiscardId || !!collectionToDiscardId;
 
   const onFormOpen = (formType: "single" | "collection") => {
     setFormType(formType);
@@ -119,12 +123,31 @@ const SourceOnPieceVersionFormContainer = ({
   const onDeletePieceVersionInit = (pieceVersionId: string) => {
     setPieceVersionToDiscardId(pieceVersionId);
   };
-  const onDeletePieceVersionId = (pieceVersionId) => {
+  const onDeletePieceVersion = (pieceVersionId) => {
     updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
       deleteIdArray: [pieceVersionId],
       idKey: "pieceVersionId",
     });
     setPieceVersionToDiscardId(null);
+  };
+  const onDeleteCollectionInit = (collectionId: string) => {
+    setCollectionToDiscardId(collectionId);
+  };
+  const onDeleteCollection = (collectionId) => {
+    // mMSourcePieceVersions to be deleted are selected by their pieceVersionId
+    const pieceVersionIdListToDelete = (feedFormState.pieceVersions || [])
+      .filter((pv) =>
+        feedFormState.pieces?.some(
+          (p) => p.id === pv.pieceId && p.collectionId === collectionId,
+        ),
+      )
+      .map((pv) => pv.id);
+
+    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+      deleteIdArray: pieceVersionIdListToDelete,
+      idKey: "pieceVersionId",
+    });
+    setCollectionToDiscardId(null);
   };
 
   return (
@@ -230,11 +253,7 @@ const SourceOnPieceVersionFormContainer = ({
                               type="button"
                               className="btn btn-sm btn-outline btn-error hover:btn-error"
                               onClick={() => {
-                                // TODO: Implement collection deletion functionality
-                                console.log(
-                                  "Delete collection:",
-                                  group.collection.id,
-                                );
+                                onDeleteCollectionInit(group.collection.id);
                               }}
                             >
                               <TrashIcon className="w-4 h-4" />
@@ -341,9 +360,17 @@ const SourceOnPieceVersionFormContainer = ({
           />
           <NeedConfirmationModal
             modalId={needConfirmationModalId}
-            onConfirm={() => onDeletePieceVersionId(pieceVersionToDiscardId)}
-            onCancel={() => setPieceVersionToDiscardId(null)}
-            description={`Delete a piece version from the source`}
+            onConfirm={() =>
+              collectionToDiscardId
+                ? onDeleteCollection(collectionToDiscardId)
+                : onDeletePieceVersion(pieceVersionToDiscardId)
+            }
+            onCancel={() =>
+              collectionToDiscardId
+                ? setCollectionToDiscardId(null)
+                : setPieceVersionToDiscardId(null)
+            }
+            description={`Delete ${collectionToDiscardId ? `an entire collection` : `a piece version`} from the source`}
             isOpened={isConfirmationModalOpened}
           />
         </>
