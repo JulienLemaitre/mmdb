@@ -280,7 +280,7 @@ const SourceOnPieceVersionFormContainer = ({
                 return (
                   <li key={`collection-${group.collection.id}-${groupIndex}`}>
                     {/* Collection Container with unified border */}
-                    <div className="border-l-4 border-primary bg-gradient-to-r from-primary/5 to-transparent rounded-r-lg overflow-hidden">
+                    <div className="border-l-4 border-l-primary rounded-r-lg overflow-hidden border border-base-300 hover:shadow-sm hover:bg-primary/5 transition-all duration-150">
                       {/* Collection Header */}
                       <div className="p-4 bg-primary/10 border-b border-primary/20">
                         <div className="flex gap-4 items-center justify-between">
@@ -325,7 +325,7 @@ const SourceOnPieceVersionFormContainer = ({
                         {group.items.map((item, itemIndex) => (
                           <div
                             key={`${groupIndex}-${item.mMSourcePieceVersion.pieceVersionId}-${item.mMSourcePieceVersion.rank}`}
-                            className="px-6 py-2 hover:bg-primary/5 transition-colors duration-150"
+                            className="px-6 py-2"
                           >
                             <div className="flex items-center gap-3">
                               <div className="w-2 h-2 bg-primary/40 rounded-full flex-shrink-0"></div>
@@ -348,7 +348,7 @@ const SourceOnPieceVersionFormContainer = ({
                   <li
                     key={`single-${item.mMSourcePieceVersion.pieceVersionId}-${item.mMSourcePieceVersion.rank}`}
                   >
-                    <div className="p-4 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-sm transition-all duration-150">
+                    <div className="p-4 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-sm hover:bg-primary/5 transition-all duration-150">
                       <div className="flex gap-4 items-center justify-between">
                         <div className="flex-grow">
                           <h4 className="text-lg font-bold text-secondary">
