@@ -1,6 +1,7 @@
 import { FeedFormState } from "@/types/feedFormTypes";
 import getFeedFormTestState from "@/utils/getFeedFormTestState";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
+import getCollectionsPieceVersionsFormTestState from "@/utils/getCollectionsPieceVersionsFormTestState";
 
 export const TEMPO_INDICATION_NONE_ID = "6a16e457-6aeb-4802-a59e-4ce3b91cafa2";
 export const ONE_MM_REQUIRED = "At least one metronome mark is required.";
@@ -29,9 +30,11 @@ export const FEED_FORM_INITIAL_STATE: FeedFormState = {
   tempoIndications: [],
 };
 
+const COLLECTION_PIECE_VERSION_FORM_TEST_STATE =
+  getCollectionsPieceVersionsFormTestState();
 export const COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE: CollectionPieceVersionsFormState =
+  // COLLECTION_PIECE_VERSION_FORM_TEST_STATE || {
   {
-    // export const COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE: CollectionPieceVersionsFormState = TEST_STATE || {
     formInfo: {
       currentStepRank: 0,
     },

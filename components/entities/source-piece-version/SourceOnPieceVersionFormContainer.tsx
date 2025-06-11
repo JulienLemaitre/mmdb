@@ -22,6 +22,7 @@ import getPersonName from "@/components/entities/person/utils/getPersonName";
 import CollectionPieceVersionsFormContainer from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsFormContainer";
 import EditIcon from "@/components/svg/EditIcon";
 import dynamic from "next/dynamic";
+import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 
 type SourcePieceVersionSelectFormProps = {
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
@@ -45,9 +46,13 @@ const SourceOnPieceVersionFormContainer = ({
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
   const [formType, setFormType] =
     useState<SourceOnPieceVersionsFormType>("none");
-  const [editionInitState, setEditionInitState] =
-    useState<SinglePieceVersionFormState | null>(null);
-  const isEditMode = !!editionInitState;
+  const [
+    singlePieceVersionEditionInitState,
+    setSinglePieceVersionEditionInitState,
+  ] = useState<SinglePieceVersionFormState | null>(null);
+  const [collectionPieceVersionInitState, setCollectionPieceVersionInitState] =
+    useState<CollectionPieceVersionsFormState | null>(null);
+  const isEditMode = !!singlePieceVersionEditionInitState;
   const isFormOpen = !!feedFormState.formInfo?.isSourceOnPieceVersionformOpen;
   const isIntro =
     feedFormState?.mMSourcePieceVersions?.length === 0 && !isFormOpen;
@@ -70,9 +75,10 @@ const SourceOnPieceVersionFormContainer = ({
   };
 
   const onFormClose = () => {
-    // reset sourceOnPieceVersionForm and editionInitState
+    // reset sourceOnPieceVersionForm and singlePieceVersionEditionInitState
     setFormType("none");
-    setEditionInitState(null);
+    setSinglePieceVersionEditionInitState(null);
+    setCollectionPieceVersionInitState(null);
 
     // Close sourceOnPieceVersions form
     updateFeedForm(feedFormDispatch, "formInfo", {
@@ -117,7 +123,7 @@ const SourceOnPieceVersionFormContainer = ({
         id: pieceVersion.id,
       },
     };
-    setEditionInitState(singlePieceVersionFormEditState);
+    setSinglePieceVersionEditionInitState(singlePieceVersionFormEditState);
     onFormOpen("single");
   };
   const onDeletePieceVersionInit = (pieceVersionId: string) => {
@@ -129,6 +135,55 @@ const SourceOnPieceVersionFormContainer = ({
       idKey: "pieceVersionId",
     });
     setPieceVersionToDiscardId(null);
+  };
+
+  const onEditCollection = (collectionId: string) => {
+    const collectionPieceVersionList = feedFormState.pieceVersions?.filter(
+      (pv) =>
+        feedFormState.pieces?.some(
+          (p) => p.id === pv.pieceId && p.collectionId === collectionId,
+        ),
+    );
+    const collectionMMSourcePieceVersionList =
+      feedFormState.mMSourcePieceVersions?.filter((mMSourcePieceVersions) =>
+        collectionPieceVersionList?.some(
+          (pv) => pv.id === mMSourcePieceVersions.pieceVersionId,
+        ),
+      );
+    const collectionFirstMMSourceOnPieceVersionRank =
+      collectionMMSourcePieceVersionList?.[0]?.rank;
+    if (!collectionFirstMMSourceOnPieceVersionRank) {
+      console.log(
+        `[onEditCollection] No piece version rank found for collection ${collectionId}`,
+      );
+      return;
+    }
+
+    const collection = feedFormState.collections?.find(
+      ({ id }) => id === collectionId,
+    );
+    if (!collection) {
+      console.log(`[onEditCollection] Collection not found`);
+      return;
+    }
+
+    const collectionPieceVersionFormEditState: CollectionPieceVersionsFormState =
+      {
+        formInfo: {
+          currentStepRank: 0,
+          collectionFirstMMSourceOnPieceVersionRank,
+        },
+        collection: {
+          id: collectionId,
+          composerId: collection.composerId,
+          ...(collection.title && { title: collection.title }),
+        },
+        mMSourcePieceVersions: collectionMMSourcePieceVersionList.map(
+          (spv, index) => ({ ...spv, rank: index + 1 }),
+        ),
+      };
+    setCollectionPieceVersionInitState(collectionPieceVersionFormEditState);
+    onFormOpen("collection");
   };
   const onDeleteCollectionInit = (collectionId: string) => {
     setCollectionToDiscardId(collectionId);
@@ -179,7 +234,9 @@ const SourceOnPieceVersionFormContainer = ({
         <>
           <h1 className="mb-4 text-4xl font-bold">{title}</h1>
           {formType === "single" && (
-            <SinglePieceVersionFormProvider initialState={editionInitState}>
+            <SinglePieceVersionFormProvider
+              initialState={singlePieceVersionEditionInitState}
+            >
               <SinglePieceVersionFormContainer
                 onFormClose={onFormClose}
                 isEditMode={isEditMode}
@@ -187,8 +244,13 @@ const SourceOnPieceVersionFormContainer = ({
             </SinglePieceVersionFormProvider>
           )}
           {formType === "collection" && (
-            <CollectionPieceVersionsFormProvider>
-              <CollectionPieceVersionsFormContainer onFormClose={onFormClose} />
+            <CollectionPieceVersionsFormProvider
+              initialState={collectionPieceVersionInitState}
+            >
+              <CollectionPieceVersionsFormContainer
+                onFormClose={onFormClose}
+                isEditMode={isEditMode}
+              />
             </CollectionPieceVersionsFormProvider>
           )}
           <div className="grid grid-cols-2 gap-4 items-center mt-6 w-full max-w-2xl">
@@ -239,11 +301,7 @@ const SourceOnPieceVersionFormContainer = ({
                               type="button"
                               className="btn btn-sm btn-primary hover:btn-primary-focus"
                               onClick={() => {
-                                // TODO: Implement collection edit functionality
-                                console.log(
-                                  "Edit collection:",
-                                  group.collection.id,
-                                );
+                                onEditCollection(group.collection.id);
                               }}
                             >
                               <EditIcon className="w-4 h-4" />

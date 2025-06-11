@@ -27,10 +27,12 @@ import CollectionPieceVersionFormSummary from "@/components/multiStepSinglePiece
 
 type CollectionPieceVersionFormProps = {
   onFormClose: () => void;
+  isEditMode?: boolean;
 };
 
 function CollectionPieceVersionsFormContainer({
   onFormClose,
+  isEditMode,
 }: CollectionPieceVersionFormProps) {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
   const {
@@ -216,17 +218,27 @@ function CollectionPieceVersionsFormContainer({
       return;
     }
 
+    const isCollectionUpdate =
+      typeof collectionPieceVersionFormState.formInfo
+        .collectionFirstMMSourceOnPieceVersionRank === "number";
+    const lastRankBefore =
+      (typeof collectionPieceVersionFormState.formInfo
+        .collectionFirstMMSourceOnPieceVersionRank === "number"
+        ? collectionPieceVersionFormState.formInfo
+            .collectionFirstMMSourceOnPieceVersionRank // First sourceOnPieceVersion.rank in case of update
+        : (feedFormState.mMSourcePieceVersions || []).length) - 1;
     const payloadArray = sourceOnPieceVersions
       .toSorted((a, b) => (a.rank > b.rank ? 1 : -1))
       .map((sopv) => ({
         pieceVersionId: sopv.pieceVersionId,
-        rank: (feedFormState.mMSourcePieceVersions || []).length + sopv.rank,
+        rank: lastRankBefore + sopv.rank,
       }));
 
-    console.log(`[onAddSourceOnPieceVersions] payloadArray :`, payloadArray);
+    console.log(`[onSubmitSourceOnPieceVersions] payloadArray :`, payloadArray);
 
     updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
       array: payloadArray,
+      isCollectionUpdate,
     });
     onFormClose();
   };

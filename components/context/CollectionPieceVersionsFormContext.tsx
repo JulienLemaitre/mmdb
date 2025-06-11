@@ -21,8 +21,6 @@ import {
 } from "@/types/collectionPieceVersionFormTypes";
 import { COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE } from "@/utils/constants";
 
-const TEST_STATE = getCollectionsPieceVersionsFormTestState();
-
 const LOCAL_STORAGE_KEY = "collectionPieceVersionsForm";
 const USE_LOCAL_STORAGE = false;
 
@@ -49,10 +47,11 @@ function localStorageGetItem(key: string) {
 
 export function CollectionPieceVersionsFormProvider({
   children,
+  initialState,
 }: Readonly<CollectionPieceVersionsFormProviderProps>) {
   const [state, dispatch] = useReducer(
     collectionPieceVersionsFormReducer,
-    COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
+    initialState || COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
   );
 
   useEffect(() => {

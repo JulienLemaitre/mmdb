@@ -24,7 +24,7 @@ export default function MMSourceContributions() {
     updateFeedForm(dispatch, "mMSourceContributions", {
       array: selectedContributions,
       next: !!option?.goToNextStep,
-      replace: true,
+      reset: true,
     });
   };
 

@@ -30,6 +30,7 @@ export type CollectionPieceVersionsFormInfo = {
   currentStepRank: number;
   isSinglePieceVersionformOpen?: boolean;
   allSourcePieceVersionsDone?: boolean;
+  collectionFirstMMSourceOnPieceVersionRank?: number;
 };
 
 export type CollectionPieceVersionsFormState = {
@@ -43,4 +44,7 @@ export type CollectionPieceVersionsFormState = {
 };
 export type PersistableCollectionPieceVersionsFormState =
   Required<CollectionPieceVersionsFormState>;
-export type CollectionPieceVersionsFormProviderProps = { children: ReactNode };
+export type CollectionPieceVersionsFormProviderProps = {
+  children: ReactNode;
+  initialState?: CollectionPieceVersionsFormState | null;
+};

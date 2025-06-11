@@ -55,13 +55,20 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
   const isActionAllowed = allowedActions.has(action.type);
 
   if (isActionAllowed) {
-    const { array, deleteIdArray, idKey, next, replace, value } =
-      action.payload || {};
+    const {
+      array,
+      deleteIdArray,
+      idKey,
+      next,
+      reset,
+      value,
+      isCollectionUpdate,
+    } = action.payload || {};
 
     let newState = state;
 
-    // If payload is an entity array and replace = false, we update the entity in state if exists, or create it otherwise.
-    if (array && !replace) {
+    // If payload is an entity array and reset = false, we update the entity in state if exists, or create it otherwise.
+    if (array && !reset && !isCollectionUpdate) {
       // For each entity in the array
       array.forEach((entity) => {
         const id = idKey || "id";
@@ -90,8 +97,8 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
       });
     }
 
-    // If payload is an entity array and replace = true, we replace the entity array in state with the given array
-    if (array && replace) {
+    // If payload is an entity array and reset = true, we reset the entity array in state with the given array
+    if (array && reset && !isCollectionUpdate) {
       newState = {
         ...newState,
         [action.type]: array,
@@ -117,7 +124,113 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
       });
     }
 
-    // If payload is a deleteIdArray, we update the state accordingly
+    // In case of a collection update, we receive:
+    //  - the sourceOnPieceVersion array, that can have a different length than before update.
+    //  - the first sourceOnPieceVersion has the same starting rank as before update
+    //  => We need to do the following:
+    //    - compare the collection length before and after update.
+    //    - adjust the rank of sourceOnPieceVersions that come after the collection items accordingly.
+    if (
+      array &&
+      isCollectionUpdate &&
+      action.type === "mMSourcePieceVersions"
+    ) {
+      // Find the collectionId from the first item in the sourceOnPieceVersion array
+      if (array.length === 0) {
+        // If the array is empty, we can't proceed with collection update
+        console.warn(
+          "[feedFormReducer] Cannot perform collection update with empty array",
+        );
+        return state;
+      }
+
+      const firstSourceOnPieceVersion = array[0];
+      const firstPieceVersion = state.pieceVersions?.find(
+        (pv) => pv.id === firstSourceOnPieceVersion.pieceVersionId,
+      );
+
+      if (!firstPieceVersion) {
+        console.warn(
+          "[feedFormReducer] Cannot find piece version for collection update",
+        );
+        return state;
+      }
+
+      const firstPiece = state.pieces?.find(
+        (p) => p.id === firstPieceVersion.pieceId,
+      );
+
+      if (!firstPiece?.collectionId) {
+        console.warn(
+          "[feedFormReducer] Cannot find piece.collectionId for collection update",
+        );
+        return state;
+      }
+
+      const collectionId = firstPiece.collectionId;
+      const startingRank = firstSourceOnPieceVersion.rank;
+
+      // Count how many items the collection had in state before update
+      const collectionPieceVersionIds =
+        state.pieces
+          ?.filter((p) => p.collectionId === collectionId)
+          ?.map(
+            (p) => state.pieceVersions?.find((pv) => pv.pieceId === p.id)?.id,
+          )
+          ?.filter(Boolean) || [];
+
+      const existingCollectionSourceOnPieceVersions = (
+        state.mMSourcePieceVersions || []
+      ).filter((spv) => collectionPieceVersionIds.includes(spv.pieceVersionId));
+
+      const collectionCountBefore =
+        existingCollectionSourceOnPieceVersions.length;
+      const collectionCountAfter = array.length;
+      console.log(
+        `[feedFormReducer] Collection length before: ${collectionCountBefore} - after: ${collectionCountAfter}`,
+      );
+
+      // Items that come before this collection
+      const itemsBeforeCollection = (state.mMSourcePieceVersions || []).filter(
+        (spv) => spv.rank < startingRank,
+      );
+      console.log(
+        `[feedFormReducer] itemsBeforeCollection length :`,
+        itemsBeforeCollection.length,
+      );
+
+      // Get items that come after this collection in the source
+      const itemsAfterCollection = (state.mMSourcePieceVersions || []).filter(
+        (spv) => spv.rank > startingRank + collectionCountBefore - 1,
+      );
+      console.log(
+        `[feedFormReducer] itemsAfterCollection length :`,
+        itemsAfterCollection.length,
+      );
+
+      // If the collection size has changed, we need to adjust the rank of items that come after
+      const rankDifference = collectionCountAfter - collectionCountBefore;
+
+      // Items that come after with adjusted ranks
+      const adjustedItemsAfter = itemsAfterCollection.map((item) => ({
+        ...item,
+        rank: item.rank + rankDifference,
+      }));
+
+      // Remove existing collection items
+      let finalArray = [
+        ...itemsBeforeCollection,
+        ...array,
+        ...adjustedItemsAfter,
+      ];
+
+      newState = {
+        ...newState,
+        [action.type]: finalArray,
+      };
+    }
+
+    // If the payload is a deleteIdArray, we update the state accordingly
     if (deleteIdArray) {
       // For each entity in the array
       deleteIdArray.forEach((idToDelete) => {
@@ -191,9 +304,6 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
         rank: index + 1,
       }),
     );
-
-    // TODO: Make sure pieces from a same collection ranks are continuous and begin at 1
-    //  OR prevent the suppression of a piece from a collection, only single piece or whole collection can be deleted
 
     localStorageSetItem(FEED_FORM_LOCAL_STORAGE_KEY, newState);
     return newState;
