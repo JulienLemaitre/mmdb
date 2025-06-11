@@ -17,12 +17,19 @@ import TrashIcon from "@/components/svg/TrashIcon";
 import PlusIcon from "@/components/svg/PlusIcon";
 import { MMSourcePieceVersionsState } from "@/types/formTypes";
 import EditIcon from "@/components/svg/EditIcon";
+import dynamic from "next/dynamic";
 
 type CollectionPieceVersionsEditFormProps = {
   onSubmitSourceOnPieceVersions: (
     piecePieceVersions: MMSourcePieceVersionsState[],
   ) => void;
 };
+
+const needConfirmationModalId = "need-confirmation-modal";
+const NeedConfirmationModal = dynamic(
+  () => import("@/components/NeedConfirmationModal"),
+  { ssr: false },
+);
 
 function CollectionPieceVersionsEditForm({
   onSubmitSourceOnPieceVersions,
@@ -36,6 +43,12 @@ function CollectionPieceVersionsEditForm({
   const collectionPieceVersions = state.mMSourcePieceVersions || [];
   const newPieceDefaultTitle = `${state?.collection?.title} No.${(state.mMSourcePieceVersions || []).length + 1}`;
   const composerId = state?.collection?.composerId;
+
+  // For needConfirmation modal
+  const [pieceVersionToDiscardId, setPieceVersionToDiscardId] = useState<
+    string | null
+  >();
+  const isConfirmationModalOpened = !!pieceVersionToDiscardId;
 
   const onFormClose = () => {
     setEditionInitState(null);
@@ -83,16 +96,16 @@ function CollectionPieceVersionsEditForm({
     setIsFormOpen(true);
   };
 
-  const onDeletePieceVersionId = (pieceVersionId) => {
+  const onDeletePieceVersionInit = (pieceVersionId: string) => {
+    setPieceVersionToDiscardId(pieceVersionId);
+  };
+
+  const onDeletePieceVersion = (pieceVersionId) => {
     updateCollectionPieceVersionsForm(dispatch, "mMSourcePieceVersions", {
       deleteIdArray: [pieceVersionId],
       idKey: "pieceVersionId",
     });
-    // TODO copy feedFormReducer cleaning behavior in collectionPieceVersionsFormContext reducer instead of the following
-    // Delete new PieceVersion as well if exists
-    updateCollectionPieceVersionsForm(dispatch, "pieceVersions", {
-      deleteIdArray: [pieceVersionId],
-    });
+    setPieceVersionToDiscardId(null);
   };
 
   const onSubmit = () => {
@@ -189,7 +202,8 @@ function CollectionPieceVersionsEditForm({
                         type="button"
                         className="btn btn-sm btn-neutral hover:btn-error"
                         onClick={() =>
-                          onDeletePieceVersionId(
+                          // onDeletePieceVersionId(
+                          onDeletePieceVersionInit(
                             collectionPieceVersion.pieceVersionId,
                           )
                         }
@@ -226,6 +240,13 @@ function CollectionPieceVersionsEditForm({
           )}
         </>
       )}
+      <NeedConfirmationModal
+        modalId={needConfirmationModalId}
+        onConfirm={() => onDeletePieceVersion(pieceVersionToDiscardId)}
+        onCancel={() => setPieceVersionToDiscardId(null)}
+        description={`Delete a piece version from the collection`}
+        isOpened={isConfirmationModalOpened}
+      />
     </>
   );
 }
