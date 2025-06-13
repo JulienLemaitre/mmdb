@@ -111,7 +111,7 @@ function CollectionPieceVersionsEditForm({
   const onMovePiece = (pieceVersionId: string, direction: "up" | "down") => {
     // Get the mMSourcePieceVersion for this piece version
     const mMSourcePieceVersion = (state.mMSourcePieceVersions || []).find(
-      (spv) => spv.pieceVersionId === pieceVersionId
+      (spv) => spv.pieceVersionId === pieceVersionId,
     );
 
     if (!mMSourcePieceVersion) {
@@ -127,8 +127,7 @@ function CollectionPieceVersionsEditForm({
       }
     } else {
       if (
-        mMSourcePieceVersion.rank >=
-        (state.mMSourcePieceVersions || []).length
+        mMSourcePieceVersion.rank >= (state.mMSourcePieceVersions || []).length
       ) {
         console.log(`[onMovePiece] Piece is already at the bottom`);
         return;
@@ -216,10 +215,10 @@ function CollectionPieceVersionsEditForm({
                 <li
                   key={`${index}-${collectionPieceVersion.pieceVersionId}-${collectionPieceVersion.rank}`}
                 >
-                  <div className="p-4 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-sm hover:bg-primary/5 transition-all duration-150">
+                  <div className="px-4 py-3 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-sm hover:bg-primary/5 transition-all duration-150">
                     <div className="flex gap-4 items-center justify-between">
                       <div className="flex-grow">
-                        <h4 className="text-lg font-bold text-secondary">
+                        <h4 className="text-base font-bold text-secondary">
                           {`${index + 1} - ${piece.title}${!!composer && ` - ${getPersonName(composer)}`}`}
                         </h4>
                       </div>
@@ -250,7 +249,7 @@ function CollectionPieceVersionsEditForm({
                           onClick={() =>
                             onMovePiece(
                               collectionPieceVersion.pieceVersionId,
-                              "up"
+                              "up",
                             )
                           }
                           disabled={index === 0}
@@ -263,10 +262,12 @@ function CollectionPieceVersionsEditForm({
                           onClick={() =>
                             onMovePiece(
                               collectionPieceVersion.pieceVersionId,
-                              "down"
+                              "down",
                             )
                           }
-                          disabled={index === collectionPieceVersions.length - 1}
+                          disabled={
+                            index === collectionPieceVersions.length - 1
+                          }
                         >
                           ↓
                         </button>

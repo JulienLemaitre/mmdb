@@ -370,7 +370,7 @@ const SourceOnPieceVersionFormContainer = ({
                     {/* Collection Container with unified border */}
                     <div className="border-l-4 border-l-primary rounded-r-lg overflow-hidden border border-base-300 hover:shadow-sm hover:bg-primary/5 transition-all duration-150">
                       {/* Collection Header */}
-                      <div className="p-4 bg-primary/10 border-b border-primary/20">
+                      <div className="px-4 py-3 bg-primary/10 border-b border-primary/20">
                         <div className="flex gap-4 items-center justify-between">
                           <div>
                             <h3 className="text-xl font-bold text-primary mb-1">
@@ -436,14 +436,13 @@ const SourceOnPieceVersionFormContainer = ({
                       </div>
 
                       {/* Collection Pieces */}
-                      <div className="py-2">
+                      <div className="py-1">
                         {group.items.map((item, itemIndex) => (
                           <div
                             key={`${groupIndex}-${item.mMSourcePieceVersion.pieceVersionId}-${item.mMSourcePieceVersion.rank}`}
                             className="px-6 py-2"
                           >
                             <div className="flex items-center gap-3">
-                              <div className="w-2 h-2 bg-primary/40 rounded-full flex-shrink-0"></div>
                               <div className="flex-grow">
                                 <h4 className="text-base font-medium text-secondary">
                                   {`${item.mMSourcePieceVersion.rank} - ${item.piece.title}`}
@@ -463,10 +462,10 @@ const SourceOnPieceVersionFormContainer = ({
                   <li
                     key={`single-${item.mMSourcePieceVersion.pieceVersionId}-${item.mMSourcePieceVersion.rank}`}
                   >
-                    <div className="p-4 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-sm hover:bg-primary/5 transition-all duration-150">
+                    <div className="px-4 py-3 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-sm hover:bg-primary/5 transition-all duration-150">
                       <div className="flex gap-4 items-center justify-between">
                         <div className="flex-grow">
-                          <h4 className="text-lg font-bold text-secondary">
+                          <h4 className="text-base font-bold text-secondary">
                             {`${item.mMSourcePieceVersion.rank} - ${item.piece.title}`}
                             <span className="text-lg font-normal">
                               {!!item.composer &&
