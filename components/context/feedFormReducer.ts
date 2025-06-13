@@ -254,6 +254,375 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
       });
     }
 
+    // Handle moving a piece up or down
+    if (action.payload?.movePiece && action.type === "mMSourcePieceVersions") {
+      const { pieceVersionId, direction } = action.payload.movePiece;
+
+      // Find the mMSourcePieceVersions to move
+      const mMSourcePieceVersionsToMove = newState.mMSourcePieceVersions?.find(
+        (spv) => spv.pieceVersionId === pieceVersionId,
+      );
+
+      if (!mMSourcePieceVersionsToMove) {
+        console.warn(
+          `[feedFormReducer] Cannot find mMSourcePieceVersions to move for pieceVersionId: ${pieceVersionId}`,
+        );
+        return state;
+      }
+
+      // Find the target rank
+      const targetRank =
+        direction === "up"
+          ? mMSourcePieceVersionsToMove.rank - 1
+          : mMSourcePieceVersionsToMove.rank + 1;
+
+      // Find the piece at the target rank
+      const pieceAtTargetRank = newState.mMSourcePieceVersions?.find(
+        (spv) => spv.rank === targetRank,
+      );
+
+      if (!pieceAtTargetRank) {
+        console.warn(
+          `[feedFormReducer] Cannot find piece version at rank ${targetRank}`,
+        );
+        return state;
+      }
+
+      // Check if the piece at target rank is part of a collection
+      const pieceVersion = newState.pieceVersions?.find(
+        (pv) => pv.id === pieceAtTargetRank.pieceVersionId,
+      );
+
+      if (!pieceVersion) {
+        console.warn(
+          `[feedFormReducer] Cannot find piece version for pieceVersionId: ${pieceAtTargetRank.pieceVersionId}`,
+        );
+        return state;
+      }
+
+      const piece = newState.pieces?.find((p) => p.id === pieceVersion.pieceId);
+
+      if (!piece) {
+        console.warn(
+          `[feedFormReducer] Cannot find piece for pieceId: ${pieceVersion.pieceId}`,
+        );
+        return state;
+      }
+
+      // If the piece at target rank is part of a collection, we need to swap with the entire collection
+      if (piece.collectionId) {
+        // Find all pieces in the collection
+        const collectionPieceVersionIds =
+          newState.pieceVersions
+            ?.filter((pv) =>
+              newState.pieces?.some(
+                (p) =>
+                  p.id === pv.pieceId && p.collectionId === piece.collectionId,
+              ),
+            )
+            ?.map((pv) => pv.id) || [];
+
+        // Find all mMSourcePieceVersions for this collection
+        const collectionMMSourcePieceVersions =
+          newState.mMSourcePieceVersions?.filter((spv) =>
+            collectionPieceVersionIds.includes(spv.pieceVersionId),
+          );
+
+        if (
+          !collectionMMSourcePieceVersions ||
+          collectionMMSourcePieceVersions.length === 0
+        ) {
+          console.warn(
+            `[feedFormReducer] Cannot find mMSourcePieceVersions for collection: ${piece.collectionId}`,
+          );
+          return state;
+        }
+
+        // Find the first and last ranks in the collection
+        const collectionFirstRank = Math.min(
+          ...collectionMMSourcePieceVersions.map((spv) => spv.rank),
+        );
+        const collectionLastRank = Math.max(
+          ...collectionMMSourcePieceVersions.map((spv) => spv.rank),
+        );
+        const collectionLength = collectionLastRank - collectionFirstRank + 1;
+        console.log(`[] collectionLength :`, collectionLength);
+
+        console.log(
+          `[] collectionPieceVersionIds :`,
+          collectionPieceVersionIds,
+        );
+
+        // Update the ranks - true swap between single piece and collection
+        const updatedMMSourcePieceVersions = newState.mMSourcePieceVersions
+          ?.map((spv) => {
+            // If this is the mMSourcePieceVersion being moved (single piece)
+            if (spv.pieceVersionId === pieceVersionId) {
+              // Move the single mMSourcePieceVersion by the length of the collection being swapped with
+              return {
+                ...spv,
+                rank:
+                  direction === "up"
+                    ? spv.rank - collectionLength
+                    : spv.rank + collectionLength,
+              };
+            }
+
+            // If this mMSourcePieceVersion is in the swapped collection
+            if (collectionPieceVersionIds.includes(spv.pieceVersionId)) {
+              // Move the entire collection one rank up or down
+              return {
+                ...spv,
+                rank: spv.rank + (direction === "up" ? 1 : -1),
+              };
+            }
+
+            return spv;
+          })
+          .sort((a, b) => a.rank - b.rank);
+
+        newState = {
+          ...newState,
+          mMSourcePieceVersions: updatedMMSourcePieceVersions,
+        };
+
+        return newState;
+      } else {
+        // Simple case: swap with a single piece
+        const updatedPieces = newState.mMSourcePieceVersions
+          ?.map((spv) => {
+            if (spv.pieceVersionId === pieceVersionId) {
+              return { ...spv, rank: targetRank };
+            }
+            if (spv.pieceVersionId === pieceAtTargetRank.pieceVersionId) {
+              return { ...spv, rank: mMSourcePieceVersionsToMove.rank };
+            }
+            return spv;
+          })
+          .sort((a, b) => a.rank - b.rank);
+
+        newState = {
+          ...newState,
+          mMSourcePieceVersions: updatedPieces,
+        };
+
+        return newState;
+      }
+    }
+
+    // Handle moving a collection up or down
+    if (
+      action.payload?.moveCollection &&
+      action.type === "mMSourcePieceVersions"
+    ) {
+      const { collectionId, direction } = action.payload.moveCollection;
+      console.log(`[moveCollection] :`, {
+        collectionId,
+        direction,
+      });
+
+      // Find all pieces in the collection being moved
+      const collectionPieceVersionIds =
+        newState.pieceVersions
+          ?.filter((pv) =>
+            newState.pieces?.some(
+              (p) => p.id === pv.pieceId && p.collectionId === collectionId,
+            ),
+          )
+          ?.map((pv) => pv.id) || [];
+
+      // Find all mMSourcePieceVersions for this collection
+      const collectionPieces = newState.mMSourcePieceVersions?.filter((spv) =>
+        collectionPieceVersionIds.includes(spv.pieceVersionId),
+      );
+
+      if (!collectionPieces || collectionPieces.length === 0) {
+        console.warn(
+          `[feedFormReducer] Cannot find pieces for collection: ${collectionId}`,
+        );
+        return state;
+      }
+
+      // Find the first and last ranks in the collection
+      const firstRank = Math.min(...collectionPieces.map((spv) => spv.rank));
+      const lastRank = Math.max(...collectionPieces.map((spv) => spv.rank));
+
+      // Find the target rank (before or after the collection)
+      const targetRank = direction === "up" ? firstRank - 1 : lastRank + 1;
+
+      // Find the mMSourcePieceVersion at the target rank
+      const mMSourcePieceVersionAtTargetRank =
+        newState.mMSourcePieceVersions?.find((spv) => spv.rank === targetRank);
+
+      if (!mMSourcePieceVersionAtTargetRank) {
+        console.warn(
+          `[feedFormReducer] Cannot find piece at rank ${targetRank}`,
+        );
+        return state;
+      }
+
+      // Check if the piece at target rank is part of a collection
+      const targetPieceVersion = newState.pieceVersions?.find(
+        (pv) => pv.id === mMSourcePieceVersionAtTargetRank.pieceVersionId,
+      );
+
+      if (!targetPieceVersion) {
+        console.warn(
+          `[feedFormReducer] Cannot find piece version for pieceVersionId: ${mMSourcePieceVersionAtTargetRank.pieceVersionId}`,
+        );
+        return state;
+      }
+
+      const targetPiece = newState.pieces?.find(
+        (p) => p.id === targetPieceVersion.pieceId,
+      );
+
+      if (!targetPiece) {
+        console.warn(
+          `[feedFormReducer] Cannot find piece for pieceId: ${targetPieceVersion.pieceId}`,
+        );
+        return state;
+      }
+
+      // If the piece at target rank is part of another collection, we need to swap with that entire collection
+      if (
+        targetPiece.collectionId &&
+        targetPiece.collectionId !== collectionId
+      ) {
+        console.group(`[] Swap with a whole collection`);
+        // Find all pieces in the other collection
+        const otherCollectionPieceVersionIds =
+          newState.pieceVersions
+            ?.filter((pv) =>
+              newState.pieces?.some(
+                (p) =>
+                  p.id === pv.pieceId &&
+                  p.collectionId === targetPiece.collectionId,
+              ),
+            )
+            ?.map((pv) => pv.id) || [];
+        console.log(
+          `[] otherCollectionPieceVersionIds :`,
+          otherCollectionPieceVersionIds,
+        );
+
+        // Find all mMSourcePieceVersions for the other collection
+        const otherCollectionMMSourcePieceVersions =
+          newState.mMSourcePieceVersions?.filter((spv) =>
+            otherCollectionPieceVersionIds.includes(spv.pieceVersionId),
+          );
+
+        if (
+          !otherCollectionMMSourcePieceVersions ||
+          otherCollectionMMSourcePieceVersions.length === 0
+        ) {
+          console.warn(
+            `[feedFormReducer] Cannot find pieces for other collection: ${targetPiece.collectionId}`,
+          );
+          return state;
+        }
+
+        // Find the first and last ranks in the other collection
+        const otherFirstRank = Math.min(
+          ...otherCollectionMMSourcePieceVersions.map((spv) => spv.rank),
+        );
+        const otherLastRank = Math.max(
+          ...otherCollectionMMSourcePieceVersions.map((spv) => spv.rank),
+        );
+        console.log(`[] otherFirstRank :`, otherFirstRank);
+        console.log(`[] otherLastRank :`, otherLastRank);
+
+        // Update the ranks - we need to swap the positions of the two collection's pieces by the length of the other collection
+        const updatedPieces = newState.mMSourcePieceVersions
+          ?.map((spv) => {
+            // If this mMSourcePieceVersion is in the collection being moved
+            if (collectionPieceVersionIds.includes(spv.pieceVersionId)) {
+              const otherCollectionLength = otherLastRank - otherFirstRank + 1;
+              return {
+                ...spv,
+                rank:
+                  direction === "up"
+                    ? spv.rank - otherCollectionLength
+                    : spv.rank + otherCollectionLength,
+              };
+            }
+
+            // If this mMSourcePieceVersion is in the other collection being swapped
+            if (otherCollectionPieceVersionIds.includes(spv.pieceVersionId)) {
+              const collectionLength = lastRank - firstRank + 1;
+              return {
+                ...spv,
+                rank:
+                  direction === "up"
+                    ? spv.rank + collectionLength
+                    : spv.rank - collectionLength,
+              };
+            }
+
+            return spv;
+          })
+          .sort((a, b) => a.rank - b.rank);
+
+        newState = {
+          ...newState,
+          mMSourcePieceVersions: updatedPieces,
+        };
+
+        return newState;
+      } else {
+        console.group(`[feedFormReducer] Swap with a single piece`);
+        console.log(
+          `[] collectionPieceVersionIds :`,
+          collectionPieceVersionIds,
+        );
+        // Simple case: swap with a single piece
+        let mMSourcePieceVersionsToSwap = [mMSourcePieceVersionAtTargetRank];
+        console.log(
+          `[] mMSourcePieceVersionsToSwap :`,
+          mMSourcePieceVersionsToSwap,
+        );
+
+        // Update the ranks
+        const updatedPieces = newState.mMSourcePieceVersions
+          ?.map((spv) => {
+            // If this mMSourcePieceVersion is in the collection being moved
+            if (collectionPieceVersionIds.includes(spv.pieceVersionId)) {
+              return {
+                ...spv,
+                rank: direction === "up" ? spv.rank - 1 : spv.rank + 1,
+              };
+            }
+
+            // If this is the mMSourcePieceVersion to swap with
+            if (
+              mMSourcePieceVersionsToSwap.some(
+                (spvts) => spvts.pieceVersionId === spv.pieceVersionId,
+              )
+            ) {
+              return {
+                ...spv,
+                rank:
+                  direction === "up"
+                    ? spv.rank + collectionPieces.length
+                    : spv.rank - collectionPieces.length,
+              };
+            }
+
+            return spv;
+          })
+          .sort((a, b) => a.rank - b.rank);
+        console.log(`[] updatedPieces :`, updatedPieces);
+        console.groupEnd();
+
+        newState = {
+          ...newState,
+          mMSourcePieceVersions: updatedPieces,
+        };
+
+        return newState;
+      }
+    }
+
     // otherwise, the payload is an object, we update the state object accordingly
     if (value) {
       newState = {

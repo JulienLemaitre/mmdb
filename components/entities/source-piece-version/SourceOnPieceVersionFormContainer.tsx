@@ -205,6 +205,94 @@ const SourceOnPieceVersionFormContainer = ({
     setCollectionToDiscardId(null);
   };
 
+  const onMoveCollection = (collectionId: string, direction: "up" | "down") => {
+    // Get all piece versions in this collection
+    const collectionPieceVersionIds = (feedFormState.pieceVersions || [])
+      .filter((pv) =>
+        feedFormState.pieces?.some(
+          (p) => p.id === pv.pieceId && p.collectionId === collectionId,
+        ),
+      )
+      .map((pv) => pv.id);
+
+    // Get all mMSourcePieceVersions for this collection
+    const collectionMMSourcePieceVersions = (
+      feedFormState.mMSourcePieceVersions || []
+    ).filter((spv) => collectionPieceVersionIds.includes(spv.pieceVersionId));
+
+    if (collectionMMSourcePieceVersions.length === 0) {
+      console.log(
+        `[onMoveCollection] No piece versions found for collection ${collectionId}`,
+      );
+      return;
+    }
+
+    // Check boundaries based on direction
+    if (direction === "up") {
+      const firstRank = Math.min(
+        ...collectionMMSourcePieceVersions.map((spv) => spv.rank),
+      );
+
+      if (firstRank <= 1) {
+        console.log(`[onMoveCollection] Collection is already at the top`);
+        return;
+      }
+    } else {
+      const lastRank = Math.max(
+        ...collectionMMSourcePieceVersions.map((spv) => spv.rank),
+      );
+
+      if (lastRank >= (feedFormState.mMSourcePieceVersions || []).length) {
+        console.log(`[onMoveCollection] Collection is already at the bottom`);
+        return;
+      }
+    }
+
+    // Move the collection
+    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+      moveCollection: {
+        collectionId,
+        direction,
+      },
+    });
+  };
+
+  const onMovePiece = (pieceVersionId: string, direction: "up" | "down") => {
+    // Get the mMSourcePieceVersion for this piece version
+    const mMSourcePieceVersion = (
+      feedFormState.mMSourcePieceVersions || []
+    ).find((spv) => spv.pieceVersionId === pieceVersionId);
+
+    if (!mMSourcePieceVersion) {
+      console.log(`[onMovePiece] Piece version not found: ${pieceVersionId}`);
+      return;
+    }
+
+    // Check boundaries based on direction
+    if (direction === "up") {
+      if (mMSourcePieceVersion.rank <= 1) {
+        console.log(`[onMovePiece] Piece is already at the top`);
+        return;
+      }
+    } else {
+      if (
+        mMSourcePieceVersion.rank >=
+        (feedFormState.mMSourcePieceVersions || []).length
+      ) {
+        console.log(`[onMovePiece] Piece is already at the bottom`);
+        return;
+      }
+    }
+
+    // Move the piece
+    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+      movePiece: {
+        pieceVersionId,
+        direction,
+      },
+    });
+  };
+
   return (
     <>
       {isIntro ? (
@@ -316,6 +404,33 @@ const SourceOnPieceVersionFormContainer = ({
                             >
                               <TrashIcon className="w-4 h-4" />
                             </button>
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-outline btn-neutral"
+                              onClick={() => {
+                                onMoveCollection(group.collection.id, "up");
+                              }}
+                              disabled={groupIndex === 0}
+                            >
+                              ↑
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-outline btn-neutral"
+                              onClick={() => {
+                                onMoveCollection(group.collection.id, "down");
+                              }}
+                              disabled={
+                                groupIndex ===
+                                processMMSourcePieceVersionsForDisplay(
+                                  mMSourcePieceVersions,
+                                  feedFormState,
+                                ).length -
+                                  1
+                              }
+                            >
+                              ↓
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -381,6 +496,35 @@ const SourceOnPieceVersionFormContainer = ({
                             }
                           >
                             <TrashIcon className="w-4 h-4" />
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-neutral"
+                            onClick={() =>
+                              onMovePiece(
+                                item.mMSourcePieceVersion.pieceVersionId,
+                                "up",
+                              )
+                            }
+                            disabled={item.mMSourcePieceVersion.rank === 1}
+                          >
+                            ↑
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-neutral"
+                            onClick={() =>
+                              onMovePiece(
+                                item.mMSourcePieceVersion.pieceVersionId,
+                                "down",
+                              )
+                            }
+                            disabled={
+                              item.mMSourcePieceVersion.rank ===
+                              mMSourcePieceVersions.length
+                            }
+                          >
+                            ↓
                           </button>
                         </div>
                       </div>
