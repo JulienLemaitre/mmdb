@@ -108,6 +108,42 @@ function CollectionPieceVersionsEditForm({
     setPieceVersionToDiscardId(null);
   };
 
+  const onMovePiece = (pieceVersionId: string, direction: "up" | "down") => {
+    // Get the mMSourcePieceVersion for this piece version
+    const mMSourcePieceVersion = (state.mMSourcePieceVersions || []).find(
+      (spv) => spv.pieceVersionId === pieceVersionId
+    );
+
+    if (!mMSourcePieceVersion) {
+      console.log(`[onMovePiece] Piece version not found: ${pieceVersionId}`);
+      return;
+    }
+
+    // Check boundaries based on direction
+    if (direction === "up") {
+      if (mMSourcePieceVersion.rank <= 1) {
+        console.log(`[onMovePiece] Piece is already at the top`);
+        return;
+      }
+    } else {
+      if (
+        mMSourcePieceVersion.rank >=
+        (state.mMSourcePieceVersions || []).length
+      ) {
+        console.log(`[onMovePiece] Piece is already at the bottom`);
+        return;
+      }
+    }
+
+    // Move the piece
+    updateCollectionPieceVersionsForm(dispatch, "mMSourcePieceVersions", {
+      movePiece: {
+        pieceVersionId,
+        direction,
+      },
+    });
+  };
+
   const onSubmit = () => {
     // Transfer from collection form to feed form
     onSubmitSourceOnPieceVersions(collectionPieceVersions);
@@ -158,7 +194,7 @@ function CollectionPieceVersionsEditForm({
         </>
       ) : (
         <>
-          <ul className="my-4 max-w-[65ch]">
+          <ul className="my-4 max-w-[65ch] space-y-6">
             {collectionPieceVersions.map((collectionPieceVersion, index) => {
               const pieceVersion = getEntityByIdOrKey(
                 feedFormState,
@@ -180,36 +216,61 @@ function CollectionPieceVersionsEditForm({
                 <li
                   key={`${index}-${collectionPieceVersion.pieceVersionId}-${collectionPieceVersion.rank}`}
                 >
-                  <div className="mt-6 flex gap-4 items-end w-full">
-                    <div className="flex-grow">
-                      <h4 className="text-lg font-bold text-secondary">
-                        {`${index + 1} - ${piece.title}${!!composer && ` | ${getPersonName(composer)}`}`}
-                      </h4>
-                    </div>
-                    <div>
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-neutral hover:btn-accent"
-                        onClick={() =>
-                          onEditCollectionPieceVersion(collectionPieceVersion)
-                        }
-                      >
-                        <EditIcon className="w-4 h-4" />
-                      </button>
-                    </div>
-                    <div>
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-neutral hover:btn-error"
-                        onClick={() =>
-                          // onDeletePieceVersionId(
-                          onDeletePieceVersionInit(
-                            collectionPieceVersion.pieceVersionId,
-                          )
-                        }
-                      >
-                        <TrashIcon className="w-4 h-4" />
-                      </button>
+                  <div className="p-4 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-sm hover:bg-primary/5 transition-all duration-150">
+                    <div className="flex gap-4 items-center justify-between">
+                      <div className="flex-grow">
+                        <h4 className="text-lg font-bold text-secondary">
+                          {`${index + 1} - ${piece.title}${!!composer && ` - ${getPersonName(composer)}`}`}
+                        </h4>
+                      </div>
+                      <div className="flex gap-2 flex-shrink-0">
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-neutral hover:btn-accent"
+                          onClick={() =>
+                            onEditCollectionPieceVersion(collectionPieceVersion)
+                          }
+                        >
+                          <EditIcon className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-neutral hover:btn-error"
+                          onClick={() =>
+                            onDeletePieceVersionInit(
+                              collectionPieceVersion.pieceVersionId,
+                            )
+                          }
+                        >
+                          <TrashIcon className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-neutral"
+                          onClick={() =>
+                            onMovePiece(
+                              collectionPieceVersion.pieceVersionId,
+                              "up"
+                            )
+                          }
+                          disabled={index === 0}
+                        >
+                          ↑
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-neutral"
+                          onClick={() =>
+                            onMovePiece(
+                              collectionPieceVersion.pieceVersionId,
+                              "down"
+                            )
+                          }
+                          disabled={index === collectionPieceVersions.length - 1}
+                        >
+                          ↓
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </li>

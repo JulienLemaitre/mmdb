@@ -153,6 +153,61 @@ export function collectionPieceVersionsFormReducer(
       });
     }
 
+    // Handle moving a piece up or down
+    if (action.payload?.movePiece && action.type === "mMSourcePieceVersions") {
+      const { pieceVersionId, direction } = action.payload.movePiece;
+
+      // Find the mMSourcePieceVersion to move
+      const mMSourcePieceVersionToMove = newState.mMSourcePieceVersions?.find(
+        (spv) => spv.pieceVersionId === pieceVersionId,
+      );
+
+      if (!mMSourcePieceVersionToMove) {
+        console.warn(
+          `[collectionPieceVersionsFormReducer] Cannot find mMSourcePieceVersion to move for pieceVersionId: ${pieceVersionId}`,
+        );
+        return state;
+      }
+
+      // Find the target rank
+      const targetRank =
+        direction === "up"
+          ? mMSourcePieceVersionToMove.rank - 1
+          : mMSourcePieceVersionToMove.rank + 1;
+
+      // Find the piece at the target rank
+      const pieceAtTargetRank = newState.mMSourcePieceVersions?.find(
+        (spv) => spv.rank === targetRank,
+      );
+
+      if (!pieceAtTargetRank) {
+        console.warn(
+          `[collectionPieceVersionsFormReducer] Cannot find piece version at rank ${targetRank}`,
+        );
+        return state;
+      }
+
+      // Simple case: swap with a single piece
+      const updatedPieces = newState.mMSourcePieceVersions
+        ?.map((spv) => {
+          if (spv.pieceVersionId === pieceVersionId) {
+            return { ...spv, rank: targetRank };
+          }
+          if (spv.pieceVersionId === pieceAtTargetRank.pieceVersionId) {
+            return { ...spv, rank: mMSourcePieceVersionToMove.rank };
+          }
+          return spv;
+        })
+        .sort((a, b) => a.rank - b.rank);
+
+      newState = {
+        ...newState,
+        mMSourcePieceVersions: updatedPieces,
+      };
+
+      return newState;
+    }
+
     // otherwise, the payload is an object, we update the state object accordingly
     if (value) {
       newState = {
