@@ -356,7 +356,7 @@ const SourceOnPieceVersionFormContainer = ({
       {!isFormOpen && (
         <>
           {!isIntro && <h1 className="mb-4 text-4xl font-bold">{title}</h1>}
-          <ul className="my-4 max-w-[65ch] space-y-6">
+          <ul className="my-4 max-w-[65ch] space-y-4">
             {processMMSourcePieceVersionsForDisplay(
               mMSourcePieceVersions,
               feedFormState,
@@ -368,14 +368,14 @@ const SourceOnPieceVersionFormContainer = ({
                 return (
                   <li key={`collection-${group.collection.id}-${groupIndex}`}>
                     {/* Collection Container with unified border */}
-                    <div className="border-l-4 border-l-primary rounded-r-lg overflow-hidden border border-base-300 hover:shadow-sm hover:bg-primary/5 transition-all duration-150">
+                    <div className="border-l-2 border-l-primary rounded-lg overflow-hidden border border-base-300 hover:shadow-sm hover:bg-primary/5 transition-all duration-150">
                       {/* Collection Header */}
                       <div className="px-4 py-3 bg-primary/10 border-b border-primary/20">
                         <div className="flex gap-4 items-center justify-between">
                           <div>
-                            <h3 className="text-xl font-bold text-primary mb-1">
+                            <h3 className="text-base font-bold text-primary mb-1">
                               {group.collection.title}
-                              <span className="text-lg font-normal">
+                              <span className="text-base font-normal">
                                 {composer && ` - ${getPersonName(composer)}`}
                               </span>
                             </h3>
@@ -467,7 +467,7 @@ const SourceOnPieceVersionFormContainer = ({
                         <div className="flex-grow">
                           <h4 className="text-base font-bold text-secondary">
                             {`${item.mMSourcePieceVersion.rank} - ${item.piece.title}`}
-                            <span className="text-lg font-normal">
+                            <span className="text-base font-normal">
                               {!!item.composer &&
                                 ` - ${getPersonName(item.composer)}`}
                             </span>

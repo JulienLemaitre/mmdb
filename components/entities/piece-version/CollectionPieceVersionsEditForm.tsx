@@ -193,7 +193,7 @@ function CollectionPieceVersionsEditForm({
         </>
       ) : (
         <>
-          <ul className="my-4 max-w-[65ch] space-y-6">
+          <ul className="my-4 max-w-[65ch] space-y-4">
             {collectionPieceVersions.map((collectionPieceVersion, index) => {
               const pieceVersion = getEntityByIdOrKey(
                 feedFormState,
@@ -219,7 +219,7 @@ function CollectionPieceVersionsEditForm({
                     <div className="flex gap-4 items-center justify-between">
                       <div className="flex-grow">
                         <h4 className="text-base font-bold text-secondary">
-                          {`${index + 1} - ${piece.title}${!!composer && ` - ${getPersonName(composer)}`}`}
+                          {`${index + 1} - ${piece.title}`}
                         </h4>
                       </div>
                       <div className="flex gap-2 flex-shrink-0">
