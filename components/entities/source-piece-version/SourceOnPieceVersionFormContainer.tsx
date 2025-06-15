@@ -52,7 +52,9 @@ const SourceOnPieceVersionFormContainer = ({
   ] = useState<SinglePieceVersionFormState | null>(null);
   const [collectionPieceVersionInitState, setCollectionPieceVersionInitState] =
     useState<CollectionPieceVersionsFormState | null>(null);
-  const isEditMode = !!singlePieceVersionEditionInitState;
+  const isEditMode = !!(
+    singlePieceVersionEditionInitState || collectionPieceVersionInitState
+  );
   const isFormOpen = !!feedFormState.formInfo?.isSourceOnPieceVersionformOpen;
   const isIntro =
     feedFormState?.mMSourcePieceVersions?.length === 0 && !isFormOpen;
