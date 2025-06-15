@@ -387,17 +387,16 @@ const SourceOnPieceVersionFormContainer = ({
                           <div className="flex gap-2">
                             <button
                               type="button"
-                              className="btn btn-sm btn-primary hover:btn-primary-focus"
+                              className="btn btn-sm btn-ghost hover:bg-accent"
                               onClick={() => {
                                 onEditCollection(group.collection.id);
                               }}
                             >
                               <EditIcon className="w-4 h-4" />
-                              Edit Collection
                             </button>
                             <button
                               type="button"
-                              className="btn btn-sm btn-outline btn-error hover:btn-error"
+                              className="btn btn-sm btn-ghost hover:bg-error"
                               onClick={() => {
                                 onDeleteCollectionInit(group.collection.id);
                               }}
@@ -406,7 +405,7 @@ const SourceOnPieceVersionFormContainer = ({
                             </button>
                             <button
                               type="button"
-                              className="btn btn-sm btn-outline btn-neutral"
+                              className="btn btn-sm btn-ghost disabled:bg-transparent"
                               onClick={() => {
                                 onMoveCollection(group.collection.id, "up");
                               }}
@@ -416,7 +415,7 @@ const SourceOnPieceVersionFormContainer = ({
                             </button>
                             <button
                               type="button"
-                              className="btn btn-sm btn-outline btn-neutral"
+                              className="btn btn-sm btn-ghost disabled:bg-transparent"
                               onClick={() => {
                                 onMoveCollection(group.collection.id, "down");
                               }}
@@ -476,7 +475,7 @@ const SourceOnPieceVersionFormContainer = ({
                         <div className="flex gap-2 flex-shrink-0">
                           <button
                             type="button"
-                            className="btn btn-sm btn-neutral hover:btn-accent"
+                            className="btn btn-sm btn-ghost hover:bg-accent"
                             onClick={() =>
                               onEditMMSourcePieceVersion(
                                 item.mMSourcePieceVersion,
@@ -487,7 +486,7 @@ const SourceOnPieceVersionFormContainer = ({
                           </button>
                           <button
                             type="button"
-                            className="btn btn-sm btn-neutral hover:btn-error"
+                            className="btn btn-sm btn-ghost hover:bg-error"
                             onClick={() =>
                               onDeletePieceVersionInit(
                                 item.mMSourcePieceVersion.pieceVersionId,
@@ -498,7 +497,7 @@ const SourceOnPieceVersionFormContainer = ({
                           </button>
                           <button
                             type="button"
-                            className="btn btn-sm btn-neutral"
+                            className="btn btn-sm btn-ghost disabled:bg-transparent"
                             onClick={() =>
                               onMovePiece(
                                 item.mMSourcePieceVersion.pieceVersionId,
@@ -511,7 +510,7 @@ const SourceOnPieceVersionFormContainer = ({
                           </button>
                           <button
                             type="button"
-                            className="btn btn-sm btn-neutral"
+                            className="btn btn-sm btn-ghost disabled:bg-transparent"
                             onClick={() =>
                               onMovePiece(
                                 item.mMSourcePieceVersion.pieceVersionId,
