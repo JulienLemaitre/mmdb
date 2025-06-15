@@ -387,7 +387,7 @@ const SourceOnPieceVersionFormContainer = ({
                           <div className="flex gap-2">
                             <button
                               type="button"
-                              className="btn btn-sm btn-ghost hover:bg-accent"
+                              className="btn btn-sm btn-ghost hover:bg-accent hover:text-neutral"
                               onClick={() => {
                                 onEditCollection(group.collection.id);
                               }}
@@ -396,7 +396,7 @@ const SourceOnPieceVersionFormContainer = ({
                             </button>
                             <button
                               type="button"
-                              className="btn btn-sm btn-ghost hover:bg-error"
+                              className="btn btn-sm btn-ghost hover:bg-error hover:text-neutral"
                               onClick={() => {
                                 onDeleteCollectionInit(group.collection.id);
                               }}
@@ -475,7 +475,7 @@ const SourceOnPieceVersionFormContainer = ({
                         <div className="flex gap-2 flex-shrink-0">
                           <button
                             type="button"
-                            className="btn btn-sm btn-ghost hover:bg-accent"
+                            className="btn btn-sm btn-ghost hover:bg-accent hover:text-neutral"
                             onClick={() =>
                               onEditMMSourcePieceVersion(
                                 item.mMSourcePieceVersion,
@@ -486,7 +486,7 @@ const SourceOnPieceVersionFormContainer = ({
                           </button>
                           <button
                             type="button"
-                            className="btn btn-sm btn-ghost hover:bg-error"
+                            className="btn btn-sm btn-ghost hover:bg-error hover:text-neutral"
                             onClick={() =>
                               onDeletePieceVersionInit(
                                 item.mMSourcePieceVersion.pieceVersionId,
