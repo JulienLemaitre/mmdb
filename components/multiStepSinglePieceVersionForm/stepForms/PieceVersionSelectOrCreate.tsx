@@ -17,7 +17,6 @@ type PieceVersionSelectOrCreateProps = {
   onCancelPieceVersionCreation: () => void;
   isCollectionCreationMode?: boolean;
   isEditMode?: boolean;
-  hasComposerJustBeenCreated: boolean;
   hasPieceJustBeenCreated: boolean;
   hasPieceVersionJustBeenCreated: boolean;
 };

@@ -173,7 +173,6 @@ export default function CollectionPieceVersionsSelectFormContainer({
             onCancelPieceVersionCreation={onCancelPieceVersionCreation}
             hasPieceVersionJustBeenCreated={false}
             hasPieceJustBeenCreated={false}
-            hasComposerJustBeenCreated={false}
           />
         </>
       )}
