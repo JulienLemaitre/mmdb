@@ -49,7 +49,7 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
       },
     };
     localStorageSetItem(FEED_FORM_LOCAL_STORAGE_KEY, newState);
-    return;
+    return newState;
   }
 
   const isActionAllowed = allowedActions.has(action.type);
