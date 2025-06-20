@@ -259,6 +259,7 @@ function CollectionPieceVersionsFormContainer({
         <StepFormComponent
           onFormClose={onFormClose}
           feedFormState={feedFormState}
+          isEditMode={isEditMode}
           // Composer
           selectedComposerId={selectedComposerId}
           hasComposerJustBeenCreated={

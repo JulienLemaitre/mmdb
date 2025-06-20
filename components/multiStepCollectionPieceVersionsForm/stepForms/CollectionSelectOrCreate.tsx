@@ -17,6 +17,7 @@ type CollectionSelectOrCreateProps = {
   onCancelCollectionCreation: () => void;
   hasComposerJustBeenCreated: boolean;
   hasCollectionJustBeenCreated: boolean;
+  isEditMode: boolean;
 };
 
 const CollectionSelectOrCreate = ({
@@ -29,15 +30,20 @@ const CollectionSelectOrCreate = ({
   hasCollectionJustBeenCreated,
   onInitCollectionCreation: onInitCollectionCreationFn,
   onCancelCollectionCreation,
+  isEditMode,
 }: CollectionSelectOrCreateProps) => {
   const [collections, setCollections] = useState<CollectionState[] | null>(
     null,
   );
   const [isLoading, setIsLoading] = useState(!hasComposerJustBeenCreated);
-  const [isCreation, setIsCreation] = useState(hasComposerJustBeenCreated);
   const newCollections = getNewEntities(feedFormState, "collections", {
     includeUnusedInFeedForm: true,
   }).filter((collection) => collection.composerId === selectedComposerId);
+  const isNewCollectionUpdate =
+    isEditMode && newCollections.some((c) => c.id === selectedCollectionId);
+  const [isCreation, setIsCreation] = useState(
+    hasComposerJustBeenCreated || isNewCollectionUpdate,
+  );
   let collectionFullList = [...(collections || []), ...(newCollections || [])];
 
   // If we have new collections, we need to sort the collectionFullList
