@@ -171,6 +171,9 @@ export default function CollectionPieceVersionsSelectFormContainer({
             // singlePieceVersionFormState={singlePieceVersionFormState}
             onInitPieceVersionCreation={onInitPieceVersionCreation}
             onCancelPieceVersionCreation={onCancelPieceVersionCreation}
+            hasPieceVersionJustBeenCreated={false}
+            hasPieceJustBeenCreated={false}
+            hasComposerJustBeenCreated={false}
           />
         </>
       )}
