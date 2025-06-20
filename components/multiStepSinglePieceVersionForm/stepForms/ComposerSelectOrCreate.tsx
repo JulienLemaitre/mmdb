@@ -15,6 +15,7 @@ type ComposerSelectOrCreateProps = {
   onInitComposerCreation: () => void;
   onCancelComposerCreation: () => void;
   hasComposerJustBeenCreated: boolean;
+  isEditMode?: boolean;
 };
 
 const ComposerSelectOrCreate = ({
@@ -25,17 +26,22 @@ const ComposerSelectOrCreate = ({
   onInitComposerCreation: onInitComposerCreationFn,
   onCancelComposerCreation,
   hasComposerJustBeenCreated,
+  isEditMode,
 }: ComposerSelectOrCreateProps) => {
-  // Composer has just been created in the present form
   const [composers, setComposers] = useState<PersonState[] | null>(null);
   const [isLoading, setIsLoading] = useState(!hasComposerJustBeenCreated);
-  const [isCreation, setIsCreation] = useState(hasComposerJustBeenCreated);
+
   const newPersons = getNewEntities(feedFormState, "persons", {
     includeUnusedInFeedForm: true,
   });
   const newSelectedComposer = newPersons?.find(
     (person) => person.id === selectedComposerId,
   );
+  const isNewComposerUpdate = isEditMode && !!newSelectedComposer;
+  const [isCreation, setIsCreation] = useState(
+    hasComposerJustBeenCreated || isNewComposerUpdate,
+  );
+
   let composerFullList = [...(composers || []), ...(newPersons || [])];
 
   // If we have new composers, we need to sort the composerFullList

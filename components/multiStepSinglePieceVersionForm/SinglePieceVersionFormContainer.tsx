@@ -360,6 +360,7 @@ const SinglePieceVersionFormContainer = ({
           onComposerCreated={onComposerCreated}
           // Piece
           selectedPieceId={singlePieceVersionFormState?.piece?.id}
+          hasPieceJustBeenCreated={!!singlePieceVersionFormState?.piece?.isNew}
           onPieceSelect={onPieceSelect}
           onInitPieceCreation={onInitPieceCreation}
           onCancelPieceCreation={onCancelPieceCreation}
@@ -367,6 +368,9 @@ const SinglePieceVersionFormContainer = ({
           newPieceDefaultTitle={newPieceDefaultTitle}
           // PieceVersion
           selectedPieceVersionId={singlePieceVersionFormState?.pieceVersion?.id}
+          hasPieceVersionJustBeenCreated={
+            !!singlePieceVersionFormState?.pieceVersion?.isNew
+          }
           onInitPieceVersionCreation={onInitPieceVersionCreation}
           onCancelPieceVersionCreation={onCancelPieceVersionCreation}
           onPieceVersionCreated={onPieceVersionCreated}

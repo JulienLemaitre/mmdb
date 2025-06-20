@@ -7,11 +7,9 @@ import PieceEditForm from "@/components/entities/piece/PieceEditForm";
 import PieceSelectForm from "@/components/entities/piece/PieceSelectForm";
 import { URL_API_GETALL_COMPOSER_PIECES } from "@/utils/routes";
 import { FeedFormState } from "@/types/feedFormTypes";
-import { SinglePieceVersionFormState } from "@/components/context/SinglePieceVersionFormContext";
 
 type PieceSelectOrCreate = {
   feedFormState: FeedFormState;
-  singlePieceVersionFormState: SinglePieceVersionFormState;
   onPieceCreated: (piece: PieceInput) => void;
   onPieceSelect: (piece: PieceState) => void;
   onInitPieceCreation: () => void;
@@ -21,11 +19,12 @@ type PieceSelectOrCreate = {
   isCollectionCreationMode?: boolean;
   newPieceDefaultTitle?: string;
   isEditMode?: boolean;
+  hasComposerJustBeenCreated: boolean;
+  hasPieceJustBeenCreated: boolean;
 };
 
 function PieceSelectOrCreate({
   feedFormState,
-  singlePieceVersionFormState,
   onPieceCreated,
   onPieceSelect,
   onInitPieceCreation: onInitPieceCreationFn,
@@ -35,22 +34,22 @@ function PieceSelectOrCreate({
   isCollectionCreationMode,
   newPieceDefaultTitle,
   isEditMode,
+  hasComposerJustBeenCreated,
+  hasPieceJustBeenCreated,
 }: PieceSelectOrCreate) {
-  const hasComposerJustBeenCreated =
-    !!singlePieceVersionFormState.composer?.isNew;
-  const hasPieceJustBeenCreated = !!singlePieceVersionFormState.piece?.isNew;
   const [pieces, setPieces] = useState<Piece[] | null>(null);
   const [isLoading, setIsLoading] = useState(!hasPieceJustBeenCreated);
-  const [isCreation, setIsCreation] = useState(
-    !!isCollectionCreationMode || hasPieceJustBeenCreated,
-  );
+
   const newPieces = getNewEntities(feedFormState, "pieces", {
     includeUnusedInFeedForm: true,
   }).filter((piece) => piece.composerId === selectedComposerId);
   const newSelectedPiece = newPieces?.find(
     (piece) => piece.id === selectedPieceId,
   );
-  // const isSelectedPieceNew = !!newSelectedPiece;
+  const isNewPieceUpdate = isEditMode && !!newSelectedPiece;
+  const [isCreation, setIsCreation] = useState(
+    !!isCollectionCreationMode || hasPieceJustBeenCreated || isNewPieceUpdate,
+  );
   let pieceFullList = [...(pieces || []), ...(newPieces || [])];
   console.log(`[PieceSelectOrCreate] pieceFullList :`, pieceFullList);
 

@@ -6,11 +6,9 @@ import PieceVersionEditForm from "@/components/entities/piece-version/PieceVersi
 import PieceVersionSelectForm from "@/components/entities/piece-version/PieceVersionSelectForm";
 import { URL_API_GETALL_PIECE_PIECE_VERSIONS } from "@/utils/routes";
 import { FeedFormState } from "@/types/feedFormTypes";
-import { SinglePieceVersionFormState } from "@/components/context/SinglePieceVersionFormContext";
 
 type PieceVersionSelectOrCreateProps = {
   feedFormState: FeedFormState;
-  singlePieceVersionFormState?: SinglePieceVersionFormState;
   selectedPieceId?: string;
   selectedPieceVersionId?: string;
   onPieceVersionCreated: (pieceVersion: PieceVersionInput) => void;
@@ -18,10 +16,13 @@ type PieceVersionSelectOrCreateProps = {
   onInitPieceVersionCreation: () => void;
   onCancelPieceVersionCreation: () => void;
   isCollectionCreationMode?: boolean;
+  isEditMode?: boolean;
+  hasComposerJustBeenCreated: boolean;
+  hasPieceJustBeenCreated: boolean;
+  hasPieceVersionJustBeenCreated: boolean;
 };
 
 function PieceVersionSelectOrCreate({
-  singlePieceVersionFormState,
   selectedPieceId,
   selectedPieceVersionId,
   feedFormState,
@@ -30,27 +31,15 @@ function PieceVersionSelectOrCreate({
   onInitPieceVersionCreation: onInitPieceVersionCreationFn,
   onCancelPieceVersionCreation,
   isCollectionCreationMode,
+  isEditMode,
+  hasPieceJustBeenCreated,
+  hasPieceVersionJustBeenCreated,
 }: PieceVersionSelectOrCreateProps) {
-  const hasComposerJustBeenCreated =
-    !!singlePieceVersionFormState?.composer?.isNew;
-  const hasPieceJustBeenCreated = !!singlePieceVersionFormState?.piece?.isNew;
-  const hasPieceVersionJustBeenCreated =
-    !!singlePieceVersionFormState?.pieceVersion?.isNew;
-  console.log(
-    `[] hasPieceVersionJustBeenCreated :`,
-    hasPieceVersionJustBeenCreated,
-  );
-
   const [existingPieceVersions, setExistingPieceVersions] = useState<
     PieceVersionState[] | null
   >(null);
   const [isLoading, setIsLoading] = useState(
     !hasPieceJustBeenCreated && !hasPieceVersionJustBeenCreated,
-  );
-  const [isCreation, setIsCreation] = useState(
-    !!isCollectionCreationMode ||
-      hasPieceJustBeenCreated ||
-      hasPieceVersionJustBeenCreated,
   );
 
   const newPieceVersions: PieceVersionState[] = getNewEntities(
@@ -61,7 +50,13 @@ function PieceVersionSelectOrCreate({
   const newSelectedPieceVersion = newPieceVersions?.find(
     (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
   );
-  // const isPieceVersionSelectedNew = !!newSelectedPieceVersion;
+  const isNewPieceVersionUpdate = isEditMode && !!newSelectedPieceVersion;
+  const [isCreation, setIsCreation] = useState(
+    !!isCollectionCreationMode ||
+      hasPieceJustBeenCreated ||
+      hasPieceVersionJustBeenCreated ||
+      isNewPieceVersionUpdate,
+  );
   let pieceVersionFullList = [
     ...(existingPieceVersions || []),
     ...(newPieceVersions || []),
