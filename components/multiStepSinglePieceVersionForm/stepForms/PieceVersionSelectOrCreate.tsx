@@ -68,43 +68,31 @@ function PieceVersionSelectOrCreate({
 
   // If piece has not been created in this singlePieceVersionForm, we fetch all related pieceVersions
   useEffect(() => {
-    if (!isLoading) return;
-
-    // If we have created a new piece, we don't fetch anything and set loading to false
-    if (hasPieceJustBeenCreated) {
-      setIsLoading(false);
-      return;
-    }
-
-    // If we selected an existing piece, we fetch all its pieceVersions
-    if (selectedPieceId) {
-      fetch(
-        URL_API_GETALL_PIECE_PIECE_VERSIONS + "?pieceId=" + selectedPieceId,
-        { cache: "no-store" },
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          const pieceVersions: PieceVersionState[] = data?.pieceVersions;
-          if (!pieceVersions?.length) {
-            console.log(
-              `[PieceVersionSelectOrCreate useEffect] No piece version found for piece ${selectedPieceId}`,
-            );
-            // setIsCreation(true);
-            setIsLoading(false);
-          } else {
-            setExistingPieceVersions(pieceVersions);
-            setIsLoading(false);
-          }
-        })
-        .catch((err) => {
+    setIsLoading(true);
+    fetch(URL_API_GETALL_PIECE_PIECE_VERSIONS + "?pieceId=" + selectedPieceId, {
+      cache: "no-store",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const pieceVersions: PieceVersionState[] = data?.pieceVersions;
+        if (!pieceVersions?.length) {
           console.log(
-            `[fetch("URL_API_GETALL_PIECE_PIECE_VERSIONS?pieceId=${selectedPieceId}")] err :`,
-            err,
+            `[PieceVersionSelectOrCreate useEffect] No piece version found for piece ${selectedPieceId}`,
           );
-          setIsLoading(false);
-        });
-    }
-  }, [isLoading, hasPieceJustBeenCreated, selectedPieceId]);
+        } else {
+          setExistingPieceVersions(pieceVersions);
+        }
+      })
+      .catch((err) => {
+        console.log(
+          `[fetch("URL_API_GETALL_PIECE_PIECE_VERSIONS?pieceId=${selectedPieceId}")] err :`,
+          err,
+        );
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [selectedPieceId]);
 
   const onInitPieceVersionCreation = () => {
     onInitPieceVersionCreationFn();
