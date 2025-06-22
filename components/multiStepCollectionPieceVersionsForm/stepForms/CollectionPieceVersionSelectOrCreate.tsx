@@ -41,14 +41,15 @@ export default function CollectionPieceVersionSelectOrCreate({
   isUpdateMode,
 }: CollectionPieceVersionSelectOrCreateProps) {
   const [pieces, setPieces] = useState<PieceState[]>();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isCreation, setIsCreation] = useState(false);
 
   const isCollectionNew = (
     getNewEntities(feedFormState, "collections", {
       includeUnusedInFeedForm: true,
     }) || []
   ).some((c) => c.id === selectedCollectionId);
+
+  const [isLoading, setIsLoading] = useState(!isCollectionNew);
+  const [isEditMode, setIsEditMode] = useState(isCollectionNew);
 
   const settledCollectionPieceVersions =
     collectionPieceVersionFormState.mMSourcePieceVersions || [];
@@ -77,13 +78,6 @@ export default function CollectionPieceVersionSelectOrCreate({
   );
 
   useEffect(() => {
-    if (isCollectionNew) {
-      setIsLoading(false);
-      setIsCreation(true);
-    }
-  }, [isCollectionNew]);
-
-  useEffect(() => {
     if (selectedCollectionId && !isCollectionNew) {
       fetch(
         `${URL_API_GETALL_COLLECTION_PIECES}?collectionId=${selectedCollectionId}`,
@@ -104,7 +98,7 @@ export default function CollectionPieceVersionSelectOrCreate({
 
   if (isLoading) return <Loader />;
 
-  if (isCreation || isUpdateMode) {
+  if (isEditMode || isUpdateMode) {
     // We have a new Collection, so All of its Pieces must be created
     return (
       <CollectionPieceVersionsEditForm
@@ -115,7 +109,7 @@ export default function CollectionPieceVersionSelectOrCreate({
     );
   }
 
-  if (!isCreation) {
+  if (!isEditMode) {
     if (!pieces) {
       return <div>No pieces found for this collection.</div>;
     }
