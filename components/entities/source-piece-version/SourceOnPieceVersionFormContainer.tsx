@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   MMSourcePieceVersionsState,
   SourceOnPieceVersionsFormType,
@@ -47,13 +47,15 @@ const SourceOnPieceVersionFormContainer = ({
   const [formType, setFormType] =
     useState<SourceOnPieceVersionsFormType>("none");
   const [
-    singlePieceVersionEditionInitState,
-    setSinglePieceVersionEditionInitState,
+    singlePieceVersionUpdateInitState,
+    setSinglePieceVersionUpdateInitState,
   ] = useState<SinglePieceVersionFormState | null>(null);
-  const [collectionPieceVersionInitState, setCollectionPieceVersionInitState] =
-    useState<CollectionPieceVersionsFormState | null>(null);
-  const isEditMode = !!(
-    singlePieceVersionEditionInitState || collectionPieceVersionInitState
+  const [
+    collectionPieceVersionUpdateInitState,
+    setCollectionPieceVersionUpdateInitState,
+  ] = useState<CollectionPieceVersionsFormState | null>(null);
+  const isUpdateMode = !!(
+    singlePieceVersionUpdateInitState || collectionPieceVersionUpdateInitState
   );
   const isFormOpen = !!feedFormState.formInfo?.isSourceOnPieceVersionformOpen;
   const isIntro =
@@ -77,10 +79,10 @@ const SourceOnPieceVersionFormContainer = ({
   };
 
   const onFormClose = () => {
-    // reset sourceOnPieceVersionForm and singlePieceVersionEditionInitState
+    // reset sourceOnPieceVersionForm and singlePieceVersionUpdateInitState
     setFormType("none");
-    setSinglePieceVersionEditionInitState(null);
-    setCollectionPieceVersionInitState(null);
+    setSinglePieceVersionUpdateInitState(null);
+    setCollectionPieceVersionUpdateInitState(null);
 
     // Close sourceOnPieceVersions form
     updateFeedForm(feedFormDispatch, "formInfo", {
@@ -125,7 +127,7 @@ const SourceOnPieceVersionFormContainer = ({
         id: pieceVersion.id,
       },
     };
-    setSinglePieceVersionEditionInitState(singlePieceVersionFormEditState);
+    setSinglePieceVersionUpdateInitState(singlePieceVersionFormEditState);
     onFormOpen("single");
   };
   const onDeletePieceVersionInit = (pieceVersionId: string) => {
@@ -184,7 +186,9 @@ const SourceOnPieceVersionFormContainer = ({
           (spv, index) => ({ ...spv, rank: index + 1 }),
         ),
       };
-    setCollectionPieceVersionInitState(collectionPieceVersionFormEditState);
+    setCollectionPieceVersionUpdateInitState(
+      collectionPieceVersionFormEditState,
+    );
     onFormOpen("collection");
   };
   const onDeleteCollectionInit = (collectionId: string) => {
@@ -325,21 +329,21 @@ const SourceOnPieceVersionFormContainer = ({
           <h1 className="mb-4 text-4xl font-bold">{title}</h1>
           {formType === "single" && (
             <SinglePieceVersionFormProvider
-              initialState={singlePieceVersionEditionInitState}
+              initialState={singlePieceVersionUpdateInitState}
             >
               <SinglePieceVersionFormContainer
                 onFormClose={onFormClose}
-                isEditMode={isEditMode}
+                isUpdateMode={isUpdateMode}
               />
             </SinglePieceVersionFormProvider>
           )}
           {formType === "collection" && (
             <CollectionPieceVersionsFormProvider
-              initialState={collectionPieceVersionInitState}
+              initialState={collectionPieceVersionUpdateInitState}
             >
               <CollectionPieceVersionsFormContainer
                 onFormClose={onFormClose}
-                isEditMode={isEditMode}
+                isUpdateMode={isUpdateMode}
               />
             </CollectionPieceVersionsFormProvider>
           )}
@@ -350,7 +354,7 @@ const SourceOnPieceVersionFormContainer = ({
               onClick={() => onFormClose()}
             >
               <TrashIcon className="w-5 h-5" />
-              {`${isEditMode ? `Cancel updating ` : "Discard"} this ${formType === "single" ? "piece" : "whole collection"}`}
+              {`${isUpdateMode ? `Cancel updating ` : "Discard"} this ${formType === "single" ? "piece" : "whole collection"}`}
             </button>
           </div>
         </>
@@ -438,7 +442,7 @@ const SourceOnPieceVersionFormContainer = ({
 
                       {/* Collection Pieces */}
                       <div className="py-1">
-                        {group.items.map((item, itemIndex) => (
+                        {group.items.map((item) => (
                           <div
                             key={`${groupIndex}-${item.mMSourcePieceVersion.pieceVersionId}-${item.mMSourcePieceVersion.rank}`}
                             className="px-6 py-2"

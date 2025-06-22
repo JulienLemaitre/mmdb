@@ -17,7 +17,7 @@ type CollectionSelectOrCreateProps = {
   onCancelCollectionCreation: () => void;
   hasComposerJustBeenCreated: boolean;
   hasCollectionJustBeenCreated: boolean;
-  isEditMode: boolean;
+  isUpdateMode: boolean;
 };
 
 const CollectionSelectOrCreate = ({
@@ -30,7 +30,7 @@ const CollectionSelectOrCreate = ({
   hasCollectionJustBeenCreated,
   onInitCollectionCreation: onInitCollectionCreationFn,
   onCancelCollectionCreation,
-  isEditMode,
+  isUpdateMode,
 }: CollectionSelectOrCreateProps) => {
   const [collections, setCollections] = useState<CollectionState[] | null>(
     null,
@@ -40,7 +40,7 @@ const CollectionSelectOrCreate = ({
     includeUnusedInFeedForm: true,
   }).filter((collection) => collection.composerId === selectedComposerId);
   const isNewCollectionUpdate =
-    isEditMode && newCollections.some((c) => c.id === selectedCollectionId);
+    isUpdateMode && newCollections.some((c) => c.id === selectedCollectionId);
   const [isCreation, setIsCreation] = useState(
     hasComposerJustBeenCreated || isNewCollectionUpdate,
   );

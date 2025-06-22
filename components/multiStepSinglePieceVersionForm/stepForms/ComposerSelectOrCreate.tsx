@@ -15,7 +15,7 @@ type ComposerSelectOrCreateProps = {
   onInitComposerCreation: () => void;
   onCancelComposerCreation: () => void;
   hasComposerJustBeenCreated: boolean;
-  isEditMode?: boolean;
+  isUpdateMode?: boolean;
 };
 
 const ComposerSelectOrCreate = ({
@@ -26,7 +26,7 @@ const ComposerSelectOrCreate = ({
   onInitComposerCreation: onInitComposerCreationFn,
   onCancelComposerCreation,
   hasComposerJustBeenCreated,
-  isEditMode,
+  isUpdateMode,
 }: ComposerSelectOrCreateProps) => {
   const [composers, setComposers] = useState<PersonState[] | null>(null);
   const [isLoading, setIsLoading] = useState(!hasComposerJustBeenCreated);
@@ -37,7 +37,7 @@ const ComposerSelectOrCreate = ({
   const newSelectedComposer = newPersons?.find(
     (person) => person.id === selectedComposerId,
   );
-  const isNewComposerUpdate = isEditMode && !!newSelectedComposer;
+  const isNewComposerUpdate = isUpdateMode && !!newSelectedComposer;
   const [isCreation, setIsCreation] = useState(
     hasComposerJustBeenCreated || isNewComposerUpdate,
   );

@@ -10,7 +10,7 @@ type SummaryProps = {
   selectedComposerId: string;
   selectedPieceId: string;
   selectedPieceVersionId: string;
-  isEditMode?: boolean;
+  isUpdateMode?: boolean;
 };
 
 function Summary({
@@ -19,7 +19,7 @@ function Summary({
   selectedComposerId,
   selectedPieceId,
   selectedPieceVersionId,
-  isEditMode,
+  isUpdateMode,
 }: SummaryProps) {
   console.log({ selectedComposerId, selectedPieceId, selectedPieceVersionId });
   const composer = getEntityByIdOrKey(
@@ -55,7 +55,7 @@ function Summary({
         onClick={onSubmitSourceOnPieceVersions}
         className="btn btn-primary mt-4"
       >
-        {`Confirm ${isEditMode ? `your changes` : `adding this piece`}`}
+        {`Confirm ${isUpdateMode ? `your changes` : `adding this piece`}`}
       </button>
     </div>
   );

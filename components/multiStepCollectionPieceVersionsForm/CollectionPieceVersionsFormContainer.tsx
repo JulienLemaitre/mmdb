@@ -22,17 +22,17 @@ import DebugBox from "@/components/DebugBox";
 import { v4 as uuidv4 } from "uuid";
 import CollectionPieceVersionsSteps from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsSteps";
 import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import CollectionPieceVersionFormSummary from "@/components/multiStepSinglePieceVersionForm/CollectionPieceVersionFormSummary";
 
 type CollectionPieceVersionFormProps = {
   onFormClose: () => void;
-  isEditMode?: boolean;
+  isUpdateMode?: boolean;
 };
 
 function CollectionPieceVersionsFormContainer({
   onFormClose,
-  isEditMode,
+  isUpdateMode,
 }: CollectionPieceVersionFormProps) {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
   const {
@@ -46,10 +46,33 @@ function CollectionPieceVersionsFormContainer({
   });
   const StepFormComponent = currentStep.Component;
 
-  ////////////////// COMPOSER ////////////////////
-
   const selectedComposerId =
     collectionPieceVersionFormState?.collection?.composerId;
+  const selectedCollectionId = collectionPieceVersionFormState?.collection?.id;
+  const hasCollectionJustBeenCreated =
+    !!collectionPieceVersionFormState.collection?.isNew;
+
+  // When updating a collection that has not just been created, we start by completing the "composer" and "collection" steps automatically and go to the third step = pieceVersions
+  useEffect(() => {
+    if (
+      isUpdateMode &&
+      !hasCollectionJustBeenCreated &&
+      selectedComposerId &&
+      selectedCollectionId
+    ) {
+      updateCollectionPieceVersionsForm(dispatch, "goToStep", {
+        stepRank: 2,
+      });
+    }
+  }, [
+    selectedComposerId,
+    selectedCollectionId,
+    dispatch,
+    hasCollectionJustBeenCreated,
+    isUpdateMode,
+  ]);
+
+  ////////////////// COMPOSER ////////////////////
 
   const onInitComposerCreation = () => {
     updateCollectionPieceVersionsForm(dispatch, "collection", {
@@ -95,8 +118,6 @@ function CollectionPieceVersionsFormContainer({
   };
 
   ////////////////// COLLECTION ////////////////////
-
-  const selectedCollectionId = collectionPieceVersionFormState?.collection?.id;
 
   const onInitCollectionCreation = () => {
     updateCollectionPieceVersionsForm(dispatch, "collection", {
@@ -244,11 +265,14 @@ function CollectionPieceVersionsFormContainer({
   };
 
   return (
-    <div>
-      <div className="flex w-full gap-3 max-w-3xl">
+    <div className="w-full max-w-3xl">
+      <div className="flex gap-3">
         <div className="flex-1">
-          <h2 className="mb-3 text-3xl font-bold">{`Add a complete collection`}</h2>
-          <CollectionPieceVersionsSteps />
+          <h2 className="mb-3 text-3xl font-bold">{`${isUpdateMode ? "Update" : "Add"} a complete collection`}</h2>
+          <CollectionPieceVersionsSteps
+            isUpdateMode={!!isUpdateMode}
+            hasCollectionJustBeenCreated={hasCollectionJustBeenCreated}
+          />
         </div>
         <div className="width-1/3 pt-2">
           <CollectionPieceVersionFormSummary />
@@ -259,12 +283,11 @@ function CollectionPieceVersionsFormContainer({
         <StepFormComponent
           onFormClose={onFormClose}
           feedFormState={feedFormState}
-          isEditMode={isEditMode}
+          collectionPieceVersionFormState={collectionPieceVersionFormState}
+          isUpdateMode={isUpdateMode}
           // Composer
           selectedComposerId={selectedComposerId}
-          hasComposerJustBeenCreated={
-            !!collectionPieceVersionFormState.collection?.isComposerNew
-          }
+          hasComposerJustBeenCreated={hasCollectionJustBeenCreated}
           onComposerSelect={onComposerSelect}
           onInitComposerCreation={onInitComposerCreation}
           onCancelComposerCreation={onCancelComposerCreation}

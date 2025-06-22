@@ -27,12 +27,13 @@ type SinglePieceVersionFormProps = {
   onFormClose: () => void;
   onSubmit?: (payload: any) => void;
   initPayload?: any;
-  isCollectionCreationMode?: boolean;
+  isCollectionMode?: boolean;
+  isCollectionUpdateMode?: boolean;
   composerId?: string;
   newPieceDefaultTitle?: string;
   collectionId?: string;
   collectionFormState?: CollectionPieceVersionsFormState;
-  isEditMode?: boolean;
+  isUpdateMode?: boolean;
 };
 
 /**
@@ -45,12 +46,13 @@ type SinglePieceVersionFormProps = {
 const SinglePieceVersionFormContainer = ({
   onFormClose,
   onSubmit,
-  isCollectionCreationMode,
+  isCollectionMode,
+  isCollectionUpdateMode,
   composerId,
   newPieceDefaultTitle,
   collectionId,
   collectionFormState,
-  isEditMode,
+  isUpdateMode,
 }: SinglePieceVersionFormProps) => {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
   const {
@@ -64,11 +66,25 @@ const SinglePieceVersionFormContainer = ({
   });
   const StepFormComponent = currentStep.Component;
 
+  const hasCollectionJustBeenCreated = !!(
+    collectionId && collectionFormState?.collection?.isNew
+  );
+
   // For Collection Form, we start by completing the "composer" step automatically and go to the second step = piece
   useEffect(() => {
-    if (isCollectionCreationMode && composerId && currentStepRank === 0) {
+    // const isCollectionCreation = !!isCollectionMode && !isCollectionUpdateMode;
+    const isPreExistingCollectionUpdate =
+      !!isCollectionUpdateMode && !hasCollectionJustBeenCreated;
+
+    // For collection creation AND update of a newly created collection, we dispatch composerId value and go to next step
+    if (
+      isCollectionMode &&
+      !isPreExistingCollectionUpdate &&
+      composerId &&
+      currentStepRank === 0
+    ) {
       console.log(
-        `[SinglePieceVersionForm in Collection] auto-complete the "composer" step and go to the next step = piece`,
+        `[SinglePieceVersionFormContainer in Collection] auto-complete the "composer" step and go to the next step = piece`,
       );
       updateSinglePieceVersionForm(dispatch, "composer", {
         value: {
@@ -77,7 +93,21 @@ const SinglePieceVersionFormContainer = ({
         next: true,
       });
     }
-  }, [composerId, currentStepRank, dispatch, isCollectionCreationMode]);
+
+    // For update of a pre-existing collection, we just go to step 2 = "pieceVersion"
+    if (isPreExistingCollectionUpdate && currentStepRank < 2) {
+      updateSinglePieceVersionForm(dispatch, "goToStep", {
+        stepRank: 2,
+      });
+    }
+  }, [
+    composerId,
+    currentStepRank,
+    dispatch,
+    isCollectionMode,
+    isCollectionUpdateMode,
+    hasCollectionJustBeenCreated,
+  ]);
 
   ////////////////// COMPOSER ////////////////////
 
@@ -167,7 +197,7 @@ const SinglePieceVersionFormContainer = ({
 
     let piecesArray = [pieceState];
 
-    if (isCollectionCreationMode && collectionId && collectionFormState) {
+    if (isCollectionMode && collectionId && collectionFormState) {
       piecesArray = piecesArray.map((piece) => ({
         ...piece,
         collectionId,
@@ -217,9 +247,9 @@ const SinglePieceVersionFormContainer = ({
   const newPieceVersions = getNewEntities(feedFormState, "pieceVersions");
   console.log(`[] newPieceVersions :`, newPieceVersions);
   // TODO: should we include new pieceVersions used only in the collection form state ?
-  const isSelectedPieceVersionNew = newPieceVersions?.some(
-    (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
-  );
+  // const isSelectedPieceVersionNew = newPieceVersions?.some(
+  //   (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
+  // );
 
   const onInitPieceVersionCreation = () => {
     updateSinglePieceVersionForm(dispatch, "pieceVersion", {
@@ -308,9 +338,9 @@ const SinglePieceVersionFormContainer = ({
         {
           pieceVersionId: singlePieceVersionFormState.pieceVersion?.id,
           rank:
-            isEditMode && typeof mMSourcePieceVersionRank === "number"
+            isUpdateMode && typeof mMSourcePieceVersionRank === "number"
               ? mMSourcePieceVersionRank
-              : isCollectionCreationMode && collectionFormState
+              : isCollectionMode && collectionFormState
                 ? (collectionFormState.mMSourcePieceVersions || []).length + 1 // Rank if added in a collection
                 : (feedFormState.mMSourcePieceVersions || []).length + 1, // Rank if added as singlePiece in feedForm
         },
@@ -328,25 +358,27 @@ const SinglePieceVersionFormContainer = ({
   };
 
   return (
-    <div>
-      <div className="flex w-full gap-3 max-w-3xl">
+    <div className="w-full max-w-3xl">
+      <div className="flex gap-3">
         <div className="flex-1">
-          <h2 className="mb-3 text-3xl font-bold">{`${isEditMode ? `Edit` : `Add`} a ${isCollectionCreationMode ? `piece to the collection` : `single piece`}`}</h2>
+          <h2 className="mb-3 text-3xl font-bold">{`${isUpdateMode ? `Update` : `Add`} a ${isCollectionMode ? `piece ${isUpdateMode ? `of` : `to`} the collection` : `single piece`}`}</h2>
           <SinglePieceVersionSteps
-            isCollectionMode={isCollectionCreationMode}
+            isCollectionMode={isCollectionMode}
+            isPreexistingCollectionUpdate={
+              isCollectionUpdateMode && !hasCollectionJustBeenCreated
+            }
           />
         </div>
         <div className="width-1/3 pt-2">
-          <SinglePieceVersionFormSummary
-            isCollectionMode={isCollectionCreationMode}
-          />
+          <SinglePieceVersionFormSummary isCollectionMode={isCollectionMode} />
         </div>
       </div>
 
       {StepFormComponent ? (
         <StepFormComponent
           onFormClose={onFormClose}
-          isEditMode={isEditMode}
+          isCollectionMode={isCollectionMode}
+          isUpdateMode={isUpdateMode}
           feedFormState={feedFormState}
           singlePieceVersionFormState={singlePieceVersionFormState}
           // Composer
@@ -377,7 +409,6 @@ const SinglePieceVersionFormContainer = ({
           onPieceVersionSelect={onPieceVersionSelect}
           // Summary
           onSubmitSourceOnPieceVersions={onSubmitSourceOnPieceVersions}
-          isCollectionCreationMode={isCollectionCreationMode}
         />
       ) : (
         <div>Nothing to show...</div>

@@ -224,7 +224,7 @@ export function collectionPieceVersionsFormReducer(
         (hasComposerChanged || hasCollectionIdChanged)
       ) {
         for (const entity of arrayEntities) {
-          if (newState[entity].length) {
+          if (newState[entity]?.length) {
             console.log(
               `[composer or collection Id changed] reset ${entity} -`,
             );

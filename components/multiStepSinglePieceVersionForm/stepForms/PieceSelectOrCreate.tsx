@@ -16,9 +16,9 @@ type PieceSelectOrCreate = {
   onCancelPieceCreation: () => void;
   selectedComposerId?: string;
   selectedPieceId?: string;
-  isCollectionCreationMode?: boolean;
+  isCollectionMode?: boolean;
   newPieceDefaultTitle?: string;
-  isEditMode?: boolean;
+  isUpdateMode?: boolean;
   hasComposerJustBeenCreated: boolean;
   hasPieceJustBeenCreated: boolean;
 };
@@ -31,12 +31,14 @@ function PieceSelectOrCreate({
   onCancelPieceCreation,
   selectedComposerId,
   selectedPieceId,
-  isCollectionCreationMode,
+  isCollectionMode,
   newPieceDefaultTitle,
-  isEditMode,
+  isUpdateMode,
   hasComposerJustBeenCreated,
   hasPieceJustBeenCreated,
 }: PieceSelectOrCreate) {
+  const isCollectionCreation = !!isCollectionMode && !isUpdateMode;
+
   const [pieces, setPieces] = useState<Piece[] | null>(null);
   const [isLoading, setIsLoading] = useState(!hasPieceJustBeenCreated);
 
@@ -46,12 +48,14 @@ function PieceSelectOrCreate({
   const newSelectedPiece = newPieces?.find(
     (piece) => piece.id === selectedPieceId,
   );
-  const isNewPieceUpdate = isEditMode && !!newSelectedPiece;
-  const [isCreation, setIsCreation] = useState(
-    !!isCollectionCreationMode || hasPieceJustBeenCreated || isNewPieceUpdate,
+  const isNewPieceUpdate = isUpdateMode && !!newSelectedPiece;
+  const [isEditMode, setIsEditMode] = useState(
+    isCollectionCreation ||
+      hasComposerJustBeenCreated ||
+      hasPieceJustBeenCreated ||
+      isNewPieceUpdate,
   );
   let pieceFullList = [...(pieces || []), ...(newPieces || [])];
-  console.log(`[PieceSelectOrCreate] pieceFullList :`, pieceFullList);
 
   // If we have new pieces, we need to sort the pieceFullList
   if (newPieces?.length) {
@@ -65,15 +69,6 @@ function PieceSelectOrCreate({
   // If composer has not been created in this singlePieceVersionForm, we fetch all his composition pieces
   useEffect(() => {
     if (!isLoading) return;
-
-    if (isCollectionCreationMode) {
-      setIsLoading(false);
-      return;
-    }
-    if (hasComposerJustBeenCreated) {
-      setIsLoading(false);
-      return;
-    }
 
     // If we selected an existing composer, we fetch all his pieces
     if (selectedComposerId) {
@@ -103,24 +98,18 @@ function PieceSelectOrCreate({
           setIsLoading(false);
         });
     }
-  }, [
-    hasComposerJustBeenCreated,
-    isCollectionCreationMode,
-    selectedComposerId,
-    pieceFullList.length,
-    isLoading,
-  ]);
+  }, [selectedComposerId, isLoading]);
 
   // If pieces have been loaded, and we found none in db or in state, we shift to piece creation mode
   useEffect(() => {
     if (!isLoading && pieceFullList.length === 0) {
-      setIsCreation(true);
+      setIsEditMode(true);
     }
   }, [isLoading, pieceFullList.length]);
 
   const onInitPieceCreation = () => {
     onInitPieceCreationFn();
-    setIsCreation(true);
+    setIsEditMode(true);
   };
 
   const onCancelPieceEdition = () => {
@@ -128,7 +117,7 @@ function PieceSelectOrCreate({
       onCancelPieceCreation();
     }
     setIsLoading(true);
-    setIsCreation(false);
+    setIsEditMode(false);
   };
 
   if (isLoading) return <Loader />;
@@ -137,14 +126,13 @@ function PieceSelectOrCreate({
     (piece) => piece.id === selectedPieceId,
   );
 
-  if (isCreation)
-    // if (isCreation || isSelectedPieceNew)
+  if (isEditMode)
     return (
       <PieceEditForm
         piece={newSelectedPiece}
         onSubmit={onPieceCreated}
         onCancel={onCancelPieceEdition}
-        {...(!isEditMode && { newPieceDefaultTitle })}
+        {...(!isUpdateMode && { newPieceDefaultTitle })}
       />
     );
 

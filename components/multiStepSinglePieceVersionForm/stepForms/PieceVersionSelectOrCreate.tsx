@@ -15,8 +15,8 @@ type PieceVersionSelectOrCreateProps = {
   onPieceVersionSelect: (pieceVersion: PieceVersionState) => void;
   onInitPieceVersionCreation: () => void;
   onCancelPieceVersionCreation: () => void;
-  isCollectionCreationMode?: boolean;
-  isEditMode?: boolean;
+  isCollectionMode?: boolean;
+  isUpdateMode?: boolean;
   hasPieceJustBeenCreated: boolean;
   hasPieceVersionJustBeenCreated: boolean;
 };
@@ -29,17 +29,17 @@ function PieceVersionSelectOrCreate({
   onPieceVersionSelect,
   onInitPieceVersionCreation: onInitPieceVersionCreationFn,
   onCancelPieceVersionCreation,
-  isCollectionCreationMode,
-  isEditMode,
+  isCollectionMode,
+  isUpdateMode,
   hasPieceJustBeenCreated,
   hasPieceVersionJustBeenCreated,
 }: PieceVersionSelectOrCreateProps) {
+  const isDataFetchDisabled =
+    hasPieceJustBeenCreated || hasPieceVersionJustBeenCreated;
   const [existingPieceVersions, setExistingPieceVersions] = useState<
     PieceVersionState[] | null
   >(null);
-  const [isLoading, setIsLoading] = useState(
-    !hasPieceJustBeenCreated && !hasPieceVersionJustBeenCreated,
-  );
+  const [isLoading, setIsLoading] = useState(!isDataFetchDisabled);
 
   const newPieceVersions: PieceVersionState[] = getNewEntities(
     feedFormState,
@@ -49,9 +49,10 @@ function PieceVersionSelectOrCreate({
   const newSelectedPieceVersion = newPieceVersions?.find(
     (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
   );
-  const isNewPieceVersionUpdate = isEditMode && !!newSelectedPieceVersion;
-  const [isCreation, setIsCreation] = useState(
-    !!isCollectionCreationMode ||
+  const isNewPieceVersionUpdate = !!isUpdateMode && !!newSelectedPieceVersion;
+  const isCollectionCreation = !!isCollectionMode && !isUpdateMode;
+  const [isEditMode, setIsEditMode] = useState(
+    isCollectionCreation ||
       hasPieceJustBeenCreated ||
       hasPieceVersionJustBeenCreated ||
       isNewPieceVersionUpdate,
@@ -66,9 +67,19 @@ function PieceVersionSelectOrCreate({
       (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
     );
 
-  // If piece has not been created in this singlePieceVersionForm, we fetch all related pieceVersions
+  // Fetch all pieceVersions for selectedPieceId
+  // => triggered by isLoading = true
   useEffect(() => {
-    setIsLoading(true);
+    if (!isLoading) {
+      console.log(
+        `[useEffect] DON'T Fetch pieceVersions for selectedPieceId ${selectedPieceId}`,
+      );
+      return;
+    }
+
+    console.log(
+      `[useEffect] Fetch pieceVersions for selectedPieceId ${selectedPieceId}`,
+    );
     fetch(URL_API_GETALL_PIECE_PIECE_VERSIONS + "?pieceId=" + selectedPieceId, {
       cache: "no-store",
     })
@@ -92,11 +103,18 @@ function PieceVersionSelectOrCreate({
       .finally(() => {
         setIsLoading(false);
       });
-  }, [selectedPieceId]);
+  }, [isLoading, selectedPieceId]);
+
+  // Set isLoading = true to trigger pieceVersion data fetching on selectedPieceId change
+  useEffect(() => {
+    if (!isDataFetchDisabled) {
+      setIsLoading(true);
+    }
+  }, [isDataFetchDisabled, selectedPieceId]);
 
   const onInitPieceVersionCreation = () => {
     onInitPieceVersionCreationFn();
-    setIsCreation(true);
+    setIsEditMode(true);
   };
 
   const onCancelPieceVersionEdition = () => {
@@ -104,13 +122,12 @@ function PieceVersionSelectOrCreate({
       onCancelPieceVersionCreation();
     }
     setIsLoading(true);
-    setIsCreation(false);
+    setIsEditMode(false);
   };
 
   if (isLoading) return <Loader />;
 
-  if (isCreation)
-    // if (isCreation || isPieceVersionSelectedNew)
+  if (isEditMode)
     return (
       <PieceVersionEditForm
         pieceVersion={newSelectedPieceVersion}
