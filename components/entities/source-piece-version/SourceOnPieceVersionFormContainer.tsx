@@ -181,6 +181,7 @@ const SourceOnPieceVersionFormContainer = ({
           id: collectionId,
           composerId: collection.composerId,
           ...(collection.title && { title: collection.title }),
+          ...(collection.isNew && { isNew: collection.isNew }),
         },
         mMSourcePieceVersions: collectionMMSourcePieceVersionList.map(
           (spv, index) => ({ ...spv, rank: index + 1 }),

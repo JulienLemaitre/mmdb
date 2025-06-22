@@ -60,6 +60,9 @@ function CollectionPieceVersionsFormContainer({
       selectedComposerId &&
       selectedCollectionId
     ) {
+      console.log(
+        `[goToStep 2] updating a collection that has not just been created`,
+      );
       updateCollectionPieceVersionsForm(dispatch, "goToStep", {
         stepRank: 2,
       });

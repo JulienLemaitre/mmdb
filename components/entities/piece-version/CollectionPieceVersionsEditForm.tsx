@@ -287,16 +287,19 @@ function CollectionPieceVersionsEditForm({
             })}
           </ul>
 
-          <div className="flex gap-4 items-center mt-6">
-            <button
-              className="btn btn-accent"
-              type="button"
-              onClick={() => setIsFormOpen(true)}
-            >
-              <PlusIcon className="w-5 h-5" />
-              Add a single piece
-            </button>
-          </div>
+          {!isPreexistingCollectionUpdate && (
+            <div className="flex gap-4 items-center mt-6">
+              <button
+                className="btn btn-accent"
+                type="button"
+                onClick={() => setIsFormOpen(true)}
+              >
+                <PlusIcon className="w-5 h-5" />
+                Add a single piece
+              </button>
+            </div>
+          )}
+
           {collectionPieceVersions.length > 1 && (
             <div className="flex gap-4 items-center mt-6">
               <button

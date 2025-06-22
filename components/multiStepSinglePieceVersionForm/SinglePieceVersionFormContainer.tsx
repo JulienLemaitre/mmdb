@@ -96,6 +96,9 @@ const SinglePieceVersionFormContainer = ({
 
     // For update of a pre-existing collection, we just go to step 2 = "pieceVersion"
     if (isPreExistingCollectionUpdate && currentStepRank < 2) {
+      console.log(
+        `[goToStep 2] isPreExistingCollectionUpdate && currentStepRank < 2`,
+      );
       updateSinglePieceVersionForm(dispatch, "goToStep", {
         stepRank: 2,
       });
