@@ -13,6 +13,11 @@ type CollectionSelectOrCreateProps = {
   selectedComposerId?: string;
   onCollectionCreated: (collection: CollectionTitleInput) => void;
   onCollectionSelect: (collection: CollectionState) => void;
+  onInitCollectionCreation: () => void;
+  onCancelCollectionCreation: () => void;
+  hasComposerJustBeenCreated: boolean;
+  hasCollectionJustBeenCreated: boolean;
+  isUpdateMode: boolean;
 };
 
 const CollectionSelectOrCreate = ({
@@ -21,14 +26,23 @@ const CollectionSelectOrCreate = ({
   selectedComposerId,
   onCollectionCreated,
   onCollectionSelect,
+  hasComposerJustBeenCreated,
+  hasCollectionJustBeenCreated,
+  onInitCollectionCreation: onInitCollectionCreationFn,
+  onCancelCollectionCreation,
+  isUpdateMode,
 }: CollectionSelectOrCreateProps) => {
   const [collections, setCollections] = useState<CollectionState[] | null>(
     null,
   );
-  const [isLoading, setIsLoading] = useState(true);
-  const [isCreation, setIsCreation] = useState(false);
-  const newCollections = getNewEntities(feedFormState, "collections").filter(
-    (collection) => collection.composerId === selectedComposerId,
+  const [isLoading, setIsLoading] = useState(!hasComposerJustBeenCreated);
+  const newCollections = getNewEntities(feedFormState, "collections", {
+    includeUnusedInFeedForm: true,
+  }).filter((collection) => collection.composerId === selectedComposerId);
+  const isNewCollectionUpdate =
+    isUpdateMode && newCollections.some((c) => c.id === selectedCollectionId);
+  const [isCreation, setIsCreation] = useState(
+    hasComposerJustBeenCreated || isNewCollectionUpdate,
   );
   let collectionFullList = [...(collections || []), ...(newCollections || [])];
 
@@ -41,46 +55,42 @@ const CollectionSelectOrCreate = ({
     });
   }
 
-  // If composer is newly created, we shift in creation mode directly
-  const newPersons = getNewEntities(feedFormState, "persons");
-  const isNewComposer =
-    !!selectedComposerId &&
-    newPersons?.some((person) => person.id === selectedComposerId);
-  useEffect(() => {
-    if (typeof isNewComposer !== "boolean")
-      console.log(`[useEffect 1] isNewComposer not boolean:`, isNewComposer);
-    if (typeof isNewComposer === "boolean" && isNewComposer) {
-      setIsCreation(true);
-    }
-  }, [isNewComposer]);
-
   const selectedCollection: CollectionState | undefined =
     collectionFullList.find(
       (collection) => collection.id === selectedCollectionId,
     );
 
   useEffect(() => {
-    if (selectedComposerId) {
-      fetch(
-        URL_API_GETALL_COMPOSER_COLLECTION +
-          "?composerId=" +
-          selectedComposerId,
-        { cache: "no-store" },
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          setCollections(data?.collections);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          console.log(`[fetch(URL_API_GETALL_COMPOSERS)] err :`, err);
-          setIsLoading(false);
-        });
-    }
-  }, [selectedComposerId]);
+    if (!isLoading || !selectedComposerId) return;
 
-  const onCollectionCreationClick = () => {
+    fetch(
+      URL_API_GETALL_COMPOSER_COLLECTION + "?composerId=" + selectedComposerId,
+      { cache: "no-store" },
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setCollections(data?.collections);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(
+          `[fetch(${URL_API_GETALL_COMPOSER_COLLECTION}?composerId=${selectedComposerId})] err :`,
+          err,
+        );
+        setIsLoading(false);
+      });
+  }, [isLoading, selectedComposerId]);
+
+  const onInitCollectionCreation = () => {
+    onInitCollectionCreationFn();
     setIsCreation(true);
+  };
+  const onCancelCollectionEdition = () => {
+    if (hasCollectionJustBeenCreated) {
+      onCancelCollectionCreation();
+    }
+    setIsLoading(true);
+    setIsCreation(false);
   };
 
   if (isLoading) return <Loader />;
@@ -94,6 +104,7 @@ const CollectionSelectOrCreate = ({
   return isCreation ? (
     <CollectionEditForm
       collection={selectedCollection}
+      onCancel={onCancelCollectionEdition}
       onSubmit={onCollectionCreated}
     />
   ) : (
@@ -101,7 +112,7 @@ const CollectionSelectOrCreate = ({
       collections={collectionFullList}
       value={selectedCollection}
       onCollectionSelect={onCollectionSelect}
-      onCollectionCreationClick={onCollectionCreationClick}
+      onInitCollectionCreation={onInitCollectionCreation}
     />
   );
 };

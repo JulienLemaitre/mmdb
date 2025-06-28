@@ -1,8 +1,8 @@
 import ComposerSelectOrCreate from "@/components/multiStepSinglePieceVersionForm/stepForms/ComposerSelectOrCreate";
-import { CollectionPieceVersionsFormState } from "@/components/context/CollectionPieceVersionsFormContext";
 import { CollectionPieceVersionsFormStep } from "@/types/formTypes";
 import CollectionSelectOrCreate from "@/components/multiStepCollectionPieceVersionsForm/stepForms/CollectionSelectOrCreate";
 import CollectionPieceVersionSelectOrCreate from "@/components/multiStepCollectionPieceVersionsForm/stepForms/CollectionPieceVersionSelectOrCreate";
+import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 
 export const collectionFormSteps: CollectionPieceVersionsFormStep[] = [
   {

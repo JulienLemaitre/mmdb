@@ -18,7 +18,7 @@ const MMSourcePieceVersions = () => {
 
   return (
     <SourceOnPieceVersionFormContainer
-      sourcePieceVersions={state.mMSourcePieceVersions}
+      mMSourcePieceVersions={state.mMSourcePieceVersions}
       onSubmit={onSubmit}
       title={step.title}
       submitTitle={step.title}

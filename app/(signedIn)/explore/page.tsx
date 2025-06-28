@@ -26,6 +26,8 @@ import { ChartDatum } from "@/types/chartTypes";
 import GetChartDataFromPieceVersions from "@/utils/getChartDataFromPieceVersions";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
+import CommonTimeIcon from "@/components/svg/CommonTimeIcon";
+import CutTimeIcon from "@/components/svg/CutTimeIcon";
 
 // TODO: What do we want in addition to what is already there:
 //  1. Show all mms that result in speeds of more / less than X notes per second with a selection of note type (strutural, repeated etc.) e.g. show me all Sources that have MMs that result in more than 15 nps (structural)
@@ -175,7 +177,7 @@ function SearchPage() {
               label: getPersonName(composer),
             }))}
             isRequired={false}
-            errors={errors}
+            fieldError={errors?.composer}
           />
           <button
             className="btn btn-primary mt-6 w-full max-w-xs"
@@ -332,21 +334,23 @@ function SearchPage() {
                                                 }${section.tempoIndication?.text}`}</h4>
                                                 <div className="border-b-2 border-gray-200">
                                                   <div className="">
-                                                    metre :{" "}
-                                                    <b>
-                                                      {isCommonOrCutTime ? (
-                                                        <>
-                                                          <span className="common-time align-middle">
-                                                            {isCommonTime
-                                                              ? `\u{1D134}`
-                                                              : `\u{1D135}`}
-                                                          </span>
-                                                          {` (${section.metreNumerator}/${section.metreDenominator})`}
-                                                        </>
-                                                      ) : (
-                                                        `${section.metreNumerator}/${section.metreDenominator}`
-                                                      )}
-                                                    </b>
+                                                    Metre :{" "}
+                                                    {isCommonOrCutTime ? (
+                                                      <>
+                                                        <span className="common-time align-middle inline-block">
+                                                          {isCommonTime ? (
+                                                            <CommonTimeIcon className="h-3.5 relative bottom-0.5" />
+                                                          ) : (
+                                                            <CutTimeIcon className="h-5 relative bottom-0.5" />
+                                                          )}
+                                                        </span>
+                                                        <b>{` (${section.metreNumerator}/${section.metreDenominator})`}</b>
+                                                      </>
+                                                    ) : (
+                                                      <b>
+                                                        {`${section.metreNumerator}/${section.metreDenominator}`}
+                                                      </b>
+                                                    )}
                                                   </div>
                                                   {section.fastestStructuralNotesPerBar && (
                                                     <div className="">

@@ -7,6 +7,9 @@ import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
 import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
 import ControlledCreatableSelect from "@/components/ReactHookForm/ControlledCreatableSelect";
 import { TempoIndicationState } from "@/types/formTypes";
+import CommonTimeIcon from "@/components/svg/CommonTimeIcon";
+import React from "react";
+import CutTimeIcon from "@/components/svg/CutTimeIcon";
 
 export default function SectionArray({
   control,
@@ -35,9 +38,9 @@ export default function SectionArray({
 
           return (
             <li key={item.id} className="px-4 border-accent border-2 my-3">
-              <h4 className="my-4 text-xl font-bold text-accent">{`Section ${
+              <h6 className="my-4 text-lg font-normal text-accent">{`Section ${
                 index + 1
-              }`}</h4>
+              }`}</h6>
               <input
                 {...register(
                   `movements[${nestIndex}].sections[${index}].id` as const,
@@ -45,7 +48,7 @@ export default function SectionArray({
                 hidden
               />
               <div className="flex gap-2 items-center">
-                <div className="text-lg font-bold">
+                <div>
                   Time Signature :<span className="text-red-500 ml-1">*</span>
                 </div>
                 <div className="flex flex-col gap-1">
@@ -107,7 +110,7 @@ export default function SectionArray({
                     type="checkbox"
                     className="mr-2"
                   />
-                  {`\u{1D134}`}
+                  <CommonTimeIcon className="h-6" />
                 </label>
                 <label className="text-5xl flex items-center">
                   <input
@@ -143,7 +146,7 @@ export default function SectionArray({
                     type="checkbox"
                     className="mr-2 ml-4"
                   />
-                  <span>{`\u{1D135}`}</span>
+                  <CutTimeIcon className="h-8" />
                 </label>
               </div>
               <ControlledCreatableSelect
@@ -163,7 +166,10 @@ export default function SectionArray({
                   }),
                 )}
                 onOptionCreated={onTempoIndicationCreated}
-                errors={errors}
+                fieldError={
+                  errors?.movements?.[nestIndex]?.sections?.[index]
+                    ?.tempoIndication
+                }
               />
               <FormInput
                 isRequired={true}

@@ -6,18 +6,20 @@ import { FeedFormState } from "@/types/feedFormTypes";
 
 type SummaryProps = {
   feedFormState: FeedFormState;
-  onAddSourceOnPieceVersions: () => void;
+  onSubmitSourceOnPieceVersions: () => void;
   selectedComposerId: string;
   selectedPieceId: string;
   selectedPieceVersionId: string;
+  isUpdateMode?: boolean;
 };
 
 function Summary({
   feedFormState,
-  onAddSourceOnPieceVersions,
+  onSubmitSourceOnPieceVersions,
   selectedComposerId,
   selectedPieceId,
   selectedPieceVersionId,
+  isUpdateMode,
 }: SummaryProps) {
   console.log({ selectedComposerId, selectedPieceId, selectedPieceVersionId });
   const composer = getEntityByIdOrKey(
@@ -50,10 +52,10 @@ function Summary({
         <div className="mb-3">{`- Piece Version not found -`}</div>
       )}
       <button
-        onClick={onAddSourceOnPieceVersions}
+        onClick={onSubmitSourceOnPieceVersions}
         className="btn btn-primary mt-4"
       >
-        Confirm adding this piece
+        {`Confirm ${isUpdateMode ? `your changes` : `adding this piece`}`}
       </button>
     </div>
   );

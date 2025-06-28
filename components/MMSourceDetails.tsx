@@ -6,6 +6,8 @@ import { KeyBase } from "@/types/formTypes";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
+import CommonTimeIcon from "@/components/svg/CommonTimeIcon";
+import CutTimeIcon from "@/components/svg/CutTimeIcon";
 
 export default function MMSourceDetails({ mMSource }) {
   // Gather collections
@@ -114,22 +116,24 @@ export default function MMSourceDetails({ mMSource }) {
                                             : ""
                                         }${section.tempoIndication?.text}`}</h5>
                                         <div className="border-b-2 border-gray-200">
-                                          <div className="">
+                                          <div>
                                             Metre :{" "}
-                                            <b>
-                                              {isCommonOrCutTime ? (
-                                                <>
-                                                  <span className="common-time align-middle">
-                                                    {isCommonTime
-                                                      ? `\u{1D134}`
-                                                      : `\u{1D135}`}
-                                                  </span>
-                                                  {` (${section.metreNumerator}/${section.metreDenominator})`}
-                                                </>
-                                              ) : (
-                                                `${section.metreNumerator}/${section.metreDenominator}`
-                                              )}
-                                            </b>
+                                            {isCommonOrCutTime ? (
+                                              <>
+                                                <span className="common-time align-middle inline-block">
+                                                  {isCommonTime ? (
+                                                    <CommonTimeIcon className="h-3.5 relative bottom-0.5" />
+                                                  ) : (
+                                                    <CutTimeIcon className="h-5 relative bottom-0.5" />
+                                                  )}
+                                                </span>
+                                                <b>{` (${section.metreNumerator}/${section.metreDenominator})`}</b>
+                                              </>
+                                            ) : (
+                                              <b>
+                                                {`${section.metreNumerator}/${section.metreDenominator}`}
+                                              </b>
+                                            )}
                                           </div>
                                           {section.fastestStructuralNotesPerBar && (
                                             <div className="">

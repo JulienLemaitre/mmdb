@@ -54,10 +54,6 @@ export default function SourceContributionSelectForm({
           role: CONTRIBUTION_ROLE;
         },
   ) => {
-    console.log(
-      `[onAddPersonContribution] personContribution :`,
-      personContribution,
-    );
     const { role } = personContribution;
     let person: PersonState;
 
@@ -66,14 +62,10 @@ export default function SourceContributionSelectForm({
       const foundPerson = [...persons, ...createdPersons].find(
         (person) => person.id === personContribution.personId,
       );
-      console.log(
-        `[SourceContributionSelectForm] onAddPersonContribution SELECT:`,
-        foundPerson,
-      );
       if (foundPerson) {
         person = foundPerson;
       } else {
-        console.log(
+        console.warn(
           `[SourceContributionSelectForm] onAddPersonContribution person NOT FOUND`,
         );
         return;
@@ -83,10 +75,6 @@ export default function SourceContributionSelectForm({
     // Case of creation of a new person
     if ("person" in personContribution) {
       person = personContribution.person;
-      console.log(
-        `[SourceContributionSelectForm] onAddPersonContribution NEW:`,
-        person,
-      );
       setCreatedPersons((prevList) => [...prevList, person]);
     }
     setSelectedContributions((prevList) => [...prevList, { person, role }]);
@@ -115,14 +103,10 @@ export default function SourceContributionSelectForm({
         (organization) =>
           organization.id === organizationContribution.organizationId,
       );
-      console.log(
-        `[SourceContributionSelectForm] onAddOrganizationContribution SELECT:`,
-        foundOrganization,
-      );
       if (foundOrganization) {
         organization = foundOrganization;
       } else {
-        console.log(
+        console.warn(
           `[SourceContributionSelectForm] onAddPersonContribution organization NOT FOUND`,
         );
         return;
@@ -132,10 +116,6 @@ export default function SourceContributionSelectForm({
     // Case of creation of a new organization
     if ("organization" in organizationContribution) {
       organization = organizationContribution.organization;
-      console.log(
-        `[SourceContributionSelectForm] onAddOrganizationContribution NEW:`,
-        organization,
-      );
       setCreatedOrganizations((prevList) => [...prevList, organization]);
     }
 
@@ -186,12 +166,6 @@ export default function SourceContributionSelectForm({
     selectedContributions,
     contributions || [],
   );
-  // console.log(
-  //   `[] isPresentFormDirty :`,
-  //   isPresentFormDirty,
-  //   selectedContributions,
-  //   contributions || [],
-  // );
 
   return (
     <>

@@ -117,7 +117,7 @@ export default function MetronomeMarkArray({
                       }))}
                       isRequired={!isNoMMChecked}
                       isDisabled={isNoMMChecked}
-                      errors={errors}
+                      fieldError={errors?.metronomeMarks?.[index]?.beatUnit}
                     />
                     <FormInput
                       name={`metronomeMarks[${index}].bpm` as const}

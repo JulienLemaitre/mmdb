@@ -41,7 +41,6 @@ function NewReferenceForm({
   };
 
   const onRefValueChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(`[onRefValueChange] e.target.value :`, e.target.value);
     setError((er) => ({ ...er, value: "" }));
     setRefValue(e.target.value);
   };
@@ -84,7 +83,6 @@ function NewReferenceForm({
       setIsCheckingReference(true);
 
       // Check if the reference already exists in new values
-      console.log(`[check] currentReferences :`, currentReferences);
       if (
         currentReferences?.some(
           (ref) => ref.type.value === refType && ref.reference === refValue,

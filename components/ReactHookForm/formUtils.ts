@@ -4,16 +4,14 @@ import { SectionInput } from "@/types/formTypes";
 export function getMovementDefaultValues() {
   return {
     id: uuidv4(),
-    key: { value: undefined, label: undefined },
     sections: [getSectionDefaultValues()],
   };
 }
-export function getSectionDefaultValues(): SectionInput {
+export function getSectionDefaultValues() {
   return {
     id: uuidv4(),
     metreNumerator: 0,
     metreDenominator: 0,
     fastestStructuralNotesPerBar: 0,
-    tempoIndication: { value: "", label: "" },
   };
 }

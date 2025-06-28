@@ -6,13 +6,13 @@ type PieceSelectProps = {
   pieces: PieceState[];
   onSelect: (pieceId: string) => void;
   selectedPiece: PieceState | null;
-  onPieceCreationClick: () => void;
+  onInitPieceCreation: () => void;
 };
 export default function PieceSelect({
   pieces,
   onSelect,
   selectedPiece,
-  onPieceCreationClick,
+  onInitPieceCreation,
 }: Readonly<PieceSelectProps>) {
   const pieceOptions = pieces.map((piece) => getPieceOption(piece));
   const defaultOption = selectedPiece ? getPieceOption(selectedPiece) : null;
@@ -34,7 +34,7 @@ export default function PieceSelect({
       }}
       noOptionsMessage={getNoOptionsMessage({
         entityName: "piece",
-        onClick: onPieceCreationClick,
+        onClick: onInitPieceCreation,
       })}
     />
   );

@@ -17,6 +17,8 @@ export async function GET(request: Request) {
       title: true,
       nickname: true,
       yearOfComposition: true,
+      collectionId: true,
+      collectionRank: true,
       composerId: true,
     },
   });

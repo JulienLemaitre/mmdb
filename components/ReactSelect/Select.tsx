@@ -1,7 +1,7 @@
 import ReactSelect from "react-select";
 import labelOnlyFilterOption from "@/utils/labelOnlyFilterOption";
 
-const Select = function Select(props) {
+function Select(props) {
   const { innerRef, ...otherProps } = props;
   return (
     <ReactSelect
@@ -11,6 +11,6 @@ const Select = function Select(props) {
       ref={innerRef}
     />
   );
-};
+}
 
 export default Select;

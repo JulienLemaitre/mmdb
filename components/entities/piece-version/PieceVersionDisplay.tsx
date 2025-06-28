@@ -1,6 +1,9 @@
 import { PieceVersionState } from "@/types/formTypes";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import getKeyLabel from "@/utils/getKeyLabel";
+import CommonTimeIcon from "@/components/svg/CommonTimeIcon";
+import CutTimeIcon from "@/components/svg/CutTimeIcon";
+import React from "react";
 
 type PieceVersionDisplayProps = {
   pieceVersion: PieceVersionState;
@@ -26,15 +29,19 @@ export default function PieceVersionDisplay({
                 return (
                   <div key={section.id} className="ml-4 flex">
                     <div>Section {section.rank}</div>
-                    <div className="ml-1 flex divide-x divide-gray-500">
+                    <div className="ml-1 flex content-center divide-x divide-gray-500">
                       <div className="px-2">
-                        metre :{" "}
+                        Metre :{" "}
                         {isCommonOrCutTime ? (
                           <>
-                            <span className="text-4xl leading-3 align-middle">
-                              {isCommonTime ? `\u{1D134}` : `\u{1D135}`}
+                            <span className="common-time align-middle inline-block">
+                              {isCommonTime ? (
+                                <CommonTimeIcon className="h-3.5 relative bottom-0.5" />
+                              ) : (
+                                <CutTimeIcon className="h-5 relative bottom-0.5" />
+                              )}
                             </span>
-                            {` (${section.metreNumerator}/${section.metreDenominator})`}
+                            <b>{` (${section.metreNumerator}/${section.metreDenominator})`}</b>
                           </>
                         ) : (
                           <b>

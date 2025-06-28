@@ -43,8 +43,8 @@ export default function PieceEditForm({
   console.log(`[PieceEditForm] errors :`, errors);
 
   return (
-    <div>
-      <h3 className="mb-4 text-xl font-normal">General information</h3>
+    <div className="w-full max-w-md mt-4">
+      <h3 className="mb-4 text-2xl font-bold">New piece</h3>
       <form
         onSubmit={handleSubmit(onSubmit)}
         onKeyDown={preventEnterKeySubmission}

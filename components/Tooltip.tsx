@@ -2,6 +2,8 @@ import React from "react";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import getRoleLabel from "@/utils/getRoleLabel";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
+import CommonTimeIcon from "@/components/svg/CommonTimeIcon";
+import CutTimeIcon from "@/components/svg/CutTimeIcon";
 
 const Tooltip = ({
   node,
@@ -36,19 +38,21 @@ const Tooltip = ({
       <div>{piece?.title}</div>
       <div>{`${movement.rank ? `Mvt ${movement.rank} | ` : ``}${section.rank ? `Section ${section.rank}` : ``} - ${section.tempoIndication?.text}`}</div>
       <div>
-        metre:{" "}
-        <b>
-          {isCommonOrCutTime ? (
-            <>
-              <span className="common-time align-middle">
-                {isCommonTime ? `\u{1D134}` : `\u{1D135}`}
-              </span>
-              {` (${section.metreNumerator}/${section.metreDenominator})`}
-            </>
-          ) : (
-            `${section.metreNumerator}/${section.metreDenominator}`
-          )}
-        </b>
+        Metre :{" "}
+        {isCommonOrCutTime ? (
+          <>
+            <span className="common-time align-middle inline-block">
+              {isCommonTime ? (
+                <CommonTimeIcon className="h-3.5 relative bottom-0.5" />
+              ) : (
+                <CutTimeIcon className="h-5 relative bottom-0.5" />
+              )}
+            </span>
+            <b>{` (${section.metreNumerator}/${section.metreDenominator})`}</b>
+          </>
+        ) : (
+          <b>{`${section.metreNumerator}/${section.metreDenominator}`}</b>
+        )}
       </div>
       <div>{`bpm: ${getNoteValueLabel(mm.beatUnit)} = ${mm.bpm}`}</div>
       <div>

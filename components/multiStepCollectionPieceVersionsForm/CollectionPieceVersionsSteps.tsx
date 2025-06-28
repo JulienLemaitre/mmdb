@@ -5,7 +5,15 @@ import {
   useCollectionPieceVersionsForm,
 } from "@/components/context/CollectionPieceVersionsFormContext";
 
-const CollectionPieceVersionsSteps = () => {
+type CollectionPieceVersionsStepsProps = {
+  hasCollectionJustBeenCreated: boolean;
+  isUpdateMode: boolean;
+};
+
+const CollectionPieceVersionsSteps = ({
+  hasCollectionJustBeenCreated,
+  isUpdateMode,
+}: CollectionPieceVersionsStepsProps) => {
   const { currentStepRank, lastCompletedStepRank, dispatch } =
     useCollectionPieceVersionsForm();
 
@@ -18,10 +26,16 @@ const CollectionPieceVersionsSteps = () => {
     }
   };
 
+  // skip the two first "composer" and "piece" steps if we are updating a selected existing collection
+  const formSteps = collectionFormSteps.toSpliced(
+    0,
+    isUpdateMode && !hasCollectionJustBeenCreated ? 2 : 0,
+  );
+
   return (
     <div className="mb-4">
       <ul className="steps">
-        {collectionFormSteps.map((step) => {
+        {formSteps.map((step) => {
           const stepClassName =
             step.rank === 0 ||
             (typeof lastCompletedStepRank === "number" &&
