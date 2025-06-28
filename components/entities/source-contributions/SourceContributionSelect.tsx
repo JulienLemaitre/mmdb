@@ -59,13 +59,6 @@ export default function SourceContributionSelect({
   const [newOrganization, setNewOrganization] = useState<OrganizationState>();
 
   const onAddContribution = useCallback(() => {
-    console.log("[onAddContribution]", {
-      role,
-      newPerson,
-      newOrganization,
-      selectedPersonId,
-      selectedOrganizationId,
-    });
     if (selectedPersonId && role) {
       onAddPersonContribution({
         personId: selectedPersonId,

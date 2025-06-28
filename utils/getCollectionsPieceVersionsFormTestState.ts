@@ -1,12 +1,17 @@
 export default function getCollectionsPieceVersionsFormTestState() {
   return {
+    formInfo: { currentStepRank: 2 },
     collection: {
-      composerId: "16ff0135-775d-4fde-8b3b-24c5a375b369",
-      id: "85a3a023-f816-487e-9a73-bd428ef32f7d",
-      title: "Op.18",
+      composerId: "08c1c7d5-da92-4bf7-b2e4-2740cfe60b79",
+      isComposerNew: true,
+      id: "a124f9a7-d0af-40a9-abf0-db6aff1eb268",
+      title: "First Collec",
+      isNew: true,
     },
-    formInfo: {
-      currentStepRank: 2,
-    },
+    mMSourcePieceVersions: [],
+    persons: [],
+    pieces: [],
+    pieceVersions: [],
+    tempoIndications: [],
   };
 }

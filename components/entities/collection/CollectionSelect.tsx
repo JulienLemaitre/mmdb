@@ -1,25 +1,23 @@
 // "use client";
 import Select from "@/components/ReactSelect/Select";
 import { CollectionState } from "@/types/formTypes";
-import { useRouter } from "next/navigation";
 import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";
 
 type CollectionSelectProps = {
   collections: CollectionState[];
   onSelect: (collectionId: string) => void;
   selectedCollection: CollectionState | null;
-  onCollectionCreationClick: () => void;
+  onInitCollectionCreation: () => void;
 };
 export default function CollectionSelect({
   collections,
   onSelect,
   selectedCollection,
-  onCollectionCreationClick,
+  onInitCollectionCreation,
 }: Readonly<CollectionSelectProps>) {
   const collectionOptions = collections.map((collection) =>
     getCollectionOption(collection),
   );
-  const router = useRouter();
   const defaultOption = selectedCollection
     ? getCollectionOption(selectedCollection)
     : null;
@@ -41,7 +39,7 @@ export default function CollectionSelect({
       }}
       noOptionsMessage={getNoOptionsMessage({
         entityName: "collection",
-        onClick: onCollectionCreationClick,
+        onClick: onInitCollectionCreation,
       })}
     />
   );

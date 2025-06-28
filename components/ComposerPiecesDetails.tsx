@@ -1,8 +1,10 @@
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import getKeyLabel from "@/utils/getKeyLabel";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
+import CommonTimeIcon from "@/components/svg/CommonTimeIcon";
+import CutTimeIcon from "@/components/svg/CutTimeIcon";
 
 export default function ComposerPiecesDetais({ person }) {
   return (
@@ -73,9 +75,11 @@ export default function ComposerPiecesDetais({ person }) {
                                             {isCommonOrCutTime ? (
                                               <>
                                                 <span className="common-time align-middle">
-                                                  {isCommonTime
-                                                    ? `\u{1D134}`
-                                                    : `\u{1D135}`}
+                                                  {isCommonTime ? (
+                                                    <CommonTimeIcon className="h-4 relative top-0.5" />
+                                                  ) : (
+                                                    <CutTimeIcon className="h-6 relative top-1.5" />
+                                                  )}
                                                 </span>
                                                 {` (${section.metreNumerator}/${section.metreDenominator})`}
                                               </>

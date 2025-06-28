@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Loader from "@/components/Loader";
 import {
+  getNewEntities,
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
@@ -23,7 +24,7 @@ export default function MMSourceContributions() {
     updateFeedForm(dispatch, "mMSourceContributions", {
       array: selectedContributions,
       next: !!option?.goToNextStep,
-      replace: true,
+      reset: true,
     });
   };
 
@@ -40,10 +41,8 @@ export default function MMSourceContributions() {
   if (!data)
     return <p>{`Oups, No data could be fetched. Can't continue...`}</p>;
   const { persons, organizations } = data;
-  const newPersonsInState =
-    state?.persons?.filter((person) => person.isNew) || [];
-  const newOrganizationsInState =
-    state?.organizations?.filter((organization) => organization.isNew) || [];
+  const newPersonsInState = getNewEntities(state, "persons");
+  const newOrganizationsInState = getNewEntities(state, "organizations");
 
   return (
     <SourceContributionSelectForm

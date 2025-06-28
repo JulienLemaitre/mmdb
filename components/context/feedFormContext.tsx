@@ -1,6 +1,16 @@
 "use client";
 import { createContext, useContext, useReducer, useEffect } from "react";
-import { FeedFormStep } from "@/types/formTypes";
+import {
+  CollectionState,
+  FeedFormStep,
+  IsNewTrue,
+  MetronomeMarkState,
+  OrganizationState,
+  PersonState,
+  PieceState,
+  PieceVersionState,
+  TempoIndicationState,
+} from "@/types/formTypes";
 import { steps } from "@/components/multiStepMMSourceForm/stepsUtils";
 import {
   Dispatch,
@@ -8,7 +18,7 @@ import {
   FeedFormState,
 } from "@/types/feedFormTypes";
 import { localStorageGetItem } from "@/utils/localStorage";
-import { feedFormReducer } from "@/reducers/feedFormReducer";
+import { feedFormReducer } from "@/components/context/feedFormReducer";
 import {
   FEED_FORM_INITIAL_STATE,
   FEED_FORM_LOCAL_STORAGE_KEY,
@@ -95,16 +105,168 @@ function getLastCompletedStep(state: FeedFormState): FeedFormStep | undefined {
   return steps[steps.length - 1];
 }
 
-export function getNewEntities(state: FeedFormState, entityName: string) {
+export function getNewEntities(
+  state: FeedFormState,
+  entityName: "pieces",
+  options?: { includeUnusedInFeedForm?: boolean },
+): (PieceState & IsNewTrue)[];
+export function getNewEntities(
+  state: FeedFormState,
+  entityName: "pieceVersions",
+  options?: { includeUnusedInFeedForm?: boolean },
+): (PieceVersionState & IsNewTrue)[];
+export function getNewEntities(
+  state: FeedFormState,
+  entityName: "collections",
+  options?: { includeUnusedInFeedForm?: boolean },
+): (CollectionState & IsNewTrue)[];
+export function getNewEntities(
+  state: FeedFormState,
+  entityName: "persons",
+  options?: { includeUnusedInFeedForm?: boolean },
+): (PersonState & IsNewTrue)[];
+export function getNewEntities(
+  state: FeedFormState,
+  entityName: "organizations",
+): (OrganizationState & IsNewTrue)[];
+export function getNewEntities(
+  state: FeedFormState,
+  entityName:
+    | "pieces"
+    | "pieceVersions"
+    | "collections"
+    | "persons"
+    | "organizations",
+  options?: { includeUnusedInFeedForm?: boolean },
+) {
   if (!state) {
     console.error(`[getNewEntities] NO state provided to find ${entityName}`);
     return [];
   }
   if (Array.isArray(state[entityName])) {
-    return state[entityName].filter((entity) => entity.isNew);
+    return state[entityName].filter(
+      (entity) =>
+        entity.isNew &&
+        (options?.includeUnusedInFeedForm ||
+          // @ts-ignore
+          isEntityUsed(entity, entityName, state)),
+    );
   }
   return [];
 }
+
+export function isEntityUsed(
+  entity: PieceState,
+  entityName: "pieces",
+  state: FeedFormState,
+): boolean;
+export function isEntityUsed(
+  entity: PieceVersionState,
+  entityName: "pieceVersions",
+  state: FeedFormState,
+): boolean;
+export function isEntityUsed(
+  entity: CollectionState,
+  entityName: "collections",
+  state: FeedFormState,
+): boolean;
+export function isEntityUsed(
+  entity: PersonState,
+  entityName: "persons",
+  state: FeedFormState,
+): boolean;
+export function isEntityUsed(
+  entity: OrganizationState,
+  entityName: "organizations",
+  state: FeedFormState,
+): boolean;
+export function isEntityUsed(
+  entity: MetronomeMarkState,
+  entityName: "metronomeMarks",
+  state: FeedFormState,
+): boolean;
+export function isEntityUsed(
+  entity: TempoIndicationState,
+  entityName: "tempoIndications",
+  state: FeedFormState,
+): boolean;
+export function isEntityUsed(
+  entity:
+    | PieceState
+    | PieceVersionState
+    | CollectionState
+    | PersonState
+    | OrganizationState
+    | MetronomeMarkState
+    | TempoIndicationState,
+  entityName:
+    | "pieces"
+    | "pieceVersions"
+    | "collections"
+    | "persons"
+    | "organizations"
+    | "metronomeMarks"
+    | "tempoIndications",
+  state: FeedFormState,
+): boolean {
+  if (entityName === "pieces") {
+    return (state.pieceVersions || []).some(
+      (pieceVersion) =>
+        pieceVersion.pieceId === entity.id &&
+        isEntityUsed(pieceVersion, "pieceVersions", state),
+    );
+  }
+  if (entityName === "pieceVersions") {
+    return (state.mMSourcePieceVersions || []).some(
+      (mMSourcePieceVersion) =>
+        mMSourcePieceVersion.pieceVersionId === entity.id,
+    );
+  }
+  if (entityName === "collections") {
+    return (state.pieces || []).some(
+      (piece) =>
+        piece.collectionId === entity.id &&
+        isEntityUsed(piece, "pieces", state),
+    );
+  }
+  if (entityName === "persons") {
+    return (state.pieces || []).some(
+      (piece) =>
+        (piece.composerId === entity.id &&
+          isEntityUsed(piece, "pieces", state)) ||
+        (state.mMSourceContributions || []).some((mMSourceContribution) => {
+          if ("person" in mMSourceContribution) {
+            return mMSourceContribution.person?.id === entity.id;
+          }
+          return false;
+        }),
+    );
+  }
+  if (entityName === "organizations") {
+    return (state.mMSourceContributions || []).some((mMSourceContribution) => {
+      if ("organization" in mMSourceContribution) {
+        return mMSourceContribution.organization?.id === entity.id;
+      }
+      return false;
+    });
+  }
+  if (entityName === "metronomeMarks") {
+    const metronomeMark = entity as MetronomeMarkState;
+    return (state.pieceVersions || []).some(
+      (pv) => pv.id === metronomeMark.pieceVersionId,
+    );
+  }
+  if (entityName === "tempoIndications") {
+    const tempoIndication = entity as TempoIndicationState;
+    return (state.pieceVersions || []).some((pv) =>
+      pv.movements.some((m) =>
+        m.sections.some((s) => s.tempoIndication.id === tempoIndication.id),
+      ),
+    );
+  }
+  return false;
+}
+
 export function getEntityByIdOrKey(
   state: FeedFormState,
   entityName: string,

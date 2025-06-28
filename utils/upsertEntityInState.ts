@@ -5,11 +5,11 @@ export default function upsertEntityInState({
   idKey = "id",
   // replace = false,
 }) {
-  console.log("[upsertEntityInState]", { state, entityName, entity, idKey });
+  // console.log("[upsertEntityInState]", { state, entityName, entity, idKey });
   let newState = state;
 
   if (!newState[entityName]) {
-    console.log(
+    console.warn(
       `[upsertEntityInState] state[${entityName}] does not exist. return state:`,
       state,
     );
@@ -21,10 +21,10 @@ export default function upsertEntityInState({
     (stateEntity) => entity[idKey] && stateEntity[idKey] === entity[idKey],
   );
   if (isEntityInState) {
-    console.log(
-      `[] UPDATE entity in array with idKey [${idKey}] new value :`,
-      entity,
-    );
+    // console.log(
+    //   `[] UPDATE entity in array with idKey [${idKey}] new value :`,
+    //   entity,
+    // );
     newState = {
       ...newState,
       [entityName]: newState[entityName].map((stateEntity) =>
@@ -33,7 +33,7 @@ export default function upsertEntityInState({
     };
   } else {
     // otherwise, we push the entity to the array
-    console.log(`[] ADD new entity '${entityName}' in array :`, entity);
+    // console.log(`[] ADD new entity '${entityName}' in array :`, entity);
     newState = {
       ...newState,
       [entityName]: [...newState[entityName], entity],

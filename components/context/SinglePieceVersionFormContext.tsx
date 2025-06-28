@@ -15,38 +15,45 @@ import { SinglePieceVersionFormStep } from "@/types/formTypes";
 type SinglePieceVersionFormInfo = {
   currentStepRank: number;
   allSourcePieceVersionsDone?: boolean;
+  mMSourcePieceVersionRank?: number;
 };
 
 export type SinglePieceVersionFormState = {
   formInfo: SinglePieceVersionFormInfo;
-  composer?: { id?: string };
-  piece?: { id?: string };
-  pieceVersion?: { id?: string };
+  composer?: { id?: string; isNew?: boolean };
+  piece?: { id?: string; isNew?: boolean };
+  pieceVersion?: { id?: string; isNew?: boolean };
 };
 
 type SinglePieceVersionFormAction =
   | {
       type: "init";
-      payload?: { value: SinglePieceVersionFormState; next?: boolean };
+      payload?: {
+        value: SinglePieceVersionFormState;
+        next?: boolean;
+      };
     }
   | { type: "goToPrevStep" }
   | { type: "goToStep"; payload: { stepRank: number } }
   | {
       type: "composer";
-      payload: { value: { id: string }; next?: boolean };
+      payload: { value: { id: string; isNew?: boolean }; next?: boolean };
     }
   | {
       type: "piece";
-      payload: { value: { id: string }; next?: boolean };
+      payload: { value: { id: string; isNew?: boolean }; next?: boolean };
     }
   | {
       type: "pieceVersion";
-      payload: { value: { id: string }; next?: boolean };
+      payload: { value: { id: string; isNew?: boolean }; next?: boolean };
     };
 
 type Dispatch = (action: SinglePieceVersionFormAction) => void;
 
-type SinglePieceVersionFormProviderProps = { children: ReactNode };
+type SinglePieceVersionFormProviderProps = {
+  children: ReactNode;
+  initialState?: SinglePieceVersionFormState | null;
+};
 
 const INITIAL_STATE: SinglePieceVersionFormState = {
   formInfo: {
@@ -120,19 +127,15 @@ function SinglePieceVersionFormReducer(
 
   // Entries created
   if (isActionAllowed) {
-    const {
-      next,
-      value,
-      // array,
-    } = action.payload || {};
+    const { next, value } = action.payload || {};
 
     let newState = state;
 
-    // otherwise, the payload is an object, we update the state object accordingly
+    // We update the state by assigning the value of the payload to the property [action.type]. No update here.
     if (value) {
       newState = {
         ...state,
-        [action.type]: { ...(state[action.type] || {}), ...value },
+        [action.type]: value,
       };
     }
 
@@ -155,7 +158,7 @@ function SinglePieceVersionFormReducer(
       }
     }
 
-    // We increment currentStep of we are told to with the property 'next' in any payload, AND if the present step is completed
+    // We increment currentStepRank if we are told to with the property 'next' in any payload, AND if the present step is completed
     const lastCompletedStep = getLastCompletedStep(newState);
 
     if (
@@ -191,10 +194,11 @@ function SinglePieceVersionFormReducer(
 
 export function SinglePieceVersionFormProvider({
   children,
+  initialState,
 }: Readonly<SinglePieceVersionFormProviderProps>) {
   const [state, dispatch] = useReducer(
     SinglePieceVersionFormReducer,
-    INITIAL_STATE,
+    initialState || INITIAL_STATE,
   );
 
   useEffect(() => {

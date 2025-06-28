@@ -9,13 +9,13 @@ type ComposerSelectProps = {
   composers: PersonState[];
   onSelect: (composerId: string) => void;
   selectedComposer: PersonState | null;
-  onComposerCreationClick: () => void;
+  onInitComposerCreation: () => void;
 };
 export default function ComposerSelect({
   composers,
   onSelect,
   selectedComposer,
-  onComposerCreationClick,
+  onInitComposerCreation,
 }: Readonly<ComposerSelectProps>) {
   const composerOptions = composers.map((composer) =>
     getComposerOption(composer),
@@ -42,7 +42,7 @@ export default function ComposerSelect({
       }}
       noOptionsMessage={getNoOptionsMessage({
         entityName: "composer",
-        onClick: onComposerCreationClick,
+        onClick: onInitComposerCreation,
       })}
     />
   );

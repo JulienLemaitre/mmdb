@@ -1,7 +1,25 @@
 import Select from "@/components/ReactSelect/Select";
 import labelOnlyFilterOption from "@/utils/labelOnlyFilterOption";
-import { useController } from "react-hook-form";
+import { useController, UseControllerProps } from "react-hook-form";
 import { ReactSelectStyles } from "@/components/ReactSelect/ReactSelectStyles";
+
+type ControlledSelectProps = {
+  name: string;
+  id: string;
+  label?: string;
+  rules?: any;
+  isRequired?: boolean;
+  defaultValue?: any;
+  // hasOptionsGrouped?: boolean;
+  isDisabled?: boolean;
+  isLoading?: boolean;
+  fieldError?: any;
+  options: {
+    value: string;
+    label: string;
+  }[];
+  control: any;
+};
 
 const ControlledSelect = ({
   control,
@@ -10,9 +28,11 @@ const ControlledSelect = ({
   label,
   rules = {},
   isRequired = false,
-  ...props
-}) => {
-  const { defaultValue, hasOptionsGrouped, optionKeys, ...selectProps } = props;
+  isDisabled = false,
+  fieldError,
+  options,
+  defaultValue,
+}: ControlledSelectProps) => {
   const {
     field: { onChange, onBlur, value, ref },
     fieldState: { error },
@@ -21,6 +41,14 @@ const ControlledSelect = ({
     control,
     rules,
   });
+  const selectProps = { options, isRequired, isDisabled };
+  if (JSON.stringify(error) !== JSON.stringify(fieldError)) {
+    console.warn(
+      `[${name}] error and fieldError are different`,
+      error,
+      fieldError,
+    );
+  }
 
   return (
     <div
@@ -44,7 +72,7 @@ const ControlledSelect = ({
         onBlur={onBlur}
         value={
           value && typeof value?.value === "undefined" // avoid "changing an uncontrolled input to be controlled" error
-            ? { value: "", label: "" }
+            ? null
             : value || defaultValue
         }
         filterOption={labelOnlyFilterOption}
@@ -52,7 +80,7 @@ const ControlledSelect = ({
         {...selectProps}
       />
       <div className="label-text-alt text-red-500 absolute top-[100%]">
-        {error?.message}
+        {fieldError?.message || fieldError?.value?.message}
       </div>
     </div>
   );

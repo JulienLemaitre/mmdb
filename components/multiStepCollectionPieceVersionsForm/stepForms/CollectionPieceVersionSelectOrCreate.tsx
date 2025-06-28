@@ -14,6 +14,7 @@ import {
 import CollectionPieceVersionsEditForm from "@/components/entities/piece-version/CollectionPieceVersionsEditForm";
 import Loader from "@/components/Loader";
 import { FeedFormState } from "@/types/feedFormTypes";
+import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 
 type CollectionPieceVersionSelectOrCreateProps = {
   feedFormState: FeedFormState;
@@ -25,6 +26,8 @@ type CollectionPieceVersionSelectOrCreateProps = {
   onSubmitSourceOnPieceVersions: (
     piecePieceVersions: MMSourcePieceVersionsState[],
   ) => void;
+  collectionPieceVersionFormState: CollectionPieceVersionsFormState;
+  isUpdateMode: boolean;
 };
 
 export default function CollectionPieceVersionSelectOrCreate({
@@ -34,13 +37,37 @@ export default function CollectionPieceVersionSelectOrCreate({
   onSubmitPiecePieceVersions,
   onSubmitSourceOnPieceVersions,
   selectedCollectionId,
+  collectionPieceVersionFormState,
+  isUpdateMode,
 }: CollectionPieceVersionSelectOrCreateProps) {
   const [pieces, setPieces] = useState<PieceState[]>();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isCreation, setIsCreation] = useState(false);
-  const isNewCollection = (
-    getNewEntities(feedFormState, "collections") || []
-  ).some((c) => c.id === selectedCollectionId && c.isNew);
+
+  const isCollectionNew = (
+    getNewEntities(feedFormState, "collections", {
+      includeUnusedInFeedForm: true,
+    }) || []
+  ).some((c) => c.id === selectedCollectionId);
+
+  const [isLoading, setIsLoading] = useState(!isCollectionNew);
+  const [isEditMode, setIsEditMode] = useState(isCollectionNew);
+
+  const settledCollectionPieceVersions =
+    collectionPieceVersionFormState.mMSourcePieceVersions || [];
+
+  const areAllPieceVersionsSet =
+    !!pieces &&
+    pieces.every((p) =>
+      settledCollectionPieceVersions.some((cpv) => {
+        const pieceVersion = feedFormState.pieceVersions?.find(
+          (pv) => pv.id === cpv.pieceVersionId,
+        );
+        return pieceVersion?.pieceId === p.id;
+      }),
+    );
+
+  if (isUpdateMode && pieces && !areAllPieceVersionsSet) {
+    console.warn(`[isUpdateMode && !areAllPieceVersionsSet]`);
+  }
 
   const storePieces = useCallback(
     (pieces: PieceState[]) => {
@@ -51,44 +78,38 @@ export default function CollectionPieceVersionSelectOrCreate({
   );
 
   useEffect(() => {
-    if (isNewCollection) {
-      setIsLoading(false);
-      setIsCreation(true);
-    }
-  }, [isNewCollection]);
-
-  useEffect(() => {
-    if (selectedCollectionId && !isNewCollection) {
+    if (selectedCollectionId && !isCollectionNew) {
       fetch(
         `${URL_API_GETALL_COLLECTION_PIECES}?collectionId=${selectedCollectionId}`,
       )
         .then((res) => res.json())
         .then((data) => {
           storePieces(data.pieces);
-          setIsLoading(false);
         })
         .catch((err) => {
           console.error(
             `[fetch(/api/getAll/collectionPieces?collectionId=${selectedCollectionId})] err :`,
             err,
           );
-          setIsLoading(false);
-        });
+        })
+        .finally(() => setIsLoading(false));
     }
-  }, [isNewCollection, selectedCollectionId, storePieces]);
+  }, [isCollectionNew, selectedCollectionId, storePieces]);
 
   if (isLoading) return <Loader />;
 
-  if (isCreation) {
+  if (isEditMode || isUpdateMode) {
     // We have a new Collection, so All of its Pieces must be created
     return (
       <CollectionPieceVersionsEditForm
         onSubmitSourceOnPieceVersions={onSubmitSourceOnPieceVersions}
+        isUpdateMode={isUpdateMode}
+        isPreexistingCollectionUpdate={isUpdateMode && !isCollectionNew}
       />
     );
   }
 
-  if (!isCreation) {
+  if (!isEditMode) {
     if (!pieces) {
       return <div>No pieces found for this collection.</div>;
     }
@@ -99,6 +120,7 @@ export default function CollectionPieceVersionSelectOrCreate({
       "collections",
       selectedCollectionId,
     );
+
     return (
       <>
         <h2 className="text-3xl font-bold mb-5">{`Collection: ${collection.title} (${pieces.length} pieces)`}</h2>

@@ -9,6 +9,8 @@ import PieceVersionSelectOrCreate from "@/components/multiStepSinglePieceVersion
 import { FeedFormState } from "@/types/feedFormTypes";
 import DebugBox from "@/components/DebugBox";
 import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput";
+// import { updateSinglePieceVersionForm } from "@/components/context/SinglePieceVersionFormContext";
+// import { updateFeedForm } from "@/components/context/feedFormContext";
 
 type CollectionPieceVersionsSelectFormContainer = {
   feedFormState: FeedFormState;
@@ -40,6 +42,32 @@ export default function CollectionPieceVersionsSelectFormContainer({
   const [currentPieceIndex, setCurrentPieceIndex] = React.useState(0);
 
   const areAllPieceVersionDefined = piecePieceVersions.length === piecesCount;
+
+  const onInitPieceVersionCreation = () => {
+    console.log(
+      `[CollectionPieceVersionsSelectFormContainer] onInitPieceVersionCreation -`,
+    );
+    // updateSinglePieceVersionForm(dispatch, "pieceVersion", {
+    //   value: { id: null },
+    // });
+  };
+  const onCancelPieceVersionCreation = () => {
+    console.log(
+      `[CollectionPieceVersionsSelectFormContainer] onCancelPieceVersionCreation -`,
+    );
+    // if (singlePieceVersionFormState.pieceVersion?.isNew) {
+    //   // Case: coming back after having first submitted the new pieceVersion and cancel it. All in the same singlePieceVersionForm.
+    //   // => The pieceVersion's data is in the feedFormState; we delete it there too.
+    //   updateSinglePieceVersionForm(dispatch, "pieceVersion", {
+    //     value: {
+    //       id: null,
+    //     },
+    //   });
+    //   updateFeedForm(feedFormDispatch, "pieceVersions", {
+    //     deleteIdArray: [selectedPieceVersionId],
+    //   });
+    // }
+  };
 
   const onPieceVersionCreated = (pieceVersion: PieceVersionInput) => {
     // Front input values validation is successful at this point.
@@ -140,6 +168,11 @@ export default function CollectionPieceVersionsSelectFormContainer({
             onPieceVersionCreated={onPieceVersionCreated}
             onPieceVersionSelect={onPieceVersionSelect}
             // deleteSelectedPieceVersionIfNew={deleteSelectedPieceVersionIfNew}
+            // singlePieceVersionFormState={singlePieceVersionFormState}
+            onInitPieceVersionCreation={onInitPieceVersionCreation}
+            onCancelPieceVersionCreation={onCancelPieceVersionCreation}
+            hasPieceVersionJustBeenCreated={false}
+            hasPieceJustBeenCreated={false}
           />
         </>
       )}

@@ -9,9 +9,9 @@ import type {
 } from "@prisma/client";
 import { FC } from "react";
 import { SinglePieceVersionFormState } from "@/components/context/SinglePieceVersionFormContext";
-import { CollectionPieceVersionsFormState } from "@/components/context/CollectionPieceVersionsFormContext";
 import { WithRequiredId } from "@/types/typescriptUtils";
 import { FeedFormState, PersistableFeedFormState } from "@/types/feedFormTypes";
+import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 
 // Related Types
 
@@ -77,6 +77,9 @@ export type CollectionPieceVersionsFormStep = {
 };
 export type IsNewProp = {
   isNew?: boolean;
+};
+export type IsNewTrue = {
+  isNew: true;
 };
 export type GoNextProp = {
   next?: boolean;
