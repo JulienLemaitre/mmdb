@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin "daisyui";
+@plugin "@tailwindcss/typography";
 
 @layer base {
   [data-nextjs-scroll-focus-boundary] {
@@ -12,81 +12,82 @@
   }
 }
 
-@layer components {
-  .react-select-container .react-select__control {
-    @apply h-12 bg-white dark:bg-neutral-700 border-2 border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500;
-  }
-
-  .react-select-container .react-select__control--is-focused {
-    @apply border-neutral-500 hover:border-neutral-500 dark:border-neutral-400 dark:hover:border-neutral-400 shadow-none;
-  }
-
-  .react-select-container .react-select__menu {
-    @apply bg-neutral-100 dark:bg-neutral-700 border-2 border-neutral-300 dark:border-neutral-600;
-  }
-
-  .react-select-container .react-select__option {
-    @apply text-neutral-600 dark:text-neutral-200 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-700 dark:hover:bg-neutral-800;
-  }
-
-  .react-select-container .react-select__indicator-separator {
-    @apply bg-neutral-400;
-  }
-
-  .react-select-container .react-select__input-container,
-  .react-select-container .react-select__placeholder,
-  .react-select-container .react-select__single-value {
-    @apply text-neutral-600 dark:text-neutral-200;
-  }
-
-  /* Multi-value container and labels */
-  .react-select-container .react-select__multi-value {
-    @apply bg-neutral-400 dark:bg-neutral-600 rounded-md;
-  }
-
-  .react-select-container .react-select__multi-value__label {
-    @apply text-neutral-800 dark:text-neutral-100;
-  }
-
-  /* Multi-value remove button and SVG */
-  .react-select-container .react-select__multi-value__remove {
-    @apply bg-neutral-500 dark:bg-neutral-700 hover:bg-neutral-600 dark:hover:bg-neutral-800 rounded-full;
-  }
-
-  .react-select-container .react-select__multi-value__remove .css-tj5bde-Svg {
-    @apply text-neutral-200 dark:text-neutral-400;
-  }
-
-  /* Clear and dropdown indicator */
-  .react-select-container .react-select__clear-indicator,
-  .react-select-container .react-select__dropdown-indicator {
-    @apply text-neutral-400 dark:text-neutral-600;
-  }
-
-  .react-select-container .react-select__clear-indicator:hover,
-  .react-select-container .react-select__dropdown-indicator:hover {
-    @apply text-neutral-500 dark:text-neutral-500;
-  }
-
-  .react-select-container .react-select__clear-indicator .css-tj5bde-Svg,
-  .react-select-container .react-select__dropdown-indicator .css-tj5bde-Svg {
-    @apply fill-current;
-  }
-
-  .react-select-container .react-select__option--is-focused {
-    @apply bg-neutral-200
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .react-select-container .react-select__option--is-focused {
-      @apply bg-neutral-800
-    }
-  }
-}
-
 * {
   box-sizing: border-box;
 }
+
+/* React-select */
+
+.react-select-container .react-select__control {
+  @apply h-12 bg-white dark:bg-neutral-700 border-2 border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500;
+}
+
+.react-select-container .react-select__control--is-focused {
+  @apply border-neutral-500 hover:border-neutral-500 dark:border-neutral-400 dark:hover:border-neutral-400 shadow-none;
+}
+
+.react-select-container .react-select__menu {
+  @apply bg-neutral-100 dark:bg-neutral-700 border-2 border-neutral-300 dark:border-neutral-600;
+}
+
+.react-select-container .react-select__option {
+  @apply text-neutral-600 dark:text-neutral-200 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-700 dark:hover:bg-neutral-800;
+}
+
+.react-select-container .react-select__indicator-separator {
+  @apply bg-neutral-400;
+}
+
+.react-select-container .react-select__input-container,
+.react-select-container .react-select__placeholder,
+.react-select-container .react-select__single-value {
+  @apply text-neutral-600 dark:text-neutral-200;
+}
+
+/* Multi-value container and labels */
+.react-select-container .react-select__multi-value {
+  @apply bg-neutral-400 dark:bg-neutral-600 rounded-md;
+}
+
+.react-select-container .react-select__multi-value__label {
+  @apply text-neutral-800 dark:text-neutral-100;
+}
+
+/* Multi-value remove button and SVG */
+.react-select-container .react-select__multi-value__remove {
+  @apply bg-neutral-500 dark:bg-neutral-700 hover:bg-neutral-600 dark:hover:bg-neutral-800 rounded-full;
+}
+
+.react-select-container .react-select__multi-value__remove .css-tj5bde-Svg {
+  @apply text-neutral-200 dark:text-neutral-400;
+}
+
+/* Clear and dropdown indicator */
+.react-select-container .react-select__clear-indicator,
+.react-select-container .react-select__dropdown-indicator {
+  @apply text-neutral-400 dark:text-neutral-600;
+}
+
+.react-select-container .react-select__clear-indicator:hover,
+.react-select-container .react-select__dropdown-indicator:hover {
+  @apply text-neutral-500 dark:text-neutral-500;
+}
+
+.react-select-container .react-select__clear-indicator .css-tj5bde-Svg,
+.react-select-container .react-select__dropdown-indicator .css-tj5bde-Svg {
+  @apply fill-current;
+}
+
+.react-select-container .react-select__option--is-focused {
+  @apply bg-neutral-200
+}
+
+@media (prefers-color-scheme: dark) {
+  .react-select-container .react-select__option--is-focused {
+    @apply bg-neutral-800
+  }
+}
+
 
 .common-time {
   font-size: 2.25rem/* 36px */;
@@ -95,36 +96,6 @@
 .common-time-sm {
   font-size: 2rem/* 36px */;
   line-height: 0.5rem/* 18px */;
-}
-.rainbow-mesh {
-  background-color: hsla(0, 100%, 50%, 1);
-  background-image: radial-gradient(
-          at 40% 20%,
-          hsla(28, 100%, 74%, 1) 0px,
-          transparent 50%
-  ), radial-gradient(at 80% 0%, hsla(189, 100%, 56%, 1) 0px, transparent 50%),
-  radial-gradient(at 0% 50%, hsla(355, 100%, 93%, 1) 0px, transparent 50%),
-  radial-gradient(at 80% 50%, hsla(340, 100%, 76%, 1) 0px, transparent 50%),
-  radial-gradient(at 0% 100%, hsla(22, 100%, 77%, 1) 0px, transparent 50%),
-  radial-gradient(at 80% 100%, hsla(242, 100%, 70%, 1) 0px, transparent 50%),
-  radial-gradient(at 0% 0%, hsla(343, 100%, 76%, 1) 0px, transparent 50%);
-}
-
-.candy-mesh {
-  background-color: #ff99ee;
-  background-image: radial-gradient(
-          at 99% 6%,
-          hsla(195, 69%, 67%, 1) 0px,
-          transparent 50%
-  ), radial-gradient(at 55% 88%, hsla(189, 74%, 69%, 1) 0px, transparent 50%),
-  radial-gradient(at 53% 27%, hsla(271, 78%, 63%, 1) 0px, transparent 50%),
-  radial-gradient(at 89% 89%, hsla(317, 89%, 70%, 1) 0px, transparent 50%),
-  radial-gradient(at 35% 44%, hsla(337, 92%, 61%, 1) 0px, transparent 50%);
-}
-
-.glass, .glass:hover {
-  backdrop-filter: blur(16px) saturate(180%);
-  background-color: rgba(255, 255, 255, 0.4);
 }
 
 [data-nextjs-scroll-focus-boundary] {
