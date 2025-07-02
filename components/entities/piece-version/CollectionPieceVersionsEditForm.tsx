@@ -219,14 +219,14 @@ function CollectionPieceVersionsEditForm({
                 <li
                   key={`${index}-${collectionPieceVersion.pieceVersionId}-${collectionPieceVersion.rank}`}
                 >
-                  <div className="px-4 py-3 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-sm hover:bg-primary/5 transition-all duration-150">
+                  <div className="px-4 py-3 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-xs hover:bg-primary/5 transition-all duration-150">
                     <div className="flex gap-4 items-center justify-between">
-                      <div className="flex-grow">
+                      <div className="grow">
                         <h4 className="text-base font-bold text-secondary">
                           {`${index + 1} - ${piece.title}`}
                         </h4>
                       </div>
-                      <div className="flex gap-2 flex-shrink-0">
+                      <div className="flex gap-2 shrink-0">
                         <button
                           type="button"
                           className="btn btn-sm btn-neutral hover:btn-accent"
