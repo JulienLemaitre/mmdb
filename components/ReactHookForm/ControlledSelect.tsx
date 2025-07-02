@@ -1,6 +1,6 @@
 import Select from "@/components/ReactSelect/Select";
 import labelOnlyFilterOption from "@/utils/labelOnlyFilterOption";
-import { useController, UseControllerProps } from "react-hook-form";
+import { useController } from "react-hook-form";
 import { ReactSelectStyles } from "@/components/ReactSelect/ReactSelectStyles";
 
 type ControlledSelectProps = {
@@ -79,7 +79,7 @@ const ControlledSelect = ({
         styles={ReactSelectStyles}
         {...selectProps}
       />
-      <div className="label-text-alt text-red-500 absolute top-[100%]">
+      <div className="label-text-alt text-red-500 absolute top-full">
         {fieldError?.message || fieldError?.value?.message}
       </div>
     </div>

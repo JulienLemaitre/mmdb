@@ -56,7 +56,7 @@ const SimpleSelect = ({
         options={options}
         {...selectProps}
       />
-      <div className="label-text-alt text-red-500 absolute top-[100%]">
+      <div className="label-text-alt text-red-500 absolute top-full">
         {error}
       </div>
     </div>

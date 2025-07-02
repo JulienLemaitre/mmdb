@@ -17,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="h-screen w-screen">
+    <html lang="en">
+      <body className={`${inter.variable} h-screen w-screen`}>
         <Providers>
           <div className="w-full h-full flex flex-col">{children}</div>
           <div id="modal"></div>

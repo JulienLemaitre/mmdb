@@ -145,7 +145,7 @@ function FeedSummary() {
       <MMSourceDetails mMSource={mMSourceToPersist} />
       <div className="flex items-center">
         <button
-          className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 border border-gray-400 rounded mr-4"
+          className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 border border-gray-400 rounded-sm mr-4"
           type="button"
           onClick={saveAll}
         >

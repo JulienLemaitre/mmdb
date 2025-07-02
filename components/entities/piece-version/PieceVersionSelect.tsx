@@ -15,7 +15,7 @@ export default function PieceVersionSelect({
   return pieceVersions.map((pieceVersion) => (
     <div
       key={pieceVersion.id}
-      className="flex py-2 pl-4 pr-2 items-center rounded border-2 border-slate-500 hover:ring"
+      className="flex py-2 pl-4 pr-2 items-center rounded-sm border-2 border-slate-500 hover:ring"
     >
       <input
         type="radio"

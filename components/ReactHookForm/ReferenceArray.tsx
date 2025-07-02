@@ -41,10 +41,10 @@ export default function ReferenceArray({
       <h3 className="text-xl font-bold text-accent mt-4">References</h3>
       <ul>
         {fields.map((field, index) => (
-          <li key={field.id} className="mt-6 w-full max-w-md">
+          <li key={field.id} className="mt-4 w-full max-w-md">
             <div className="flex w-full justify-between gap-3 items-end">
               <div>
-                <h4 className="mt-6 text-lg font-bold text-secondary">{`Reference ${
+                <h4 className="text-lg font-bold text-secondary">{`Reference ${
                   index + 1
                 }`}</h4>
                 <div className="flex gap-3 items-center">

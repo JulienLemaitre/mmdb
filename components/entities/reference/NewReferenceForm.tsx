@@ -172,7 +172,7 @@ function NewReferenceForm({
       <div>{`Create a new reference`}</div>
 
       <div className="flex items-end gap-3">
-        <div className="flex-shrink-0 min-w-40">
+        <div className="shrink-0 min-w-40">
           <SimpleSelect
             name={`type` as const}
             label={`Type`}

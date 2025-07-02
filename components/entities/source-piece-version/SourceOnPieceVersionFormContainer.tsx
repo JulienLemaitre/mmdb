@@ -375,7 +375,7 @@ const SourceOnPieceVersionFormContainer = ({
                 return (
                   <li key={`collection-${group.collection.id}-${groupIndex}`}>
                     {/* Collection Container with unified border */}
-                    <div className="border-l-2 border-l-primary rounded-lg overflow-hidden border border-base-300 hover:shadow-sm hover:bg-primary/5 transition-all duration-150">
+                    <div className="border-l-2 border-l-primary rounded-lg overflow-hidden border border-base-300 hover:shadow-xs hover:bg-primary/5 transition-all duration-150">
                       {/* Collection Header */}
                       <div className="px-4 py-3 bg-primary/10 border-b border-primary/20">
                         <div className="flex gap-4 items-center justify-between">
@@ -449,7 +449,7 @@ const SourceOnPieceVersionFormContainer = ({
                             className="px-6 py-2"
                           >
                             <div className="flex items-center gap-3">
-                              <div className="flex-grow">
+                              <div className="grow">
                                 <h4 className="text-base font-medium text-secondary">
                                   {`${item.mMSourcePieceVersion.rank} - ${item.piece.title}`}
                                 </h4>
@@ -468,9 +468,9 @@ const SourceOnPieceVersionFormContainer = ({
                   <li
                     key={`single-${item.mMSourcePieceVersion.pieceVersionId}-${item.mMSourcePieceVersion.rank}`}
                   >
-                    <div className="px-4 py-3 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-sm hover:bg-primary/5 transition-all duration-150">
+                    <div className="px-4 py-3 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-xs hover:bg-primary/5 transition-all duration-150">
                       <div className="flex gap-4 items-center justify-between">
-                        <div className="flex-grow">
+                        <div className="grow">
                           <h4 className="text-base font-bold text-secondary">
                             {`${item.mMSourcePieceVersion.rank} - ${item.piece.title}`}
                             <span className="text-base font-normal">
@@ -479,7 +479,7 @@ const SourceOnPieceVersionFormContainer = ({
                             </span>
                           </h4>
                         </div>
-                        <div className="flex gap-2 flex-shrink-0">
+                        <div className="flex gap-2 shrink-0">
                           <button
                             type="button"
                             className="btn btn-sm btn-ghost hover:bg-accent hover:text-neutral"

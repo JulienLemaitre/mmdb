@@ -64,7 +64,7 @@ export default function SectionArray({
                     {...{ register, control, errors }}
                   />
                   <div className="divider border-black my-0" />
-                  <div className="mt-[-0.5rem]">
+                  <div className="-mt-2">
                     <FormInput
                       name={
                         `movements[${nestIndex}].sections[${index}].metreDenominator` as const
