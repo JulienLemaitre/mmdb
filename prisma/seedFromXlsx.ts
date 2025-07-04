@@ -88,7 +88,7 @@ const schema = {
       }
       // A metre expressed as a fraction, e.g. 4/4, is considered as a date by the library
       if (value instanceof Date) {
-        // console.log(`[PARSE] Mettre value as date: ${value}`)
+        // console.log(`[PARSE] Metre value as date: ${value}`)
         const day = value.getDate()
         const month = value.getMonth() + 1
         if (day && month) {
@@ -209,7 +209,7 @@ async function traverseDirectory(directory: string) {
   return dataSheetList
 }
 
-// This function takes the dataSheetList as an input and return a well-structured pieceList Array of piece object containing movements, sections and metronomeMarkList. It also determines note values from fastest note values, and output a list of pieces with note found notes.
+// This function takes the dataSheetList as an input and return a well-structured pieceList Array of piece objects containing movements, sections and metronomeMarkList. It also determines note values from the fastest note values, and output a list of pieces with not found notes.
 async function processDataFromXlsx(dataSheetList: any) {
   const pieceList: any[] = []
   const metronomeMarkList: any[] = []
@@ -223,9 +223,9 @@ async function processDataFromXlsx(dataSheetList: any) {
 
     dataSheet.forEach((rowData: any) => {
       // Single row data
-      const isPieceDescription = rowData.hasOwnProperty('composer') && rowData.hasOwnProperty('title')
-      const isMovement = rowData.hasOwnProperty('movement') && rowData.hasOwnProperty('key')
-      const isSectionDescription = rowData.hasOwnProperty('metre')
+      const isPieceDescription = Object.hasOwn(rowData, 'composer') && Object.hasOwn(rowData, 'title')
+      const isMovement = Object.hasOwn(rowData, 'movement') && Object.hasOwn(rowData, 'key')
+      const isSectionDescription = Object.hasOwn(rowData, 'metre')
 
       if (isPieceDescription) {
         // - PUSH remaining movement in precedent piece
@@ -933,7 +933,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
           },
           metronomeMarks: {
             create: metronomeMarkList.map((metronomeMark) => {
-              // test if bpm is float
+              // test if bpm is a float number
               if (metronomeMark.bpm % 1 !== 0) {
                 console.group(`[ERROR] FLOAT BPM`)
                 console.log(`[] metronomeMark.bpm`, metronomeMark.bpm)

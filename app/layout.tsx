@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import React from "react";
 import { Inter } from "next/font/google";
 import Providers from "@/components/Providers";
 import { SpeedInsights } from "@vercel/speed-insights/next";

@@ -83,7 +83,7 @@ export default function getNotesPerBarCollectionFromNotesPerSecondCollection({
           )}`,
         );
         // @ts-ignore
-        notes[note.replace("PerSecond", "PerBar")] = null;
+        // notes[note.replace("PerSecond", "PerBar")] = null;
       }
     });
 

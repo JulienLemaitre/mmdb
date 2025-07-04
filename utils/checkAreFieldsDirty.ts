@@ -13,11 +13,11 @@ export default function checkAreFieldsDirty(
   ): Record<string, boolean> => {
     const result: Record<string, boolean> = {};
     for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
+      if (Object.hasOwn(obj, key)) {
         if (typeof obj[key] === "object" && obj[key] !== null) {
           const flattened = flattenObject(obj[key] as Record<string, unknown>);
           for (const nestedKey in flattened) {
-            if (flattened.hasOwnProperty(nestedKey)) {
+            if (Object.hasOwn(flattened, nestedKey)) {
               result[key + "." + nestedKey] = flattened[nestedKey];
             }
           }

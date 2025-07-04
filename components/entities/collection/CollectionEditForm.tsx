@@ -14,13 +14,13 @@ const CollectionSchema = z.object({
 export default function CollectionEditForm(
   props: Readonly<{
     collection?: CollectionTitleInput;
-    onSubmit: (collection: CollectionTitleInput) => void;
+    onSubmit: (_collection: CollectionTitleInput) => void;
     onCancel: () => void;
     submitTitle?: string;
     title?: string;
   }>,
 ) {
-  const { collection, onCancel, onSubmit, submitTitle, title } = props;
+  const { collection, onCancel, onSubmit } = props;
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
