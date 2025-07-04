@@ -264,6 +264,43 @@ function CollectionPieceVersionsFormContainer({
       array: payloadArray,
       isCollectionUpdate,
     });
+
+    // Change the corresponding piece.collectionRank if it has changed
+    const piecePayloadArray = (feedFormState.pieces || []).reduce<PieceState[]>(
+      (array: PieceState[], p: PieceState) => {
+        const correspondingSourceOnPieceVersion = sourceOnPieceVersions.find(
+          (sourceOnPieceVersion) =>
+            (feedFormState.pieceVersions || []).some(
+              (pv) =>
+                sourceOnPieceVersion.pieceVersionId === pv.id &&
+                pv.pieceId === p.id,
+            ),
+        );
+        if (
+          correspondingSourceOnPieceVersion &&
+          p.collectionRank !== correspondingSourceOnPieceVersion.rank
+        ) {
+          console.log(
+            `[] Change piece ${p.title} collectionRank from ${p.collectionRank} to ${correspondingSourceOnPieceVersion.rank}`,
+          );
+          return [
+            ...array,
+            {
+              ...p,
+              collectionRank: correspondingSourceOnPieceVersion.rank,
+            },
+          ];
+        }
+
+        return array;
+      },
+      [],
+    );
+    console.log(`[] piecePayloadArray :`, piecePayloadArray);
+    updateFeedForm(feedFormDispatch, "pieces", {
+      array: piecePayloadArray,
+    });
+
     onFormClose();
   };
 

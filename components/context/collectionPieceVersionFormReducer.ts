@@ -166,6 +166,7 @@ export function collectionPieceVersionsFormReducer(
         console.warn(
           `[collectionPieceVersionsFormReducer] Cannot find mMSourcePieceVersion to move for pieceVersionId: ${pieceVersionId}`,
         );
+        console.groupEnd();
         return state;
       }
 
@@ -184,6 +185,7 @@ export function collectionPieceVersionsFormReducer(
         console.warn(
           `[collectionPieceVersionsFormReducer] Cannot find piece version at rank ${targetRank}`,
         );
+        console.groupEnd();
         return state;
       }
 
@@ -205,6 +207,7 @@ export function collectionPieceVersionsFormReducer(
         mMSourcePieceVersions: updatedPieces,
       };
 
+      console.groupEnd();
       return newState;
     }
 
