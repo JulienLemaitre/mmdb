@@ -51,6 +51,8 @@ function CollectionPieceVersionsFormContainer({
   const selectedCollectionId = collectionPieceVersionFormState?.collection?.id;
   const hasCollectionJustBeenCreated =
     !!collectionPieceVersionFormState.collection?.isNew;
+  const hasComposerJustBeenCreated =
+    !!collectionPieceVersionFormState.collection?.isComposerNew;
 
   // When updating a collection that has not just been created, we start by completing the "composer" and "collection" steps automatically and go to the third step = pieceVersions
   useEffect(() => {
@@ -264,6 +266,43 @@ function CollectionPieceVersionsFormContainer({
       array: payloadArray,
       isCollectionUpdate,
     });
+
+    // Change the corresponding piece.collectionRank if it has changed
+    const piecePayloadArray = (feedFormState.pieces || []).reduce<PieceState[]>(
+      (array: PieceState[], p: PieceState) => {
+        const correspondingSourceOnPieceVersion = sourceOnPieceVersions.find(
+          (sourceOnPieceVersion) =>
+            (feedFormState.pieceVersions || []).some(
+              (pv) =>
+                sourceOnPieceVersion.pieceVersionId === pv.id &&
+                pv.pieceId === p.id,
+            ),
+        );
+        if (
+          correspondingSourceOnPieceVersion &&
+          p.collectionRank !== correspondingSourceOnPieceVersion.rank
+        ) {
+          console.log(
+            `[] Change piece ${p.title} collectionRank from ${p.collectionRank} to ${correspondingSourceOnPieceVersion.rank}`,
+          );
+          return [
+            ...array,
+            {
+              ...p,
+              collectionRank: correspondingSourceOnPieceVersion.rank,
+            },
+          ];
+        }
+
+        return array;
+      },
+      [],
+    );
+    console.log(`[] piecePayloadArray :`, piecePayloadArray);
+    updateFeedForm(feedFormDispatch, "pieces", {
+      array: piecePayloadArray,
+    });
+
     onFormClose();
   };
 
@@ -290,16 +329,14 @@ function CollectionPieceVersionsFormContainer({
           isUpdateMode={isUpdateMode}
           // Composer
           selectedComposerId={selectedComposerId}
-          hasComposerJustBeenCreated={hasCollectionJustBeenCreated}
+          hasComposerJustBeenCreated={hasComposerJustBeenCreated}
           onComposerSelect={onComposerSelect}
           onInitComposerCreation={onInitComposerCreation}
           onCancelComposerCreation={onCancelComposerCreation}
           onComposerCreated={onComposerCreated}
           // Collection
           selectedCollectionId={selectedCollectionId}
-          hasCollectionJustBeenCreated={
-            !!collectionPieceVersionFormState.collection?.isNew
-          }
+          hasCollectionJustBeenCreated={hasCollectionJustBeenCreated}
           onInitCollectionCreation={onInitCollectionCreation}
           onCancelCollectionCreation={onCancelCollectionCreation}
           onCollectionSelect={onCollectionSelect}

@@ -1,3 +1,4 @@
+import React from "react";
 import type {} from "react-select/base";
 import { GroupBase } from "react-select";
 // This import is necessary for module augmentation.
