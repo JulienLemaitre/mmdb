@@ -51,6 +51,8 @@ function CollectionPieceVersionsFormContainer({
   const selectedCollectionId = collectionPieceVersionFormState?.collection?.id;
   const hasCollectionJustBeenCreated =
     !!collectionPieceVersionFormState.collection?.isNew;
+  const hasComposerJustBeenCreated =
+    !!collectionPieceVersionFormState.collection?.isComposerNew;
 
   // When updating a collection that has not just been created, we start by completing the "composer" and "collection" steps automatically and go to the third step = pieceVersions
   useEffect(() => {
@@ -327,16 +329,14 @@ function CollectionPieceVersionsFormContainer({
           isUpdateMode={isUpdateMode}
           // Composer
           selectedComposerId={selectedComposerId}
-          hasComposerJustBeenCreated={hasCollectionJustBeenCreated}
+          hasComposerJustBeenCreated={hasComposerJustBeenCreated}
           onComposerSelect={onComposerSelect}
           onInitComposerCreation={onInitComposerCreation}
           onCancelComposerCreation={onCancelComposerCreation}
           onComposerCreated={onComposerCreated}
           // Collection
           selectedCollectionId={selectedCollectionId}
-          hasCollectionJustBeenCreated={
-            !!collectionPieceVersionFormState.collection?.isNew
-          }
+          hasCollectionJustBeenCreated={hasCollectionJustBeenCreated}
           onInitCollectionCreation={onInitCollectionCreation}
           onCancelCollectionCreation={onCancelCollectionCreation}
           onCollectionSelect={onCollectionSelect}
