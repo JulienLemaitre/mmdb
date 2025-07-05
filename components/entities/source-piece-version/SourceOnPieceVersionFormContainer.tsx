@@ -21,6 +21,7 @@ import EditIcon from "@/components/svg/EditIcon";
 import dynamic from "next/dynamic";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
+import { NEED_CONFIRMATION_MODAL_ID } from "@/utils/constants";
 
 type SourcePieceVersionSelectFormProps = {
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
@@ -29,7 +30,6 @@ type SourcePieceVersionSelectFormProps = {
   title?: string;
 };
 
-const needConfirmationModalId = "need-confirmation-modal";
 const NeedConfirmationModal = dynamic(
   () => import("@/components/NeedConfirmationModal"),
   { ssr: false },
@@ -564,7 +564,7 @@ const SourceOnPieceVersionFormContainer = ({
             onGoToPrevStep={onFormClose}
           />
           <NeedConfirmationModal
-            modalId={needConfirmationModalId}
+            modalId={NEED_CONFIRMATION_MODAL_ID}
             onConfirm={() =>
               collectionToDiscardId
                 ? onDeleteCollection(collectionToDiscardId)

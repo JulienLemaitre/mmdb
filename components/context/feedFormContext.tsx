@@ -73,8 +73,11 @@ export function useFeedForm() {
   };
 }
 
-export function updateFeedForm(dispatch, type, value) {
-  dispatch({ type, payload: value });
+export function updateFeedForm(dispatch, type, value?: any) {
+  dispatch({
+    type,
+    ...(typeof value !== "undefined" ? { payload: value } : ({} as any)),
+  });
 }
 
 export function initFeedForm(dispatch, initialState = FEED_FORM_INITIAL_STATE) {
