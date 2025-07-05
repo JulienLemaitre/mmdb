@@ -8,6 +8,7 @@ import {
   OrganizationState,
   PersonState,
   PieceState,
+  SourceOnPieceVersionsFormType,
   TempoIndicationState,
 } from "@/types/formTypes";
 import { ReactNode } from "react";
@@ -33,6 +34,7 @@ export type FeedFormInfo = {
   currentStepRank: number;
   introDone?: boolean;
   isSourceOnPieceVersionformOpen?: boolean;
+  formType?: SourceOnPieceVersionsFormType;
   allSourcePieceVersionsDone?: boolean;
   allSourceContributionsDone?: boolean;
 };

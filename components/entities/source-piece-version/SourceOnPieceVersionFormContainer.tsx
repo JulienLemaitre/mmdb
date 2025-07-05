@@ -1,8 +1,5 @@
 import { useState } from "react";
-import {
-  MMSourcePieceVersionsState,
-  SourceOnPieceVersionsFormType,
-} from "@/types/formTypes";
+import { MMSourcePieceVersionsState } from "@/types/formTypes";
 import PlusIcon from "@/components/svg/PlusIcon";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import SinglePieceVersionFormContainer from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer";
@@ -42,8 +39,6 @@ const SourceOnPieceVersionFormContainer = ({
   title,
 }: SourcePieceVersionSelectFormProps) => {
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
-  const [formType, setFormType] =
-    useState<SourceOnPieceVersionsFormType>("none");
   const [
     singlePieceVersionUpdateInitState,
     setSinglePieceVersionUpdateInitState,
@@ -56,6 +51,7 @@ const SourceOnPieceVersionFormContainer = ({
     singlePieceVersionUpdateInitState || collectionPieceVersionUpdateInitState
   );
   const isFormOpen = !!feedFormState.formInfo?.isSourceOnPieceVersionformOpen;
+  const formType = feedFormState.formInfo?.formType;
   const isIntro =
     feedFormState?.mMSourcePieceVersions?.length === 0 && !isFormOpen;
 
@@ -70,15 +66,16 @@ const SourceOnPieceVersionFormContainer = ({
     !!pieceVersionToDiscardId || !!collectionToDiscardId;
 
   const onFormOpen = (formType: "single" | "collection") => {
-    setFormType(formType);
     updateFeedForm(feedFormDispatch, "formInfo", {
-      value: { isSourceOnPieceVersionformOpen: true },
+      value: {
+        isSourceOnPieceVersionformOpen: true,
+        formType,
+      },
     });
   };
 
   const onFormClose = () => {
     // reset sourceOnPieceVersionForm and singlePieceVersionUpdateInitState
-    setFormType("none");
     setSinglePieceVersionUpdateInitState(null);
     setCollectionPieceVersionUpdateInitState(null);
 
