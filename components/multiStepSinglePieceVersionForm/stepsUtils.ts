@@ -1,9 +1,9 @@
 import { SinglePieceVersionFormStep } from "@/types/formTypes";
 import ComposerSelectOrCreate from "@/components/multiStepSinglePieceVersionForm/stepForms/ComposerSelectOrCreate";
-import { SinglePieceVersionFormState } from "@/components/context/SinglePieceVersionFormContext";
 import PieceSelectOrCreate from "@/components/multiStepSinglePieceVersionForm/stepForms/PieceSelectOrCreate";
 import PieceVersionSelectOrCreate from "@/components/multiStepSinglePieceVersionForm/stepForms/PieceVersionSelectOrCreate";
 import Summary from "@/components/multiStepSinglePieceVersionForm/stepForms/Summary";
+import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 
 export const singlePieceFormSteps: SinglePieceVersionFormStep[] = [
   {
@@ -64,4 +64,21 @@ export function getStepByRank({
     singlePieceFormSteps.find((step) => step.rank === rank) ||
     singlePieceFormSteps[0]
   );
+}
+
+export function getLastCompletedStep(
+  state: SinglePieceVersionFormState,
+): SinglePieceVersionFormStep | undefined {
+  // traversing the steps array, we return the step before the first incomplete one
+  // console.group(`SOPEVF getLastCompletedStep`);
+  for (let i = 0; i < singlePieceFormSteps.length; i++) {
+    // console.log(`steps[${i}] isComplete :`, steps[i].isComplete(state));
+    if (!singlePieceFormSteps[i].isComplete(state)) {
+      // console.groupEnd();
+      return singlePieceFormSteps[i - 1];
+    }
+  }
+  // console.groupEnd();
+  // If none incomplete step found, we return the last step
+  return singlePieceFormSteps[singlePieceFormSteps.length - 1];
 }
