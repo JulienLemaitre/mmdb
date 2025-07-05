@@ -24,6 +24,7 @@ import CollectionPieceVersionsSteps from "@/components/multiStepCollectionPieceV
 import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
 import React, { useCallback, useEffect } from "react";
 import CollectionPieceVersionFormSummary from "@/components/multiStepSinglePieceVersionForm/CollectionPieceVersionFormSummary";
+import { COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 
 type CollectionPieceVersionFormProps = {
   onFormClose: () => void;
@@ -224,6 +225,13 @@ function CollectionPieceVersionsFormContainer({
     updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
       array: payloadArray,
     });
+
+    // Reset localStorage
+    console.log(
+      `[localStorage REMOVE] ${COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY}`,
+    );
+    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+
     onFormClose();
   };
 
@@ -302,6 +310,12 @@ function CollectionPieceVersionsFormContainer({
     updateFeedForm(feedFormDispatch, "pieces", {
       array: piecePayloadArray,
     });
+
+    // Reset localStorage
+    console.log(
+      `[localStorage REMOVE] ${COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY}`,
+    );
+    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
 
     onFormClose();
   };

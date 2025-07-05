@@ -1,22 +1,23 @@
 import { FeedFormState, PieceFormAction } from "@/types/feedFormTypes";
 import upsertEntityInState from "@/utils/upsertEntityInState";
-import { localStorageSetItem } from "@/utils/localStorage";
 import { steps } from "@/components/multiStepMMSourceForm/stepsUtils";
 import {
   FEED_FORM_INITIAL_STATE,
   FEED_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
 import { cleanFeedFormState } from "@/components/context/cleanFeedFormState";
+import { withLocalStorage } from "@/components/context/localStorageReducerWrapper";
 
 const allowedActions = new Set();
 steps.forEach((step) =>
   step.actionTypes.forEach((actionType) => allowedActions.add(actionType)),
 );
 
-export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
+function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
+  console.log(`[feedFormReducer] action.type :`, action.type);
+
   // Navigation back
   if (action.type === "goToPrevStep") {
-    console.log(`[feedFormReducer]`, action.type);
     const currentStepRank = state?.formInfo?.currentStepRank || 1;
     return {
       ...state,
@@ -27,29 +28,23 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
     };
   }
 
-  console.log(`[feedFormReducer]`, action.type, action.payload);
+  console.log(`[feedFormReducer] action.payload`, action.payload);
 
   // Reset
   if (action.type === "init") {
-    localStorageSetItem(
-      FEED_FORM_LOCAL_STORAGE_KEY,
-      action.payload || FEED_FORM_INITIAL_STATE,
-    );
     return action.payload || FEED_FORM_INITIAL_STATE;
   }
 
   // Navigation to specific step
   if (action.type === "goToStep") {
     const { stepRank } = action.payload;
-    const newState = {
+    return {
       ...state,
       formInfo: {
         ...state.formInfo,
         currentStepRank: stepRank,
       },
     };
-    localStorageSetItem(FEED_FORM_LOCAL_STORAGE_KEY, newState);
-    return newState;
   }
 
   const isActionAllowed = allowedActions.has(action.type);
@@ -674,7 +669,6 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
       }),
     );
 
-    localStorageSetItem(FEED_FORM_LOCAL_STORAGE_KEY, newState);
     return newState;
   } else {
     console.log(
@@ -686,3 +680,9 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
     `[FeedFormContext] Unhandled${!isActionAllowed ? ` (Not allowed)` : ""} action type: ${action.type}`,
   );
 }
+
+export const feedFormReducer = withLocalStorage(
+  feedFormReducerCore,
+  FEED_FORM_LOCAL_STORAGE_KEY,
+  FEED_FORM_INITIAL_STATE,
+);

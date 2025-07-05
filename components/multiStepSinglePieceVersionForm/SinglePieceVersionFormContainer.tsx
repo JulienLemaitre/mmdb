@@ -22,6 +22,7 @@ import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput
 import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
 import SinglePieceVersionFormSummary from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionFormSummary";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
+import { SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
@@ -356,6 +357,12 @@ const SinglePieceVersionFormContainer = ({
     } else {
       updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", payload);
     }
+
+    // Reset localStorage
+    console.log(
+      `[localStorage REMOVE] ${SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY}`,
+    );
+    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
 
     onFormClose();
   };
