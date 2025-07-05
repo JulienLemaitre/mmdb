@@ -658,12 +658,12 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
     ) {
       newState = cleanFeedFormState(newState);
     } else {
-      console.log(`NOT Cleaning state`, {
-        condition1: !otherFormInfoAction,
-        condition2:
-          !isSourceOnPieceVersionFormOpen ||
-          closeSourceOnPieceVersionFormAction,
-      });
+      // console.log(`NOT Cleaning state`, {
+      //   condition1: !otherFormInfoAction,
+      //   condition2:
+      //     !isSourceOnPieceVersionFormOpen ||
+      //     closeSourceOnPieceVersionFormAction,
+      // });
     }
 
     // Make sure mMSourcePieceVersions ranks are continuous and begin at 1
@@ -677,7 +677,10 @@ export function feedFormReducer(state: FeedFormState, action: PieceFormAction) {
     localStorageSetItem(FEED_FORM_LOCAL_STORAGE_KEY, newState);
     return newState;
   } else {
-    console.log(`[] Action not allowed: action.type`, action.type);
+    console.log(
+      `[FeedFormContext] Action not allowed: action.type`,
+      action.type,
+    );
   }
   throw new Error(
     `[FeedFormContext] Unhandled${!isActionAllowed ? ` (Not allowed)` : ""} action type: ${action.type}`,
