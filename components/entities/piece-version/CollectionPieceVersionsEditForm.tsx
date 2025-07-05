@@ -7,16 +7,14 @@ import {
   getEntityByIdOrKey,
   useFeedForm,
 } from "@/components/context/feedFormContext";
-import {
-  SinglePieceVersionFormProvider,
-  SinglePieceVersionFormState,
-} from "@/components/context/SinglePieceVersionFormContext";
+import { SinglePieceVersionFormProvider } from "@/components/context/SinglePieceVersionFormContext";
 import SinglePieceVersionFormContainer from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer";
 import TrashIcon from "@/components/svg/TrashIcon";
 import PlusIcon from "@/components/svg/PlusIcon";
 import { MMSourcePieceVersionsState } from "@/types/formTypes";
 import EditIcon from "@/components/svg/EditIcon";
 import dynamic from "next/dynamic";
+import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 
 type CollectionPieceVersionsEditFormProps = {
   isUpdateMode: boolean;
