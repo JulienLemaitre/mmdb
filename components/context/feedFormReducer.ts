@@ -305,7 +305,10 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
       }
 
       // If the piece at target rank is part of a collection, we need to swap with the entire collection
-      if (piece.collectionId) {
+      if (
+        piece.collectionId &&
+        state.collections?.find((c) => c.id === piece.collectionId) // This prevents from triggering this collection handling behavior if a piece of a collection has been added as a single piece
+      ) {
         // Find all pieces in the collection
         const collectionPieceVersionIds =
           newState.pieceVersions
