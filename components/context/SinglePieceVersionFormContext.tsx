@@ -46,22 +46,15 @@ export function SinglePieceVersionFormProvider({
   );
 
   useEffect(() => {
-    try {
-      const localStorageValue = localStorageGetItem(
-        SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+    const localStorageValue = localStorageGetItem(
+      SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+    );
+    if (localStorageValue) {
+      console.log(
+        `[INIT] SinglePieceVersions from localStorage`,
+        localStorageValue,
       );
-      if (localStorageValue) {
-        console.log(
-          `[INIT] SinglePieceVersions from localStorage`,
-          localStorageValue,
-        );
-        initSinglePieceVersionForm(dispatch, JSON.parse(localStorageValue));
-      }
-    } catch (error) {
-      console.warn(
-        `Error reading localStorage key “${SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY}”:`,
-        error,
-      );
+      initSinglePieceVersionForm(dispatch, localStorageValue);
     }
   }, [initialState]);
 

@@ -1,8 +1,5 @@
 import { useState } from "react";
-import {
-  MMSourcePieceVersionsState,
-  SourceOnPieceVersionsFormType,
-} from "@/types/formTypes";
+import { MMSourcePieceVersionsState } from "@/types/formTypes";
 import PlusIcon from "@/components/svg/PlusIcon";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import SinglePieceVersionFormContainer from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer";
@@ -21,6 +18,11 @@ import EditIcon from "@/components/svg/EditIcon";
 import dynamic from "next/dynamic";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
+import {
+  COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+  NEED_CONFIRMATION_MODAL_ID,
+  SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+} from "@/utils/constants";
 
 type SourcePieceVersionSelectFormProps = {
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
@@ -29,7 +31,6 @@ type SourcePieceVersionSelectFormProps = {
   title?: string;
 };
 
-const needConfirmationModalId = "need-confirmation-modal";
 const NeedConfirmationModal = dynamic(
   () => import("@/components/NeedConfirmationModal"),
   { ssr: false },
@@ -42,8 +43,6 @@ const SourceOnPieceVersionFormContainer = ({
   title,
 }: SourcePieceVersionSelectFormProps) => {
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
-  const [formType, setFormType] =
-    useState<SourceOnPieceVersionsFormType>("none");
   const [
     singlePieceVersionUpdateInitState,
     setSinglePieceVersionUpdateInitState,
@@ -56,6 +55,7 @@ const SourceOnPieceVersionFormContainer = ({
     singlePieceVersionUpdateInitState || collectionPieceVersionUpdateInitState
   );
   const isFormOpen = !!feedFormState.formInfo?.isSourceOnPieceVersionformOpen;
+  const formType = feedFormState.formInfo?.formType;
   const isIntro =
     feedFormState?.mMSourcePieceVersions?.length === 0 && !isFormOpen;
 
@@ -70,17 +70,20 @@ const SourceOnPieceVersionFormContainer = ({
     !!pieceVersionToDiscardId || !!collectionToDiscardId;
 
   const onFormOpen = (formType: "single" | "collection") => {
-    setFormType(formType);
     updateFeedForm(feedFormDispatch, "formInfo", {
-      value: { isSourceOnPieceVersionformOpen: true },
+      value: {
+        isSourceOnPieceVersionformOpen: true,
+        formType,
+      },
     });
   };
 
   const onFormClose = () => {
     // reset sourceOnPieceVersionForm and singlePieceVersionUpdateInitState
-    setFormType("none");
     setSinglePieceVersionUpdateInitState(null);
     setCollectionPieceVersionUpdateInitState(null);
+    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
 
     // Close sourceOnPieceVersions form
     updateFeedForm(feedFormDispatch, "formInfo", {
@@ -350,7 +353,7 @@ const SourceOnPieceVersionFormContainer = ({
             <button
               className="btn btn-accent"
               type="button"
-              onClick={() => onFormClose()}
+              onClick={onFormClose}
             >
               <TrashIcon className="w-5 h-5" />
               {`${isUpdateMode ? `Cancel updating ` : "Discard"} this ${formType === "single" ? "piece" : "whole collection"}`}
@@ -564,7 +567,7 @@ const SourceOnPieceVersionFormContainer = ({
             onGoToPrevStep={onFormClose}
           />
           <NeedConfirmationModal
-            modalId={needConfirmationModalId}
+            modalId={NEED_CONFIRMATION_MODAL_ID}
             onConfirm={() =>
               collectionToDiscardId
                 ? onDeleteCollection(collectionToDiscardId)

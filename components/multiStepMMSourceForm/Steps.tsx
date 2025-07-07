@@ -5,7 +5,6 @@ import {
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import { steps } from "@/components/multiStepMMSourceForm/stepsUtils";
-import DebugBox from "@/components/DebugBox";
 import React from "react";
 
 const Steps = () => {
@@ -51,12 +50,6 @@ const Steps = () => {
           );
         })}
       </ul>
-      <DebugBox
-        stateObject={state}
-        title="Feed form state"
-        // shouldExpandNode={(level) => level < 3}
-        expandAllNodes
-      />
     </>
   );
 };

@@ -41,19 +41,10 @@ export function FeedFormProvider({
   );
 
   useEffect(() => {
-    try {
-      const localStorageValue = localStorageGetItem(
-        FEED_FORM_LOCAL_STORAGE_KEY,
-      );
-      if (localStorageValue) {
-        console.log(`[INIT] feedForm from localStorage`, localStorageValue);
-        initFeedForm(dispatch, JSON.parse(localStorageValue));
-      }
-    } catch (error) {
-      console.warn(
-        `Error reading localStorage key “${FEED_FORM_LOCAL_STORAGE_KEY}”:`,
-        error,
-      );
+    const localStorageValue = localStorageGetItem(FEED_FORM_LOCAL_STORAGE_KEY);
+    if (localStorageValue) {
+      console.log(`[INIT] feedForm from localStorage`, localStorageValue);
+      initFeedForm(dispatch, localStorageValue);
     }
   }, []);
 
@@ -82,8 +73,11 @@ export function useFeedForm() {
   };
 }
 
-export function updateFeedForm(dispatch, type, value) {
-  dispatch({ type, payload: value });
+export function updateFeedForm(dispatch, type, value?: any) {
+  dispatch({
+    type,
+    ...(typeof value !== "undefined" ? { payload: value } : ({} as any)),
+  });
 }
 
 export function initFeedForm(dispatch, initialState = FEED_FORM_INITIAL_STATE) {

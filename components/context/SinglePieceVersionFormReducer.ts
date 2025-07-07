@@ -6,13 +6,13 @@ import {
   getAllowedActions,
   getLastCompletedStep,
 } from "@/components/multiStepSinglePieceVersionForm/stepsUtils";
-import { localStorageSetItem } from "@/utils/localStorage";
 import {
   SINGLE_PIECE_VERSION_FORM_INITIAL_STATE,
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
+import { withLocalStorage } from "@/components/context/localStorageReducerWrapper";
 
-export function singlePieceVersionFormReducer(
+function singlePieceVersionFormReducerCore(
   state: SinglePieceVersionFormState,
   action: SinglePieceVersionFormAction,
 ): any {
@@ -34,6 +34,14 @@ export function singlePieceVersionFormReducer(
 
   console.log(`action.payload :`, action.payload);
 
+  // Reset
+  if (action.type === "init") {
+    const initialState =
+      action.payload || SINGLE_PIECE_VERSION_FORM_INITIAL_STATE;
+    console.groupEnd();
+    return initialState;
+  }
+
   // Navigation to specific step
   if (action.type === "goToStep") {
     const { stepRank } = action.payload;
@@ -49,8 +57,6 @@ export function singlePieceVersionFormReducer(
 
   const allowedActions = getAllowedActions();
   const isActionAllowed = allowedActions.has(action.type);
-  console.log(`allowedActions :`, allowedActions);
-  console.log(`isActionAllowed :`, isActionAllowed);
 
   // Entries created
   if (isActionAllowed) {
@@ -107,19 +113,15 @@ export function singlePieceVersionFormReducer(
       };
     }
 
-    localStorageSetItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY, newState);
     console.groupEnd();
     return newState;
   }
-  if (action.type === "init") {
-    const initialState =
-      action.payload || SINGLE_PIECE_VERSION_FORM_INITIAL_STATE;
-    localStorageSetItem(
-      SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-      initialState,
-    );
-    console.groupEnd();
-    return initialState;
-  }
+
   throw new Error(`Unhandled action type: ${action.type}`);
 }
+
+export const singlePieceVersionFormReducer = withLocalStorage(
+  singlePieceVersionFormReducerCore,
+  SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+  SINGLE_PIECE_VERSION_FORM_INITIAL_STATE,
+);

@@ -3,6 +3,7 @@ import NavBar from "@/app/NavBar";
 import React from "react";
 import HelpDrawer from "@/components/HelpDrawer";
 import Steps from "@/components/multiStepMMSourceForm/Steps";
+import ResetAllForms from "@/components/ResetAllForms";
 
 export const dynamic = "force-dynamic";
 
@@ -18,6 +19,7 @@ export default function FeedLayout({ children }) {
             <div className="bg-zinc-50 dark:bg-zinc-800 flex-1 flex items-stretch">
               <aside className="bg-base-100 w-1/2 max-w-sm p-10 overflow-auto border-r-base-200 border-r-4">
                 <Steps />
+                <ResetAllForms />
               </aside>
               <main className="flex-1 bg-base-100 p-10">{children}</main>
             </div>

@@ -137,6 +137,9 @@ export type PieceState = WithRequiredId<
   >
 > &
   IsNewProp;
+export type PieceStateWithCollectionRank = PieceState & {
+  collectionRank: number;
+};
 
 export type SectionState = WithRequiredId<
   Pick<
