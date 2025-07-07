@@ -18,7 +18,11 @@ import EditIcon from "@/components/svg/EditIcon";
 import dynamic from "next/dynamic";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
-import { NEED_CONFIRMATION_MODAL_ID } from "@/utils/constants";
+import {
+  COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+  NEED_CONFIRMATION_MODAL_ID,
+  SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+} from "@/utils/constants";
 
 type SourcePieceVersionSelectFormProps = {
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
@@ -78,6 +82,8 @@ const SourceOnPieceVersionFormContainer = ({
     // reset sourceOnPieceVersionForm and singlePieceVersionUpdateInitState
     setSinglePieceVersionUpdateInitState(null);
     setCollectionPieceVersionUpdateInitState(null);
+    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
 
     // Close sourceOnPieceVersions form
     updateFeedForm(feedFormDispatch, "formInfo", {
@@ -347,7 +353,7 @@ const SourceOnPieceVersionFormContainer = ({
             <button
               className="btn btn-accent"
               type="button"
-              onClick={() => onFormClose()}
+              onClick={onFormClose}
             >
               <TrashIcon className="w-5 h-5" />
               {`${isUpdateMode ? `Cancel updating ` : "Discard"} this ${formType === "single" ? "piece" : "whole collection"}`}
