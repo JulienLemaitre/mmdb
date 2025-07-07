@@ -31,6 +31,7 @@ export type CollectionPieceVersionsFormInfo = {
   isSinglePieceVersionformOpen?: boolean;
   allSourcePieceVersionsDone?: boolean;
   collectionFirstMMSourceOnPieceVersionRank?: number;
+  pieceIdsNeedingVersions?: string[];
 };
 
 export type CollectionPieceVersionsFormState = {

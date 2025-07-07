@@ -25,6 +25,7 @@ import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput
 import React, { useCallback, useEffect } from "react";
 import CollectionPieceVersionFormSummary from "@/components/multiStepSinglePieceVersionForm/CollectionPieceVersionFormSummary";
 import { COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
+import { URL_API_GETALL_COLLECTION_PIECES } from "@/utils/routes";
 
 type CollectionPieceVersionFormProps = {
   onFormClose: () => void;
@@ -168,8 +169,25 @@ function CollectionPieceVersionsFormContainer({
       next: true,
     });
   };
-  const onCollectionSelect = (collection: CollectionInput) => {
+  const onCollectionSelect = async (collection: CollectionInput) => {
+    const pieces: PieceState[] = await fetch(
+      `${URL_API_GETALL_COLLECTION_PIECES}?collectionId=${collection.id}`,
+    )
+      .then((res) => res.json())
+      .then((data) => data.pieces)
+      .catch((err) => {
+        console.error(
+          `[fetch(/api/getAll/collectionPieces?collectionId=${selectedCollectionId})] err :`,
+          err.message,
+        );
+      });
+    updateFeedForm(feedFormDispatch, "pieces", {
+      array: pieces,
+    });
     updateFeedForm(feedFormDispatch, "collections", { array: [collection] });
+    updateCollectionPieceVersionsForm(dispatch, "formInfo", {
+      value: { pieceIdsNeedingVersions: pieces.map((p) => p.id) },
+    });
     updateCollectionPieceVersionsForm(dispatch, "collection", {
       value: {
         id: collection.id,

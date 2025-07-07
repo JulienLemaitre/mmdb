@@ -2,12 +2,12 @@
 
 import {
   COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+  CONFIRM_RESET_ALL_FORMS_MODAL_ID,
   FEED_FORM_LOCAL_STORAGE_KEY,
-  NEED_CONFIRMATION_MODAL_ID,
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
 import {
-  updateFeedForm,
+  initFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
 import dynamic from "next/dynamic";
@@ -28,9 +28,9 @@ export default function ResetAllForms() {
     localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
     localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
     localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
-    updateFeedForm(dispatch, "init");
     setIsConfirmationModalOpened(false);
-  }, []);
+    initFeedForm(dispatch);
+  }, [dispatch]);
 
   return (
     <>
@@ -52,7 +52,7 @@ export default function ResetAllForms() {
         expandAllNodes
       />
       <NeedConfirmationModal
-        modalId={NEED_CONFIRMATION_MODAL_ID}
+        modalId={CONFIRM_RESET_ALL_FORMS_MODAL_ID}
         onConfirm={resetAllFormsData}
         onCancel={() => setIsConfirmationModalOpened(false)}
         description={`Delete all forms data from your browser local memory.`}
