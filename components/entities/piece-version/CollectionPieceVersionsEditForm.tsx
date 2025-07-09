@@ -97,6 +97,7 @@ function CollectionPieceVersionsEditForm({
     let pieceVersion, piece, rank;
 
     if ("pieceVersionId" in collectionPieceVersion) {
+      // MMSourcePieceVersionsState
       const { pieceVersionId, rank: cpvRank } = collectionPieceVersion;
       pieceVersion = getEntityByIdOrKey(
         feedFormState,
@@ -108,6 +109,7 @@ function CollectionPieceVersionsEditForm({
     }
 
     if ("collectionRank" in collectionPieceVersion) {
+      // PieceStateWithCollectionRank
       const { collectionRank } = collectionPieceVersion;
       piece = collectionPieceVersion;
       rank = collectionRank;
