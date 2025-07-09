@@ -27,54 +27,54 @@ export function cleanFeedFormState(state: FeedFormState): FeedFormState {
     ),
   };
 
-  console.log("cleanFeedFormState", {
-    ...(state.collections?.length !== newState.collections?.length
-      ? {
-          collections:
-            (newState.collections || []).length -
-            (state.collections || []).length,
-        }
-      : {}),
-    ...(state.metronomeMarks?.length !== newState.metronomeMarks?.length
-      ? {
-          metronomeMarks:
-            (newState.metronomeMarks || []).length -
-            (state.metronomeMarks || []).length,
-        }
-      : {}),
-    ...(state.organizations?.length !== newState.organizations?.length
-      ? {
-          organizations:
-            (newState.organizations || []).length -
-            (state.organizations || []).length,
-        }
-      : {}),
-    ...(state.persons?.length !== newState.persons?.length
-      ? {
-          persons:
-            (newState.persons || []).length - (state.persons || []).length,
-        }
-      : {}),
-    ...(state.pieces?.length !== newState.pieces?.length
-      ? {
-          pieces: (newState.pieces || []).length - (state.pieces || []).length,
-        }
-      : {}),
-    ...(state.pieceVersions?.length !== newState.pieceVersions?.length
-      ? {
-          pieceVersions:
-            (newState.pieceVersions || []).length -
-            (state.pieceVersions || []).length,
-        }
-      : {}),
-    ...(state.tempoIndications?.length !== newState.tempoIndications?.length
-      ? {
-          tempoIndications:
-            (newState.tempoIndications || []).length -
-            (state.tempoIndications || []).length,
-        }
-      : {}),
-  });
+  // console.log("cleanFeedFormState", {
+  //   ...(state.collections?.length !== newState.collections?.length
+  //     ? {
+  //         collections:
+  //           (newState.collections || []).length -
+  //           (state.collections || []).length,
+  //       }
+  //     : {}),
+  //   ...(state.metronomeMarks?.length !== newState.metronomeMarks?.length
+  //     ? {
+  //         metronomeMarks:
+  //           (newState.metronomeMarks || []).length -
+  //           (state.metronomeMarks || []).length,
+  //       }
+  //     : {}),
+  //   ...(state.organizations?.length !== newState.organizations?.length
+  //     ? {
+  //         organizations:
+  //           (newState.organizations || []).length -
+  //           (state.organizations || []).length,
+  //       }
+  //     : {}),
+  //   ...(state.persons?.length !== newState.persons?.length
+  //     ? {
+  //         persons:
+  //           (newState.persons || []).length - (state.persons || []).length,
+  //       }
+  //     : {}),
+  //   ...(state.pieces?.length !== newState.pieces?.length
+  //     ? {
+  //         pieces: (newState.pieces || []).length - (state.pieces || []).length,
+  //       }
+  //     : {}),
+  //   ...(state.pieceVersions?.length !== newState.pieceVersions?.length
+  //     ? {
+  //         pieceVersions:
+  //           (newState.pieceVersions || []).length -
+  //           (state.pieceVersions || []).length,
+  //       }
+  //     : {}),
+  //   ...(state.tempoIndications?.length !== newState.tempoIndications?.length
+  //     ? {
+  //         tempoIndications:
+  //           (newState.tempoIndications || []).length -
+  //           (state.tempoIndications || []).length,
+  //       }
+  //     : {}),
+  // });
 
   return newState;
 }

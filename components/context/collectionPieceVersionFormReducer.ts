@@ -4,7 +4,11 @@ import {
   CollectionPieceVersionsFormState,
 } from "@/types/collectionPieceVersionFormTypes";
 import { collectionFormSteps as steps } from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
-import { COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE } from "@/utils/constants";
+import {
+  COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
+  COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+} from "@/utils/constants";
+import { withLocalStorage } from "@/components/context/localStorageReducerWrapper";
 
 const allowedActions = new Set();
 steps.forEach((step) =>
@@ -19,7 +23,7 @@ const arrayEntities = [
   "mMSourcePieceVersions",
 ];
 
-export function collectionPieceVersionsFormReducer(
+function collectionPieceVersionsFormReducerCore(
   state: CollectionPieceVersionsFormState,
   action: CollectionPieceVersionsFormAction,
 ) {
@@ -39,6 +43,16 @@ export function collectionPieceVersionsFormReducer(
     };
   }
 
+  console.log(`[] action.payload`, action.payload);
+
+  // Reset
+  if (action.type === "init") {
+    const initialState =
+      action.payload || COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE;
+    console.groupEnd();
+    return initialState;
+  }
+
   console.log(`[] action.payload :`, action.payload);
 
   // Navigation to specific step
@@ -53,15 +67,6 @@ export function collectionPieceVersionsFormReducer(
       },
     };
   }
-
-  // if (action.type === "collection") {
-  //   console.log(`[] UPDATE collection :`, action.payload);
-  //   console.groupEnd();
-  //   return {
-  //     ...state,
-  //     collection: action.payload,
-  //   };
-  // }
 
   const isActionAllowed = allowedActions.has(action.type);
 
@@ -129,8 +134,8 @@ export function collectionPieceVersionsFormReducer(
       });
     }
 
-    // If payload is a deleteIdArray, we update the state accordingly
-    if (deleteIdArray) {
+    // If payload is a deleteIdArray, we update the state accordingly ("collection" state is not an array)
+    if (deleteIdArray && action.type !== "collection") {
       // For each entity in the array
       deleteIdArray.forEach((idToDelete) => {
         const id = idKey || "id";
@@ -261,11 +266,12 @@ export function collectionPieceVersionsFormReducer(
     return newState;
   }
 
-  if (action.type === "init") {
-    console.log(`[] INIT state :`, action.payload);
-    console.groupEnd();
-    return action.payload || COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE;
-  }
   console.groupEnd();
   throw new Error(`[CollectionContext] Unhandled action type: ${action.type}`);
 }
+
+export const collectionPieceVersionsFormReducer = withLocalStorage(
+  collectionPieceVersionsFormReducerCore,
+  COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+  COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
+);

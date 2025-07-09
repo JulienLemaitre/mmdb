@@ -7,12 +7,12 @@ import {
 
 type SinglePieceVersionStepsProps = {
   isCollectionMode?: boolean;
-  isPreexistingCollectionUpdate?: boolean;
+  isPreexistingCollectionEdit?: boolean;
 };
 
 const SinglePieceVersionSteps = ({
   isCollectionMode,
-  isPreexistingCollectionUpdate,
+  isPreexistingCollectionEdit,
 }: SinglePieceVersionStepsProps) => {
   const { currentStepRank, lastCompletedStepRank, dispatch } =
     useSinglePieceVersionForm();
@@ -26,10 +26,10 @@ const SinglePieceVersionSteps = ({
     }
   };
 
-  // skip the first "composer" step if we are in collectionMode
+  // skip the first "composer" step if we are in collectionMode, "composer" AND "piece" if isPreexistingCollectionEdit
   const formSteps = singlePieceFormSteps.toSpliced(
     0,
-    isPreexistingCollectionUpdate ? 2 : isCollectionMode ? 1 : 0,
+    isPreexistingCollectionEdit ? 2 : isCollectionMode ? 1 : 0,
   );
 
   return (

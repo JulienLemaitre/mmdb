@@ -8,10 +8,10 @@ import type {
   SOURCE_TYPE,
 } from "@prisma/client";
 import { FC } from "react";
-import { SinglePieceVersionFormState } from "@/components/context/SinglePieceVersionFormContext";
 import { WithRequiredId } from "@/types/typescriptUtils";
 import { FeedFormState, PersistableFeedFormState } from "@/types/feedFormTypes";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
+import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 
 // Related Types
 
@@ -137,6 +137,9 @@ export type PieceState = WithRequiredId<
   >
 > &
   IsNewProp;
+export type PieceStateWithCollectionRank = PieceState & {
+  collectionRank: number;
+};
 
 export type SectionState = WithRequiredId<
   Pick<

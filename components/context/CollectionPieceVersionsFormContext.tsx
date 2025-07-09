@@ -1,17 +1,6 @@
 "use client";
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useReducer,
-} from "react";
-// import {
-//   getAllowedActions,
-//   steps,
-// } from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { CollectionPieceVersionsFormStep } from "@/types/formTypes";
-import getCollectionsPieceVersionsFormTestState from "@/utils/getCollectionsPieceVersionsFormTestState";
 import { collectionFormSteps as steps } from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
 import { collectionPieceVersionsFormReducer } from "@/components/context/collectionPieceVersionFormReducer";
 import {
@@ -19,10 +8,11 @@ import {
   CollectionPieceVersionsFormState,
   Dispatch,
 } from "@/types/collectionPieceVersionFormTypes";
-import { COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE } from "@/utils/constants";
-
-const LOCAL_STORAGE_KEY = "collectionPieceVersionsForm";
-const USE_LOCAL_STORAGE = false;
+import {
+  COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
+  COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+} from "@/utils/constants";
+import { localStorageGetItem } from "@/utils/localStorage";
 
 const CollectionPieceVersionsFormContext = createContext<
   | {
@@ -31,19 +21,6 @@ const CollectionPieceVersionsFormContext = createContext<
     }
   | undefined
 >(undefined);
-
-function localStorageSetItem(key: string, value: any) {
-  if (typeof window !== "undefined" && USE_LOCAL_STORAGE) {
-    // Perform localStorage action
-    return localStorage.setItem(key, JSON.stringify(value));
-  }
-}
-function localStorageGetItem(key: string) {
-  if (typeof window !== "undefined" && USE_LOCAL_STORAGE) {
-    // Perform localStorage action
-    return localStorage.getItem(key);
-  }
-}
 
 export function CollectionPieceVersionsFormProvider({
   children,
@@ -55,23 +32,15 @@ export function CollectionPieceVersionsFormProvider({
   );
 
   useEffect(() => {
-    try {
-      const localStorageValue = localStorageGetItem(LOCAL_STORAGE_KEY);
-      if (localStorageValue) {
-        console.log(
-          `[INIT] collectionPieceVersionsForm from localStorage`,
-          localStorageValue,
-        );
-        initCollectionPieceVersionsForm(
-          dispatch,
-          JSON.parse(localStorageValue),
-        );
-      }
-    } catch (error) {
-      console.warn(
-        `Error reading localStorage key “${LOCAL_STORAGE_KEY}”:`,
-        error,
+    const localStorageValue = localStorageGetItem(
+      COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+    );
+    if (localStorageValue) {
+      console.log(
+        `[INIT] collectionPieceVersionsForm from localStorage`,
+        localStorageValue,
       );
+      initCollectionPieceVersionsForm(dispatch, localStorageValue);
     }
   }, []);
 
@@ -116,35 +85,11 @@ function getLastCompletedStep(
   state: CollectionPieceVersionsFormState,
 ): CollectionPieceVersionsFormStep | undefined {
   // traversing the steps array, we return the step before the first incomplete one id
-  // console.group(`getLastCompletedStep`);
   for (let i = 0; i < steps.length; i++) {
-    // console.log(`steps[${i}] isComplete :`, steps[i].isComplete(state));
     if (!steps[i].isComplete(state)) {
-      // console.groupEnd();
       return steps[i - 1];
     }
   }
-  // console.groupEnd();
   // If none incomplete step found, we return the last step id
   return steps[steps.length - 1];
 }
-
-// export function getNewEntities(
-//   state: CollectionPieceVersionsFormState,
-//   entityName: string,
-// ) {
-//   if (Array.isArray(state[entityName])) {
-//     return state[entityName].filter((entity) => entity.isNew);
-//   }
-//   return [];
-// }
-// export function getEntityByIdOrKey(
-//   state: CollectionPieceVersionsFormState,
-//   entityName: string,
-//   id: string,
-//   key = "id",
-// ) {
-//   if (Array.isArray(state[entityName])) {
-//     return state[entityName].find((entity) => entity[key] === id);
-//   }
-// }

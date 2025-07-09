@@ -10,6 +10,11 @@ import DebugBox from "@/components/DebugBox";
 import LoadingSpinIcon from "@/components/svg/LoadingSpinIcon";
 import MMSourceDetails from "@/components/MMSourceDetails";
 import computeMMSourceToPersistFromState from "@/utils/computeMMSourceToPersistFromState";
+import {
+  COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+  FEED_FORM_LOCAL_STORAGE_KEY,
+  SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+} from "@/utils/constants";
 
 function FeedSummary() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -102,6 +107,9 @@ function FeedSummary() {
   };
 
   const onReset = () => {
+    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
     initFeedForm(dispatch);
   };
 

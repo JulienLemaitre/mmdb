@@ -240,7 +240,7 @@ export default function SourceDescriptionEditForm(
             ) : isLinkDirty ? (
               isCheckingLink ? (
                 <>
-                  <LoadingSpinIcon className="w-7 h-7" />
+                  <span className="loading loading-infinity w-7"></span>
                   checking
                 </>
               ) : (
