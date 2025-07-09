@@ -42,7 +42,8 @@ function CollectionPieceVersionsEditForm({
 }: CollectionPieceVersionsEditFormProps) {
   const { state: feedFormState } = useFeedForm();
   const { state, dispatch } = useCollectionPieceVersionsForm();
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const isSinglePieceVersionFormOpen =
+    !!state.formInfo?.isSinglePieceVersionFormOpen;
   const [updateInitState, setUpdateInitState] =
     useState<SinglePieceVersionFormState | null>(null);
   const isSinglePieceUpdateMode = !!updateInitState;
@@ -50,7 +51,6 @@ function CollectionPieceVersionsEditForm({
   const newPieceDefaultTitle = `${state?.collection?.title} No.${(state.mMSourcePieceVersions || []).length + 1}`;
   const composerId = state?.collection?.composerId;
   const { pieceIdsNeedingVersions } = state.formInfo;
-  console.log(`[] pieceIdsNeedingVersions :`, pieceIdsNeedingVersions);
   const piecesNeedingVersion = pieceIdsNeedingVersions?.reduce<PieceState[]>(
     (list, pieceId) => {
       const piece = feedFormState.pieces?.find(
@@ -65,7 +65,6 @@ function CollectionPieceVersionsEditForm({
     },
     [],
   ) as PieceStateWithCollectionRank[] | undefined;
-  console.log(`[] piecesNeedingVersion :`, piecesNeedingVersion);
   const isExistingCollectionAddingProcess = !!piecesNeedingVersion;
   const areAllNeededPieceVersionSet =
     isExistingCollectionAddingProcess &&
@@ -76,7 +75,6 @@ function CollectionPieceVersionsEditForm({
         ),
       ),
     );
-  console.log(`[] areAllNeededPieceVersionSet :`, areAllNeededPieceVersionSet);
 
   // For needConfirmation modal
   const [pieceVersionToDiscardId, setPieceVersionToDiscardId] = useState<
@@ -84,9 +82,20 @@ function CollectionPieceVersionsEditForm({
   >();
   const isConfirmationModalOpened = !!pieceVersionToDiscardId;
 
-  const onFormClose = () => {
+  const onSinglePieceVersionFormOpen = () => {
+    updateCollectionPieceVersionsForm(dispatch, "formInfo", {
+      value: {
+        isSinglePieceVersionFormOpen: true,
+      },
+    });
+  };
+  const onSinglePieceVersionFormClose = () => {
     setUpdateInitState(null);
-    setIsFormOpen(false);
+    updateCollectionPieceVersionsForm(dispatch, "formInfo", {
+      value: {
+        isSinglePieceVersionFormOpen: false,
+      },
+    });
   };
 
   const onEditCollectionPieceVersion = (
@@ -143,7 +152,7 @@ function CollectionPieceVersionsEditForm({
         : {}),
     };
     setUpdateInitState(singlePieceVersionFormEditState);
-    setIsFormOpen(true);
+    onSinglePieceVersionFormOpen();
   };
 
   const onDeletePieceVersionInit = (pieceVersionId: string) => {
@@ -196,7 +205,7 @@ function CollectionPieceVersionsEditForm({
   const onSubmit = () => {
     // Transfer from collection form to feed form
     onSubmitSourceOnPieceVersions(collectionPieceVersions);
-    setIsFormOpen(false);
+    onSinglePieceVersionFormClose();
   };
   const onSinglePieceSubmit = (payload: any) => {
     console.log(`[onSinglePieceSubmit] payload :`, payload);
@@ -216,11 +225,11 @@ function CollectionPieceVersionsEditForm({
 
   return (
     <>
-      {isFormOpen ? (
+      {isSinglePieceVersionFormOpen ? (
         <>
           <SinglePieceVersionFormProvider initialState={updateInitState}>
             <SinglePieceVersionFormContainer
-              onFormClose={onFormClose}
+              onFormClose={onSinglePieceVersionFormClose}
               onSubmit={onSinglePieceSubmit}
               isCollectionMode={true}
               isCollectionUpdateMode={isUpdateMode}
@@ -235,7 +244,7 @@ function CollectionPieceVersionsEditForm({
             <button
               className="btn btn-accent"
               type="button"
-              onClick={() => onFormClose()}
+              onClick={onSinglePieceVersionFormClose}
             >
               <TrashIcon className="w-5 h-5" />
               {`Discard${isSinglePieceUpdateMode ? ` updating ` : ""} this piece`}
@@ -401,7 +410,7 @@ function CollectionPieceVersionsEditForm({
                   <button
                     className="btn btn-accent"
                     type="button"
-                    onClick={() => setIsFormOpen(true)}
+                    onClick={onSinglePieceVersionFormOpen}
                   >
                     <PlusIcon className="w-5 h-5" />
                     Add a single piece
