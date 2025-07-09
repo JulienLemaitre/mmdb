@@ -28,7 +28,7 @@ export type CollectionPieceVersionsFormAction =
 export type Dispatch = (action: CollectionPieceVersionsFormAction) => void;
 export type CollectionPieceVersionsFormInfo = {
   currentStepRank: number;
-  isSinglePieceVersionformOpen?: boolean;
+  isSinglePieceVersionFormOpen?: boolean;
   allSourcePieceVersionsDone?: boolean;
   collectionFirstMMSourceOnPieceVersionRank?: number;
   pieceIdsNeedingVersions?: string[];

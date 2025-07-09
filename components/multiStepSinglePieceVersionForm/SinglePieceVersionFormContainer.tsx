@@ -70,17 +70,15 @@ const SinglePieceVersionFormContainer = ({
   const hasCollectionJustBeenCreated = !!(
     collectionId && collectionFormState?.collection?.isNew
   );
+  const isPreexistingCollectionEdit =
+    isCollectionMode && !hasCollectionJustBeenCreated;
 
-  // For Collection Form, we start by completing the "composer" step automatically and go to the second step = piece
+  // For Collection Form, we to populate state and skip form steps
   useEffect(() => {
-    // const isCollectionCreation = !!isCollectionMode && !isCollectionUpdateMode;
-    const isPreExistingCollectionUpdate =
-      !!isCollectionUpdateMode && !hasCollectionJustBeenCreated;
-
-    // For collection creation AND update of a newly created collection, we dispatch composerId value and go to next step
+    // For collection creation AND update of a newly created collection, we dispatch composerId value and go to the next step: "piece"
     if (
       isCollectionMode &&
-      !isPreExistingCollectionUpdate &&
+      !isPreexistingCollectionEdit &&
       composerId &&
       currentStepRank === 0
     ) {
@@ -95,10 +93,10 @@ const SinglePieceVersionFormContainer = ({
       });
     }
 
-    // For update of a pre-existing collection, we just go to step 2 = "pieceVersion"
-    if (isPreExistingCollectionUpdate && currentStepRank < 2) {
+    // For edit and update of a pre-existing collection, we just go to step 2 = "pieceVersion"
+    if (isPreexistingCollectionEdit && currentStepRank < 2) {
       console.log(
-        `[goToStep 2] isPreExistingCollectionUpdate && currentStepRank < 2`,
+        `[goToStep 2] isPreexistingCollectionEdit && currentStepRank < 2`,
       );
       updateSinglePieceVersionForm(dispatch, "goToStep", {
         stepRank: 2,
@@ -111,6 +109,7 @@ const SinglePieceVersionFormContainer = ({
     isCollectionMode,
     isCollectionUpdateMode,
     hasCollectionJustBeenCreated,
+    isPreexistingCollectionEdit,
   ]);
 
   ////////////////// COMPOSER ////////////////////
@@ -374,9 +373,7 @@ const SinglePieceVersionFormContainer = ({
           <h2 className="mb-3 text-3xl font-bold">{`${isUpdateMode ? `Update` : `Add`} a ${isCollectionMode ? `piece ${isUpdateMode ? `of` : `to`} the collection` : `single piece`}`}</h2>
           <SinglePieceVersionSteps
             isCollectionMode={isCollectionMode}
-            isPreexistingCollectionUpdate={
-              isCollectionUpdateMode && !hasCollectionJustBeenCreated
-            }
+            isPreexistingCollectionEdit={isPreexistingCollectionEdit}
           />
         </div>
         <div className="width-1/3 pt-2">
