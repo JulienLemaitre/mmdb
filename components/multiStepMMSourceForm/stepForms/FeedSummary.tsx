@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   initFeedForm,
   useFeedForm,
@@ -6,8 +6,6 @@ import {
 import { URL_API_FEEDFORM_SUBMIT } from "@/utils/routes";
 import { fetchAPI } from "@/utils/fetchAPI";
 import { useSession } from "next-auth/react";
-import DebugBox from "@/components/DebugBox";
-import LoadingSpinIcon from "@/components/svg/LoadingSpinIcon";
 import MMSourceDetails from "@/components/MMSourceDetails";
 import computeMMSourceToPersistFromState from "@/utils/computeMMSourceToPersistFromState";
 import {
@@ -15,11 +13,16 @@ import {
   FEED_FORM_LOCAL_STORAGE_KEY,
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
+import dynamic from "next/dynamic";
+
+const SAVE_INFO_MODAL_ID = "save-info-modal";
+const InfoModal = dynamic(() => import("@/components/InfoModal"), {
+  ssr: false,
+});
 
 function FeedSummary() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSaveSuccess, setIsSaveSuccess] = useState<boolean>();
-  const [submitResponse, setSubmitResponse] = useState<any>();
   const { dispatch, state } = useFeedForm();
   const { data: session } = useSession();
 
@@ -94,17 +97,25 @@ function FeedSummary() {
               ),
             );
         }
-        // initFeedForm(dispatch);
-        setSubmitResponse(response);
         setIsSubmitting(false);
       })
       .catch((error) => {
         console.log("error in /api/feedForm", error);
-        // initFeedForm(dispatch);
         setIsSaveSuccess(false);
         setIsSubmitting(false);
       });
   };
+
+  const onInfoModalOpen = (modalId: string) => {
+    //@ts-ignore => Daisy UI modal has an unconventional showModal method
+    document?.getElementById(modalId)?.showModal();
+  };
+
+  useEffect(() => {
+    if (typeof isSaveSuccess !== "boolean") return;
+
+    onInfoModalOpen(SAVE_INFO_MODAL_ID);
+  }, [isSaveSuccess]);
 
   const onReset = () => {
     localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
@@ -113,45 +124,10 @@ function FeedSummary() {
     initFeedForm(dispatch);
   };
 
-  if (isSaveSuccess === true) {
-    return (
-      <div>
-        <div>Voilà ! All has been saved successfully.</div>
-        <div>Thank you.</div>
-        <button className="btn btn-primary" onClick={onReset}>
-          Reset the form
-        </button>
-        {/*<div>Here is the data you saved :</div>*/}
-        {/*<MMSourceDetails mMSource={submitResponse.mMSourceFromDb} />*/}
-        <DebugBox
-          title="Submit success return"
-          stateObject={submitResponse}
-          // shouldExpandNode={(level) => level < 3}
-        />
-      </div>
-    );
-  }
-
-  if (isSaveSuccess === false) {
-    return (
-      <div>
-        <div>Oops ! Something went wrong.</div>
-        <div>
-          We have been notified and we will try to fix the problem soon.
-        </div>
-        <DebugBox
-          title="Submit Error"
-          stateObject={submitResponse}
-          shouldExpandNode={(level) => level < 3}
-        />
-      </div>
-    );
-  }
-
   return (
     <>
       <MMSourceDetails mMSource={mMSourceToPersist} />
-      <div className="flex items-center">
+      <div className="flex items-center gap-4">
         <button
           className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 border border-gray-400 rounded-sm mr-4"
           type="button"
@@ -160,11 +136,19 @@ function FeedSummary() {
           Save the complete Metronome Mark Source
         </button>
         {isSubmitting ? (
-          <div className="w-6">
-            <LoadingSpinIcon />
-          </div>
+          <span className="loading loading-infinity loading-xl"></span>
         ) : null}
       </div>
+      <InfoModal
+        modalId={SAVE_INFO_MODAL_ID}
+        type={isSaveSuccess ? "success" : "error"}
+        description={
+          isSaveSuccess
+            ? "Your Metronome Mark Source and all the related data has been saved successfully. Thank you !"
+            : "Oops ! Something went wrong. We have been notified and we will try to fix the problem soon."
+        }
+        onClose={onReset}
+      />
     </>
   );
 }
