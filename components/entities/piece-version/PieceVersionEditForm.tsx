@@ -17,6 +17,7 @@ import {
   getZodOptionFromEnum,
   zodOption,
   zodPositiveNumber,
+  zodPositiveNumberOrEmpty,
 } from "@/types/zodTypes";
 import {
   updateFeedForm,
@@ -45,13 +46,13 @@ const PieceVersionSchema = z.object({
               isCutTime: z.boolean().optional(),
               fastestStructuralNotesPerBar: zodPositiveNumber,
               isFastestStructuralNoteBelCanto: z.boolean().optional(),
-              fastestStaccatoNotesPerBar: zodPositiveNumber
+              fastestStaccatoNotesPerBar: zodPositiveNumberOrEmpty
                 .optional()
                 .nullable(),
-              fastestRepeatedNotesPerBar: zodPositiveNumber
+              fastestRepeatedNotesPerBar: zodPositiveNumberOrEmpty
                 .optional()
                 .nullable(),
-              fastestOrnamentalNotesPerBar: zodPositiveNumber
+              fastestOrnamentalNotesPerBar: zodPositiveNumberOrEmpty
                 .optional()
                 .nullable(),
               comment: z.string().optional().nullable(),
