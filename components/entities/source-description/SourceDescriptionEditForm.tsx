@@ -19,7 +19,6 @@ import getMMSourceDescriptionInputFromState from "@/utils/getMMSourceDescription
 import checkAreFieldsDirty from "@/utils/checkAreFieldsDirty";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 import XMarkIcon from "@/components/svg/XMarkIcon";
-import LoadingSpinIcon from "@/components/svg/LoadingSpinIcon";
 import CheckIcon from "@/components/svg/CheckIcon";
 
 const SourceSchema = z
@@ -112,6 +111,8 @@ export default function SourceDescriptionEditForm(
     clearErrors(`link`);
   };
   const onLinkBlur = async () => {
+    if (!isLinkDirty) return;
+
     setIsCheckingLink(true);
     const link = getValues(`link`);
 
@@ -229,8 +230,11 @@ export default function SourceDescriptionEditForm(
             {...{ register, errors, control }}
           />
           <div
-            className={`badge badge-outline py-3.5 gap-1 ${!hasLinkValue ? "badge-neutral" : isLinkDirty ? (isCheckingLink ? "badge-disabled" : "badge-warning") : "badge-success"}`}
-            onClick={(e) => e.preventDefault()}
+            className={`badge badge-outline py-3.5 gap-1 ${!hasLinkValue ? "badge-neutral" : isLinkDirty ? (isCheckingLink ? "badge-disabled" : "badge-warning") : "badge-success"} cursor-${isLinkDirty ? "pointer" : "auto"}`}
+            onClick={(e) => {
+              e.preventDefault();
+              onLinkBlur();
+            }}
           >
             {!hasLinkValue ? (
               <>
