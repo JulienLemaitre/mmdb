@@ -28,3 +28,6 @@ export function getZodOptionFromEnum<T extends Record<string, string>>(
 }
 
 export const zodPositiveNumber = z.coerce.number().positive();
+export const zodPositiveNumberOrEmpty = z
+  .union([z.literal(""), z.coerce.number().positive()])
+  .transform((val) => (val === "" ? null : val)); // Convert empty string to null
