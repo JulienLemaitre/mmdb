@@ -224,16 +224,20 @@ export function isEntityUsed(
     );
   }
   if (entityName === "persons") {
-    return (state.pieces || []).some(
-      (piece) =>
-        (piece.composerId === entity.id &&
-          isEntityUsed(piece, "pieces", state)) ||
-        (state.mMSourceContributions || []).some((mMSourceContribution) => {
-          if ("person" in mMSourceContribution) {
-            return mMSourceContribution.person?.id === entity.id;
-          }
-          return false;
-        }),
+    return (
+      // Is the person a composer?
+      (state.pieces || []).some(
+        (piece) =>
+          piece.composerId === entity.id &&
+          isEntityUsed(piece, "pieces", state),
+      ) ||
+      // Is the person a contributor?
+      (state.mMSourceContributions || []).some((mMSourceContribution) => {
+        if ("person" in mMSourceContribution) {
+          return mMSourceContribution.person?.id === entity.id;
+        }
+        return false;
+      })
     );
   }
   if (entityName === "organizations") {

@@ -32,12 +32,12 @@ export default function getPersonCreateInput(
       return true;
     }
 
-    if (person) {
-      const pieceVersion = state.pieceVersions.find(
+    if (piece) {
+      const pieceVersionList = state.pieceVersions.filter(
         // @ts-ignore
         (pv) => pv.pieceId === piece.id,
       );
-      if (!pieceVersion) {
+      if (!pieceVersionList || pieceVersionList.length === 0) {
         console.log(
           // @ts-ignore
           `[getComposerCreateInput] No pieceVersion for the piece ${piece.id} pointing to the new composer ${person.id}`,
@@ -45,8 +45,8 @@ export default function getPersonCreateInput(
         return false;
       }
 
-      return state.mMSourcePieceVersions.some(
-        (mms) => mms.pieceVersionId === pieceVersion.id,
+      return state.mMSourcePieceVersions.some((mms) =>
+        pieceVersionList.some((pv) => pv.id === mms.pieceVersionId),
       );
     }
   });
