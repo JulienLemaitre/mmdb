@@ -8,6 +8,7 @@ import { CollectionTitleInput } from "@/types/formTypes";
 import ArrowLeftIcon from "@/components/svg/ArrowLeftIcon";
 
 const CollectionSchema = z.object({
+  id: z.string().optional(),
   title: z.string().min(2),
 });
 
@@ -39,6 +40,7 @@ export default function CollectionEditForm(
         onKeyDown={preventEnterKeySubmission}
         className="max-w-md"
       >
+        {collection?.id && <input type="hidden" {...register("id")} />}
         <FormInput
           name="title"
           label="Title of the collection"
