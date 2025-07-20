@@ -333,20 +333,14 @@ const SourceOnPieceVersionFormContainer = ({
             <SinglePieceVersionFormProvider
               initialState={singlePieceVersionUpdateInitState}
             >
-              <SinglePieceVersionFormContainer
-                onFormClose={onFormClose}
-                isUpdateMode={isUpdateMode}
-              />
+              <SinglePieceVersionFormContainer onFormClose={onFormClose} />
             </SinglePieceVersionFormProvider>
           )}
           {formType === "collection" && (
             <CollectionPieceVersionsFormProvider
               initialState={collectionPieceVersionUpdateInitState}
             >
-              <CollectionPieceVersionsFormContainer
-                onFormClose={onFormClose}
-                isUpdateMode={isUpdateMode}
-              />
+              <CollectionPieceVersionsFormContainer onFormClose={onFormClose} />
             </CollectionPieceVersionsFormProvider>
           )}
           <div className="grid grid-cols-2 gap-4 items-center mt-6 w-full max-w-2xl">
