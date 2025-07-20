@@ -20,7 +20,7 @@ export const COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY =
 
 export const FEED_FORM_LOCAL_STORAGE_KEY = "feedForm";
 // @ts-ignore
-const FEED_FORM_TEST_STATE: FeedFormState | null = getFeedFormTestState();
+export const FEED_FORM_TEST_STATE: FeedFormState = getFeedFormTestState();
 
 export const FEED_FORM_INITIAL_STATE: FeedFormState = {
   // export const FEED_FORM_INITIAL_STATE: FeedFormState = FEED_FORM_TEST_STATE || {
