@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useReducer, useEffect } from "react";
+import { createContext, useContext, useReducer } from "react";
 import {
   CollectionState,
   FeedFormStep,
