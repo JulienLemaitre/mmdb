@@ -26,7 +26,7 @@ import { SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
-  onSubmit?: (payload: any) => void;
+  onSubmit?: (payload: any, options?: { isUpdateMode?: boolean }) => void;
   initPayload?: any;
   isCollectionMode?: boolean;
   isCollectionUpdateMode?: boolean;
@@ -34,7 +34,6 @@ type SinglePieceVersionFormProps = {
   newPieceDefaultTitle?: string;
   collectionId?: string;
   collectionFormState?: CollectionPieceVersionsFormState;
-  isUpdateMode?: boolean;
 };
 
 /**
@@ -53,7 +52,6 @@ const SinglePieceVersionFormContainer = ({
   newPieceDefaultTitle,
   collectionId,
   collectionFormState,
-  isUpdateMode,
 }: SinglePieceVersionFormProps) => {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
   const {
@@ -61,6 +59,12 @@ const SinglePieceVersionFormContainer = ({
     state: singlePieceVersionFormState,
     currentStepRank,
   } = useSinglePieceVersionForm();
+
+  // Deduce isUpdateMode from context state
+  const mMSourcePieceVersionRank =
+    singlePieceVersionFormState.formInfo.mMSourcePieceVersionRank;
+  const isUpdateMode = typeof mMSourcePieceVersionRank === "number";
+
   const currentStep = getStepByRank({
     state: singlePieceVersionFormState,
     rank: currentStepRank,
@@ -340,19 +344,18 @@ const SinglePieceVersionFormContainer = ({
       array: [
         {
           pieceVersionId: singlePieceVersionFormState.pieceVersion?.id,
-          rank:
-            isUpdateMode && typeof mMSourcePieceVersionRank === "number"
-              ? mMSourcePieceVersionRank
-              : isCollectionMode && collectionFormState
-                ? (collectionFormState.mMSourcePieceVersions || []).length + 1 // Rank if added in a collection
-                : (feedFormState.mMSourcePieceVersions || []).length + 1, // Rank if added as singlePiece in feedForm
+          rank: isUpdateMode
+            ? mMSourcePieceVersionRank
+            : isCollectionMode && collectionFormState
+              ? (collectionFormState.mMSourcePieceVersions || []).length + 1 // Rank if added in a collection
+              : (feedFormState.mMSourcePieceVersions || []).length + 1, // Rank if added as singlePiece in feedForm
         },
       ],
     };
     // This is useful for submitting a pieceVersion to a collection form instead of the general feedForm
     if (typeof onSubmit === "function") {
       console.log(`[SUBMIT] with provided onSubmit function`);
-      onSubmit(payload);
+      onSubmit(payload, { isUpdateMode });
     } else {
       updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", payload);
     }
