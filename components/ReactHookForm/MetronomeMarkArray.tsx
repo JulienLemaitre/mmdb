@@ -3,7 +3,7 @@ import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import TrashIcon from "@/components/svg/TrashIcon";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import { NOTE_VALUE } from "@prisma/client";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useFeedForm } from "@/components/context/feedFormContext";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import { SectionStateExtendedForMMForm } from "@/types/formTypes";
@@ -24,6 +24,17 @@ export default function MetronomeMarkArray({
   const [commentToShow, setCommentToShow] = useState<number[]>([]);
   const { state } = useFeedForm();
 
+  // show previously saved comments on mount
+  useEffect(() => {
+    getValues("metronomeMarks").forEach((mm: any, index: number) =>
+      mm.comment
+        ? setCommentToShow((prev) =>
+            prev.indexOf(index) > -1 ? prev : [...prev, index],
+          )
+        : null,
+    );
+  }, [getValues]);
+
   const onRemoveComment = (index: number) => {
     setValue(`metronomeMarks[${index}].comment`, "");
     setCommentToShow((prev) => prev.filter((idx) => idx !== index));
@@ -40,7 +51,6 @@ export default function MetronomeMarkArray({
       <ul>
         {sectionList.map(
           (section: SectionStateExtendedForMMForm, index: number) => {
-            const sectionValue = getValues(`metronomeMarks[${index}]`);
             const isPieceBeginning =
               index === 0 ||
               section.pieceId !== sectionList[index - 1].pieceId ||
