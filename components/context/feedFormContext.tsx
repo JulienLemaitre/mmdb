@@ -17,12 +17,8 @@ import {
   FeedFormProviderProps,
   FeedFormState,
 } from "@/types/feedFormTypes";
-import { localStorageGetItem } from "@/utils/localStorage";
 import { feedFormReducer } from "@/components/context/feedFormReducer";
-import {
-  FEED_FORM_INITIAL_STATE,
-  FEED_FORM_LOCAL_STORAGE_KEY,
-} from "@/utils/constants";
+import { FEED_FORM_INITIAL_STATE } from "@/utils/constants";
 
 const FeedFormContext = createContext<
   | {
@@ -39,14 +35,6 @@ export function FeedFormProvider({
     feedFormReducer,
     FEED_FORM_INITIAL_STATE,
   );
-
-  useEffect(() => {
-    const localStorageValue = localStorageGetItem(FEED_FORM_LOCAL_STORAGE_KEY);
-    if (localStorageValue) {
-      console.log(`[INIT] feedForm from localStorage`, localStorageValue);
-      initFeedForm(dispatch, localStorageValue);
-    }
-  }, []);
 
   const value = { state, dispatch };
   return (

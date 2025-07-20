@@ -15,11 +15,7 @@ import {
   SinglePieceVersionFormState,
 } from "@/types/singlePieceVersionFormTypes";
 import { singlePieceVersionFormReducer } from "@/components/context/SinglePieceVersionFormReducer";
-import { localStorageGetItem } from "@/utils/localStorage";
-import {
-  SINGLE_PIECE_VERSION_FORM_INITIAL_STATE,
-  SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-} from "@/utils/constants";
+import { SINGLE_PIECE_VERSION_FORM_INITIAL_STATE } from "@/utils/constants";
 
 type Dispatch = (action: SinglePieceVersionFormAction) => void;
 
@@ -44,19 +40,6 @@ export function SinglePieceVersionFormProvider({
     singlePieceVersionFormReducer,
     initialState || SINGLE_PIECE_VERSION_FORM_INITIAL_STATE,
   );
-
-  useEffect(() => {
-    const localStorageValue = localStorageGetItem(
-      SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-    );
-    if (localStorageValue) {
-      console.log(
-        `[INIT] SinglePieceVersions from localStorage`,
-        localStorageValue,
-      );
-      initSinglePieceVersionForm(dispatch, localStorageValue);
-    }
-  }, [initialState]);
 
   const value = { state, dispatch };
   return (

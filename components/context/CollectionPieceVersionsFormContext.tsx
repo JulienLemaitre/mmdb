@@ -8,11 +8,7 @@ import {
   CollectionPieceVersionsFormState,
   Dispatch,
 } from "@/types/collectionPieceVersionFormTypes";
-import {
-  COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
-  COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-} from "@/utils/constants";
-import { localStorageGetItem } from "@/utils/localStorage";
+import { COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE } from "@/utils/constants";
 
 const CollectionPieceVersionsFormContext = createContext<
   | {
@@ -30,19 +26,6 @@ export function CollectionPieceVersionsFormProvider({
     collectionPieceVersionsFormReducer,
     initialState || COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
   );
-
-  useEffect(() => {
-    const localStorageValue = localStorageGetItem(
-      COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-    );
-    if (localStorageValue) {
-      console.log(
-        `[INIT] collectionPieceVersionsForm from localStorage`,
-        localStorageValue,
-      );
-      initCollectionPieceVersionsForm(dispatch, localStorageValue);
-    }
-  }, []);
 
   return (
     <CollectionPieceVersionsFormContext.Provider value={{ state, dispatch }}>
