@@ -1,7 +1,7 @@
 import { FeedFormState } from "@/types/feedFormTypes";
 import getFeedFormTestState from "@/utils/getFeedFormTestState";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
-import getCollectionsPieceVersionsFormTestState from "@/utils/getCollectionsPieceVersionsFormTestState";
+// import getCollectionsPieceVersionsFormTestState from "@/utils/getCollectionsPieceVersionsFormTestState";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 
 export const TEMPO_INDICATION_NONE_ID = "6a16e457-6aeb-4802-a59e-4ce3b91cafa2";
@@ -20,7 +20,7 @@ export const COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY =
 
 export const FEED_FORM_LOCAL_STORAGE_KEY = "feedForm";
 // @ts-ignore
-const FEED_FORM_TEST_STATE: FeedFormState | null = getFeedFormTestState();
+export const FEED_FORM_TEST_STATE: FeedFormState = getFeedFormTestState();
 
 export const FEED_FORM_INITIAL_STATE: FeedFormState = {
   // export const FEED_FORM_INITIAL_STATE: FeedFormState = FEED_FORM_TEST_STATE || {
@@ -50,8 +50,7 @@ export const SINGLE_PIECE_VERSION_FORM_INITIAL_STATE: SinglePieceVersionFormStat
 
 // Collection form
 
-const COLLECTION_PIECE_VERSION_FORM_TEST_STATE =
-  getCollectionsPieceVersionsFormTestState();
+// const COLLECTION_PIECE_VERSION_FORM_TEST_STATE = getCollectionsPieceVersionsFormTestState();
 export const COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE: CollectionPieceVersionsFormState =
   // COLLECTION_PIECE_VERSION_FORM_TEST_STATE || {
   {

@@ -4,6 +4,7 @@ import {
   COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
   CONFIRM_RESET_ALL_FORMS_MODAL_ID,
   FEED_FORM_LOCAL_STORAGE_KEY,
+  FEED_FORM_TEST_STATE,
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
 import {
@@ -13,6 +14,7 @@ import {
 import dynamic from "next/dynamic";
 import React, { useCallback, useState } from "react";
 import DebugBox from "@/components/DebugBox";
+import { useSearchParams } from "next/navigation";
 
 const NeedConfirmationModal = dynamic(
   () => import("@/components/NeedConfirmationModal"),
@@ -32,6 +34,18 @@ export default function ResetAllForms() {
     initFeedForm(dispatch);
   }, [dispatch]);
 
+  const resetTestData = useCallback(() => {
+    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
+    setIsConfirmationModalOpened(false);
+    initFeedForm(dispatch, FEED_FORM_TEST_STATE);
+  }, [dispatch]);
+
+  const searchParams = useSearchParams();
+  const debug = searchParams.get("debug");
+  const isDebug = debug === "true";
+
   return (
     <>
       <div className="flex content-center items-center mt-6 mb-4 gap-2">
@@ -45,6 +59,11 @@ export default function ResetAllForms() {
       >
         {`Reset all forms data`}
       </div>
+      {isDebug && (
+        <div className="btn btn-soft btn-dash w-full" onClick={resetTestData}>
+          {`Reset test data`}
+        </div>
+      )}
       <DebugBox
         stateObject={state}
         title="Feed form state"
