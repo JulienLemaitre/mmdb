@@ -3,10 +3,12 @@ import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import TrashIcon from "@/components/svg/TrashIcon";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import { NOTE_VALUE } from "@prisma/client";
-import { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useFeedForm } from "@/components/context/feedFormContext";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import { SectionStateExtendedForMMForm } from "@/types/formTypes";
+import CommonTimeIcon from "@/components/svg/CommonTimeIcon";
+import CutTimeIcon from "@/components/svg/CutTimeIcon";
 
 export default function MetronomeMarkArray({
   control,
@@ -57,30 +59,57 @@ export default function MetronomeMarkArray({
               section.mMSourceOnPieceVersion.pieceVersionId !==
                 sectionList[index - 1].mMSourceOnPieceVersion.pieceVersionId;
             const movementRank = section.movement.rank;
-            const key = section.movement.key;
+            const key = section.movement.key.replaceAll("_", " ");
             const tempoIndication = section.tempoIndication?.text;
             const isNoMMChecked = !!watch(`metronomeMarks[${index}].noMM`);
             const piece = state.pieces?.find(
               (piece) => piece.id === section.pieceId,
             );
+            const pieceVersion = state.pieceVersions?.find(
+              (pv) => pv.id === section.mMSourceOnPieceVersion.pieceVersionId,
+            );
+            const movementCount = (pieceVersion?.movements || []).length;
+            const isMonoMovementPiece = movementCount === 1;
+            console.log(`[] piece :`, piece);
+            console.log(`[] pieceVersion :`, pieceVersion);
+            console.log(`[] movementCount :`, movementCount);
+            console.log(`[] isMonoMovementPiece :`, isMonoMovementPiece);
+            const { isCommonTime, isCutTime } = section;
+            const isCommonOrCutTime = isCommonTime || isCutTime;
 
             return (
               <Fragment key={section.pieceId + section.id}>
                 {isPieceBeginning ? (
-                  <h3 className="text-xl font-bold text-accent mt-6">
-                    {piece?.title}
+                  <h3 className="text-xl font-bold text-accent mt-14">
+                    {`${piece?.title}${isMonoMovementPiece ? ` in ${key}` : ""}`}
                   </h3>
                 ) : null}
-                {section.rank === 1 ? (
+                {section.rank === 1 && !isMonoMovementPiece ? (
                   <h4 className="text-lg font-bold text-primary mt-6">
-                    {`Movement ${movementRank} in ${key.replaceAll("_", " ")}`}
+                    {`Movement ${movementRank} in ${key}`}
                   </h4>
                 ) : null}
                 <li>
                   <h5 className="mt-4 text-md font-bold text-secondary">
-                    {`Section ${section.rank}`}
+                    {`Section ${section.rank}\u2002-\u2002`}
+                    {isCommonOrCutTime ? (
+                      <>
+                        <span className="common-time align-middle inline-block">
+                          {isCommonTime ? (
+                            <CommonTimeIcon className="h-3.5 relative bottom-0.5" />
+                          ) : (
+                            <CutTimeIcon className="h-5 relative bottom-0.5" />
+                          )}
+                        </span>
+                        <b>{` (${section.metreNumerator}/${section.metreDenominator})`}</b>
+                      </>
+                    ) : (
+                      <b>
+                        {`${section.metreNumerator}/${section.metreDenominator}`}
+                      </b>
+                    )}
                     <span className="italic">
-                      {tempoIndication && ` - ${tempoIndication}`}
+                      {tempoIndication && `\u2002-\u2002${tempoIndication}`}
                     </span>
                   </h5>
                   <input

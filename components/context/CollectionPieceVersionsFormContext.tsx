@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { CollectionPieceVersionsFormStep } from "@/types/formTypes";
 import { collectionFormSteps as steps } from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
 import { collectionPieceVersionsFormReducer } from "@/components/context/collectionPieceVersionFormReducer";
@@ -8,7 +8,11 @@ import {
   CollectionPieceVersionsFormState,
   Dispatch,
 } from "@/types/collectionPieceVersionFormTypes";
-import { COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE } from "@/utils/constants";
+import {
+  COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
+  COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+} from "@/utils/constants";
+import { localStorageGetItem } from "@/utils/localStorage";
 
 const CollectionPieceVersionsFormContext = createContext<
   | {
@@ -26,6 +30,19 @@ export function CollectionPieceVersionsFormProvider({
     collectionPieceVersionsFormReducer,
     initialState || COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
   );
+
+  useEffect(() => {
+    const localStorageValue = localStorageGetItem(
+      COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+    );
+    if (localStorageValue) {
+      console.log(
+        `[INIT] collectionPieceVersionsForm from localStorage`,
+        localStorageValue,
+      );
+      initCollectionPieceVersionsForm(dispatch, localStorageValue);
+    }
+  }, []);
 
   return (
     <CollectionPieceVersionsFormContext.Provider value={{ state, dispatch }}>

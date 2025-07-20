@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, ReactNode, useContext, useReducer } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 import {
   getLastCompletedStep,
   singlePieceFormSteps,
@@ -10,7 +16,11 @@ import {
   SinglePieceVersionFormState,
 } from "@/types/singlePieceVersionFormTypes";
 import { singlePieceVersionFormReducer } from "@/components/context/SinglePieceVersionFormReducer";
-import { SINGLE_PIECE_VERSION_FORM_INITIAL_STATE } from "@/utils/constants";
+import { localStorageGetItem } from "@/utils/localStorage";
+import {
+  SINGLE_PIECE_VERSION_FORM_INITIAL_STATE,
+  SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+} from "@/utils/constants";
 
 type Dispatch = (action: SinglePieceVersionFormAction) => void;
 
@@ -35,6 +45,19 @@ export function SinglePieceVersionFormProvider({
     singlePieceVersionFormReducer,
     initialState || SINGLE_PIECE_VERSION_FORM_INITIAL_STATE,
   );
+
+  useEffect(() => {
+    const localStorageValue = localStorageGetItem(
+      SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+    );
+    if (localStorageValue) {
+      console.log(
+        `[INIT] SinglePieceVersions from localStorage`,
+        localStorageValue,
+      );
+      initSinglePieceVersionForm(dispatch, localStorageValue);
+    }
+  }, [initialState]);
 
   const value = { state, dispatch };
   return (
