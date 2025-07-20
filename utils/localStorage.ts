@@ -11,7 +11,7 @@ export function localStorageGetItem(key: string) {
   if (typeof window !== "undefined" && USE_LOCAL_STORAGE) {
     // Perform localStorage action
     const retrievedValue = localStorage.getItem(key);
-    let finalValue: any = null;
+    let finalValue: any;
     try {
       finalValue = retrievedValue && JSON.parse(retrievedValue);
     } catch (e: any) {
