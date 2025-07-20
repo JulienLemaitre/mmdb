@@ -61,6 +61,7 @@ export default function MetronomeMarkArray({
             const movementRank = section.movement.rank;
             const key = section.movement.key.replaceAll("_", " ");
             const tempoIndication = section.tempoIndication?.text;
+            const comment = section.comment;
             const isNoMMChecked = !!watch(`metronomeMarks[${index}].noMM`);
             const piece = state.pieces?.find(
               (piece) => piece.id === section.pieceId,
@@ -70,10 +71,6 @@ export default function MetronomeMarkArray({
             );
             const movementCount = (pieceVersion?.movements || []).length;
             const isMonoMovementPiece = movementCount === 1;
-            console.log(`[] piece :`, piece);
-            console.log(`[] pieceVersion :`, pieceVersion);
-            console.log(`[] movementCount :`, movementCount);
-            console.log(`[] isMonoMovementPiece :`, isMonoMovementPiece);
             const { isCommonTime, isCutTime } = section;
             const isCommonOrCutTime = isCommonTime || isCutTime;
 
@@ -110,6 +107,9 @@ export default function MetronomeMarkArray({
                     )}
                     <span className="italic">
                       {tempoIndication && `\u2002-\u2002${tempoIndication}`}
+                    </span>
+                    <span className="font-normal italic text-neutral-content">
+                      {comment && `\u2002-\u2002${comment}`}
                     </span>
                   </h5>
                   <input
