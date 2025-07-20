@@ -21,7 +21,6 @@ function Summary({
   selectedPieceVersionId,
   isUpdateMode,
 }: SummaryProps) {
-  console.log({ selectedComposerId, selectedPieceId, selectedPieceVersionId });
   const composer = getEntityByIdOrKey(
     feedFormState,
     "persons",

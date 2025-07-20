@@ -29,12 +29,10 @@ import { URL_API_GETALL_COLLECTION_PIECES } from "@/utils/routes";
 
 type CollectionPieceVersionFormProps = {
   onFormClose: () => void;
-  isUpdateMode?: boolean;
 };
 
 function CollectionPieceVersionsFormContainer({
   onFormClose,
-  isUpdateMode,
 }: CollectionPieceVersionFormProps) {
   const { dispatch: feedFormDispatch, state: feedFormState } = useFeedForm();
   const {
@@ -47,6 +45,9 @@ function CollectionPieceVersionsFormContainer({
     rank: currentStepRank,
   });
   const StepFormComponent = currentStep.Component;
+  const isUpdateMode =
+    !!collectionPieceVersionFormState.formInfo
+      .collectionFirstMMSourceOnPieceVersionRank;
 
   const selectedComposerId =
     collectionPieceVersionFormState?.collection?.composerId;
@@ -344,7 +345,7 @@ function CollectionPieceVersionsFormContainer({
         <div className="flex-1">
           <h2 className="mb-3 text-3xl font-bold">{`${isUpdateMode ? "Update" : "Add"} a complete collection`}</h2>
           <CollectionPieceVersionsSteps
-            isUpdateMode={!!isUpdateMode}
+            isUpdateMode={isUpdateMode}
             hasCollectionJustBeenCreated={hasCollectionJustBeenCreated}
           />
         </div>

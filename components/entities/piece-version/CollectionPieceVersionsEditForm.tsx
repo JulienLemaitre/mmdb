@@ -46,7 +46,8 @@ function CollectionPieceVersionsEditForm({
     !!state.formInfo?.isSinglePieceVersionFormOpen;
   const [updateInitState, setUpdateInitState] =
     useState<SinglePieceVersionFormState | null>(null);
-  const isSinglePieceUpdateMode = !!updateInitState;
+
+  const isSinglePieceUpdateMode = isUpdateMode;
   const collectionPieceVersions = state.mMSourcePieceVersions || [];
   const newPieceDefaultTitle = `${state?.collection?.title} No.${(state.mMSourcePieceVersions || []).length + 1}`;
   const composerId = state?.collection?.composerId;
@@ -207,12 +208,15 @@ function CollectionPieceVersionsEditForm({
     onSubmitSourceOnPieceVersions(collectionPieceVersions);
     onSinglePieceVersionFormClose();
   };
-  const onSinglePieceSubmit = (payload: any) => {
+  const onSinglePieceSubmit = (
+    payload: any,
+    options?: { isUpdateMode?: boolean },
+  ) => {
     console.log(`[onSinglePieceSubmit] payload :`, payload);
 
-    // idKey = "rank is used to replace value in place when updating
+    // idKey = "rank" is used to replace value in place when updating
     // For normal piece addition, we delete the idKey provided to avoid replacing the first piece forever
-    if (!isSinglePieceUpdateMode) {
+    if (!options?.isUpdateMode) {
       delete payload.idKey;
     }
 
@@ -237,7 +241,6 @@ function CollectionPieceVersionsEditForm({
               collectionFormState={state}
               newPieceDefaultTitle={newPieceDefaultTitle}
               composerId={composerId}
-              isUpdateMode={isSinglePieceUpdateMode}
             />
           </SinglePieceVersionFormProvider>
           <div className="grid grid-cols-2 gap-4 items-center mt-6 w-full max-w-2xl">
