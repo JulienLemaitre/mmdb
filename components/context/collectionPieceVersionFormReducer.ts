@@ -21,6 +21,7 @@ const arrayEntities = [
   "pieceVersions",
   "tempoIndications",
   "mMSourcePieceVersions",
+  "pieceIdsNeedingVersions",
 ];
 
 function collectionPieceVersionsFormReducerCore(
@@ -39,6 +40,7 @@ function collectionPieceVersionsFormReducerCore(
       formInfo: {
         ...state.formInfo,
         currentStepRank: currentStepRank - 1,
+        isSinglePieceVersionFormOpen: false,
       },
     };
   }
@@ -64,6 +66,7 @@ function collectionPieceVersionsFormReducerCore(
       formInfo: {
         ...state.formInfo,
         currentStepRank: stepRank,
+        isSinglePieceVersionFormOpen: false,
       },
     };
   }
@@ -72,13 +75,13 @@ function collectionPieceVersionsFormReducerCore(
 
   // Entries created
   if (isActionAllowed) {
-    const { array, deleteIdArray, idKey, next, replace, value } =
+    const { array, deleteIdArray, idKey, next, reset, value } =
       action.payload || {};
 
     let newState = state;
 
-    // If payload is an entity array and replace = false, we update the state accordingly
-    if (array && !replace) {
+    // If payload is an entity array and reset = false, we update the state accordingly
+    if (array && !reset) {
       // For each entity in the array
       array.forEach((entity) => {
         const id = idKey || "id";
@@ -107,8 +110,8 @@ function collectionPieceVersionsFormReducerCore(
       });
     }
 
-    // If payload is an entity array and replace = true, we replace the entity in state
-    if (array && replace) {
+    // If payload is an entity array and reset = true, we replace the entity in state
+    if (array && reset) {
       newState = {
         ...newState,
         [action.type]: array,
@@ -220,7 +223,9 @@ function collectionPieceVersionsFormReducerCore(
     if (value) {
       newState = {
         ...state,
-        [action.type]: { ...(state[action.type] || {}), ...value },
+        [action.type]: reset
+          ? value
+          : { ...(state[action.type] || {}), ...value },
       };
       const hasComposerChanged =
         newState.collection?.composerId !== state.collection?.composerId;
@@ -238,15 +243,22 @@ function collectionPieceVersionsFormReducerCore(
             );
             newState[entity] = [];
           }
+          if (newState.formInfo[entity]?.length) {
+            console.log(
+              `[composer or collection Id changed] reset ${entity} -`,
+            );
+            newState.formInfo[entity] = [];
+          }
         }
 
-        // If composer has changed, we delete collection.id and collection.title if exists
+        // If composer has changed, we delete collection.id and collection.title and collection.isNew if exists
         if (hasComposerChanged && newState.collection?.id) {
           console.log(
             `[composer changed] delete collection.id and collection.title -`,
           );
           delete newState.collection.id;
           delete newState.collection.title;
+          delete newState.collection.isNew;
         }
       }
     }
