@@ -66,7 +66,8 @@ function CollectionPieceVersionsEditForm({
     },
     [],
   ) as PieceStateWithCollectionRank[] | undefined;
-  const isExistingCollectionAddingProcess = !!piecesNeedingVersion;
+  const isExistingCollectionAddingProcess =
+    !!piecesNeedingVersion && piecesNeedingVersion.length > 0;
   const areAllNeededPieceVersionSet =
     isExistingCollectionAddingProcess &&
     piecesNeedingVersion?.every((piece) =>

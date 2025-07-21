@@ -85,6 +85,7 @@ function CollectionPieceVersionsFormContainer({
   const onInitComposerCreation = () => {
     updateCollectionPieceVersionsForm(dispatch, "collection", {
       value: { composerId: null },
+      reset: true,
     });
   };
 
@@ -99,13 +100,28 @@ function CollectionPieceVersionsFormContainer({
     updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
     updateCollectionPieceVersionsForm(dispatch, "collection", {
       value: { composerId: newComposer.id, isComposerNew: true },
+      reset: true,
       next: true,
     });
   };
   const onComposerSelect = (composer: PersonInput) => {
+    // If a composer was being created, we delete it from the feedForm state
+    if (collectionPieceVersionFormState.collection?.isComposerNew) {
+      updateFeedForm(feedFormDispatch, "persons", {
+        deleteIdArray: [collectionPieceVersionFormState.collection.composerId],
+      });
+    }
+    // Same if a collection was being created
+    if (collectionPieceVersionFormState.collection?.isNew) {
+      updateFeedForm(feedFormDispatch, "collections", {
+        deleteIdArray: [collectionPieceVersionFormState.collection?.id],
+      });
+    }
+
     updateFeedForm(feedFormDispatch, "persons", { array: [composer] });
     updateCollectionPieceVersionsForm(dispatch, "collection", {
       value: { composerId: composer.id },
+      reset: true,
       next: true,
     });
   };
@@ -118,6 +134,7 @@ function CollectionPieceVersionsFormContainer({
         value: {
           composerId: null,
         },
+        reset: true,
       });
       updateFeedForm(feedFormDispatch, "persons", {
         deleteIdArray: [selectedComposerId],
@@ -130,8 +147,11 @@ function CollectionPieceVersionsFormContainer({
   const onInitCollectionCreation = () => {
     updateCollectionPieceVersionsForm(dispatch, "collection", {
       value: {
+        composerId: selectedComposerId,
+        ...(hasComposerJustBeenCreated ? { isComposerNew: true } : {}),
         id: null,
       },
+      reset: true,
     });
   };
   const onCancelCollectionCreation = () => {
@@ -140,8 +160,11 @@ function CollectionPieceVersionsFormContainer({
       // => The collection's data is in the feedFormState; we delete it there too.
       updateCollectionPieceVersionsForm(dispatch, "collection", {
         value: {
+          composerId: selectedComposerId,
+          ...(hasComposerJustBeenCreated ? { isComposerNew: true } : {}),
           id: null,
         },
+        reset: true,
       });
       updateFeedForm(feedFormDispatch, "collections", {
         deleteIdArray: [selectedCollectionId],
@@ -164,13 +187,22 @@ function CollectionPieceVersionsFormContainer({
       value: {
         id: newCollection.id,
         composerId: newCollection.composerId,
+        ...(hasComposerJustBeenCreated ? { isComposerNew: true } : {}),
         title: newCollection.title,
         isNew: true,
       },
+      reset: true,
       next: true,
     });
   };
   const onCollectionSelect = async (collection: CollectionInput) => {
+    // If a new collection was being created, remove it from feedFormState
+    if (collectionPieceVersionFormState.collection?.isNew) {
+      updateFeedForm(feedFormDispatch, "collections", {
+        deleteIdArray: [collectionPieceVersionFormState.collection?.id],
+      });
+    }
+
     const pieces: PieceState[] = await fetch(
       `${URL_API_GETALL_COLLECTION_PIECES}?collectionId=${collection.id}`,
     )
@@ -186,16 +218,17 @@ function CollectionPieceVersionsFormContainer({
       array: pieces,
     });
     updateFeedForm(feedFormDispatch, "collections", { array: [collection] });
-    updateCollectionPieceVersionsForm(dispatch, "formInfo", {
-      value: { pieceIdsNeedingVersions: pieces.map((p) => p.id) },
-    });
     updateCollectionPieceVersionsForm(dispatch, "collection", {
       value: {
         id: collection.id,
         composerId: collection.composerId,
         title: collection.title,
       },
+      reset: true,
       next: true,
+    });
+    updateCollectionPieceVersionsForm(dispatch, "formInfo", {
+      value: { pieceIdsNeedingVersions: pieces.map((p) => p.id) },
     });
   };
 
