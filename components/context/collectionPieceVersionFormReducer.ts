@@ -40,6 +40,7 @@ function collectionPieceVersionsFormReducerCore(
       formInfo: {
         ...state.formInfo,
         currentStepRank: currentStepRank - 1,
+        isSinglePieceVersionFormOpen: false,
       },
     };
   }
@@ -65,6 +66,7 @@ function collectionPieceVersionsFormReducerCore(
       formInfo: {
         ...state.formInfo,
         currentStepRank: stepRank,
+        isSinglePieceVersionFormOpen: false,
       },
     };
   }
