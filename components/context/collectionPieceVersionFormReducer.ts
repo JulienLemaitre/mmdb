@@ -21,6 +21,7 @@ const arrayEntities = [
   "pieceVersions",
   "tempoIndications",
   "mMSourcePieceVersions",
+  "pieceIdsNeedingVersions",
 ];
 
 function collectionPieceVersionsFormReducerCore(
@@ -237,6 +238,12 @@ function collectionPieceVersionsFormReducerCore(
               `[composer or collection Id changed] reset ${entity} -`,
             );
             newState[entity] = [];
+          }
+          if (newState.formInfo[entity]?.length) {
+            console.log(
+              `[composer or collection Id changed] reset ${entity} -`,
+            );
+            newState.formInfo[entity] = [];
           }
         }
 
