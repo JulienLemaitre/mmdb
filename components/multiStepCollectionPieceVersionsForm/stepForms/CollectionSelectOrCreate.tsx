@@ -42,7 +42,9 @@ const CollectionSelectOrCreate = ({
   const isNewCollectionUpdate =
     isUpdateMode && newCollections.some((c) => c.id === selectedCollectionId);
   const [isCreation, setIsCreation] = useState(
-    hasComposerJustBeenCreated || isNewCollectionUpdate,
+    hasComposerJustBeenCreated ||
+      hasCollectionJustBeenCreated ||
+      isNewCollectionUpdate,
   );
   let collectionFullList = [...(collections || []), ...(newCollections || [])];
 
