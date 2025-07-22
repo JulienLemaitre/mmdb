@@ -41,7 +41,7 @@ export default function ReferenceArray({
       <h3 className="text-xl font-bold text-accent mt-4">References</h3>
       <ul>
         {fields.map((field, index) => (
-          <li key={field.id} className="mt-4 w-full max-w-md">
+          <li key={field.id} className="mt-4">
             <div className="flex w-full justify-between gap-3 items-end">
               <div>
                 <h4 className="text-lg font-bold text-secondary">{`Reference ${
@@ -76,7 +76,7 @@ export default function ReferenceArray({
       ) : (
         <button
           type="button"
-          className="btn btn-secondary btn-sm mt-4"
+          className="btn btn-accent mt-4"
           disabled={isReferenceFormOpen}
           onClick={onReferenceFormOpen}
         >

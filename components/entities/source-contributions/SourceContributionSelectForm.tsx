@@ -195,7 +195,7 @@ export default function SourceContributionSelectForm({
           }
 
           return (
-            <li key={key} className="mt-6 w-full max-w-md">
+            <li key={key} className="mt-6">
               <div className="flex w-full justify-between gap-3 items-end">
                 <div>
                   <h4 className="text-lg font-bold text-secondary">{`${

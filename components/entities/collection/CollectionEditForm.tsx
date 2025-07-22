@@ -33,12 +33,11 @@ export default function CollectionEditForm(
   });
 
   return (
-    <div className="w-full max-w-md mt-4">
+    <div className="mt-4">
       <h3 className="mb-4 text-2xl font-bold">{`New collection`}</h3>
       <form
         onSubmit={handleSubmit(onSubmit)}
         onKeyDown={preventEnterKeySubmission}
-        className="max-w-md"
       >
         {collection?.id && <input type="hidden" {...register("id")} />}
         <FormInput
@@ -47,7 +46,7 @@ export default function CollectionEditForm(
           isRequired={true}
           {...{ register, errors, control }}
         />
-        <div className="flex gap-4 items-center mt-6">
+        <div className="grid grid-cols-2 gap-4 items-center mt-6">
           <button
             className="btn btn-neutral"
             type="button"
@@ -58,7 +57,7 @@ export default function CollectionEditForm(
             Cancel
           </button>
           <button
-            className="btn btn-primary w-full max-w-xs"
+            className="btn btn-primary"
             type="submit"
             disabled={isSubmitting}
           >
