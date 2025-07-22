@@ -124,13 +124,8 @@ export default function PieceVersionEditForm({
 
   // @ts-ignore
   return (
-    <div className="w-full max-w-md mt-4">
+    <div className="mt-4">
       <h3 className="mb-4 text-2xl font-bold">New piece version</h3>
-      {/*
-      <h3 className="mb-4 text-xl font-normal">
-        Content details (a.k.a. piece version)
-      </h3>
-*/}
       <form
         onSubmit={handleSubmit(onSubmit)}
         onKeyDown={preventEnterKeySubmission}
@@ -148,13 +143,13 @@ export default function PieceVersionEditForm({
           fieldError={errors?.category}
         />
 
-        <h4 className="my-4 text-xl font-bold">Piece structure</h4>
+        <h4 className="mt-8 text-xl font-bold">Piece structure</h4>
         <MovementArray
           {...{ control, register, getValues, setValue, errors, watch }}
           tempoIndicationList={fullTempoIndicationList}
           onTempoIndicationCreated={onTempoIndicationCreated}
         />
-        <div className="flex gap-4 items-center mt-6">
+        <div className="grid grid-cols-2 gap-4 items-center mt-6">
           <button
             className="btn btn-neutral"
             type="button"
@@ -165,7 +160,7 @@ export default function PieceVersionEditForm({
             Cancel
           </button>
           <button
-            className="btn btn-primary w-full max-w-xs"
+            className="btn btn-primary"
             type="submit"
             disabled={isSubmitting}
           >

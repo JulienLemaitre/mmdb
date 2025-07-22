@@ -43,7 +43,7 @@ export default function PieceEditForm({
   console.log(`[PieceEditForm] errors :`, errors);
 
   return (
-    <div className="w-full max-w-md mt-4">
+    <div className="mt-4">
       <h3 className="mb-4 text-2xl font-bold">New piece</h3>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -56,7 +56,7 @@ export default function PieceEditForm({
           inputMode="numeric"
           {...{ register, control, errors }}
         />
-        <div className="flex gap-4 items-center mt-6">
+        <div className="grid grid-cols-2 gap-4 items-center mt-6">
           <button
             className="btn btn-neutral"
             type="button"
@@ -67,7 +67,7 @@ export default function PieceEditForm({
             Cancel
           </button>
           <button
-            className="btn btn-primary w-full max-w-xs"
+            className="btn btn-primary"
             type="submit"
             disabled={isSubmitting}
           >

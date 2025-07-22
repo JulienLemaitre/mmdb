@@ -31,14 +31,45 @@ export default function MovementArray({
           const isLastItem = index === mvtArray.length - 1;
 
           return (
-            <li key={item.id}>
-              <h5 className="mt-6 text-xl font-normal text-secondary">{`Movement ${
-                index + 1
-              }${
-                mvtArray.length === 1
-                  ? ` (or whole piece if not divided in movements)`
-                  : ""
-              }`}</h5>
+            <li key={item.id} className="mt-6">
+              <div className="flex justify-between">
+                <h5 className="text-xl font-normal text-secondary">{`Movement ${
+                  index + 1
+                }${
+                  mvtArray.length === 1
+                    ? ` (or whole piece if not divided in movements)`
+                    : ""
+                }`}</h5>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-ghost hover:bg-error hover:text-neutral"
+                    onClick={() => remove(index)}
+                  >
+                    <TrashIcon className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-ghost disabled:bg-transparent"
+                    onClick={() => {
+                      swap(index, index - 1);
+                    }}
+                    disabled={index === 0}
+                  >
+                    <ArrowUpIcon className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-ghost disabled:bg-transparent"
+                    onClick={() => {
+                      swap(index, index + 1);
+                    }}
+                    disabled={index === mvtArray.length - 1}
+                  >
+                    <ArrowDownIcon className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
               <input {...register(`movements[${index}].id` as const)} hidden />
               <ControlledSelect
                 name={`movements[${index}].key` as const}
@@ -60,56 +91,18 @@ export default function MovementArray({
                 onTempoIndicationCreated={onTempoIndicationCreated}
               />
               <section className="my-4 flex gap-2 w-full justify-between">
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    className="btn btn-secondary btn-sm"
-                    onClick={() =>
-                      isLastItem
-                        ? append(getMovementDefaultValues())
-                        : insert(index + 1, getMovementDefaultValues())
-                    }
-                  >
-                    <PlusIcon className="w-5 h-5" />
-                    Add Movement
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-error btn-sm"
-                    onClick={() => remove(index)}
-                  >
-                    <TrashIcon className="w-5 h-5" />
-                    {`Delete Movement ${index + 1}`}
-                  </button>
-                </div>
-
-                <div className="flex gap-2">
-                  {index > 0 && (
-                    <button
-                      type="button"
-                      className="btn btn-move btn-sm"
-                      onClick={() => {
-                        swap(index, index - 1);
-                      }}
-                    >
-                      <ArrowUpIcon className="w-5 h-5" />
-                      Move Movement up
-                    </button>
-                  )}
-
-                  {index < mvtArray.length - 1 && (
-                    <button
-                      type="button"
-                      className="btn btn-move btn-sm"
-                      onClick={() => {
-                        swap(index, index + 1);
-                      }}
-                    >
-                      <ArrowDownIcon className="w-5 h-5" />
-                      Move Movement down
-                    </button>
-                  )}
-                </div>
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  onClick={() =>
+                    isLastItem
+                      ? append(getMovementDefaultValues())
+                      : insert(index + 1, getMovementDefaultValues())
+                  }
+                >
+                  <PlusIcon className="w-4 h-4" />
+                  Add Movement
+                </button>
               </section>
             </li>
           );
@@ -124,7 +117,7 @@ export default function MovementArray({
                   append(getMovementDefaultValues());
                 }}
               >
-                <PlusIcon className="w-5 h-5" />
+                <PlusIcon className="w-4 h-4" />
                 Add Movement
               </button>
             </div>

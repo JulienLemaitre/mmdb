@@ -175,7 +175,7 @@ export default function SourceDescriptionEditForm(
   };
 
   return (
-    <div>
+    <>
       <h1 className="mb-4 text-4xl font-bold">
         {title ?? (
           <>
@@ -192,7 +192,6 @@ export default function SourceDescriptionEditForm(
           // Form is submitted programmatically
         }}
         onKeyDown={preventEnterKeySubmission}
-        className="max-w-md"
       >
         <ControlledSelect
           name="type"
@@ -285,6 +284,6 @@ export default function SourceDescriptionEditForm(
           dirtyFields={dirtyFields}
         />
       </form>
-    </div>
+    </>
   );
 }

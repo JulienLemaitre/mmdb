@@ -128,9 +128,13 @@ export function FormInput({
     "text";
   const errorMessage = error?.message;
 
+  // Check if controlClassName already includes a max-width utility
+  const hasCustomMaxWidth = controlClassName.includes("max-w-");
+  const maxWidthClass = hasCustomMaxWidth ? "" : "max-w-xs";
+
   return (
     <div
-      className={`relative form-control w-full max-w-xs mt-2 ${controlClassName}${disabled ? ` opacity-50` : ""}`}
+      className={`relative form-control w-full ${maxWidthClass} mt-2 ${controlClassName}${disabled ? ` opacity-50` : ""}`}
     >
       {(label || getLabel(name)) && (
         <label className="label">
