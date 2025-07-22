@@ -58,7 +58,7 @@ export default function MMSourceFormStepNavigation(
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-4 items-center mt-6 w-full max-w-2xl">
+      <div className="grid grid-cols-2 gap-4 items-center mt-6">
         <button
           className={`btn btn-neutral`}
           type="button"

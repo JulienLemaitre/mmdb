@@ -38,9 +38,40 @@ export default function SectionArray({
 
           return (
             <li key={item.id} className="px-4 border-accent border-2 my-3">
-              <h6 className="my-4 text-lg font-normal text-accent">{`Section ${
-                index + 1
-              }`}</h6>
+              <div className="flex justify-between">
+                <h6 className="my-4 text-lg font-normal text-accent">{`Section ${
+                  index + 1
+                }`}</h6>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-ghost hover:bg-error hover:text-neutral"
+                    onClick={() => remove(index)}
+                  >
+                    <TrashIcon className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-ghost disabled:bg-transparent"
+                    onClick={() => {
+                      swap(index, index - 1);
+                    }}
+                    disabled={index === 0}
+                  >
+                    <ArrowUpIcon className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-ghost disabled:bg-transparent"
+                    onClick={() => {
+                      swap(index, index + 1);
+                    }}
+                    disabled={index === sectionArray.length - 1}
+                  >
+                    <ArrowDownIcon className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
               <input
                 {...register(
                   `movements[${nestIndex}].sections[${index}].id` as const,
@@ -244,45 +275,9 @@ export default function SectionArray({
                         : insert(index + 1, getSectionDefaultValues())
                     }
                   >
-                    <PlusIcon className="w-5 h-5" />
+                    <PlusIcon className="w-4 h-4" />
                     Add Section
                   </button>
-                  <button
-                    type="button"
-                    className="btn btn-error btn-sm"
-                    onClick={() => remove(index)}
-                  >
-                    <TrashIcon className="w-5 h-5" />
-                    {`Delete Section ${index + 1}`}
-                  </button>
-                </div>
-
-                <div className="flex gap-2">
-                  {index > 0 && (
-                    <button
-                      type="button"
-                      className="btn btn-move btn-sm"
-                      onClick={() => {
-                        swap(index, index - 1);
-                      }}
-                    >
-                      <ArrowUpIcon className="w-5 h-5" />
-                      Move Section up
-                    </button>
-                  )}
-
-                  {index < sectionArray.length - 1 && (
-                    <button
-                      type="button"
-                      className="btn btn-move btn-sm"
-                      onClick={() => {
-                        swap(index, index + 1);
-                      }}
-                    >
-                      <ArrowDownIcon className="w-5 h-5" />
-                      Move Section down
-                    </button>
-                  )}
                 </div>
               </section>
             </li>
@@ -298,7 +293,7 @@ export default function SectionArray({
                   append(getSectionDefaultValues());
                 }}
               >
-                <PlusIcon className="w-5 h-5" />
+                <PlusIcon className="w-4 h-4" />
                 Add section
               </button>
             </div>

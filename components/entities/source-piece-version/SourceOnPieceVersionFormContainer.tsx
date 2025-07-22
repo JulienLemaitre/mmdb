@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { MMSourcePieceVersionsState } from "@/types/formTypes";
 import PlusIcon from "@/components/svg/PlusIcon";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
@@ -23,6 +23,8 @@ import {
   NEED_CONFIRMATION_MODAL_ID,
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
+import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
+import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
 
 type SourcePieceVersionSelectFormProps = {
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
@@ -349,7 +351,7 @@ const SourceOnPieceVersionFormContainer = ({
               type="button"
               onClick={onFormClose}
             >
-              <TrashIcon className="w-5 h-5" />
+              <TrashIcon className="w-4 h-4" />
               {`${isUpdateMode ? `Cancel updating ` : "Discard"} this ${formType === "single" ? "piece" : "whole collection"}`}
             </button>
           </div>
@@ -358,7 +360,7 @@ const SourceOnPieceVersionFormContainer = ({
       {!isFormOpen && (
         <>
           {!isIntro && <h1 className="mb-4 text-4xl font-bold">{title}</h1>}
-          <ul className="my-4 max-w-[65ch] space-y-4">
+          <ul className="my-4 space-y-4">
             {processMMSourcePieceVersionsForDisplay(
               mMSourcePieceVersions,
               feedFormState,
@@ -413,7 +415,7 @@ const SourceOnPieceVersionFormContainer = ({
                               }}
                               disabled={groupIndex === 0}
                             >
-                              ↑
+                              <ArrowUpIcon className="w-4 h-4" />
                             </button>
                             <button
                               type="button"
@@ -430,7 +432,7 @@ const SourceOnPieceVersionFormContainer = ({
                                   1
                               }
                             >
-                              ↓
+                              <ArrowDownIcon className="w-4 h-4" />
                             </button>
                           </div>
                         </div>
@@ -541,7 +543,7 @@ const SourceOnPieceVersionFormContainer = ({
               type="button"
               onClick={() => onFormOpen("single")}
             >
-              <PlusIcon className="w-5 h-5" />
+              <PlusIcon className="w-4 h-4" />
               Add a single piece
             </button>
             <button
@@ -549,7 +551,7 @@ const SourceOnPieceVersionFormContainer = ({
               type="button"
               onClick={() => onFormOpen("collection")}
             >
-              <PlusIcon className="w-5 h-5" />
+              <PlusIcon className="w-4 h-4" />
               Add a complete collection
             </button>
           </div>

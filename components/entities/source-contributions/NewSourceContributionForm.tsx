@@ -122,16 +122,20 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
           isRequired={true}
         />
 
-        <div className="form-control w-52">
+        <div className="form-control w-52 mt-4">
           <label className="cursor-pointer label">
-            <span className="label-text">Person</span>
+            <span className={`label-text ${isPerson && "text-primary"}`}>
+              Person
+            </span>
             <input
               type="checkbox"
-              className="toggle toggle-primary"
+              className="toggle border-primary bg-primary text-white/60 checked:bg-secondary checked:border-secondary"
               checked={!isPerson}
               onChange={onIsOrganizationToggleChange}
             />
-            <span className="label-text">Organization</span>
+            <span className={`label-text ${!isPerson && "text-secondary"}`}>
+              Organization
+            </span>
           </label>
         </div>
 

@@ -164,6 +164,7 @@ export default function MetronomeMarkArray({
                       disabled={isNoMMChecked}
                       label="BPM"
                       inputMode="numeric"
+                      controlClassName="max-w-42"
                       {...{ register, control, errors }}
                     />
                     {!commentToShow.includes(index) && (

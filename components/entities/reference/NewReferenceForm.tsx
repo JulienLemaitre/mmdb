@@ -168,11 +168,13 @@ function NewReferenceForm({
   };
 
   return (
-    <>
-      <div>{`Create a new reference`}</div>
+    <div className="border-accent border-1 rounded-md px-6 pt-4 pb-6 my-3">
+      <h6 className="mb-2 text-lg font-normal text-accent">
+        {`Add a reference`}
+      </h6>
 
       <div className="flex items-end gap-3">
-        <div className="shrink-0 min-w-40">
+        <div className="shrink-0 min-w-[230px]">
           <SimpleSelect
             name={`type` as const}
             label={`Type`}
@@ -196,12 +198,12 @@ function NewReferenceForm({
         />
       </div>
 
-      <div className="flex gap-4 items-center mt-6">
+      <div className="grid grid-cols-2 gap-4 items-center mt-6">
         <button className="btn btn-neutral" type="button" onClick={onCancel}>
           Cancel
         </button>
         <button
-          className="btn btn-primary w-full max-w-xs"
+          className="btn btn-primary"
           onClick={onNewReferenceSubmit}
           disabled={isCheckingReference}
         >
@@ -218,7 +220,7 @@ function NewReferenceForm({
         refValue={refValue}
         mMSourceListToCheck={mMSourceListToCheck}
       />
-    </>
+    </div>
   );
 }
 

@@ -5,7 +5,7 @@ import {
   OrganizationState,
   PersonState,
 } from "@/types/formTypes";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
 import NewSourceContributionForm from "@/components/entities/source-contributions/NewSourceContributionForm";
 import Label from "@/components/Label";
@@ -132,7 +132,10 @@ export default function SourceContributionSelect({
   );
 
   return (
-    <div className="max-w-md">
+    <div className="border-accent border-1 rounded-md px-6 pt-4 pb-6">
+      <h6 className="mb-4 text-lg font-normal text-accent">
+        {`Add a source contribution`}
+      </h6>
       {!isContributionCreation ? (
         <>
           <Label label={`Person or Organization`} />
@@ -186,12 +189,12 @@ export default function SourceContributionSelect({
           onContributionCreated={onContributionCreated}
         />
       )}
-      <div className="flex gap-4 items-center mt-6">
+      <div className="grid grid-cols-2 gap-4 items-center mt-6">
         <button className="btn btn-neutral" type="button" onClick={onCancel}>
           Cancel
         </button>
         <button
-          className="btn btn-primary w-full max-w-xs"
+          className="btn btn-primary"
           disabled={!role || !(selectedOrganizationId ?? selectedPersonId)}
           onClick={onAddContribution}
         >

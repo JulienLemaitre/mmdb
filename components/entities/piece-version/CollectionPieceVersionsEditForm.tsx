@@ -20,6 +20,8 @@ import EditIcon from "@/components/svg/EditIcon";
 import dynamic from "next/dynamic";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 import CheckIcon from "@/components/svg/CheckIcon";
+import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
+import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
 
 type CollectionPieceVersionsEditFormProps = {
   isUpdateMode: boolean;
@@ -250,7 +252,7 @@ function CollectionPieceVersionsEditForm({
               type="button"
               onClick={onSinglePieceVersionFormClose}
             >
-              <TrashIcon className="w-5 h-5" />
+              <TrashIcon className="w-4 h-4" />
               {`Discard${isSinglePieceUpdateMode ? ` updating ` : ""} this piece`}
             </button>
           </div>
@@ -259,7 +261,7 @@ function CollectionPieceVersionsEditForm({
         <>
           {isExistingCollectionAddingProcess && (
             <>
-              <ul className="my-4 max-w-[65ch] space-y-4">
+              <ul className="my-4 space-y-4">
                 {piecesNeedingVersion
                   .sort((a, b) =>
                     a.collectionRank > b.collectionRank ? 1 : -1,
@@ -319,7 +321,7 @@ function CollectionPieceVersionsEditForm({
           )}
           {!isExistingCollectionAddingProcess && (
             <>
-              <ul className="my-4 max-w-[65ch] space-y-4">
+              <ul className="my-4 space-y-4">
                 {collectionPieceVersions.map(
                   (collectionPieceVersion, index) => {
                     const pieceVersion = getEntityByIdOrKey(
@@ -380,7 +382,7 @@ function CollectionPieceVersionsEditForm({
                                     }
                                     disabled={index === 0}
                                   >
-                                    ↑
+                                    <ArrowUpIcon className="w-4 h-4" />
                                   </button>
                                   <button
                                     type="button"
@@ -396,7 +398,7 @@ function CollectionPieceVersionsEditForm({
                                       collectionPieceVersions.length - 1
                                     }
                                   >
-                                    ↓
+                                    <ArrowDownIcon className="w-4 h-4" />
                                   </button>
                                 </>
                               )}
@@ -416,7 +418,7 @@ function CollectionPieceVersionsEditForm({
                     type="button"
                     onClick={onSinglePieceVersionFormOpen}
                   >
-                    <PlusIcon className="w-5 h-5" />
+                    <PlusIcon className="w-4 h-4" />
                     Add a single piece
                   </button>
                 </div>
