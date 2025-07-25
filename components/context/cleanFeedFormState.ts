@@ -27,6 +27,31 @@ export function cleanFeedFormState(state: FeedFormState): FeedFormState {
     ),
   };
 
+  const finalState = {
+    ...newState,
+    collections: (newState.collections || []).filter((c) =>
+      isEntityUsed(c, "collections", newState),
+    ),
+    metronomeMarks: (newState.metronomeMarks || []).filter((mm) =>
+      isEntityUsed(mm, "metronomeMarks", newState),
+    ),
+    organizations: (newState.organizations || []).filter((o) =>
+      isEntityUsed(o, "organizations", newState),
+    ),
+    persons: (newState.persons || []).filter((p) =>
+      isEntityUsed(p, "persons", newState),
+    ),
+    pieces: (newState.pieces || []).filter((p) =>
+      isEntityUsed(p, "pieces", newState),
+    ),
+    pieceVersions: (newState.pieceVersions || []).filter((pv) =>
+      isEntityUsed(pv, "pieceVersions", newState),
+    ),
+    tempoIndications: (newState.tempoIndications || []).filter((ti) =>
+      isEntityUsed(ti, "tempoIndications", newState),
+    ),
+  };
+
   // console.log("cleanFeedFormState", {
   //   ...(state.collections?.length !== newState.collections?.length
   //     ? {
@@ -76,5 +101,5 @@ export function cleanFeedFormState(state: FeedFormState): FeedFormState {
   //     : {}),
   // });
 
-  return newState;
+  return finalState;
 }
