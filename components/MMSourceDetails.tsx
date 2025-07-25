@@ -63,8 +63,90 @@ export default function MMSourceDetails({ mMSource }) {
           // );
 
           return (
-            <div className="my-8 flex" key={pieceVersion.id + "-nopv"}>
-              <div className="w-1/2">
+            <div className="my-8" key={pieceVersion.id + "-nopv"}>
+              {index === 0 ? (
+                <div
+                // className="w-1/2"
+                >
+                  <div className="my-4 border-2 border-gray-300 rounded-2xl p-4">
+                    <div className="flex">
+                      <div className="mr-4">Source:</div>
+                      <div>
+                        <div className="">
+                          {`${mMSource.year} - ${getSourceTypeLabel(mMSource.type)} ${
+                            mMSource?.createdAt
+                              ? `[
+                            created ${mMSource?.createdAt?.toLocaleString()} ]`
+                              : ""
+                          }
+                          `}
+                        </div>
+                        {mMSource.title && (
+                          <div className="">{mMSource.title}</div>
+                        )}
+                        {mMSource.link && (
+                          <div className="break-all">
+                            <a href={mMSource.link} target="_blank">
+                              {mMSource.link}
+                            </a>
+                          </div>
+                        )}
+                        {mMSource.references &&
+                          mMSource.references.length > 0 &&
+                          mMSource.references.map((refItem) => {
+                            // console.log(
+                            //   `[] refItem.type + refItem.reference :`,
+                            //   refItem.type + refItem.reference,
+                            // );
+
+                            return (
+                              <div
+                                key={refItem.type + refItem.reference}
+                                className="break-all"
+                              >
+                                <b>{`${getReferenceTypeLabel(refItem.type)}: `}</b>
+                                {refItem.reference}
+                              </div>
+                            );
+                          })}
+                      </div>
+                    </div>
+                    {mMSource.contributions.map((contribution) => {
+                      // console.log(
+                      //   `[] contribution.role + (contribution?.person?.id || contribution?.organization?.id) :`,
+                      //   contribution.role +
+                      //     (contribution?.person?.id ||
+                      //       contribution?.organization?.id),
+                      // );
+
+                      return (
+                        <div
+                          key={
+                            contribution.role +
+                            (contribution?.person?.id ||
+                              contribution?.organization?.id)
+                          }
+                          className="flex"
+                        >
+                          <div className="mr-4">
+                            {contribution.role.toLowerCase()}:
+                          </div>
+                          <div className="mr-4">
+                            {contribution.person?.firstName
+                              ? contribution.person?.firstName +
+                                " " +
+                                contribution.person?.lastName
+                              : contribution.organization?.name}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : null}
+              <div
+              // className="w-1/2"
+              >
                 {collection ? (
                   <div className="my-8 border-solid border-l-8 border-l-primary pl-2">
                     <h2 className="text-3xl font-bold primary">
@@ -274,8 +356,7 @@ export default function MMSourceDetails({ mMSource }) {
                                                       computedNotesPerSecondFromNotesPerBar -
                                                         originalNotesPerSecond,
                                                     ) > 0.01;
-                                                  const hasDataInconsistency =
-                                                    false;
+                                                  const hasDataInconsistency = false;
                                                   // const hasDataInconsistency =
                                                   //   (originalNotesPerSecond &&
                                                   //     !computedNotesPerSecondFromNotesPerBar) ||
@@ -453,84 +534,6 @@ export default function MMSourceDetails({ mMSource }) {
                   }
                 </div>
               </div>
-              {index === 0 ? (
-                <div className="w-1/2">
-                  <div className="ml-4 border-2 border-gray-300 rounded-2xl p-4">
-                    <div className="flex">
-                      <div className="mr-4">Source:</div>
-                      <div>
-                        <div className="">
-                          {`${mMSource.year} - ${getSourceTypeLabel(mMSource.type)} ${
-                            mMSource?.createdAt
-                              ? `[
-                            created ${mMSource?.createdAt?.toLocaleString()} ]`
-                              : ""
-                          }
-                          `}
-                        </div>
-                        {mMSource.title && (
-                          <div className="">{mMSource.title}</div>
-                        )}
-                        {mMSource.link && (
-                          <div className="break-all">
-                            <a href={mMSource.link} target="_blank">
-                              {mMSource.link}
-                            </a>
-                          </div>
-                        )}
-                        {mMSource.references &&
-                          mMSource.references.length > 0 &&
-                          mMSource.references.map((refItem) => {
-                            // console.log(
-                            //   `[] refItem.type + refItem.reference :`,
-                            //   refItem.type + refItem.reference,
-                            // );
-
-                            return (
-                              <div
-                                key={refItem.type + refItem.reference}
-                                className="break-all"
-                              >
-                                <b>{`${getReferenceTypeLabel(refItem.type)}: `}</b>
-                                {refItem.reference}
-                              </div>
-                            );
-                          })}
-                      </div>
-                    </div>
-                    {mMSource.contributions.map((contribution) => {
-                      // console.log(
-                      //   `[] contribution.role + (contribution?.person?.id || contribution?.organization?.id) :`,
-                      //   contribution.role +
-                      //     (contribution?.person?.id ||
-                      //       contribution?.organization?.id),
-                      // );
-
-                      return (
-                        <div
-                          key={
-                            contribution.role +
-                            (contribution?.person?.id ||
-                              contribution?.organization?.id)
-                          }
-                          className="flex"
-                        >
-                          <div className="mr-4">
-                            {contribution.role.toLowerCase()}:
-                          </div>
-                          <div className="mr-4">
-                            {contribution.person?.firstName
-                              ? contribution.person?.firstName +
-                                " " +
-                                contribution.person?.lastName
-                              : contribution.organization?.name}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              ) : null}
             </div>
           );
         })
