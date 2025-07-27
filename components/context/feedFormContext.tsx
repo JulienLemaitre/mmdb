@@ -251,15 +251,18 @@ export function isEntityUsed(
   if (entityName === "metronomeMarks") {
     const metronomeMark = entity as MetronomeMarkState;
     return (state.pieceVersions || []).some(
-      (pv) => pv.id === metronomeMark.pieceVersionId,
+      (pv) =>
+        pv.id === metronomeMark.pieceVersionId &&
+        isEntityUsed(pv, "pieceVersions", state),
     );
   }
   if (entityName === "tempoIndications") {
     const tempoIndication = entity as TempoIndicationState;
-    return (state.pieceVersions || []).some((pv) =>
-      pv.movements.some((m) =>
-        m.sections.some((s) => s.tempoIndication.id === tempoIndication.id),
-      ),
+    return (state.pieceVersions || []).some(
+      (pv) =>
+        pv.movements.some((m) =>
+          m.sections.some((s) => s.tempoIndication.id === tempoIndication.id),
+        ) && isEntityUsed(pv, "pieceVersions", state),
     );
   }
   return false;
