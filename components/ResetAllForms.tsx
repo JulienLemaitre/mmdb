@@ -60,7 +60,10 @@ export default function ResetAllForms() {
         {`Reset all forms data`}
       </div>
       {isDebug && (
-        <div className="btn btn-soft btn-dash w-full" onClick={resetTestData}>
+        <div
+          className="btn btn-soft btn-dash btn-warning w-full mt-4"
+          onClick={resetTestData}
+        >
           {`Reset test data`}
         </div>
       )}

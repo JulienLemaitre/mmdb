@@ -1,6 +1,12 @@
 import { FeedFormState } from "@/types/feedFormTypes";
 import { isEntityUsed } from "@/components/context/feedFormContext";
 
+/**
+ * Cleans the given FeedFormState object by filtering out any entity that is not in use anymore.
+ *
+ * @param {FeedFormState} state - The current state to be cleaned and filtered.
+ * @return {FeedFormState} The new state object with filtered attributes.
+ */
 export function cleanFeedFormState(state: FeedFormState): FeedFormState {
   const newState = {
     ...state,
@@ -24,31 +30,6 @@ export function cleanFeedFormState(state: FeedFormState): FeedFormState {
     ),
     tempoIndications: (state.tempoIndications || []).filter((ti) =>
       isEntityUsed(ti, "tempoIndications", state),
-    ),
-  };
-
-  const finalState = {
-    ...newState,
-    collections: (newState.collections || []).filter((c) =>
-      isEntityUsed(c, "collections", newState),
-    ),
-    metronomeMarks: (newState.metronomeMarks || []).filter((mm) =>
-      isEntityUsed(mm, "metronomeMarks", newState),
-    ),
-    organizations: (newState.organizations || []).filter((o) =>
-      isEntityUsed(o, "organizations", newState),
-    ),
-    persons: (newState.persons || []).filter((p) =>
-      isEntityUsed(p, "persons", newState),
-    ),
-    pieces: (newState.pieces || []).filter((p) =>
-      isEntityUsed(p, "pieces", newState),
-    ),
-    pieceVersions: (newState.pieceVersions || []).filter((pv) =>
-      isEntityUsed(pv, "pieceVersions", newState),
-    ),
-    tempoIndications: (newState.tempoIndications || []).filter((ti) =>
-      isEntityUsed(ti, "tempoIndications", newState),
     ),
   };
 
@@ -101,5 +82,5 @@ export function cleanFeedFormState(state: FeedFormState): FeedFormState {
   //     : {}),
   // });
 
-  return finalState;
+  return newState;
 }
