@@ -78,7 +78,7 @@ export default function MetronomeMarksForm({
     trigger,
     reset,
   } = useForm<z.infer<typeof MetronomeMarkListSchema>>({
-    defaultValues: metronomeMarks
+    defaultValues: metronomeMarks?.length
       ? {
           metronomeMarks: metronomeMarks.map((metronomeMark) =>
             getMetronomeMarkInputFromState(metronomeMark),
@@ -99,33 +99,22 @@ export default function MetronomeMarksForm({
   const computedIsDirty = checkAreFieldsDirty(dirtyFields);
 
   const onResetForm = () => {
-    sectionList.forEach((section, index) => {
-      setValue(`metronomeMarks.${index}.sectionId`, section.id);
-      // @ts-ignore => I don't know how to allow resetting the value to undefined without implying the correct MetronomeMArkInput type accepting this value and screwing the getMetronomeMarkStateFromInput type checking before persisting feedForm data.
-      setValue(`metronomeMarks.${index}.bpm`, undefined);
-      // @ts-ignore
-      setValue(`metronomeMarks.${index}.beatUnit`, undefined);
-      // @ts-ignore
-      setValue(`metronomeMarks.${index}.comment`, undefined);
-      setValue(`metronomeMarks.${index}.noMM`, false);
-    });
-    reset(
-      metronomeMarks
-        ? {
-            metronomeMarks: metronomeMarks.map((metronomeMark) =>
-              getMetronomeMarkInputFromState(metronomeMark),
-            ),
-          }
-        : {
-            metronomeMarks: sectionList.map((s) => ({
-              beatUnit: undefined,
-              bpm: undefined,
-              comment: undefined,
-              sectionId: s.id,
-              noMM: false,
-            })),
-          },
-    );
+    const resetValues = metronomeMarks?.length
+      ? {
+          metronomeMarks: metronomeMarks.map((metronomeMark) =>
+            getMetronomeMarkInputFromState(metronomeMark),
+          ),
+        }
+      : {
+          metronomeMarks: sectionList.map((s) => ({
+            beatUnit: undefined,
+            bpm: undefined,
+            comment: undefined,
+            sectionId: s.id,
+            noMM: false,
+          })),
+        };
+    reset(resetValues);
   };
 
   const submitForm = async (option: { goToNextStep: boolean }) => {
