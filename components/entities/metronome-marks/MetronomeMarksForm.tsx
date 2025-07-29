@@ -68,7 +68,7 @@ export default function MetronomeMarksForm({
   const { dispatch, currentStepRank } = useFeedForm();
   const step = getStepByRank(currentStepRank);
   const {
-    formState: { errors, isSubmitting, dirtyFields },
+    formState: { errors, dirtyFields },
     control,
     register,
     handleSubmit,
