@@ -19,6 +19,7 @@ type ControlledSelectProps = {
     label: string;
   }[];
   control: any;
+  classNames?: string;
 };
 
 const ControlledSelect = ({
@@ -32,6 +33,7 @@ const ControlledSelect = ({
   fieldError,
   options,
   defaultValue,
+  classNames,
 }: ControlledSelectProps) => {
   const {
     field: { onChange, onBlur, value, ref },
@@ -52,7 +54,7 @@ const ControlledSelect = ({
 
   return (
     <div
-      className={`relative form-control mt-2 w-full max-w-xs${selectProps.isDisabled ? ` opacity-50 cursor-not-allowed` : ""}`}
+      className={`relative form-control w-full max-w-xs${selectProps.isDisabled ? ` opacity-50 cursor-not-allowed` : ""} ${classNames || "mt-2"}`}
     >
       {label && (
         <label className="label">

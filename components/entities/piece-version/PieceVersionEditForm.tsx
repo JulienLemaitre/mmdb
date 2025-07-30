@@ -125,30 +125,36 @@ export default function PieceVersionEditForm({
   // @ts-ignore
   return (
     <div className="mt-4">
-      <h3 className="mb-4 text-2xl font-bold">New piece version</h3>
+      <h3 className="mb-4 text-2xl font-bold">
+        Piece version<div className="badge badge-soft badge-info mx-3">New</div>
+      </h3>
       <form
         onSubmit={handleSubmit(onSubmit)}
         onKeyDown={preventEnterKeySubmission}
       >
-        <ControlledSelect
-          name="category"
-          label="Category"
-          id="category"
-          control={control}
-          options={Object.values(PIECE_CATEGORY).map((category) => ({
-            value: category,
-            label: formatToPhraseCase(category),
-          }))}
-          isRequired={true}
-          fieldError={errors?.category}
-        />
+        <fieldset className="fieldset border border-base-300 rounded-lg hover:border-base-400 hover:shadow-xs hover:bg-primary/5 transition-all duration-150 px-4 pb-4">
+          <legend className="fieldset-legend">Piece</legend>
+          <ControlledSelect
+            name="category"
+            label="Category"
+            id="category"
+            classNames="mt-0"
+            control={control}
+            options={Object.values(PIECE_CATEGORY).map((category) => ({
+              value: category,
+              label: formatToPhraseCase(category),
+            }))}
+            isRequired={true}
+            fieldError={errors?.category}
+          />
+        </fieldset>
 
-        <h4 className="mt-8 text-xl font-bold">Piece structure</h4>
         <MovementArray
           {...{ control, register, getValues, setValue, errors, watch }}
           tempoIndicationList={fullTempoIndicationList}
           onTempoIndicationCreated={onTempoIndicationCreated}
         />
+
         <div className="grid grid-cols-2 gap-4 items-center mt-6">
           <button
             className="btn btn-neutral"
