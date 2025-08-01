@@ -165,29 +165,57 @@ export default function MetronomeMarkArray({
         key={section.id}
         className="px-4 py-3 border-l-2 border-l-secondary/10 hover:border-l-secondary bg-secondary/5"
       >
-        <h6 className="text-sm font-bold text-secondary mb-3">
-          {`Section ${section.rank}\u2002-\u2002`}
-          {isCommonOrCutTime ? (
-            <>
-              <span className="common-time align-middle inline-block">
-                {isCommonTime ? (
-                  <CommonTimeIcon className="h-3.5 relative bottom-0.5" />
-                ) : (
-                  <CutTimeIcon className="h-5 relative bottom-0.5" />
-                )}
-              </span>
-              <b>{` (${section.metreNumerator}/${section.metreDenominator})`}</b>
-            </>
-          ) : (
-            <b>{`${section.metreNumerator}/${section.metreDenominator}`}</b>
-          )}
-          <span className="italic">
-            {tempoIndication && `\u2002-\u2002${tempoIndication}`}
-          </span>
-          <span className="font-normal italic text-neutral-content">
-            {comment && `\u2002-\u2002${comment}`}
-          </span>
-        </h6>
+        <div className="flex justify-between mb-2">
+          <h6 className="text-sm font-bold text-secondary">
+            {`Section ${section.rank}\u2002-\u2002`}
+            {isCommonOrCutTime ? (
+              <>
+                <span className="common-time align-middle inline-block">
+                  {isCommonTime ? (
+                    <CommonTimeIcon className="h-3.5 relative bottom-0.5" />
+                  ) : (
+                    <CutTimeIcon className="h-5 relative bottom-0.5" />
+                  )}
+                </span>
+                <b>{` (${section.metreNumerator}/${section.metreDenominator})`}</b>
+              </>
+            ) : (
+              <b>{`${section.metreNumerator}/${section.metreDenominator}`}</b>
+            )}
+            <span className="italic">
+              {tempoIndication && `\u2002-\u2002${tempoIndication}`}
+            </span>
+            <span className="font-normal italic text-neutral-content">
+              {comment && `\u2002-\u2002${comment}`}
+            </span>
+          </h6>
+          <button
+            type="button"
+            className="btn btn-accent btn-xs"
+            disabled={isNoMMChecked || commentToShow.includes(formIndex)}
+            onClick={() => setCommentToShow((prev) => [...prev, formIndex])}
+          >
+            Add a Comment
+          </button>
+        </div>
+        {commentToShow.includes(formIndex) && (
+          <div className="flex items-end gap-3 mb-2">
+            <FormInput
+              name={`metronomeMarks.${formIndex}.comment` as const}
+              label={`Comment`}
+              controlClassName="max-w-none mt-0"
+              defaultValue={``}
+              {...{ register, control, errors }}
+            />
+            <button
+              type="button"
+              className="btn btn-error btn-sm"
+              onClick={() => onRemoveComment(formIndex)}
+            >
+              <TrashIcon className="w-4 h-4" />
+            </button>
+          </div>
+        )}
 
         <input
           {...register(`metronomeMarks.${formIndex}.sectionId`, {
@@ -220,6 +248,7 @@ export default function MetronomeMarkArray({
             name={`metronomeMarks.${formIndex}.beatUnit` as const}
             id={`metronomeMarks.${formIndex}.beatUnit` as const}
             label={`Beat unit`}
+            classNames="mt-0"
             control={control}
             options={Object.keys(NOTE_VALUE).map((key) => ({
               value: key,
@@ -235,39 +264,10 @@ export default function MetronomeMarkArray({
             disabled={isNoMMChecked}
             label="BPM"
             inputMode="numeric"
-            controlClassName="flex-1"
+            controlClassName="flex-1 mt-none"
             {...{ register, control, errors }}
           />
-          {!commentToShow.includes(formIndex) && (
-            <button
-              type="button"
-              className="btn btn-accent btn-sm"
-              disabled={isNoMMChecked}
-              onClick={() => setCommentToShow((prev) => [...prev, formIndex])}
-            >
-              Add a Comment
-            </button>
-          )}
         </div>
-
-        {commentToShow.includes(formIndex) && (
-          <div className="flex items-end gap-3">
-            <FormInput
-              name={`metronomeMarks.${formIndex}.comment` as const}
-              label={`Comment`}
-              controlClassName="max-w-xl"
-              defaultValue={``}
-              {...{ register, control, errors }}
-            />
-            <button
-              type="button"
-              className="btn btn-error btn-sm"
-              onClick={() => onRemoveComment(formIndex)}
-            >
-              <TrashIcon className="w-4 h-4" />
-            </button>
-          </div>
-        )}
       </div>
     );
   };
