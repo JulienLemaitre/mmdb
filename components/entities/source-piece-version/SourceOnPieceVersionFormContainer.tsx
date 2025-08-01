@@ -585,7 +585,7 @@ const SourceOnPieceVersionFormContainer = ({
 
 export default SourceOnPieceVersionFormContainer;
 
-// First, let's create a utility function to process the data
+// Utility function to gather the data into groups with all related information from feedFormState
 function processMMSourcePieceVersionsForDisplay(
   mMSourcePieceVersions: MMSourcePieceVersionsState[],
   feedFormState: any,
