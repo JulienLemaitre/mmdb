@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import {
   MetronomeMarkState,
@@ -59,14 +60,36 @@ const MetronomeMarkListSchema = z
 
 interface MetronomeMarksFormProps {
   sectionList: SectionStateExtendedForMMForm[];
-  metronomeMarks?: MetronomeMarkState[];
+  // metronomeMarks?: MetronomeMarkState[];
 }
 export default function MetronomeMarksForm({
-  metronomeMarks,
+  // metronomeMarks,
   sectionList,
 }: MetronomeMarksFormProps) {
-  const { dispatch, currentStepRank } = useFeedForm();
+  const { state, dispatch, currentStepRank } = useFeedForm();
   const step = getStepByRank(currentStepRank);
+
+  // 1. Build defaultValues whose order == UI order
+  const defaultValues = useMemo(
+    () => ({
+      metronomeMarks: sectionList.map((section) => {
+        const existing = state.metronomeMarks?.find(
+          (mm) => mm.sectionId === section.id,
+        );
+        // If we already have a value for this section, reuse it
+        if (existing) return getMetronomeMarkInputFromState(existing);
+
+        // Otherwise create an “empty” value for this section
+        return {
+          sectionId: section.id,
+          noMM: true, // or false + empty bpm/beatUnit, depending on your UX
+          comment: "",
+        };
+      }),
+    }),
+    [sectionList, state.metronomeMarks],
+  );
+
   const {
     formState: { errors, dirtyFields },
     control,
@@ -78,43 +101,14 @@ export default function MetronomeMarksForm({
     trigger,
     reset,
   } = useForm<z.infer<typeof MetronomeMarkListSchema>>({
-    defaultValues: metronomeMarks?.length
-      ? {
-          metronomeMarks: metronomeMarks.map((metronomeMark) =>
-            getMetronomeMarkInputFromState(metronomeMark),
-          ),
-        }
-      : {
-          metronomeMarks: sectionList.map((s) => ({
-            beatUnit: undefined,
-            bpm: undefined,
-            comment: undefined,
-            sectionId: s.id,
-            noMM: false,
-          })),
-        },
+    defaultValues,
     resolver: zodResolver(MetronomeMarkListSchema),
   });
 
   const computedIsDirty = checkAreFieldsDirty(dirtyFields);
 
   const onResetForm = () => {
-    const resetValues = metronomeMarks?.length
-      ? {
-          metronomeMarks: metronomeMarks.map((metronomeMark) =>
-            getMetronomeMarkInputFromState(metronomeMark),
-          ),
-        }
-      : {
-          metronomeMarks: sectionList.map((s) => ({
-            beatUnit: undefined,
-            bpm: undefined,
-            comment: undefined,
-            sectionId: s.id,
-            noMM: false,
-          })),
-        };
-    reset(resetValues);
+    reset(defaultValues);
   };
 
   const submitForm = async (option: { goToNextStep: boolean }) => {
