@@ -163,7 +163,7 @@ export default function MetronomeMarkArray({
     return (
       <div
         key={section.id}
-        className="px-4 py-3 border-l-2 border-l-secondary/10 hover:border-l-secondary bg-secondary/5"
+        className="px-4 py-3 border-l-2 border-l-secondary/10 hover:border-l-secondary bg-secondary/5 transition-all duration-150"
       >
         <div className="flex justify-between mb-2">
           <h6 className="text-sm font-bold text-secondary">
@@ -287,18 +287,18 @@ export default function MetronomeMarkArray({
             return (
               <li key={`collection-${group.collection.id}-${groupIndex}`}>
                 {/* Collection Container with unified border */}
-                <div className="border-l-4 border-l-primary rounded-lg border border-base-300 hover:shadow-md hover:bg-primary/5 transition-all duration-150">
+                <div className="border-l-2 border-l-warning/10 hover:border-l-warning rounded-lg transition-all duration-150">
                   {/* Collection Header */}
-                  <div className="px-4 py-3 bg-primary/10 border-b border-primary/20">
+                  <div className="px-4 py-3 bg-warning/10 border-b border-warning/20">
                     <div className="flex gap-4 items-center justify-between">
                       <div>
-                        <h3 className="text-lg font-bold text-primary mb-1">
+                        <h3 className="text-lg font-bold text-warning mb-1">
                           {group.collection.title}
                           <span className="text-base font-normal">
                             {composer && ` - ${getPersonName(composer)}`}
                           </span>
                         </h3>
-                        <div className="text-sm text-primary/70 font-medium">
+                        <div className="text-sm text-warning/70 font-medium">
                           Collection • {group.pieces.length} piece
                           {group.pieces.length > 1 ? "s" : ""}
                         </div>
@@ -307,7 +307,7 @@ export default function MetronomeMarkArray({
                   </div>
 
                   {/* Collection Pieces */}
-                  <div className="py-2">
+                  <div className="pt-2 pl-2 grid-cols-1 space-y-2">
                     {group.pieces.map((pieceGroup) => {
                       const movementCount = pieceGroup.movements.length;
                       const isMonoMovementPiece = movementCount === 1;
@@ -315,11 +315,11 @@ export default function MetronomeMarkArray({
                       return (
                         <div
                           key={`${pieceGroup.piece.id}-${pieceGroup.pieceVersion.id}`}
-                          className="mb-4"
+                          className="border border-base-300 rounded-lg order-l-2 border-l-accent/10 hover:border-l-accent hover:border-base-400 hover:shadow-md hover:bg-primary/5 transition-all duration-150"
                         >
                           {/* Piece Header */}
-                          <div className="px-4 py-2 bg-accent/10">
-                            <h4 className="text-base font-bold text-accent">
+                          <div className="px-4 py-2 3 bg-accent/10 border-b border-accent/20">
+                            <h4 className="text-lg font-bold text-accent">
                               {pieceGroup.piece.title}
                               {isMonoMovementPiece &&
                                 pieceGroup.movements[0] &&
@@ -328,32 +328,45 @@ export default function MetronomeMarkArray({
                           </div>
 
                           {/* Movements */}
-                          {pieceGroup.movements.map((movementGroup) => (
-                            <div
-                              key={movementGroup.movement.id}
-                              className="ml-4"
-                            >
-                              {!isMonoMovementPiece && (
-                                <div className="px-4 py-2 bg-primary/5">
-                                  <h5 className="text-sm font-bold text-primary">
-                                    Movement {movementGroup.movement.rank} in{" "}
-                                    {movementGroup.movement.key.replaceAll(
-                                      "_",
-                                      " ",
-                                    )}
-                                  </h5>
-                                </div>
-                              )}
+                          <div className="py-2">
+                            {pieceGroup.movements.map(
+                              (movementGroup, mvtIndex) => (
+                                <div
+                                  key={movementGroup.movement.id}
+                                  className={
+                                    isMonoMovementPiece
+                                      ? ""
+                                      : `ml-2 rounded-tl-lg border-l-2 border-l-primary/10 hover:border-l-primary transition-all duration-150`
+                                  }
+                                >
+                                  {!isMonoMovementPiece && (
+                                    <div
+                                      className={`px-4 py-2 ${mvtIndex > 0 ? "mt-3" : ""} bg-primary/5`}
+                                    >
+                                      <h5 className="text-sm font-bold text-primary">
+                                        Movement {movementGroup.movement.rank}{" "}
+                                        in{" "}
+                                        {movementGroup.movement.key.replaceAll(
+                                          "_",
+                                          " ",
+                                        )}
+                                      </h5>
+                                    </div>
+                                  )}
 
-                              {/* Sections */}
-                              <div className="ml-2">
-                                {movementGroup.sections.map(
-                                  ({ section, index }) =>
-                                    renderSectionForm({ section, index }),
-                                )}
-                              </div>
-                            </div>
-                          ))}
+                                  {/* Sections */}
+                                  <div
+                                    className={`ml-2 ${isMonoMovementPiece ? "" : "pt-2"} grid-cols-1 space-y-1`}
+                                  >
+                                    {movementGroup.sections.map(
+                                      ({ section, index }) =>
+                                        renderSectionForm({ section, index }),
+                                    )}
+                                  </div>
+                                </div>
+                              ),
+                            )}
+                          </div>
                         </div>
                       );
                     })}
@@ -372,7 +385,7 @@ export default function MetronomeMarkArray({
                 key={`single-${pieceGroup.piece.id}-${pieceGroup.pieceVersion.id}`}
                 className="border border-base-300 rounded-lg hover:border-base-400 hover:shadow-md hover:bg-primary/5 transition-all duration-150"
               >
-                <div className="rounded-lg border-l-2 border-l-accent/10 hover:border-l-accent">
+                <div className="rounded-lg border-l-2 border-l-accent/10 hover:border-l-accent transition-all duration-150">
                   {/* Single Piece Header */}
                   <div className="px-4 py-3 bg-accent/10 border-b border-accent/20">
                     <div className="flex gap-4 items-center justify-between">
@@ -404,7 +417,7 @@ export default function MetronomeMarkArray({
                         className={
                           isMonoMovementPiece
                             ? ""
-                            : `ml-2 rounded-tl-lg border-l-2 border-l-primary/10 hover:border-l-primary`
+                            : `ml-2 rounded-tl-lg border-l-2 border-l-primary/10 hover:border-l-primary transition-all duration-150`
                         }
                       >
                         {!isMonoMovementPiece && (
