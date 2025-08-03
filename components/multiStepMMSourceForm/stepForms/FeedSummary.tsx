@@ -243,7 +243,20 @@ function FeedSummary() {
                               <div className="px-2 py-1 border-r border-secondary/20">
                                 {item.notesPerBar}
                               </div>
-                              <div className="px-2 py-1">
+                              <div className="px-2 py-1 flex items-center gap-2">
+                                {item.notesPerSecond && (
+                                  <div
+                                    className={`w-3 h-3 ${
+                                      item.notesPerSecond >= 15
+                                        ? "bg-red-500"
+                                        : item.notesPerSecond >= 11
+                                          ? "bg-orange-400"
+                                          : item.notesPerSecond >= 8
+                                            ? "bg-amber-200"
+                                            : "bg-white border border-gray-300"
+                                    }`}
+                                  />
+                                )}
                                 {item.notesPerSecond
                                   ? Math.round(item.notesPerSecond * 100) / 100
                                   : "-"}
