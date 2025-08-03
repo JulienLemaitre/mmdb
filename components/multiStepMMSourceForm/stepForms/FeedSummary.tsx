@@ -19,6 +19,8 @@ import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
 import SectionMeter from "@/components/entities/section/SectionMeter";
+import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
+import { NotesPerSecondCollection } from "@/utils/notesCalculation";
 
 const SAVE_INFO_MODAL_ID = "save-info-modal";
 const InfoModal = dynamic(() => import("@/components/InfoModal"), {
@@ -155,99 +157,105 @@ function FeedSummary() {
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          {/* Left column: Meter and Fastest Notes per Bar */}
-          <div className="border-l-2 border-l-primary/10 hover:border-l-primary bg-primary/5 p-3 rounded-lg">
-            <h5 className="text-xs font-bold text-primary mb-2">
-              Meter & Fastest Notes per Bar
-            </h5>
-            <div className="text-xs space-y-1">
-              {section.fastestStructuralNotesPerBar && (
-                <div>
-                  <span className="font-medium">Fastest structural notes:</span>{" "}
-                  {section.fastestStructuralNotesPerBar}
-                </div>
-              )}
-              {section.fastestRepeatedNotesPerBar && (
-                <div>
-                  <span className="font-medium">Fastest repeated notes:</span>{" "}
-                  {section.fastestRepeatedNotesPerBar}
-                </div>
-              )}
-              {section.fastestStaccatoNotesPerBar && (
-                <div>
-                  <span className="font-medium">Fastest staccato notes:</span>{" "}
-                  {section.fastestStaccatoNotesPerBar}
-                </div>
-              )}
-              {section.fastestOrnamentalNotesPerBar && (
-                <div>
-                  <span className="font-medium">Fastest ornamental notes:</span>{" "}
-                  {section.fastestOrnamentalNotesPerBar}
-                </div>
-              )}
-            </div>
-          </div>
+        <div className="text-xs space-y-3">
+          {section.metronomeMarks &&
+            section.metronomeMarks.map((mm: any, idx: number) => {
+              if (mm.noMM) {
+                return (
+                  <div key={idx} className="italic">
+                    No metronome mark indicated
+                  </div>
+                );
+              }
 
-          {/* Right column: Metronome Mark and Computed Notes per Second */}
-          <div className="border-l-2 border-l-accent/10 hover:border-l-accent bg-accent/5 p-3 rounded-lg">
-            <h5 className="text-xs font-bold text-accent mb-2">
-              Metronome Mark & Notes per Second
-            </h5>
-            <div className="text-xs space-y-1">
-              {section.metronomeMarks &&
-                section.metronomeMarks.map((mm: any, idx: number) => {
-                  if (mm.noMM) {
-                    return (
-                      <div key={idx} className="italic">
-                        No metronome mark indicated
-                      </div>
-                    );
-                  }
+              // Compute notes per second using the utility function
+              let notesPerSecondCollection: NotesPerSecondCollection | null =
+                null;
+              try {
+                notesPerSecondCollection =
+                  getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM({
+                    section,
+                    metronomeMark: mm,
+                  });
+              } catch (e) {
+                console.error("Error computing notes per second:", e);
+              }
 
-                  return (
-                    <div key={idx}>
-                      <div>
-                        <span className="font-medium">Metronome mark:</span>{" "}
+              return (
+                <div key={idx} className="space-y-2">
+                  {notesPerSecondCollection && (
+                    <div>
+                      <div className="font-medium mb-1">
+                        Fastest notes for metronome mark:{" "}
                         {getNoteValueLabel(mm.beatUnit)} = {mm.bpm}
                       </div>
-                      {mm.notesPerSecond &&
-                        [
+                      <div className="rounded">
+                        {/* Table headers */}
+                        <div className="grid grid-cols-3 text-xs font-medium border-b border-secondary/20">
+                          <div className="p-2 border-r border-secondary/20">
+                            Note type
+                          </div>
+                          <div className="p-2 border-r border-secondary/20">
+                            Notes per bar
+                          </div>
+                          <div className="p-2">Notes per second (computed)</div>
+                        </div>
+                        {/* Table rows */}
+                        {[
                           {
-                            key: "fastestStructuralNotesPerSecond",
+                            key: "fastestStructuralNotes",
                             label: "Structural",
+                            notesPerBar: section.fastestStructuralNotesPerBar,
+                            notesPerSecond:
+                              notesPerSecondCollection.fastestStructuralNotesPerSecond,
                           },
                           {
-                            key: "fastestRepeatedNotesPerSecond",
+                            key: "fastestRepeatedNotes",
                             label: "Repeated",
+                            notesPerBar: section.fastestRepeatedNotesPerBar,
+                            notesPerSecond:
+                              notesPerSecondCollection.fastestRepeatedNotesPerSecond,
                           },
                           {
-                            key: "fastestStaccatoNotesPerSecond",
+                            key: "fastestStaccatoNotes",
                             label: "Staccato",
+                            notesPerBar: section.fastestStaccatoNotesPerBar,
+                            notesPerSecond:
+                              notesPerSecondCollection.fastestStaccatoNotesPerSecond,
                           },
                           {
-                            key: "fastestOrnamentalNotesPerSecond",
+                            key: "fastestOrnamentalNotes",
                             label: "Ornamental",
+                            notesPerBar: section.fastestOrnamentalNotesPerBar,
+                            notesPerSecond:
+                              notesPerSecondCollection.fastestOrnamentalNotesPerSecond,
                           },
-                        ].map(
-                          (type) =>
-                            mm.notesPerSecond[type.key] && (
-                              <div key={type.key}>
-                                <span className="font-medium">
-                                  {type.label} notes/sec:
-                                </span>{" "}
-                                {mm.notesPerSecond[type.key].toFixed(2)}
+                        ]
+                          .filter((item) => item.notesPerBar)
+                          .map((item) => (
+                            <div
+                              key={item.key}
+                              className="grid grid-cols-3 text-xs border-b border-secondary/10 last:border-b-0"
+                            >
+                              <div className="px-2 py-1 border-r border-secondary/20">
+                                {item.label}
                               </div>
-                            ),
-                        )}
-                      {mm.comment && (
-                        <div className="mt-1 italic">Comment: {mm.comment}</div>
-                      )}
+                              <div className="px-2 py-1 border-r border-secondary/20">
+                                {item.notesPerBar}
+                              </div>
+                              <div className="px-2 py-1">
+                                {item.notesPerSecond
+                                  ? Math.round(item.notesPerSecond * 100) / 100
+                                  : "-"}
+                              </div>
+                            </div>
+                          ))}
+                      </div>
                     </div>
-                  );
-                })}
-            </div>
-          </div>
+                  )}
+                </div>
+              );
+            })}
         </div>
       </div>
     );
