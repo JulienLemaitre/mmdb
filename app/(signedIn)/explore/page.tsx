@@ -26,8 +26,7 @@ import { ChartDatum } from "@/types/chartTypes";
 import GetChartDataFromPieceVersions from "@/utils/getChartDataFromPieceVersions";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
-import CommonTimeIcon from "@/components/svg/CommonTimeIcon";
-import CutTimeIcon from "@/components/svg/CutTimeIcon";
+import SectionMeter from "@/components/entities/section/SectionMeter";
 
 // TODO: What do we want in addition to what is already there:
 //  1. Show all mms that result in speeds of more / less than X notes per second with a selection of note type (strutural, repeated etc.) e.g. show me all Sources that have MMs that result in more than 15 nps (structural)
@@ -321,10 +320,6 @@ function SearchPage() {
                                             sectionIndex,
                                             sectionList,
                                           ) => {
-                                            const { isCommonTime, isCutTime } =
-                                              section;
-                                            const isCommonOrCutTime =
-                                              isCommonTime || isCutTime;
                                             return (
                                               <div key={section.id}>
                                                 <h4 className="text-lg my-1 italic">{`${
@@ -335,22 +330,9 @@ function SearchPage() {
                                                 <div className="border-b-2 border-gray-200">
                                                   <div className="">
                                                     Metre :{" "}
-                                                    {isCommonOrCutTime ? (
-                                                      <>
-                                                        <span className="common-time align-middle inline-block">
-                                                          {isCommonTime ? (
-                                                            <CommonTimeIcon className="h-3.5 relative bottom-0.5" />
-                                                          ) : (
-                                                            <CutTimeIcon className="h-5 relative bottom-0.5" />
-                                                          )}
-                                                        </span>
-                                                        <b>{` (${section.metreNumerator}/${section.metreDenominator})`}</b>
-                                                      </>
-                                                    ) : (
-                                                      <b>
-                                                        {`${section.metreNumerator}/${section.metreDenominator}`}
-                                                      </b>
-                                                    )}
+                                                    <SectionMeter
+                                                      section={section}
+                                                    />
                                                   </div>
                                                   {section.fastestStructuralNotesPerBar && (
                                                     <div className="">
@@ -475,8 +457,7 @@ function SearchPage() {
                                                                   computedNotesPerSecondFromNotesPerBar -
                                                                     originalNotesPerSecond,
                                                                 ) > 0.01;
-                                                              const hasDataInconsistency =
-                                                                false;
+                                                              const hasDataInconsistency = false;
                                                               // (originalNotesPerSecond &&
                                                               //   !computedNotesPerSecondFromNotesPerBar) ||
                                                               // (!originalNotesPerSecond &&

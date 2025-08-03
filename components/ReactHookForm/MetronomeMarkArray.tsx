@@ -3,12 +3,11 @@ import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import TrashIcon from "@/components/svg/TrashIcon";
 import { FormInput } from "@/components/ReactHookForm/FormInput";
 import { NOTE_VALUE } from "@prisma/client";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFeedForm } from "@/components/context/feedFormContext";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import { SectionStateExtendedForMMForm } from "@/types/formTypes";
-import CommonTimeIcon from "@/components/svg/CommonTimeIcon";
-import CutTimeIcon from "@/components/svg/CutTimeIcon";
+import SectionMeter from "@/components/entities/section/SectionMeter";
 
 // Utility function to organize sections into groups by collection, piece, movement
 function processSectionsForDisplay(
@@ -157,8 +156,6 @@ export default function MetronomeMarkArray({
     const tempoIndication = section.tempoIndication?.text;
     const comment = section.comment;
     const isNoMMChecked = !!watch(`metronomeMarks.${formIndex}.noMM`);
-    const { isCommonTime, isCutTime } = section;
-    const isCommonOrCutTime = isCommonTime || isCutTime;
 
     return (
       <div
@@ -168,20 +165,7 @@ export default function MetronomeMarkArray({
         <div className="flex justify-between mb-2">
           <h6 className="text-sm font-bold text-secondary">
             {`Section ${section.rank}\u2002-\u2002`}
-            {isCommonOrCutTime ? (
-              <>
-                <span className="common-time align-middle inline-block">
-                  {isCommonTime ? (
-                    <CommonTimeIcon className="h-3.5 relative bottom-0.5" />
-                  ) : (
-                    <CutTimeIcon className="h-5 relative bottom-0.5" />
-                  )}
-                </span>
-                <b>{` (${section.metreNumerator}/${section.metreDenominator})`}</b>
-              </>
-            ) : (
-              <b>{`${section.metreNumerator}/${section.metreDenominator}`}</b>
-            )}
+            <SectionMeter section={section} />
             <span className="italic">
               {tempoIndication && `\u2002-\u2002${tempoIndication}`}
             </span>
