@@ -134,10 +134,7 @@ function FeedSummary() {
   };
 
   // Utility function to organize piece versions into groups by collection
-  function processPieceVersionsForDisplay(
-    pieceVersions: any[],
-    feedFormState: any,
-  ) {
+  function processPieceVersionsForDisplay(pieceVersions: any[]) {
     const processedGroups: Array<{
       type: "collection" | "single";
       collection?: any;
@@ -336,7 +333,7 @@ function FeedSummary() {
     if (!mMSourceToPersist) return null;
 
     const { pieceVersions = [] } = mMSourceToPersist;
-    const organizedData = processPieceVersionsForDisplay(pieceVersions, state);
+    const organizedData = processPieceVersionsForDisplay(pieceVersions);
 
     const getPersonName = (person: any) => {
       return person ? `${person.firstName} ${person.lastName}` : "";
@@ -463,7 +460,7 @@ function FeedSummary() {
 
                   {/* Collection Pieces */}
                   <div className="pt-2 pl-2 grid-cols-1 space-y-2">
-                    {group.pieces.map((pieceGroup, pieceIndex) => {
+                    {group.pieces.map((pieceGroup) => {
                       const { pieceVersion, piece } = pieceGroup;
                       const movementCount = pieceVersion.movements?.length || 0;
                       const isMonoMovementPiece = movementCount === 1;
