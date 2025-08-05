@@ -347,7 +347,7 @@ const SourceOnPieceVersionFormContainer = ({
           )}
           <div className="grid grid-cols-2 gap-4 items-center mt-6 w-full max-w-2xl">
             <button
-              className="btn btn-accent"
+              className="btn btn-warning"
               type="button"
               onClick={onFormClose}
             >
@@ -585,7 +585,7 @@ const SourceOnPieceVersionFormContainer = ({
 
 export default SourceOnPieceVersionFormContainer;
 
-// First, let's create a utility function to process the data
+// Utility function to gather the data into groups with all related information from feedFormState
 function processMMSourcePieceVersionsForDisplay(
   mMSourcePieceVersions: MMSourcePieceVersionsState[],
   feedFormState: any,

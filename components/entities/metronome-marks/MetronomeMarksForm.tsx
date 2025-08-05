@@ -1,8 +1,6 @@
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
-import {
-  MetronomeMarkState,
-  SectionStateExtendedForMMForm,
-} from "@/types/formTypes";
+import { SectionStateExtendedForMMForm } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MetronomeMarkArray from "@/components/ReactHookForm/MetronomeMarkArray";
 import { z } from "zod";
@@ -59,16 +57,37 @@ const MetronomeMarkListSchema = z
 
 interface MetronomeMarksFormProps {
   sectionList: SectionStateExtendedForMMForm[];
-  metronomeMarks?: MetronomeMarkState[];
+  // metronomeMarks?: MetronomeMarkState[];
 }
 export default function MetronomeMarksForm({
-  metronomeMarks,
+  // metronomeMarks,
   sectionList,
 }: MetronomeMarksFormProps) {
-  const { dispatch, currentStepRank } = useFeedForm();
+  const { state, dispatch, currentStepRank } = useFeedForm();
   const step = getStepByRank(currentStepRank);
+
+  // 1. Build defaultValues whose order == UI order
+  const defaultValues = useMemo(
+    () => ({
+      metronomeMarks: sectionList.map((section) => {
+        const existing = state.metronomeMarks?.find(
+          (mm) => mm.sectionId === section.id,
+        );
+        // If we already have a value for this section, reuse it
+        if (existing) return getMetronomeMarkInputFromState(existing);
+
+        // Otherwise create an “empty” value for this section
+        return {
+          sectionId: section.id,
+          comment: "",
+        };
+      }),
+    }),
+    [sectionList, state.metronomeMarks],
+  );
+
   const {
-    formState: { errors, isSubmitting, dirtyFields },
+    formState: { errors, dirtyFields },
     control,
     register,
     handleSubmit,
@@ -78,54 +97,14 @@ export default function MetronomeMarksForm({
     trigger,
     reset,
   } = useForm<z.infer<typeof MetronomeMarkListSchema>>({
-    defaultValues: metronomeMarks
-      ? {
-          metronomeMarks: metronomeMarks.map((metronomeMark) =>
-            getMetronomeMarkInputFromState(metronomeMark),
-          ),
-        }
-      : {
-          metronomeMarks: sectionList.map((s) => ({
-            beatUnit: undefined,
-            bpm: undefined,
-            comment: undefined,
-            sectionId: s.id,
-            noMM: false,
-          })),
-        },
+    defaultValues,
     resolver: zodResolver(MetronomeMarkListSchema),
   });
 
   const computedIsDirty = checkAreFieldsDirty(dirtyFields);
 
   const onResetForm = () => {
-    sectionList.forEach((section, index) => {
-      setValue(`metronomeMarks.${index}.sectionId`, section.id);
-      // @ts-ignore => I don't know how to allow resetting the value to undefined without implying the correct MetronomeMArkInput type accepting this value and screwing the getMetronomeMarkStateFromInput type checking before persisting feedForm data.
-      setValue(`metronomeMarks.${index}.bpm`, undefined);
-      // @ts-ignore
-      setValue(`metronomeMarks.${index}.beatUnit`, undefined);
-      // @ts-ignore
-      setValue(`metronomeMarks.${index}.comment`, undefined);
-      setValue(`metronomeMarks.${index}.noMM`, false);
-    });
-    reset(
-      metronomeMarks
-        ? {
-            metronomeMarks: metronomeMarks.map((metronomeMark) =>
-              getMetronomeMarkInputFromState(metronomeMark),
-            ),
-          }
-        : {
-            metronomeMarks: sectionList.map((s) => ({
-              beatUnit: undefined,
-              bpm: undefined,
-              comment: undefined,
-              sectionId: s.id,
-              noMM: false,
-            })),
-          },
-    );
+    reset(defaultValues);
   };
 
   const submitForm = async (option: { goToNextStep: boolean }) => {

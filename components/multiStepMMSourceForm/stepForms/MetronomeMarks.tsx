@@ -95,19 +95,19 @@ function MetronomeMarks() {
     ];
   }, []);
 
-  // If there are metronome marks in state but not the same number as sectionList, we raise an error
-  const metronomeMarks = state.metronomeMarks;
-  if (metronomeMarks?.length && metronomeMarks.length !== sectionList.length) {
-    console.warn(
-      `[ERROR] metronomeMarks.length (${metronomeMarks.length}) !== sectionList.length (${sectionList.length})`,
-    );
-  }
+  // // If there are metronome marks in state but not the same number as sectionList, we raise an error
+  // const metronomeMarks = state.metronomeMarks;
+  // if (metronomeMarks?.length && metronomeMarks.length !== sectionList.length) {
+  //   console.warn(
+  //     `[ERROR] metronomeMarks.length (${metronomeMarks.length}) !== sectionList.length (${sectionList.length})`,
+  //   );
+  // }
 
   return (
     <div>
       <h1 className="mb-4 text-4xl font-bold">Enter metronome marks</h1>
       <MetronomeMarksForm
-        metronomeMarks={metronomeMarks}
+        // metronomeMarks={metronomeMarks}
         sectionList={sectionList}
       />
     </div>

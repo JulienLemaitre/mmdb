@@ -57,7 +57,7 @@ export default function PieceVersionSelectForm({
       <div className="mt-4">
         <button
           type="button"
-          className="btn btn-secondary"
+          className="btn btn-accent"
           onClick={onInitPieceVersionCreation}
         >
           <PlusIcon className="w-5 h-5" />

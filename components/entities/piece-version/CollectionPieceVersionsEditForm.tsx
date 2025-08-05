@@ -248,7 +248,7 @@ function CollectionPieceVersionsEditForm({
           </SinglePieceVersionFormProvider>
           <div className="grid grid-cols-2 gap-4 items-center mt-6 w-full max-w-2xl">
             <button
-              className="btn btn-accent"
+              className="btn btn-warning"
               type="button"
               onClick={onSinglePieceVersionFormClose}
             >

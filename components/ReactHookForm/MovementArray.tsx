@@ -29,9 +29,11 @@ export default function MovementArray({
       <ul>
         {fields.map((item, index, mvtArray) => {
           const isLastItem = index === mvtArray.length - 1;
-
           return (
-            <li key={item.id} className="mt-6">
+            <li
+              key={item.id}
+              className="mt-6 px-4 pt-3 border border-base-300 rounded-lg hover:border-secondary/25 hover:shadow-xs hover:bg-primary/5 transition-all duration-150"
+            >
               <div className="flex justify-between">
                 <h5 className="text-xl font-normal text-secondary">{`Movement ${
                   index + 1

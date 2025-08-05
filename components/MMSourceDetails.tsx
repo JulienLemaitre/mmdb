@@ -6,8 +6,7 @@ import { KeyBase } from "@/types/formTypes";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
-import CommonTimeIcon from "@/components/svg/CommonTimeIcon";
-import CutTimeIcon from "@/components/svg/CutTimeIcon";
+import SectionMeter from "@/components/entities/section/SectionMeter";
 
 export default function MMSourceDetails({ mMSource }) {
   // Gather collections
@@ -184,12 +183,7 @@ export default function MMSourceDetails({ mMSource }) {
                                 movement.sections
                                   .sort((a, b) => a.rank - b.rank)
                                   .map((section, _, sectionList) => {
-                                    const { isCommonTime, isCutTime } = section;
-                                    const isCommonOrCutTime =
-                                      isCommonTime || isCutTime;
-
                                     // console.log(`[] section.id :`, section.id);
-
                                     return (
                                       <div key={section.id}>
                                         <h5 className="text-lg my-1 italic">{`${
@@ -200,22 +194,7 @@ export default function MMSourceDetails({ mMSource }) {
                                         <div className="border-b-2 border-gray-200">
                                           <div>
                                             Metre :{" "}
-                                            {isCommonOrCutTime ? (
-                                              <>
-                                                <span className="common-time align-middle inline-block">
-                                                  {isCommonTime ? (
-                                                    <CommonTimeIcon className="h-3.5 relative bottom-0.5" />
-                                                  ) : (
-                                                    <CutTimeIcon className="h-5 relative bottom-0.5" />
-                                                  )}
-                                                </span>
-                                                <b>{` (${section.metreNumerator}/${section.metreDenominator})`}</b>
-                                              </>
-                                            ) : (
-                                              <b>
-                                                {`${section.metreNumerator}/${section.metreDenominator}`}
-                                              </b>
-                                            )}
+                                            <SectionMeter section={section} />
                                           </div>
                                           {section.fastestStructuralNotesPerBar && (
                                             <div className="">

@@ -134,7 +134,7 @@ export function FormInput({
 
   return (
     <div
-      className={`relative form-control w-full ${maxWidthClass} mt-2 ${controlClassName}${disabled ? ` opacity-50` : ""}`}
+      className={`relative form-control w-full ${maxWidthClass} ${!controlClassName.includes("mt-") && "mt-2"} ${controlClassName}${disabled ? ` opacity-50` : ""}`}
     >
       {(label || getLabel(name)) && (
         <label className="label">

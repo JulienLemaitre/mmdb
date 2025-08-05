@@ -37,9 +37,12 @@ export default function SectionArray({
             watch(`movements[${nestIndex}].sections[${index}].isCutTime`);
 
           return (
-            <li key={item.id} className="px-4 border-accent border-2 my-3">
+            <li
+              key={item.id}
+              className="my-3 px-4 pt-3 border border-base-300 rounded-lg hover:border-accent/25 hover:shadow-xs hover:bg-accent/5 transition-all duration-150"
+            >
               <div className="flex justify-between">
-                <h6 className="my-4 text-lg font-normal text-accent">{`Section ${
+                <h6 className="text-lg font-normal text-accent">{`Section ${
                   index + 1
                 }`}</h6>
                 <div className="flex items-center gap-2">
