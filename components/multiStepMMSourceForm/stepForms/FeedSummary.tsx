@@ -133,12 +133,67 @@ function FeedSummary() {
     initFeedForm(dispatch);
   };
 
+  // Utility function to organize piece versions into groups by collection
+  function processPieceVersionsForDisplay(
+    pieceVersions: any[],
+    feedFormState: any,
+  ) {
+    const processedGroups: Array<{
+      type: "collection" | "single";
+      collection?: any;
+      pieces: Array<{
+        pieceVersion: any;
+        piece: any;
+        composer: any;
+      }>;
+    }> = [];
+
+    let currentGroup: (typeof processedGroups)[0] | null = null;
+
+    pieceVersions.forEach((pvs: any) => {
+      const pieceVersion = pvs.pieceVersion;
+      const piece = pieceVersion?.piece;
+      const collection = piece?.collection;
+      const composer = piece?.composer;
+
+      if (!pieceVersion) return;
+
+      // Determine if we need a new group
+      const needNewGroup =
+        !currentGroup ||
+        (collection &&
+          (currentGroup.type !== "collection" ||
+            currentGroup.collection?.id !== collection.id)) ||
+        (!collection &&
+          (currentGroup.type !== "single" ||
+            currentGroup.pieces.some((p) => p.piece.id !== piece.id)));
+
+      if (needNewGroup) {
+        currentGroup = {
+          type: collection ? "collection" : "single",
+          collection,
+          pieces: [],
+        };
+        processedGroups.push(currentGroup);
+      }
+
+      // Add piece to current group
+      currentGroup?.pieces.push({
+        pieceVersion,
+        piece,
+        composer,
+      });
+    });
+
+    return processedGroups;
+  }
+
   // Helper function to render movement sections with styling
   const renderSection = (section: any) => {
     return (
       <div
         key={section.id}
-        className="px-3 py-2 border-l-2 border-l-secondary/10 hover:border-l-secondary bg-secondary/5 transition-all duration-150 rounded-r-lg mb-3"
+        className="px-4 py-3 border-l-2 border-l-secondary/10 hover:border-l-secondary bg-secondary/5 transition-all duration-150"
       >
         <div className="mb-2">
           <h6 className="text-sm font-bold text-secondary">
@@ -281,6 +336,11 @@ function FeedSummary() {
     if (!mMSourceToPersist) return null;
 
     const { pieceVersions = [] } = mMSourceToPersist;
+    const organizedData = processPieceVersionsForDisplay(pieceVersions, state);
+
+    const getPersonName = (person: any) => {
+      return person ? `${person.firstName} ${person.lastName}` : "";
+    };
 
     return (
       <ul className="space-y-6 mb-6">
@@ -373,84 +433,191 @@ function FeedSummary() {
           </div>
         </li>
 
-        {/* Pieces */}
-        {pieceVersions.map((pvs: any, index: number) => {
-          const pieceVersion = pvs.pieceVersion;
-          const piece = pieceVersion?.piece;
-          const collection = piece?.collection;
-          const composer = piece?.composer;
+        {/* Organized Pieces */}
+        {organizedData.map((group, groupIndex) => {
+          if (group.type === "collection") {
+            // Get composer from the first piece (since all pieces in collection have same composer)
+            const composer = group.pieces[0]?.composer;
 
-          if (!pieceVersion) return null;
-
-          return (
-            <li
-              key={`piece-${index}`}
-              className="border border-base-300 rounded-lg hover:border-base-400 hover:shadow-md hover:bg-primary/5 transition-all duration-150"
-            >
-              <div className="rounded-lg border-l-2 border-l-accent/10 hover:border-l-accent transition-all duration-150">
-                {/* Collection Header if applicable */}
-                {collection && (
-                  <div className="px-4 py-2 bg-primary/10 border-b border-primary/20">
-                    <h4 className="text-md font-bold text-primary">
-                      Collection: {collection.title}
-                    </h4>
-                  </div>
-                )}
-
-                {/* Piece Header */}
-                <div className="px-4 py-3 bg-accent/10 border-b border-accent/20">
-                  <div className="flex gap-4 items-center justify-between">
-                    <div>
-                      <h3 className="text-lg font-bold text-accent">
-                        {piece?.title}
-                        <span className="text-base font-normal">
-                          {composer &&
-                            ` - ${composer.firstName} ${composer.lastName}`}
-                        </span>
-                      </h3>
-                      <div className="text-sm text-accent/70 font-medium">
-                        {piece?.yearOfComposition &&
-                          `Composed: ${piece.yearOfComposition}`}
-                        {pieceVersion?.category &&
-                          ` • ${formatToPhraseCase(pieceVersion.category)}`}
+            return (
+              <li key={`collection-${group.collection.id}-${groupIndex}`}>
+                {/* Collection Container with unified border */}
+                <div className="border-l-2 border-l-warning/10 hover:border-l-warning rounded-lg transition-all duration-150">
+                  {/* Collection Header */}
+                  <div className="px-4 py-3 bg-warning/10 border-b border-warning/20">
+                    <div className="flex gap-4 items-center justify-between">
+                      <div>
+                        <h3 className="text-lg font-bold text-warning mb-1">
+                          {group.collection.title}
+                          <span className="text-base font-normal">
+                            {composer && ` - ${getPersonName(composer)}`}
+                          </span>
+                        </h3>
+                        <div className="text-sm text-warning/70 font-medium">
+                          {`Collection\u2002•\u2002{group.pieces.length} piece
+                          ${group.pieces.length > 1 ? "s" : ""}`}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Movements and Sections */}
-                <div className="py-4 px-4">
-                  {pieceVersion.movements &&
-                    pieceVersion.movements.map(
-                      (movement: any, mvtIndex: number) => (
-                        <div key={`mvt-${mvtIndex}`} className="mb-4">
-                          <div className="px-3 py-2 bg-primary/10 rounded-t-lg mb-2">
-                            <h5 className="text-sm font-bold text-primary">
-                              {pieceVersion.movements.length > 1
-                                ? `Movement ${movement.rank}`
-                                : ""}
-                              {pieceVersion.movements.length > 0
-                                ? pieceVersion.movements.length > 1
-                                  ? " in "
-                                  : ""
-                                : ""}
-                              {getKeyLabel(movement.key)}
-                            </h5>
+                  {/* Collection Pieces */}
+                  <div className="pt-2 pl-2 grid-cols-1 space-y-2">
+                    {group.pieces.map((pieceGroup, pieceIndex) => {
+                      const { pieceVersion, piece } = pieceGroup;
+                      const movementCount = pieceVersion.movements?.length || 0;
+                      const isMonoMovementPiece = movementCount === 1;
+
+                      return (
+                        <div
+                          key={`${piece.id}-${pieceVersion.id}`}
+                          className="border border-base-300 rounded-lg border-l-2 border-l-accent/10 hover:border-l-accent hover:border-base-400 hover:shadow-md hover:bg-primary/5 transition-all duration-150"
+                        >
+                          {/* Piece Header */}
+                          <div className="px-4 py-3 bg-accent/10 border-b border-accent/20">
+                            <h4 className="text-lg font-bold text-accent">
+                              {piece?.title}
+                              {isMonoMovementPiece &&
+                                pieceVersion.movements?.[0] &&
+                                ` in ${getKeyLabel(pieceVersion.movements[0].key)}`}
+                            </h4>
+                            <div className="text-sm text-accent/70 font-medium">
+                              {piece?.yearOfComposition ? (
+                                `Year of Composition: ${piece.yearOfComposition}`
+                              ) : (
+                                <span className="italic">
+                                  No year of composition provided
+                                </span>
+                              )}
+                              {pieceVersion?.category &&
+                                `\u2002•\u2002Category: ${formatToPhraseCase(pieceVersion.category)}`}
+                            </div>
                           </div>
 
-                          <div className="ml-2">
-                            {movement.sections &&
-                              movement.sections.map((section: any) =>
-                                renderSection(section),
+                          {/* Movements and Sections */}
+                          <div className="py-2">
+                            {pieceVersion.movements &&
+                              pieceVersion.movements.map(
+                                (movement: any, mvtIndex: number) => (
+                                  <div
+                                    key={`mvt-${mvtIndex}`}
+                                    className={
+                                      isMonoMovementPiece
+                                        ? ""
+                                        : `ml-2 rounded-tl-lg border-l-2 border-l-primary/10 hover:border-l-primary transition-all duration-150`
+                                    }
+                                  >
+                                    {!isMonoMovementPiece && (
+                                      <div
+                                        className={`px-4 py-2 ${mvtIndex > 0 ? "mt-3" : ""} bg-primary/5`}
+                                      >
+                                        <h5 className="text-sm font-bold text-primary">
+                                          Movement {movement.rank} in{" "}
+                                          {getKeyLabel(movement.key)}
+                                        </h5>
+                                      </div>
+                                    )}
+
+                                    <div
+                                      className={`ml-2 ${isMonoMovementPiece ? "" : "pt-2"} grid-cols-1 space-y-1`}
+                                    >
+                                      {movement.sections &&
+                                        movement.sections.map((section: any) =>
+                                          renderSection(section),
+                                        )}
+                                    </div>
+                                  </div>
+                                ),
                               )}
                           </div>
                         </div>
-                      ),
-                    )}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            </li>
-          );
+              </li>
+            );
+          } else {
+            // Single piece (not part of a collection)
+            const pieceGroup = group.pieces[0];
+            const { pieceVersion, piece, composer } = pieceGroup;
+            const movementCount = pieceVersion.movements?.length || 0;
+            const isMonoMovementPiece = movementCount === 1;
+
+            return (
+              <li
+                key={`single-${piece.id}-${pieceVersion.id}`}
+                className="border border-base-300 rounded-lg hover:border-base-400 hover:shadow-md hover:bg-primary/5 transition-all duration-150"
+              >
+                <div className="rounded-lg border-l-2 border-l-accent/10 hover:border-l-accent transition-all duration-150">
+                  {/* Single Piece Header */}
+                  <div className="px-4 py-3 bg-accent/10 border-b border-accent/20">
+                    <div className="flex gap-4 items-center justify-between">
+                      <div>
+                        <h3 className="text-lg font-bold text-accent">
+                          {piece?.title}
+                          {isMonoMovementPiece &&
+                            pieceVersion.movements?.[0] &&
+                            ` in ${getKeyLabel(pieceVersion.movements[0].key)}`}
+                          <span className="text-base font-normal">
+                            {composer && ` - ${getPersonName(composer)}`}
+                          </span>
+                        </h3>
+                        <div className="text-sm text-accent/70 font-medium">
+                          {piece?.yearOfComposition ? (
+                            `Year of Composition: ${piece.yearOfComposition}`
+                          ) : (
+                            <span className="italic">
+                              No year of composition provided
+                            </span>
+                          )}
+                          {pieceVersion?.category &&
+                            `\u2002•\u2002Category: ${formatToPhraseCase(pieceVersion.category)}`}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Movements and Sections */}
+                  <div className="py-2">
+                    {pieceVersion.movements &&
+                      pieceVersion.movements.map(
+                        (movement: any, mvtIndex: number) => (
+                          <div
+                            key={`mvt-${mvtIndex}`}
+                            className={
+                              isMonoMovementPiece
+                                ? ""
+                                : `ml-2 rounded-tl-lg border-l-2 border-l-primary/10 hover:border-l-primary transition-all duration-150`
+                            }
+                          >
+                            {!isMonoMovementPiece && (
+                              <div
+                                className={`px-4 py-2 ${mvtIndex > 0 ? "mt-3" : ""} bg-primary/5`}
+                              >
+                                <h5 className="text-sm font-bold text-primary">
+                                  Movement {movement.rank} in{" "}
+                                  {getKeyLabel(movement.key)}
+                                </h5>
+                              </div>
+                            )}
+
+                            <div
+                              className={`ml-2 ${isMonoMovementPiece ? "" : "pt-2"} grid-cols-1 space-y-1`}
+                            >
+                              {movement.sections &&
+                                movement.sections.map((section: any) =>
+                                  renderSection(section),
+                                )}
+                            </div>
+                          </div>
+                        ),
+                      )}
+                  </div>
+                </div>
+              </li>
+            );
+          }
         })}
       </ul>
     );
