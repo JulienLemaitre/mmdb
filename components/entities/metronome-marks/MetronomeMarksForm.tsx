@@ -1,9 +1,6 @@
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";
-import {
-  MetronomeMarkState,
-  SectionStateExtendedForMMForm,
-} from "@/types/formTypes";
+import { SectionStateExtendedForMMForm } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MetronomeMarkArray from "@/components/ReactHookForm/MetronomeMarkArray";
 import { z } from "zod";
@@ -82,7 +79,6 @@ export default function MetronomeMarksForm({
         // Otherwise create an “empty” value for this section
         return {
           sectionId: section.id,
-          noMM: true, // or false + empty bpm/beatUnit, depending on your UX
           comment: "",
         };
       }),
