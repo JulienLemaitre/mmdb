@@ -21,6 +21,8 @@ import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
 import SectionMeter from "@/components/entities/section/SectionMeter";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import { NotesPerSecondCollection } from "@/utils/notesCalculation";
+import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
+import getRoleLabel from "@/utils/getRoleLabel";
 
 const SAVE_INFO_MODAL_ID = "save-info-modal";
 const InfoModal = dynamic(() => import("@/components/InfoModal"), {
@@ -284,30 +286,40 @@ function FeedSummary() {
       <ul className="space-y-6 mb-6">
         {/* Source Information Card */}
         <li className="border border-base-300 rounded-lg hover:border-base-400 hover:shadow-md hover:bg-primary/5 transition-all duration-150">
-          <div className="rounded-lg border-l-2 border-l-warning/10 hover:border-l-warning transition-all duration-150">
-            <div className="px-4 py-3 bg-warning/10 border-b border-warning/20">
-              <h3 className="text-lg font-bold text-warning">
-                Metronome Mark Source
-                <span className="text-base font-normal ml-2">
-                  {mMSourceToPersist.year ? `(${mMSourceToPersist.year})` : ""}
-                </span>
-              </h3>
-              <div className="text-sm text-warning/70 font-medium">
-                {mMSourceToPersist.type &&
-                  `Type: ${getSourceTypeLabel(mMSourceToPersist.type)}`}
-                {mMSourceToPersist.title && ` • ${mMSourceToPersist.title}`}
+          <div className="rounded-lg border-l-2 border-l-info/10 hover:border-l-info transition-all duration-150">
+            <div className="px-4 py-3 bg-info/10 border-b border-info/20">
+              {mMSourceToPersist.title && (
+                <h2 className="text-lg font-bold text-info">
+                  {mMSourceToPersist.title}
+                </h2>
+              )}
+              <div className="flex text-base text-info/70 gap-3">
+                {mMSourceToPersist.type && (
+                  <div className="pr-3 border-r border-info/20">
+                    {`${getSourceTypeLabel(mMSourceToPersist.type)}`}
+                  </div>
+                )}
+                <div>
+                  {mMSourceToPersist.year ? (
+                    `${mMSourceToPersist.year}`
+                  ) : (
+                    <span className="italic">
+                      No year of publication provided
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
 
-            <div className="p-4">
+            <div className="p-4 text-sm">
               {mMSourceToPersist.link && (
-                <div className="mb-2">
+                <div className="mb-3 flex items-center gap-2">
                   <span className="font-semibold">Link: </span>
                   <a
-                    href={mMSourceToPersist.link}
+                    href={getIMSLPPermaLink(mMSourceToPersist.link)}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-accent hover:underline break-all"
+                    className="link link-primary break-all"
                   >
                     {mMSourceToPersist.link}
                   </a>
@@ -316,8 +328,10 @@ function FeedSummary() {
 
               {mMSourceToPersist.references &&
                 mMSourceToPersist.references.length > 0 && (
-                  <div className="mb-2">
-                    <h4 className="font-semibold mb-1">References:</h4>
+                  <div className="mb-3">
+                    <h4 className="uppercase text-xs text-primary font-semibold mb-1">
+                      References
+                    </h4>
                     <ul className="list-disc pl-5">
                       {mMSourceToPersist.references.map(
                         (ref: any, idx: number) => (
@@ -335,14 +349,16 @@ function FeedSummary() {
 
               {mMSourceToPersist.contributions &&
                 mMSourceToPersist.contributions.length > 0 && (
-                  <div className="mb-2">
-                    <h4 className="font-semibold mb-1">Contributors:</h4>
+                  <div className="">
+                    <h4 className="uppercase text-xs text-primary font-semibold mb-1">
+                      Contributors
+                    </h4>
                     <ul className="list-disc pl-5">
                       {mMSourceToPersist.contributions.map(
                         (contribution: any, idx: number) => (
                           <li key={idx}>
                             <span className="font-medium">
-                              {contribution.role}:{" "}
+                              {getRoleLabel(contribution.role)}:{" "}
                             </span>
                             {contribution.person
                               ? `${contribution.person.firstName} ${contribution.person.lastName}`
@@ -442,6 +458,7 @@ function FeedSummary() {
 
   return (
     <div className="mb-8">
+      <h1 className="mb-4 text-4xl font-bold">Metronome Mark Source Summary</h1>
       {renderStylizedSourceDetails()}
 
       <div className="flex items-center gap-4 mt-6 justify-center">
