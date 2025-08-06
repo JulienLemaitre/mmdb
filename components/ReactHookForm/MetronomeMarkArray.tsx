@@ -163,7 +163,7 @@ export default function MetronomeMarkArray({
         className="px-4 py-3 border-l-2 border-l-secondary/10 hover:border-l-secondary bg-secondary/5 transition-all duration-150"
       >
         <div className="flex justify-between mb-2">
-          <h6 className="text-sm font-bold text-secondary">
+          <h6 className="text-sm font-semibold text-secondary">
             {`Section ${section.rank}\u2002-\u2002`}
             <SectionMeter section={section} />
             <span className="italic">
@@ -327,7 +327,7 @@ export default function MetronomeMarkArray({
                                     <div
                                       className={`px-4 py-2 ${mvtIndex > 0 ? "mt-3" : ""} bg-primary/5`}
                                     >
-                                      <h5 className="text-sm font-bold text-primary">
+                                      <h5 className="text-sm font-semibold text-primary">
                                         Movement {movementGroup.movement.rank}{" "}
                                         in{" "}
                                         {movementGroup.movement.key.replaceAll(

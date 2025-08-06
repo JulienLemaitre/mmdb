@@ -8,26 +8,24 @@ export function SectionDetail({ section }) {
   return (
     <div
       key={section.id}
-      className="px-4 py-3 border-l-2 border-l-secondary/10 hover:border-l-secondary bg-secondary/5 transition-all duration-150"
+      className="px-4 py-2 border-l-2 border-l-secondary/10 hover:border-l-secondary bg-secondary/5 transition-all duration-150"
     >
-      <div className="mb-2">
-        <h6 className="text-sm font-bold text-secondary">
-          {`Section ${section.rank}\u2002-\u2002`}
-          <SectionMeter section={section} />
-          <span className="italic">
-            {section?.tempoIndication?.text &&
-              `\u2002-\u2002${section.tempoIndication.text}`}
-          </span>
-        </h6>
-        {section.comment && (
-          <div className="text-xs italic">Comment: {section.comment}</div>
-        )}
-        {section.commentForReview && (
-          <div className="text-xs italic px-2 py-1 bg-warning/10 rounded mt-2">
-            Review note: {section.commentForReview}
-          </div>
-        )}
-      </div>
+      <h6 className="text-sm font-semibold text-secondary">
+        {`Section ${section.rank}\u2002-\u2002`}
+        <SectionMeter section={section} />
+        <span className="italic">
+          {section?.tempoIndication?.text &&
+            `\u2002-\u2002${section.tempoIndication.text}`}
+        </span>
+      </h6>
+      {section.comment && (
+        <div className="text-xs italic">Comment: {section.comment}</div>
+      )}
+      {section.commentForReview && (
+        <div className="text-xs italic px-2 pt-1 bg-warning/10 rounded mt-2">
+          Review note: {section.commentForReview}
+        </div>
+      )}
 
       <div className="text-xs space-y-3">
         {section.metronomeMarks &&
