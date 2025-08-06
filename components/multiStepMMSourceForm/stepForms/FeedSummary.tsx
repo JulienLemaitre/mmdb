@@ -305,8 +305,7 @@ function FeedSummary() {
                           </span>
                         </h3>
                         <div className="text-sm text-warning/70 font-medium">
-                          {`Collection\u2002•\u2002{group.pieces.length} piece
-                          ${group.pieces.length > 1 ? "s" : ""}`}
+                          {`Collection\u2002•\u2002${group.pieces.length} piece${group.pieces.length > 1 ? "s" : ""}`}
                         </div>
                       </div>
                     </div>
