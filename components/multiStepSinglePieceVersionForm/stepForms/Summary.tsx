@@ -17,16 +17,16 @@ type SummaryProps = {
 function Summary({
   feedFormState,
   onSubmitSourceOnPieceVersions,
-  selectedComposerId,
+  // selectedComposerId,
   selectedPieceId,
   selectedPieceVersionId,
   isUpdateMode,
 }: SummaryProps) {
-  const composer = getEntityByIdOrKey(
-    feedFormState,
-    "persons",
-    selectedComposerId,
-  );
+  // const composer = getEntityByIdOrKey(
+  //   feedFormState,
+  //   "persons",
+  //   selectedComposerId,
+  // );
   const piece = getEntityByIdOrKey(feedFormState, "pieces", selectedPieceId);
   const pieceVersion = getEntityByIdOrKey(
     feedFormState,
@@ -75,7 +75,7 @@ function Summary({
                   <div
                     className={`px-4 py-2 ${mvtIndex > 0 ? "mt-3" : ""} bg-primary/5`}
                   >
-                    <h5 className="text-sm font-bold text-primary">
+                    <h5 className="text-sm font-semibold text-primary">
                       Movement {movement.rank} in {getKeyLabel(movement.key)}
                     </h5>
                   </div>
