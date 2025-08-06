@@ -25,6 +25,8 @@ import {
 } from "@/utils/constants";
 import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
 import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
+import PieceVersionDisplay from "@/components/entities/piece-version/PieceVersionDisplay";
+import InformationCircleIcon from "@/components/svg/InformationCircleIcon";
 
 type SourcePieceVersionSelectFormProps = {
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
@@ -305,6 +307,37 @@ const SourceOnPieceVersionFormContainer = ({
 
   return (
     <>
+      <style jsx>{`
+        .tooltip:hover .tooltip-content {
+          display: block;
+          position: absolute;
+          z-index: 1000;
+          background: white;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.5rem;
+          padding: 1rem;
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+          max-width: 600px;
+          right: 100%;
+          top: 50%;
+          transform: translateY(-50%);
+          margin-right: 0.5rem;
+          text-align: left;
+        }
+        .tooltip-content {
+          display: none;
+        }
+        .tooltip-icon {
+          cursor: help;
+        }
+        @media (prefers-color-scheme: dark) {
+          .tooltip:hover .tooltip-content {
+            background: #1f2937;
+            border-color: #374151;
+            color: white;
+          }
+        }
+      `}</style>
       {isIntro ? (
         <div className="w-full prose">
           <h1>{title}</h1>
@@ -372,7 +405,7 @@ const SourceOnPieceVersionFormContainer = ({
                 return (
                   <li key={`collection-${group.collection.id}-${groupIndex}`}>
                     {/* Collection Container with unified border */}
-                    <div className="border-l-2 border-l-primary rounded-lg overflow-hidden border border-base-300 hover:shadow-xs hover:bg-primary/5 transition-all duration-150">
+                    <div className="border-l-2 border-l-primary rounded-lg border border-base-300 hover:shadow-xs hover:bg-primary/5 transition-all duration-150">
                       {/* Collection Header */}
                       <div className="px-4 py-3 bg-primary/10 border-b border-primary/20">
                         <div className="flex gap-4 items-center justify-between">
@@ -447,9 +480,22 @@ const SourceOnPieceVersionFormContainer = ({
                           >
                             <div className="flex items-center gap-3">
                               <div className="grow">
-                                <h4 className="text-base font-medium text-secondary">
-                                  {`${item.mMSourcePieceVersion.rank} - ${item.piece.title}`}
-                                </h4>
+                                <div className="flex items-center gap-2">
+                                  <h4 className="text-base font-medium text-secondary">
+                                    {`${item.mMSourcePieceVersion.rank} - ${item.piece.title}`}
+                                  </h4>
+                                  <div
+                                    className="tooltip tooltip-right"
+                                    data-tip=""
+                                  >
+                                    <div className="tooltip-content">
+                                      <PieceVersionDisplay
+                                        pieceVersion={item.pieceVersion}
+                                      />
+                                    </div>
+                                    <InformationCircleIcon className="w-5 h-5 text-info/50 hover:text-info tooltip-icon" />
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -468,13 +514,23 @@ const SourceOnPieceVersionFormContainer = ({
                     <div className="px-4 py-3 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-xs hover:bg-primary/5 transition-all duration-150">
                       <div className="flex gap-4 items-center justify-between">
                         <div className="grow">
-                          <h4 className="text-base font-bold text-secondary">
-                            {`${item.mMSourcePieceVersion.rank} - ${item.piece.title}`}
-                            <span className="text-base font-normal">
-                              {!!item.composer &&
-                                ` - ${getPersonName(item.composer)}`}
-                            </span>
-                          </h4>
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-base font-bold text-secondary">
+                              {`${item.mMSourcePieceVersion.rank} - ${item.piece.title}`}
+                              <span className="text-base font-normal">
+                                {!!item.composer &&
+                                  ` - ${getPersonName(item.composer)}`}
+                              </span>
+                            </h4>
+                            <div className="tooltip tooltip-right" data-tip="">
+                              <div className="tooltip-content">
+                                <PieceVersionDisplay
+                                  pieceVersion={item.pieceVersion}
+                                />
+                              </div>
+                              <InformationCircleIcon className="w-5 h-5 text-info/50 hover:text-info tooltip-icon" />
+                            </div>
+                          </div>
                         </div>
                         <div className="flex gap-2 shrink-0">
                           <button
