@@ -283,8 +283,7 @@ export default function MetronomeMarkArray({
                           </span>
                         </h3>
                         <div className="text-sm text-warning/70 font-medium">
-                          Collection • {group.pieces.length} piece
-                          {group.pieces.length > 1 ? "s" : ""}
+                          {`Collection • ${group.pieces.length} piece${group.pieces.length > 1 ? "s" : ""}`}
                         </div>
                       </div>
                     </div>
