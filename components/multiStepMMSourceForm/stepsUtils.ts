@@ -5,6 +5,8 @@ import MMSourceContributions from "@/components/multiStepMMSourceForm/stepForms/
 import MMSourcePieceVersions from "@/components/multiStepMMSourceForm/stepForms/MMSourcePieceVersions";
 import MetronomeMarks from "@/components/multiStepMMSourceForm/stepForms/MetronomeMarks";
 import FeedSummary from "@/components/multiStepMMSourceForm/stepForms/FeedSummary";
+import { getSectionList } from "@/utils/getSectionList";
+import { areMetronomeMarksCompleteForSections } from "@/utils/metronomeMarks/isComplete";
 
 export const steps: FeedFormStep[] = [
   {
@@ -56,7 +58,25 @@ export const steps: FeedFormStep[] = [
     id: "metronomeMarks",
     actionTypes: ["metronomeMarks", "formInfo"],
     title: "Metronome Marks",
-    isComplete: (state) => (state?.metronomeMarks?.length || 0) > 0,
+    isComplete: (state) => {
+      // Need to build the sectionList and validate marks for each section
+      if (!state?.mMSourcePieceVersions?.length) return false;
+
+      // Ensure we have all required pieceVersions in state (isComplete must be sync)
+      const neededIds = new Set(
+        state.mMSourcePieceVersions.map((s) => s.pieceVersionId),
+      );
+      const inState = (state.pieceVersions || []).filter((pv) =>
+        neededIds.has(pv.id),
+      );
+      if (inState.length !== neededIds.size) {
+        // Missing pieceVersions => cannot assert completion synchronously
+        return false;
+      }
+
+      const sectionList = getSectionList(state, inState);
+      return areMetronomeMarksCompleteForSections(state, sectionList);
+    },
     Component: MetronomeMarks,
   },
   {

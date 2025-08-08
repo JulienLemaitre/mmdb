@@ -4,7 +4,6 @@ import { SectionStateExtendedForMMForm } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MetronomeMarkArray from "@/components/ReactHookForm/MetronomeMarkArray";
 import { z } from "zod";
-import { getZodOptionFromEnum, zodPositiveNumber } from "@/types/zodTypes";
 import {
   updateFeedForm,
   useFeedForm,
@@ -13,47 +12,10 @@ import getMetronomeMarkInputFromState from "@/utils/getMetronomeMarksInputFromSt
 import getMetronomeMarkStateFromInput from "@/utils/getMetronomeMarkStateFromInput";
 import { ONE_MM_REQUIRED } from "@/utils/constants";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
-import { NOTE_VALUE } from "@prisma/client";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import checkAreFieldsDirty from "@/utils/checkAreFieldsDirty";
 import { getStepByRank } from "@/components/multiStepMMSourceForm/stepsUtils";
-
-const MetronomeMarkSchema = z.discriminatedUnion("noMM", [
-  z.object({
-    noMM: z.literal(true),
-    sectionId: z.string(),
-    comment: z.string().optional().nullable(),
-  }),
-  z.object({
-    noMM: z.literal(false),
-    sectionId: z.string(),
-    beatUnit: getZodOptionFromEnum(NOTE_VALUE),
-    bpm: zodPositiveNumber,
-    comment: z.string().optional().nullable(),
-  }),
-]);
-
-const MetronomeMarkListSchema = z
-  .object({
-    metronomeMarks: z.array(MetronomeMarkSchema).nonempty(),
-  })
-  .superRefine(({ metronomeMarks }, ctx) => {
-    // If there is no metronomeMark with beatUnit and bpm, we add an error
-    if (
-      !metronomeMarks.some(
-        (metronomeMark) =>
-          !metronomeMark.noMM &&
-          metronomeMark.beatUnit?.value &&
-          metronomeMark.bpm,
-      )
-    ) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["general"],
-        message: ONE_MM_REQUIRED,
-      });
-    }
-  });
+import { MetronomeMarkListSchema } from "@/utils/metronomeMarks/schema";
 
 interface MetronomeMarksFormProps {
   sectionList: SectionStateExtendedForMMForm[];
@@ -98,7 +60,24 @@ export default function MetronomeMarksForm({
     reset,
   } = useForm<z.infer<typeof MetronomeMarkListSchema>>({
     defaultValues,
-    resolver: zodResolver(MetronomeMarkListSchema),
+    resolver: zodResolver(
+      MetronomeMarkListSchema.superRefine(({ metronomeMarks }, ctx) => {
+        if (
+          !metronomeMarks.some(
+            (metronomeMark) =>
+              !metronomeMark.noMM &&
+              metronomeMark.beatUnit?.value &&
+              metronomeMark.bpm,
+          )
+        ) {
+          ctx.addIssue({
+            code: "custom",
+            path: ["general"],
+            message: ONE_MM_REQUIRED,
+          });
+        }
+      }),
+    ),
   });
 
   const computedIsDirty = checkAreFieldsDirty(dirtyFields);
