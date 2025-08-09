@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import MetronomeMarksForm from "@/components/entities/metronome-marks/MetronomeMarksForm";
 import { useFeedForm } from "@/components/context/feedFormContext";
 import { URL_API_GETMANY_PIECEVERSIONS } from "@/utils/routes";
 import Loader from "@/components/Loader";
-import {
-  PieceVersionState,
-  SectionStateExtendedForMMForm,
-} from "@/types/formTypes";
+import { PieceVersionState } from "@/types/formTypes";
+import { getSectionList } from "@/utils/getSectionList";
 
 function MetronomeMarks() {
   const { state } = useFeedForm();
@@ -54,62 +52,19 @@ function MetronomeMarks() {
     }
   }, [state.mMSourcePieceVersions, state.pieceVersions]);
 
+  const sectionList = useMemo(() => {
+    if (!pieceVersions || pieceVersions.length === 0) return [];
+    return getSectionList(state, pieceVersions);
+  }, [pieceVersions, state]);
+
   if (!pieceVersions || pieceVersions.length === 0) {
     return <Loader />;
   }
 
-  const sectionList = state.mMSourcePieceVersions!.reduce<
-    SectionStateExtendedForMMForm[]
-  >((sectionList, mMSourceOnPieceVersion) => {
-    const pieceVersion = pieceVersions.find(
-      (pv) => pv.id === mMSourceOnPieceVersion.pieceVersionId,
-    );
-    if (!pieceVersion) {
-      throw new Error(
-        `[MetronomeMarks] NO pieceVersion for mMSourceOnPieceVersion.pieceVersionId: ${mMSourceOnPieceVersion.pieceVersionId}`,
-      );
-    }
-
-    return [
-      ...sectionList,
-      ...pieceVersion.movements.reduce<SectionStateExtendedForMMForm[]>(
-        (sectionList, movement) => {
-          return [
-            ...sectionList,
-            ...movement.sections.map((section) => {
-              // Insert in section the properties of movement except "sections"
-              return {
-                ...section,
-                movement: {
-                  ...movement,
-                  sections: undefined,
-                },
-                mMSourceOnPieceVersion,
-                pieceId: pieceVersion.pieceId,
-              };
-            }),
-          ];
-        },
-        [],
-      ),
-    ];
-  }, []);
-
-  // // If there are metronome marks in state but not the same number as sectionList, we raise an error
-  // const metronomeMarks = state.metronomeMarks;
-  // if (metronomeMarks?.length && metronomeMarks.length !== sectionList.length) {
-  //   console.warn(
-  //     `[ERROR] metronomeMarks.length (${metronomeMarks.length}) !== sectionList.length (${sectionList.length})`,
-  //   );
-  // }
-
   return (
     <div>
       <h1 className="mb-4 text-4xl font-bold">Enter metronome marks</h1>
-      <MetronomeMarksForm
-        // metronomeMarks={metronomeMarks}
-        sectionList={sectionList}
-      />
+      <MetronomeMarksForm sectionList={sectionList} />
     </div>
   );
 }
