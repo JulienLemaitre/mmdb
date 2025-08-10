@@ -32,8 +32,13 @@ export function SectionDetail({ section }) {
           section.metronomeMarks.map((mm: any, idx: number) => {
             if (mm.noMM) {
               return (
-                <div key={idx} className="italic">
-                  No metronome mark indicated
+                <div key={idx}>
+                  <div className="italic">No metronome mark indicated</div>
+                  {mm.comment && (
+                    <div className="text-xs italic">
+                      {`Comment: ${mm.comment}`}
+                    </div>
+                  )}
                 </div>
               );
             }
@@ -134,6 +139,11 @@ export function SectionDetail({ section }) {
                           </div>
                         ))}
                     </div>
+                  </div>
+                )}
+                {mm.comment && (
+                  <div className="text-xs italic">
+                    {`Comment: ${mm.comment}`}
                   </div>
                 )}
               </div>
