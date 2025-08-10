@@ -265,7 +265,7 @@ async function processDataFromXlsx(dataSheetList: any) {
             collectionTitle = collectionTitleMatch[1]
           console.log(`[processDataFromXlsx] collectionTitle :`, collectionTitle)
             pieceRank = pieceNumberMatch[1]
-          console.log(`[processDataFromXlsx] pieceNumber :`, pieceRank)
+          console.log(`[processDataFromXlsx] pieceRank :`, pieceRank)
             collection = {
               title: collectionTitle,
               pieceRank,
@@ -488,6 +488,12 @@ async function getDatas() {
   // Process the datas to build a well-structured object list
   const { pieceList, noteNotFoundList } = await processDataFromXlsx(datasFromXlsxFiles)
 
+  // STOP of we find a piece without source.link
+  const pieceListWithoutSourceLink = pieceList.filter((piece) => !piece.source?.link)
+  if (pieceListWithoutSourceLink.length > 0) {
+    throw new Error(`pieceListWithoutSourceLink : ${JSON.stringify(pieceListWithoutSourceLink, null, 2)}`)
+  }
+
   // Extract the sections from the pieceList (just to count them ;-) )
   const sectionList = pieceList.reduce((acc, piece) => {
     if (!piece) {
@@ -555,9 +561,9 @@ function makeCollectionEntryforPieceList(pieceList: any[]) {
   pieceListWithCollectionToMake.forEach((piece: any) => {
     const collectionMainTitlePartRegex = /.+,\s*(Op.\s*\d+)/
     const collectionTitleMatch = collectionMainTitlePartRegex.exec(piece.title)
-    console.log(`[isCollectionHint] collectionTitleMatch :`, collectionTitleMatch)
+    console.log(`[hasTitleCollectionHintWord] collectionTitleMatch :`, collectionTitleMatch)
     const collectionTitle = collectionTitleMatch?.[0] || piece.title
-    console.log(`[isCollectionHint] collectionTitle :`, collectionTitle)
+    console.log(`[hasTitleCollectionHintWord] collectionTitle :`, collectionTitle)
     const collection = {
       title: collectionTitle,
     }
