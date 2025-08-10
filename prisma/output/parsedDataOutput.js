@@ -7,6 +7,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -67,6 +68,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -127,6 +129,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -190,6 +193,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -253,6 +257,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -316,6 +321,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -376,6 +382,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -436,6 +443,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -496,6 +504,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -556,6 +565,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -613,6 +623,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -673,6 +684,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -733,6 +745,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -790,6 +803,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -850,6 +864,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -903,1770 +918,6 @@ const pieceList = [
     ]
   },
   {
-    "title": "Escuela de guitarra, 1st ed.",
-    "category": "OTHER",
-    "composer": "Aguado, Dionisio",
-    "yearOfComposition": 1825,
-    "source": {
-      "type": "EDITION",
-      "link": "https://s9.imslp.org/files/imglnks/usimg/0/0b/IMSLP265881-PMLP82088-DAguado_Escuela_de_guitarra_2ded.pd",
-      "year": 1826,
-      "contributions": [
-        {
-          "role": "PUBLISHER",
-          "organization": {
-            "name": "Unidentified"
-          }
-        }
-      ],
-      "rank": 1
-    },
-    "metronomeMarkList": [
-      {
-        "movementRank": 1,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 69,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.9
-        }
-      },
-      {
-        "movementRank": 2,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 69,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 9.2
-        }
-      },
-      {
-        "movementRank": 3,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 58,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12,
-          "fastestOrnamentalNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 2.9,
-          "fastestOrnamentalNotesPerSecond": 3.87
-        }
-      },
-      {
-        "movementRank": 4,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 69,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 2.3
-        }
-      },
-      {
-        "movementRank": 5,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 50,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 18,
-          "fastestOrnamentalNotesPerBar": 36
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 5,
-          "fastestOrnamentalNotesPerSecond": 10
-        }
-      },
-      {
-        "movementRank": 6,
-        "sectionRank": 1,
-        "beatUnit": "EIGHTH",
-        "bpm": 84,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12,
-          "fastestOrnamentalNotesPerBar": 48
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 4.2,
-          "fastestOrnamentalNotesPerSecond": 16.8
-        }
-      },
-      {
-        "movementRank": 7,
-        "sectionRank": 1,
-        "beatUnit": "HALF",
-        "bpm": 66,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 8.8
-        }
-      },
-      {
-        "movementRank": 8,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 36,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 64
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 2.4,
-          "fastestOrnamentalNotesPerSecond": 9.6
-        }
-      },
-      {
-        "movementRank": 9,
-        "sectionRank": 1,
-        "beatUnit": "EIGHTH",
-        "bpm": 132,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6,
-          "fastestOrnamentalNotesPerBar": 24
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 2.2,
-          "fastestOrnamentalNotesPerSecond": 8.8
-        }
-      },
-      {
-        "movementRank": 10,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 104,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.93
-        }
-      },
-      {
-        "movementRank": 11,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 104,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.93
-        }
-      },
-      {
-        "movementRank": 12,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 104,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.93,
-          "fastestOrnamentalNotesPerSecond": 13.87
-        }
-      },
-      {
-        "movementRank": 13,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 63,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16 // Hack, INVENTED VALUE because it had NO VALUE
-        },
-        "notesPerSecond": {}
-      },
-      {
-        "movementRank": 14,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 72,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 9.6,
-          "fastestOrnamentalNotesPerSecond": 19.2
-        }
-      },
-      {
-        "movementRank": 15,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 63,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 8.4
-        }
-      },
-      {
-        "movementRank": 16,
-        "sectionRank": 1,
-        "beatUnit": "DOTTED_QUARTER",
-        "bpm": 50,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 24
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 5
-        }
-      },
-      {
-        "movementRank": 16,
-        "sectionRank": 2,
-        "beatUnit": "DOTTED_QUARTER",
-        "bpm": 80,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 24,
-          "fastestOrnamentalNotesPerBar": 48
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 8,
-          "fastestOrnamentalNotesPerSecond": 16
-        }
-      },
-      {
-        "movementRank": 17,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 66,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 8.8,
-          "fastestOrnamentalNotesPerSecond": 17.6
-        }
-      }
-    ],
-    "movements": [
-      {
-        "rank": 1,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Moderato",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 12
-          }
-        ]
-      },
-      {
-        "rank": 2,
-        "key": "C_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andantino",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 32
-          }
-        ]
-      },
-      {
-        "rank": 3,
-        "key": "G_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 12,
-            "fastestOrnamentalNotesPerBar": 16
-          }
-        ]
-      },
-      {
-        "rank": 4,
-        "key": "G_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 6
-          }
-        ]
-      },
-      {
-        "rank": 5,
-        "key": "G_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Adagio",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 18,
-            "fastestOrnamentalNotesPerBar": 36,
-            "comment": "Same as Nuevo método de guitarra, xxiv"
-          }
-        ]
-      },
-      {
-        "rank": 6,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 12,
-            "fastestOrnamentalNotesPerBar": 48,
-            "comment": "Same as Nuevo método de guitarra, ix"
-          }
-        ]
-      },
-      {
-        "rank": 7,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "comment": "Same as Nuevo método de guitarra, x"
-          }
-        ]
-      },
-      {
-        "rank": 8,
-        "key": "C_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 64,
-            "comment": "Very likely a misprint, see Fossa's publication"
-          }
-        ]
-      },
-      {
-        "rank": 9,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andantino",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 6,
-            "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 6,
-            "fastestOrnamentalNotesPerBar": 24
-          }
-        ]
-      },
-      {
-        "rank": 10,
-        "key": "A_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "comment": "Same as Nuevo método de guitarra, xii"
-          }
-        ]
-      },
-      {
-        "rank": 11,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "comment": "Same as Nuevo método de guitarra, xiii"
-          }
-        ]
-      },
-      {
-        "rank": 12,
-        "key": "E_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 32,
-            "comment": "Same as Nuevo método de guitarra, xiv"
-          }
-        ]
-      },
-      {
-        "rank": 13,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro cómodo",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16, // Hack, INVENTED VALUE because it had NO VALUE
-            "comment": "Same as Nuevo método de guitarra, xxi"
-          }
-        ]
-      },
-      {
-        "rank": 14,
-        "key": "G_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro moderato",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 32,
-            "comment": "Same as Nuevo método de guitarra, xxii"
-          }
-        ]
-      },
-      {
-        "rank": 15,
-        "key": "C_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro cómodo",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "comment": "Same as Nuevo método de guitarra, xx"
-          }
-        ]
-      },
-      {
-        "rank": 16,
-        "key": "D_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 12,
-            "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 24
-          },
-          {
-            "rank": 2,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 12,
-            "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 24,
-            "fastestOrnamentalNotesPerBar": 48
-          }
-        ]
-      },
-      {
-        "rank": 17,
-        "key": "E_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 32,
-            "comment": "Same as Nuevo método de guitarra, xxvii"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "title": "Escuela de guitarra, 2nd ed.",
-    "category": "OTHER",
-    "composer": "Aguado, Dionisio",
-    "yearOfComposition": 1825,
-    "source": {
-      "type": "EDITION",
-      "link": "https://s9.imslp.org/files/imglnks/usimg/8/86/IMSLP696557-PMLP82088-Aguado_D-Fossa-Methode_complete.pdf",
-      "year": 1826,
-      "contributions": [
-        {
-          "role": "PUBLISHER",
-          "organization": {
-            "name": "The author"
-          }
-        },
-        {
-          "role": "EDITOR",
-          "organization": {
-            "name": "Fossa, François de"
-          }
-        }
-      ],
-      "rank": 1
-    },
-    "metronomeMarkList": [
-      {
-        "movementRank": 1,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 69,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.9
-        }
-      },
-      {
-        "movementRank": 2,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 69,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 9.2
-        }
-      },
-      {
-        "movementRank": 3,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 58,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12,
-          "fastestOrnamentalNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 2.9,
-          "fastestOrnamentalNotesPerSecond": 3.87
-        }
-      },
-      {
-        "movementRank": 4,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 69,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 2.3
-        }
-      },
-      {
-        "movementRank": 5,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 50,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 18,
-          "fastestOrnamentalNotesPerBar": 36
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 5,
-          "fastestOrnamentalNotesPerSecond": 10
-        }
-      },
-      {
-        "movementRank": 6,
-        "sectionRank": 1,
-        "beatUnit": "EIGHTH",
-        "bpm": 84,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12,
-          "fastestOrnamentalNotesPerBar": 48
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 4.2,
-          "fastestOrnamentalNotesPerSecond": 16.8
-        }
-      },
-      {
-        "movementRank": 7,
-        "sectionRank": 1,
-        "beatUnit": "HALF",
-        "bpm": 66,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 8.8
-        }
-      },
-      {
-        "movementRank": 8,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 96,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 64
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.4,
-          "fastestOrnamentalNotesPerSecond": 25.6
-        }
-      },
-      {
-        "movementRank": 9,
-        "sectionRank": 1,
-        "beatUnit": "DOTTED_QUARTER",
-        "bpm": 132,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6,
-          "fastestOrnamentalNotesPerBar": 24
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.6,
-          "fastestOrnamentalNotesPerSecond": 26.4
-        }
-      },
-      {
-        "movementRank": 10,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 104,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.93
-        }
-      },
-      {
-        "movementRank": 11,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 104,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.93
-        }
-      },
-      {
-        "movementRank": 12,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 104,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.93,
-          "fastestOrnamentalNotesPerSecond": 13.87
-        }
-      },
-      {
-        "movementRank": 13,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 63,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16, // Hack, INVENTED VALUE because it had NO VALUE
-        },
-        "notesPerSecond": {}
-      },
-      {
-        "movementRank": 14,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 72,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 9.6,
-          "fastestOrnamentalNotesPerSecond": 19.2
-        }
-      },
-      {
-        "movementRank": 15,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 63,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 8.4
-        }
-      },
-      {
-        "movementRank": 16,
-        "sectionRank": 1,
-        "beatUnit": "DOTTED_QUARTER",
-        "bpm": 50,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 24
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 5
-        }
-      },
-      {
-        "movementRank": 16,
-        "sectionRank": 2,
-        "beatUnit": "DOTTED_QUARTER",
-        "bpm": 80,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 24,
-          "fastestOrnamentalNotesPerBar": 48
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 8,
-          "fastestOrnamentalNotesPerSecond": 16
-        }
-      },
-      {
-        "movementRank": 17,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 66,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 8.8,
-          "fastestOrnamentalNotesPerSecond": 17.6
-        }
-      }
-    ],
-    "movements": [
-      {
-        "rank": 1,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Moderato",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 12
-          }
-        ]
-      },
-      {
-        "rank": 2,
-        "key": "C_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andantino",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 32
-          }
-        ]
-      },
-      {
-        "rank": 3,
-        "key": "G_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 12,
-            "fastestOrnamentalNotesPerBar": 16
-          }
-        ]
-      },
-      {
-        "rank": 4,
-        "key": "G_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 6
-          }
-        ]
-      },
-      {
-        "rank": 5,
-        "key": "G_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Adagio",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 18,
-            "fastestOrnamentalNotesPerBar": 36,
-            "comment": "Same as Nuevo método de guitarra, xxiv"
-          }
-        ]
-      },
-      {
-        "rank": 6,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 12,
-            "fastestOrnamentalNotesPerBar": 48,
-            "comment": "Same as Nuevo método de guitarra, ix"
-          }
-        ]
-      },
-      {
-        "rank": 7,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "comment": "Same as Nuevo método de guitarra, x"
-          }
-        ]
-      },
-      {
-        "rank": 8,
-        "key": "C_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 64
-          }
-        ]
-      },
-      {
-        "rank": 9,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andantino",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 6,
-            "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 6,
-            "fastestOrnamentalNotesPerBar": 24,
-            "comment": "Very likely a misprint, see first publication"
-          }
-        ]
-      },
-      {
-        "rank": 10,
-        "key": "A_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "comment": "Same as Nuevo método de guitarra, xii"
-          }
-        ]
-      },
-      {
-        "rank": 11,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "comment": "Same as Nuevo método de guitarra, xiii"
-          }
-        ]
-      },
-      {
-        "rank": 12,
-        "key": "E_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 32,
-            "comment": "Same as Nuevo método de guitarra, xiv"
-          }
-        ]
-      },
-      {
-        "rank": 13,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro comodo",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16, // Hack, INVENTED VALUE because it had NO VALUE
-            "comment": "Same as Nuevo método de guitarra, xxi"
-          }
-        ]
-      },
-      {
-        "rank": 14,
-        "key": "G_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro moderato",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 32,
-            "comment": "Same as Nuevo método de guitarra, xxii"
-          }
-        ]
-      },
-      {
-        "rank": 15,
-        "key": "C_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro comodo",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "comment": "Same as Nuevo método de guitarra, xx"
-          }
-        ]
-      },
-      {
-        "rank": 16,
-        "key": "D_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 12,
-            "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 24
-          },
-          {
-            "rank": 2,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 12,
-            "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 24,
-            "fastestOrnamentalNotesPerBar": 48
-          }
-        ]
-      },
-      {
-        "rank": 17,
-        "key": "E_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 32,
-            "comment": "Same as Nuevo método de guitarra, xxvii"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "title": "Nuevo método para guitarra",
-    "category": "OTHER",
-    "composer": "Aguado, Dionisio",
-    "yearOfComposition": 1843,
-    "source": {
-      "type": "EDITION",
-      "link": "https://s9.imslp.org/files/imglnks/usimg/3/31/IMSLP265882-PMLP430836-DAguado_Nuevo_m%C3%A9todo_para_guitarra_1843.pdf",
-      "year": 1843,
-      "contributions": [
-        {
-          "role": "PUBLISHER",
-          "organization": {
-            "name": "Campo"
-          }
-        }
-      ],
-      "rank": 1
-    },
-    "metronomeMarkList": [
-      {
-        "movementRank": 1,
-        "sectionRank": 1,
-        "beatUnit": "DOTTED_HALF",
-        "bpm": 66,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12,
-          "fastestOrnamentalNotesPerBar": 48
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.6,
-          "fastestOrnamentalNotesPerSecond": 26.4
-        }
-      },
-      {
-        "movementRank": 2,
-        "sectionRank": 1,
-        "beatUnit": "DOTTED_HALF",
-        "bpm": 66,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.6
-        }
-      },
-      {
-        "movementRank": 3,
-        "sectionRank": 1,
-        "beatUnit": "DOTTED_HALF",
-        "bpm": 66,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 18
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 19.8
-        }
-      },
-      {
-        "movementRank": 4,
-        "sectionRank": 1,
-        "beatUnit": "EIGHTH",
-        "bpm": 84,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12,
-          "fastestOrnamentalNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 4.2,
-          "fastestOrnamentalNotesPerSecond": 5.6
-        }
-      },
-      {
-        "movementRank": 5,
-        "sectionRank": 1,
-        "beatUnit": "HALF",
-        "bpm": 66,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 8.8
-        }
-      },
-      {
-        "movementRank": 6,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 104,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.93
-        }
-      },
-      {
-        "movementRank": 7,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 104,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.93
-        }
-      },
-      {
-        "movementRank": 8,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 104,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.93,
-          "fastestOrnamentalNotesPerSecond": 13.87
-        }
-      },
-      {
-        "movementRank": 9,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 69,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 24,
-          "fastestOrnamentalNotesPerBar": 64
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.9,
-          "fastestOrnamentalNotesPerSecond": 18.4
-        }
-      },
-      {
-        "movementRank": 10,
-        "sectionRank": 1,
-        "beatUnit": "DOTTED_HALF",
-        "bpm": 66,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 30
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 33
-        }
-      },
-      {
-        "movementRank": 11,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 63,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 8.4
-        }
-      },
-      {
-        "movementRank": 12,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 63,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16 // Hack, INVENTED VALUE because it had NO VALUE
-        },
-        "notesPerSecond": {}
-      },
-      {
-        "movementRank": 13,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 72,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 9.6,
-          "fastestOrnamentalNotesPerSecond": 19.2
-        }
-      },
-      {
-        "movementRank": 14,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 50,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 18,
-          "fastestOrnamentalNotesPerBar": 36
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 5,
-          "fastestOrnamentalNotesPerSecond": 10
-        }
-      },
-      {
-        "movementRank": 15,
-        "sectionRank": 1,
-        "beatUnit": "HALF",
-        "bpm": 66,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 8.8,
-          "fastestOrnamentalNotesPerSecond": 17.6
-        }
-      },
-      {
-        "movementRank": 16,
-        "sectionRank": 1,
-        "beatUnit": "HALF",
-        "bpm": 66,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 17.6,
-          "fastestOrnamentalNotesPerSecond": 35.2
-        }
-      }
-    ],
-    "movements": [
-      {
-        "rank": 1,
-        "key": "G_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 12,
-            "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 12,
-            "fastestOrnamentalNotesPerBar": 48
-          }
-        ]
-      },
-      {
-        "rank": 2,
-        "key": "E_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 12,
-            "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 12
-          }
-        ]
-      },
-      {
-        "rank": 3,
-        "key": "A_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 18,
-            "comment": "Likely a misprint"
-          }
-        ]
-      },
-      {
-        "rank": 4,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 12,
-            "fastestOrnamentalNotesPerBar": 16,
-            "comment": "Same as Escuela de guitarra, xv"
-          }
-        ]
-      },
-      {
-        "rank": 5,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "comment": "Same as Escuela de guitarra, xvi"
-          }
-        ]
-      },
-      {
-        "rank": 6,
-        "key": "A_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "comment": "Same as Escuela de guitarra, xxv"
-          }
-        ]
-      },
-      {
-        "rank": 7,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "comment": "Same as Escuela de guitarra, xxiv"
-          }
-        ]
-      },
-      {
-        "rank": 8,
-        "key": "E_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 32,
-            "comment": "Same as Escuela de guitarra, xxv"
-          }
-        ]
-      },
-      {
-        "rank": 9,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 24,
-            "fastestOrnamentalNotesPerBar": 64
-          }
-        ]
-      },
-      {
-        "rank": 10,
-        "key": "A_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 30,
-            "comment": "Likely a misprint"
-          }
-        ]
-      },
-      {
-        "rank": 11,
-        "key": "C_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "comment": "Same as Escuela de guitarra, xxviii"
-          }
-        ]
-      },
-      {
-        "rank": 12,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro cómodo",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16, // Hack, INVENTED VALUE because it had NO VALUE
-            "comment": "Same as Escuela de guitarra, xxvi"
-          }
-        ]
-      },
-      {
-        "rank": 13,
-        "key": "G_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 32,
-            "comment": "Same as Escuela de guitarra, xxvii"
-          }
-        ]
-      },
-      {
-        "rank": 14,
-        "key": "G_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Adagio",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 18,
-            "fastestOrnamentalNotesPerBar": 36,
-            "comment": "Same as Escuela de guitarra, x"
-          }
-        ]
-      },
-      {
-        "rank": 15,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 32
-          }
-        ]
-      },
-      {
-        "rank": 16,
-        "key": "E_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro brillante",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 32,
-            "comment": "Very likely a misprint, see Escuela de guitarra, xxx"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "title": "4 Rondos brillants, Op.2",
-    "category": "OTHER",
-    "composer": "Aguado, Dionisio",
-    "yearOfComposition": 1827,
-    "source": {
-      "type": "EDITION",
-      "link": "https://s9.imslp.org/files/imglnks/usimg/e/e5/IMSLP36899-PMLP47634-Aguado_3_Rondos_Op2.pdf",
-      "year": 1827,
-      "contributions": [
-        {
-          "role": "PUBLISHER",
-          "organization": {
-            "name": "Schott"
-          }
-        }
-      ],
-      "rank": 1
-    },
-    "metronomeMarkList": [
-      {
-        "movementRank": 1,
-        "sectionRank": 1,
-        "beatUnit": "EIGHTH",
-        "bpm": 66,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 36,
-          "fastestOrnamentalNotesPerBar": 96
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.6,
-          "fastestOrnamentalNotesPerSecond": 17.6
-        }
-      },
-      {
-        "movementRank": 1,
-        "sectionRank": 2,
-        "beatUnit": "QUARTER",
-        "bpm": 112,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 18,
-          "fastestOrnamentalNotesPerBar": 48
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 11.2,
-          "fastestOrnamentalNotesPerSecond": 29.87
-        }
-      },
-      {
-        "movementRank": 2,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 63,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 32,
-          "fastestOrnamentalNotesPerBar": 64
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 8.4,
-          "fastestOrnamentalNotesPerSecond": 16.8
-        }
-      },
-      {
-        "movementRank": 2,
-        "sectionRank": 2,
-        "beatUnit": "QUARTER",
-        "bpm": 96,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 12.8,
-          "fastestOrnamentalNotesPerSecond": 25.6
-        }
-      },
-      {
-        "movementRank": 3,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 63,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 32,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 8.4,
-          "fastestOrnamentalNotesPerSecond": 8.4
-        }
-      },
-      {
-        "movementRank": 3,
-        "sectionRank": 2,
-        "beatUnit": "QUARTER",
-        "bpm": 108,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 24,
-          "fastestOrnamentalNotesPerBar": 48
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 14.4,
-          "fastestOrnamentalNotesPerSecond": 28.8
-        }
-      }
-    ],
-    "movements": [
-      {
-        "rank": 1,
-        "key": "E_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Adagio",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 6,
-            "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 36,
-            "fastestOrnamentalNotesPerBar": 96
-          },
-          {
-            "rank": 2,
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 18,
-            "fastestOrnamentalNotesPerBar": 48,
-            "comment": "Polonaise"
-          }
-        ]
-      },
-      {
-        "rank": 2,
-        "key": "A_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 32,
-            "fastestOrnamentalNotesPerBar": 64
-          },
-          {
-            "rank": 2,
-            "tempoIndication": "Allegro moderato",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 32,
-            "comment": "Rondo"
-          }
-        ]
-      },
-      {
-        "rank": 3,
-        "key": "D_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 32,
-            "fastestOrnamentalNotesPerBar": 32
-          },
-          {
-            "rank": 2,
-            "tempoIndication": "Allegro",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 24,
-            "fastestOrnamentalNotesPerBar": 48,
-            "comment": "Rondo"
-          }
-        ]
-      }
-    ]
-  },
-  {
     "title": "Fugue in D Major, Op. 137",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
@@ -2674,6 +925,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/6/64/IMSLP51370-PMLP40988-Op.137.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/51370/sevqs",
       "year": 1827,
       "contributions": [
         {
@@ -2729,6 +981,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/3/34/IMSLP677693-PMLP4920-Grand_septuor_0001-converted-compressed.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/677693/sevqs",
       "year": 1828,
       "comment": "Scored for violin, viola, clarinet, horn, bassoon, cello, and double bass",
       "contributions": [
@@ -3007,6 +1260,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/e/e8/IMSLP274938-PMLP04680-Quartet_op._18_no._1_-_Beethoven.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274938/sevqs",
       "year": 1829,
       "contributions": [
         {
@@ -3165,6 +1419,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://imslp.simssa.ca/files/imglnks/usimg/c/c3/IMSLP274934-PMLP05125-Quartet_op.18_no.2_-_Beethoven.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274934/sevqs",
       "year": 1829,
       "contributions": [
         {
@@ -3350,6 +1605,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/9/9d/IMSLP274932-PMLP04691-Quartet_Op._18_No._3_Beethoven.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274932/sevqs",
       "year": 1829,
       "contributions": [
         {
@@ -3507,6 +1763,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/3/3f/IMSLP274829-PMLP04332-Quartet_op._18_no._4_-_Beethoven.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274829/sevqs",
       "year": 1829,
       "contributions": [
         {
@@ -3696,6 +1953,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/5/5c/IMSLP274828-PMLP05018-Beethoven_quartet_op._18_no._5.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274828/sevqs",
       "year": 1829,
       "contributions": [
         {
@@ -3876,6 +2134,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/c/c7/IMSLP04760-Beethoven_-_String_Quartet_No.6_Dover.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/04760/sevqs",
       "year": 1862,
       "contributions": [
         {
@@ -4110,6 +2369,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/2/24/IMSLP274340-PMLP05127-Beethoven_Quartet_op._59_no.1.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274340/sevqs",
       "year": 1830,
       "contributions": [
         {
@@ -4314,6 +2574,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/3/39/IMSLP592966-PMLP5113-Beethoven_no.2.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/592966/sevqs",
       "year": 1830,
       "contributions": [
         {
@@ -4495,6 +2756,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/6/66/IMSLP274817-PMLP04779-Beethoven_Quartet_op._59_no.3.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274817/sevqs",
       "year": 1830,
       "contributions": [
         {
@@ -4674,6 +2936,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/f/f0/IMSLP274827-PMLP05044-Quartet_op._74_No._10_-_Beethoven.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274827/sevqs",
       "year": 1830,
       "comment": "\"Harp\" Quartet",
       "contributions": [
@@ -4918,6 +3181,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/0/0b/IMSLP396267-PMLP04781--Mus.Hs.16531-_Quartetto_Op.95.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/396267/sevqs",
       "year": 1810,
       "comment": "\"Serioso\" Quartet",
       "contributions": [
@@ -5147,6 +3411,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/8/89/IMSLP51318-PMLP01486-Op.106.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/51318/sevqs",
       "year": 1819,
       "comment": "\"Hammerklavier\" Sonata",
       "contributions": [
@@ -5321,6 +3586,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/4/4a/IMSLP46060-PMLP01582-Op.21.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46060/sevqs",
       "year": 1809,
       "contributions": [
         {
@@ -5517,6 +3783,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/4/45/IMSLP46061-PMLP02580-Op.36.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46061/sevqs",
       "year": 1809,
       "contributions": [
         {
@@ -5695,6 +3962,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/e/e2/IMSLP46066-PMLP02581-Op.55.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46066/sevqs",
       "year": 1809,
       "comment": "\"Eroica\" Symphony",
       "contributions": [
@@ -5921,6 +4189,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/c/c4/IMSLP46075-PMLP01585-Op.60.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46075/sevqs",
       "year": 1823,
       "contributions": [
         {
@@ -6128,6 +4397,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/4/4b/IMSLP46080-PMLP01586-Op.67_Manuscript.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46080/sevqs",
       "year": 1808,
       "contributions": [
         {
@@ -6382,6 +4652,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/1/1b/IMSLP46101-PMLP01595-Op.68_Score.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46101/sevqs",
       "year": 1826,
       "comment": "\"Pastoral\" Symphony",
       "contributions": [
@@ -6593,6 +4864,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/6/66/IMSLP46251-PMLP01600-Op.92.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46251/sevqs",
       "year": 1816,
       "contributions": [
         {
@@ -6800,6 +5072,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/0/04/IMSLP46253-PMLP01605-Op.93.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46253/sevqs",
       "year": 1816,
       "contributions": [
         {
@@ -6958,6 +5231,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/6/6f/IMSLP59054-PMLP121131-Beethoven_Werke_Breitkopf_Serie_23_No_255_WoO_104.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/59054/sevqs",
       "year": 1839,
       "contributions": [
         {
@@ -7009,6 +5283,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/e/e7/IMSLP51327-PMLP58949-Op.112.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/51327/sevqs",
       "year": 1823,
       "contributions": [
         {
@@ -7095,6 +5370,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/76/IMSLP328923-PMLP01607-LvBeethoven_Symphony_No.9,_Op.125_fe_fs_BPL.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/328923/sevqs",
       "year": 1826,
       "comment": "\"Choral\" Symphony",
       "contributions": [
@@ -7539,6 +5815,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/f/f6/IMSLP51473-PMLP101809-WoO_148.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/51473/sevqs",
       "year": 1817,
       "contributions": [
         {
@@ -7593,6 +5870,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/a/ab/IMSLP51474-PMLP101819-WoO_149.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/51474/sevqs",
       "year": 1818,
       "contributions": [
         {
@@ -7643,7 +5921,8 @@ const pieceList = [
     "yearOfComposition": 1820,
     "source": {
       "type": "EDITION",
-      "link": "https://???",
+      "link": "https://ks.imslp.info/files/imglnks/usimg/3/39/IMSLP51475-PMLP101825-WoO_150.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/51475/sevqs",
       "year": 1820,
       "contributions": [
         {
@@ -7698,6 +5977,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/b/b4/IMSLP258494-PMLP52223-brahms_trio_op8-1_dkb.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/258494/sevqs",
       "year": 1854,
       "comment": "1st version of the trio",
       "contributions": [
@@ -7907,6 +6187,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/a/a4/IMSLP23117-PMLP52833-BraWV,_S._362.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/23117/sevqs",
       "year": 1883,
       "contributions": [
         {
@@ -7964,6 +6245,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/5/5a/IMSLP311060-PMLP02760-JBrahms_Piano_Concerto_No.1,_Op.15_fullscore_1875.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/311060/sevqs",
       "year": 1875,
       "contributions": [
         {
@@ -8022,6 +6304,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/d/d1/IMSLP23113-PMLP02761-BraWV,_S._345.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/23113/sevqs",
       "year": 1882,
       "contributions": [
         {
@@ -8199,6 +6482,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/1/18/IMSLP23011-PMLP11297-BraWV,_S._177.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/23011/sevqs",
       "year": 1868,
       "contributions": [
         {
@@ -8592,6 +6876,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.net/files/imglnks/usimg/4/41/IMSLP23061-PMLP52641-BraWV,_S._205f.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/23061/sevqs",
       "year": 1869,
       "contributions": [
         {
@@ -8931,6 +7216,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.net/files/imglnks/usimg/0/0a/IMSLP23112-PMLP52824-BraWV,_S._342.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/23112/sevqs",
       "year": 1881,
       "contributions": [
         {
@@ -8996,1481 +7282,6 @@ const pieceList = [
     ]
   },
   {
-    "title": "25 Études, Op.38",
-    "category": "OTHER",
-    "composer": "Coste, Napoléon",
-    "yearOfComposition": 1860,
-    "source": {
-      "type": "EDITION",
-      "link": "https://s9.imslp.org/files/imglnks/usimg/b/b0/IMSLP30857-PMLP70249-Coste_25_Etudes_op38.pdf",
-      "year": 1920,
-      "contributions": [
-        {
-          "role": "PUBLISHER",
-          "organization": {
-            "name": "Verlag Gitarrenfreund"
-          }
-        },
-        {
-          "role": "EDITOR",
-          "organization": {
-            "name": "Unidentified"
-          }
-        }
-      ],
-      "rank": 1
-    },
-    "metronomeMarkList": [
-      {
-        "movementRank": 1,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 112,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 8
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 7.47
-        }
-      },
-      {
-        "movementRank": 2,
-        "sectionRank": 1,
-        "beatUnit": "EIGHTH",
-        "bpm": 138,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6,
-          "fastestOrnamentalNotesPerBar": 24
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 2.3,
-          "fastestOrnamentalNotesPerSecond": 9.2
-        }
-      },
-      {
-        "movementRank": 3,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 72,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 4.8
-        }
-      },
-      {
-        "movementRank": 4,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 66,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 8,
-          "fastestOrnamentalNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 4.4,
-          "fastestOrnamentalNotesPerSecond": 8.8
-        }
-      },
-      {
-        "movementRank": 5,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 104,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.93
-        }
-      },
-      {
-        "movementRank": 6,
-        "sectionRank": 1,
-        "beatUnit": "EIGHTH",
-        "bpm": 84,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 8,
-          "fastestOrnamentalNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 2.8,
-          "fastestOrnamentalNotesPerSecond": 5.6
-        }
-      },
-      {
-        "movementRank": 7,
-        "sectionRank": 1,
-        "beatUnit": "EIGHTH",
-        "bpm": 104,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 8,
-          "fastestOrnamentalNotesPerBar": 23
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 3.47,
-          "fastestOrnamentalNotesPerSecond": 9.93
-        }
-      },
-      {
-        "movementRank": 8,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 116,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6,
-          "fastestOrnamentalNotesPerBar": 12
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 3.87,
-          "fastestOrnamentalNotesPerSecond": 7.73
-        }
-      },
-      {
-        "movementRank": 9,
-        "sectionRank": 1,
-        "beatUnit": "EIGHTH",
-        "bpm": 92,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.13,
-          "fastestOrnamentalNotesPerSecond": 12.27
-        }
-      },
-      {
-        "movementRank": 10,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 120,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 9,
-          "fastestOrnamentalNotesPerBar": 12
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6,
-          "fastestOrnamentalNotesPerSecond": 8
-        }
-      },
-      {
-        "movementRank": 11,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 132,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 9,
-          "fastestOrnamentalNotesPerBar": 36
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.6,
-          "fastestOrnamentalNotesPerSecond": 26.4
-        }
-      },
-      {
-        "movementRank": 12,
-        "sectionRank": 1,
-        "beatUnit": "EIGHTH",
-        "bpm": 144,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 4.8,
-          "fastestOrnamentalNotesPerSecond": 9.6
-        }
-      },
-      {
-        "movementRank": 13,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 144,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6,
-          "fastestOrnamentalNotesPerBar": 12
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 4.8,
-          "fastestOrnamentalNotesPerSecond": 9.6
-        }
-      },
-      {
-        "movementRank": 14,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 88,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 11.73
-        }
-      },
-      {
-        "movementRank": 15,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 120,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 9,
-          "fastestOrnamentalNotesPerBar": 36
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6,
-          "fastestOrnamentalNotesPerSecond": 24
-        }
-      },
-      {
-        "movementRank": 16,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 63,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 8
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 4.2
-        }
-      },
-      {
-        "movementRank": 17,
-        "sectionRank": 1,
-        "beatUnit": "EIGHTH",
-        "bpm": 144,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 24
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 7.2
-        }
-      },
-      {
-        "movementRank": 18,
-        "sectionRank": 1,
-        "beatUnit": "EIGHTH",
-        "bpm": 104,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 8,
-          "fastestOrnamentalNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 3.47,
-          "fastestOrnamentalNotesPerSecond": 6.93
-        }
-      },
-      {
-        "movementRank": 19,
-        "sectionRank": 1,
-        "beatUnit": "DOTTED_QUARTER",
-        "bpm": 160,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6,
-          "fastestOrnamentalNotesPerBar": 12
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 16,
-          "fastestOrnamentalNotesPerSecond": 32
-        }
-      },
-      {
-        "movementRank": 20,
-        "sectionRank": 1,
-        "beatUnit": "EIGHTH",
-        "bpm": 104,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 18
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 5.2
-        }
-      },
-      {
-        "movementRank": 21,
-        "sectionRank": 1,
-        "beatUnit": "DOTTED_QUARTER",
-        "bpm": 120,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 6
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6
-        }
-      },
-      {
-        "movementRank": 22,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 104,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 16
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 6.93
-        }
-      },
-      {
-        "movementRank": 23,
-        "sectionRank": 1,
-        "beatUnit": "EIGHTH",
-        "bpm": 88,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 12,
-          "fastestOrnamentalNotesPerBar": 24
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 5.87,
-          "fastestOrnamentalNotesPerSecond": 11.73
-        }
-      },
-      {
-        "movementRank": 24,
-        "sectionRank": 1,
-        "beatUnit": "DOTTED_QUARTER",
-        "bpm": 60,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 36,
-          "fastestOrnamentalNotesPerBar": 54
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 12,
-          "fastestOrnamentalNotesPerSecond": 18
-        }
-      }
-    ],
-    "movements": [
-      {
-        "rank": 1,
-        "key": "A_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 8
-          }
-        ]
-      },
-      {
-        "rank": 2,
-        "key": "C_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Scherzando",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 6,
-            "fastestOrnamentalNotesPerBar": 24,
-            "comment": "Is \"scherzando\" a tempo indication?"
-          }
-        ]
-      },
-      {
-        "rank": 3,
-        "key": "D_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "[Andantino]",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "comment": "Prélude; the \"Andantino\" tempo indication comes from an earlier edition, but which doesn't have any MM."
-          }
-        ]
-      },
-      {
-        "rank": 4,
-        "key": "D_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andantino",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 8,
-            "fastestOrnamentalNotesPerBar": 16
-          }
-        ]
-      },
-      {
-        "rank": 5,
-        "key": "E_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16
-          }
-        ]
-      },
-      {
-        "rank": 6,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andantino",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 8,
-            "fastestOrnamentalNotesPerBar": 16
-          }
-        ]
-      },
-      {
-        "rank": 7,
-        "key": "A_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Agitato",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 8,
-            "fastestOrnamentalNotesPerBar": 23
-          }
-        ]
-      },
-      {
-        "rank": 8,
-        "key": "E_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Scherzando",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 6,
-            "fastestOrnamentalNotesPerBar": 12,
-            "comment": "Is \"scherzando\" a tempo indication?"
-          }
-        ]
-      },
-      {
-        "rank": 9,
-        "key": "G_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andantino",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 32
-          }
-        ]
-      },
-      {
-        "rank": 10,
-        "key": "D_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 9,
-            "fastestOrnamentalNotesPerBar": 12
-          }
-        ]
-      },
-      {
-        "rank": 11,
-        "key": "G_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "[Allegretto]",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 9,
-            "fastestOrnamentalNotesPerBar": 36,
-            "comment": "The \"Allegretto\" tempo indication comes from an earlier edition, but which doesn't have any MM."
-          }
-        ]
-      },
-      {
-        "rank": 12,
-        "key": "C_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16,
-            "fastestOrnamentalNotesPerBar": 32,
-            "comment": "Prélude; ornamental arpeggio in \"Piu moderato\" section"
-          }
-        ]
-      },
-      {
-        "rank": 13,
-        "key": "C_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 6,
-            "fastestOrnamentalNotesPerBar": 12
-          }
-        ]
-      },
-      {
-        "rank": 14,
-        "key": "D_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Moderato",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16
-          }
-        ]
-      },
-      {
-        "rank": 15,
-        "key": "G_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 9,
-            "fastestOrnamentalNotesPerBar": 36
-          }
-        ]
-      },
-      {
-        "rank": 16,
-        "key": "C_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Moderato",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 8
-          }
-        ]
-      },
-      {
-        "rank": 17,
-        "key": "A_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 24
-          }
-        ]
-      },
-      {
-        "rank": 18,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 8,
-            "fastestOrnamentalNotesPerBar": 16,
-            "comment": "\"à Trois Parties réelles\""
-          }
-        ]
-      },
-      {
-        "rank": 19,
-        "key": "D_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegretto",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 6,
-            "fastestOrnamentalNotesPerBar": 12,
-            "comment": "Likely a misprint"
-          }
-        ]
-      },
-      {
-        "rank": 20,
-        "key": "G_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Cantabile",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 6,
-            "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 18
-          }
-        ]
-      },
-      {
-        "rank": 21,
-        "key": "A_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 6,
-            "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 6,
-            "comment": "Tarantelle"
-          }
-        ]
-      },
-      {
-        "rank": 22,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Allegro moderato",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 16
-          }
-        ]
-      },
-      {
-        "rank": 23,
-        "key": "D_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andantino",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 3,
-            "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 12,
-            "fastestOrnamentalNotesPerBar": 24
-          }
-        ]
-      },
-      {
-        "rank": 24,
-        "key": "B_FLAT_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Cantabile",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 9,
-            "metreDenominator": 8,
-            "fastestStructuralNotesPerBar": 36,
-            "fastestOrnamentalNotesPerBar": 54
-          }
-        ]
-      }
-    ]
-  },
-  // {
-  //   "title": "Adagio et divertissements, Op.50",
-  //   "category": "OTHER",
-  //   "composer": "Coste, Napoléon",
-  //   "yearOfComposition": 1875,
-  //   "source": {
-  //     "type": "EDITION",
-  //     "link": "https://s9.imslp.org/files/imglnks/usimg/2/2c/IMSLP30861-PMLP70257-Coste_Adagio_et_Divertissements_op50.pdf",
-  //     "year": 1875,
-  //     "comment": "Estimated year",
-  //     "contributions": [
-  //       {
-  //         "role": "PUBLISHER",
-  //         "organization": {
-  //           "name": "The author"
-  //         }
-  //       }
-  //     ]
-  //   },
-  //   "metronomeMarkList": [
-  //     {
-  //       "movementRank": 1,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 42,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 32,
-  //         "fastestOrnamentalNotesPerBar": 64
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 5.6,
-  //         "fastestOrnamentalNotesPerSecond": 11.2
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 2,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 152,
-  //       "notesPerBar": {},
-  //       "notesPerSecond": {}
-  //     },
-  //     {
-  //       "movementRank": 3,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 92,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 12
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 6.13
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 4,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 66,
-  //       "notesPerBar": {},
-  //       "notesPerSecond": {}
-  //     },
-  //     {
-  //       "movementRank": 4,
-  //       "sectionRank": 2,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 144,
-  //       "notesPerBar": {
-  //         "fastestOrnamentalNotesPerBar": 12
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestOrnamentalNotesPerSecond": 9.6
-  //       }
-  //     }
-  //   ],
-  //   "movements": [
-  //     {
-  //       "rank": 1,
-  //       "key": "D_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "tempoIndication": "Adagio",
-  //           "isCommonTime": true,
-  //           "isCutTime": false,
-  //           "metreNumerator": 4,
-  //           "metreDenominator": 4,
-  //           "fastestStructuralNotesPerBar": 32,
-  //           "fastestOrnamentalNotesPerBar": 64
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 2,
-  //       "key": "D_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 3,
-  //           "metreDenominator": 4,
-  //           "comment": "Scherzo and trio"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 3,
-  //       "key": "A_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 3,
-  //           "metreDenominator": 4,
-  //           "fastestStructuralNotesPerBar": 12,
-  //           "comment": "Minuet and trio"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 4,
-  //       "key": "G_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "tempoIndication": "Andantino",
-  //           "isCommonTime": true,
-  //           "isCutTime": false,
-  //           "metreNumerator": 4,
-  //           "metreDenominator": 4
-  //         },
-  //         {
-  //           "rank": 2,
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 3,
-  //           "metreDenominator": 4,
-  //           "fastestOrnamentalNotesPerBar": 12,
-  //           "comment": "Minuet alla mazurka"
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // },
-  // {
-  //   "title": "Récréation du guitariste, Op.51",
-  //   "category": "OTHER",
-  //   "composer": "Coste, Napoléon",
-  //   "yearOfComposition": 1875,
-  //   "source": {
-  //     "type": "EDITION",
-  //     "link": "https://s9.imslp.org/files/imglnks/usimg/6/65/IMSLP31000-PMLP70726-Coste_14_Pieces_Op51.pdf",
-  //     "year": 1875,
-  //     "comment": "Estimated year",
-  //     "contributions": [
-  //       {
-  //         "role": "PUBLISHER",
-  //         "organization": {
-  //           "name": "The author"
-  //         }
-  //       }
-  //     ]
-  //   },
-  //   "metronomeMarkList": [
-  //     {
-  //       "movementRank": 1,
-  //       "sectionRank": 1,
-  //       "beatUnit": "DOTTED_QUARTER",
-  //       "bpm": 112,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 6,
-  //         "fastestOrnamentalNotesPerBar": 12
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 11.2,
-  //         "fastestOrnamentalNotesPerSecond": 22.4
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 2,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 116,
-  //       "notesPerBar": {},
-  //       "notesPerSecond": {}
-  //     },
-  //     {
-  //       "movementRank": 3,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 63,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 12
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 6.3
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 4,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 92,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 6,
-  //         "fastestOrnamentalNotesPerBar": 12
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 3.07,
-  //         "fastestOrnamentalNotesPerSecond": 6.13
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 5,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 120,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 6,
-  //         "fastestOrnamentalNotesPerBar": 24
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 4,
-  //         "fastestOrnamentalNotesPerSecond": 16
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 6,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 112,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 4
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 3.73
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 7,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 88,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 12
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 5.87
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 8,
-  //       "sectionRank": 1,
-  //       "beatUnit": "DOTTED_QUARTER",
-  //       "bpm": 144,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 6,
-  //         "fastestOrnamentalNotesPerBar": 24
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 14.4,
-  //         "fastestOrnamentalNotesPerSecond": 57.6
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 9,
-  //       "sectionRank": 1,
-  //       "beatUnit": "DOTTED_QUARTER",
-  //       "bpm": 92,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 6,
-  //         "fastestOrnamentalNotesPerBar": 24
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 4.6,
-  //         "fastestOrnamentalNotesPerSecond": 18.4
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 10,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 48,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 8,
-  //         "fastestOrnamentalNotesPerBar": 16
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 3.2,
-  //         "fastestOrnamentalNotesPerSecond": 6.4
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 11,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 112,
-  //       "notesPerBar": {},
-  //       "notesPerSecond": {}
-  //     },
-  //     {
-  //       "movementRank": 12,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 60,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 12,
-  //         "fastestOrnamentalNotesPerBar": 48
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 4,
-  //         "fastestOrnamentalNotesPerSecond": 16
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 13,
-  //       "sectionRank": 1,
-  //       "beatUnit": "DOTTED_QUARTER",
-  //       "bpm": 108,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 6
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 5.4
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 14,
-  //       "sectionRank": 1,
-  //       "beatUnit": "DOTTED_QUARTER",
-  //       "bpm": 132,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 6
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 13.2
-  //       }
-  //     }
-  //   ],
-  //   "movements": [
-  //     {
-  //       "rank": 1,
-  //       "key": "A_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 3,
-  //           "metreDenominator": 8,
-  //           "fastestStructuralNotesPerBar": 6,
-  //           "fastestOrnamentalNotesPerBar": 12,
-  //           "comment": "Barcarolle; likely a misprint"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 2,
-  //       "key": "C_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "isCommonTime": true,
-  //           "isCutTime": false,
-  //           "metreNumerator": 4,
-  //           "metreDenominator": 4,
-  //           "comment": "March"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 3,
-  //       "key": "A_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "tempoIndication": "Allegretto",
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 2,
-  //           "metreDenominator": 4,
-  //           "fastestStructuralNotesPerBar": 12,
-  //           "comment": "Rondoletto"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 4,
-  //       "key": "D_MINOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "tempoIndication": "Andantino",
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 3,
-  //           "metreDenominator": 4,
-  //           "fastestStructuralNotesPerBar": 6,
-  //           "fastestOrnamentalNotesPerBar": 12
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 5,
-  //       "key": "C_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 3,
-  //           "metreDenominator": 4,
-  //           "fastestStructuralNotesPerBar": 6,
-  //           "fastestOrnamentalNotesPerBar": 24,
-  //           "comment": "Waltz"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 6,
-  //       "key": "E_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "tempoIndication": "Allegretto",
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 2,
-  //           "metreDenominator": 4,
-  //           "fastestStructuralNotesPerBar": 4,
-  //           "comment": "Rondo"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 7,
-  //       "key": "A_MINOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "tempoIndication": "Andante",
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 3,
-  //           "metreDenominator": 4,
-  //           "fastestStructuralNotesPerBar": 12,
-  //           "comment": "Minuet"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 8,
-  //       "key": "A_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 3,
-  //           "metreDenominator": 8,
-  //           "fastestStructuralNotesPerBar": 6,
-  //           "fastestOrnamentalNotesPerBar": 24,
-  //           "comment": "Waltz; ornament with ritenuto; likely a misprint"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 9,
-  //       "key": "G_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "tempoIndication": "Allegretto",
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 6,
-  //           "metreDenominator": 8,
-  //           "fastestStructuralNotesPerBar": 6,
-  //           "fastestOrnamentalNotesPerBar": 24,
-  //           "comment": "Chasse"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 10,
-  //       "key": "E_MINOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "tempoIndication": "Andantino",
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 2,
-  //           "metreDenominator": 4,
-  //           "fastestStructuralNotesPerBar": 8,
-  //           "fastestOrnamentalNotesPerBar": 16,
-  //           "comment": "\"Mélancolie\""
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 11,
-  //       "key": "G_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 2,
-  //           "metreDenominator": 4,
-  //           "comment": "Rondo"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 12,
-  //       "key": "A_MINOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "tempoIndication": "Andante",
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 3,
-  //           "metreDenominator": 4,
-  //           "fastestStructuralNotesPerBar": 12,
-  //           "fastestOrnamentalNotesPerBar": 48
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 13,
-  //       "key": "A_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 6,
-  //           "metreDenominator": 8,
-  //           "fastestStructuralNotesPerBar": 6,
-  //           "comment": "Pas redoublé"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 14,
-  //       "key": "A_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 3,
-  //           "metreDenominator": 8,
-  //           "fastestStructuralNotesPerBar": 6,
-  //           "comment": "Barcarolle; likely a misprint"
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // },
-  // {
-  //   "title": "6 Pièces originales, Op.53",
-  //   "category": "OTHER",
-  //   "composer": "Coste, Napoléon",
-  //   "yearOfComposition": 1875,
-  //   "source": {
-  //     "type": "EDITION",
-  //     "link": "https://s9.imslp.org/files/imglnks/usimg/e/ed/IMSLP31005-PMLP70735-Coste_6_Pieces_Op53.pdf",
-  //     "year": 1875,
-  //     "comment": "Estimated year",
-  //     "contributions": [
-  //       {
-  //         "role": "PUBLISHER",
-  //         "organization": {
-  //           "name": "The author"
-  //         }
-  //       }
-  //     ],
-  //     "rank": 3
-  //   },
-  //   "metronomeMarkList": [
-  //     {
-  //       "movementRank": 1,
-  //       "sectionRank": 1,
-  //       "beatUnit": "DOTTED_QUARTER",
-  //       "bpm": 80,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 36,
-  //         "fastestOrnamentalNotesPerBar": 48
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 24,
-  //         "fastestOrnamentalNotesPerSecond": 32
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 2,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 72,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 8
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 4.8
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 4,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 112,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 6,
-  //         "fastestOrnamentalNotesPerBar": 24
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 3.73,
-  //         "fastestOrnamentalNotesPerSecond": 14.93
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 5,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 100,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 12,
-  //         "fastestOrnamentalNotesPerBar": 48
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 5,
-  //         "fastestOrnamentalNotesPerSecond": 20
-  //       }
-  //     },
-  //     {
-  //       "movementRank": 6,
-  //       "sectionRank": 1,
-  //       "beatUnit": "QUARTER",
-  //       "bpm": 66,
-  //       "notesPerBar": {
-  //         "fastestStructuralNotesPerBar": 12,
-  //         "fastestOrnamentalNotesPerBar": 48
-  //       },
-  //       "notesPerSecond": {
-  //         "fastestStructuralNotesPerSecond": 4.4,
-  //         "fastestOrnamentalNotesPerSecond": 17.6
-  //       }
-  //     }
-  //   ],
-  //   "movements": [
-  //     {
-  //       "rank": 1,
-  //       "key": "E_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "tempoIndication": "Andante sostenuto",
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 6,
-  //           "metreDenominator": 8,
-  //           "fastestStructuralNotesPerBar": 36,
-  //           "fastestOrnamentalNotesPerBar": 48,
-  //           "comment": "\"Rêverie\""
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 2,
-  //       "key": "A_MINOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 2,
-  //           "metreDenominator": 4,
-  //           "fastestStructuralNotesPerBar": 8,
-  //           "comment": "Rondo"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 3,
-  //       "key": "A_MAJOR",
-  //       "sections": []
-  //     },
-  //     {
-  //       "rank": 4,
-  //       "key": "D_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "tempoIndication": "Allegretto",
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 3,
-  //           "metreDenominator": 4,
-  //           "fastestStructuralNotesPerBar": 6,
-  //           "fastestOrnamentalNotesPerBar": 24,
-  //           "comment": "Scherzo and trio"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 5,
-  //       "key": "G_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "isCommonTime": true,
-  //           "isCutTime": false,
-  //           "metreNumerator": 4,
-  //           "metreDenominator": 4,
-  //           "fastestStructuralNotesPerBar": 12,
-  //           "fastestOrnamentalNotesPerBar": 48,
-  //           "comment": "Étude"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "rank": 6,
-  //       "key": "G_MAJOR",
-  //       "sections": [
-  //         {
-  //           "rank": 1,
-  //           "tempoIndication": "Andantino",
-  //           "isCommonTime": false,
-  //           "isCutTime": false,
-  //           "metreNumerator": 3,
-  //           "metreDenominator": 4,
-  //           "fastestStructuralNotesPerBar": 12,
-  //           "fastestOrnamentalNotesPerBar": 48,
-  //           "comment": "Minuet; ornament with ritar."
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // },
-  {
     "title": "The School of Velocity, Op.299",
     "category": "KEYBOARD",
     "composer": "Czerny, Carl",
@@ -10478,6 +7289,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/c/cf/IMSLP593590-PMLP3452-czerny_op299_diabelli_CzerDie_49124441X.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/593590/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -11588,6 +8400,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/c/c0/IMSLP643373-PMLP177367-czerny_g.371.s_40_ta-gliche_Studien_auf_dem_Piano-Forte_mit_vorgeschriebenen_Wiederholungen_..._337tes_Werk-_etc_full.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/643373/sevqs",
       "year": 1834,
       "contributions": [
         {
@@ -12740,8 +9553,9 @@ const pieceList = [
     "yearOfComposition": 1837,
     "source": {
       "type": "EDITION",
-      "year": 1837,
       "link": "https://ks.imslp.net/files/imglnks/usimg/2/2b/IMSLP582004-PMLP14384-czerny_365_bk_1.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/582004/sevqs",
+      "year": 1837,
       "contributions": [
         {
           "role": "PUBLISHER",
@@ -12930,6 +9744,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.net/files/imglnks/usimg/6/6e/IMSLP229704-PMLP46631-ADvorak_Symphony_No.3,_Op.10_fe_fs.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/229704/sevqs",
       "year": 1911,
       "contributions": [
         {
@@ -13021,6 +9836,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.net/files/imglnks/usimg/7/76/IMSLP235245-SIBLEY1802.18757.6c71-39087009397391vol._2.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/235245/sevqs",
       "year": 1912,
       "contributions": [
         {
@@ -13145,6 +9961,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.net/files/imglnks/usimg/4/40/IMSLP28536-PMLP05726-Dvorak-Op076FSsim.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/28536/sevqs",
       "year": 1888,
       "contributions": [
         {
@@ -13294,152 +10111,6 @@ const pieceList = [
     ]
   },
   {
-    "title": "Variations on a Theme by Handel, Op.107",
-    "category": "OTHER",
-    "composer": "Giuliani, Mauro",
-    "yearOfComposition": 1828,
-    "source": {
-      "type": "EDITION",
-      "link": "https://s9.imslp.org/files/imglnks/usimg/3/36/IMSLP480058-PMLP130014-op_107,_Variations_-_Haendel.pdf",
-      "year": 1828,
-      "comment": "Very likely a misprint",
-      "contributions": [
-        {
-          "role": "PUBLISHER",
-          "organization": {
-            "name": "Hofmeister"
-          }
-        }
-      ],
-      "rank": 1
-    },
-    "metronomeMarkList": [
-      {
-        "movementRank": 1,
-        "sectionRank": 1,
-        "beatUnit": "HALF",
-        "bpm": 88,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 8,
-          "fastestStaccatoNotesPerBar": 8,
-          "fastestOrnamentalNotesPerBar": 32
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": "11.73",
-          "fastestStaccatoNotesPerSecond": "11.73",
-          "fastestOrnamentalNotesPerSecond": "46.93"
-        }
-      }
-    ],
-    "movements": [
-      {
-        "rank": 1,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andantino",
-            "isCommonTime": false,
-            "isCutTime": false,
-            "metreNumerator": 2,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 8,
-            "fastestStaccatoNotesPerBar": 8,
-            "fastestOrnamentalNotesPerBar": 32,
-            "comment": "Very likely a misprint"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "title": "Variations on a Theme by Carafa, Op. 114",
-    "category": "OTHER",
-    "composer": "Giuliani, Mauro",
-    "yearOfComposition": 1829,
-    "source": {
-      "type": "EDITION",
-      "link": "http://maurogiuliani.free.fr/partitions/Op%20114%20Gran%20Variazioni%20sopra%20l%20aria%20favorita%20O%20cara%20memoria%20del%20Sig%20Carafa.pdf",
-      "year": 1829,
-      "contributions": [
-        {
-          "role": "PUBLISHER",
-          "organization": {
-            "name": "Diabelli"
-          }
-        }
-      ],
-      "rank": 1
-    },
-    "metronomeMarkList": [
-      {
-        "movementRank": 1,
-        "sectionRank": 1,
-        "beatUnit": "QUARTER",
-        "bpm": 54,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 36,
-          "fastestStaccatoNotesPerBar": 36
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 8.1,
-          "fastestStaccatoNotesPerSecond": 8.1
-        }
-      },
-      {
-        "movementRank": 2,
-        "sectionRank": 1,
-        "beatUnit": "HALF",
-        "bpm": 54,
-        "notesPerBar": {
-          "fastestStructuralNotesPerBar": 24,
-          "fastestStaccatoNotesPerBar": 24,
-          "fastestOrnamentalNotesPerBar": 64
-        },
-        "notesPerSecond": {
-          "fastestStructuralNotesPerSecond": 10.8,
-          "fastestStaccatoNotesPerSecond": 10.8,
-          "fastestOrnamentalNotesPerSecond": 28.8
-        }
-      }
-    ],
-    "movements": [
-      {
-        "rank": 1,
-        "key": "A_MINOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Andante sostenuto",
-            "isCommonTime": true,
-            "isCutTime": false,
-            "metreNumerator": 4,
-            "metreDenominator": 4,
-            "fastestStructuralNotesPerBar": 36,
-            "fastestStaccatoNotesPerBar": 36
-          }
-        ]
-      },
-      {
-        "rank": 2,
-        "key": "A_MAJOR",
-        "sections": [
-          {
-            "rank": 1,
-            "tempoIndication": "Maestoso",
-            "isCommonTime": false,
-            "isCutTime": true,
-            "metreNumerator": 2,
-            "metreDenominator": 2,
-            "fastestStructuralNotesPerBar": 24,
-            "fastestStaccatoNotesPerBar": 24,
-            "fastestOrnamentalNotesPerBar": 64
-          }
-        ]
-      }
-    ]
-  },
-  {
     "title": "Piano Quartet No.3, Op.3",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Mendelssohn, Felix",
@@ -13447,6 +10118,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/a/ac/IMSLP25328-PMLP13881-Mendelssohn_Piano_Quartet3_Op3.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/25328/sevqs",
       "year": 1833,
       "contributions": [
         {
@@ -13648,6 +10320,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/d/d2/IMSLP17394-Mendelssohn_Trio_Op49.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/17394/sevqs",
       "year": 1840,
       "contributions": [
         {
@@ -13802,6 +10475,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/f/fa/IMSLP86707-PMLP41447-mendelssohn_trio_op66.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/86707/sevqs",
       "year": 1846,
       "contributions": [
         {
@@ -13957,6 +10631,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/f/fe/IMSLP03060-Schumann-Op015Brt6016.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/03060/sevqs",
       "year": 1839,
       "contributions": [
         {
@@ -14353,6 +11028,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/a/ae/IMSLP23744-PMLP03587-Tchaikovsky_-_1812_Overture_(orch._score).pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/23744/sevqs",
       "year": 1882,
       "contributions": [
         {
@@ -14518,6 +11194,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/2/2c/IMSLP377466-PMLP02739-SymphonyOp64jur.pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/377466/sevqs",
       "year": 1888,
       "contributions": [
         {
@@ -14931,6 +11608,7 @@ const pieceList = [
     "source": {
       "type": "EDITION",
       "link": "https://ks.imslp.info/files/imglnks/usimg/2/2d/IMSLP105425-PMLP02511-Ciaikovskij_-_74_-_Symphony_n.6_b_fs_(Jurgenson).pdf",
+      "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/105425/sevqs",
       "year": 1896,
       "contributions": [
         {
@@ -15696,593 +12374,6 @@ const sectionList = [
     "metreDenominator": 4,
     "fastestStructuralNotesPerBar": 16,
     "fastestStaccatoNotesPerBar": 8
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Moderato",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andantino",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 32
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 16
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 6
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Adagio",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 18,
-    "fastestOrnamentalNotesPerBar": 36,
-    "comment": "Same as Nuevo método de guitarra, xxiv"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 48,
-    "comment": "Same as Nuevo método de guitarra, ix"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "comment": "Same as Nuevo método de guitarra, x"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 64,
-    "comment": "Very likely a misprint, see Fossa's publication"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andantino",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 6,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 24
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "comment": "Same as Nuevo método de guitarra, xii"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "comment": "Same as Nuevo método de guitarra, xiii"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 32,
-    "comment": "Same as Nuevo método de guitarra, xiv"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro cómodo",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "comment": "Same as Nuevo método de guitarra, xxi"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro moderato",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 32,
-    "comment": "Same as Nuevo método de guitarra, xxii"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro cómodo",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "comment": "Same as Nuevo método de guitarra, xx"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 12,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 24
-  },
-  {
-    "rank": 2,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 12,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 24,
-    "fastestOrnamentalNotesPerBar": 48
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 32,
-    "comment": "Same as Nuevo método de guitarra, xxvii"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Moderato",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andantino",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 32
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 16
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 6
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Adagio",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 18,
-    "fastestOrnamentalNotesPerBar": 36,
-    "comment": "Same as Nuevo método de guitarra, xxiv"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 48,
-    "comment": "Same as Nuevo método de guitarra, ix"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "comment": "Same as Nuevo método de guitarra, x"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 64
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andantino",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 6,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 24,
-    "comment": "Very likely a misprint, see first publication"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "comment": "Same as Nuevo método de guitarra, xii"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "comment": "Same as Nuevo método de guitarra, xiii"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 32,
-    "comment": "Same as Nuevo método de guitarra, xiv"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro comodo",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "comment": "Same as Nuevo método de guitarra, xxi"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro moderato",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 32,
-    "comment": "Same as Nuevo método de guitarra, xxii"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro comodo",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "comment": "Same as Nuevo método de guitarra, xx"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 12,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 24
-  },
-  {
-    "rank": 2,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 12,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 24,
-    "fastestOrnamentalNotesPerBar": 48
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 32,
-    "comment": "Same as Nuevo método de guitarra, xxvii"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 12,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 48
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 12,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 12
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 18,
-    "comment": "Likely a misprint"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 16,
-    "comment": "Same as Escuela de guitarra, xv"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "comment": "Same as Escuela de guitarra, xvi"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "comment": "Same as Escuela de guitarra, xxv"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "comment": "Same as Escuela de guitarra, xxiv"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 32,
-    "comment": "Same as Escuela de guitarra, xxv"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 24,
-    "fastestOrnamentalNotesPerBar": 64
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 30,
-    "comment": "Likely a misprint"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "comment": "Same as Escuela de guitarra, xxviii"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro cómodo",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "comment": "Same as Escuela de guitarra, xxvi"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 32,
-    "comment": "Same as Escuela de guitarra, xxvii"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Adagio",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 18,
-    "fastestOrnamentalNotesPerBar": 36,
-    "comment": "Same as Escuela de guitarra, x"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 32
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro brillante",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 32,
-    "comment": "Very likely a misprint, see Escuela de guitarra, xxx"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Adagio",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 6,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 36,
-    "fastestOrnamentalNotesPerBar": 96
-  },
-  {
-    "rank": 2,
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 18,
-    "fastestOrnamentalNotesPerBar": 48,
-    "comment": "Polonaise"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 32,
-    "fastestOrnamentalNotesPerBar": 64
-  },
-  {
-    "rank": 2,
-    "tempoIndication": "Allegro moderato",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 32,
-    "comment": "Rondo"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 32,
-    "fastestOrnamentalNotesPerBar": 32
-  },
-  {
-    "rank": 2,
-    "tempoIndication": "Allegro",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 24,
-    "fastestOrnamentalNotesPerBar": 48,
-    "comment": "Rondo"
   },
   {
     "rank": 1,
@@ -18255,477 +14346,6 @@ const sectionList = [
   },
   {
     "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Scherzando",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 24,
-    "comment": "Is \"scherzando\" a tempo indication?"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "[Andantino]",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "comment": "Prélude; the \"Andantino\" tempo indication comes from an earlier edition, but which doesn't have any MM."
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andantino",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8,
-    "fastestOrnamentalNotesPerBar": 16
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andantino",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8,
-    "fastestOrnamentalNotesPerBar": 16
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Agitato",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8,
-    "fastestOrnamentalNotesPerBar": 23
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Scherzando",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 12,
-    "comment": "Is \"scherzando\" a tempo indication?"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andantino",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 32
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 9,
-    "fastestOrnamentalNotesPerBar": 12
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "[Allegretto]",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 9,
-    "fastestOrnamentalNotesPerBar": 36,
-    "comment": "The \"Allegretto\" tempo indication comes from an earlier edition, but which doesn't have any MM."
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16,
-    "fastestOrnamentalNotesPerBar": 32,
-    "comment": "Prélude; ornamental arpeggio in \"Piu moderato\" section"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 12
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Moderato",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 9,
-    "fastestOrnamentalNotesPerBar": 36
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Moderato",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 24
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8,
-    "fastestOrnamentalNotesPerBar": 16,
-    "comment": "\"à Trois Parties réelles\""
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 12,
-    "comment": "Likely a misprint"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Cantabile",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 6,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 18
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 6,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 6,
-    "comment": "Tarantelle"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegro moderato",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 16
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andantino",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 24
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Cantabile",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 9,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 36,
-    "fastestOrnamentalNotesPerBar": 54
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Adagio",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 32,
-    "fastestOrnamentalNotesPerBar": 64
-  },
-  {
-    "rank": 1,
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "comment": "Scherzo and trio"
-  },
-  {
-    "rank": 1,
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12,
-    "comment": "Minuet and trio"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andantino",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4
-  },
-  {
-    "rank": 2,
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestOrnamentalNotesPerBar": 12,
-    "comment": "Minuet alla mazurka"
-  },
-  {
-    "rank": 1,
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 12,
-    "comment": "Barcarolle; likely a misprint"
-  },
-  {
-    "rank": 1,
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "comment": "March"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12,
-    "comment": "Rondoletto"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andantino",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 12
-  },
-  {
-    "rank": 1,
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 24,
-    "comment": "Waltz"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 4,
-    "comment": "Rondo"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12,
-    "comment": "Minuet"
-  },
-  {
-    "rank": 1,
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 24,
-    "comment": "Waltz; ornament with ritenuto; likely a misprint"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 6,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 24,
-    "comment": "Chasse"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andantino",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8,
-    "fastestOrnamentalNotesPerBar": 16,
-    "comment": "\"Mélancolie\""
-  },
-  {
-    "rank": 1,
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "comment": "Rondo"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 48
-  },
-  {
-    "rank": 1,
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 6,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 6,
-    "comment": "Pas redoublé"
-  },
-  {
-    "rank": 1,
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 6,
-    "comment": "Barcarolle; likely a misprint"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante sostenuto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 6,
-    "metreDenominator": 8,
-    "fastestStructuralNotesPerBar": 36,
-    "fastestOrnamentalNotesPerBar": 48,
-    "comment": "\"Rêverie\""
-  },
-  {
-    "rank": 1,
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8,
-    "comment": "Rondo"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Allegretto",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 6,
-    "fastestOrnamentalNotesPerBar": 24,
-    "comment": "Scherzo and trio"
-  },
-  {
-    "rank": 1,
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 48,
-    "comment": "Étude"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andantino",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 3,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 12,
-    "fastestOrnamentalNotesPerBar": 48,
-    "comment": "Minuet; ornament with ritar."
-  },
-  {
-    "rank": 1,
     "tempoIndication": "Presto",
     "isCommonTime": true,
     "isCutTime": false,
@@ -19622,39 +15242,6 @@ const sectionList = [
     "fastestStructuralNotesPerBar": 16,
     "fastestStaccatoNotesPerBar": 16,
     "fastestOrnamentalNotesPerBar": 32
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andantino",
-    "isCommonTime": false,
-    "isCutTime": false,
-    "metreNumerator": 2,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 8,
-    "fastestStaccatoNotesPerBar": 8,
-    "fastestOrnamentalNotesPerBar": 32,
-    "comment": "Very likely a misprint"
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Andante sostenuto",
-    "isCommonTime": true,
-    "isCutTime": false,
-    "metreNumerator": 4,
-    "metreDenominator": 4,
-    "fastestStructuralNotesPerBar": 36,
-    "fastestStaccatoNotesPerBar": 36
-  },
-  {
-    "rank": 1,
-    "tempoIndication": "Maestoso",
-    "isCommonTime": false,
-    "isCutTime": true,
-    "metreNumerator": 2,
-    "metreDenominator": 2,
-    "fastestStructuralNotesPerBar": 24,
-    "fastestStaccatoNotesPerBar": 24,
-    "fastestOrnamentalNotesPerBar": 64
   },
   {
     "rank": 1,
