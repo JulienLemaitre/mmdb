@@ -362,35 +362,35 @@ Ref: Piece.composerId > Person.id
 
 Ref: Piece.creatorId > User.id
 
-Ref: PieceVersion.pieceId > Piece.id
+Ref: PieceVersion.pieceId > Piece.id [delete: Cascade]
 
 Ref: PieceVersion.creatorId > User.id
 
-Ref: Movement.pieceVersionId > PieceVersion.id
+Ref: Movement.pieceVersionId > PieceVersion.id [delete: Cascade]
 
-Ref: Section.movementId > Movement.id
+Ref: Section.movementId > Movement.id [delete: Cascade]
 
 Ref: Section.tempoIndicationId > TempoIndication.id
 
 Ref: TempoIndication.creatorId > User.id
 
-Ref: MetronomeMark.mMSourceId > MMSource.id
+Ref: MetronomeMark.mMSourceId > MMSource.id [delete: Cascade]
 
-Ref: MetronomeMark.sectionId > Section.id
+Ref: MetronomeMark.sectionId > Section.id [delete: Cascade]
 
-Ref: MMSourcesOnPieceVersions.pieceVersionId > PieceVersion.id
+Ref: MMSourcesOnPieceVersions.pieceVersionId > PieceVersion.id [delete: Cascade]
 
-Ref: MMSourcesOnPieceVersions.mMSourceId > MMSource.id
+Ref: MMSourcesOnPieceVersions.mMSourceId > MMSource.id [delete: Cascade]
 
 Ref: MMSource.creatorId > User.id
 
-Ref: Reference.mMSourceId > MMSource.id
+Ref: Reference.mMSourceId > MMSource.id [delete: Cascade]
 
-Ref: Contribution.mMSourceId > MMSource.id
+Ref: Contribution.mMSourceId > MMSource.id [delete: Cascade]
 
-Ref: Contribution.personId > Person.id
+Ref: Contribution.personId > Person.id [delete: Cascade]
 
-Ref: Contribution.organizationId > Organization.id
+Ref: Contribution.organizationId > Organization.id [delete: Cascade]
 
 Ref: Organization.creatorId > User.id
 
