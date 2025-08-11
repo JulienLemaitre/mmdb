@@ -148,6 +148,8 @@ Table MMSource {
   creator User
   creatorId String
   comment String
+  reviewState REVIEW_STATE [not null, default: 'PENDING']
+  reviews Review [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
 }
@@ -249,6 +251,9 @@ Table User {
   persons Person [not null]
   organizations Organization [not null]
   TempoIndications TempoIndication [not null]
+  reviews Review [not null]
+  auditLogs AuditLog [not null]
+  reviewedEntities ReviewedEntity [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
 }
@@ -261,6 +266,52 @@ Table VerificationToken {
   indexes {
     (identifier, token) [unique]
   }
+}
+
+Table Review {
+  id String [pk]
+  mMSource MMSource [not null]
+  mMSourceId String [not null]
+  creator User [not null]
+  creatorId String [not null]
+  state REVIEW_STATE [not null, default: 'PENDING']
+  startedAt DateTime [default: `now()`, not null]
+  endedAt DateTime
+  overallComment String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  auditLogs AuditLog [not null]
+  reviewedEntities ReviewedEntity [not null]
+}
+
+Table ReviewedEntity {
+  id String [pk]
+  entityType REVIEWED_ENTITY_TYPE [not null]
+  entityId String [not null]
+  reviewedAt DateTime [default: `now()`, not null]
+  reviewer User [not null]
+  reviewedById String [not null]
+  review Review [not null]
+  reviewId String [not null]
+
+  indexes {
+    (entityType, entityId) [unique]
+  }
+}
+
+Table AuditLog {
+  id String [pk]
+  review Review [not null]
+  reviewId String [not null]
+  entityType AUDIT_ENTITY_TYPE [not null]
+  entityId String [not null]
+  operation OPERATION [not null]
+  before Json
+  after Json
+  author User [not null]
+  authorId String [not null]
+  comment String
+  createdAt DateTime [default: `now()`, not null]
 }
 
 Enum NOTE_VALUE {
@@ -352,6 +403,41 @@ Enum CONTRIBUTION_ROLE {
   OTHER
 }
 
+Enum REVIEW_STATE {
+  PENDING
+  IN_REVIEW
+  APPROVED
+  ABORTED
+}
+
+Enum REVIEWED_ENTITY_TYPE {
+  PERSON
+  ORGANIZATION
+  COLLECTION
+  PIECE
+}
+
+Enum AUDIT_ENTITY_TYPE {
+  PERSON
+  ORGANIZATION
+  COLLECTION
+  PIECE
+  PIECE_VERSION
+  MOVEMENT
+  SECTION
+  TEMPO_INDICATION
+  METRONOME_MARK
+  MM_SOURCE
+  REFERENCE
+  CONTRIBUTION
+}
+
+Enum OPERATION {
+  CREATE
+  UPDATE
+  DELETE
+}
+
 Ref: Collection.composerId > Person.id
 
 Ref: Collection.creatorId > User.id
@@ -399,3 +485,15 @@ Ref: Person.creatorId > User.id
 Ref: Account.userId > User.id [delete: Cascade]
 
 Ref: Session.userId > User.id [delete: Cascade]
+
+Ref: Review.mMSourceId > MMSource.id [delete: Cascade]
+
+Ref: Review.creatorId > User.id
+
+Ref: ReviewedEntity.reviewedById > User.id
+
+Ref: ReviewedEntity.reviewId > Review.id [delete: Cascade]
+
+Ref: AuditLog.reviewId > Review.id [delete: Cascade]
+
+Ref: AuditLog.authorId > User.id

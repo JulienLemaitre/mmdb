@@ -152,8 +152,13 @@ model MMSource {
   creator        User?                      @relation(fields: [creatorId], references: [id])
   creatorId      String?                    @db.Uuid
   comment        String?
-  createdAt      DateTime                   @default(now())
-  updatedAt      DateTime                   @updatedAt
+
+  // Review process
+  reviewState REVIEW_STATE @default(PENDING)
+  reviews     Review[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Reference {
@@ -258,8 +263,14 @@ model User {
   persons          Person[] // A user can have created many persons
   organizations    Organization[] // A user can have created many organizations
   TempoIndications TempoIndication[] // A user can have created many tempoIndications
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
+
+  // Review process
+  reviews          Review[] // A user can have created many reviews
+  auditLogs        AuditLog[] // A user can have authored many audit logs
+  reviewedEntities ReviewedEntity[] // A user can have created many reviewed entity flags
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model VerificationToken {
@@ -359,4 +370,95 @@ enum CONTRIBUTION_ROLE {
   TRANSCRIBER
   TRANSLATOR
   OTHER
+}
+
+// Review process enums
+
+enum REVIEW_STATE {
+  PENDING
+  IN_REVIEW
+  APPROVED
+  ABORTED
+}
+
+enum REVIEWED_ENTITY_TYPE {
+  PERSON
+  ORGANIZATION
+  COLLECTION
+  PIECE
+}
+
+enum AUDIT_ENTITY_TYPE {
+  PERSON
+  ORGANIZATION
+  COLLECTION
+  PIECE
+  PIECE_VERSION
+  MOVEMENT
+  SECTION
+  TEMPO_INDICATION
+  METRONOME_MARK
+  MM_SOURCE
+  REFERENCE
+  CONTRIBUTION
+}
+
+enum OPERATION {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+// Review process models
+
+model Review {
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  mMSource       MMSource     @relation(fields: [mMSourceId], references: [id], onDelete: Cascade)
+  mMSourceId     String       @db.Uuid
+  creator        User         @relation(fields: [creatorId], references: [id])
+  creatorId      String       @db.Uuid
+  state          REVIEW_STATE @default(PENDING)
+  startedAt      DateTime     @default(now())
+  endedAt        DateTime?
+  overallComment String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  auditLogs        AuditLog[]
+  reviewedEntities ReviewedEntity[]
+
+  @@index([mMSourceId])
+}
+
+model ReviewedEntity {
+  id           String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  entityType   REVIEWED_ENTITY_TYPE
+  entityId     String               @db.Uuid
+  reviewedAt   DateTime             @default(now())
+  reviewer     User                 @relation(fields: [reviewedById], references: [id])
+  reviewedById String               @db.Uuid
+  review       Review               @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  reviewId     String               @db.Uuid
+
+  @@unique([entityType, entityId])
+  @@index([reviewId])
+  @@index([reviewedById])
+}
+
+model AuditLog {
+  id         String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  review     Review            @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  reviewId   String            @db.Uuid
+  entityType AUDIT_ENTITY_TYPE
+  entityId   String            @db.Uuid
+  operation  OPERATION
+  before     Json?
+  after      Json?
+  author     User              @relation(fields: [authorId], references: [id])
+  authorId   String            @db.Uuid
+  comment    String?
+  createdAt  DateTime          @default(now())
+
+  @@index([entityType, entityId])
+  @@index([reviewId])
 }
