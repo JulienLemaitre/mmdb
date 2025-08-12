@@ -119,8 +119,21 @@ export async function POST(request: NextRequest) {
           data: collectionCreateManyInput,
         });
 
+        // Compute sectionCount for this MM Source purely from the submitted state
+        const includedPieceVersionIds = state.mMSourcePieceVersions.map(
+          (pv) => pv.pieceVersionId,
+        );
+        const includedPieceVersions = state.pieceVersions.filter((pv) =>
+          includedPieceVersionIds.includes(pv.id),
+        );
+        const sectionCount = includedPieceVersions.reduce(
+          (acc, pv) =>
+            acc + pv.movements.reduce((mAcc, mv) => mAcc + mv.sections.length, 0),
+          0,
+        );
+
         const mMSource = await tx.mMSource.create({
-          data: mMSourceInput,
+          data: ({ ...mMSourceInput, sectionCount}),
         });
 
         txDebug.mMSource = mMSource;
