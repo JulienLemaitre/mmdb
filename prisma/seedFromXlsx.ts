@@ -899,129 +899,182 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
     persistedPieceList.push(await task())
   }
 
-  const sourceTaskList = persistedPieceList.map((piece, index) => {
-    // console.log(`[] piece.pieceVersions :`, piece.pieceVersions)
-    if (!piece.pieceVersions) {
-      console.log(`[ERROR] piece.pieceVersions is null`, piece.title, JSON.stringify(piece))
-    }
-    const pieceVersion = piece.pieceVersions[0]
+// ---------- Gather pieces by the same source and reuse a single MMSource ----------
+
+  // Stable dedupe key: type | permalink (or derived from link) | year
+  const getSourceKey = (s: any) => {
+    const permalink = s.permalink || (s.link ? getIMSLPPermaLink(s.link) : undefined)
+    return `${s.type}|${permalink}|${s.year}`
+  }
+
+  // Keep a cache of created sources to reuse
+  const sourceByKey = new Map<string, { source: any; lastRank: number }>()
+  // For contributions, we only want to add them once per created source
+  const newlyCreatedSourceIds = new Set<string>()
+
+  const sourceTaskList = persistedPieceList.map((piece) => {
+    const pieceVersion = piece.pieceVersions?.[0]
     return async function () {
       const source = piece.source
       const metronomeMarkList = piece.metronomeMarkList
-      if (!metronomeMarkList) {
-        console.log(`[ERROR] metronomeMarkList is null`, piece.title, piece)
+      if (!pieceVersion || !metronomeMarkList) {
+        console.log(`[ERROR] pieceVersion or metronomeMarkList missing for piece`, piece.title)
+        return null
       }
-      console.log(`[PERSIST] mMSource, pieceVersion and MMs for piece :`, piece.title)
-      const movements = pieceVersion.movements.sort((a, b) => a.rank - b.rank)
-      const sectionCount = movements.reduce((acc, movement) => acc + movement.sections.length, 0)
 
-      // Persist source and metronomeMarks
-      const persistedSource = await db.mMSource.create({
-        data: {
-          creator: {
-            connect: {
-              id: userArjun.id
+      console.log(`[PERSIST] link pieceVersion and MMs for piece :`, piece.title)
+      const movements = pieceVersion.movements.sort((a, b) => a.rank - b.rank)
+      const sectionCountForThisPiece = movements.reduce((acc, mv) => acc + mv.sections.length, 0)
+
+      const key = getSourceKey(source)
+      const cached = sourceByKey.get(key)
+
+      if (cached) {
+        // Reuse existing MMSource: attach this pieceVersion with incremented rank and add its MMs
+        const nextRank = cached.lastRank + 1
+
+        await db.mMSourcesOnPieceVersions.create({
+          data: {
+            mMSource: { connect: { id: cached.source.id } },
+            pieceVersion: { connect: { id: pieceVersion.id } },
+            rank: nextRank,
+          },
+        })
+
+        // Increment sectionCount to reflect additional sections coming from this pieceVersion
+        await db.mMSource.update({
+          where: { id: cached.source.id },
+          data: { sectionCount: { increment: sectionCountForThisPiece } },
+        })
+
+        // Create metronome marks for this pieceVersion on the existing MMSource
+        await db.metronomeMark.createMany({
+          data: metronomeMarkList.map((metronomeMark: any) => {
+            // Resolve sectionId by movement/section ranks
+            const sectionId =
+              movements
+              .sort((a, b) => a.rank - b.rank)[metronomeMark.movementRank - 1]
+              .sections.sort((a, b) => a.rank - b.rank)[metronomeMark.sectionRank - 1].id
+
+            return {
+              mMSourceId: cached.source.id,
+              sectionId,
+              beatUnit: metronomeMark.beatUnit,
+              bpm: metronomeMark.bpm,
+              notesPerSecond: metronomeMark.notesPerSecond,
+              notesPerBar: metronomeMark.notesPerBar,
+            }
+          }),
+        })
+
+        // Update cache rank
+        cached.lastRank = nextRank
+        sourceByKey.set(key, cached)
+
+        // Return a minimal shape compatible with later steps if needed
+        return { ...cached.source, piece }
+      } else {
+        // Create a brand new MMSource (rank = 1) and store it for reuse
+        const persistedSource = await db.mMSource.create({
+          data: {
+            creator: {
+              connect: {
+                id: userArjun.id,
+              },
+            },
+            type: source.type,
+            link: source.link,
+            permalink: source.permalink || getIMSLPPermaLink(source.link),
+            year: source.year,
+            ...(source.comment && { comment: source.comment }),
+            sectionCount: sectionCountForThisPiece,
+            pieceVersions: {
+              create: {
+                rank: 1,
+                pieceVersion: {
+                  connect: { id: pieceVersion.id },
+                },
+              },
+            },
+            metronomeMarks: {
+              create: metronomeMarkList.map((metronomeMark: any) => {
+                const sectionId =
+                  movements
+                  .sort((a, b) => a.rank - b.rank)[metronomeMark.movementRank - 1]
+                  .sections.sort((a, b) => a.rank - b.rank)[metronomeMark.sectionRank - 1].id
+                return {
+                  beatUnit: metronomeMark.beatUnit,
+                  bpm: metronomeMark.bpm,
+                  notesPerSecond: metronomeMark.notesPerSecond,
+                  notesPerBar: metronomeMark.notesPerBar,
+                  section: { connect: { id: sectionId } },
+                }
+              }),
             },
           },
-          type: source.type,
-          link: source.link,
-          permalink: source.permalink || getIMSLPPermaLink(source.link),
-          year: source.year,
-          ...(source.comment && { comment: source.comment }),
-          sectionCount,
-          pieceVersions: {
-            create: {
-              rank: source.rank,
-              pieceVersion: {
-                connect: {
-                  id: pieceVersion.id
-                }
-              }
-            }
+          include: {
+            metronomeMarks: true,
           },
-          metronomeMarks: {
-            create: metronomeMarkList.map((metronomeMark) => {
-              // test if bpm is a float number
-              if (metronomeMark.bpm % 1 !== 0) {
-                console.group(`[ERROR] FLOAT BPM`)
-                console.log(`[] metronomeMark.bpm`, metronomeMark.bpm)
-                console.log(`[] piece`, piece)
-                console.groupEnd()
-              }
-              const sectionId = movements.sort((a, b) => a.rank - b.rank)[metronomeMark.movementRank - 1].sections.sort((a, b) => a.rank - b.rank)[metronomeMark.sectionRank - 1].id
-              return {
-                beatUnit: metronomeMark.beatUnit,
-                bpm: metronomeMark.bpm,
-                notesPerSecond: metronomeMark.notesPerSecond,
-                notesPerBar: metronomeMark.notesPerBar,
-                section: {
-                  connect: {
-                    id: sectionId,
-                  },
-                },
-              }
-            }),
-          },
-        },
-        include: {
-          metronomeMarks: true,
-        }
-      })
-      // console.log(`[] persistedSource`, JSON.stringify(persistedSource, null, 2))
+        })
 
-      return {
-        ...persistedSource,
-        piece,
+        // Cache and mark as newly created (for contributions)
+        sourceByKey.set(key, { source: persistedSource, lastRank: 1 })
+        newlyCreatedSourceIds.add(persistedSource.id)
+
+        return { ...persistedSource, piece }
       }
     }
   })
 
   const persistedSourceList: any[] = []
   for (const task of sourceTaskList) {
-    persistedSourceList.push(await task())
+    const res = await task()
+    if (res) persistedSourceList.push(res)
   }
-  // console.log(`[] persistedSourceList`, JSON.stringify(persistedSourceList, null, 2))
 
+  // ---------- Create contributions once per unique MMSource ----------
+  const uniquePersistedSources = Array.from(sourceByKey.values()).map((v) => v.source)
   const contributionsTaskList: any[] = []
-  persistedSourceList.forEach((source, index) => {
-    const piece = source.piece
+  uniquePersistedSources.forEach((source: any) => {
+    // Only add contributions for MMSource created in this run. If you prefer to always upsert, remove the check below.
+    if (!newlyCreatedSourceIds.has(source.id)) return
 
-    piece.source.contributions.forEach((contribution) => {
+    // Find any piece that carried the original 'source.contributions' payload
+    // (all pieces grouped under the same MMSource share identical contribution metadata at this stage)
+    const anyPieceWithSource = persistedPieceList.find((p) => {
+      const k = getSourceKey(p.source)
+      return sourceByKey.get(k)?.source.id === source.id
+    })
+
+    anyPieceWithSource?.source?.contributions?.forEach((contribution: any) => {
       contributionsTaskList.push(async function () {
-        console.log(`[PERSIST] ${contribution.role} contribution of ${contribution.organization.name} to ${source.type} source (${source.year})`)
+        console.log(
+          `[PERSIST] ${contribution.role} contribution of ${contribution.organization.name} to ${source.type} source (${source.year})`
+        )
 
         const persistedContribution = await db.contribution.create({
           data: {
             role: contribution.role,
-            mMSource: {
-              connect: {
-                id: source.id,
-              },
-            },
+            mMSource: { connect: { id: source.id } },
             organization: {
               connectOrCreate: {
-                where: {
-                  name: contribution.organization.name,
-                },
-                create: {
-                  name: contribution.organization.name,
-                }
-              }
+                where: { name: contribution.organization.name },
+                create: { name: contribution.organization.name },
+              },
             },
           },
-          include: {
-            organization: true,
-          }
+          include: { organization: true },
         })
-        // console.log(`[] persistedContributions`, JSON.stringify(persistedContribution, null, 2))
         return persistedContribution
       })
     })
   })
+
   const persistedContributionsList: any[] = []
   for (const task of contributionsTaskList) {
     persistedContributionsList.push(await task())
   }
+  // ---------- END FIX ----------
 
   console.log(`-------- END - seedDB --------`)
 }
