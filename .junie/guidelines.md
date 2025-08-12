@@ -120,7 +120,7 @@ This document captures project-specific knowledge that will speed up development
   - Classes: use PascalCase.
   - Enums: use PascalCase.
   - Interfaces: use PascalCase.
-- Error messages: prefix with short code (e.g., [gNPSFNPB]) as seen in existing utils tests to make triage easier.
+- Error messages: prefix with component or function names between brackets, using initials if two long (e.g., [gNPSFNPB]) as seen in existing utils tests to make triage easier.
 - Comments: capture invariants and constraints near model definitions (e.g., XOR constraints) and reference migrations when enforced in SQL only.
 
 6. CI/CD and deployment notes

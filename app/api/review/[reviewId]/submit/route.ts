@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { db } from "@/utils/db";
 import { REVIEW_STATE, REVIEWED_ENTITY_TYPE } from "@prisma/client";
-import { ChecklistEntityType, getChecklistFields, isDoNotReviewTwice } from "@/utils/ReviewChecklistSchema";
+import {
+  ChecklistEntityType,
+  getChecklistFields,
+  isDoNotReviewTwice,
+} from "@/utils/ReviewChecklistSchema";
+import { authOptions } from "@/auth/options";
 
 function json(data: unknown, init?: any) {
   return NextResponse.json(data as any, init as any);
@@ -18,27 +23,37 @@ type ChecklistStateItem = {
 
 export async function POST(req: Request, { params }: any) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session || !session.user) {
-      return json({ error: "[gAUTH001] Unauthorized" }, { status: 401 });
+      return json({ error: "[review submit] Unauthorized" }, { status: 401 });
     }
 
     const role = session.user.role;
     if (!role || !["REVIEWER", "ADMIN"].includes(role)) {
-      return json({ error: "[gAUTH002] Forbidden: reviewer role required" }, { status: 403 });
+      return json(
+        { error: "[review submit] Forbidden: reviewer role required" },
+        { status: 403 },
+      );
     }
 
     const reviewId = params?.reviewId;
     if (!reviewId) {
-      return json({ error: "[gINPUT010] reviewId is required in route params" }, { status: 400 });
+      return json(
+        { error: "[review submit] reviewId is required in route params" },
+        { status: 400 },
+      );
     }
 
     const body = await req.json().catch(() => null);
-    const checklistState: ChecklistStateItem[] | undefined = body?.checklistState;
+    const checklistState: ChecklistStateItem[] | undefined =
+      body?.checklistState;
     const overallComment: string | undefined = body?.overallComment;
 
     if (!Array.isArray(checklistState)) {
-      return json({ error: "[gINPUT011] checklistState array is required" }, { status: 400 });
+      return json(
+        { error: "[review submit] checklistState array is required" },
+        { status: 400 },
+      );
     }
 
     // Load review and authorize: only owner can submit as per specs (admin submit is not allowed here)
@@ -46,15 +61,27 @@ export async function POST(req: Request, { params }: any) {
       where: { id: reviewId },
       select: { id: true, creatorId: true, state: true, mMSourceId: true },
     });
-    if (!review) return json({ error: "[gNF002] Review not found" }, { status: 404 });
+    if (!review)
+      return json(
+        { error: "[review submit] Review not found" },
+        { status: 404 },
+      );
 
     const isOwner = review.creatorId === session.user.id;
     if (!isOwner) {
-      return json({ error: "[gAUTH004] Forbidden: only owner can submit this review" }, { status: 403 });
+      return json(
+        {
+          error: "[review submit] Forbidden: only owner can submit this review",
+        },
+        { status: 403 },
+      );
     }
 
     if (review.state !== REVIEW_STATE.IN_REVIEW) {
-      return json({ error: "[gBUS010] Review is not active (IN_REVIEW)" }, { status: 400 });
+      return json(
+        { error: "[review submit] Review is not active (IN_REVIEW)" },
+        { status: 400 },
+      );
     }
 
     // Load the MM Source graph needed to recompute required checklist items (reuse logic from overview)
@@ -63,14 +90,18 @@ export async function POST(req: Request, { params }: any) {
       select: {
         id: true,
         references: { select: { id: true } },
-        contributions: { select: { id: true, personId: true, organizationId: true } },
+        contributions: {
+          select: { id: true, personId: true, organizationId: true },
+        },
         pieceVersions: {
           select: {
             rank: true,
             pieceVersion: {
               select: {
                 id: true,
-                piece: { select: { id: true, composerId: true, collectionId: true } },
+                piece: {
+                  select: { id: true, composerId: true, collectionId: true },
+                },
                 movements: {
                   select: {
                     id: true,
@@ -93,7 +124,8 @@ export async function POST(req: Request, { params }: any) {
       },
     });
 
-    if (!mmSource) return json({ error: "[gNF001] MMSource not found" }, { status: 404 });
+    if (!mmSource)
+      return json({ error: "[gNF001] MMSource not found" }, { status: 404 });
 
     // Collect entity IDs for do-not-review-twice resolution
     const personIds = new Set<string>();
@@ -116,10 +148,22 @@ export async function POST(req: Request, { params }: any) {
     const reviewed = await db.reviewedEntity.findMany({
       where: {
         OR: [
-          { entityType: REVIEWED_ENTITY_TYPE.PERSON, entityId: { in: Array.from(personIds) } },
-          { entityType: REVIEWED_ENTITY_TYPE.ORGANIZATION, entityId: { in: Array.from(orgIds) } },
-          { entityType: REVIEWED_ENTITY_TYPE.COLLECTION, entityId: { in: Array.from(collectionIds) } },
-          { entityType: REVIEWED_ENTITY_TYPE.PIECE, entityId: { in: Array.from(pieceIds) } },
+          {
+            entityType: REVIEWED_ENTITY_TYPE.PERSON,
+            entityId: { in: Array.from(personIds) },
+          },
+          {
+            entityType: REVIEWED_ENTITY_TYPE.ORGANIZATION,
+            entityId: { in: Array.from(orgIds) },
+          },
+          {
+            entityType: REVIEWED_ENTITY_TYPE.COLLECTION,
+            entityId: { in: Array.from(collectionIds) },
+          },
+          {
+            entityType: REVIEWED_ENTITY_TYPE.PIECE,
+            entityId: { in: Array.from(pieceIds) },
+          },
         ],
       },
       select: { entityType: true, entityId: true },
@@ -127,8 +171,16 @@ export async function POST(req: Request, { params }: any) {
 
     const exclusions: Record<ChecklistEntityType, Set<string>> = {
       MM_SOURCE: new Set(),
-      COLLECTION: new Set(reviewed.filter(r => r.entityType === REVIEWED_ENTITY_TYPE.COLLECTION).map(r => r.entityId)),
-      PIECE: new Set(reviewed.filter(r => r.entityType === REVIEWED_ENTITY_TYPE.PIECE).map(r => r.entityId)),
+      COLLECTION: new Set(
+        reviewed
+          .filter((r) => r.entityType === REVIEWED_ENTITY_TYPE.COLLECTION)
+          .map((r) => r.entityId),
+      ),
+      PIECE: new Set(
+        reviewed
+          .filter((r) => r.entityType === REVIEWED_ENTITY_TYPE.PIECE)
+          .map((r) => r.entityId),
+      ),
       PIECE_VERSION: new Set(),
       MOVEMENT: new Set(),
       SECTION: new Set(),
@@ -136,20 +188,44 @@ export async function POST(req: Request, { params }: any) {
       METRONOME_MARK: new Set(),
       REFERENCE: new Set(),
       CONTRIBUTION: new Set(),
-      PERSON: new Set(reviewed.filter(r => r.entityType === REVIEWED_ENTITY_TYPE.PERSON).map(r => r.entityId)),
-      ORGANIZATION: new Set(reviewed.filter(r => r.entityType === REVIEWED_ENTITY_TYPE.ORGANIZATION).map(r => r.entityId)),
+      PERSON: new Set(
+        reviewed
+          .filter((r) => r.entityType === REVIEWED_ENTITY_TYPE.PERSON)
+          .map((r) => r.entityId),
+      ),
+      ORGANIZATION: new Set(
+        reviewed
+          .filter((r) => r.entityType === REVIEWED_ENTITY_TYPE.ORGANIZATION)
+          .map((r) => r.entityId),
+      ),
     };
 
-    type ChecklistItem = { entityType: ChecklistEntityType; entityId: string; fieldPath: string; label: string; required: boolean };
+    type ChecklistItem = {
+      entityType: ChecklistEntityType;
+      entityId: string;
+      fieldPath: string;
+      label: string;
+      required: boolean;
+    };
 
     const requiredItems: ChecklistItem[] = [];
 
     function pushFields(entityType: ChecklistEntityType, entityId: string) {
-      if (isDoNotReviewTwice(entityType) && exclusions[entityType].has(entityId)) return;
+      if (
+        isDoNotReviewTwice(entityType) &&
+        exclusions[entityType].has(entityId)
+      )
+        return;
       const fields = getChecklistFields(entityType);
       for (const f of fields) {
         if (f.meta?.required === false) continue; // Only required fields for server validation
-        requiredItems.push({ entityType, entityId, fieldPath: f.path, label: f.label, required: true });
+        requiredItems.push({
+          entityType,
+          entityId,
+          fieldPath: f.path,
+          label: f.label,
+          required: true,
+        });
       }
     }
 
@@ -169,12 +245,16 @@ export async function POST(req: Request, { params }: any) {
       const pv = pvJoin.pieceVersion;
       pushFields("PIECE_VERSION", pv.id);
       if (pv.piece?.id) pushFields("PIECE", pv.piece.id);
-      if (pv.piece?.collectionId) pushFields("COLLECTION", pv.piece.collectionId);
+      if (pv.piece?.collectionId)
+        pushFields("COLLECTION", pv.piece.collectionId);
       for (const mv of pv.movements) {
         pushFields("MOVEMENT", mv.id);
         for (const s of mv.sections) {
           pushFields("SECTION", s.id);
-          if (s.tempoIndication && !tempoIndicationIdsAdded.has(s.tempoIndication.id)) {
+          if (
+            s.tempoIndication &&
+            !tempoIndicationIdsAdded.has(s.tempoIndication.id)
+          ) {
             tempoIndicationIdsAdded.add(s.tempoIndication.id);
             pushFields("TEMPO_INDICATION", s.tempoIndication.id);
           }
@@ -182,17 +262,30 @@ export async function POST(req: Request, { params }: any) {
       }
     }
     // Metronome marks
-    for (const mm of mmSource.metronomeMarks) pushFields("METRONOME_MARK", mm.id);
+    for (const mm of mmSource.metronomeMarks)
+      pushFields("METRONOME_MARK", mm.id);
 
     // Validate completeness
-    const encodeKey = (et: string, id: string, fp: string) => `${et}:${id}:${fp}`;
+    const encodeKey = (et: string, id: string, fp: string) =>
+      `${et}:${id}:${fp}`;
     const checkedSet = new Set(
-      checklistState.filter((c) => c && c.checked === true).map((c) => encodeKey(c.entityType, c.entityId, c.fieldPath)),
+      checklistState
+        .filter((c) => c && c.checked === true)
+        .map((c) => encodeKey(c.entityType, c.entityId, c.fieldPath)),
     );
-    const missing: { entityType: ChecklistEntityType; entityId: string; fieldPath: string }[] = [];
+    const missing: {
+      entityType: ChecklistEntityType;
+      entityId: string;
+      fieldPath: string;
+    }[] = [];
     for (const it of requiredItems) {
       const key = encodeKey(it.entityType, it.entityId, it.fieldPath);
-      if (!checkedSet.has(key)) missing.push({ entityType: it.entityType, entityId: it.entityId, fieldPath: it.fieldPath });
+      if (!checkedSet.has(key))
+        missing.push({
+          entityType: it.entityType,
+          entityId: it.entityId,
+          fieldPath: it.fieldPath,
+        });
     }
 
     if (missing.length > 0) {
@@ -206,12 +299,41 @@ export async function POST(req: Request, { params }: any) {
     }
 
     // Prepare ReviewedEntity upserts for PERSON/ORGANIZATION/COLLECTION/PIECE in scope (exclude those already in ReviewedEntity via skipDuplicates)
-    const reviewedRows: { entityType: REVIEWED_ENTITY_TYPE; entityId: string; reviewedById: string; reviewId: string }[] = [];
+    const reviewedRows: {
+      entityType: REVIEWED_ENTITY_TYPE;
+      entityId: string;
+      reviewedById: string;
+      reviewId: string;
+    }[] = [];
 
-    for (const id of personIds) reviewedRows.push({ entityType: REVIEWED_ENTITY_TYPE.PERSON, entityId: id, reviewedById: session.user.id, reviewId });
-    for (const id of orgIds) reviewedRows.push({ entityType: REVIEWED_ENTITY_TYPE.ORGANIZATION, entityId: id, reviewedById: session.user.id, reviewId });
-    for (const id of collectionIds) reviewedRows.push({ entityType: REVIEWED_ENTITY_TYPE.COLLECTION, entityId: id, reviewedById: session.user.id, reviewId });
-    for (const id of pieceIds) reviewedRows.push({ entityType: REVIEWED_ENTITY_TYPE.PIECE, entityId: id, reviewedById: session.user.id, reviewId });
+    for (const id of personIds)
+      reviewedRows.push({
+        entityType: REVIEWED_ENTITY_TYPE.PERSON,
+        entityId: id,
+        reviewedById: session.user.id,
+        reviewId,
+      });
+    for (const id of orgIds)
+      reviewedRows.push({
+        entityType: REVIEWED_ENTITY_TYPE.ORGANIZATION,
+        entityId: id,
+        reviewedById: session.user.id,
+        reviewId,
+      });
+    for (const id of collectionIds)
+      reviewedRows.push({
+        entityType: REVIEWED_ENTITY_TYPE.COLLECTION,
+        entityId: id,
+        reviewedById: session.user.id,
+        reviewId,
+      });
+    for (const id of pieceIds)
+      reviewedRows.push({
+        entityType: REVIEWED_ENTITY_TYPE.PIECE,
+        entityId: id,
+        reviewedById: session.user.id,
+        reviewId,
+      });
 
     const approvedAt = new Date();
 
@@ -219,7 +341,11 @@ export async function POST(req: Request, { params }: any) {
       // Flip review + source states
       await tx.review.update({
         where: { id: reviewId },
-        data: { state: REVIEW_STATE.APPROVED, endedAt: approvedAt, overallComment: overallComment ?? null },
+        data: {
+          state: REVIEW_STATE.APPROVED,
+          endedAt: approvedAt,
+          overallComment: overallComment ?? null,
+        },
       });
       await tx.mMSource.update({
         where: { id: review.mMSourceId },
@@ -228,14 +354,26 @@ export async function POST(req: Request, { params }: any) {
 
       let reviewedEntitiesUpserted = 0;
       if (reviewedRows.length > 0) {
-        const res = await tx.reviewedEntity.createMany({ data: reviewedRows, skipDuplicates: true });
+        const res = await tx.reviewedEntity.createMany({
+          data: reviewedRows,
+          skipDuplicates: true,
+        });
         reviewedEntitiesUpserted = res.count ?? 0;
       }
 
       return { reviewedEntitiesUpserted };
     });
 
-    return json({ ok: true, reviewId, approvedAt, counts: { requiredItems: requiredItems.length, checkedItems: checkedSet.size, reviewedEntitiesUpserted: result.reviewedEntitiesUpserted } });
+    return json({
+      ok: true,
+      reviewId,
+      approvedAt,
+      counts: {
+        requiredItems: requiredItems.length,
+        checkedItems: checkedSet.size,
+        reviewedEntitiesUpserted: result.reviewedEntitiesUpserted,
+      },
+    });
   } catch (err) {
     console.error("/api/reviews/[reviewId]/submit error:", err);
     return json({ error: "[gUNX005] Unexpected error" }, { status: 500 });

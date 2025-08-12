@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { db } from "@/utils/db";
 import { REVIEW_STATE } from "@prisma/client";
+import { authOptions } from "@/auth/options";
 
 function json(data: unknown, init?: any) {
   return NextResponse.json(data as any, init as any);
@@ -9,20 +10,26 @@ function json(data: unknown, init?: any) {
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session || !session.user) {
-      return json({ error: "[gAUTH001] Unauthorized" }, { status: 401 });
+      return json({ error: "[review start] Unauthorized" }, { status: 401 });
     }
 
     const role = session.user.role;
     if (!role || !["REVIEWER", "ADMIN"].includes(role)) {
-      return json({ error: "[gAUTH002] Forbidden: reviewer role required" }, { status: 403 });
+      return json(
+        { error: "[review start] Forbidden: reviewer role required" },
+        { status: 403 },
+      );
     }
 
     const body = await req.json().catch(() => null);
     const mmSourceId: string | undefined = body?.mmSourceId;
     if (!mmSourceId || typeof mmSourceId !== "string") {
-      return json({ error: "[gINPUT001] mmSourceId is required" }, { status: 400 });
+      return json(
+        { error: "[review start] mmSourceId is required" },
+        { status: 400 },
+      );
     }
 
     // Fetch source and basic validations
@@ -31,11 +38,17 @@ export async function POST(req: Request) {
       select: { id: true, creatorId: true, reviewState: true },
     });
     if (!source) {
-      return json({ error: "[gNF001] MMSource not found" }, { status: 404 });
+      return json(
+        { error: "[review start] MMSource not found" },
+        { status: 404 },
+      );
     }
 
     if (source.creatorId && source.creatorId === session.user.id) {
-      return json({ error: "[gBUS001] Reviewer cannot review own MM Source" }, { status: 400 });
+      return json(
+        { error: "[review start] Reviewer cannot review own MM Source" },
+        { status: 400 },
+      );
     }
 
     // Check existing active review lock
@@ -44,7 +57,10 @@ export async function POST(req: Request) {
       select: { id: true },
     });
     if (active) {
-      return json({ error: "[gBUS002] Review already in progress for this source" }, { status: 409 });
+      return json(
+        { error: "[review start] Review already in progress for this source" },
+        { status: 409 },
+      );
     }
 
     // Create review and flip MMSource state atomically
@@ -70,12 +86,16 @@ export async function POST(req: Request) {
     return json({ reviewId: result });
   } catch (err: any) {
     // If unique partial index is enforced, a race condition could throw here; translate to 409
-    const message = typeof err?.message === "string" ? err.message : String(err);
+    const message =
+      typeof err?.message === "string" ? err.message : String(err);
     const isConflict = /unique|constraint|duplicate/i.test(message);
     if (isConflict) {
-      return json({ error: "[gDB409] Another review just started for this source" }, { status: 409 });
+      return json(
+        { error: "[review start] Another review just started for this source" },
+        { status: 409 },
+      );
     }
     console.error("/api/reviews/start error:", err);
-    return json({ error: "[gUNX001] Unexpected error" }, { status: 500 });
+    return json({ error: "[review start] Unexpected error" }, { status: 500 });
   }
 }

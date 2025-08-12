@@ -1,28 +1,32 @@
-import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { db } from "@/utils/db";
 import { REVIEW_STATE } from "@prisma/client";
 import { authOptions } from "@/auth/options";
 
-function json(data: unknown, init?: any) {
-  return NextResponse.json(data as any, init as any);
-}
-
-export async function GET() {
+export async function getToReviewFromDb(): Promise<{
+  items: Array<{
+    id: string;
+    title: string | null;
+    composers: {
+      id: string;
+      firstName: string | null;
+      lastName: string | null;
+    }[];
+    link: string | null;
+    permalink: string | null;
+    enteredBy: { id: string; name: string | null; email: string | null } | null;
+    sectionsCount: number;
+    creationDate: Date;
+  }>;
+}> {
   try {
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
-      return json(
-        { error: "[mMSource toReview] Unauthorized" },
-        { status: 401 },
-      );
+      throw new Error("Unauthorized");
     }
     const role = session.user.role;
     if (!role || !["REVIEWER", "ADMIN"].includes(role)) {
-      return json(
-        { error: "[mMSource toReview] Forbidden: reviewer role required" },
-        { status: 403 },
-      );
+      throw new Error("Forbidden: reviewer role required");
     }
 
     const sources = await db.mMSource.findMany({
@@ -98,12 +102,11 @@ export async function GET() {
       };
     });
 
-    return json({ items: data });
+    return { items: data };
   } catch (err) {
-    console.error("/api/mm-sources/to-review error:", err);
-    return json(
-      { error: "[mMSource toReview] Unexpected error" },
-      { status: 500 },
+    console.error("[getToReviewFromDb] error:", err);
+    throw new Error(
+      `Unexpected server error: ${err instanceof Error ? err.message : "Unknown error"}`,
     );
   }
 }

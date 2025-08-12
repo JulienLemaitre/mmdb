@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { URL_EXPLORE, URL_FEED } from "@/utils/routes";
+import { URL_EXPLORE, URL_FEED, URL_REVIEW_LIST } from "@/utils/routes";
 import NavBar from "@/app/NavBar";
 import Metronome from "@/components/Metronome";
 // import SnowballMetronome from "@/components/SnowballMetronome";
@@ -34,7 +34,9 @@ export default function Home() {
           <Link href={URL_FEED} className="btn btn-primary">
             Enter new Metronome Marks data
           </Link>
-          <button className="btn btn-disabled">Review</button>
+          <Link href={URL_REVIEW_LIST} className="btn btn-primary">
+            Review
+          </Link>
         </div>
       </div>
     </>
