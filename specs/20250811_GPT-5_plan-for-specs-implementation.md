@@ -119,22 +119,22 @@ Field‑level checklist strategy
 - When an entity is first seen as reviewed within any approved review, create the ReviewedEntity row once.
 
 API design (minimal, clear)
-- POST /api/reviews/start
+- POST /api/review/start
     - body: { mmSourceId }
     - returns: { reviewId }
-- GET /api/reviews/:reviewId/overview
+- GET /api/review/:reviewId/overview
     - returns the MM Source graph needed for the checklist plus flags for “globally reviewed” exclusions.
-- POST /api/reviews/:reviewId/submit
+- POST /api/review/:reviewId/submit
     - body: { workingCopy, checklistState, overallComment }
     - transactional finalize as described.
-- POST /api/reviews/:reviewId/abort
+- POST /api/review/:reviewId/abort
     - body: { reason? }
-- GET /api/mm-sources/to-review
+- GET /api/mMSource/toReview
     - Returns list with: title, composers, link, enteredBy, sectionsCount, creationDate.
     - Server filters:
         - MMSource.reviewState IN ('PENDING','ABORTED').
         - No active Review IN_REVIEW for that source.
-- Optional: GET /api/reviews/:reviewId/audit
+- Optional: GET /api/review/:reviewId/audit
     - Returns paginated AuditLog entries for confirmation UI or admin back-office.
 
 UI flows and components

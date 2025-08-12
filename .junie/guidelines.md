@@ -116,7 +116,7 @@ This document captures project-specific knowledge that will speed up development
   - Variables: use camelCase.
   - Constants: use UPPER_CASE.
   - Files: use camelCase.
-  - Directories: use camelCase.
+  - Directories: use camelCase and singular for entity folders.
   - Classes: use PascalCase.
   - Enums: use PascalCase.
   - Interfaces: use PascalCase.
