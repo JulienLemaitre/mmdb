@@ -152,6 +152,7 @@ model MMSource {
   creator        User?                      @relation(fields: [creatorId], references: [id])
   creatorId      String?                    @db.Uuid
   comment        String?
+  sectionCount   Int             @default(0)
 
   // Review process
   reviewState REVIEW_STATE @default(PENDING)

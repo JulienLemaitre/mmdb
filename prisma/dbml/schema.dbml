@@ -148,6 +148,7 @@ Table MMSource {
   creator User
   creatorId String
   comment String
+  sectionCount Int [not null, default: 0]
   reviewState REVIEW_STATE [not null, default: 'PENDING']
   reviews Review [not null]
   createdAt DateTime [default: `now()`, not null]
