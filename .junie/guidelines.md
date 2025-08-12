@@ -110,6 +110,16 @@ This document captures project-specific knowledge that will speed up development
 
 - Prefer functional, pure utilities in utils/ with comprehensive unit tests.
 - Keep enums and domain types centralized in Prisma schema; mirror types in /types only when needed by the client.
+- naming conventions:
+  - Types: use PascalCase.
+  - Functions: use camelCase.
+  - Variables: use camelCase.
+  - Constants: use UPPER_CASE.
+  - Files: use camelCase.
+  - Directories: use camelCase.
+  - Classes: use PascalCase.
+  - Enums: use PascalCase.
+  - Interfaces: use PascalCase.
 - Error messages: prefix with short code (e.g., [gNPSFNPB]) as seen in existing utils tests to make triage easier.
 - Comments: capture invariants and constraints near model definitions (e.g., XOR constraints) and reference migrations when enforced in SQL only.
 
