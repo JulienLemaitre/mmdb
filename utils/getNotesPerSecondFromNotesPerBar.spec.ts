@@ -57,7 +57,7 @@ describe("getNotesPerSecondFromNotesPerBar", () => {
         bpm,
         beatUnit,
       });
-    }).toThrowError("[gNPSFNPB] Invalid or missing parameter");
+    }).toThrow("[gNPSFNPB] Invalid or missing parameter");
   });
 
   // Tests that the function throws an error if the metreNumerator parameter is missing or invalid
@@ -75,7 +75,7 @@ describe("getNotesPerSecondFromNotesPerBar", () => {
         bpm,
         beatUnit,
       });
-    }).toThrowError("[gNPSFNPB] Invalid or missing parameter");
+    }).toThrow("[gNPSFNPB] Invalid or missing parameter");
   });
 
   // Tests that the function throws an error if the bpm parameter is missing or invalid
@@ -93,6 +93,6 @@ describe("getNotesPerSecondFromNotesPerBar", () => {
         metreDenominator,
         beatUnit,
       });
-    }).toThrowError("[gNPSFNPB] Invalid or missing parameter");
+    }).toThrow("[gNPSFNPB] Invalid or missing parameter");
   });
 });
