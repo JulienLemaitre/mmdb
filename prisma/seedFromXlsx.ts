@@ -913,6 +913,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
       }
       console.log(`[PERSIST] mMSource, pieceVersion and MMs for piece :`, piece.title)
       const movements = pieceVersion.movements.sort((a, b) => a.rank - b.rank)
+      const sectionCount = movements.reduce((acc, movement) => acc + movement.sections.length, 0)
 
       // Persist source and metronomeMarks
       const persistedSource = await db.mMSource.create({
@@ -927,6 +928,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
           permalink: source.permalink || getIMSLPPermaLink(source.link),
           year: source.year,
           ...(source.comment && { comment: source.comment }),
+          sectionCount,
           pieceVersions: {
             create: {
               rank: source.rank,
