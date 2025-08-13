@@ -123,11 +123,15 @@ This document captures project-specific knowledge that will speed up development
 - Error messages: prefix with component or function names between brackets, using initials if two long (e.g., [gNPSFNPB]) as seen in existing utils tests to make triage easier.
 - Comments: capture invariants and constraints near model definitions (e.g., XOR constraints) and reference migrations when enforced in SQL only.
 
-6. CI/CD and deployment notes
+6. Types
+
+- Build types using Prisma provided types like you can see in the file `types/formTypes.ts`
+
+7. CI/CD and deployment notes
 
 - vercel-build script expects a reachable database and runs migrations with prisma migrate deploy. Ensure DATABASE_URL/DIRECT_URL are set in Vercel project settings. Use pooled URL for runtime (DATABASE_URL with pgbouncer) and direct URL for migrations (DIRECT_URL).
 
-7. Troubleshooting
+8. Troubleshooting
 
 - Jest failing on toThrowError: replace with toThrow (Jest 30 change).
 - Module resolution errors in tests: remember tsconfig uses bundler resolution; when importing path aliases in tests, run via next/jest which respects next config (dir: './').
