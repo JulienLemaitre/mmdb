@@ -6,6 +6,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in C major, BWV 772",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -67,6 +68,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in C minor, BWV 773",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -128,6 +130,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in D major, BWV 774",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -192,6 +195,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in D minor, BWV 775",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -256,6 +260,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in E-flat major, BWV 776",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -320,6 +325,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in E major, BWV 777",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -381,6 +387,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in E minor, BWV 778",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -442,6 +449,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in F major, BWV 779",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -503,6 +511,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in F minor, BWV 780",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -564,6 +573,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in G major, BWV 781",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -622,6 +632,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in G minor, BWV 782",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -683,6 +694,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in A major, BWV 783",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -744,6 +756,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in A minor, BWV 784",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -802,6 +815,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in B-flat major, BWV 785",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -863,6 +877,7 @@ const pieceList = [
     "yearOfComposition": 1723,
     "source": {
       "type": "EDITION",
+      "title": "Invention in B minor, BWV 786",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/72/IMSLP63611-PMLP03267-Bach_Oeves_Complets_Peters_Liv_7_BWV_772-786_2748.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/63611/sevqs",
       "year": 1840,
@@ -924,6 +939,7 @@ const pieceList = [
     "yearOfComposition": 1817,
     "source": {
       "type": "EDITION",
+      "title": "Fugue in D Major, Op. 137",
       "link": "https://ks.imslp.info/files/imglnks/usimg/6/64/IMSLP51370-PMLP40988-Op.137.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/51370/sevqs",
       "year": 1827,
@@ -980,6 +996,7 @@ const pieceList = [
     "yearOfComposition": 1800,
     "source": {
       "type": "EDITION",
+      "title": "Septet in E-flat major, Op.20",
       "link": "https://ks.imslp.info/files/imglnks/usimg/3/34/IMSLP677693-PMLP4920-Grand_septuor_0001-converted-compressed.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/677693/sevqs",
       "year": 1828,
@@ -1249,16 +1266,13 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.18",
-      "pieceRank": "1"
-    },
     "title": "String Quartet No.1, Op.18 No.1",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
     "yearOfComposition": 1799,
     "source": {
       "type": "EDITION",
+      "title": "String Quartet No.1, Op.18 No.1",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/e/e8/IMSLP274938-PMLP04680-Quartet_op._18_no._1_-_Beethoven.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274938/sevqs",
       "year": 1829,
@@ -1408,16 +1422,13 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.18",
-      "pieceRank": "2"
-    },
     "title": "String Quartet No.2, Op.18 No.2",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
     "yearOfComposition": 1799,
     "source": {
       "type": "EDITION",
+      "title": "String Quartet No.2, Op.18 No.2",
       "link": "https://imslp.simssa.ca/files/imglnks/usimg/c/c3/IMSLP274934-PMLP05125-Quartet_op.18_no.2_-_Beethoven.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274934/sevqs",
       "year": 1829,
@@ -1594,16 +1605,13 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.18",
-      "pieceRank": "3"
-    },
     "title": "String Quartet No.3, Op.18 No.3",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
     "yearOfComposition": 1799,
     "source": {
       "type": "EDITION",
+      "title": "String Quartet No.3, Op.18 No.3",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/9/9d/IMSLP274932-PMLP04691-Quartet_Op._18_No._3_Beethoven.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274932/sevqs",
       "year": 1829,
@@ -1752,16 +1760,13 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.18",
-      "pieceRank": "4"
-    },
     "title": "String Quartet No.4, Op.18 No.4",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
     "yearOfComposition": 1799,
     "source": {
       "type": "EDITION",
+      "title": "String Quartet No.4, Op.18 No.4",
       "link": "https://ks.imslp.info/files/imglnks/usimg/3/3f/IMSLP274829-PMLP04332-Quartet_op._18_no._4_-_Beethoven.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274829/sevqs",
       "year": 1829,
@@ -1942,16 +1947,13 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.18",
-      "pieceRank": "5"
-    },
     "title": "String Quartet No.5, Op.18 No.5",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
     "yearOfComposition": 1799,
     "source": {
       "type": "EDITION",
+      "title": "String Quartet No.5, Op.18 No.5",
       "link": "https://ks.imslp.info/files/imglnks/usimg/5/5c/IMSLP274828-PMLP05018-Beethoven_quartet_op._18_no._5.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274828/sevqs",
       "year": 1829,
@@ -2123,16 +2125,13 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.18",
-      "pieceRank": "6"
-    },
     "title": "String Quartet No.6, Op.18 No.6",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
     "yearOfComposition": 1799,
     "source": {
       "type": "EDITION",
+      "title": "String Quartet No.6, Op.18 No.6",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/c/c7/IMSLP04760-Beethoven_-_String_Quartet_No.6_Dover.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/04760/sevqs",
       "year": 1862,
@@ -2358,16 +2357,13 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.59",
-      "pieceRank": "1"
-    },
     "title": "String Quartet No.7, Op.59 No.1",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
     "yearOfComposition": 1806,
     "source": {
       "type": "EDITION",
+      "title": "String Quartet No.7, Op.59 No.1",
       "link": "https://ks.imslp.info/files/imglnks/usimg/2/24/IMSLP274340-PMLP05127-Beethoven_Quartet_op._59_no.1.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274340/sevqs",
       "year": 1830,
@@ -2563,16 +2559,13 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.59",
-      "pieceRank": "2"
-    },
     "title": "String Quartet No.8, Op.59 No.2",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
     "yearOfComposition": 1806,
     "source": {
       "type": "EDITION",
+      "title": "String Quartet No.8, Op.59 No.2",
       "link": "https://ks.imslp.info/files/imglnks/usimg/3/39/IMSLP592966-PMLP5113-Beethoven_no.2.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/592966/sevqs",
       "year": 1830,
@@ -2745,16 +2738,13 @@ const pieceList = [
     ]
   },
   {
-    "collection": {
-      "title": "Op.59",
-      "pieceRank": "3"
-    },
     "title": "String Quartet No.9, Op.59 No.3",
     "category": "CHAMBER_INSTRUMENTAL",
     "composer": "Beethoven, Ludwig van",
     "yearOfComposition": 1806,
     "source": {
       "type": "EDITION",
+      "title": "String Quartet No.9, Op.59 No.3",
       "link": "https://ks.imslp.info/files/imglnks/usimg/6/66/IMSLP274817-PMLP04779-Beethoven_Quartet_op._59_no.3.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274817/sevqs",
       "year": 1830,
@@ -2935,6 +2925,7 @@ const pieceList = [
     "yearOfComposition": 1809,
     "source": {
       "type": "EDITION",
+      "title": "String Quartet No.10, Op.74",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/f/f0/IMSLP274827-PMLP05044-Quartet_op._74_No._10_-_Beethoven.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/274827/sevqs",
       "year": 1830,
@@ -3180,6 +3171,7 @@ const pieceList = [
     "yearOfComposition": 1810,
     "source": {
       "type": "EDITION",
+      "title": "String Quartet No.11, Op.95",
       "link": "https://ks.imslp.info/files/imglnks/usimg/0/0b/IMSLP396267-PMLP04781--Mus.Hs.16531-_Quartetto_Op.95.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/396267/sevqs",
       "year": 1810,
@@ -3410,6 +3402,7 @@ const pieceList = [
     "yearOfComposition": 1818,
     "source": {
       "type": "EDITION",
+      "title": "Piano Sonata No.29, Op.106",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/8/89/IMSLP51318-PMLP01486-Op.106.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/51318/sevqs",
       "year": 1819,
@@ -3585,6 +3578,7 @@ const pieceList = [
     "yearOfComposition": 1800,
     "source": {
       "type": "EDITION",
+      "title": "Symphony No.1, Op.21",
       "link": "https://ks.imslp.info/files/imglnks/usimg/4/4a/IMSLP46060-PMLP01582-Op.21.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46060/sevqs",
       "year": 1809,
@@ -3782,6 +3776,7 @@ const pieceList = [
     "yearOfComposition": 1802,
     "source": {
       "type": "EDITION",
+      "title": "Symphony No.2, Op.36",
       "link": "https://ks.imslp.info/files/imglnks/usimg/4/45/IMSLP46061-PMLP02580-Op.36.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46061/sevqs",
       "year": 1809,
@@ -3961,6 +3956,7 @@ const pieceList = [
     "yearOfComposition": 1804,
     "source": {
       "type": "EDITION",
+      "title": "Symphony No.3, Op.55",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/e/e2/IMSLP46066-PMLP02581-Op.55.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46066/sevqs",
       "year": 1809,
@@ -4188,6 +4184,7 @@ const pieceList = [
     "yearOfComposition": 1806,
     "source": {
       "type": "EDITION",
+      "title": "Symphony No.4, Op.60",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/c/c4/IMSLP46075-PMLP01585-Op.60.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46075/sevqs",
       "year": 1823,
@@ -4396,6 +4393,7 @@ const pieceList = [
     "yearOfComposition": 1808,
     "source": {
       "type": "EDITION",
+      "title": "Symphony No.5, Op.67",
       "link": "https://ks.imslp.info/files/imglnks/usimg/4/4b/IMSLP46080-PMLP01586-Op.67_Manuscript.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46080/sevqs",
       "year": 1808,
@@ -4651,6 +4649,7 @@ const pieceList = [
     "yearOfComposition": 1808,
     "source": {
       "type": "EDITION",
+      "title": "Symphony No.6, Op.68",
       "link": "https://ks.imslp.info/files/imglnks/usimg/1/1b/IMSLP46101-PMLP01595-Op.68_Score.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46101/sevqs",
       "year": 1826,
@@ -4863,6 +4862,7 @@ const pieceList = [
     "yearOfComposition": 1812,
     "source": {
       "type": "EDITION",
+      "title": "Symphony No.7, Op.92",
       "link": "https://ks.imslp.info/files/imglnks/usimg/6/66/IMSLP46251-PMLP01600-Op.92.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46251/sevqs",
       "year": 1816,
@@ -5071,6 +5071,7 @@ const pieceList = [
     "yearOfComposition": 1812,
     "source": {
       "type": "EDITION",
+      "title": "Symphony No. 8, Op.93",
       "link": "https://ks.imslp.info/files/imglnks/usimg/0/04/IMSLP46253-PMLP01605-Op.93.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/46253/sevqs",
       "year": 1816,
@@ -5230,6 +5231,7 @@ const pieceList = [
     "yearOfComposition": 1817,
     "source": {
       "type": "EDITION",
+      "title": "Gesang der Mönche, WoO 104",
       "link": "https://ks.imslp.info/files/imglnks/usimg/6/6f/IMSLP59054-PMLP121131-Beethoven_Werke_Breitkopf_Serie_23_No_255_WoO_104.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/59054/sevqs",
       "year": 1839,
@@ -5282,6 +5284,7 @@ const pieceList = [
     "yearOfComposition": 1815,
     "source": {
       "type": "EDITION",
+      "title": "Meeresstille und glückliche Fahrt, Op.112",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/e/e7/IMSLP51327-PMLP58949-Op.112.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/51327/sevqs",
       "year": 1823,
@@ -5369,6 +5372,7 @@ const pieceList = [
     "yearOfComposition": 1824,
     "source": {
       "type": "EDITION",
+      "title": "Symphony No.9, Op. 125",
       "link": "https://ks.imslp.info/files/imglnks/usimg/7/76/IMSLP328923-PMLP01607-LvBeethoven_Symphony_No.9,_Op.125_fe_fs_BPL.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/328923/sevqs",
       "year": 1826,
@@ -5814,6 +5818,7 @@ const pieceList = [
     "yearOfComposition": 1817,
     "source": {
       "type": "EDITION",
+      "title": "So oder So, WoO 148",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/f/f6/IMSLP51473-PMLP101809-WoO_148.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/51473/sevqs",
       "year": 1817,
@@ -5869,6 +5874,7 @@ const pieceList = [
     "yearOfComposition": 1817,
     "source": {
       "type": "EDITION",
+      "title": "Resignation, WoO 149",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/a/ab/IMSLP51474-PMLP101819-WoO_149.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/51474/sevqs",
       "year": 1818,
@@ -5921,6 +5927,7 @@ const pieceList = [
     "yearOfComposition": 1820,
     "source": {
       "type": "EDITION",
+      "title": "Abendlied unter'm gestirnten Himmel, WoO 150",
       "link": "https://ks.imslp.info/files/imglnks/usimg/3/39/IMSLP51475-PMLP101825-WoO_150.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/51475/sevqs",
       "year": 1820,
@@ -5976,6 +5983,7 @@ const pieceList = [
     "yearOfComposition": 1854,
     "source": {
       "type": "EDITION",
+      "title": "Piano Trio No.1, Op.8",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/b/b4/IMSLP258494-PMLP52223-brahms_trio_op8-1_dkb.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/258494/sevqs",
       "year": 1854,
@@ -6186,6 +6194,7 @@ const pieceList = [
     "yearOfComposition": 1882,
     "source": {
       "type": "EDITION",
+      "title": "Piano Trio No.2, Op.87",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/a/a4/IMSLP23117-PMLP52833-BraWV,_S._362.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/23117/sevqs",
       "year": 1883,
@@ -6244,6 +6253,7 @@ const pieceList = [
     "yearOfComposition": 1859,
     "source": {
       "type": "EDITION",
+      "title": "Piano Concerto No.1, Op.15",
       "link": "https://ks.imslp.info/files/imglnks/usimg/5/5a/IMSLP311060-PMLP02760-JBrahms_Piano_Concerto_No.1,_Op.15_fullscore_1875.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/311060/sevqs",
       "year": 1875,
@@ -6303,6 +6313,7 @@ const pieceList = [
     "yearOfComposition": 1881,
     "source": {
       "type": "EDITION",
+      "title": "Piano Concerto No.2, Op. 83",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/d/d1/IMSLP23113-PMLP02761-BraWV,_S._345.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/23113/sevqs",
       "year": 1882,
@@ -6481,6 +6492,7 @@ const pieceList = [
     "yearOfComposition": 1868,
     "source": {
       "type": "EDITION",
+      "title": "Ein deutsches Requiem, Op.45",
       "link": "https://ks.imslp.info/files/imglnks/usimg/1/18/IMSLP23011-PMLP11297-BraWV,_S._177.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/23011/sevqs",
       "year": 1868,
@@ -6875,6 +6887,7 @@ const pieceList = [
     "yearOfComposition": 1868,
     "source": {
       "type": "EDITION",
+      "title": "Rinaldo, Op.50",
       "link": "https://ks.imslp.net/files/imglnks/usimg/4/41/IMSLP23061-PMLP52641-BraWV,_S._205f.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/23061/sevqs",
       "year": 1869,
@@ -7215,6 +7228,7 @@ const pieceList = [
     "yearOfComposition": 1881,
     "source": {
       "type": "EDITION",
+      "title": "Nänie, Op.82",
       "link": "https://ks.imslp.net/files/imglnks/usimg/0/0a/IMSLP23112-PMLP52824-BraWV,_S._342.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/23112/sevqs",
       "year": 1881,
@@ -7288,6 +7302,7 @@ const pieceList = [
     "yearOfComposition": 1833,
     "source": {
       "type": "EDITION",
+      "title": "The School of Velocity, Op.299",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/c/cf/IMSLP593590-PMLP3452-czerny_op299_diabelli_CzerDie_49124441X.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/593590/sevqs",
       "year": 1840,
@@ -8399,6 +8414,7 @@ const pieceList = [
     "yearOfComposition": 1834,
     "source": {
       "type": "EDITION",
+      "title": "40 Daily Exercises, Op.337",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/c/c0/IMSLP643373-PMLP177367-czerny_g.371.s_40_ta-gliche_Studien_auf_dem_Piano-Forte_mit_vorgeschriebenen_Wiederholungen_..._337tes_Werk-_etc_full.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/643373/sevqs",
       "year": 1834,
@@ -9553,6 +9569,7 @@ const pieceList = [
     "yearOfComposition": 1837,
     "source": {
       "type": "EDITION",
+      "title": "The School of the Virtuoso, Op.365",
       "link": "https://ks.imslp.net/files/imglnks/usimg/2/2b/IMSLP582004-PMLP14384-czerny_365_bk_1.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/582004/sevqs",
       "year": 1837,
@@ -9743,6 +9760,7 @@ const pieceList = [
     "yearOfComposition": 1873,
     "source": {
       "type": "EDITION",
+      "title": "Symphony No.3, Op.10",
       "link": "https://ks.imslp.net/files/imglnks/usimg/6/6e/IMSLP229704-PMLP46631-ADvorak_Symphony_No.3,_Op.10_fe_fs.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/229704/sevqs",
       "year": 1911,
@@ -9835,6 +9853,7 @@ const pieceList = [
     "yearOfComposition": 1874,
     "source": {
       "type": "EDITION",
+      "title": "Symphony No.4, Op.13",
       "link": "https://ks.imslp.net/files/imglnks/usimg/7/76/IMSLP235245-SIBLEY1802.18757.6c71-39087009397391vol._2.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/235245/sevqs",
       "year": 1912,
@@ -9960,6 +9979,7 @@ const pieceList = [
     "yearOfComposition": 1875,
     "source": {
       "type": "EDITION",
+      "title": "Symphony No.5, Op.76",
       "link": "https://ks.imslp.net/files/imglnks/usimg/4/40/IMSLP28536-PMLP05726-Dvorak-Op076FSsim.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/28536/sevqs",
       "year": 1888,
@@ -10117,6 +10137,7 @@ const pieceList = [
     "yearOfComposition": 1825,
     "source": {
       "type": "EDITION",
+      "title": "Piano Quartet No.3, Op.3",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/a/ac/IMSLP25328-PMLP13881-Mendelssohn_Piano_Quartet3_Op3.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/25328/sevqs",
       "year": 1833,
@@ -10319,6 +10340,7 @@ const pieceList = [
     "yearOfComposition": 1839,
     "source": {
       "type": "EDITION",
+      "title": "Piano Trio No.1, Op.49",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/d/d2/IMSLP17394-Mendelssohn_Trio_Op49.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/17394/sevqs",
       "year": 1840,
@@ -10474,6 +10496,7 @@ const pieceList = [
     "yearOfComposition": 1845,
     "source": {
       "type": "EDITION",
+      "title": "Piano Trio No.2, Op.66",
       "link": "https://ks4.imslp.net/files/imglnks/usimg/f/fa/IMSLP86707-PMLP41447-mendelssohn_trio_op66.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/86707/sevqs",
       "year": 1846,
@@ -10630,6 +10653,7 @@ const pieceList = [
     "yearOfComposition": 1838,
     "source": {
       "type": "EDITION",
+      "title": "Kinderszenen, Op.15",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/f/fe/IMSLP03060-Schumann-Op015Brt6016.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/03060/sevqs",
       "year": 1839,
@@ -11027,6 +11051,7 @@ const pieceList = [
     "yearOfComposition": 1880,
     "source": {
       "type": "EDITION",
+      "title": "1812 Overture, Op.49",
       "link": "https://ks4.imslp.info/files/imglnks/usimg/a/ae/IMSLP23744-PMLP03587-Tchaikovsky_-_1812_Overture_(orch._score).pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/23744/sevqs",
       "year": 1882,
@@ -11193,6 +11218,7 @@ const pieceList = [
     "yearOfComposition": 1888,
     "source": {
       "type": "EDITION",
+      "title": "Symphony No.5, Op.64",
       "link": "https://ks.imslp.info/files/imglnks/usimg/2/2c/IMSLP377466-PMLP02739-SymphonyOp64jur.pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/377466/sevqs",
       "year": 1888,
@@ -11607,6 +11633,7 @@ const pieceList = [
     "yearOfComposition": 1893,
     "source": {
       "type": "EDITION",
+      "title": "Symphony No.6, Op.74",
       "link": "https://ks.imslp.info/files/imglnks/usimg/2/2d/IMSLP105425-PMLP02511-Ciaikovskij_-_74_-_Symphony_n.6_b_fs_(Jurgenson).pdf",
       "permalink": "https://imslp.org/wiki/Special:ImagefromIndex/105425/sevqs",
       "year": 1896,

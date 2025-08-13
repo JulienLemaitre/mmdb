@@ -262,14 +262,24 @@ async function processDataFromXlsx(dataSheetList: any) {
           const pieceNumberMatch = pieceNumberPart.exec(collectionTitleFull[0])
           console.log(`[processDataFromXlsx] pieceNumberMatch :`, pieceNumberMatch)
           if (collectionTitleMatch && pieceNumberMatch) {
-            collectionTitle = collectionTitleMatch[1]
-          console.log(`[processDataFromXlsx] collectionTitle :`, collectionTitle)
-            pieceRank = pieceNumberMatch[1]
-          console.log(`[processDataFromXlsx] pieceRank :`, pieceRank)
-            collection = {
-              title: collectionTitle,
-              pieceRank,
+            // Extract opus number and exclude specific ones
+            const opNumMatch = collectionTitleMatch[1].match(/\d+/)
+            const opNum = opNumMatch ? Number(opNumMatch[0]) : NaN
+            const isExcludedOpus = opNum === 18 || opNum === 59
+
+            if (!isExcludedOpus) {
+              collectionTitle = collectionTitleMatch[1]
+              console.log(`[processDataFromXlsx] collectionTitle :`, collectionTitle)
+              pieceRank = pieceNumberMatch[1]
+              console.log(`[processDataFromXlsx] pieceRank :`, pieceRank)
+              collection = {
+                title: collectionTitle,
+                pieceRank,
+              }
+            } else {
+              console.log(`[processDataFromXlsx] Skipping collection recognition for Op.${opNum}`)
             }
+
           }
         }
 
@@ -284,6 +294,8 @@ async function processDataFromXlsx(dataSheetList: any) {
         // NEW source
         const source = {
           type: SOURCE_TYPE.EDITION,
+          // Prefer the collection title if we detected this piece is part of a collection, otherwise use the row title
+          title: collection?.title ?? rowData.title,
           ...(rowData.link && {
             link: rowData.link,
             permalink: getIMSLPPermaLink(rowData.link),
@@ -983,6 +995,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
               },
             },
             type: source.type,
+            title: source.title,
             link: source.link,
             permalink: source.permalink || getIMSLPPermaLink(source.link),
             year: source.year,
