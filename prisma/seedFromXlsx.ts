@@ -7,6 +7,29 @@ import getNotesPerBarCollectionFromNotesPerSecondCollection
 import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 
+const EXCLUDED_OPUSES = new Set<number>([18, 59]);
+
+function deriveCollectionLabelFromTitle(title: string) {
+  // Take the part before ", Op."
+  const beforeOp = title.split(/,\s*Op\./i)[0]?.trim() || "";
+  // Remove trailing "No. X ..." if present
+  const base = beforeOp.replace(/\s*No\.\s*\d+.*$/i, "").trim();
+  // Pluralize naively: add trailing 's' if not already plural
+  const plural =
+    base.endsWith("s") || base.endsWith("S") ? base : `${base}s`;
+  return plural;
+}
+
+function parseOpusAndNo(title: string) {
+  // e.g. "... , Op. 18 No. 3", "... Op.18 No.1", with optional commas/spaces
+  const m = title.match(/,\s*Op\.\s*(\d+)\s*No\.\s*(\d+)/i);
+  if (!m) return null;
+  const opus = Number(m[1]);
+  const no = Number(m[2]);
+  if (Number.isNaN(opus) || Number.isNaN(no)) return null;
+  return { opus, no };
+}
+
 function logTestError(bpm, ...props) {
   if (bpm === 108) {
     console.log(props)
@@ -731,15 +754,61 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
     return piece
   })
 
-  const collectionToCreateList : any[] = []
-    pieceListFixed.filter((piece) => piece.collection).forEach((piece) => {
-      if (!collectionToCreateList.some((collection) => collection.title === piece.collection.title && collection.composer === piece.composer)) {
-        collectionToCreateList.push({
-          title: piece.collection.title,
-          composer: piece.composer,
-        })
-      }
-  })
+  // Group excluded-opus pieces (e.g., Beethoven String Quartets Op.18/59) into collections,
+  // without affecting their separate MM Sources.
+  const piecesAugmentedForExcludedOpus = pieceListFixed.map((p) => ({ ...p }));
+  type GroupKey = string; // `${composer}|${opus}`
+  const groups = new Map<GroupKey, { composer: string; opus: number; label: string; items: Array<{ index: number; rank: number }> }>();
+
+  piecesAugmentedForExcludedOpus.forEach((piece, index) => {
+    const parsed = parseOpusAndNo(piece.title);
+    if (!parsed) return;
+    if (!EXCLUDED_OPUSES.has(parsed.opus)) return;
+
+    // Build group key by composer + opus
+    const key = `${piece.composer}|${parsed.opus}`;
+    if (!groups.has(key)) {
+      const label = deriveCollectionLabelFromTitle(piece.title);
+      groups.set(key, {
+        composer: piece.composer,
+        opus: parsed.opus,
+        label,
+        items: [],
+      });
+    }
+    groups.get(key)!.items.push({ index, rank: parsed.no });
+  });
+
+  // Attach a collection object with the derived title and correct rank to each grouped piece
+  groups.forEach((group) => {
+    const collectionTitle = `${group.label}, Op. ${group.opus}`;
+    group.items.forEach(({ index, rank }) => {
+      const original = piecesAugmentedForExcludedOpus[index];
+      piecesAugmentedForExcludedOpus[index] = {
+        ...original,
+        collection: {
+          title: collectionTitle,
+          pieceRank: String(rank),
+        },
+      };
+    });
+  });
+
+  const collectionToCreateList: any[] = [];
+  piecesAugmentedForExcludedOpus
+  .filter((piece) => piece.collection)
+  .forEach((piece) => {
+    if (
+      !collectionToCreateList.some(
+        (c) => c.title === piece.collection.title && c.composer === piece.composer,
+      )
+    ) {
+      collectionToCreateList.push({
+        title: piece.collection.title,
+        composer: piece.composer,
+      });
+    }
+  });
 
   const collectionTaskList = collectionToCreateList.map((collection) => {
     return async function () {
@@ -783,7 +852,8 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
 
   console.log(`[SEED] persistedCollectionList`, JSON.stringify(persistedCollectionList, null, 2))
 
-  const pieceTaskList = pieceListFixed.map((piece, pieceIndex, pieceArray) => {
+  const pieceTaskList = piecesAugmentedForExcludedOpus
+  .map((piece, pieceIndex, pieceArray) => {
     const birthDeath: [number, number] = composerBirthDeathYear[piece.composer.split(',')[0].trim()]
     const collectionId: string = persistedCollectionList.find((collection) => collection.title === piece.collection?.title)?.id
     if (!birthDeath) {
@@ -924,6 +994,11 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
   // For contributions, we only want to add them once per created source
   const newlyCreatedSourceIds = new Set<string>()
 
+  const isExcludedOpusTitle = (title: string) => {
+    const m = parseOpusAndNo(title);
+    return !!(m && EXCLUDED_OPUSES.has(m.opus));
+  };
+
   const sourceTaskList = persistedPieceList.map((piece) => {
     const pieceVersion = piece.pieceVersions?.[0]
     return async function () {
@@ -938,7 +1013,10 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
       const movements = pieceVersion.movements.sort((a, b) => a.rank - b.rank)
       const sectionCountForThisPiece = movements.reduce((acc, mv) => acc + mv.sections.length, 0)
 
-      const key = getSourceKey(source)
+      // Force separate MM Sources for excluded opuses even if link/year/type match
+      const baseKey = getSourceKey(source)
+      const key = isExcludedOpusTitle(piece.title) ? `${baseKey}|${piece.title}` : baseKey
+
       const cached = sourceByKey.get(key)
 
       if (cached) {
