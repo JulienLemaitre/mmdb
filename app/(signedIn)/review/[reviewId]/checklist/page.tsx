@@ -29,8 +29,18 @@ type OverviewResponse = {
   counts: { totalItems: number };
 };
 
+// Minimal working copy persisted in localStorage; forms will mutate this later.
+// For the foundation, we at least persist the overview graph as the initial working copy.
+type WorkingCopy = {
+  graph: OverviewResponse["graph"];
+  updatedAt: string; // ISO timestamp of last local update
+};
+
 function storageKey(reviewId: string) {
   return `review:${reviewId}:checklist`;
+}
+function workingCopyKey(reviewId: string) {
+  return `review:${reviewId}:workingCopy`;
 }
 
 function encodeKey(it: ChecklistItem) {
@@ -46,6 +56,11 @@ export default function ChecklistPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [checkedKeys, setCheckedKeys] = useState<Set<string>>(new Set());
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [aborting, setAborting] = useState(false);
+  const [abortError, setAbortError] = useState<string | null>(null);
+  const [reloadNonce, setReloadNonce] = useState(0);
 
   // Load overview
   useEffect(() => {
@@ -53,7 +68,7 @@ export default function ChecklistPage() {
     async function load() {
       try {
         setLoading(true);
-        const res = await fetch(`/api/reviews/${reviewId}/overview`, {
+        const res = await fetch(`/api/review/${reviewId}/overview`, {
           cache: "no-store",
         });
         if (!res.ok) {
@@ -72,6 +87,13 @@ export default function ChecklistPage() {
           } catch {
             // ignore
           }
+        }
+        // Initialize working copy if absent
+        const wcKey = workingCopyKey(j.reviewId);
+        const wcRaw = localStorage.getItem(wcKey);
+        if (!wcRaw) {
+          const wc: WorkingCopy = { graph: j.graph, updatedAt: new Date().toISOString() };
+          localStorage.setItem(wcKey, JSON.stringify(wc));
         }
       } catch (e: any) {
         if (!mounted) return;
@@ -126,7 +148,7 @@ export default function ChecklistPage() {
 
   const allItems = data.checklist;
   const requiredItems = allItems.filter((i) => i.required);
-  const submitDisabled = totals.totalRequired === 0 || totals.checkedRequired < totals.totalRequired;
+  const submitDisabled = submitting || totals.totalRequired === 0 || totals.checkedRequired < totals.totalRequired;
 
   return (
     <div className="p-6 space-y-6">
@@ -198,31 +220,88 @@ export default function ChecklistPage() {
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
-        <button
-          type="button"
-          className={`px-4 py-2 rounded ${submitDisabled ? "bg-gray-300 cursor-not-allowed" : "bg-green-600 text-white"}`}
-          disabled={submitDisabled}
-          title="Submit is disabled until 100% required checks are completed (finalize endpoint comes next)."
-          onClick={() => {
-            // No-op for now; will integrate with finalize API later
-            alert("Submit is disabled until finalize endpoint is implemented.");
-          }}
-        >
-          Submit (disabled)
-        </button>
-        <button
-          type="button"
-          className="px-4 py-2 rounded border"
-          onClick={() => {
-            // Clear local checklist state for this review
-            localStorage.removeItem(storageKey(data.reviewId));
-            setCheckedKeys(new Set());
-            router.push("/feed");
-          }}
-        >
-          Abort (clear local state)
-        </button>
+      <div className="flex flex-col gap-2">
+        {submitError && (
+          <div className="text-sm text-red-600">{submitError}</div>
+        )}
+        {abortError && (
+          <div className="text-sm text-red-600">{abortError}</div>
+        )}
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            className={`px-4 py-2 rounded ${submitDisabled ? "bg-gray-300 cursor-not-allowed" : "bg-green-600 text-white"}`}
+            disabled={submitDisabled}
+            onClick={async () => {
+              if (!data) return;
+              try {
+                setSubmitError(null);
+                setSubmitting(true);
+                const requiredItemsChecked = requiredItems
+                  .filter((it) => checkedKeys.has(encodeKey(it)))
+                  .map((it) => ({
+                    entityType: it.entityType,
+                    entityId: it.entityId,
+                    fieldPath: it.fieldPath,
+                    checked: true,
+                  }));
+                const res = await fetch(`/api/review/${data.reviewId}/submit`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ checklistState: requiredItemsChecked, overallComment: null }),
+                });
+                if (!res.ok) {
+                  const j = await res.json().catch(() => ({}));
+                  throw new Error(j?.error || `Submit failed (status ${res.status})`);
+                }
+                // Clear local state and navigate back to list
+                localStorage.removeItem(storageKey(data.reviewId));
+                localStorage.removeItem(workingCopyKey(data.reviewId));
+                setCheckedKeys(new Set());
+                router.push("/feed");
+              } catch (e: any) {
+                setSubmitError(e?.message || String(e));
+              } finally {
+                setSubmitting(false);
+              }
+            }}
+          >
+            {submitting ? "Submitting…" : "Submit review"}
+          </button>
+          <button
+            type="button"
+            className={`px-4 py-2 rounded border ${aborting ? "opacity-60 cursor-not-allowed" : ""}`}
+            disabled={aborting}
+            onClick={async () => {
+              if (!data) return;
+              const ok = window.confirm("Abort this review? This will discard your local progress and release the lock.");
+              if (!ok) return;
+              try {
+                setAbortError(null);
+                setAborting(true);
+                const res = await fetch(`/api/review/${data.reviewId}/abort`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({}),
+                });
+                if (!res.ok) {
+                  const j = await res.json().catch(() => ({}));
+                  throw new Error(j?.error || `Abort failed (status ${res.status})`);
+                }
+                localStorage.removeItem(storageKey(data.reviewId));
+                localStorage.removeItem(workingCopyKey(data.reviewId));
+                setCheckedKeys(new Set());
+                router.push("/feed");
+              } catch (e: any) {
+                setAbortError(e?.message || String(e));
+              } finally {
+                setAborting(false);
+              }
+            }}
+          >
+            {aborting ? "Aborting…" : "Abort review"}
+          </button>
+        </div>
       </div>
     </div>
   );

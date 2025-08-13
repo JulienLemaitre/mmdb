@@ -36,7 +36,7 @@ export async function POST(req: Request, { params }: any) {
       );
     }
 
-    const reviewId = params?.reviewId;
+    const { reviewId } = (await params) || {};
     if (!reviewId) {
       return json(
         { error: "[review submit] reviewId is required in route params" },
@@ -125,7 +125,10 @@ export async function POST(req: Request, { params }: any) {
     });
 
     if (!mmSource)
-      return json({ error: "[gNF001] MMSource not found" }, { status: 404 });
+      return json(
+        { error: "[review submit] MMSource not found" },
+        { status: 404 },
+      );
 
     // Collect entity IDs for do-not-review-twice resolution
     const personIds = new Set<string>();
@@ -291,7 +294,7 @@ export async function POST(req: Request, { params }: any) {
     if (missing.length > 0) {
       return json(
         {
-          error: "[gVAL001] Checklist incomplete",
+          error: "[review submit] Checklist incomplete",
           details: { missingCount: missing.length, missing },
         },
         { status: 400 },
@@ -376,6 +379,6 @@ export async function POST(req: Request, { params }: any) {
     });
   } catch (err) {
     console.error("/api/reviews/[reviewId]/submit error:", err);
-    return json({ error: "[gUNX005] Unexpected error" }, { status: 500 });
+    return json({ error: "[review submit] Unexpected error" }, { status: 500 });
   }
 }

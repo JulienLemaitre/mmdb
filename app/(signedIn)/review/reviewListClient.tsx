@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { GET_URL_REVIEW_CHECKLIST } from "@/utils/routes";
 
 export type ToReviewItem = {
   id: string;
@@ -42,7 +43,7 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
       });
       if (res.ok) {
         const data = (await res.json()) as { reviewId: string };
-        router.push(`/review/${data.reviewId}`);
+        router.push(GET_URL_REVIEW_CHECKLIST(data.reviewId));
         return;
       }
       // Non-OK

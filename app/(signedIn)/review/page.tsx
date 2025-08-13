@@ -6,6 +6,7 @@ import React from "react";
 import { REVIEW_STATE } from "@prisma/client";
 import ReviewListClient from "./reviewListClient";
 import { getToReviewFromDb } from "@/utils/server/review";
+import { GET_URL_REVIEW_CHECKLIST } from "@/utils/routes";
 
 export default async function ReviewListPage() {
   const session = await getServerSession(authOptions);
@@ -25,7 +26,7 @@ export default async function ReviewListPage() {
     select: { id: true },
   });
   if (active) {
-    redirect(`/review/${active.id}`);
+    redirect(GET_URL_REVIEW_CHECKLIST(active.id));
   }
 
   const data = await getToReviewFromDb().catch((e) => {

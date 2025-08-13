@@ -23,12 +23,21 @@ export async function POST(req: Request, { params }: any) {
       );
     }
 
-    const reviewId = params?.reviewId as string;
+    const reviewId = params?.reviewId as string | undefined;
     if (!reviewId) {
       return json(
-        { error: "[review abort] reviewId param is required" },
+        { error: "[review abort] reviewId is required in route params" },
         { status: 400 },
       );
+    }
+
+    // Optional reason in body, not persisted in MVP but accepted to keep API stable
+    let reason: string | undefined;
+    try {
+      const body = await req.json();
+      reason = body?.reason;
+    } catch {
+      // ignore non-JSON or empty body
     }
 
     const review = await db.review.findUnique({
@@ -36,32 +45,35 @@ export async function POST(req: Request, { params }: any) {
       select: { id: true, creatorId: true, state: true, mMSourceId: true },
     });
     if (!review) {
-      return json(
-        { error: "[review abort] Review not found" },
-        { status: 404 },
-      );
+      return json({ error: "[review abort] Review not found" }, { status: 404 });
     }
 
     const isOwner = review.creatorId === session.user.id;
     const isAdmin = role === "ADMIN";
     if (!isOwner && !isAdmin) {
       return json(
-        { error: "[review abort] Forbidden: only owner or admin can abort" },
+        { error: "[review abort] Forbidden: only owner or admin" },
         { status: 403 },
       );
     }
 
     if (review.state !== REVIEW_STATE.IN_REVIEW) {
       return json(
-        { error: "[review abort] Only IN_REVIEW reviews can be aborted" },
+        { error: "[review abort] Review is not active (IN_REVIEW)" },
         { status: 400 },
       );
     }
 
+    const abortedAt = new Date();
+
     await db.$transaction(async (tx) => {
       await tx.review.update({
         where: { id: reviewId },
-        data: { state: REVIEW_STATE.ABORTED, endedAt: new Date() },
+        data: {
+          state: REVIEW_STATE.ABORTED,
+          endedAt: abortedAt,
+          // Could store reason later in dedicated column if needed
+        },
       });
 
       await tx.mMSource.update({
@@ -70,9 +82,9 @@ export async function POST(req: Request, { params }: any) {
       });
     });
 
-    return json({ ok: true });
+    return json({ ok: true, reviewId, abortedAt, reason: reason ?? null });
   } catch (err) {
     console.error("/api/reviews/[reviewId]/abort error:", err);
-    return json({ error: "[review abort] Unexpected error" }, { status: 500 });
+    return json({ error: "[gUNX006] Unexpected error" }, { status: 500 });
   }
 }
