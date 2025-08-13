@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { GET_URL_REVIEW_CHECKLIST } from "@/utils/routes";
+import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 
 export type ToReviewItem = {
   id: string;
@@ -56,9 +57,14 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
         // ignore JSON parse error; keep defaults
       }
       if (res.status === 409) {
-        setError("This source was just locked by another reviewer. Refreshing list…");
+        setError(
+          "This source was just locked by another reviewer. Refreshing list…",
+        );
         router.refresh();
-      } else if (res.status === 400 && (apiError?.toLowerCase()?.includes("own mm source") ?? false)) {
+      } else if (
+        res.status === 400 &&
+        (apiError?.toLowerCase()?.includes("own mm source") ?? false)
+      ) {
         setError("You cannot review an MM Source you entered yourself.");
       } else if (res.status === 403) {
         setError("You do not have permission to start reviews.");
@@ -121,7 +127,7 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
                       {it.link ? (
                         <a
                           className="text-blue-600 hover:underline"
-                          href={it.link}
+                          href={getIMSLPPermaLink(it.link)}
                           target="_blank"
                           rel="noreferrer"
                         >
