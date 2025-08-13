@@ -48,16 +48,22 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
       }
       // Non-OK
       let msg = "Unable to start review.";
+      let apiError: string | undefined;
       try {
         const j = (await res.json()) as any;
-        if (j?.error) msg = j.error;
+        apiError = j?.error;
       } catch {
-        // ignore JSON parse error; keep default message
+        // ignore JSON parse error; keep defaults
       }
       if (res.status === 409) {
-        setError(`${msg} Refreshing list…`);
-        // best-effort refresh
+        setError("This source was just locked by another reviewer. Refreshing list…");
         router.refresh();
+      } else if (res.status === 400 && (apiError?.toLowerCase()?.includes("own mm source") ?? false)) {
+        setError("You cannot review an MM Source you entered yourself.");
+      } else if (res.status === 403) {
+        setError("You do not have permission to start reviews.");
+      } else if (apiError) {
+        setError(apiError);
       } else {
         setError(msg);
       }

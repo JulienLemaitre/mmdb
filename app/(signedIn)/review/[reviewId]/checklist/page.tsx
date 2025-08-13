@@ -72,6 +72,15 @@ export default function ChecklistPage() {
           cache: "no-store",
         });
         if (!res.ok) {
+          // On auth/ownership/state errors, redirect back to the list per specs
+          if (res.status === 401) {
+            router.push("/login");
+            return;
+          }
+          if (res.status === 400 || res.status === 403 || res.status === 404) {
+            router.push("/review");
+            return;
+          }
           const j = await res.json().catch(() => ({}));
           throw new Error(j?.error || `Failed to load (status ${res.status})`);
         }
@@ -106,7 +115,7 @@ export default function ChecklistPage() {
     return () => {
       mounted = false;
     };
-  }, [reviewId]);
+  }, [reviewId, reloadNonce]);
 
   // Persist changes in localStorage
   useEffect(() => {
@@ -143,7 +152,31 @@ export default function ChecklistPage() {
   }
 
   if (loading) return <div className="p-6">Loading checklist…</div>;
-  if (error) return <div className="p-6 text-red-600">{error}</div>;
+  if (error)
+    return (
+      <div className="p-6 space-y-3">
+        <div className="text-red-600">{error}</div>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            className="px-3 py-1 rounded border"
+            onClick={() => {
+              setError(null);
+              setReloadNonce((n) => n + 1);
+            }}
+          >
+            Retry
+          </button>
+          <button
+            type="button"
+            className="px-3 py-1 rounded border"
+            onClick={() => router.push("/review")}
+          >
+            Back to list
+          </button>
+        </div>
+      </div>
+    );
   if (!data) return <div className="p-6">No data</div>;
 
   const allItems = data.checklist;
@@ -158,7 +191,7 @@ export default function ChecklistPage() {
           <p className="text-sm opacity-80">Review ID: {data.reviewId}</p>
         </div>
         <div className="text-sm">
-          <Link className="underline" href={`/feed`}>
+          <Link className="underline" href={`/review`}>
             Back to list
           </Link>
         </div>
