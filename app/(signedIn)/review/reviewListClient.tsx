@@ -160,22 +160,19 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
       )}
 
       {confirmId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="w-full max-w-sm rounded bg-white p-4 shadow">
-            <h2 className="mb-3 text-lg font-semibold">Start review</h2>
-            <p className="mb-4 text-sm text-gray-700">
+        <dialog className="modal" open>
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Start review</h3>
+            <p className="py-2">
               You are about to start reviewing this MM Source. This will lock it
               for other reviewers until you finish or abort.
             </p>
-            <div className="flex justify-end gap-2">
-              <button
-                className="rounded border px-3 py-1"
-                onClick={cancelModal}
-              >
+            <div className="modal-action">
+              <button className="btn" onClick={cancelModal}>
                 Cancel
               </button>
               <button
-                className="rounded bg-black px-3 py-1 text-white disabled:opacity-50"
+                className="btn btn-primary"
                 onClick={doConfirm}
                 disabled={busyId === confirmId}
               >
@@ -183,7 +180,7 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
               </button>
             </div>
           </div>
-        </div>
+        </dialog>
       )}
     </div>
   );
