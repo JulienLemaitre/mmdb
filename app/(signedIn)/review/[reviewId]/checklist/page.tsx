@@ -2,8 +2,8 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
 import type { ChecklistEntityType } from "@/utils/ReviewChecklistSchema";
+import { URL_REVIEW_LIST } from "@/utils/routes";
 
 type ChecklistItem = {
   entityType: ChecklistEntityType;
@@ -78,7 +78,7 @@ export default function ChecklistPage() {
             return;
           }
           if (res.status === 400 || res.status === 403 || res.status === 404) {
-            router.push("/review");
+            router.push(URL_REVIEW_LIST);
             return;
           }
           const j = await res.json().catch(() => ({}));
@@ -101,7 +101,10 @@ export default function ChecklistPage() {
         const wcKey = workingCopyKey(j.reviewId);
         const wcRaw = localStorage.getItem(wcKey);
         if (!wcRaw) {
-          const wc: WorkingCopy = { graph: j.graph, updatedAt: new Date().toISOString() };
+          const wc: WorkingCopy = {
+            graph: j.graph,
+            updatedAt: new Date().toISOString(),
+          };
           localStorage.setItem(wcKey, JSON.stringify(wc));
         }
       } catch (e: any) {
@@ -120,13 +123,21 @@ export default function ChecklistPage() {
   // Persist changes in localStorage
   useEffect(() => {
     if (!data) return;
-    localStorage.setItem(storageKey(data.reviewId), JSON.stringify(Array.from(checkedKeys)));
+    localStorage.setItem(
+      storageKey(data.reviewId),
+      JSON.stringify(Array.from(checkedKeys)),
+    );
   }, [checkedKeys, data]);
 
   const totals = useMemo(() => {
     const totalRequired = data?.checklist.filter((i) => i.required).length ?? 0;
-    const checkedRequired = data?.checklist.filter((i) => i.required && checkedKeys.has(encodeKey(i))).length ?? 0;
-    const pct = totalRequired === 0 ? 0 : Math.round((checkedRequired / totalRequired) * 100);
+    const checkedRequired =
+      data?.checklist.filter((i) => i.required && checkedKeys.has(encodeKey(i)))
+        .length ?? 0;
+    const pct =
+      totalRequired === 0
+        ? 0
+        : Math.round((checkedRequired / totalRequired) * 100);
     return { totalRequired, checkedRequired, pct };
   }, [data, checkedKeys]);
 
@@ -167,13 +178,6 @@ export default function ChecklistPage() {
           >
             Retry
           </button>
-          <button
-            type="button"
-            className="px-3 py-1 rounded border"
-            onClick={() => router.push("/review")}
-          >
-            Back to list
-          </button>
         </div>
       </div>
     );
@@ -181,7 +185,10 @@ export default function ChecklistPage() {
 
   const allItems = data.checklist;
   const requiredItems = allItems.filter((i) => i.required);
-  const submitDisabled = submitting || totals.totalRequired === 0 || totals.checkedRequired < totals.totalRequired;
+  const submitDisabled =
+    submitting ||
+    totals.totalRequired === 0 ||
+    totals.checkedRequired < totals.totalRequired;
 
   return (
     <div className="p-6 space-y-6">
@@ -190,21 +197,32 @@ export default function ChecklistPage() {
           <h1 className="text-2xl font-semibold">Review checklist</h1>
           <p className="text-sm opacity-80">Review ID: {data.reviewId}</p>
         </div>
-        <div className="text-sm">
-          <Link className="underline" href={`/review`}>
-            Back to list
-          </Link>
-        </div>
       </div>
 
       <div className="rounded border p-4 space-y-2">
         <div className="font-medium">Source</div>
         <div className="text-sm">Title: {data.graph.title ?? "(no title)"}</div>
         <div className="text-sm">
-          Link: <a className="underline" href={data.graph.link} target="_blank" rel="noreferrer">open</a>
+          Link:{" "}
+          <a
+            className="underline"
+            href={data.graph.link}
+            target="_blank"
+            rel="noreferrer"
+          >
+            open
+          </a>
         </div>
         <div className="text-sm">
-          Permalink: <a className="underline" href={data.graph.permalink} target="_blank" rel="noreferrer">open</a>
+          Permalink:{" "}
+          <a
+            className="underline"
+            href={data.graph.permalink}
+            target="_blank"
+            rel="noreferrer"
+          >
+            open
+          </a>
         </div>
       </div>
 
@@ -212,11 +230,15 @@ export default function ChecklistPage() {
         <div className="mb-3 flex items-center justify-between">
           <div className="font-medium">Progress</div>
           <div className="text-sm">
-            {totals.checkedRequired} / {totals.totalRequired} required checks ({totals.pct}%)
+            {totals.checkedRequired} / {totals.totalRequired} required checks (
+            {totals.pct}%)
           </div>
         </div>
         <div className="w-full h-3 bg-gray-200 rounded">
-          <div className="h-3 bg-green-500 rounded" style={{ width: `${totals.pct}%` }} />
+          <div
+            className="h-3 bg-green-500 rounded"
+            style={{ width: `${totals.pct}%` }}
+          />
         </div>
       </div>
 
@@ -227,7 +249,10 @@ export default function ChecklistPage() {
             const key = encodeKey(it);
             const isChecked = checkedKeys.has(key);
             return (
-              <label key={key} className="flex items-start gap-2 border rounded p-3">
+              <label
+                key={key}
+                className="flex items-start gap-2 border rounded p-3"
+              >
                 <input
                   type="checkbox"
                   checked={isChecked}
@@ -257,9 +282,7 @@ export default function ChecklistPage() {
         {submitError && (
           <div className="text-sm text-red-600">{submitError}</div>
         )}
-        {abortError && (
-          <div className="text-sm text-red-600">{abortError}</div>
-        )}
+        {abortError && <div className="text-sm text-red-600">{abortError}</div>}
         <div className="flex items-center gap-3">
           <button
             type="button"
@@ -281,17 +304,22 @@ export default function ChecklistPage() {
                 const res = await fetch(`/api/review/${data.reviewId}/submit`, {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ checklistState: requiredItemsChecked, overallComment: null }),
+                  body: JSON.stringify({
+                    checklistState: requiredItemsChecked,
+                    overallComment: null,
+                  }),
                 });
                 if (!res.ok) {
                   const j = await res.json().catch(() => ({}));
-                  throw new Error(j?.error || `Submit failed (status ${res.status})`);
+                  throw new Error(
+                    j?.error || `Submit failed (status ${res.status})`,
+                  );
                 }
                 // Clear local state and navigate back to list
                 localStorage.removeItem(storageKey(data.reviewId));
                 localStorage.removeItem(workingCopyKey(data.reviewId));
                 setCheckedKeys(new Set());
-                router.push("/feed");
+                router.push(URL_REVIEW_LIST);
               } catch (e: any) {
                 setSubmitError(e?.message || String(e));
               } finally {
@@ -307,7 +335,9 @@ export default function ChecklistPage() {
             disabled={aborting}
             onClick={async () => {
               if (!data) return;
-              const ok = window.confirm("Abort this review? This will discard your local progress and release the lock.");
+              const ok = window.confirm(
+                "Abort this review? This will discard your local progress and release the lock.",
+              );
               if (!ok) return;
               try {
                 setAbortError(null);
@@ -319,12 +349,14 @@ export default function ChecklistPage() {
                 });
                 if (!res.ok) {
                   const j = await res.json().catch(() => ({}));
-                  throw new Error(j?.error || `Abort failed (status ${res.status})`);
+                  throw new Error(
+                    j?.error || `Abort failed (status ${res.status})`,
+                  );
                 }
                 localStorage.removeItem(storageKey(data.reviewId));
                 localStorage.removeItem(workingCopyKey(data.reviewId));
                 setCheckedKeys(new Set());
-                router.push("/feed");
+                router.push(URL_REVIEW_LIST);
               } catch (e: any) {
                 setAbortError(e?.message || String(e));
               } finally {
