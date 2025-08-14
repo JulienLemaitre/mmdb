@@ -4,19 +4,24 @@
 
 #### Metronome Mark
 A *Metronome Mark* (MM) is a combination of note value and corresponding frequency per minute, measured in beats per minute (BPM).
+
 #### Metronome Mark Source
 An *MM Source* is any document that provides a metronome mark for a given piece. In most cases, it will be editions of scores, but it can also be a letter or diary in which the metronome mark is mentioned.
+
 #### Metronome Mark Source Contribution
 An *MM Source Contribution* is any person or organization involved in the MM Source. One of the following roles needs to be selected: MM provider, arranger, editor, publisher, transcriber, translator. The most important role is the MM provider, who is the person that gave the MM to the piece in question.
+
 #### Piece Version
 A Piece Version is the structure of a piece, which consists of one or more movements (e.g., movements of a sonata or symphony). Each movement, in turn, is made up of one or more sections (e.g., the introduction of a movement and the main part).
 Note: When a piece has not been composed with movements, It technically has one single movement in the database, and this leads to display rules where we don't show a "movement" explicitly in the interface.
+
 #### Section
 A Section is defined by the following three characteristics:
 - time signature,
 - tempo indication
 - metronome mark
   If any of the three characteristics above change, a new section must be entered. For each section created, the maximum number of notes per bar for each structural, staccato, repeated and ornamental note is entered. If the tempo indication changes within a sonata movement, but no new metronome mark is given, the section in question should be entered without a metronome mark.
+
 #### Collection
 A collection consists of multiple pieces with the same opus number, e.g., Beethoven’s Op.10 or Schumann’s Kinderszenen. The pieces in a collection are either separated by numbering (e.g., Op.10 No.1, Op.10 No.2, etc.) or by other means such as names.
 
@@ -115,6 +120,7 @@ Consequently, here is my approach concerning the interface that we obtain once w
 7. When every data of a piece is reviewed, the reviewer will be able to declare this piece as reviewed.
 8. In the case of collections, when the collection's description and all its pieces are marked as reviewed, the whole collection will also be considered reviewed.
 9. When all pieces and collections are reviewed, the reviewer will be able to register his entire review.
+
 #### Advantages
 
 - **Reuse of existing forms**

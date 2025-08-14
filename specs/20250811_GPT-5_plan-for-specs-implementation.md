@@ -210,7 +210,7 @@ Authorization and roles
 
 #### 5. Finalize endpoint wiring
 
-- POST /api/review/:reviewId/submit performs transactional apply + audit + MMSource.reviewState update to APPROVED.
+- POST /api/review/:reviewId/submit performs transactional apply + review update to APPROVED + MMSource.reviewState update to APPROVED + reviewedEntity rows creation
 - On success: clear local state, navigate back to list.
 
 #### 6. Abort flow wiring
@@ -234,16 +234,295 @@ Authorization and roles
 
 This keeps the “pick and confirm to lock” UI as an explicit, testable milestone in Phase 1, ensuring the review lifecycle begins where users expect: the to‑review list and confirmation modal.
 
-### Phase 2 (comfort and quality)
+### Phase 2 — Edit forms, Checklist UI structure, and AuditLog
+
+#### Phase 2A — Review UI structure (screens, navigation, and state) Goal: Implement the three review screens and their navigation model, driven by the ReviewChecklistSchema and the “do-not-review-twice” filtering.
+
+- Screens and routes
+    - Review Overview (source-level)
+        - Shows MM Source metadata, references, contributions.
+        - Lists collections and single pieces contained in the source.
+        - Displays per-item review progress and whether a piece/collection is “complete” (all mandatory checks done).
+        - Allows drill-down into Collection view or Piece Review Checklist.
+
+    - Collection Overview
+        - Displays collection description block (if not globally marked reviewed) with per-field checkboxes.
+        - Lists the pieces in the collection with per-piece progress; drill down into Piece Review Checklist.
+        - Rolls up completion state: collection is “complete” when its description block + all its pieces are complete.
+
+    - Piece Review Checklist
+        - One-page “exhaustive” list of every field to check for this piece’s scope:
+            - Piece description (if not globally reviewed)
+            - Piece version, movements, sections, tempo indications, metronome marks
+            - Source‑level references/contributions that attach to this piece (if any)
+            - Collection description (if applicable and required; appears as first block)
+
+        - Each field shows current value; an Edit button opens the existing data-entry form for that entity (working on the local working copy).
+        - Changing a value resets checkmarks for fields affected by that change.
+        - Show filters: Unchecked only, Changed only, All.
+        - Show progress indicators (piece-level, and a breadcrumb-level summary for collection/source).
+
+- Navigation and guards
+    - Route parameters include reviewId and entity anchors (e.g., pieceId, collectionId).
+    - Guard:
+        - If the review is not IN_REVIEW or not owned by current user (unless ADMIN), redirect to the list with a message.
+        - If there’s an active review for the user, block the to-review list route (as in Phase 1).
+
+    - Back navigation preserves scroll/filters in the Overview screens.
+
+- Data loading
+    - GET /api/review/:reviewId/overview
+        - Returns:
+            - MM Source graph trimmed by “do-not-review-twice” rules (persons/orgs/collection-desc/piece-desc filtered when globally reviewed)
+            - Flattened index of entity nodes: {entityType, entityId, parentId?, fieldPaths}
+            - Display metadata for progress: counts of required checks per node.
+
+        - The client builds the working copy initially from this payload.
+
+- Local state model
+    - WorkingCopyContext
+        - Holds the editable graph for this reviewId.
+        - Tracks per-field check states: { entityKey, fieldPath } → checked:boolean.
+        - Tracks derived flags: changed:boolean per field, per entity, and rollups.
+
+    - Persistence
+        - LocalStorage: key = review:{reviewId}.
+        - Auto-save on changes, restore on mount.
+
+- Acceptance criteria (Phase 2A)
+    - The three screens render correctly from the schema and server payload.
+    - Progress and completion roll up accurately for piece, collection, and source.
+    - Navigation between Overview → Piece Checklist → Overview preserves state.
+    - Do-not-review-twice entities are omitted and not editable unless user is ADMIN.
+
+#### Phase 2B — Edit forms wiring (reuse existing forms against the working copy) Goal: Reuse existing data-entry forms to edit the working copy, without touching the DB until submit.
+
+- “Edit” button launch behavior
+    - Each field block has an Edit action that:
+        - Opens the corresponding edit form (drawer/modal/route section).
+        - The form receives initialValues from the working copy slice for that entity.
+        - On save:
+            - Writes the updated values back into the working copy.
+            - Emits a “value changed” event to recompute field diffs and reset checkmarks for touched fields.
+
+- Form adapter layer
+    - Implement a small adapter per entity type to map:
+        - WorkingCopy slice ⇄ existing form props/DTOs (e.g., normalization for nested relations like movements/sections).
+        - Change impact: which fieldPaths to mark as changed/reset.
+
+    - Ensure each form operates purely on props/state; no server calls.
+
+- Change impact rules
+    - Maintain a map per entity type:
+        - fieldPath → affectedFieldPaths
+        - Example:
+            - Changing a timeSignature in Section resets:
+                - section.timeSignature
+                - and derived displays that rely on beats-per-bar if present.
+
+    - Upon successful edit, set changed=true for affected fields and set checked=false for them.
+
+- Validation and constraints
+    - Use the same schema/validation as original data-entry forms.
+    - In the piece checklist, invalid form state blocks Save with visible inline messages.
+    - Optional: highlight invalid entity blocks in the checklist until corrected.
+
+- Admin override
+    - Admin can edit globally-reviewed entities in this flow only if explicitly enabled in UI (hidden by default).
+    - By default, globally-reviewed entities are non-editable and omitted from the checklist.
+
+- Acceptance criteria (Phase 2B)
+    - All relevant entity forms can open from checklist and save back to the working copy.
+    - Saving a change resets related checks and marks fields as changed.
+    - No network requests are made during editing; all happens in memory until final submission.
+    - Attempts to edit a filtered “do-not-review-twice” entity are blocked (unless ADMIN override is active).
+
+#### Phase 2C — Finalize wiring: diffs, server validation, and transactional apply Goal: Compute per-entity diffs, validate checklist completeness server-side, and apply changes atomically.
+
+- Client submit payload
+    - POST /api/review/:reviewId/submit
+        - { workingCopy, checklistState, overallComment }
+        - workingCopy: full graph of edited entities scoped to the review.
+        - checklistState: array of checked items { entityType, entityId, fieldPath } only for required fields.
+
+- Server-side validation
+    - Recompute required fields from ReviewChecklistSchema based on the actual DB graph and “do-not-review-twice” exclusions for this review.
+    - Ensure that for each required field, there is a corresponding checked=true.
+    - Reject if any required field is missing from checklistState or if data fails domain validation.
+
+- Diff computation strategy
+    - For each submitted entity:
+        - Load current DB row(s).
+        - Compare fieldPaths present in the ReviewChecklistSchema scope.
+        - Classify operation: CREATE (new nested child), UPDATE, DELETE (for removed nested child).
+        - Build before/after snapshots for changed entities/nodes only.
+
+- Transactional apply
+    - In one transaction:
+        - Apply CRUD to all changed entities.
+        - Create AuditLog rows for each changed entity (see Phase 2D).
+        - Upsert ReviewedEntity rows for newly reviewed Person/Organization/Collection-desc/Piece-desc entities encountered in scope.
+        - Set Review.state = APPROVED; set endedAt.
+        - Update MMSource.reviewState = APPROVED.
+
+- Acceptance criteria (Phase 2C)
+    - Server rejects incomplete checklists even if client shows 100% (covers race or schema drift).
+    - All updates are atomic; partial failure rolls back everything.
+    - Response returns a summary: counts by operation and list of entity types touched.
+
+#### Phase 2D — AuditLog implementation Goal: Record robust provenance snapshots for every entity touched by a review.
+
+- Table and indexes
+    - AuditLog
+        - id
+        - reviewId
+        - entityType
+        - entityId
+        - operation: CREATE | UPDATE | DELETE
+        - before: jsonb (nullable)
+        - after: jsonb (nullable)
+        - authorId
+        - createdAt
+        - comment (nullable)
+
+    - Indexes:
+        - (reviewId)
+        - (entityType, entityId, createdAt desc)
+
+- Snapshot shape
+    - Use consistent serialization for before/after:
+        - Only persisted fields (no transient/computed props).
+        - Include IDs for nested relations only when they are first-class entities; otherwise embed sub-objects as needed.
+
+    - Strip sensitive or irrelevant fields if any (e.g., internal flags).
+
+- Server write policy
+    - Only write an AuditLog row if there’s a change or a CREATE/DELETE occurs.
+    - For UPDATEs:
+        - before: full snapshot of the entity row(s) at read time.
+        - after: full snapshot after apply.
+
+    - For CREATE/DELETE:
+        - Use null accordingly.
+
+    - Attach authorId = Review.creatorId.
+    - Attach comment if the finalize request includes a review-level comment.
+
+- Read API (for Phase 3 admin UX, but implementable now)
+    - GET /api/review/:reviewId/audit?cursor=&limit=
+        - Returns paginated list of audit entries.
+
+    - GET /api/audit/search?entityType=&entityId=&cursor=&limit=
+        - For back-office search.
+
+- Acceptance criteria (Phase 2D)
+    - Each changed entity in a finalized review results in one AuditLog row with accurate before/after.
+    - CREATE/DELETE are correctly captured with null before/after respectively.
+    - Audit rows are written inside the same transaction as the changes.
+
+#### Phase 2E — Checklist schema finalization and cross‑cutting concerns Goal: Lock down the single source of truth for checklist requirements and ensure both UI and server agree.
+
+- ReviewChecklistSchema
+    - For each entityType:
+        - fields: [{ fieldPath, label, required: boolean | (ctx) => boolean }]
+        - Conditions can depend on related data (e.g., a tempo indication may be required only if a section exists).
+
+    - Provide a helper to:
+        - Expand required fields for a given graph.
+        - Return a flattened list of { entityType, entityId, fieldPath }.
+
+    - This helper is used:
+        - Client-side: to render and compute progress.
+        - Server-side: to validate completeness against submitted checklistState.
+
+- Do-not-review-twice enforcement
+    - Server includes flags for globally reviewed entities in the overview payload.
+    - Client removes these blocks from rendering and disables edit buttons (unless ADMIN override).
+    - Server re-applies the rule on submit (authoritative).
+
+- Field path convention
+    - Adopt a stable naming like:
+        - piece.title, piece.nickname
+        - pieceVersion[uuid].ordering
+        - movement[uuid].title
+        - section[uuid].timeSignature
+        - tempoIndication[uuid].text
+        - metronomeMark[uuid].noteValue and metronomeMark[uuid].bpm
+
+    - Client and server share the same convention for diffing and check mark mapping.
+
+- Acceptance criteria (Phase 2E)
+    - Schema changes immediately propagate to UI and server validation without divergence.
+    - Conditional requirements work and are test-covered.
+
+#### Phase 2F — QA, tests, and resilience Goal: Ensure correctness and prevent regressions.
+
+- Unit tests
+    - Checklist schema expansion:
+        - Given a mocked entity graph, compute required fields and verify count/paths.
+
+    - Diff engine:
+        - CREATE/UPDATE/DELETE per entity type produce expected before/after.
+
+    - Audit composer:
+        - Given diffs, write correct AuditLog rows.
+
+    - ReviewedEntity upserts:
+        - Persons/Orgs/Collection-desc/Piece-desc handled; structure-only entities excluded.
+
+- Integration tests
+    - Start → edit → submit:
+        - Verify one transaction applies CRUD and logs.
+
+    - Abort leaves no entity changes, only review state updated.
+    - Do-not-review-twice:
+        - If an entity is marked reviewed globally, it is omitted and non-editable; submit still passes completeness.
+
+- UI tests
+    - Editing resets checks for impacted fields.
+    - Submit disabled until 100% checks complete.
+    - Progress rollups show accurate counts.
+
+- Resilience
+    - Local storage corruption handling: detect invalid JSON, reset cleanly with a user prompt.
+    - Idempotency (optional): allow a requestId header; can be deferred to Phase 3.
+
+#### Phase 2G — Deliverables and sequencing Recommended order of implementation to keep momentum and minimize rework:
+
+1. Schema helper and field path convention (Phase 2E foundation)
+2. Review Overview and Collection Overview screens (Phase 2A skeleton)
+3. Piece Review Checklist basic rendering from schema (no edit yet)
+4. Form adapter wiring and change-impact rules (Phase 2B)
+5. Client diff pre-check and submit payload shaping (Phase 2C prep)
+6. Server: finalize endpoint with validation → diff → transactional apply (Phase 2C)
+7. AuditLog write path and minimal audit read API (Phase 2D)
+8. Tests across units/integration/UI (Phase 2F)
+9. Polishing: filters, progress accuracy, guard rails, admin override off by default
+
+#### Phase 2 — Acceptance criteria (global)
+- The three review screens exist and mirror the structure described in the specs (source overview → collection overview → piece checklist).
+- Edit buttons open existing forms and save back to the local working copy; changed fields are tracked and their checks reset.
+- Submit enforces server-side completeness and applies changes atomically, writing accurate AuditLog rows and updating ReviewedEntity where applicable.
+- “Do-not-review-twice” exclusions are honored and enforced both client-side and server-side.
+- Adequate tests cover schema expansion, diffs, audit composition, and critical UX flows.
+
+Notes on scope and risk
+- Biggest risk is schema drift between UI and server. Mitigate by centralizing ReviewChecklistSchema and sharing field path helpers.
+- Nested updates (movements/sections/MMs) require careful diffing to distinguish UPDATE vs CREATE/DELETE. Write focused unit tests for these.
+- Keep admin override out of the initial release to reduce complexity; add in Phase 4 back-office.
+
+### Phase 3 (comfort and quality)
 
 - Checklist QoL: progress indicators, filters (unchecked/changed), show changed vs unchanged.
+
+### Phase 4 back-office
+
 - Admin panel:
     - View and abort active reviews.
     - Search AuditLog by entity.
+    - ...
 
-- Idempotency for finalize (optional dedicated key table).
-
-### Phase 3 (optional)
+### Phase 5 (optional)
 
 - Server-side “draft” storage (ReviewDraft) for long reviews.
 - ReviewAttachment support.
