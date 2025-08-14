@@ -672,7 +672,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
     }
   })
 
-  // Create admin and editor test accounts
+  // Create admin and reviewer test accounts
   await db.user.createMany({
     data: [
       {
@@ -690,23 +690,30 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
         passwordHash: "$2a$10$wkkjfc62trF0/lxpEWeHMufw3/JfOayEyi37yjaJwQ18YBe580gmC",
       },
       {
+        name: "mmdb REVIEWER",
+        email: "julem80+mmdbreviewer@pm.me",
+        role: "REVIEWER",
+        emailVerified: now,
+        passwordHash: "$2a$10$wkkjfc62trF0/lxpEWeHMufw3/JfOayEyi37yjaJwQ18YBe580gmC",
+      },
+      {
         name: "Setfan Pospiech",
         email: "st.pospiech@web.de",
-        role: "EDITOR",
+        role: "REVIEWER",
         emailVerified: now,
         passwordHash: "$2a$10$NgfYJUZgxR8PxENV.2aE4.xJc.ayim2wljlquH.7xP01gbMbeBT3S",
       },
       {
         name: "Wim Winters",
         email: "wwinters@telenet.be",
-        role: "EDITOR",
+        role: "REVIEWER",
         emailVerified: now,
         passwordHash: "$2a$10$xa0I2y70qbNl3yC7AZepXuEO07WAcyNX2nRx4/dqWvHz5CdsbZ6uS",
       },
       {
         name: "Johan Van Kerckhoven",
         email: "johan.vankerckhoven@gmail.com",
-        role: "EDITOR",
+        role: "REVIEWER",
         emailVerified: now,
         passwordHash: "$2b$10$8WUBFEwrTadSwzKCOT8FjuQk63QAM.vQi8Kjyu6xHtJ7WnYx/.zmO",
       },
