@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { expandRequiredChecklistItems } from "@/utils/ReviewChecklistSchema";
 import { buildMockOverview } from "@/utils/reviewMock";
 import { computeChangedChecklistFieldPaths } from "@/utils/reviewDiff";
+import { composeAuditEntries } from "@/utils/auditCompose";
 
 // POST /api/review/[reviewId]/submit
 // Body: { workingCopy, checklistState: Array<{entityType, entityId, fieldPath, checked}>, overallComment? }
@@ -81,6 +82,9 @@ export async function POST(req: Request, { params }: { params: { reviewId: strin
     Object.entries(changedUniqueByEntityType).map(([k, v]) => [k, v.size]),
   );
 
+  // Compose audit entries preview (no DB write in mock)
+  const auditPreview = composeAuditEntries(reviewId, baselineGraph as any, workingCopy as any);
+
   // MOCK transactional apply: in a real implementation, here we would:
   // - Verify Review state and ownership (IN_REVIEW) via Prisma
   // - Apply CRUD changes in a single transaction and write AuditLog rows
@@ -97,5 +101,8 @@ export async function POST(req: Request, { params }: { params: { reviewId: strin
     changedFieldPathsSample: changedFieldPaths.slice(0, 100),
   };
 
-  return NextResponse.json({ ok: true, summary });
+  return NextResponse.json({ ok: true, summary, auditPreview: {
+    count: auditPreview.length,
+    entries: auditPreview.slice(0, 100),
+  }});
 }
