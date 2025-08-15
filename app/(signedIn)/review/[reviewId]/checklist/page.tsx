@@ -2,38 +2,44 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import type { ChecklistEntityType } from "@/utils/ReviewChecklistSchema";
+import {
+  ChecklistEntityType,
+  expandRequiredChecklistItems,
+  type RequiredChecklistItem,
+} from "@/utils/ReviewChecklistSchema";
 import { URL_REVIEW_LIST } from "@/utils/routes";
 
-type ChecklistItem = {
-  entityType: ChecklistEntityType;
-  entityId: string;
-  fieldPath: string;
-  label: string;
-  required: boolean;
-};
-
-type OverviewResponse = {
+// API payload shape from /api/review/[reviewId]/overview
+type ApiOverview = {
   reviewId: string;
-  mmSourceId: string;
-  graph: {
-    id: string;
-    title: string | null;
-    link: string;
-    permalink: string;
-    year: number;
-    comment: string | null;
+  graph: any; // ChecklistGraph-like
+  globallyReviewed: {
+    personIds: string[];
+    organizationIds: string[];
+    collectionIds: string[];
+    pieceIds: string[];
   };
-  exclusions: Record<string, string[]>;
-  checklist: ChecklistItem[];
-  counts: { totalItems: number };
+  sourceContents: Array<{
+    joinId: string;
+    mMSourceId: string;
+    pieceVersionId: string;
+    rank: number;
+    pieceId: string;
+    collectionId?: string;
+    collectionRank?: number;
+  }>;
+  progress: {
+    source: { required: number; checked: number };
+    perCollection: Record<string, { required: number; checked: number }>;
+    perPiece: Record<string, { required: number; checked: number }>;
+  };
 };
 
-// Minimal working copy persisted in localStorage; forms will mutate this later.
-// For the foundation, we at least persist the overview graph as the initial working copy.
+// Minimal working copy persisted in localStorage; future forms will mutate this.
+// Initialize from the overview's graph for now.
 type ReviewWorkingCopy = {
-  graph: OverviewResponse["graph"];
-  updatedAt: string; // ISO timestamp of last local update
+  graph: any;
+  updatedAt: string; // ISO timestamp
 };
 
 function storageKey(reviewId: string) {
@@ -43,16 +49,31 @@ function reviewWorkingCopyKey(reviewId: string) {
   return `review:${reviewId}:workingCopy`;
 }
 
-function encodeKey(it: ChecklistItem) {
-  return `${it.entityType}:${it.entityId}:${it.fieldPath}`;
+function encodeKey(it: { entityType: ChecklistEntityType; entityId?: string | null; fieldPath: string }) {
+  return `${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`;
 }
+
+const ENTITY_BADGE: Record<ChecklistEntityType, string> = {
+  MM_SOURCE: "badge-info",
+  COLLECTION: "badge-warning",
+  PIECE: "badge-accent",
+  PIECE_VERSION: "badge-accent",
+  MOVEMENT: "badge-primary",
+  SECTION: "badge-secondary",
+  TEMPO_INDICATION: "badge-secondary",
+  METRONOME_MARK: "badge-primary",
+  REFERENCE: "badge-neutral",
+  CONTRIBUTION: "badge-neutral",
+  PERSON: "badge-neutral",
+  ORGANIZATION: "badge-neutral",
+};
 
 export default function ChecklistPage() {
   const params = useParams();
   const router = useRouter();
   const reviewId = (params?.reviewId as string) ?? "";
 
-  const [data, setData] = useState<OverviewResponse | null>(null);
+  const [data, setData] = useState<ApiOverview | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [checkedKeys, setCheckedKeys] = useState<Set<string>>(new Set());
@@ -72,7 +93,6 @@ export default function ChecklistPage() {
           cache: "no-store",
         });
         if (!res.ok) {
-          // On auth/ownership/state errors, redirect back to the list per specs
           if (res.status === 401) {
             router.push("/login");
             return;
@@ -84,7 +104,7 @@ export default function ChecklistPage() {
           const j = await res.json().catch(() => ({}));
           throw new Error(j?.error || `Failed to load (status ${res.status})`);
         }
-        const j = (await res.json()) as OverviewResponse;
+        const j = (await res.json()) as ApiOverview;
         if (!mounted) return;
         setData(j);
         // Restore saved checked state
@@ -94,7 +114,7 @@ export default function ChecklistPage() {
             const arr = JSON.parse(raw) as string[];
             setCheckedKeys(new Set(arr));
           } catch {
-            // ignore
+            // ignore broken storage
           }
         }
         // Initialize working copy if absent
@@ -123,25 +143,32 @@ export default function ChecklistPage() {
   // Persist changes in localStorage
   useEffect(() => {
     if (!data) return;
-    localStorage.setItem(
-      storageKey(data.reviewId),
-      JSON.stringify(Array.from(checkedKeys)),
-    );
+    localStorage.setItem(storageKey(data.reviewId), JSON.stringify(Array.from(checkedKeys)));
   }, [checkedKeys, data]);
 
-  const totals = useMemo(() => {
-    const totalRequired = data?.checklist.filter((i) => i.required).length ?? 0;
-    const checkedRequired =
-      data?.checklist.filter((i) => i.required && checkedKeys.has(encodeKey(i)))
-        .length ?? 0;
-    const pct =
-      totalRequired === 0
-        ? 0
-        : Math.round((checkedRequired / totalRequired) * 100);
-    return { totalRequired, checkedRequired, pct };
-  }, [data, checkedKeys]);
+  const requiredItems: RequiredChecklistItem[] = useMemo(() => {
+    if (!data) return [];
+    const g = data.graph;
+    const gr = data.globallyReviewed;
+    const items = expandRequiredChecklistItems(g, {
+      globallyReviewed: {
+        personIds: new Set(gr?.personIds ?? []),
+        organizationIds: new Set(gr?.organizationIds ?? []),
+        collectionIds: new Set(gr?.collectionIds ?? []),
+        pieceIds: new Set(gr?.pieceIds ?? []),
+      },
+    });
+    return items;
+  }, [data]);
 
-  function toggle(item: ChecklistItem) {
+  const totals = useMemo(() => {
+    const totalRequired = requiredItems.length;
+    const checkedRequired = requiredItems.filter((i) => checkedKeys.has(encodeKey(i))).length;
+    const pct = totalRequired === 0 ? 0 : Math.round((checkedRequired / totalRequired) * 100);
+    return { totalRequired, checkedRequired, pct };
+  }, [requiredItems, checkedKeys]);
+
+  function toggle(item: RequiredChecklistItem) {
     const key = encodeKey(item);
     setCheckedKeys((prev) => {
       const next = new Set(prev);
@@ -151,26 +178,15 @@ export default function ChecklistPage() {
     });
   }
 
-  function resetItem(item: ChecklistItem) {
-    // Placeholder for: user edited a field -> reset its check
-    const key = encodeKey(item);
-    setCheckedKeys((prev) => {
-      if (!prev.has(key)) return prev;
-      const next = new Set(prev);
-      next.delete(key);
-      return next;
-    });
-  }
-
   if (loading) return <div className="p-6">Loading checklist…</div>;
   if (error)
     return (
       <div className="p-6 space-y-3">
-        <div className="text-red-600">{error}</div>
+        <div className="text-error">{error}</div>
         <div className="flex items-center gap-3">
           <button
             type="button"
-            className="px-3 py-1 rounded border"
+            className="btn btn-neutral btn-sm"
             onClick={() => {
               setError(null);
               setReloadNonce((n) => n + 1);
@@ -183,110 +199,100 @@ export default function ChecklistPage() {
     );
   if (!data) return <div className="p-6">No data</div>;
 
-  const allItems = data.checklist;
-  const requiredItems = allItems.filter((i) => i.required);
   const submitDisabled =
-    submitting ||
-    totals.totalRequired === 0 ||
-    totals.checkedRequired < totals.totalRequired;
+    submitting || totals.totalRequired === 0 || totals.checkedRequired < totals.totalRequired;
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="container mx-auto p-4 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold">Review checklist</h1>
+          <h1 className="text-2xl font-bold">Piece Review Checklist</h1>
           <p className="text-sm opacity-80">Review ID: {data.reviewId}</p>
         </div>
       </div>
 
-      <div className="rounded border p-4 space-y-2">
-        <div className="font-medium">Source</div>
-        <div className="text-sm">Title: {data.graph.title ?? "(no title)"}</div>
+      <div className="card bg-info/10 p-4">
+        <div className="font-medium mb-1">Source</div>
+        <div className="text-sm">Title: {data.graph.source?.title ?? "(no title)"}</div>
         <div className="text-sm">
-          Link:{" "}
-          <a
-            className="underline"
-            href={data.graph.link}
-            target="_blank"
-            rel="noreferrer"
-          >
-            open
-          </a>
+          Link: {" "}
+          {data.graph.source?.link ? (
+            <a className="link" href={data.graph.source.link} target="_blank" rel="noreferrer">
+              open score
+            </a>
+          ) : (
+            "—"
+          )}
         </div>
         <div className="text-sm">
-          Permalink:{" "}
-          <a
-            className="underline"
-            href={data.graph.permalink}
-            target="_blank"
-            rel="noreferrer"
-          >
-            open
-          </a>
+          Permalink: {" "}
+          {data.graph.source?.permalink ? (
+            <a className="link" href={data.graph.source.permalink} target="_blank" rel="noreferrer">
+              open permalink
+            </a>
+          ) : (
+            "—"
+          )}
         </div>
       </div>
 
-      <div className="rounded border p-4">
+      <div className="card bg-base-100 border p-4">
         <div className="mb-3 flex items-center justify-between">
           <div className="font-medium">Progress</div>
           <div className="text-sm">
-            {totals.checkedRequired} / {totals.totalRequired} required checks (
-            {totals.pct}%)
+            {totals.checkedRequired} / {totals.totalRequired} required checks ({totals.pct}%)
           </div>
         </div>
-        <div className="w-full h-3 bg-gray-200 rounded">
-          <div
-            className="h-3 bg-green-500 rounded"
-            style={{ width: `${totals.pct}%` }}
-          />
-        </div>
+        <progress className="progress progress-primary w-full" value={totals.pct} max={100} />
       </div>
 
-      <div className="rounded border p-4 space-y-4">
-        <div className="font-medium">Checklist items</div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {requiredItems.map((it) => {
-            const key = encodeKey(it);
-            const isChecked = checkedKeys.has(key);
-            return (
-              <label
-                key={key}
-                className="flex items-start gap-2 border rounded p-3"
-              >
-                <input
-                  type="checkbox"
-                  checked={isChecked}
-                  onChange={() => toggle(it)}
-                  className="mt-1"
-                />
-                <span className="text-sm">
-                  <span className="font-medium">{it.label}</span>
-                  <span className="opacity-60"> — {it.entityType}</span>
-                  <span className="block opacity-60">path: {it.fieldPath}</span>
-                  <button
-                    type="button"
-                    className="mt-1 text-blue-600 underline"
-                    onClick={() => resetItem(it)}
-                    title="Open edit form (placeholder); resets check"
-                  >
-                    Edit (placeholder)
-                  </button>
-                </span>
-              </label>
-            );
-          })}
+      <div className="card bg-base-100 border p-4">
+        <div className="font-semibold mb-3">Checklist items</div>
+        <div className="overflow-x-auto">
+          <table className="table table-zebra">
+            <thead>
+              <tr>
+                <th>Checked</th>
+                <th>Entity</th>
+                <th>Label</th>
+                <th>Field path</th>
+              </tr>
+            </thead>
+            <tbody>
+              {requiredItems.map((it) => {
+                const key = encodeKey(it);
+                const isChecked = checkedKeys.has(key);
+                const badgeClass = ENTITY_BADGE[it.entityType] || "badge-ghost";
+                return (
+                  <tr key={key}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        className="checkbox checkbox-primary"
+                        checked={isChecked}
+                        onChange={() => toggle(it)}
+                      />
+                    </td>
+                    <td>
+                      <span className={`badge ${badgeClass}`}>{it.entityType}</span>
+                    </td>
+                    <td>{it.label}</td>
+                    <td className="opacity-70 text-xs">{it.fieldPath}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
 
       <div className="flex flex-col gap-2">
-        {submitError && (
-          <div className="text-sm text-red-600">{submitError}</div>
-        )}
-        {abortError && <div className="text-sm text-red-600">{abortError}</div>}
+        {submitError && <div className="text-sm text-error">{submitError}</div>}
+        {abortError && <div className="text-sm text-error">{abortError}</div>}
         <div className="flex items-center gap-3">
           <button
             type="button"
-            className={`px-4 py-2 rounded ${submitDisabled ? "bg-gray-300 cursor-not-allowed" : "bg-green-600 text-white"}`}
+            className="btn btn-primary"
             disabled={submitDisabled}
             onClick={async () => {
               if (!data) return;
@@ -297,7 +303,7 @@ export default function ChecklistPage() {
                   .filter((it) => checkedKeys.has(encodeKey(it)))
                   .map((it) => ({
                     entityType: it.entityType,
-                    entityId: it.entityId,
+                    entityId: it.entityId ?? null,
                     fieldPath: it.fieldPath,
                     checked: true,
                   }));
@@ -311,11 +317,8 @@ export default function ChecklistPage() {
                 });
                 if (!res.ok) {
                   const j = await res.json().catch(() => ({}));
-                  throw new Error(
-                    j?.error || `Submit failed (status ${res.status})`,
-                  );
+                  throw new Error(j?.error || `Submit failed (status ${res.status})`);
                 }
-                // Clear local state and navigate back to list
                 localStorage.removeItem(storageKey(data.reviewId));
                 localStorage.removeItem(reviewWorkingCopyKey(data.reviewId));
                 setCheckedKeys(new Set());
@@ -331,7 +334,7 @@ export default function ChecklistPage() {
           </button>
           <button
             type="button"
-            className={`px-4 py-2 rounded border ${aborting ? "opacity-60 cursor-not-allowed" : ""}`}
+            className="btn btn-neutral"
             disabled={aborting}
             onClick={async () => {
               if (!data) return;
@@ -349,9 +352,7 @@ export default function ChecklistPage() {
                 });
                 if (!res.ok) {
                   const j = await res.json().catch(() => ({}));
-                  throw new Error(
-                    j?.error || `Abort failed (status ${res.status})`,
-                  );
+                  throw new Error(j?.error || `Abort failed (status ${res.status})`);
                 }
                 localStorage.removeItem(storageKey(data.reviewId));
                 localStorage.removeItem(reviewWorkingCopyKey(data.reviewId));
