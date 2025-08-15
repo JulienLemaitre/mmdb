@@ -66,6 +66,13 @@
     - Rationale: full snapshots are simplest and robust; a later optimization can store per‑field diffs if needed.
 - Optional: ReviewAttachment (future)
     - If you later want to store supporting evidence (e.g., archived PDF references), keep a simple attachment table keyed by reviewId.
+- MMSourcesOnPieceVersions (tweak)
+    - Add a surrogate primary key id (UUID) to the join table.
+    - Keep columns: mMSourceId, pieceVersionId, rank.
+    - Constraints:
+        - unique(mMSourceId, rank)
+        - unique(mMSourceId, pieceVersionId)
+    - Rationale: simplifies reordering (rank updates become pure UPDATEs) and provides a stable joinId for field paths and UI addressing.
 
 ## Core lifecycle
 
@@ -145,9 +152,15 @@ Authorization and roles
     - body: { mmSourceId }
     - returns: { reviewId }
 - GET /api/review/:reviewId/overview
-    - returns the MM Source graph needed for the checklist plus flags for “globally reviewed” exclusions.
+    - returns:
+        - the MM Source graph needed for the checklist
+        - flags for “globally reviewed” exclusions
+        - source contents join rows for ordering/grouping UI: [{ joinId, mMSourceId, pieceVersionId, rank, pieceId, collectionId, collectionRank }]
 - POST /api/review/:reviewId/submit
     - body: { workingCopy, checklistState, overallComment }
+    - Notes:
+        - workingCopy includes source contents join rows addressed by joinId with updated ranks, e.g., workingCopy.source.pieceVersions[{joinId}].rank
+        - Server applies rank updates along with other entity diffs.
     - transactional finalize as described.
 - POST /api/review/:reviewId/abort
     - body: { reason? }
@@ -258,6 +271,12 @@ This keeps the “pick and confirm to lock” UI as an explicit, testable milest
     - Review Overview (source-level)
         - Shows MM Source metadata, references, contributions.
         - Lists collections and single pieces contained in the source.
+        - Source contents and ordering:
+            - Show the list of pieceVersions as contained in the MM Source (MMSourcesOnPieceVersions), grouped by collection when applicable:
+                - Group header: collection title (from piece.collectionId) with optional summary.
+                - Items: pieces in their collection order (piece.collectionRank for context) and single pieces.
+            - Provide reorder controls (drag-and-drop or up/down) that update the working copy’s ranks.
+            - MVP scope: allow reordering only (no add/remove of pieceVersions).
         - Displays per-item review progress and whether a piece/collection is “complete” (all mandatory checks done).
         - Allows drill-down into Collection view or Piece Review Checklist.
 
@@ -288,6 +307,7 @@ This keeps the “pick and confirm to lock” UI as an explicit, testable milest
     - GET /api/review/:reviewId/overview
         - Returns:
             - MM Source graph trimmed by “do-not-review-twice” rules (persons/orgs/collection-desc/piece-desc filtered when globally reviewed)
+            - Source contents join rows: [{ joinId, mMSourceId, pieceVersionId, rank, pieceId, collectionId, collectionRank }]
             - Flattened index of entity nodes: {entityType, entityId, parentId?, fieldPaths}
             - Display metadata for progress: counts of required checks per node.
 
@@ -327,6 +347,7 @@ Goal: Reuse the context‑agnostic EditForms (not their multi‑step containers)
     - Collection (description)
         - components/entities/collection/CollectionEditForm.tsx
     - PieceVersion (structure root, movements/sections nested)
+        - Canonical editor in the review flow: open with anchors (movementId/sectionId) for nested edits.
         - components/entities/piece-version/PieceVersionEditForm.tsx
         - components/entities/piece-version/CollectionPieceVersionsEditForm.tsx (batch within a collection - this level of adding or removing a piece from a collection should not be included in th review features, at least for now)
     - Movement
@@ -355,8 +376,9 @@ Goal: Reuse the context‑agnostic EditForms (not their multi‑step containers)
 
 - 2B.3 Navigation strategy for nested entities
     - Movement/Section/TempoIndication:
-        - Prefer opening PieceVersionEditForm with anchors (e.g., pieceVersionId + movementId/sectionId) to focus the correct sub-entity.
+        - Open PieceVersionEditForm with anchors (e.g., pieceVersionId + movementId/sectionId) to focus the correct sub-entity. This is the default mechanism in the review flow.
         - Alternatively, use SectionDetail/SectionArray for direct section edits when the change is local (meter/section properties).
+        - Standalone MovementEditForm, SectionEditForm, and TempoIndicationEditForm are out of scope for Phase 2 unless anchors prove insufficient; consider them optional post‑MVP.
     - MetronomeMark:
         - Use MetronomeMarksForm scoped to the section that holds the MM; preselect the target MM where applicable.
 
@@ -410,6 +432,9 @@ Goal: Reuse the context‑agnostic EditForms (not their multi‑step containers)
 - Transactional apply
     - In one transaction:
         - Apply CRUD to all changed entities.
+        - For reordering MMSourcesOnPieceVersions ranks (unique on mMSourceId, rank), use a safe two-step strategy to avoid unique collisions:
+            - First, temporarily offset ranks: UPDATE MMSourcesOnPieceVersions SET rank = rank + 1000 WHERE mMSourceId = :sourceId;
+            - Then write final desired ranks 1..N for each join row addressed by joinId.
         - Create AuditLog rows for each changed entity (see Phase 2D).
         - Upsert ReviewedEntity rows for newly reviewed Person/Organization/Collection-desc/Piece-desc entities encountered in scope.
         - Set Review.state = APPROVED; set endedAt.
@@ -443,6 +468,7 @@ Goal: Reuse the context‑agnostic EditForms (not their multi‑step containers)
     - Use consistent serialization for before/after:
         - Only persisted fields (no transient/computed props).
         - Include IDs for nested relations only when they are first-class entities; otherwise embed sub-objects as needed.
+        - For MM_SOURCE contents ordering, record before/after as ordered arrays of { pieceVersionId, rank } (joinId optional for forensics). The sequence order reflects the final ranks.
 
     - Strip sensitive or irrelevant fields if any (e.g., internal flags).
 
@@ -493,6 +519,8 @@ Goal: Reuse the context‑agnostic EditForms (not their multi‑step containers)
 - Field path convention
     - Adopt a stable naming like:
         - piece.title, piece.nickname
+        - source.pieceVersions[joinId].rank (join row rank used for ordering within the source)
+        - source.contents.order (logical checklist item representing the whole ordering block)
         - pieceVersion[uuid].ordering
         - movement[uuid].title
         - section[uuid].timeSignature
@@ -513,6 +541,8 @@ Goal: Reuse the context‑agnostic EditForms (not their multi‑step containers)
 
     - Diff engine:
         - CREATE/UPDATE/DELETE per entity type produce expected before/after.
+    - Reordering diffs and transactional safety:
+        - Given contents before [pvA:1, pvB:2] → after [pvB:1, pvA:2], the diff engine emits correct updates and the server applies ranks using the offset-then-normalize algorithm without unique violations.
 
     - Audit composer:
         - Given diffs, write correct AuditLog rows.
@@ -530,6 +560,7 @@ Goal: Reuse the context‑agnostic EditForms (not their multi‑step containers)
 
 - UI tests
     - Editing resets checks for impacted fields.
+    - Reordering source contents resets the “order reviewed” logical check and updates progress rollups.
     - Submit disabled until 100% checks complete.
     - Progress rollups show accurate counts.
 
