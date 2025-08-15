@@ -13,7 +13,8 @@ import PieceEditForm from "@/components/entities/piece/PieceEditForm";
 import PieceVersionQuickEditForm from "@/components/entities/piece-version/PieceVersionQuickEditForm";
 import MovementQuickEditForm from "@/components/entities/movement/MovementQuickEditForm";
 import SectionQuickEditForm from "@/components/entities/section/SectionQuickEditForm";
-import { SourceDescriptionAdapter, PieceAdapter, PieceVersionAdapter, MovementAdapter, SectionAdapter } from "@/utils/reviewAdapters";
+import OrganizationEditForm from "@/components/entities/organization/OrganizationEditForm";
+import { SourceDescriptionAdapter, PieceAdapter, PieceVersionAdapter, MovementAdapter, SectionAdapter, OrganizationAdapter } from "@/utils/reviewAdapters";
 import type { PieceInput } from "@/types/formTypes";
 
 // API payload shape from /api/review/[reviewId]/overview
@@ -95,6 +96,7 @@ export default function ChecklistPage() {
     | { kind: "PIECE_VERSION"; id: string }
     | { kind: "MOVEMENT"; id: string }
     | { kind: "SECTION"; id: string }
+    | { kind: "ORGANIZATION"; id: string }
     | null
   >(null);
 
@@ -161,6 +163,10 @@ export default function ChecklistPage() {
         setEditState({ kind: "SECTION", id: mm.sectionId });
         return;
       }
+    }
+    if (it.entityType === "ORGANIZATION" && it.entityId) {
+      setEditState({ kind: "ORGANIZATION", id: it.entityId });
+      return;
     }
   }
 
@@ -462,6 +468,23 @@ export default function ChecklistPage() {
                         }}
                       />
                     </div>
+                  );
+                }
+                if (editState.kind === "ORGANIZATION") {
+                  const initial = OrganizationAdapter.buildInitialValues(graph, editState.id);
+                  if (!initial) return <div className="text-error">Organization not found</div>;
+                  return (
+                    <OrganizationEditForm
+                      initialValues={{ id: initial.id, name: initial.name ?? "" }}
+                      onCancel={() => setEditState(null)}
+                      onSubmit={(vals) => {
+                        const res = OrganizationAdapter.applySave(graph, { id: initial.id, name: vals.name ?? null });
+                        saveWorkingCopyGraph(res.updatedGraph);
+                        resetChecksFor(res.affectedFieldPaths, res.entityType, res.entityId);
+                        setEditState(null);
+                        setReloadNonce((n) => n + 1);
+                      }}
+                    />
                   );
                 }
                 return null;
