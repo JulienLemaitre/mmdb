@@ -7,7 +7,10 @@ import {
   expandRequiredChecklistItems,
   type RequiredChecklistItem,
 } from "@/utils/ReviewChecklistSchema";
-import { computeChangedChecklistFieldPaths, toEncodedKeys } from "@/utils/reviewDiff";
+import {
+  computeChangedChecklistFieldPaths,
+  toEncodedKeys,
+} from "@/utils/reviewDiff";
 import { URL_REVIEW_LIST } from "@/utils/routes";
 import SourceDescriptionEditForm from "@/components/entities/source-description/SourceDescriptionEditForm";
 import PieceEditForm from "@/components/entities/piece/PieceEditForm";
@@ -15,34 +18,16 @@ import PieceVersionQuickEditForm from "@/components/entities/piece-version/Piece
 import MovementQuickEditForm from "@/components/entities/movement/MovementQuickEditForm";
 import SectionQuickEditForm from "@/components/entities/section/SectionQuickEditForm";
 import OrganizationEditForm from "@/components/entities/organization/OrganizationEditForm";
-import { SourceDescriptionAdapter, PieceAdapter, PieceVersionAdapter, MovementAdapter, SectionAdapter, OrganizationAdapter } from "@/utils/reviewAdapters";
+import {
+  SourceDescriptionAdapter,
+  PieceAdapter,
+  PieceVersionAdapter,
+  MovementAdapter,
+  SectionAdapter,
+  OrganizationAdapter,
+} from "@/utils/reviewAdapters";
 import type { PieceInput } from "@/types/formTypes";
-
-// API payload shape from /api/review/[reviewId]/overview
-type ApiOverview = {
-  reviewId: string;
-  graph: any; // ChecklistGraph-like
-  globallyReviewed: {
-    personIds: string[];
-    organizationIds: string[];
-    collectionIds: string[];
-    pieceIds: string[];
-  };
-  sourceContents: Array<{
-    joinId: string;
-    mMSourceId: string;
-    pieceVersionId: string;
-    rank: number;
-    pieceId: string;
-    collectionId?: string;
-    collectionRank?: number;
-  }>;
-  progress: {
-    source: { required: number; checked: number };
-    perCollection: Record<string, { required: number; checked: number }>;
-    perPiece: Record<string, { required: number; checked: number }>;
-  };
-};
+import { ApiOverview } from "@/types/reviewTypes";
 
 // Minimal working copy persisted in localStorage; future forms will mutate this.
 // Initialize from the overview's graph for now.
@@ -58,7 +43,11 @@ function reviewWorkingCopyKey(reviewId: string) {
   return `review:${reviewId}:workingCopy`;
 }
 
-function encodeKey(it: { entityType: ChecklistEntityType; entityId?: string | null; fieldPath: string }) {
+function encodeKey(it: {
+  entityType: ChecklistEntityType;
+  entityId?: string | null;
+  fieldPath: string;
+}) {
   return `${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`;
 }
 
@@ -116,11 +105,18 @@ export default function ChecklistPage() {
   }
   function saveWorkingCopyGraph(updatedGraph: any) {
     if (!reviewId) return;
-    const next: ReviewWorkingCopy = { graph: updatedGraph, updatedAt: new Date().toISOString() };
+    const next: ReviewWorkingCopy = {
+      graph: updatedGraph,
+      updatedAt: new Date().toISOString(),
+    };
     localStorage.setItem(reviewWorkingCopyKey(reviewId), JSON.stringify(next));
   }
 
-  function resetChecksFor(affectedFieldPaths: string[], entityType: ChecklistEntityType, entityId?: string | null) {
+  function resetChecksFor(
+    affectedFieldPaths: string[],
+    entityType: ChecklistEntityType,
+    entityId?: string | null,
+  ) {
     setCheckedKeys((prev) => {
       const next = new Set(prev);
       for (const fp of affectedFieldPaths) {
@@ -154,7 +150,9 @@ export default function ChecklistPage() {
     }
     if (it.entityType === "TEMPO_INDICATION" && it.entityId) {
       // Map to the owning section and open section editor
-      const section = (data?.graph?.sections ?? []).find((s: any) => s.tempoIndicationId === it.entityId);
+      const section = (data?.graph?.sections ?? []).find(
+        (s: any) => s.tempoIndicationId === it.entityId,
+      );
       if (section?.id) {
         setEditState({ kind: "SECTION", id: section.id });
         return;
@@ -162,7 +160,9 @@ export default function ChecklistPage() {
     }
     if (it.entityType === "METRONOME_MARK" && it.entityId) {
       // Map to the owning section via metronomeMarks array if present
-      const mm = (data?.graph?.metronomeMarks ?? []).find((m: any) => m.id === it.entityId);
+      const mm = (data?.graph?.metronomeMarks ?? []).find(
+        (m: any) => m.id === it.entityId,
+      );
       if (mm?.sectionId) {
         setEditState({ kind: "SECTION", id: mm.sectionId });
         return;
@@ -205,7 +205,9 @@ export default function ChecklistPage() {
             const arr = JSON.parse(raw) as string[];
             setCheckedKeys(new Set(arr));
           } catch {
-            setStorageWarning("Local review progress (checked items) was corrupted and has been reset.");
+            setStorageWarning(
+              "Local review progress (checked items) was corrupted and has been reset.",
+            );
             localStorage.removeItem(storageKey(j.reviewId));
             setCheckedKeys(new Set());
           }
@@ -223,8 +225,13 @@ export default function ChecklistPage() {
           try {
             JSON.parse(rwcRaw) as ReviewWorkingCopy;
           } catch {
-            setStorageWarning("Local working copy was corrupted and has been reset to server data.");
-            const rwc: ReviewWorkingCopy = { graph: j.graph, updatedAt: new Date().toISOString() };
+            setStorageWarning(
+              "Local working copy was corrupted and has been reset to server data.",
+            );
+            const rwc: ReviewWorkingCopy = {
+              graph: j.graph,
+              updatedAt: new Date().toISOString(),
+            };
             localStorage.setItem(rwcKey, JSON.stringify(rwc));
           }
         }
@@ -244,7 +251,10 @@ export default function ChecklistPage() {
   // Persist changes in localStorage
   useEffect(() => {
     if (!data) return;
-    localStorage.setItem(storageKey(data.reviewId), JSON.stringify(Array.from(checkedKeys)));
+    localStorage.setItem(
+      storageKey(data.reviewId),
+      JSON.stringify(Array.from(checkedKeys)),
+    );
   }, [checkedKeys, data]);
 
   const requiredItems: RequiredChecklistItem[] = useMemo(() => {
@@ -264,8 +274,13 @@ export default function ChecklistPage() {
 
   const totals = useMemo(() => {
     const totalRequired = requiredItems.length;
-    const checkedRequired = requiredItems.filter((i) => checkedKeys.has(encodeKey(i))).length;
-    const pct = totalRequired === 0 ? 0 : Math.round((checkedRequired / totalRequired) * 100);
+    const checkedRequired = requiredItems.filter((i) =>
+      checkedKeys.has(encodeKey(i)),
+    ).length;
+    const pct =
+      totalRequired === 0
+        ? 0
+        : Math.round((checkedRequired / totalRequired) * 100);
     return { totalRequired, checkedRequired, pct };
   }, [requiredItems, checkedKeys]);
 
@@ -275,7 +290,10 @@ export default function ChecklistPage() {
     const wc = getWorkingCopy();
     const workingGraph = wc?.graph ?? data.graph;
     try {
-      const changes = computeChangedChecklistFieldPaths(data.graph, workingGraph);
+      const changes = computeChangedChecklistFieldPaths(
+        data.graph,
+        workingGraph,
+      );
       setChangedKeys(new Set(toEncodedKeys(changes)));
     } catch {
       setChangedKeys(new Set());
@@ -285,7 +303,8 @@ export default function ChecklistPage() {
   const filteredItems = useMemo(() => {
     if (!requiredItems) return [] as RequiredChecklistItem[];
     if (filter === "ALL") return requiredItems;
-    if (filter === "UNCHECKED") return requiredItems.filter((it) => !checkedKeys.has(encodeKey(it)));
+    if (filter === "UNCHECKED")
+      return requiredItems.filter((it) => !checkedKeys.has(encodeKey(it)));
     // CHANGED
     return requiredItems.filter((it) => changedKeys.has(encodeKey(it)));
   }, [requiredItems, checkedKeys, changedKeys, filter]);
@@ -322,7 +341,9 @@ export default function ChecklistPage() {
   if (!data) return <div className="p-6">No data</div>;
 
   const submitDisabled =
-    submitting || totals.totalRequired === 0 || totals.checkedRequired < totals.totalRequired;
+    submitting ||
+    totals.totalRequired === 0 ||
+    totals.checkedRequired < totals.totalRequired;
 
   return (
     <div className="container mx-auto p-4 space-y-6">
@@ -335,11 +356,18 @@ export default function ChecklistPage() {
 
       <div className="card bg-info/10 p-4">
         <div className="font-medium mb-1">Source</div>
-        <div className="text-sm">Title: {data.graph.source?.title ?? "(no title)"}</div>
         <div className="text-sm">
-          Link: {" "}
+          Title: {data.graph.source?.title ?? "(no title)"}
+        </div>
+        <div className="text-sm">
+          Link:{" "}
           {data.graph.source?.link ? (
-            <a className="link" href={data.graph.source.link} target="_blank" rel="noreferrer">
+            <a
+              className="link"
+              href={data.graph.source.link}
+              target="_blank"
+              rel="noreferrer"
+            >
               open score
             </a>
           ) : (
@@ -347,9 +375,14 @@ export default function ChecklistPage() {
           )}
         </div>
         <div className="text-sm">
-          Permalink: {" "}
+          Permalink:{" "}
           {data.graph.source?.permalink ? (
-            <a className="link" href={data.graph.source.permalink} target="_blank" rel="noreferrer">
+            <a
+              className="link"
+              href={data.graph.source.permalink}
+              target="_blank"
+              rel="noreferrer"
+            >
               open permalink
             </a>
           ) : (
@@ -362,25 +395,53 @@ export default function ChecklistPage() {
         <div className="mb-3 flex items-center justify-between">
           <div className="font-medium">Progress</div>
           <div className="text-sm">
-            {totals.checkedRequired} / {totals.totalRequired} required checks ({totals.pct}%)
+            {totals.checkedRequired} / {totals.totalRequired} required checks (
+            {totals.pct}%)
           </div>
         </div>
-        <progress className="progress progress-primary w-full" value={totals.pct} max={100} />
+        <progress
+          className="progress progress-primary w-full"
+          value={totals.pct}
+          max={100}
+        />
       </div>
 
       <div className="card bg-base-100 border p-4">
         <div className="flex items-center justify-between mb-3">
           <div className="font-semibold">Checklist items</div>
           <div className="join">
-            <button className={`btn btn-xs join-item ${filter === "ALL" ? "btn-active" : "btn-ghost"}`} onClick={() => setFilter("ALL")} type="button">All</button>
-            <button className={`btn btn-xs join-item ${filter === "UNCHECKED" ? "btn-active" : "btn-ghost"}`} onClick={() => setFilter("UNCHECKED")} type="button">Unchecked</button>
-            <button className={`btn btn-xs join-item ${filter === "CHANGED" ? "btn-active" : "btn-ghost"}`} onClick={() => setFilter("CHANGED")} type="button">Changed</button>
+            <button
+              className={`btn btn-xs join-item ${filter === "ALL" ? "btn-active" : "btn-ghost"}`}
+              onClick={() => setFilter("ALL")}
+              type="button"
+            >
+              All
+            </button>
+            <button
+              className={`btn btn-xs join-item ${filter === "UNCHECKED" ? "btn-active" : "btn-ghost"}`}
+              onClick={() => setFilter("UNCHECKED")}
+              type="button"
+            >
+              Unchecked
+            </button>
+            <button
+              className={`btn btn-xs join-item ${filter === "CHANGED" ? "btn-active" : "btn-ghost"}`}
+              onClick={() => setFilter("CHANGED")}
+              type="button"
+            >
+              Changed
+            </button>
           </div>
         </div>
         {storageWarning && (
           <div className="alert alert-warning mb-3">
             <span>{storageWarning}</span>
-            <button className="btn btn-xs btn-ghost ml-auto" onClick={() => setStorageWarning(null)}>Dismiss</button>
+            <button
+              className="btn btn-xs btn-ghost ml-auto"
+              onClick={() => setStorageWarning(null)}
+            >
+              Dismiss
+            </button>
           </div>
         )}
         {editState && (
@@ -391,15 +452,23 @@ export default function ChecklistPage() {
                 const wc = getWorkingCopy();
                 const graph = wc?.graph ?? data.graph; // fall back to current graph
                 if (editState.kind === "MM_SOURCE") {
-                  const initial = SourceDescriptionAdapter.buildInitialValues(graph);
+                  const initial =
+                    SourceDescriptionAdapter.buildInitialValues(graph);
                   return (
                     <SourceDescriptionEditForm
                       initialValues={initial}
                       onCancel={() => setEditState(null)}
                       onSubmit={(values) => {
-                        const res = SourceDescriptionAdapter.applySave(graph, values);
+                        const res = SourceDescriptionAdapter.applySave(
+                          graph,
+                          values,
+                        );
                         saveWorkingCopyGraph(res.updatedGraph);
-                        resetChecksFor(res.affectedFieldPaths, res.entityType, res.entityId);
+                        resetChecksFor(
+                          res.affectedFieldPaths,
+                          res.entityType,
+                          res.entityId,
+                        );
                         setEditState(null);
                         setReloadNonce((n) => n + 1);
                       }}
@@ -407,13 +476,18 @@ export default function ChecklistPage() {
                   );
                 }
                 if (editState.kind === "PIECE") {
-                  const initial = PieceAdapter.buildInitialValues(graph, editState.id);
-                  if (!initial) return <div className="text-error">Piece not found</div>;
+                  const initial = PieceAdapter.buildInitialValues(
+                    graph,
+                    editState.id,
+                  );
+                  if (!initial)
+                    return <div className="text-error">Piece not found</div>;
                   const pieceInput: PieceInput = {
                     id: initial.id,
                     title: (initial.title as any) ?? "",
                     nickname: (initial.nickname as any) ?? "",
-                    yearOfComposition: (initial.yearOfComposition as any) ?? null,
+                    yearOfComposition:
+                      (initial.yearOfComposition as any) ?? null,
                   };
                   return (
                     <PieceEditForm
@@ -424,10 +498,15 @@ export default function ChecklistPage() {
                           id: initial.id,
                           title: vals.title ?? null,
                           nickname: vals.nickname ?? null,
-                          yearOfComposition: (vals.yearOfComposition as any) ?? null,
+                          yearOfComposition:
+                            (vals.yearOfComposition as any) ?? null,
                         });
                         saveWorkingCopyGraph(res.updatedGraph);
-                        resetChecksFor(res.affectedFieldPaths, res.entityType, res.entityId);
+                        resetChecksFor(
+                          res.affectedFieldPaths,
+                          res.entityType,
+                          res.entityId,
+                        );
                         setEditState(null);
                         setReloadNonce((n) => n + 1);
                       }}
@@ -435,16 +514,32 @@ export default function ChecklistPage() {
                   );
                 }
                 if (editState.kind === "PIECE_VERSION") {
-                  const initial = PieceVersionAdapter.buildInitialValues(graph, editState.id);
-                  if (!initial) return <div className="text-error">Piece version not found</div>;
+                  const initial = PieceVersionAdapter.buildInitialValues(
+                    graph,
+                    editState.id,
+                  );
+                  if (!initial)
+                    return (
+                      <div className="text-error">Piece version not found</div>
+                    );
                   return (
                     <PieceVersionQuickEditForm
-                      initialValues={{ id: initial.id, category: initial.category ?? undefined }}
+                      initialValues={{
+                        id: initial.id,
+                        category: initial.category ?? undefined,
+                      }}
                       onCancel={() => setEditState(null)}
                       onSubmit={(vals) => {
-                        const res = PieceVersionAdapter.applySave(graph, { id: initial.id, category: vals.category ?? null });
+                        const res = PieceVersionAdapter.applySave(graph, {
+                          id: initial.id,
+                          category: vals.category ?? null,
+                        });
                         saveWorkingCopyGraph(res.updatedGraph);
-                        resetChecksFor(res.affectedFieldPaths, res.entityType, res.entityId);
+                        resetChecksFor(
+                          res.affectedFieldPaths,
+                          res.entityType,
+                          res.entityId,
+                        );
                         setEditState(null);
                         setReloadNonce((n) => n + 1);
                       }}
@@ -452,29 +547,57 @@ export default function ChecklistPage() {
                   );
                 }
                 if (editState.kind === "MOVEMENT") {
-                  const initial = MovementAdapter.buildInitialValues(graph, editState.id);
-                  if (!initial) return <div className="text-error">Movement not found</div>;
-                  const movement = (graph.movements ?? []).find((m: any) => m.id === editState.id);
+                  const initial = MovementAdapter.buildInitialValues(
+                    graph,
+                    editState.id,
+                  );
+                  if (!initial)
+                    return <div className="text-error">Movement not found</div>;
+                  const movement = (graph.movements ?? []).find(
+                    (m: any) => m.id === editState.id,
+                  );
                   const pvId = movement?.pieceVersionId as string | undefined;
                   return (
                     <div className="space-y-3">
                       {pvId && (
                         <div className="alert alert-info text-sm">
                           <div className="flex items-center justify-between w-full">
-                            <span>Anchor: Movement belongs to a Piece Version.</span>
-                            <button className="btn btn-xs btn-ghost hover:btn-accent" onClick={() => setEditState({ kind: "PIECE_VERSION", id: pvId })}>
+                            <span>
+                              Anchor: Movement belongs to a Piece Version.
+                            </span>
+                            <button
+                              className="btn btn-xs btn-ghost hover:btn-accent"
+                              onClick={() =>
+                                setEditState({
+                                  kind: "PIECE_VERSION",
+                                  id: pvId,
+                                })
+                              }
+                            >
                               Open PieceVersion editor
                             </button>
                           </div>
                         </div>
                       )}
                       <MovementQuickEditForm
-                        initialValues={{ id: initial.id, rank: (initial as any).rank ?? undefined, key: (initial as any).key ?? undefined }}
+                        initialValues={{
+                          id: initial.id,
+                          rank: (initial as any).rank ?? undefined,
+                          key: (initial as any).key ?? undefined,
+                        }}
                         onCancel={() => setEditState(null)}
                         onSubmit={(vals) => {
-                          const res = MovementAdapter.applySave(graph, { id: initial.id, rank: vals.rank ?? null, key: (vals.key as any) ?? null });
+                          const res = MovementAdapter.applySave(graph, {
+                            id: initial.id,
+                            rank: vals.rank ?? null,
+                            key: (vals.key as any) ?? null,
+                          });
                           saveWorkingCopyGraph(res.updatedGraph);
-                          resetChecksFor(res.affectedFieldPaths, res.entityType, res.entityId);
+                          resetChecksFor(
+                            res.affectedFieldPaths,
+                            res.entityType,
+                            res.entityId,
+                          );
                           setEditState(null);
                           setReloadNonce((n) => n + 1);
                         }}
@@ -483,12 +606,20 @@ export default function ChecklistPage() {
                   );
                 }
                 if (editState.kind === "SECTION") {
-                  const initial = SectionAdapter.buildInitialValues(graph, editState.id);
-                  if (!initial) return <div className="text-error">Section not found</div>;
-                  const section = (graph.sections ?? []).find((s: any) => s.id === editState.id);
+                  const initial = SectionAdapter.buildInitialValues(
+                    graph,
+                    editState.id,
+                  );
+                  if (!initial)
+                    return <div className="text-error">Section not found</div>;
+                  const section = (graph.sections ?? []).find(
+                    (s: any) => s.id === editState.id,
+                  );
                   let pvId: string | undefined;
                   if (section?.movementId) {
-                    const mv = (graph.movements ?? []).find((m: any) => m.id === section.movementId);
+                    const mv = (graph.movements ?? []).find(
+                      (m: any) => m.id === section.movementId,
+                    );
                     pvId = mv?.pieceVersionId;
                   }
                   return (
@@ -496,8 +627,18 @@ export default function ChecklistPage() {
                       {pvId && (
                         <div className="alert alert-info text-sm">
                           <div className="flex items-center justify-between w-full">
-                            <span>Anchor: Section belongs to a Piece Version.</span>
-                            <button className="btn btn-xs btn-ghost hover:btn-accent" onClick={() => setEditState({ kind: "PIECE_VERSION", id: pvId! })}>
+                            <span>
+                              Anchor: Section belongs to a Piece Version.
+                            </span>
+                            <button
+                              className="btn btn-xs btn-ghost hover:btn-accent"
+                              onClick={() =>
+                                setEditState({
+                                  kind: "PIECE_VERSION",
+                                  id: pvId!,
+                                })
+                              }
+                            >
                               Open PieceVersion editor
                             </button>
                           </div>
@@ -508,9 +649,16 @@ export default function ChecklistPage() {
                         readonlyPreview={section}
                         onCancel={() => setEditState(null)}
                         onSubmit={(vals) => {
-                          const res = SectionAdapter.applySave(graph, { ...vals, id: initial.id });
+                          const res = SectionAdapter.applySave(graph, {
+                            ...vals,
+                            id: initial.id,
+                          });
                           saveWorkingCopyGraph(res.updatedGraph);
-                          resetChecksFor(res.affectedFieldPaths, res.entityType, res.entityId);
+                          resetChecksFor(
+                            res.affectedFieldPaths,
+                            res.entityType,
+                            res.entityId,
+                          );
                           setEditState(null);
                           setReloadNonce((n) => n + 1);
                         }}
@@ -519,16 +667,32 @@ export default function ChecklistPage() {
                   );
                 }
                 if (editState.kind === "ORGANIZATION") {
-                  const initial = OrganizationAdapter.buildInitialValues(graph, editState.id);
-                  if (!initial) return <div className="text-error">Organization not found</div>;
+                  const initial = OrganizationAdapter.buildInitialValues(
+                    graph,
+                    editState.id,
+                  );
+                  if (!initial)
+                    return (
+                      <div className="text-error">Organization not found</div>
+                    );
                   return (
                     <OrganizationEditForm
-                      initialValues={{ id: initial.id, name: initial.name ?? "" }}
+                      initialValues={{
+                        id: initial.id,
+                        name: initial.name ?? "",
+                      }}
                       onCancel={() => setEditState(null)}
                       onSubmit={(vals) => {
-                        const res = OrganizationAdapter.applySave(graph, { id: initial.id, name: vals.name ?? null });
+                        const res = OrganizationAdapter.applySave(graph, {
+                          id: initial.id,
+                          name: vals.name ?? null,
+                        });
                         saveWorkingCopyGraph(res.updatedGraph);
-                        resetChecksFor(res.affectedFieldPaths, res.entityType, res.entityId);
+                        resetChecksFor(
+                          res.affectedFieldPaths,
+                          res.entityType,
+                          res.entityId,
+                        );
                         setEditState(null);
                         setReloadNonce((n) => n + 1);
                       }}
@@ -538,7 +702,12 @@ export default function ChecklistPage() {
                 return null;
               })()}
               <div className="modal-action">
-                <button className="btn btn-neutral" onClick={() => setEditState(null)}>Close</button>
+                <button
+                  className="btn btn-neutral"
+                  onClick={() => setEditState(null)}
+                >
+                  Close
+                </button>
               </div>
             </div>
           </dialog>
@@ -571,9 +740,18 @@ export default function ChecklistPage() {
                       />
                     </td>
                     <td>
-                      <span className={`badge ${badgeClass}`}>{it.entityType}</span>
+                      <span className={`badge ${badgeClass}`}>
+                        {it.entityType}
+                      </span>
                     </td>
-                    <td>{it.label}{rowChanged && (<span className="badge badge-warning badge-outline ml-2">Changed</span>)}</td>
+                    <td>
+                      {it.label}
+                      {rowChanged && (
+                        <span className="badge badge-warning badge-outline ml-2">
+                          Changed
+                        </span>
+                      )}
+                    </td>
                     <td className="opacity-70 text-xs">{it.fieldPath}</td>
                     <td>
                       <button
@@ -612,11 +790,20 @@ export default function ChecklistPage() {
                 const workingGraph = wc?.graph ?? data.graph;
 
                 // Pre-check: ensure any changed checklist field is checked
-                const changes = computeChangedChecklistFieldPaths(data.graph, workingGraph);
+                const changes = computeChangedChecklistFieldPaths(
+                  data.graph,
+                  workingGraph,
+                );
                 const changeKeys = new Set(toEncodedKeys(changes));
-                const requiredKeyMap = new Map(requiredItems.map((it) => [encodeKey(it), it]));
-                const relevantChangeKeys = Array.from(changeKeys).filter((k) => requiredKeyMap.has(k));
-                const missing = relevantChangeKeys.filter((k) => !checkedKeys.has(k));
+                const requiredKeyMap = new Map(
+                  requiredItems.map((it) => [encodeKey(it), it]),
+                );
+                const relevantChangeKeys = Array.from(changeKeys).filter((k) =>
+                  requiredKeyMap.has(k),
+                );
+                const missing = relevantChangeKeys.filter(
+                  (k) => !checkedKeys.has(k),
+                );
                 if (missing.length > 0) {
                   const samples = missing.slice(0, 5).map((k) => {
                     const it = requiredKeyMap.get(k)!;
@@ -649,7 +836,9 @@ export default function ChecklistPage() {
                 });
                 if (!res.ok) {
                   const j = await res.json().catch(() => ({}));
-                  throw new Error(j?.error || `Submit failed (status ${res.status})`);
+                  throw new Error(
+                    j?.error || `Submit failed (status ${res.status})`,
+                  );
                 }
                 localStorage.removeItem(storageKey(data.reviewId));
                 localStorage.removeItem(reviewWorkingCopyKey(data.reviewId));
@@ -684,7 +873,9 @@ export default function ChecklistPage() {
                 });
                 if (!res.ok) {
                   const j = await res.json().catch(() => ({}));
-                  throw new Error(j?.error || `Abort failed (status ${res.status})`);
+                  throw new Error(
+                    j?.error || `Abort failed (status ${res.status})`,
+                  );
                 }
                 localStorage.removeItem(storageKey(data.reviewId));
                 localStorage.removeItem(reviewWorkingCopyKey(data.reviewId));

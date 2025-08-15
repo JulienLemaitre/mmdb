@@ -5,7 +5,7 @@ import { db } from "@/utils/db";
 import React from "react";
 import { REVIEW_STATE } from "@prisma/client";
 import ReviewListClient from "./reviewListClient";
-import { getToReviewFromDb } from "@/utils/server/review";
+import { getToReviewFromDb } from "@/utils/server/getToReviewFromDb";
 import { GET_URL_REVIEW_CHECKLIST } from "@/utils/routes";
 
 export default async function ReviewListPage() {

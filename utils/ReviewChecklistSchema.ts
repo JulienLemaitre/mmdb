@@ -5,6 +5,8 @@
 // - Person and Organization are included here but should be filtered out when they already appear in ReviewedEntity.
 // - For arrays (e.g., multiple References or Contributions), the consumer should render one checklist instance per entity row.
 
+import { SourceContent } from "@/types/reviewTypes";
+
 export type ChecklistEntityType =
   | "MM_SOURCE"
   | "COLLECTION"
@@ -35,7 +37,8 @@ export type ChecklistGraph = {
   persons?: Array<{ id: string; [k: string]: any }>;
   organizations?: Array<{ id: string; [k: string]: any }>;
   // Ordering join rows for the source contents (MMSourcesOnPieceVersions)
-  sourceContents?: Array<{ joinId: string; pieceVersionId: string; rank: number; [k: string]: any }>;
+  sourceContents?: Array<SourceContent>;
+  // sourceContents?: Array<{ joinId: string; pieceVersionId: string; rank: number; [k: string]: any }>;
 };
 
 export type RequiredPredicateCtx = {
@@ -371,7 +374,10 @@ export function expandRequiredChecklistItems(
     if (!nodes || nodes.length === 0) return;
     const schema = REVIEW_CHECKLIST_SCHEMA[entityType];
     for (const n of nodes) {
-      if (schema.doNotReviewTwice && isGloballyReviewed(entityType, n.id, options)) {
+      if (
+        schema.doNotReviewTwice &&
+        isGloballyReviewed(entityType, n.id, options)
+      ) {
         continue;
       }
       for (const field of schema.fields) {
@@ -392,11 +398,26 @@ export function expandRequiredChecklistItems(
     }
   };
 
-  addEntityGroup("COLLECTION", graph.collections as Array<{ id: string } | undefined> as any);
-  addEntityGroup("PIECE", graph.pieces as Array<{ id: string } | undefined> as any);
-  addEntityGroup("PIECE_VERSION", graph.pieceVersions as Array<{ id: string } | undefined> as any);
-  addEntityGroup("MOVEMENT", graph.movements as Array<{ id: string } | undefined> as any);
-  addEntityGroup("SECTION", graph.sections as Array<{ id: string } | undefined> as any);
+  addEntityGroup(
+    "COLLECTION",
+    graph.collections as Array<{ id: string } | undefined> as any,
+  );
+  addEntityGroup(
+    "PIECE",
+    graph.pieces as Array<{ id: string } | undefined> as any,
+  );
+  addEntityGroup(
+    "PIECE_VERSION",
+    graph.pieceVersions as Array<{ id: string } | undefined> as any,
+  );
+  addEntityGroup(
+    "MOVEMENT",
+    graph.movements as Array<{ id: string } | undefined> as any,
+  );
+  addEntityGroup(
+    "SECTION",
+    graph.sections as Array<{ id: string } | undefined> as any,
+  );
   addEntityGroup(
     "TEMPO_INDICATION",
     graph.tempoIndications as Array<{ id: string } | undefined> as any,
@@ -405,12 +426,18 @@ export function expandRequiredChecklistItems(
     "METRONOME_MARK",
     graph.metronomeMarks as Array<{ id: string } | undefined> as any,
   );
-  addEntityGroup("REFERENCE", graph.references as Array<{ id: string } | undefined> as any);
+  addEntityGroup(
+    "REFERENCE",
+    graph.references as Array<{ id: string } | undefined> as any,
+  );
   addEntityGroup(
     "CONTRIBUTION",
     graph.contributions as Array<{ id: string } | undefined> as any,
   );
-  addEntityGroup("PERSON", graph.persons as Array<{ id: string } | undefined> as any);
+  addEntityGroup(
+    "PERSON",
+    graph.persons as Array<{ id: string } | undefined> as any,
+  );
   addEntityGroup(
     "ORGANIZATION",
     graph.organizations as Array<{ id: string } | undefined> as any,
