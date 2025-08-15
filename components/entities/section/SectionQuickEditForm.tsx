@@ -33,7 +33,7 @@ export default function SectionQuickEditForm({
   onCancel: () => void;
   readonlyPreview?: any; // optional section object for SectionDetail preview
 }>) {
-  const { register, handleSubmit, formState, setValue, watch } = useForm<SectionQuickValues>({
+  const { register, handleSubmit, formState, watch } = useForm<SectionQuickValues>({
     defaultValues: initialValues,
   });
   const [tempoIndications, setTempoIndications] = useState<Array<{ id: string; text: string }>>([]);
