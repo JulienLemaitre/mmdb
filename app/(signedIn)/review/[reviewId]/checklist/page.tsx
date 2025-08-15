@@ -31,7 +31,7 @@ type OverviewResponse = {
 
 // Minimal working copy persisted in localStorage; forms will mutate this later.
 // For the foundation, we at least persist the overview graph as the initial working copy.
-type WorkingCopy = {
+type ReviewWorkingCopy = {
   graph: OverviewResponse["graph"];
   updatedAt: string; // ISO timestamp of last local update
 };
@@ -39,7 +39,7 @@ type WorkingCopy = {
 function storageKey(reviewId: string) {
   return `review:${reviewId}:checklist`;
 }
-function workingCopyKey(reviewId: string) {
+function reviewWorkingCopyKey(reviewId: string) {
   return `review:${reviewId}:workingCopy`;
 }
 
@@ -98,14 +98,14 @@ export default function ChecklistPage() {
           }
         }
         // Initialize working copy if absent
-        const wcKey = workingCopyKey(j.reviewId);
-        const wcRaw = localStorage.getItem(wcKey);
-        if (!wcRaw) {
-          const wc: WorkingCopy = {
+        const rwcKey = reviewWorkingCopyKey(j.reviewId);
+        const rwcRaw = localStorage.getItem(rwcKey);
+        if (!rwcRaw) {
+          const rwc: ReviewWorkingCopy = {
             graph: j.graph,
             updatedAt: new Date().toISOString(),
           };
-          localStorage.setItem(wcKey, JSON.stringify(wc));
+          localStorage.setItem(rwcKey, JSON.stringify(rwc));
         }
       } catch (e: any) {
         if (!mounted) return;
@@ -118,7 +118,7 @@ export default function ChecklistPage() {
     return () => {
       mounted = false;
     };
-  }, [reviewId, reloadNonce]);
+  }, [reviewId, reloadNonce, router]);
 
   // Persist changes in localStorage
   useEffect(() => {
@@ -317,7 +317,7 @@ export default function ChecklistPage() {
                 }
                 // Clear local state and navigate back to list
                 localStorage.removeItem(storageKey(data.reviewId));
-                localStorage.removeItem(workingCopyKey(data.reviewId));
+                localStorage.removeItem(reviewWorkingCopyKey(data.reviewId));
                 setCheckedKeys(new Set());
                 router.push(URL_REVIEW_LIST);
               } catch (e: any) {
@@ -354,7 +354,7 @@ export default function ChecklistPage() {
                   );
                 }
                 localStorage.removeItem(storageKey(data.reviewId));
-                localStorage.removeItem(workingCopyKey(data.reviewId));
+                localStorage.removeItem(reviewWorkingCopyKey(data.reviewId));
                 setCheckedKeys(new Set());
                 router.push(URL_REVIEW_LIST);
               } catch (e: any) {
