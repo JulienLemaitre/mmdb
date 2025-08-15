@@ -9,6 +9,22 @@
 - Audit trail with JSONB snapshots: simple, reliable, sufficient for research-grade provenance.
 - Declarative review checklist schema: one TypeScript map enumerates which fields must be checked per entity; UI renders a piece-level checklist view from that single source of truth.
 
+## Architectural decisions
+
+- Do not reuse FeedFormContext and its reducer for the review process.
+  - Rationale: different semantics (per-field checks and reviewId scoping), risk of state coupling and localStorage collisions, and clearer debuggability when separated.
+- Introduce a dedicated ReviewWorkingCopyContext
+  - Scope: per reviewId; holds a local working copy of the entity graph and checklist state (checked/changed).
+  - Persistence: localStorage key review:{reviewId}.
+  - Progress: derive rollups at piece, collection, and source levels.
+- Reuse existing EditForms via thin adapters
+  - Contract: props.in, props.onSave, fieldPath mapping, optional anchors (movementId/sectionId).
+  - On save: merge into working copy; mark changed=true; reset checked=false; recompute rollups.
+- Keep “do-not-review-twice” global via a ReviewedEntity registry
+  - Omit Person/Organization/Collection(description)/Piece(description) when globally reviewed; ADMIN override may expose them.
+- Finalize reviews transactionally
+  - Validate required checks from a shared ReviewChecklistSchema, compute diffs, apply changes, write AuditLog, upsert ReviewedEntity, and update states in one transaction.
+
 ## Data model
 
 - Review (new)
@@ -278,7 +294,7 @@ This keeps the “pick and confirm to lock” UI as an explicit, testable milest
         - The client builds the working copy initially from this payload.
 
 - Local state model
-    - WorkingCopyContext
+    - ReviewWorkingCopyContext
         - Holds the editable graph for this reviewId.
         - Tracks per-field check states: { entityKey, fieldPath } → checked:boolean.
         - Tracks derived flags: changed:boolean per field, per entity, and rollups.
@@ -340,7 +356,7 @@ Goal: Reuse the context‑agnostic EditForms (not their multi‑step containers)
 - 2B.3 Navigation strategy for nested entities
     - Movement/Section/TempoIndication:
         - Prefer opening PieceVersionEditForm with anchors (e.g., pieceVersionId + movementId/sectionId) to focus the correct sub-entity.
-        - Alternatively, use SectionDetail/SectionMeter for direct section edits when the change is local (meter/section properties).
+        - Alternatively, use SectionDetail/SectionArray for direct section edits when the change is local (meter/section properties).
     - MetronomeMark:
         - Use MetronomeMarksForm scoped to the section that holds the MM; preselect the target MM where applicable.
 
@@ -531,7 +547,7 @@ Goal: Reuse the context‑agnostic EditForms (not their multi‑step containers)
         - SourceDescriptionEditForm, PieceEditForm, PieceVersionEditForm
     - Prove the changed/checked reset loop end-to-end.
 5. Nested-entity navigation anchors (Phase 2B.3)
-    - Support focusing movements/sections within PieceVersion editors; add direct SectionDetail/SectionMeter integration.
+    - Support focusing movements/sections within PieceVersion editors; add direct SectionDetail/SectionArray integration.
 6. Extend adapters to remaining existing EditForms (Phase 2B.1)
     - Contributions (SourceContributionSelectForm/NewSourceContributionForm)
     - Composer (ComposerEditForm)
