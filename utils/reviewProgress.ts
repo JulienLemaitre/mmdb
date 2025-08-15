@@ -1,4 +1,4 @@
-import { ChecklistGraph, RequiredChecklistItem, expandRequiredChecklistItems } from "@/utils/ReviewChecklistSchema";
+import { ChecklistGraph, RequiredChecklistItem, expandRequiredChecklistItems, type ExpandOptions } from "@/utils/ReviewChecklistSchema";
 
 export type ProgressCounts = {
   required: number;
@@ -86,8 +86,8 @@ function attributeItemToPieceId(
   return undefined;
 }
 
-export function computeOverviewProgress(graph: ChecklistGraph): OverviewProgress {
-  const items = expandRequiredChecklistItems(graph);
+export function computeOverviewProgress(graph: ChecklistGraph, options?: ExpandOptions): OverviewProgress {
+  const items = expandRequiredChecklistItems(graph, options);
   const idx = buildParentIndexes(graph);
 
   const perPiece: Record<string, ProgressCounts> = {};

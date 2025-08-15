@@ -91,6 +91,9 @@ export default function ChecklistPage() {
   const [aborting, setAborting] = useState(false);
   const [abortError, setAbortError] = useState<string | null>(null);
   const [reloadNonce, setReloadNonce] = useState(0);
+  const [storageWarning, setStorageWarning] = useState<string | null>(null);
+  const [filter, setFilter] = useState<"ALL" | "UNCHECKED" | "CHANGED">("ALL");
+  const [changedKeys, setChangedKeys] = useState<Set<string>>(new Set());
   const [editState, setEditState] = useState<
     | { kind: "MM_SOURCE" }
     | { kind: "PIECE"; id: string }
@@ -202,10 +205,12 @@ export default function ChecklistPage() {
             const arr = JSON.parse(raw) as string[];
             setCheckedKeys(new Set(arr));
           } catch {
-            // ignore broken storage
+            setStorageWarning("Local review progress (checked items) was corrupted and has been reset.");
+            localStorage.removeItem(storageKey(j.reviewId));
+            setCheckedKeys(new Set());
           }
         }
-        // Initialize working copy if absent
+        // Initialize or validate working copy
         const rwcKey = reviewWorkingCopyKey(j.reviewId);
         const rwcRaw = localStorage.getItem(rwcKey);
         if (!rwcRaw) {
@@ -214,6 +219,14 @@ export default function ChecklistPage() {
             updatedAt: new Date().toISOString(),
           };
           localStorage.setItem(rwcKey, JSON.stringify(rwc));
+        } else {
+          try {
+            JSON.parse(rwcRaw) as ReviewWorkingCopy;
+          } catch {
+            setStorageWarning("Local working copy was corrupted and has been reset to server data.");
+            const rwc: ReviewWorkingCopy = { graph: j.graph, updatedAt: new Date().toISOString() };
+            localStorage.setItem(rwcKey, JSON.stringify(rwc));
+          }
         }
       } catch (e: any) {
         if (!mounted) return;
@@ -255,6 +268,27 @@ export default function ChecklistPage() {
     const pct = totalRequired === 0 ? 0 : Math.round((checkedRequired / totalRequired) * 100);
     return { totalRequired, checkedRequired, pct };
   }, [requiredItems, checkedKeys]);
+
+  // Recompute changed keys whenever working copy or baseline (data.graph) changes
+  useEffect(() => {
+    if (!data) return;
+    const wc = getWorkingCopy();
+    const workingGraph = wc?.graph ?? data.graph;
+    try {
+      const changes = computeChangedChecklistFieldPaths(data.graph, workingGraph);
+      setChangedKeys(new Set(toEncodedKeys(changes)));
+    } catch {
+      setChangedKeys(new Set());
+    }
+  }, [data, reloadNonce]);
+
+  const filteredItems = useMemo(() => {
+    if (!requiredItems) return [] as RequiredChecklistItem[];
+    if (filter === "ALL") return requiredItems;
+    if (filter === "UNCHECKED") return requiredItems.filter((it) => !checkedKeys.has(encodeKey(it)));
+    // CHANGED
+    return requiredItems.filter((it) => changedKeys.has(encodeKey(it)));
+  }, [requiredItems, checkedKeys, changedKeys, filter]);
 
   function toggle(item: RequiredChecklistItem) {
     const key = encodeKey(item);
@@ -335,7 +369,20 @@ export default function ChecklistPage() {
       </div>
 
       <div className="card bg-base-100 border p-4">
-        <div className="font-semibold mb-3">Checklist items</div>
+        <div className="flex items-center justify-between mb-3">
+          <div className="font-semibold">Checklist items</div>
+          <div className="join">
+            <button className={`btn btn-xs join-item ${filter === "ALL" ? "btn-active" : "btn-ghost"}`} onClick={() => setFilter("ALL")} type="button">All</button>
+            <button className={`btn btn-xs join-item ${filter === "UNCHECKED" ? "btn-active" : "btn-ghost"}`} onClick={() => setFilter("UNCHECKED")} type="button">Unchecked</button>
+            <button className={`btn btn-xs join-item ${filter === "CHANGED" ? "btn-active" : "btn-ghost"}`} onClick={() => setFilter("CHANGED")} type="button">Changed</button>
+          </div>
+        </div>
+        {storageWarning && (
+          <div className="alert alert-warning mb-3">
+            <span>{storageWarning}</span>
+            <button className="btn btn-xs btn-ghost ml-auto" onClick={() => setStorageWarning(null)}>Dismiss</button>
+          </div>
+        )}
         {editState && (
           <dialog className="modal modal-open">
             <div className="modal-box w-11/12 max-w-3xl">
@@ -508,12 +555,13 @@ export default function ChecklistPage() {
               </tr>
             </thead>
             <tbody>
-              {requiredItems.map((it) => {
+              {filteredItems.map((it) => {
                 const key = encodeKey(it);
                 const isChecked = checkedKeys.has(key);
                 const badgeClass = ENTITY_BADGE[it.entityType] || "badge-ghost";
+                const rowChanged = changedKeys.has(key);
                 return (
-                  <tr key={key}>
+                  <tr key={key} className={rowChanged ? "bg-warning/10" : ""}>
                     <td>
                       <input
                         type="checkbox"
@@ -525,7 +573,7 @@ export default function ChecklistPage() {
                     <td>
                       <span className={`badge ${badgeClass}`}>{it.entityType}</span>
                     </td>
-                    <td>{it.label}</td>
+                    <td>{it.label}{rowChanged && (<span className="badge badge-warning badge-outline ml-2">Changed</span>)}</td>
                     <td className="opacity-70 text-xs">{it.fieldPath}</td>
                     <td>
                       <button

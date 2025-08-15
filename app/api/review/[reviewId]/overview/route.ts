@@ -8,7 +8,14 @@ export async function GET(
 ) {
   const reviewId = params.reviewId;
   const { graph, globallyReviewed } = buildMockOverview(reviewId);
-  const progress = computeOverviewProgress(graph);
+  const progress = computeOverviewProgress(graph, {
+    globallyReviewed: {
+      personIds: new Set(globallyReviewed.personIds ?? []),
+      organizationIds: new Set(globallyReviewed.organizationIds ?? []),
+      collectionIds: new Set(globallyReviewed.collectionIds ?? []),
+      pieceIds: new Set(globallyReviewed.pieceIds ?? []),
+    },
+  });
 
   return NextResponse.json({
     reviewId,
