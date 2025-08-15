@@ -126,6 +126,37 @@ Consequently, here is my approach concerning the interface that we obtain once w
 - **Reuse of existing forms**
 - The new Piece Review Checklist screen will be responsible for **presenting the entities that need to be reviewed and only them**. (As Stefan pointed it out, already reviewed persons (composer or MM Source contributors), organizations, collection and piece descriptions don't need to be reviewed again. Such reviewed data won't be presented to the reviewer nor editable by him.) => **This new screen will endorse this specific feature without the need to adapt other existing screens**.
 
+#### Styles guidelines
+
+- The presentation styles must stick as close as possible to the existing data-entering process.
+- The Piece Review Checklist screen will be a new screen, but it should adhere to the same styles frame as the existing data-entering process:
+- Entity / Daisy UI semantic color correspondence:
+    - MM Source = info
+    - Collection = warning
+    - Piece = accent
+    - Piece Version = accent
+    - Movement = primary
+    - Section = secondary
+  - Titles
+  - Tables: take an example on the summary section display table for the number of notes per bar and per second (in components/entities/section/SectionDetail.tsx)
+  - Buttons action / color:
+    - submit/validate/confirm/ok = primary
+    - add = accent
+    - reset = error
+    - back = neutral
+    - cancel = neutral
+    - discard = warning
+    - edit = ghost / hover:accent
+    - delete = ghost / hover:error
+    - remove = ghost / hover:error
+    - save = primary
+    - next = primary
+  - padding and margins
+
+A good example of these style usage and combination is the Summary step of the feedForm (components/multiStepMMSourceForm/stepForms/FeedSummary.tsx):
+- capture of the whole page: specs/20250815_FeedForm_Summary.png
+- capture of the section display table: specs/20250815_FeedForm_summary_section_display.png
+
 ## Remarks on the "not to be reviewed twice" entities
 
 The following entities should not be presented for review to the reviewer of a piece if they already have been reviewed previously:
