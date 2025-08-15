@@ -19,6 +19,32 @@ export type ChecklistEntityType =
   | "PERSON"
   | "ORGANIZATION";
 
+export type ChecklistGraph = {
+  // Singleton source node for this review context
+  source: { id: string; [k: string]: any };
+  // Arrays of nodes in scope
+  collections?: Array<{ id: string; [k: string]: any }>;
+  pieces?: Array<{ id: string; [k: string]: any }>;
+  pieceVersions?: Array<{ id: string; [k: string]: any }>;
+  movements?: Array<{ id: string; [k: string]: any }>;
+  sections?: Array<{ id: string; [k: string]: any }>;
+  tempoIndications?: Array<{ id: string; [k: string]: any }>;
+  metronomeMarks?: Array<{ id: string; [k: string]: any }>;
+  references?: Array<{ id: string; [k: string]: any }>;
+  contributions?: Array<{ id: string; [k: string]: any }>;
+  persons?: Array<{ id: string; [k: string]: any }>;
+  organizations?: Array<{ id: string; [k: string]: any }>;
+  // Ordering join rows for the source contents (MMSourcesOnPieceVersions)
+  sourceContents?: Array<{ joinId: string; pieceVersionId: string; rank: number; [k: string]: any }>;
+};
+
+export type RequiredPredicateCtx = {
+  graph: ChecklistGraph;
+  entityType: ChecklistEntityType;
+  entityId?: string | null;
+  fieldRelativePath: string;
+};
+
 export type ChecklistField = {
   // Field path relative to the entity object used in your working copy payload.
   // Use simple dot paths for scalar fields.
@@ -27,7 +53,7 @@ export type ChecklistField = {
   label: string;
   // Optional helper for validation or UI rules (e.g., XOR on Contribution.personId/organizationId)
   meta?: {
-    required?: boolean; // default true
+    required?: boolean | ((ctx: RequiredPredicateCtx) => boolean); // default true; predicate can inspect contextual graph
     notes?: string;
   };
 };
@@ -57,6 +83,8 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
       { path: "permalink", label: "Permalink" },
       { path: "year", label: "Publication year" },
       { path: "comment", label: "Source comment" },
+      // Logical checklist item for ordering within the source (Phase 2E field path convention)
+      { path: "contents.order", label: "Ordering of pieces and versions" },
     ],
   },
 
@@ -207,4 +235,186 @@ export function getChecklistFields(
 // Helper: returns whether the entity type participates in “do not review twice.”
 export function isDoNotReviewTwice(entityType: ChecklistEntityType): boolean {
   return !!REVIEW_CHECKLIST_SCHEMA[entityType].doNotReviewTwice;
+}
+
+// ===== Phase 2E helpers: field path convention and checklist expansion =====
+
+export const ENTITY_PREFIX: Record<ChecklistEntityType, string> = {
+  MM_SOURCE: "source",
+  COLLECTION: "collection",
+  PIECE: "piece",
+  PIECE_VERSION: "pieceVersion",
+  MOVEMENT: "movement",
+  SECTION: "section",
+  TEMPO_INDICATION: "tempoIndication",
+  METRONOME_MARK: "metronomeMark",
+  REFERENCE: "reference",
+  CONTRIBUTION: "contribution",
+  PERSON: "person",
+  ORGANIZATION: "organization",
+};
+
+/**
+ * Builds a stable field path according to the convention.
+ * - For MM_SOURCE: no id bracket; e.g., source.title
+ * - For others: prefix[entityId].field.relative.path
+ */
+export function buildFieldPath(
+  entityType: ChecklistEntityType,
+  entityId: string | null | undefined,
+  relativePath: string,
+): string {
+  const prefix = ENTITY_PREFIX[entityType];
+  if (entityType === "MM_SOURCE") {
+    return `${prefix}.${relativePath}`;
+  }
+  const idPart = entityId ? `[${entityId}]` : "";
+  return `${prefix}${idPart}.${relativePath}`;
+}
+
+export function buildSourceJoinRankPath(joinId: string): string {
+  return `source.pieceVersions[${joinId}].rank`;
+}
+
+export type GloballyReviewed = {
+  personIds?: Set<string>;
+  organizationIds?: Set<string>;
+  collectionIds?: Set<string>;
+  pieceIds?: Set<string>;
+};
+
+export type ExpandOptions = {
+  globallyReviewed?: GloballyReviewed;
+  includePerJoinOrderChecks?: boolean; // default true
+};
+
+export type RequiredChecklistItem = {
+  entityType: ChecklistEntityType;
+  entityId?: string | null;
+  fieldPath: string;
+  label: string;
+};
+
+function isRequiredField(
+  field: ChecklistField,
+  ctx: RequiredPredicateCtx,
+): boolean {
+  const req = field.meta?.required;
+  if (req === undefined) return true;
+  if (typeof req === "function") return !!req(ctx);
+  return !!req;
+}
+
+function isGloballyReviewed(
+  entityType: ChecklistEntityType,
+  entityId: string | null | undefined,
+  options?: ExpandOptions,
+): boolean {
+  if (!entityId) return false;
+  const sets = options?.globallyReviewed;
+  switch (entityType) {
+    case "PERSON":
+      return !!sets?.personIds?.has(entityId);
+    case "ORGANIZATION":
+      return !!sets?.organizationIds?.has(entityId);
+    case "COLLECTION":
+      return !!sets?.collectionIds?.has(entityId);
+    case "PIECE":
+      return !!sets?.pieceIds?.has(entityId);
+    default:
+      return false;
+  }
+}
+
+export function expandRequiredChecklistItems(
+  graph: ChecklistGraph,
+  options?: ExpandOptions,
+): RequiredChecklistItem[] {
+  const items: RequiredChecklistItem[] = [];
+
+  // MM_SOURCE fields (singleton). Always include the logical ordering item.
+  for (const field of REVIEW_CHECKLIST_SCHEMA.MM_SOURCE.fields) {
+    const ctx: RequiredPredicateCtx = {
+      graph,
+      entityType: "MM_SOURCE",
+      entityId: null,
+      fieldRelativePath: field.path,
+    };
+    if (!isRequiredField(field, ctx)) continue;
+    items.push({
+      entityType: "MM_SOURCE",
+      entityId: null,
+      fieldPath: buildFieldPath("MM_SOURCE", null, field.path),
+      label: field.label,
+    });
+  }
+
+  // Per-join rank checks for ordering within source
+  const includeJoins = options?.includePerJoinOrderChecks ?? true;
+  if (includeJoins && Array.isArray(graph.sourceContents)) {
+    for (const row of graph.sourceContents) {
+      if (!row?.joinId) continue;
+      items.push({
+        entityType: "MM_SOURCE",
+        entityId: null,
+        fieldPath: buildSourceJoinRankPath(String(row.joinId)),
+        label: "Rank in source",
+      });
+    }
+  }
+
+  // Helper to add items per entity array based on schema
+  const addEntityGroup = (
+    entityType: ChecklistEntityType,
+    nodes: Array<{ id: string }> | undefined,
+  ) => {
+    if (!nodes || nodes.length === 0) return;
+    const schema = REVIEW_CHECKLIST_SCHEMA[entityType];
+    for (const n of nodes) {
+      if (schema.doNotReviewTwice && isGloballyReviewed(entityType, n.id, options)) {
+        continue;
+      }
+      for (const field of schema.fields) {
+        const ctx: RequiredPredicateCtx = {
+          graph,
+          entityType,
+          entityId: n.id,
+          fieldRelativePath: field.path,
+        };
+        if (!isRequiredField(field, ctx)) continue;
+        items.push({
+          entityType,
+          entityId: n.id,
+          fieldPath: buildFieldPath(entityType, n.id, field.path),
+          label: field.label,
+        });
+      }
+    }
+  };
+
+  addEntityGroup("COLLECTION", graph.collections as Array<{ id: string } | undefined> as any);
+  addEntityGroup("PIECE", graph.pieces as Array<{ id: string } | undefined> as any);
+  addEntityGroup("PIECE_VERSION", graph.pieceVersions as Array<{ id: string } | undefined> as any);
+  addEntityGroup("MOVEMENT", graph.movements as Array<{ id: string } | undefined> as any);
+  addEntityGroup("SECTION", graph.sections as Array<{ id: string } | undefined> as any);
+  addEntityGroup(
+    "TEMPO_INDICATION",
+    graph.tempoIndications as Array<{ id: string } | undefined> as any,
+  );
+  addEntityGroup(
+    "METRONOME_MARK",
+    graph.metronomeMarks as Array<{ id: string } | undefined> as any,
+  );
+  addEntityGroup("REFERENCE", graph.references as Array<{ id: string } | undefined> as any);
+  addEntityGroup(
+    "CONTRIBUTION",
+    graph.contributions as Array<{ id: string } | undefined> as any,
+  );
+  addEntityGroup("PERSON", graph.persons as Array<{ id: string } | undefined> as any);
+  addEntityGroup(
+    "ORGANIZATION",
+    graph.organizations as Array<{ id: string } | undefined> as any,
+  );
+
+  return items;
 }
