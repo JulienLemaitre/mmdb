@@ -129,13 +129,15 @@ model MetronomeMark {
 }
 
 model MMSourcesOnPieceVersions {
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   pieceVersion   PieceVersion @relation(fields: [pieceVersionId], references: [id], onDelete: Cascade)
   pieceVersionId String       @db.Uuid
   mMSource       MMSource     @relation(fields: [mMSourceId], references: [id], onDelete: Cascade)
   mMSourceId     String       @db.Uuid
   rank           Int
 
-  @@id([mMSourceId, rank])
+  @@unique([mMSourceId, rank])
+  @@unique([mMSourceId, pieceVersionId])
 }
 
 model MMSource {

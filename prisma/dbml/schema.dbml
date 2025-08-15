@@ -123,6 +123,7 @@ Table MetronomeMark {
 }
 
 Table MMSourcesOnPieceVersions {
+  id String [pk]
   pieceVersion PieceVersion [not null]
   pieceVersionId String [not null]
   mMSource MMSource [not null]
@@ -130,7 +131,8 @@ Table MMSourcesOnPieceVersions {
   rank Int [not null]
 
   indexes {
-    (mMSourceId, rank) [pk]
+    (mMSourceId, rank) [unique]
+    (mMSourceId, pieceVersionId) [unique]
   }
 }
 
