@@ -107,3 +107,82 @@ export const PieceVersionAdapter = {
     return { updatedGraph, affectedFieldPaths: affected, entityType: "PIECE_VERSION", entityId: values.id };
   },
 };
+
+export const MovementAdapter = {
+  entityType: "MOVEMENT" as const,
+  buildInitialValues(graph: any, movementId: string): { id: string; rank?: number | null; key?: string | null } | null {
+    const mv = (graph?.movements ?? []).find((m: any) => m.id === movementId);
+    if (!mv) return null;
+    return { id: mv.id, rank: mv.rank ?? null, key: mv.key ?? null };
+  },
+  applySave(graph: any, values: { id: string; rank?: number | null; key?: string | null }): ApplyResult {
+    const list = graph?.movements ?? [];
+    const idx = list.findIndex((m: any) => m.id === values.id);
+    if (idx === -1) return { updatedGraph: graph, affectedFieldPaths: [], entityType: "MOVEMENT", entityId: values.id };
+    const before = list[idx];
+    const next = { ...before, ...values };
+    const nextList = list.slice();
+    nextList[idx] = next;
+    const updatedGraph = { ...graph, movements: nextList };
+    const affected: string[] = [];
+    const relToFull = (rel: string) => buildFieldPath("MOVEMENT", values.id, rel);
+    if ((values.rank ?? null) !== (before.rank ?? null)) affected.push(relToFull("rank"));
+    if ((values.key ?? null) !== (before.key ?? null)) affected.push(relToFull("key"));
+    return { updatedGraph, affectedFieldPaths: affected, entityType: "MOVEMENT", entityId: values.id };
+  },
+};
+
+export const SectionAdapter = {
+  entityType: "SECTION" as const,
+  buildInitialValues(graph: any, sectionId: string): any | null {
+    const sec = (graph?.sections ?? []).find((s: any) => s.id === sectionId);
+    if (!sec) return null;
+    return {
+      id: sec.id,
+      rank: sec.rank ?? null,
+      metreNumerator: sec.metreNumerator ?? null,
+      metreDenominator: sec.metreDenominator ?? null,
+      isCommonTime: !!sec.isCommonTime,
+      isCutTime: !!sec.isCutTime,
+      fastestStructuralNotesPerBar: sec.fastestStructuralNotesPerBar ?? null,
+      fastestStaccatoNotesPerBar: sec.fastestStaccatoNotesPerBar ?? null,
+      fastestRepeatedNotesPerBar: sec.fastestRepeatedNotesPerBar ?? null,
+      fastestOrnamentalNotesPerBar: sec.fastestOrnamentalNotesPerBar ?? null,
+      isFastestStructuralNoteBelCanto: !!sec.isFastestStructuralNoteBelCanto,
+      tempoIndicationId: sec.tempoIndicationId ?? null,
+      comment: sec.comment ?? null,
+      commentForReview: sec.commentForReview ?? null,
+    };
+  },
+  applySave(graph: any, values: any): ApplyResult {
+    const list = graph?.sections ?? [];
+    const idx = list.findIndex((s: any) => s.id === values.id);
+    if (idx === -1) return { updatedGraph: graph, affectedFieldPaths: [], entityType: "SECTION", entityId: values.id };
+    const before = list[idx];
+    const next = { ...before, ...values };
+    const nextList = list.slice();
+    nextList[idx] = next;
+    const updatedGraph = { ...graph, sections: nextList };
+    const affected: string[] = [];
+    const relToFull = (rel: string) => buildFieldPath("SECTION", values.id, rel);
+    const diffKeys = [
+      "rank",
+      "metreNumerator",
+      "metreDenominator",
+      "isCommonTime",
+      "isCutTime",
+      "fastestStructuralNotesPerBar",
+      "fastestStaccatoNotesPerBar",
+      "fastestRepeatedNotesPerBar",
+      "fastestOrnamentalNotesPerBar",
+      "isFastestStructuralNoteBelCanto",
+      "tempoIndicationId",
+      "comment",
+      "commentForReview",
+    ];
+    for (const k of diffKeys) {
+      if ((values as any)[k] !== (before as any)[k]) affected.push(relToFull(k));
+    }
+    return { updatedGraph, affectedFieldPaths: affected, entityType: "SECTION", entityId: values.id };
+  },
+};

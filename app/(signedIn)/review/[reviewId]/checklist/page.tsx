@@ -11,7 +11,9 @@ import { URL_REVIEW_LIST } from "@/utils/routes";
 import SourceDescriptionEditForm from "@/components/entities/source-description/SourceDescriptionEditForm";
 import PieceEditForm from "@/components/entities/piece/PieceEditForm";
 import PieceVersionQuickEditForm from "@/components/entities/piece-version/PieceVersionQuickEditForm";
-import { SourceDescriptionAdapter, PieceAdapter, PieceVersionAdapter } from "@/utils/reviewAdapters";
+import MovementQuickEditForm from "@/components/entities/movement/MovementQuickEditForm";
+import SectionQuickEditForm from "@/components/entities/section/SectionQuickEditForm";
+import { SourceDescriptionAdapter, PieceAdapter, PieceVersionAdapter, MovementAdapter, SectionAdapter } from "@/utils/reviewAdapters";
 import type { PieceInput } from "@/types/formTypes";
 
 // API payload shape from /api/review/[reviewId]/overview
@@ -91,6 +93,8 @@ export default function ChecklistPage() {
     | { kind: "MM_SOURCE" }
     | { kind: "PIECE"; id: string }
     | { kind: "PIECE_VERSION"; id: string }
+    | { kind: "MOVEMENT"; id: string }
+    | { kind: "SECTION"; id: string }
     | null
   >(null);
 
@@ -134,7 +138,30 @@ export default function ChecklistPage() {
       setEditState({ kind: "PIECE_VERSION", id: it.entityId });
       return;
     }
-    // For other entity types, adapters not wired yet in this phase
+    if (it.entityType === "MOVEMENT" && it.entityId) {
+      setEditState({ kind: "MOVEMENT", id: it.entityId });
+      return;
+    }
+    if (it.entityType === "SECTION" && it.entityId) {
+      setEditState({ kind: "SECTION", id: it.entityId });
+      return;
+    }
+    if (it.entityType === "TEMPO_INDICATION" && it.entityId) {
+      // Map to the owning section and open section editor
+      const section = (data?.graph?.sections ?? []).find((s: any) => s.tempoIndicationId === it.entityId);
+      if (section?.id) {
+        setEditState({ kind: "SECTION", id: section.id });
+        return;
+      }
+    }
+    if (it.entityType === "METRONOME_MARK" && it.entityId) {
+      // Map to the owning section via metronomeMarks array if present
+      const mm = (data?.graph?.metronomeMarks ?? []).find((m: any) => m.id === it.entityId);
+      if (mm?.sectionId) {
+        setEditState({ kind: "SECTION", id: mm.sectionId });
+        return;
+      }
+    }
   }
 
   // Load overview
@@ -368,6 +395,73 @@ export default function ChecklistPage() {
                         setReloadNonce((n) => n + 1);
                       }}
                     />
+                  );
+                }
+                if (editState.kind === "MOVEMENT") {
+                  const initial = MovementAdapter.buildInitialValues(graph, editState.id);
+                  if (!initial) return <div className="text-error">Movement not found</div>;
+                  const movement = (graph.movements ?? []).find((m: any) => m.id === editState.id);
+                  const pvId = movement?.pieceVersionId as string | undefined;
+                  return (
+                    <div className="space-y-3">
+                      {pvId && (
+                        <div className="alert alert-info text-sm">
+                          <div className="flex items-center justify-between w-full">
+                            <span>Anchor: Movement belongs to a Piece Version.</span>
+                            <button className="btn btn-xs btn-ghost hover:btn-accent" onClick={() => setEditState({ kind: "PIECE_VERSION", id: pvId })}>
+                              Open PieceVersion editor
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                      <MovementQuickEditForm
+                        initialValues={{ id: initial.id, rank: (initial as any).rank ?? undefined, key: (initial as any).key ?? undefined }}
+                        onCancel={() => setEditState(null)}
+                        onSubmit={(vals) => {
+                          const res = MovementAdapter.applySave(graph, { id: initial.id, rank: vals.rank ?? null, key: (vals.key as any) ?? null });
+                          saveWorkingCopyGraph(res.updatedGraph);
+                          resetChecksFor(res.affectedFieldPaths, res.entityType, res.entityId);
+                          setEditState(null);
+                          setReloadNonce((n) => n + 1);
+                        }}
+                      />
+                    </div>
+                  );
+                }
+                if (editState.kind === "SECTION") {
+                  const initial = SectionAdapter.buildInitialValues(graph, editState.id);
+                  if (!initial) return <div className="text-error">Section not found</div>;
+                  const section = (graph.sections ?? []).find((s: any) => s.id === editState.id);
+                  let pvId: string | undefined;
+                  if (section?.movementId) {
+                    const mv = (graph.movements ?? []).find((m: any) => m.id === section.movementId);
+                    pvId = mv?.pieceVersionId;
+                  }
+                  return (
+                    <div className="space-y-3">
+                      {pvId && (
+                        <div className="alert alert-info text-sm">
+                          <div className="flex items-center justify-between w-full">
+                            <span>Anchor: Section belongs to a Piece Version.</span>
+                            <button className="btn btn-xs btn-ghost hover:btn-accent" onClick={() => setEditState({ kind: "PIECE_VERSION", id: pvId! })}>
+                              Open PieceVersion editor
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                      <SectionQuickEditForm
+                        initialValues={initial}
+                        readonlyPreview={section}
+                        onCancel={() => setEditState(null)}
+                        onSubmit={(vals) => {
+                          const res = SectionAdapter.applySave(graph, { ...vals, id: initial.id });
+                          saveWorkingCopyGraph(res.updatedGraph);
+                          resetChecksFor(res.affectedFieldPaths, res.entityType, res.entityId);
+                          setEditState(null);
+                          setReloadNonce((n) => n + 1);
+                        }}
+                      />
+                    </div>
                   );
                 }
                 return null;
