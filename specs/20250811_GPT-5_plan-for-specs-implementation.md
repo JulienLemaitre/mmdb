@@ -254,10 +254,8 @@ This keeps the “pick and confirm to lock” UI as an explicit, testable milest
         - One-page “exhaustive” list of every field to check for this piece’s scope:
             - Piece description (if not globally reviewed)
             - Piece version, movements, sections, tempo indications, metronome marks
-            - Source‑level references/contributions that attach to this piece (if any)
-            - Collection description (if applicable and required; appears as first block)
 
-        - Each field shows current value; an Edit button opens the existing data-entry form for that entity (working on the local working copy).
+        - Each field shows current value; an Edit button opens the existing data-entry form editing the working copy.
         - Changing a value resets checkmarks for fields affected by that change.
         - Show filters: Unchecked only, Changed only, All.
         - Show progress indicators (piece-level, and a breadcrumb-level summary for collection/source).
@@ -295,47 +293,83 @@ This keeps the “pick and confirm to lock” UI as an explicit, testable milest
     - Navigation between Overview → Piece Checklist → Overview preserves state.
     - Do-not-review-twice entities are omitted and not editable unless user is ADMIN.
 
-#### Phase 2B — Edit forms wiring (reuse existing forms against the working copy) Goal: Reuse existing data-entry forms to edit the working copy, without touching the DB until submit.
+#### Phase 2B — Edit forms wiring (context‑agnostic EditForms, adapters, and gaps)
+Goal: Reuse the context‑agnostic EditForms (not their multi‑step containers) to edit the local working copy; define a thin adapter per entity; fill small gaps where no standalone EditForm exists.
 
-- “Edit” button launch behavior
-    - Each field block has an Edit action that:
-        - Opens the corresponding edit form (drawer/modal/route section).
-        - The form receives initialValues from the working copy slice for that entity.
-        - On save:
-            - Writes the updated values back into the working copy.
-            - Emits a “value changed” event to recompute field diffs and reset checkmarks for touched fields.
+- 2B.1 EditForm catalog (reusable, context‑agnostic)
+    - MM Source (description)
+        - components/entities/source-description/SourceDescriptionEditForm.tsx
+    - Contributions (MM Source contributions: person/org + role)
+        - components/entities/source-contributions/SourceContributionSelect.tsx
+        - components/entities/source-contributions/NewSourceContributionForm.tsx (will first need to be generalized as a SourceContributionEditForm)
+    - Person (Composer)
+        - components/entities/composer/ComposerEditForm.tsx (must be renamed PersonEditForm)
+    - Organization
+        - Gap: no standalone OrganizationEditForm (see 2B.4).
+    - Piece (description)
+        - components/entities/piece/PieceEditForm.tsx
+    - Collection (description)
+        - components/entities/collection/CollectionEditForm.tsx
+    - PieceVersion (structure root, movements/sections nested)
+        - components/entities/piece-version/PieceVersionEditForm.tsx
+        - components/entities/piece-version/CollectionPieceVersionsEditForm.tsx (batch within a collection - this level of adding or removing a piece from a collection should not be included in th review features, at least for now)
+    - Movement
+        - Gap: no standalone MovementEditForm (see 2B.4).
+    - Section
+        - Gap: no standalone SectionEditForm (see 2B.4).
+    - TempoIndication
+        - Gap: no standalone TempoIndicationEditForm (see 2B.4).
+    - MetronomeMark
+        - components/entities/metronome-marks/MetronomeMarksForm.tsx
+    - Reference
+        - included in the MM Source description form SourceDescriptionEditForm
 
-- Form adapter layer
-    - Implement a small adapter per entity type to map:
-        - WorkingCopy slice ⇄ existing form props/DTOs (e.g., normalization for nested relations like movements/sections).
-        - Change impact: which fieldPaths to mark as changed/reset.
+- 2B.2 Adapter contract per entity type
+    - Purpose: decouple EditForms from FeedForm context and map to the review working copy.
+    - Contract (per entity type):
+        - props.in: initialValues built from workingCopy slice
+        - props.onSave: (updatedValues) => void
+        - fieldPath mapping: function that returns affected fieldPaths for a given change
+        - optional focus anchors (e.g., movementId, sectionId) for deep editors
+    - On save:
+        - Merge changes into working copy
+        - Mark changed=true on affected fieldPaths
+        - Reset checked=false on affected fieldPaths
+        - Emit “entityChanged” event for rollup recomputation
 
-    - Ensure each form operates purely on props/state; no server calls.
+- 2B.3 Navigation strategy for nested entities
+    - Movement/Section/TempoIndication:
+        - Prefer opening PieceVersionEditForm with anchors (e.g., pieceVersionId + movementId/sectionId) to focus the correct sub-entity.
+        - Alternatively, use SectionDetail/SectionMeter for direct section edits when the change is local (meter/section properties).
+    - MetronomeMark:
+        - Use MetronomeMarksForm scoped to the section that holds the MM; preselect the target MM where applicable.
 
-- Change impact rules
-    - Maintain a map per entity type:
-        - fieldPath → affectedFieldPaths
-        - Example:
-            - Changing a timeSignature in Section resets:
-                - section.timeSignature
-                - and derived displays that rely on beats-per-bar if present.
+- 2B.4 Small gap-fillers (lightweight forms to add)
+    - OrganizationEditForm:
+        - Minimal editor for organization name and relevant fields used in contributions.
+    - MovementEditForm (optional if anchors are sufficient):
+        - Minimal editor for movement-level (derived from MovementArray) properties if we want direct movement editing without entering the full PieceVersion form.
+    - SectionEditForm (optional if anchors are sufficient):
+        - Minimal editor for section-level (derived from SectionArray) properties if we want direct movement editing without entering the full PieceVersion form.
+    - TempoIndicationEditForm (optional if anchors are sufficient):
+        - Minimal editor for tempo indication-level properties if we want direct tempo indication editing without entering the full PieceVersion form.
+        
+        - Each new form must follow the same adapter contract as 2B.2.
 
-    - Upon successful edit, set changed=true for affected fields and set checked=false for them.
+- 2B.5 Validation and constraints
+    - Reuse each EditForm’s internal validations.
+    - The checklist screen must block Save if the embedded form is invalid; surface inline errors and keep the dialog open.
+    - After successful save, recompute changed/checked flags and progress.
 
-- Validation and constraints
-    - Use the same schema/validation as original data-entry forms.
-    - In the piece checklist, invalid form state blocks Save with visible inline messages.
-    - Optional: highlight invalid entity blocks in the checklist until corrected.
-
-- Admin override
-    - Admin can edit globally-reviewed entities in this flow only if explicitly enabled in UI (hidden by default).
-    - By default, globally-reviewed entities are non-editable and omitted from the checklist.
+- 2B.6 Admin override
+    - Respect “do-not-review-twice” rules by default (omit or disable editing for globally reviewed entities).
+    - When ADMIN override is enabled, allow opening the EditForm but still route all changes through the working copy and final transactional submit.
 
 - Acceptance criteria (Phase 2B)
-    - All relevant entity forms can open from checklist and save back to the working copy.
-    - Saving a change resets related checks and marks fields as changed.
-    - No network requests are made during editing; all happens in memory until final submission.
-    - Attempts to edit a filtered “do-not-review-twice” entity are blocked (unless ADMIN override is active).
+    - All editors listed in 2B.1 can open with initialValues from the working copy and save back through adapters.
+    - Changed fields are tracked and their checkmarks reset.
+    - For nested entities, anchor-based focusing works (e.g., jump directly to a section inside PieceVersionEditForm).
+    - Gap-fillers (if in scope) are implemented and follow the adapter contract.
 
 #### Phase 2C — Finalize wiring: diffs, server validation, and transactional apply Goal: Compute per-entity diffs, validate checklist completeness server-side, and apply changes atomically.
 
@@ -492,19 +526,36 @@ This keeps the “pick and confirm to lock” UI as an explicit, testable milest
 1. Schema helper and field path convention (Phase 2E foundation)
 2. Review Overview and Collection Overview screens (Phase 2A skeleton)
 3. Piece Review Checklist basic rendering from schema (no edit yet)
-4. Form adapter wiring and change-impact rules (Phase 2B)
-5. Client diff pre-check and submit payload shaping (Phase 2C prep)
-6. Server: finalize endpoint with validation → diff → transactional apply (Phase 2C)
-7. AuditLog write path and minimal audit read API (Phase 2D)
-8. Tests across units/integration/UI (Phase 2F)
-9. Polishing: filters, progress accuracy, guard rails, admin override off by default
+4. EditForm catalog and adapter scaffolding (Phase 2B.1 and 2B.2)
+    - Implement the adapter contract and wire the first three EditForms:
+        - SourceDescriptionEditForm, PieceEditForm, PieceVersionEditForm
+    - Prove the changed/checked reset loop end-to-end.
+5. Nested-entity navigation anchors (Phase 2B.3)
+    - Support focusing movements/sections within PieceVersion editors; add direct SectionDetail/SectionMeter integration.
+6. Extend adapters to remaining existing EditForms (Phase 2B.1)
+    - Contributions (SourceContributionSelectForm/NewSourceContributionForm)
+    - Composer (ComposerEditForm)
+    - Collection (CollectionEditForm)
+    - MetronomeMark (MetronomeMarksForm)
+    - TempoIndication (TempoIndicationSelect)
+    - References (via SourceDescriptionEditForm; add standalone only if required)
+7. Gap-fillers (Phase 2B.4), if needed for this release
+    - OrganizationEditForm
+    - MovementEditForm (optional if anchors suffice)
+    - ReferenceEditForm (only if editing outside source description is required)
+8. Client diff pre-check and submit payload shaping (Phase 2C prep)
+9. Server: finalize endpoint with validation → diff → transactional apply (Phase 2C)
+10. AuditLog write path and minimal audit read API (Phase 2D)
+11. Tests across units/integration/UI (Phase 2F)
+12. Polishing: filters, progress accuracy, guard rails, admin override off by default
 
 #### Phase 2 — Acceptance criteria (global)
 - The three review screens exist and mirror the structure described in the specs (source overview → collection overview → piece checklist).
-- Edit buttons open existing forms and save back to the local working copy; changed fields are tracked and their checks reset.
+- Edit buttons open context‑agnostic EditForms and save back to the local working copy via adapters; changed fields are tracked and their checks reset.
+- Nested edits (movements/sections/MMs) work via anchors or focused subforms.
 - Submit enforces server-side completeness and applies changes atomically, writing accurate AuditLog rows and updating ReviewedEntity where applicable.
 - “Do-not-review-twice” exclusions are honored and enforced both client-side and server-side.
-- Adequate tests cover schema expansion, diffs, audit composition, and critical UX flows.
+- Adequate tests cover schema expansion, diffs, audit composition, adapters, and critical UX flows.
 
 Notes on scope and risk
 - Biggest risk is schema drift between UI and server. Mitigate by centralizing ReviewChecklistSchema and sharing field path helpers.
