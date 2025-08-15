@@ -8,6 +8,11 @@ import {
   type RequiredChecklistItem,
 } from "@/utils/ReviewChecklistSchema";
 import { URL_REVIEW_LIST } from "@/utils/routes";
+import SourceDescriptionEditForm from "@/components/entities/source-description/SourceDescriptionEditForm";
+import PieceEditForm from "@/components/entities/piece/PieceEditForm";
+import PieceVersionQuickEditForm from "@/components/entities/piece-version/PieceVersionQuickEditForm";
+import { SourceDescriptionAdapter, PieceAdapter, PieceVersionAdapter } from "@/utils/reviewAdapters";
+import type { PieceInput } from "@/types/formTypes";
 
 // API payload shape from /api/review/[reviewId]/overview
 type ApiOverview = {
@@ -82,6 +87,55 @@ export default function ChecklistPage() {
   const [aborting, setAborting] = useState(false);
   const [abortError, setAbortError] = useState<string | null>(null);
   const [reloadNonce, setReloadNonce] = useState(0);
+  const [editState, setEditState] = useState<
+    | { kind: "MM_SOURCE" }
+    | { kind: "PIECE"; id: string }
+    | { kind: "PIECE_VERSION"; id: string }
+    | null
+  >(null);
+
+  function getWorkingCopy(): ReviewWorkingCopy | null {
+    if (!reviewId) return null;
+    const rwcRaw = localStorage.getItem(reviewWorkingCopyKey(reviewId));
+    if (!rwcRaw) return null;
+    try {
+      return JSON.parse(rwcRaw) as ReviewWorkingCopy;
+    } catch {
+      return null;
+    }
+  }
+  function saveWorkingCopyGraph(updatedGraph: any) {
+    if (!reviewId) return;
+    const next: ReviewWorkingCopy = { graph: updatedGraph, updatedAt: new Date().toISOString() };
+    localStorage.setItem(reviewWorkingCopyKey(reviewId), JSON.stringify(next));
+  }
+
+  function resetChecksFor(affectedFieldPaths: string[], entityType: ChecklistEntityType, entityId?: string | null) {
+    setCheckedKeys((prev) => {
+      const next = new Set(prev);
+      for (const fp of affectedFieldPaths) {
+        const key = `${entityType}:${entityId ?? ""}:${fp}`;
+        if (next.has(key)) next.delete(key);
+      }
+      return next;
+    });
+  }
+
+  function openEditForItem(it: RequiredChecklistItem) {
+    if (it.entityType === "MM_SOURCE") {
+      setEditState({ kind: "MM_SOURCE" });
+      return;
+    }
+    if (it.entityType === "PIECE" && it.entityId) {
+      setEditState({ kind: "PIECE", id: it.entityId });
+      return;
+    }
+    if (it.entityType === "PIECE_VERSION" && it.entityId) {
+      setEditState({ kind: "PIECE_VERSION", id: it.entityId });
+      return;
+    }
+    // For other entity types, adapters not wired yet in this phase
+  }
 
   // Load overview
   useEffect(() => {
@@ -248,6 +302,82 @@ export default function ChecklistPage() {
 
       <div className="card bg-base-100 border p-4">
         <div className="font-semibold mb-3">Checklist items</div>
+        {editState && (
+          <dialog className="modal modal-open">
+            <div className="modal-box w-11/12 max-w-3xl">
+              <h3 className="font-bold text-lg mb-3">Edit</h3>
+              {(() => {
+                const wc = getWorkingCopy();
+                const graph = wc?.graph ?? data.graph; // fall back to current graph
+                if (editState.kind === "MM_SOURCE") {
+                  const initial = SourceDescriptionAdapter.buildInitialValues(graph);
+                  return (
+                    <SourceDescriptionEditForm
+                      initialValues={initial}
+                      onCancel={() => setEditState(null)}
+                      onSubmit={(values) => {
+                        const res = SourceDescriptionAdapter.applySave(graph, values);
+                        saveWorkingCopyGraph(res.updatedGraph);
+                        resetChecksFor(res.affectedFieldPaths, res.entityType, res.entityId);
+                        setEditState(null);
+                        setReloadNonce((n) => n + 1);
+                      }}
+                    />
+                  );
+                }
+                if (editState.kind === "PIECE") {
+                  const initial = PieceAdapter.buildInitialValues(graph, editState.id);
+                  if (!initial) return <div className="text-error">Piece not found</div>;
+                  const pieceInput: PieceInput = {
+                    id: initial.id,
+                    title: (initial.title as any) ?? "",
+                    nickname: (initial.nickname as any) ?? "",
+                    yearOfComposition: (initial.yearOfComposition as any) ?? null,
+                  };
+                  return (
+                    <PieceEditForm
+                      piece={pieceInput}
+                      onCancel={() => setEditState(null)}
+                      onSubmit={(vals) => {
+                        const res = PieceAdapter.applySave(graph, {
+                          id: initial.id,
+                          title: vals.title ?? null,
+                          nickname: vals.nickname ?? null,
+                          yearOfComposition: (vals.yearOfComposition as any) ?? null,
+                        });
+                        saveWorkingCopyGraph(res.updatedGraph);
+                        resetChecksFor(res.affectedFieldPaths, res.entityType, res.entityId);
+                        setEditState(null);
+                        setReloadNonce((n) => n + 1);
+                      }}
+                    />
+                  );
+                }
+                if (editState.kind === "PIECE_VERSION") {
+                  const initial = PieceVersionAdapter.buildInitialValues(graph, editState.id);
+                  if (!initial) return <div className="text-error">Piece version not found</div>;
+                  return (
+                    <PieceVersionQuickEditForm
+                      initialValues={{ id: initial.id, category: initial.category ?? undefined }}
+                      onCancel={() => setEditState(null)}
+                      onSubmit={(vals) => {
+                        const res = PieceVersionAdapter.applySave(graph, { id: initial.id, category: vals.category ?? null });
+                        saveWorkingCopyGraph(res.updatedGraph);
+                        resetChecksFor(res.affectedFieldPaths, res.entityType, res.entityId);
+                        setEditState(null);
+                        setReloadNonce((n) => n + 1);
+                      }}
+                    />
+                  );
+                }
+                return null;
+              })()}
+              <div className="modal-action">
+                <button className="btn btn-neutral" onClick={() => setEditState(null)}>Close</button>
+              </div>
+            </div>
+          </dialog>
+        )}
         <div className="overflow-x-auto">
           <table className="table table-zebra">
             <thead>
@@ -256,6 +386,7 @@ export default function ChecklistPage() {
                 <th>Entity</th>
                 <th>Label</th>
                 <th>Field path</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -278,6 +409,16 @@ export default function ChecklistPage() {
                     </td>
                     <td>{it.label}</td>
                     <td className="opacity-70 text-xs">{it.fieldPath}</td>
+                    <td>
+                      <button
+                        type="button"
+                        className="btn btn-xs btn-ghost hover:btn-accent"
+                        onClick={() => openEditForItem(it)}
+                        title="Edit this entity"
+                      >
+                        Edit
+                      </button>
+                    </td>
                   </tr>
                 );
               })}
