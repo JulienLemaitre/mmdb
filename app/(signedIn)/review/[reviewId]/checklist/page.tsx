@@ -7,6 +7,7 @@ import {
   expandRequiredChecklistItems,
   type RequiredChecklistItem,
 } from "@/utils/ReviewChecklistSchema";
+import { computeChangedChecklistFieldPaths, toEncodedKeys } from "@/utils/reviewDiff";
 import { URL_REVIEW_LIST } from "@/utils/routes";
 import SourceDescriptionEditForm from "@/components/entities/source-description/SourceDescriptionEditForm";
 import PieceEditForm from "@/components/entities/piece/PieceEditForm";
@@ -557,6 +558,29 @@ export default function ChecklistPage() {
               try {
                 setSubmitError(null);
                 setSubmitting(true);
+
+                // Load working copy graph (fallback to current data.graph)
+                const wc = getWorkingCopy();
+                const workingGraph = wc?.graph ?? data.graph;
+
+                // Pre-check: ensure any changed checklist field is checked
+                const changes = computeChangedChecklistFieldPaths(data.graph, workingGraph);
+                const changeKeys = new Set(toEncodedKeys(changes));
+                const requiredKeyMap = new Map(requiredItems.map((it) => [encodeKey(it), it]));
+                const relevantChangeKeys = Array.from(changeKeys).filter((k) => requiredKeyMap.has(k));
+                const missing = relevantChangeKeys.filter((k) => !checkedKeys.has(k));
+                if (missing.length > 0) {
+                  const samples = missing.slice(0, 5).map((k) => {
+                    const it = requiredKeyMap.get(k)!;
+                    return `${it.label} (${it.fieldPath})`;
+                  });
+                  setSubmitting(false);
+                  setSubmitError(
+                    `Some changed fields must be checked before submitting. Please review: ${samples.join(", ")}${missing.length > samples.length ? `, and ${missing.length - samples.length} more…` : ""}`,
+                  );
+                  return;
+                }
+
                 const requiredItemsChecked = requiredItems
                   .filter((it) => checkedKeys.has(encodeKey(it)))
                   .map((it) => ({
@@ -565,10 +589,12 @@ export default function ChecklistPage() {
                     fieldPath: it.fieldPath,
                     checked: true,
                   }));
+
                 const res = await fetch(`/api/review/${data.reviewId}/submit`, {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({
+                    workingCopy: workingGraph,
                     checklistState: requiredItemsChecked,
                     overallComment: null,
                   }),
