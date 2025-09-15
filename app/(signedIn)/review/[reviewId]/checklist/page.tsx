@@ -28,6 +28,7 @@ import {
 } from "@/utils/reviewAdapters";
 import type { PieceInput } from "@/types/formTypes";
 import { ApiOverview } from "@/types/reviewTypes";
+import { ReviewWorkingCopyProvider } from "@/components/context/reviewWorkingCopyContext";
 
 // Minimal working copy persisted in localStorage; future forms will mutate this.
 // Initialize from the overview's graph for now.
@@ -346,251 +347,199 @@ export default function ChecklistPage() {
     totals.checkedRequired < totals.totalRequired;
 
   return (
-    <div className="container mx-auto p-4 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Piece Review Checklist</h1>
-          <p className="text-sm opacity-80">Review ID: {data.reviewId}</p>
+    <ReviewWorkingCopyProvider
+      reviewId={data.reviewId}
+      initialGraph={data.graph}
+    >
+      <div className="container mx-auto p-4 space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold">Piece Review Checklist</h1>
+            <p className="text-sm opacity-80">Review ID: {data.reviewId}</p>
+          </div>
         </div>
-      </div>
 
-      <div className="card bg-info/10 p-4">
-        <div className="font-medium mb-1">Source</div>
-        <div className="text-sm">
-          Title: {data.graph.source?.title ?? "(no title)"}
-        </div>
-        <div className="text-sm">
-          Link:{" "}
-          {data.graph.source?.link ? (
-            <a
-              className="link"
-              href={data.graph.source.link}
-              target="_blank"
-              rel="noreferrer"
-            >
-              open score
-            </a>
-          ) : (
-            "—"
-          )}
-        </div>
-        <div className="text-sm">
-          Permalink:{" "}
-          {data.graph.source?.permalink ? (
-            <a
-              className="link"
-              href={data.graph.source.permalink}
-              target="_blank"
-              rel="noreferrer"
-            >
-              open permalink
-            </a>
-          ) : (
-            "—"
-          )}
-        </div>
-      </div>
-
-      <div className="card bg-base-100 border p-4">
-        <div className="mb-3 flex items-center justify-between">
-          <div className="font-medium">Progress</div>
+        <div className="card bg-info/10 p-4">
+          <div className="font-medium mb-1">Source</div>
           <div className="text-sm">
-            {totals.checkedRequired} / {totals.totalRequired} required checks (
-            {totals.pct}%)
+            Title: {data.graph.source?.title ?? "(no title)"}
+          </div>
+          <div className="text-sm">
+            Link:{" "}
+            {data.graph.source?.link ? (
+              <a
+                className="link"
+                href={data.graph.source.link}
+                target="_blank"
+                rel="noreferrer"
+              >
+                open score
+              </a>
+            ) : (
+              "—"
+            )}
+          </div>
+          <div className="text-sm">
+            Permalink:{" "}
+            {data.graph.source?.permalink ? (
+              <a
+                className="link"
+                href={data.graph.source.permalink}
+                target="_blank"
+                rel="noreferrer"
+              >
+                open permalink
+              </a>
+            ) : (
+              "—"
+            )}
           </div>
         </div>
-        <progress
-          className="progress progress-primary w-full"
-          value={totals.pct}
-          max={100}
-        />
-      </div>
 
-      <div className="card bg-base-100 border p-4">
-        <div className="flex items-center justify-between mb-3">
-          <div className="font-semibold">Checklist items</div>
-          <div className="join">
-            <button
-              className={`btn btn-xs join-item ${filter === "ALL" ? "btn-active" : "btn-ghost"}`}
-              onClick={() => setFilter("ALL")}
-              type="button"
-            >
-              All
-            </button>
-            <button
-              className={`btn btn-xs join-item ${filter === "UNCHECKED" ? "btn-active" : "btn-ghost"}`}
-              onClick={() => setFilter("UNCHECKED")}
-              type="button"
-            >
-              Unchecked
-            </button>
-            <button
-              className={`btn btn-xs join-item ${filter === "CHANGED" ? "btn-active" : "btn-ghost"}`}
-              onClick={() => setFilter("CHANGED")}
-              type="button"
-            >
-              Changed
-            </button>
+        <div className="card bg-base-100 border p-4">
+          <div className="mb-3 flex items-center justify-between">
+            <div className="font-medium">Progress</div>
+            <div className="text-sm">
+              {totals.checkedRequired} / {totals.totalRequired} required checks
+              ({totals.pct}%)
+            </div>
           </div>
+          <progress
+            className="progress progress-primary w-full"
+            value={totals.pct}
+            max={100}
+          />
         </div>
-        {storageWarning && (
-          <div className="alert alert-warning mb-3">
-            <span>{storageWarning}</span>
-            <button
-              className="btn btn-xs btn-ghost ml-auto"
-              onClick={() => setStorageWarning(null)}
-            >
-              Dismiss
-            </button>
+
+        <div className="card bg-base-100 border p-4">
+          <div className="flex items-center justify-between mb-3">
+            <div className="font-semibold">Checklist items</div>
+            <div className="join">
+              <button
+                className={`btn btn-xs join-item ${filter === "ALL" ? "btn-active" : "btn-ghost"}`}
+                onClick={() => setFilter("ALL")}
+                type="button"
+              >
+                All
+              </button>
+              <button
+                className={`btn btn-xs join-item ${filter === "UNCHECKED" ? "btn-active" : "btn-ghost"}`}
+                onClick={() => setFilter("UNCHECKED")}
+                type="button"
+              >
+                Unchecked
+              </button>
+              <button
+                className={`btn btn-xs join-item ${filter === "CHANGED" ? "btn-active" : "btn-ghost"}`}
+                onClick={() => setFilter("CHANGED")}
+                type="button"
+              >
+                Changed
+              </button>
+            </div>
           </div>
-        )}
-        {editState && (
-          <dialog className="modal modal-open">
-            <div className="modal-box w-11/12 max-w-3xl">
-              <h3 className="font-bold text-lg mb-3">Edit</h3>
-              {(() => {
-                const wc = getWorkingCopy();
-                const graph = wc?.graph ?? data.graph; // fall back to current graph
-                if (editState.kind === "MM_SOURCE") {
-                  const initial =
-                    SourceDescriptionAdapter.buildInitialValues(graph);
-                  return (
-                    <SourceDescriptionEditForm
-                      initialValues={initial}
-                      onCancel={() => setEditState(null)}
-                      onSubmit={(values) => {
-                        const res = SourceDescriptionAdapter.applySave(
-                          graph,
-                          values,
-                        );
-                        saveWorkingCopyGraph(res.updatedGraph);
-                        resetChecksFor(
-                          res.affectedFieldPaths,
-                          res.entityType,
-                          res.entityId,
-                        );
-                        setEditState(null);
-                        setReloadNonce((n) => n + 1);
-                      }}
-                    />
-                  );
-                }
-                if (editState.kind === "PIECE") {
-                  const initial = PieceAdapter.buildInitialValues(
-                    graph,
-                    editState.id,
-                  );
-                  if (!initial)
-                    return <div className="text-error">Piece not found</div>;
-                  const pieceInput: PieceInput = {
-                    id: initial.id,
-                    title: (initial.title as any) ?? "",
-                    nickname: (initial.nickname as any) ?? "",
-                    yearOfComposition:
-                      (initial.yearOfComposition as any) ?? null,
-                  };
-                  return (
-                    <PieceEditForm
-                      piece={pieceInput}
-                      onCancel={() => setEditState(null)}
-                      onSubmit={(vals) => {
-                        const res = PieceAdapter.applySave(graph, {
-                          id: initial.id,
-                          title: vals.title ?? null,
-                          nickname: vals.nickname ?? null,
-                          yearOfComposition:
-                            (vals.yearOfComposition as any) ?? null,
-                        });
-                        saveWorkingCopyGraph(res.updatedGraph);
-                        resetChecksFor(
-                          res.affectedFieldPaths,
-                          res.entityType,
-                          res.entityId,
-                        );
-                        setEditState(null);
-                        setReloadNonce((n) => n + 1);
-                      }}
-                    />
-                  );
-                }
-                if (editState.kind === "PIECE_VERSION") {
-                  const initial = PieceVersionAdapter.buildInitialValues(
-                    graph,
-                    editState.id,
-                  );
-                  if (!initial)
+          {storageWarning && (
+            <div className="alert alert-warning mb-3">
+              <span>{storageWarning}</span>
+              <button
+                className="btn btn-xs btn-ghost ml-auto"
+                onClick={() => setStorageWarning(null)}
+              >
+                Dismiss
+              </button>
+            </div>
+          )}
+          {editState && (
+            <dialog className="modal modal-open">
+              <div className="modal-box w-11/12 max-w-3xl">
+                <h3 className="font-bold text-lg mb-3">Edit</h3>
+                {(() => {
+                  const wc = getWorkingCopy();
+                  const graph = wc?.graph ?? data.graph; // fall back to current graph
+                  if (editState.kind === "MM_SOURCE") {
+                    const initial =
+                      SourceDescriptionAdapter.buildInitialValues(graph);
                     return (
-                      <div className="text-error">Piece version not found</div>
+                      <SourceDescriptionEditForm
+                        initialValues={initial}
+                        onCancel={() => setEditState(null)}
+                        onSubmit={(values) => {
+                          const res = SourceDescriptionAdapter.applySave(
+                            graph,
+                            values,
+                          );
+                          saveWorkingCopyGraph(res.updatedGraph);
+                          resetChecksFor(
+                            res.affectedFieldPaths,
+                            res.entityType,
+                            res.entityId,
+                          );
+                          setEditState(null);
+                          setReloadNonce((n) => n + 1);
+                        }}
+                      />
                     );
-                  return (
-                    <PieceVersionQuickEditForm
-                      initialValues={{
-                        id: initial.id,
-                        category: initial.category ?? undefined,
-                      }}
-                      onCancel={() => setEditState(null)}
-                      onSubmit={(vals) => {
-                        const res = PieceVersionAdapter.applySave(graph, {
-                          id: initial.id,
-                          category: vals.category ?? null,
-                        });
-                        saveWorkingCopyGraph(res.updatedGraph);
-                        resetChecksFor(
-                          res.affectedFieldPaths,
-                          res.entityType,
-                          res.entityId,
-                        );
-                        setEditState(null);
-                        setReloadNonce((n) => n + 1);
-                      }}
-                    />
-                  );
-                }
-                if (editState.kind === "MOVEMENT") {
-                  const initial = MovementAdapter.buildInitialValues(
-                    graph,
-                    editState.id,
-                  );
-                  if (!initial)
-                    return <div className="text-error">Movement not found</div>;
-                  const movement = (graph.movements ?? []).find(
-                    (m: any) => m.id === editState.id,
-                  );
-                  const pvId = movement?.pieceVersionId as string | undefined;
-                  return (
-                    <div className="space-y-3">
-                      {pvId && (
-                        <div className="alert alert-info text-sm">
-                          <div className="flex items-center justify-between w-full">
-                            <span>
-                              Anchor: Movement belongs to a Piece Version.
-                            </span>
-                            <button
-                              className="btn btn-xs btn-ghost hover:btn-accent"
-                              onClick={() =>
-                                setEditState({
-                                  kind: "PIECE_VERSION",
-                                  id: pvId,
-                                })
-                              }
-                            >
-                              Open PieceVersion editor
-                            </button>
-                          </div>
+                  }
+                  if (editState.kind === "PIECE") {
+                    const initial = PieceAdapter.buildInitialValues(
+                      graph,
+                      editState.id,
+                    );
+                    if (!initial)
+                      return <div className="text-error">Piece not found</div>;
+                    const pieceInput: PieceInput = {
+                      id: initial.id,
+                      title: (initial.title as any) ?? "",
+                      nickname: (initial.nickname as any) ?? "",
+                      yearOfComposition:
+                        (initial.yearOfComposition as any) ?? null,
+                    };
+                    return (
+                      <PieceEditForm
+                        piece={pieceInput}
+                        onCancel={() => setEditState(null)}
+                        onSubmit={(vals) => {
+                          const res = PieceAdapter.applySave(graph, {
+                            id: initial.id,
+                            title: vals.title ?? null,
+                            nickname: vals.nickname ?? null,
+                            yearOfComposition:
+                              (vals.yearOfComposition as any) ?? null,
+                          });
+                          saveWorkingCopyGraph(res.updatedGraph);
+                          resetChecksFor(
+                            res.affectedFieldPaths,
+                            res.entityType,
+                            res.entityId,
+                          );
+                          setEditState(null);
+                          setReloadNonce((n) => n + 1);
+                        }}
+                      />
+                    );
+                  }
+                  if (editState.kind === "PIECE_VERSION") {
+                    const initial = PieceVersionAdapter.buildInitialValues(
+                      graph,
+                      editState.id,
+                    );
+                    if (!initial)
+                      return (
+                        <div className="text-error">
+                          Piece version not found
                         </div>
-                      )}
-                      <MovementQuickEditForm
+                      );
+                    return (
+                      <PieceVersionQuickEditForm
                         initialValues={{
                           id: initial.id,
-                          rank: (initial as any).rank ?? undefined,
-                          key: (initial as any).key ?? undefined,
+                          category: initial.category ?? undefined,
                         }}
                         onCancel={() => setEditState(null)}
                         onSubmit={(vals) => {
-                          const res = MovementAdapter.applySave(graph, {
+                          const res = PieceVersionAdapter.applySave(graph, {
                             id: initial.id,
-                            rank: vals.rank ?? null,
-                            key: (vals.key as any) ?? null,
+                            category: vals.category ?? null,
                           });
                           saveWorkingCopyGraph(res.updatedGraph);
                           resetChecksFor(
@@ -602,56 +551,152 @@ export default function ChecklistPage() {
                           setReloadNonce((n) => n + 1);
                         }}
                       />
-                    </div>
-                  );
-                }
-                if (editState.kind === "SECTION") {
-                  const initial = SectionAdapter.buildInitialValues(
-                    graph,
-                    editState.id,
-                  );
-                  if (!initial)
-                    return <div className="text-error">Section not found</div>;
-                  const section = (graph.sections ?? []).find(
-                    (s: any) => s.id === editState.id,
-                  );
-                  let pvId: string | undefined;
-                  if (section?.movementId) {
-                    const mv = (graph.movements ?? []).find(
-                      (m: any) => m.id === section.movementId,
                     );
-                    pvId = mv?.pieceVersionId;
                   }
-                  return (
-                    <div className="space-y-3">
-                      {pvId && (
-                        <div className="alert alert-info text-sm">
-                          <div className="flex items-center justify-between w-full">
-                            <span>
-                              Anchor: Section belongs to a Piece Version.
-                            </span>
-                            <button
-                              className="btn btn-xs btn-ghost hover:btn-accent"
-                              onClick={() =>
-                                setEditState({
-                                  kind: "PIECE_VERSION",
-                                  id: pvId!,
-                                })
-                              }
-                            >
-                              Open PieceVersion editor
-                            </button>
+                  if (editState.kind === "MOVEMENT") {
+                    const initial = MovementAdapter.buildInitialValues(
+                      graph,
+                      editState.id,
+                    );
+                    if (!initial)
+                      return (
+                        <div className="text-error">Movement not found</div>
+                      );
+                    const movement = (graph.movements ?? []).find(
+                      (m: any) => m.id === editState.id,
+                    );
+                    const pvId = movement?.pieceVersionId as string | undefined;
+                    return (
+                      <div className="space-y-3">
+                        {pvId && (
+                          <div className="alert alert-info text-sm">
+                            <div className="flex items-center justify-between w-full">
+                              <span>
+                                Anchor: Movement belongs to a Piece Version.
+                              </span>
+                              <button
+                                className="btn btn-xs btn-ghost hover:btn-accent"
+                                onClick={() =>
+                                  setEditState({
+                                    kind: "PIECE_VERSION",
+                                    id: pvId,
+                                  })
+                                }
+                              >
+                                Open PieceVersion editor
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      )}
-                      <SectionQuickEditForm
-                        initialValues={initial}
-                        readonlyPreview={section}
+                        )}
+                        <MovementQuickEditForm
+                          initialValues={{
+                            id: initial.id,
+                            rank: (initial as any).rank ?? undefined,
+                            key: (initial as any).key ?? undefined,
+                          }}
+                          onCancel={() => setEditState(null)}
+                          onSubmit={(vals) => {
+                            const res = MovementAdapter.applySave(graph, {
+                              id: initial.id,
+                              rank: vals.rank ?? null,
+                              key: (vals.key as any) ?? null,
+                            });
+                            saveWorkingCopyGraph(res.updatedGraph);
+                            resetChecksFor(
+                              res.affectedFieldPaths,
+                              res.entityType,
+                              res.entityId,
+                            );
+                            setEditState(null);
+                            setReloadNonce((n) => n + 1);
+                          }}
+                        />
+                      </div>
+                    );
+                  }
+                  if (editState.kind === "SECTION") {
+                    const initial = SectionAdapter.buildInitialValues(
+                      graph,
+                      editState.id,
+                    );
+                    if (!initial)
+                      return (
+                        <div className="text-error">Section not found</div>
+                      );
+                    const section = (graph.sections ?? []).find(
+                      (s: any) => s.id === editState.id,
+                    );
+                    let pvId: string | undefined;
+                    if (section?.movementId) {
+                      const mv = (graph.movements ?? []).find(
+                        (m: any) => m.id === section.movementId,
+                      );
+                      pvId = mv?.pieceVersionId;
+                    }
+                    return (
+                      <div className="space-y-3">
+                        {pvId && (
+                          <div className="alert alert-info text-sm">
+                            <div className="flex items-center justify-between w-full">
+                              <span>
+                                Anchor: Section belongs to a Piece Version.
+                              </span>
+                              <button
+                                className="btn btn-xs btn-ghost hover:btn-accent"
+                                onClick={() =>
+                                  setEditState({
+                                    kind: "PIECE_VERSION",
+                                    id: pvId!,
+                                  })
+                                }
+                              >
+                                Open PieceVersion editor
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                        <SectionQuickEditForm
+                          initialValues={initial}
+                          readonlyPreview={section}
+                          onCancel={() => setEditState(null)}
+                          onSubmit={(vals) => {
+                            const res = SectionAdapter.applySave(graph, {
+                              ...vals,
+                              id: initial.id,
+                            });
+                            saveWorkingCopyGraph(res.updatedGraph);
+                            resetChecksFor(
+                              res.affectedFieldPaths,
+                              res.entityType,
+                              res.entityId,
+                            );
+                            setEditState(null);
+                            setReloadNonce((n) => n + 1);
+                          }}
+                        />
+                      </div>
+                    );
+                  }
+                  if (editState.kind === "ORGANIZATION") {
+                    const initial = OrganizationAdapter.buildInitialValues(
+                      graph,
+                      editState.id,
+                    );
+                    if (!initial)
+                      return (
+                        <div className="text-error">Organization not found</div>
+                      );
+                    return (
+                      <OrganizationEditForm
+                        initialValues={{
+                          id: initial.id,
+                          name: initial.name ?? "",
+                        }}
                         onCancel={() => setEditState(null)}
                         onSubmit={(vals) => {
-                          const res = SectionAdapter.applySave(graph, {
-                            ...vals,
+                          const res = OrganizationAdapter.applySave(graph, {
                             id: initial.id,
+                            name: vals.name ?? null,
                           });
                           saveWorkingCopyGraph(res.updatedGraph);
                           resetChecksFor(
@@ -663,235 +708,211 @@ export default function ChecklistPage() {
                           setReloadNonce((n) => n + 1);
                         }}
                       />
-                    </div>
-                  );
-                }
-                if (editState.kind === "ORGANIZATION") {
-                  const initial = OrganizationAdapter.buildInitialValues(
-                    graph,
-                    editState.id,
-                  );
-                  if (!initial)
-                    return (
-                      <div className="text-error">Organization not found</div>
                     );
-                  return (
-                    <OrganizationEditForm
-                      initialValues={{
-                        id: initial.id,
-                        name: initial.name ?? "",
-                      }}
-                      onCancel={() => setEditState(null)}
-                      onSubmit={(vals) => {
-                        const res = OrganizationAdapter.applySave(graph, {
-                          id: initial.id,
-                          name: vals.name ?? null,
-                        });
-                        saveWorkingCopyGraph(res.updatedGraph);
-                        resetChecksFor(
-                          res.affectedFieldPaths,
-                          res.entityType,
-                          res.entityId,
-                        );
-                        setEditState(null);
-                        setReloadNonce((n) => n + 1);
-                      }}
-                    />
-                  );
-                }
-                return null;
-              })()}
-              <div className="modal-action">
-                <button
-                  className="btn btn-neutral"
-                  onClick={() => setEditState(null)}
-                >
-                  Close
-                </button>
+                  }
+                  return null;
+                })()}
+                <div className="modal-action">
+                  <button
+                    className="btn btn-neutral"
+                    onClick={() => setEditState(null)}
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
-            </div>
-          </dialog>
-        )}
-        <div className="overflow-x-auto">
-          <table className="table table-zebra">
-            <thead>
-              <tr>
-                <th>Checked</th>
-                <th>Entity</th>
-                <th>Label</th>
-                <th>Field path</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredItems.map((it) => {
-                const key = encodeKey(it);
-                const isChecked = checkedKeys.has(key);
-                const badgeClass = ENTITY_BADGE[it.entityType] || "badge-ghost";
-                const rowChanged = changedKeys.has(key);
-                return (
-                  <tr key={key} className={rowChanged ? "bg-warning/10" : ""}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        className="checkbox checkbox-primary"
-                        checked={isChecked}
-                        onChange={() => toggle(it)}
-                      />
-                    </td>
-                    <td>
-                      <span className={`badge ${badgeClass}`}>
-                        {it.entityType}
-                      </span>
-                    </td>
-                    <td>
-                      {it.label}
-                      {rowChanged && (
-                        <span className="badge badge-warning badge-outline ml-2">
-                          Changed
+            </dialog>
+          )}
+          <div className="overflow-x-auto">
+            <table className="table table-zebra">
+              <thead>
+                <tr>
+                  <th>Checked</th>
+                  <th>Entity</th>
+                  <th>Label</th>
+                  <th>Field path</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredItems.map((it) => {
+                  const key = encodeKey(it);
+                  const isChecked = checkedKeys.has(key);
+                  const badgeClass =
+                    ENTITY_BADGE[it.entityType] || "badge-ghost";
+                  const rowChanged = changedKeys.has(key);
+                  return (
+                    <tr key={key} className={rowChanged ? "bg-warning/10" : ""}>
+                      <td>
+                        <input
+                          type="checkbox"
+                          className="checkbox checkbox-primary"
+                          checked={isChecked}
+                          onChange={() => toggle(it)}
+                        />
+                      </td>
+                      <td>
+                        <span className={`badge ${badgeClass}`}>
+                          {it.entityType}
                         </span>
-                      )}
-                    </td>
-                    <td className="opacity-70 text-xs">{it.fieldPath}</td>
-                    <td>
-                      <button
-                        type="button"
-                        className="btn btn-xs btn-ghost hover:btn-accent"
-                        onClick={() => openEditForItem(it)}
-                        title="Edit this entity"
-                      >
-                        Edit
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                      </td>
+                      <td>
+                        {it.label}
+                        {rowChanged && (
+                          <span className="badge badge-warning badge-outline ml-2">
+                            Changed
+                          </span>
+                        )}
+                      </td>
+                      <td className="opacity-70 text-xs">{it.fieldPath}</td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-xs btn-ghost hover:btn-accent"
+                          onClick={() => openEditForItem(it)}
+                          title="Edit this entity"
+                        >
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
 
-      <div className="flex flex-col gap-2">
-        {submitError && <div className="text-sm text-error">{submitError}</div>}
-        {abortError && <div className="text-sm text-error">{abortError}</div>}
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            className="btn btn-primary"
-            disabled={submitDisabled}
-            onClick={async () => {
-              if (!data) return;
-              try {
-                setSubmitError(null);
-                setSubmitting(true);
+        <div className="flex flex-col gap-2">
+          {submitError && (
+            <div className="text-sm text-error">{submitError}</div>
+          )}
+          {abortError && <div className="text-sm text-error">{abortError}</div>}
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              className="btn btn-primary"
+              disabled={submitDisabled}
+              onClick={async () => {
+                if (!data) return;
+                try {
+                  setSubmitError(null);
+                  setSubmitting(true);
 
-                // Load working copy graph (fallback to current data.graph)
-                const wc = getWorkingCopy();
-                const workingGraph = wc?.graph ?? data.graph;
+                  // Load working copy graph (fallback to current data.graph)
+                  const wc = getWorkingCopy();
+                  const workingGraph = wc?.graph ?? data.graph;
 
-                // Pre-check: ensure any changed checklist field is checked
-                const changes = computeChangedChecklistFieldPaths(
-                  data.graph,
-                  workingGraph,
-                );
-                const changeKeys = new Set(toEncodedKeys(changes));
-                const requiredKeyMap = new Map(
-                  requiredItems.map((it) => [encodeKey(it), it]),
-                );
-                const relevantChangeKeys = Array.from(changeKeys).filter((k) =>
-                  requiredKeyMap.has(k),
-                );
-                const missing = relevantChangeKeys.filter(
-                  (k) => !checkedKeys.has(k),
-                );
-                if (missing.length > 0) {
-                  const samples = missing.slice(0, 5).map((k) => {
-                    const it = requiredKeyMap.get(k)!;
-                    return `${it.label} (${it.fieldPath})`;
-                  });
+                  // Pre-check: ensure any changed checklist field is checked
+                  const changes = computeChangedChecklistFieldPaths(
+                    data.graph,
+                    workingGraph,
+                  );
+                  const changeKeys = new Set(toEncodedKeys(changes));
+                  const requiredKeyMap = new Map(
+                    requiredItems.map((it) => [encodeKey(it), it]),
+                  );
+                  const relevantChangeKeys = Array.from(changeKeys).filter(
+                    (k) => requiredKeyMap.has(k),
+                  );
+                  const missing = relevantChangeKeys.filter(
+                    (k) => !checkedKeys.has(k),
+                  );
+                  if (missing.length > 0) {
+                    const samples = missing.slice(0, 5).map((k) => {
+                      const it = requiredKeyMap.get(k)!;
+                      return `${it.label} (${it.fieldPath})`;
+                    });
+                    setSubmitting(false);
+                    setSubmitError(
+                      `Some changed fields must be checked before submitting. Please review: ${samples.join(", ")}${missing.length > samples.length ? `, and ${missing.length - samples.length} more…` : ""}`,
+                    );
+                    return;
+                  }
+
+                  const requiredItemsChecked = requiredItems
+                    .filter((it) => checkedKeys.has(encodeKey(it)))
+                    .map((it) => ({
+                      entityType: it.entityType,
+                      entityId: it.entityId ?? null,
+                      fieldPath: it.fieldPath,
+                      checked: true,
+                    }));
+
+                  const res = await fetch(
+                    `/api/review/${data.reviewId}/submit`,
+                    {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        workingCopy: workingGraph,
+                        checklistState: requiredItemsChecked,
+                        overallComment: null,
+                      }),
+                    },
+                  );
+                  if (!res.ok) {
+                    const j = await res.json().catch(() => ({}));
+                    throw new Error(
+                      j?.error || `Submit failed (status ${res.status})`,
+                    );
+                  }
+                  localStorage.removeItem(storageKey(data.reviewId));
+                  localStorage.removeItem(reviewWorkingCopyKey(data.reviewId));
+                  setCheckedKeys(new Set());
+                  router.push(URL_REVIEW_LIST);
+                } catch (e: any) {
+                  setSubmitError(e?.message || String(e));
+                } finally {
                   setSubmitting(false);
-                  setSubmitError(
-                    `Some changed fields must be checked before submitting. Please review: ${samples.join(", ")}${missing.length > samples.length ? `, and ${missing.length - samples.length} more…` : ""}`,
-                  );
-                  return;
                 }
-
-                const requiredItemsChecked = requiredItems
-                  .filter((it) => checkedKeys.has(encodeKey(it)))
-                  .map((it) => ({
-                    entityType: it.entityType,
-                    entityId: it.entityId ?? null,
-                    fieldPath: it.fieldPath,
-                    checked: true,
-                  }));
-
-                const res = await fetch(`/api/review/${data.reviewId}/submit`, {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    workingCopy: workingGraph,
-                    checklistState: requiredItemsChecked,
-                    overallComment: null,
-                  }),
-                });
-                if (!res.ok) {
-                  const j = await res.json().catch(() => ({}));
-                  throw new Error(
-                    j?.error || `Submit failed (status ${res.status})`,
+              }}
+            >
+              {submitting ? "Submitting…" : "Submit review"}
+            </button>
+            <button
+              type="button"
+              className="btn btn-neutral"
+              disabled={aborting}
+              onClick={async () => {
+                if (!data) return;
+                const ok = window.confirm(
+                  "Abort this review? This will discard your local progress and release the lock.",
+                );
+                if (!ok) return;
+                try {
+                  setAbortError(null);
+                  setAborting(true);
+                  const res = await fetch(
+                    `/api/review/${data.reviewId}/abort`,
+                    {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({}),
+                    },
                   );
+                  if (!res.ok) {
+                    const j = await res.json().catch(() => ({}));
+                    throw new Error(
+                      j?.error || `Abort failed (status ${res.status})`,
+                    );
+                  }
+                  localStorage.removeItem(storageKey(data.reviewId));
+                  localStorage.removeItem(reviewWorkingCopyKey(data.reviewId));
+                  setCheckedKeys(new Set());
+                  router.push(URL_REVIEW_LIST);
+                } catch (e: any) {
+                  setAbortError(e?.message || String(e));
+                } finally {
+                  setAborting(false);
                 }
-                localStorage.removeItem(storageKey(data.reviewId));
-                localStorage.removeItem(reviewWorkingCopyKey(data.reviewId));
-                setCheckedKeys(new Set());
-                router.push(URL_REVIEW_LIST);
-              } catch (e: any) {
-                setSubmitError(e?.message || String(e));
-              } finally {
-                setSubmitting(false);
-              }
-            }}
-          >
-            {submitting ? "Submitting…" : "Submit review"}
-          </button>
-          <button
-            type="button"
-            className="btn btn-neutral"
-            disabled={aborting}
-            onClick={async () => {
-              if (!data) return;
-              const ok = window.confirm(
-                "Abort this review? This will discard your local progress and release the lock.",
-              );
-              if (!ok) return;
-              try {
-                setAbortError(null);
-                setAborting(true);
-                const res = await fetch(`/api/review/${data.reviewId}/abort`, {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({}),
-                });
-                if (!res.ok) {
-                  const j = await res.json().catch(() => ({}));
-                  throw new Error(
-                    j?.error || `Abort failed (status ${res.status})`,
-                  );
-                }
-                localStorage.removeItem(storageKey(data.reviewId));
-                localStorage.removeItem(reviewWorkingCopyKey(data.reviewId));
-                setCheckedKeys(new Set());
-                router.push(URL_REVIEW_LIST);
-              } catch (e: any) {
-                setAbortError(e?.message || String(e));
-              } finally {
-                setAborting(false);
-              }
-            }}
-          >
-            {aborting ? "Aborting…" : "Abort review"}
-          </button>
+              }}
+            >
+              {aborting ? "Aborting…" : "Abort review"}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </ReviewWorkingCopyProvider>
   );
 }
