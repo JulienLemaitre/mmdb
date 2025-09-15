@@ -271,6 +271,16 @@ export function buildFieldPath(
   if (entityType === "MM_SOURCE") {
     return `${prefix}.${relativePath}`;
   }
+  // Enforce stable IDs for non-singletons to avoid collisions when arrays reorder.
+  if (!entityId || typeof entityId !== "string" || entityId.trim() === "") {
+    // Fail fast in dev; in prod, this will still produce a bracketless path,
+    // but we want to catch it early during development/tests.
+    if (process.env.NODE_ENV !== "production") {
+      throw new Error(
+        `buildFieldPath: missing entityId for ${entityType} (non-singleton). relativePath=${relativePath}`,
+      );
+    }
+  }
   const idPart = entityId ? `[${entityId}]` : "";
   return `${prefix}${idPart}.${relativePath}`;
 }
