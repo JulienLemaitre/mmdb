@@ -14,6 +14,7 @@ import {
 import { URL_REVIEW_LIST } from "@/utils/routes";
 import { ApiOverview } from "@/types/reviewTypes";
 import { ReviewWorkingCopyProvider } from "@/components/context/reviewWorkingCopyContext";
+import { useReviewWorkingCopy } from "@/components/context/reviewWorkingCopyContext";
 
 // Minimal working copy persisted in localStorage; future forms will mutate this.
 // Initialize from the overview's graph for now.
@@ -24,9 +25,6 @@ type ReviewWorkingCopy = {
 
 function storageKey(reviewId: string) {
   return `review:${reviewId}:checklist`;
-}
-function reviewWorkingCopyKey(reviewId: string) {
-  return `review:${reviewId}:workingCopy`;
 }
 
 function encodeKey(it: {
@@ -56,6 +54,7 @@ export default function ChecklistPage() {
   const params = useParams();
   const router = useRouter();
   const reviewId = (params?.reviewId as string) ?? "";
+  const { get, save, clear } = useReviewWorkingCopy();
 
   const [data, setData] = useState<ApiOverview | null>(null);
   const [loading, setLoading] = useState(true);
@@ -78,40 +77,6 @@ export default function ChecklistPage() {
     | { kind: "ORGANIZATION"; id: string }
     | null
   >(null);
-
-  function getWorkingCopy(): ReviewWorkingCopy | null {
-    if (!reviewId) return null;
-    const rwcRaw = localStorage.getItem(reviewWorkingCopyKey(reviewId));
-    if (!rwcRaw) return null;
-    try {
-      return JSON.parse(rwcRaw) as ReviewWorkingCopy;
-    } catch {
-      return null;
-    }
-  }
-  function saveWorkingCopyGraph(updatedGraph: any) {
-    if (!reviewId) return;
-    const next: ReviewWorkingCopy = {
-      graph: updatedGraph,
-      updatedAt: new Date().toISOString(),
-    };
-    localStorage.setItem(reviewWorkingCopyKey(reviewId), JSON.stringify(next));
-  }
-
-  function resetChecksFor(
-    affectedFieldPaths: string[],
-    entityType: ChecklistEntityType,
-    entityId?: string | null,
-  ) {
-    setCheckedKeys((prev) => {
-      const next = new Set(prev);
-      for (const fp of affectedFieldPaths) {
-        const key = `${entityType}:${entityId ?? ""}:${fp}`;
-        if (next.has(key)) next.delete(key);
-      }
-      return next;
-    });
-  }
 
   function openEditForItem(it: RequiredChecklistItem) {
     if (it.entityType === "MM_SOURCE") {
@@ -198,28 +163,11 @@ export default function ChecklistPage() {
             setCheckedKeys(new Set());
           }
         }
-        // Initialize or validate working copy
-        const rwcKey = reviewWorkingCopyKey(j.reviewId);
-        const rwcRaw = localStorage.getItem(rwcKey);
-        if (!rwcRaw) {
-          const rwc: ReviewWorkingCopy = {
-            graph: j.graph,
-            updatedAt: new Date().toISOString(),
-          };
-          localStorage.setItem(rwcKey, JSON.stringify(rwc));
-        } else {
-          try {
-            JSON.parse(rwcRaw) as ReviewWorkingCopy;
-          } catch {
-            setStorageWarning(
-              "Local working copy was corrupted and has been reset to server data.",
-            );
-            const rwc: ReviewWorkingCopy = {
-              graph: j.graph,
-              updatedAt: new Date().toISOString(),
-            };
-            localStorage.setItem(rwcKey, JSON.stringify(rwc));
-          }
+        // Initialize working copy via Provider if empty:
+        // Use the hook's save() only if nothing is present.
+        const current = get();
+        if (!current) {
+          save(j.graph);
         }
       } catch (e: any) {
         if (!mounted) return;
@@ -232,9 +180,9 @@ export default function ChecklistPage() {
     return () => {
       mounted = false;
     };
-  }, [reviewId, reloadNonce, router]);
+  }, [reviewId, reloadNonce, router, get, save]);
 
-  // Persist changes in localStorage
+  // Persist changes in localStorage for checked keys only (working copy is handled by the hook/provider)
   useEffect(() => {
     if (!data) return;
     localStorage.setItem(
@@ -273,7 +221,7 @@ export default function ChecklistPage() {
   // Recompute changed keys whenever working copy or baseline (data.graph) changes
   useEffect(() => {
     if (!data) return;
-    const wc = getWorkingCopy();
+    const wc = get();
     const workingGraph = wc?.graph ?? data.graph;
     try {
       const changes = computeChangedChecklistFieldPaths(
@@ -284,7 +232,7 @@ export default function ChecklistPage() {
     } catch {
       setChangedKeys(new Set());
     }
-  }, [data, reloadNonce]);
+  }, [data, reloadNonce, get]);
 
   const filteredItems = useMemo(() => {
     if (!requiredItems) return [] as RequiredChecklistItem[];
@@ -511,7 +459,7 @@ export default function ChecklistPage() {
                   setSubmitting(true);
 
                   // Load working copy graph (fallback to current data.graph)
-                  const wc = getWorkingCopy();
+                  const wc = get();
                   const workingGraph = wc?.graph ?? data.graph;
 
                   // Pre-check: ensure any changed checklist field is checked
@@ -569,7 +517,7 @@ export default function ChecklistPage() {
                     );
                   }
                   localStorage.removeItem(storageKey(data.reviewId));
-                  localStorage.removeItem(reviewWorkingCopyKey(data.reviewId));
+                  clear(); // clear working copy via hook
                   setCheckedKeys(new Set());
                   router.push(URL_REVIEW_LIST);
                 } catch (e: any) {
@@ -609,7 +557,7 @@ export default function ChecklistPage() {
                     );
                   }
                   localStorage.removeItem(storageKey(data.reviewId));
-                  localStorage.removeItem(reviewWorkingCopyKey(data.reviewId));
+                  clear(); // clear working copy via hook
                   setCheckedKeys(new Set());
                   router.push(URL_REVIEW_LIST);
                 } catch (e: any) {
