@@ -122,16 +122,93 @@ Authorization and roles
     - On returning from edit mode, recompute the required checklist from the working copy.
     - Re-apply display rule and reintroduce globally reviewed entities that changed during this review.
 
-## Deep-linking into edit mode (placeholders to be filled)
+## Deep-linking between Review (check-only) and Edit (multistep) modes
 
-- Entry step resolution
-    - [AUTHOR TO SPECIFY]: mapping from current checklist slice to the initial multistep form step.
+### WorkingCopy ↔ FeedFormState bridge
 
-- Anchors and focus
-    - [AUTHOR TO SPECIFY]: how to pass anchors (e.g., pieceVersionId, movementId, sectionId) to auto-focus/scroll the target sub-entity.
+- Purpose: allow “Edit” from any checklist field to open the multistep feed form on the exact target, and on return, to reflect edits in the review working copy and checklist.
+- Sources of truth:
+    - workingCopy (scoped by reviewId) drives the review UI.
+    - FeedFormState (persisted by feed form) drives the multistep editor.
+    - initialBaseline (snapshot at review start) is used only for “changed” detection.
 
-- Return behavior
-    - [AUTHOR TO SPECIFY]: how “Back to review” restores the same slice and scroll position.
+#### 1) Compute FeedFormState from workingCopy + fieldPath
+- Inputs:
+    - workingCopy (current review graph)
+    - fieldPath (stable path of the clicked field)
+- Output:
+    - feedFormState (persistable, complete enough for the multistep form to boot deterministically)
+- Mapping rules (high level):
+    - MM Source: map source metadata, references, contributions to feed form slices.
+    - Collections/Pieces/Persons/Organizations: populate their arrays; preserve IDs.
+    - PieceVersions with Movements/Sections: populate the nested structure; preserve IDs and ranks.
+    - MMSourcesOnPieceVersions ordering: map to mMSourcePieceVersions with join semantics preserved where applicable.
+    - MetronomeMarks: associate to sectionId and pieceVersionId as used by the feed form.
+- Anchor resolution:
+    - Derive “anchor ids” from fieldPath (e.g., pieceVersionId, movementId, sectionId, metronomeMarkId) to drive step selection and in-form focus.
+
+#### 2) feedFormState.formInfo adjustments
+- Set formInfo.currentStepRank to the step corresponding to the clicked fieldPath (step map defined beside the checklist schema).
+- Set any in-form flags required by the multistep UI (e.g., introDone = true).
+- Review-edit context via route params (do not pollute domain state, i.e. FeedFormState):
+    - When navigating to the feed form, append query parameters: ?reviewId={reviewId}&reviewEdit=1.
+    - The feed form shows the review banner and “Back to review” controls when reviewEdit=1 is present.
+    - FeedFormState must not contain any “review mode” flags; the indicator is transient and UI-only.
+- Include optional anchor payload via route params (do not add to FeedFormState):
+  - Append ids needed for deep focus to the URL, e.g., &pvId={pieceVersionId}&movId={movementId}&secId={sectionId}&mmId={metronomeMarkId}.
+  - The feed form reads these params on mount to scroll/focus appropriately, uses them once, and then discards them.
+
+#### 3) Pre-populate feed form localStorage and navigate
+- Write the computed feedFormState into the feed form’s localStorage key before navigation.
+- Store in review localStorage:
+    - returnRoute payload: { reviewId, sliceKey, scrollY } to restore exact slice and scroll.
+- Navigate to the feed form route; its boot logic restores from localStorage and redirects to the appropriate step.
+
+#### 4) Back to review and WorkingCopy refresh
+- On “Back to review”, the feed form persists its latest FeedFormState in its localStorage (existing behavior).
+- The review route:
+    - Reads feedFormState from feed form localStorage.
+    - Computes a new workingCopy from the feedFormState (inverse mapping of step 1).
+    - Performs impact-scoped reset and checklist recomputation (below).
+    - Restores the previous slice and scroll from the stored returnRoute payload.
+
+### Impact-scoped reset with persistent checked map
+
+- Persistent checked map
+    - Maintain a single map across mode switches: checked[fieldPath] = boolean.
+    - Keys are stable field paths (must include stable IDs for non-singletons).
+
+- Baselines
+    - initialBaseline: snapshot of values at review start; immutable; used for “changed” visual hint.
+    - previousWorkingCopy: snapshot of values at last return to review; used for impact detection.
+
+- On return from edit mode
+    1) Diff previousWorkingCopy vs new workingCopy to compute impactedPaths:
+        - Include any field paths whose values changed.
+        - Include structural impacts: added/removed entities → treat as remove+add; their fields become new required items (unchecked).
+    2) Recompute required checklist from new workingCopy (including reintroduction of globally reviewed entities if they were edited).
+    3) Update checked map:
+        - For p in impactedPaths: set checked[p] = false.
+        - For required paths already present and not impacted: preserve existing checked[p].
+        - For newly added required paths: initialize checked[p] = false.
+        - For removed paths: delete checked[p].
+    4) Update “changed” flags:
+        - For display only, set changed[p] = (value in workingCopy != value in initialBaseline) using review-start baseline.
+    5) Persist:
+        - Save updated workingCopy, checked map, and previousWorkingCopy = new workingCopy in the review localStorage key.
+
+- Notes
+    - Reorders with stable IDs should not reset unrelated checks; only ordering-specific fields (e.g., rank paths) are impacted.
+    - Renames/ID changes are treated as remove+add: old checks removed, new paths unchecked.
+    - Globally reviewed entities:
+        - If edited in feed form, their fields reappear in required checklist and follow the same impact-scoped reset rules.
+
+### Navigation lifecycle summary
+
+- Edit button in review:
+    - Capture slice + scroll → build feedFormState from workingCopy + fieldPath → write feed form localStorage → navigate to feed form.
+- Back to review:
+    - Read feedFormState → rebuild workingCopy → impact-scoped reset → recompute required checklist → restore slice + scroll → render progress and changed hints.
 
 ## API design
 
