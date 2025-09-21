@@ -12,7 +12,7 @@ const MMSourceDescription = () => {
 
   const onSubmit = async (
     data: SourceDescriptionInput,
-    option: { goToNextStep: boolean },
+    option?: { goToNextStep: boolean },
   ) => {
     // Front input values validation is successful at this point.
 
@@ -32,7 +32,7 @@ const MMSourceDescription = () => {
       next: !!option?.goToNextStep,
     });
 
-    if (!option.goToNextStep) {
+    if (!option?.goToNextStep) {
       return sourceDescriptionState;
     }
   };

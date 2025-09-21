@@ -102,18 +102,39 @@ Described below
 
 ### General approach concerning interface for reviewing an MM source
 
+#### New idea - 12/09/2025
+
+I think we can have the simplest review process as possible if we rule out any "structural modification" of the data. That means not allowing the reviewer to add, remove or move collections, pieces, movements or sections.
+
+This way, the reviewer is shown the data that needs to be reviewed, and he can only :
+- mark each datum as reviewed or not.
+- modify the field values if needed.
+
+We can think of an ordered sequential way of showing one slice of data at a time: one source description, collection or piece at a time, with a "next" button to go to the next piece.
+
+If any structural change is required, I'm thinking about taking the mMSource data being reviewed and using it as initial values in the data-entering process.
+
+We just need to add something to the data-entering context to declare it to be part of the review process.
+A simple button to switch to the data-entering process with the initial values of the mMSource being reviewed. And a simple button to switch back to the review process.
+The changes that would be applied through the data-entering process will be persisted in the database only when the review is complete, and as part of the review audit log.
+
+This data-entering process is currently able to store in its context (synced in localStorage) the exact interface the user is currently on. So we can even display the part of the source where the reviewer was reviewing when he decided the switch to the data modification mode (= data-entering process fed with initial values).
+
+#### Previous idea I consider obsolete for the moment
+
 I want to reuse as most as possible the forms developed for the data-entering process.
 
 Consequently, here is my approach concerning the interface that we obtain once we choose an MM Source to review :
 1. the general organization of the view will be close to the MM Source "Pieces and Versions" step in the data registering process :
     - the first block will present the MM Source description data, including references and contributions. Contribution roles and linkage are reviewed; Person/Organization core records are excluded if previously reviewed.
     - Then comes a list of single pieces and collections.
-    - Each one (MM Source description block and each piece) is marked as reviewed or not.
-    - From there, we can enter each one and review its part.
+    - Each one (MM Source description block and each piece or collection of pieces) is marked as reviewed or not according to the fact that all of the related fields to review have been reviewed or not).
+    - From there, we can select a piece or a collection and access a new page to review its parts.
 2. Selecting a collection will display the same type of view as above:
     - a first block with the collection's info
     - a list of its pieces to review.
-3. When selecting a piece to review, a not yet developed view (the Piece Review Checklist) will display the data of every bit of data that is related to this piece and needs to be reviewed, exhaustively. Each bit of data will have a checkbox that serves to declare it as reviewed once it has been verified by the reviewer.
+    - We can then select a piece and access a new page to review its parts.
+3. When selecting a piece to review, a not yet developed view, called the Piece Review Checklist, will display the data of every bit of data that is related to this piece and needs to be reviewed, exhaustively. Each bit of data will have a checkbox that serves to declare it as reviewed once it has been verified by the reviewer.
 4. To avoid multiplying new components to develop, the details of a collection, if it needs to be reviewed, will be part of the Piece Review Checklist as the first block on the page.
 5. If data needs to be corrected, the reviewer will have an "edit" button to click beside this particular datum, and he will be presented with the corresponding form among those already used in the data entering process for updating data.
 6. After submitting the changes, he'll be back to the Piece Review Checklist to continue marking each datum as reviewed. Any bit of data that would have been updated by the reviewer will have its review state reset and will require to be marked as checked by the reviewer.
