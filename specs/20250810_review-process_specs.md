@@ -20,7 +20,7 @@ A Section is defined by the following three characteristics:
 - time signature,
 - tempo indication
 - metronome mark
-  If any of the three characteristics above change, a new section must be entered. For each section created, the maximum number of notes per bar for each structural, staccato, repeated and ornamental note is entered. If the tempo indication changes within a sonata movement, but no new metronome mark is given, the section in question should be entered without a metronome mark.
+  If any of the three characteristics above change, a new section must be entered. For each section created, the maximum number of notes per bar for each structural, staccato, repeated, and ornamental note is entered. If the tempo indication changes within a sonata movement, but no new metronome mark is given, the section in question should be entered without a metronome mark.
 
 #### Collection
 A collection consists of multiple pieces with the same opus number, e.g., Beethoven’s Op.10 or Schumann’s Kinderszenen. The pieces in a collection are either separated by numbering (e.g., Op.10 No.1, Op.10 No.2, etc.) or by other means such as names.
@@ -28,7 +28,7 @@ A collection consists of multiple pieces with the same opus number, e.g., Beetho
 ## Present state of our application
 
 The first phase of development has been finished and well tested: the MM source data entering a section of the website.
-Users with an 'EDITOR' role can access a multistep tunnel that allows them to completely describe an MM Source, its contributors, collections and pieces found in it, every section that these pieces contain with its time structure (metre), tempo indication and maximum number of notes per bar, and the metronome marks assigned to these sections when it exists.
+Users with an 'EDITOR' role can access a multistep tunnel that allows them to completely describe an MM Source, its contributors, collections, and pieces found in it, every section that these pieces contain with its time structure (metre), tempo indication and maximum number of notes per bar, and the metronome marks assigned to these sections when it exists.
 
 The basis of a data exploration section has also been included in the website, but this will be for a later time in the project.
 
@@ -41,9 +41,10 @@ The current database structure can be found in the file ![[schema.dbml]]
 This database is meant to be used as a research support tool to lead inquiry into the use of metronome throughout the last two centuries.
 The subject is raising controversy and will trigger hostile reactions when published.
 It is an absolute necessity to organize the data collection in as an unbiased and conservative manner as possible.
-This will be the case in the way we define the difference between structural and ornamental notes, for example, in our guidelines for the editors, and the general rules "when in doubt, take the more conservative choice".
-Concerning the data, we need to double-check everything that is entered in the database, hence the necessity of a review process.
-It will also serve as a safeguard later, when we plan to grant people outside of our small team the right to enter new data in the database.
+This will be the case in the way we define the difference between structural and ornamental notes, for example, in our guidelines for the editors, and the general rules "when in doubt, take the more conservative choice."
+Concerning the data, we need to double-check everything added to the database, hence the necessity of a review process.
+It will also serve as a safeguard later, when we plan to grant people outside our small team the right to enter new data in the database.
+
 ## General remarks
 
 ### Technically
@@ -102,55 +103,43 @@ Described below
 
 ### General approach concerning interface for reviewing an MM source
 
-#### New idea - 12/09/2025
+#### Simplified rule (final)
 
-I think we can have the simplest review process as possible if we rule out any "structural modification" of the data. That means not allowing the reviewer to add, remove or move collections, pieces, movements or sections.
+Review mode is check-only. The reviewer cannot edit any value while in review mode. Any change (field value or structural) must be done by explicitly switching to edit mode, which reuses the multistep data-entering flow as-is within the review context.
 
-This way, the reviewer is shown the data that needs to be reviewed, and he can only :
-- mark each datum as reviewed or not.
-- modify the field values if needed.
+- Review mode (default)
+    - Sequential slices: Source metadata → each Collection (if any) → each Piece.
+    - Each field to verify has a checkbox; no inline editing controls and no filters. Use visual hints (badges, emphasis, color) to highlight “unchecked” and “changed” items.
+    - Navigation: Next / Previous to move between slices.
+    - Submit is disabled until 100% of required checkboxes are checked for the current graph.
 
-We can think of an ordered sequential way of showing one slice of data at a time: one source description, collection or piece at a time, with a "next" button to go to the next piece.
+- Switch to edit mode
+    - Action: a “Modify (switch to edit mode)” button on each slice.
+    - Behavior: open the existing multistep data-entering form with only two UI additions:
+        - A persistent banner: “Edit mode: You are editing data within an in-progress review. Changes are saved locally and will only be persisted when you approve the review.”
+        - A “Back to review” button that returns to the exact slice.
+    - No other conditional rendering or restrictions inside the multistep form.
+- Return to review mode: bring the reviewer back to the same slice; recompute the checklist based on the updated working copy, reset checkmarks for impacted fields, and show a succinct note (e.g., “Checklist expanded: +1 movement, +3 sections; 14 new fields to verify.”).
 
-If any structural change is required, I'm thinking about taking the mMSource data being reviewed and using it as initial values in the data-entering process.
+- “Do not review twice” rule (display-only)
+    - By default, review mode omits Person, Organization, Collection description (title, composer), and Piece description (title, nickname, composition, date of composition) if they are already globally reviewed.
+    - In edit mode, these entities are NOT locked: reviewers may modify them using the multistep form.
+    - If an already-reviewed entity is modified in edit mode, its fields MUST reappear in review mode and require checkmarks again for this review.
 
-We just need to add something to the data-entering context to declare it to be part of the review process.
-A simple button to switch to the data-entering process with the initial values of the mMSource being reviewed. And a simple button to switch back to the review process.
-The changes that would be applied through the data-entering process will be persisted in the database only when the review is complete, and as part of the review audit log.
+#### Notes on previously considered approach
 
-This data-entering process is currently able to store in its context (synced in localStorage) the exact interface the user is currently on. So we can even display the part of the source where the reviewer was reviewing when he decided the switch to the data modification mode (= data-entering process fed with initial values).
-
-#### Previous idea I consider obsolete for the moment
-
-I want to reuse as most as possible the forms developed for the data-entering process.
-
-Consequently, here is my approach concerning the interface that we obtain once we choose an MM Source to review :
-1. the general organization of the view will be close to the MM Source "Pieces and Versions" step in the data registering process :
-    - the first block will present the MM Source description data, including references and contributions. Contribution roles and linkage are reviewed; Person/Organization core records are excluded if previously reviewed.
-    - Then comes a list of single pieces and collections.
-    - Each one (MM Source description block and each piece or collection of pieces) is marked as reviewed or not according to the fact that all of the related fields to review have been reviewed or not).
-    - From there, we can select a piece or a collection and access a new page to review its parts.
-2. Selecting a collection will display the same type of view as above:
-    - a first block with the collection's info
-    - a list of its pieces to review.
-    - We can then select a piece and access a new page to review its parts.
-3. When selecting a piece to review, a not yet developed view, called the Piece Review Checklist, will display the data of every bit of data that is related to this piece and needs to be reviewed, exhaustively. Each bit of data will have a checkbox that serves to declare it as reviewed once it has been verified by the reviewer.
-4. To avoid multiplying new components to develop, the details of a collection, if it needs to be reviewed, will be part of the Piece Review Checklist as the first block on the page.
-5. If data needs to be corrected, the reviewer will have an "edit" button to click beside this particular datum, and he will be presented with the corresponding form among those already used in the data entering process for updating data.
-6. After submitting the changes, he'll be back to the Piece Review Checklist to continue marking each datum as reviewed. Any bit of data that would have been updated by the reviewer will have its review state reset and will require to be marked as checked by the reviewer.
-7. When every data of a piece is reviewed, the reviewer will be able to declare this piece as reviewed.
-8. In the case of collections, when the collection's description and all its pieces are marked as reviewed, the whole collection will also be considered reviewed.
-9. When all pieces and collections are reviewed, the reviewer will be able to register his entire review.
+Earlier ideas that locked already-reviewed entities or allowed inline non-structural edits in review mode are superseded by the stricter check-only review mode plus full multistep editing.
 
 #### Advantages
 
-- **Reuse of existing forms**
-- The new Piece Review Checklist screen will be responsible for **presenting the entities that need to be reviewed and only them**. (As Stefan pointed it out, already reviewed persons (composer or MM Source contributors), organizations, collection and piece descriptions don't need to be reviewed again. Such reviewed data won't be presented to the reviewer nor editable by him.) => **This new screen will endorse this specific feature without the need to adapt other existing screens**.
+- Reuse of existing forms exactly as-is (except banner and back button).
+- Clear mental model: review = verify and check; edit = explicit separate multistep mode.
+- Fast to build; fewer review-specific components and branches.
 
 #### Styles guidelines
 
-- The presentation styles must stick as close as possible to the existing data-entering process.
-- The Piece Review Checklist screen will be a new screen, but it should adhere to the same styles frame as the existing data-entering process:
+- The review screen follows existing styles.
+- Visual hints (badges/colors) replace filters to surface “unchecked” and “changed.”
 - Entity / Daisy UI semantic color correspondence:
     - MM Source = info
     - Collection = warning
@@ -158,21 +147,18 @@ Consequently, here is my approach concerning the interface that we obtain once w
     - Piece Version = accent
     - Movement = primary
     - Section = secondary
-  - Titles
-  - Tables: take an example on the summary section display table for the number of notes per bar and per second (in components/entities/section/SectionDetail.tsx)
-  - Buttons action / color:
-    - submit/validate/confirm/ok = primary
-    - add = accent
-    - reset = error
-    - back = neutral
-    - cancel = neutral
-    - discard = warning
-    - edit = ghost / hover:accent
-    - delete = ghost / hover:error
-    - remove = ghost / hover:error
-    - save = primary
-    - next = primary
-  - padding and margins
+    - Buttons action / color:
+        - submit/validate/confirm/ok = primary
+        - add = accent
+        - reset = error
+        - back = neutral
+        - cancel = neutral
+        - discard = warning
+        - edit (switch to edit mode) = ghost / hover:accent
+        - delete = ghost / hover:error
+        - remove = ghost / hover:error
+        - save = primary
+        - next = primary
 
 A good example of these style usage and combination is the Summary step of the feedForm (components/multiStepMMSourceForm/stepForms/FeedSummary.tsx):
 - capture of the whole page: specs/20250815_FeedForm_Summary.png
@@ -180,7 +166,7 @@ A good example of these style usage and combination is the Summary step of the f
 
 ## Remarks on the "not to be reviewed twice" entities
 
-The following entities should not be presented for review to the reviewer of a piece if they already have been reviewed previously:
+The following entities should not be presented for review to the reviewer of a piece if they already have been reviewed previously (display-only rule; see edit mode note above):
 - person
 - organization
 - collection (*Collection* in db: title, composer)
@@ -188,8 +174,8 @@ The following entities should not be presented for review to the reviewer of a p
 
 #### Consequence
 
-- We need to know at the entity level if it has been reviewed or not, at least for person, organization, piece and collection.
-
+- We need to know at the entity level if it has been reviewed or not, at least for person, organization, piece, and collection.
+- If a reviewer changes such an entity during edit mode, it must be included again in the current review’s checklist.
 
 ## Clarifications and decisions
 
@@ -222,7 +208,7 @@ The following entities should not be presented for review to the reviewer of a p
     - Collection (title, composer)
     - Piece description (title, nickname, composition, date of composition)
 
-- Once Person/Organization/Collection (title, composer)/Piece(description) are reviewed, they cannot be edited through normal flows; only ADMIN may edit via back-office, and such edits do not flip any “reviewed” status.
+- Display-only rule: these are omitted by default in review mode, but they remain editable in edit mode; if edited, they reappear in the checklist for this review.
 - There is no difficulty in principle to have multiple subsequent reviews on a single MM Source, even if we do not plan on organizing such a process with our interface. We do consider using AI as a first pass review process, but the time has not come yet for that. When implemented, it could just be registered exactly the same way as a review with a user "AI".
 
 ### 4. State model and lifecycle (MM Source review)
@@ -241,7 +227,7 @@ The following is the first thought. It could be changed if a better way is propo
 
 ### 6. Review locking
 
-When the reviewer confirms starting a review, we will create the review entity in the database with the state IN_REVIEW, the id of the source it relates to, the user and the date.
+When the reviewer confirms starting a review, we will create the review entity in the database with the state IN_REVIEW, the id of the source it relates to, the user, and the date.
 This will be used as to:
 - Prevent and forbid having two ongoing reviews for the same MM Source (another reviewer cannot choose to review this MM Source anymore)
 - not include in review MM Source in the general list of MM Sources waiting for review.
@@ -251,6 +237,7 @@ The review process can be long (several days for long musical pieces). We do not
 ### 7. Where “review edits” live before completion
 
 - During review, like during the initial registering data process, edits are applied to a client-side working copy (React context synced with local storage) only.
+- Review mode is check-only; any edit (field or structural) occurs only after switching to edit mode and still applies to the same local working copy.
 - On completion:
     - Persist changes.
     - Persist an immutable audit record with a diff per changed field, linked to reviewId.
@@ -266,9 +253,11 @@ We can, however, add a general comment field in the Review table that the review
 
 Every field is important to check, so we cannot provide any easy "check all fields" shortcut.
 
-otherwise, we should:
-- Provide progress indicators and filters (e.g., show or highlight unchecked, show or highlight changed).
+We should:
+- Provide visual hints (badges/colors) for “unchecked” and “changed” items; avoid interactive filters.
+- Make review vs. edit modes visually distinct (banner and wording).
 - Disable final submission until 100% of required checks are completed.
+
 ### 10. Handling optional/missing fields
 
 - Show “Not provided / N/A” fields; they still require a review checkbox with that status.
@@ -297,6 +286,6 @@ The possible review states transitions are:
 
 ### 14. Audit log schema
 
-A minimal idea for an audit log is to have the following fields: reviewId, entityType, entityId, operation (CREATE, UPDATE or DELETE), before (jsonb of the entity), after (jsonb of the entity), authorId, createdAt, comment.
+A minimal idea for an audit log is to have the following fields: reviewId, entityType, entityId, operation (CREATE, UPDATE, or DELETE), before (jsonb of the entity), after (jsonb of the entity), authorId, createdAt, comment.
 
 This is a first thought, it could be changed and optimized according to other choices.
