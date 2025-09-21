@@ -20,7 +20,7 @@ A Section is defined by the following three characteristics:
 - time signature,
 - tempo indication
 - metronome mark
-  If any of the three characteristics above change, a new section must be entered. For each section created, the maximum number of notes per bar for each structural, staccato, repeated, and ornamental note is entered. If the tempo indication changes within a sonata movement, but no new metronome mark is given, the section in question should be entered without a metronome mark.
+  If any of the three characteristics above change, a new section must be entered. For each section created, the maximum number of notes per bar for each structural, staccato, repeated and ornamental note is entered. If the tempo indication changes within a sonata movement, but no new metronome mark is given, the section in question should be entered without a metronome mark.
 
 #### Collection
 A collection consists of multiple pieces with the same opus number, e.g., Beethoven’s Op.10 or Schumann’s Kinderszenen. The pieces in a collection are either separated by numbering (e.g., Op.10 No.1, Op.10 No.2, etc.) or by other means such as names.
@@ -28,7 +28,7 @@ A collection consists of multiple pieces with the same opus number, e.g., Beetho
 ## Present state of our application
 
 The first phase of development has been finished and well tested: the MM source data entering a section of the website.
-Users with an 'EDITOR' role can access a multistep tunnel that allows them to completely describe an MM Source, its contributors, collections, and pieces found in it, every section that these pieces contain with its time structure (metre), tempo indication and maximum number of notes per bar, and the metronome marks assigned to these sections when it exists.
+Users with an 'EDITOR' role can access a multistep tunnel that allows them to completely describe an MM Source, its contributors, collections and pieces found in it, every section that these pieces contain with its time structure (metre), tempo indication and maximum number of notes per bar, and the metronome marks assigned to these sections when it exists.
 
 The basis of a data exploration section has also been included in the website, but this will be for a later time in the project.
 
@@ -41,9 +41,9 @@ The current database structure can be found in the file ![[schema.dbml]]
 This database is meant to be used as a research support tool to lead inquiry into the use of metronome throughout the last two centuries.
 The subject is raising controversy and will trigger hostile reactions when published.
 It is an absolute necessity to organize the data collection in as an unbiased and conservative manner as possible.
-This will be the case in the way we define the difference between structural and ornamental notes, for example, in our guidelines for the editors, and the general rules "when in doubt, take the more conservative choice."
-Concerning the data, we need to double-check everything added to the database, hence the necessity of a review process.
-It will also serve as a safeguard later, when we plan to grant people outside our small team the right to enter new data in the database.
+This will be the case in the way we define the difference between structural and ornamental notes, for example, in our guidelines for the editors, and the general rules "when in doubt, take the more conservative choice".
+Concerning the data, we need to double-check everything that is entered in the database, hence the necessity of a review process.
+It will also serve as a safeguard later, when we plan to grant people outside of our small team the right to enter new data in the database.
 
 ## General remarks
 
@@ -126,9 +126,13 @@ Review mode is check-only. The reviewer cannot edit any value while in review mo
     - In edit mode, these entities are NOT locked: reviewers may modify them using the multistep form.
     - If an already-reviewed entity is modified in edit mode, its fields MUST reappear in review mode and require checkmarks again for this review.
 
-#### Notes on previously considered approach
-
-Earlier ideas that locked already-reviewed entities or allowed inline non-structural edits in review mode are superseded by the stricter check-only review mode plus full multistep editing.
+- Deep-linking into the multistep editor (placeholder to be filled)
+    - Entry step resolution:
+        - [AUTHOR TO SPECIFY: map from checklist slice (Source/Collection/Piece) to the initial step opened in the multistep form.]
+    - Anchors and focus:
+        - [AUTHOR TO SPECIFY: how movementId/sectionId/etc. anchors are passed so the form opens scrolled/focused on the relevant sub-entity.]
+    - Return path:
+        - [AUTHOR TO SPECIFY: how “Back to review” restores the exact slice and scroll position.]
 
 #### Advantages
 
@@ -174,7 +178,7 @@ The following entities should not be presented for review to the reviewer of a p
 
 #### Consequence
 
-- We need to know at the entity level if it has been reviewed or not, at least for person, organization, piece, and collection.
+- We need to know at the entity level if it has been reviewed or not, at least for person, organization, piece and collection.
 - If a reviewer changes such an entity during edit mode, it must be included again in the current review’s checklist.
 
 ## Clarifications and decisions
@@ -227,7 +231,7 @@ The following is the first thought. It could be changed if a better way is propo
 
 ### 6. Review locking
 
-When the reviewer confirms starting a review, we will create the review entity in the database with the state IN_REVIEW, the id of the source it relates to, the user, and the date.
+When the reviewer confirms starting a review, we will create the review entity in the database with the state IN_REVIEW, the id of the source it relates to, the user and the date.
 This will be used as to:
 - Prevent and forbid having two ongoing reviews for the same MM Source (another reviewer cannot choose to review this MM Source anymore)
 - not include in review MM Source in the general list of MM Sources waiting for review.
@@ -286,6 +290,33 @@ The possible review states transitions are:
 
 ### 14. Audit log schema
 
-A minimal idea for an audit log is to have the following fields: reviewId, entityType, entityId, operation (CREATE, UPDATE, or DELETE), before (jsonb of the entity), after (jsonb of the entity), authorId, createdAt, comment.
+A minimal idea for an audit log is to have the following fields: reviewId, entityType, entityId, operation (CREATE, UPDATE or DELETE), before (jsonb of the entity), after (jsonb of the entity), authorId, createdAt, comment.
 
 This is a first thought, it could be changed and optimized according to other choices.
+
+### 15. Changed status (definition and effects)
+
+- Definition: a field is “changed” if its current value in the working copy differs from its initial value at review start.
+- Effects:
+    - Any changed field automatically resets its checkbox to unchecked.
+    - Visual hints (e.g., badge/color) indicate changed fields; no interactive filters are provided.
+
+### 16. Required checklist recomputation
+
+- After returning from edit mode, recompute the required checklist from the current working copy.
+- Re-apply the “do-not-review-twice” display rule together with the reintroduction rule: if previously globally reviewed entities were edited, include their fields again for this review.
+
+### 17. Working copy persistence
+
+- Persistence key format: review:{reviewId}.
+- The working copy is stored in localStorage and auto-saved on change.
+- On abort, the client clears this key.
+
+### 18. Submit gating authority
+
+- The server recomputes the required checklist from the actual database graph at submit time and validates that all required items are checked.
+- The server rejects submission if any required item is unchecked, even if the client indicates completion.
+
+### 19. Concurrency and ownership guard
+
+- Accessing a review not owned by the current user (unless ADMIN) or whose state is not IN_REVIEW must redirect to the list with an explanatory message.
