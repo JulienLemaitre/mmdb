@@ -570,6 +570,13 @@ export default function ChecklistPage() {
           </div>
         </div>
 
+        <div className="card bg-base-100 border p-4">
+          <div className="flex items-center justify-between mb-2">
+            <div className="font-semibold">Audit events (read-only)</div>
+          </div>
+          <AuditPanel reviewId={data.reviewId} />
+        </div>
+
         <div className="flex flex-col gap-2">
           {submitError && (
             <div className="text-sm text-error">{submitError}</div>
@@ -713,5 +720,74 @@ export default function ChecklistPage() {
         </div>
       </div>
     </ReviewWorkingCopyProvider>
+  );
+}
+
+
+// Lightweight read-only audit panel for the current review
+function AuditPanel({ reviewId }: { reviewId: string }) {
+  const [items, setItems] = useState<any[]>([]);
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const load = async (cursor?: string | null) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const qs = new URLSearchParams();
+      qs.set("reviewId", reviewId);
+      if (cursor) qs.set("cursor", cursor);
+      qs.set("limit", "20");
+      const res = await fetch(`/api/audit?${qs.toString()}`, { cache: "no-store" });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j?.error || `Failed to load audit (${res.status})`);
+      if (cursor) setItems((prev) => [...prev, ...(j.items || [])]);
+      else setItems(j.items || []);
+      setNextCursor(j.nextCursor ?? null);
+    } catch (e: any) {
+      setError(e?.message || String(e));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reviewId]);
+
+  return (
+    <div>
+      {error && (
+        <div className="alert alert-warning mb-2">
+          <span>{error}</span>
+          <button className="btn btn-xs btn-ghost ml-auto" onClick={() => setError(null)}>Dismiss</button>
+        </div>
+      )}
+      <div className="flex items-center gap-2 mb-2">
+        <button type="button" className="btn btn-xs" onClick={() => load()} disabled={loading}>
+          {loading ? "Loading…" : "Refresh"}
+        </button>
+        {nextCursor && (
+          <button type="button" className="btn btn-xs btn-outline" onClick={() => load(nextCursor)} disabled={loading}>
+            Load more
+          </button>
+        )}
+      </div>
+      {items.length === 0 ? (
+        <div className="text-sm opacity-70">No audit events yet.</div>
+      ) : (
+        <ul className="text-sm space-y-1 max-h-64 overflow-auto">
+          {items.map((it: any) => (
+            <li key={it.id} className="border-b last:border-b-0 pb-1">
+              <span className="badge badge-ghost mr-2">{it.operation}</span>
+              <span className="opacity-80 mr-2">{it.entityType}:{it.entityId}</span>
+              <span className="opacity-60">{new Date(it.createdAt).toLocaleString()}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
