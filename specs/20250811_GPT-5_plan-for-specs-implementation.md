@@ -150,22 +150,27 @@ Authorization and roles
 #### 2) feedFormState.formInfo adjustments
 - Set formInfo.currentStepRank to the step corresponding to the clicked fieldPath (step map defined beside the checklist schema).
 - Set any in-form flags required by the multistep UI (e.g., introDone = true).
-- Review-edit context via route params (do not pollute domain state, i.e. FeedFormState):
-    - When navigating to the feed form, append query parameters: ?reviewId={reviewId}&reviewEdit=1.
-    - The feed form shows the review banner and “Back to review” controls when reviewEdit=1 is present.
-    - FeedFormState must not contain any “review mode” flags; the indicator is transient and UI-only.
-- Include optional anchor payload via route params (do not add to FeedFormState):
-  - Append ids needed for deep focus to the URL, e.g., &pvId={pieceVersionId}&movId={movementId}&secId={sectionId}&mmId={metronomeMarkId}.
-  - The feed form reads these params on mount to scroll/focus appropriately, uses them once, and then discards them.
+- Embed review context (UI-only) in formInfo to survive reloads and make intent explicit:
+    - formInfo.reviewContext = {
+      reviewId: string,
+      reviewEdit: true,
+      updatedAt: ISO string,
+      anchors?: { pvId?: string, movId?: string, secId?: string, mmId?: string }
+      }
+    - The feed form shows the review banner and “Back to review” controls whenever formInfo.reviewContext.reviewEdit === true.
+- Do not use URL parameters for review context or anchors; FeedFormState.formInfo.reviewContext is the single source of truth.
+
 
 #### 3) Pre-populate feed form localStorage and navigate
-- Write the computed feedFormState into the feed form’s localStorage key before navigation.
+- Write the computed FeedFormState (including formInfo.reviewContext) into the feed form’s localStorage key before navigation.
 - Store in review localStorage:
     - returnRoute payload: { reviewId, sliceKey, scrollY } to restore exact slice and scroll.
 - Navigate to the feed form route; its boot logic restores from localStorage and redirects to the appropriate step.
 
 #### 4) Back to review and WorkingCopy refresh
-- On “Back to review”, the feed form persists its latest FeedFormState in its localStorage (existing behavior).
+- On “Back to review”:
+    - Persist final FeedFormState to compute the new workingCopy.
+    - After rebuilding workingCopy and applying impact-scoped reset, DELETE the feed form localStorage entirely to avoid stale review context when opening the feed form outside the review flow.
 - The review route:
     - Reads feedFormState from feed form localStorage.
     - Computes a new workingCopy from the feedFormState (inverse mapping of step 1).
