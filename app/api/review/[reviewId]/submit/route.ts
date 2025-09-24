@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { expandRequiredChecklistItems } from "@/utils/ReviewChecklistSchema";
-import { buildMockOverview } from "@/utils/reviewMock";
+import { getReviewOverview } from "@/utils/server/getReviewOverview";
 import { computeChangedChecklistFieldPaths } from "@/utils/reviewDiff";
 import { composeAuditEntries } from "@/utils/auditCompose";
 
@@ -25,8 +25,23 @@ export async function POST(req: Request, { params }: { params: { reviewId: strin
     return NextResponse.json({ error: "Missing workingCopy or checklistState" }, { status: 400 });
   }
 
-  // Load the baseline graph in the same deterministic way as overview
-  const { graph: baselineGraph, globallyReviewed } = buildMockOverview(reviewId);
+  // Load the baseline graph from the real DB-backed overview
+  let baselineGraph: any;
+  let globallyReviewed: any;
+  try {
+    const ov = await getReviewOverview(reviewId);
+    baselineGraph = ov.graph;
+    globallyReviewed = ov.globallyReviewed;
+  } catch (err: any) {
+    const msg = err instanceof Error ? err.message : String(err);
+    const lc = msg.toLowerCase();
+    let status = 500;
+    if (lc.includes("unauthorized")) status = 401;
+    else if (lc.startsWith("forbidden")) status = 403;
+    else if (lc.includes("must be") || lc.includes("required")) status = 400;
+    else if (lc.includes("not found")) status = 404;
+    return NextResponse.json({ error: msg }, { status });
+  }
 
   // Recompute required checklist items for validation (server authoritative)
   const requiredItems = expandRequiredChecklistItems(baselineGraph, {
