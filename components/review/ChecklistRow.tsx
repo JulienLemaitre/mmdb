@@ -30,7 +30,15 @@ export function ChecklistRow({
     .join(" ");
 
   return (
-    <tr id={rowId} role="row" aria-label={rowStateLabel} className={rowClass}>
+    <tr
+      id={rowId}
+      role="row"
+      aria-label={rowStateLabel}
+      className={rowClass}
+      data-fieldpath={item.fieldPath}
+      data-entity-type={item.entityType}
+      data-entity-id={item.entityId ?? ''}
+    >
       <td>
         <input
           type="checkbox"

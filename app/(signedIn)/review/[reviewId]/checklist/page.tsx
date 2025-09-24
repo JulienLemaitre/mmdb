@@ -310,7 +310,7 @@ export default function ChecklistPage() {
       // Clear feed form storage so normal feed openings don't inherit review context
       localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
 
-      // Restore slice scroll position
+      // Restore slice scroll position (prefer slice anchor over raw scrollY)
       try {
         const retKey = `review:${data.reviewId}:returnRoute`;
         const retRaw = localStorage.getItem(retKey);
@@ -320,9 +320,34 @@ export default function ChecklistPage() {
             sliceKey?: string;
             scrollY?: number;
           };
-          if (typeof ret.scrollY === "number") {
-            window.scrollTo({ top: ret.scrollY, behavior: "auto" });
-          }
+
+          const tryAnchorScroll = () => {
+            if (ret.sliceKey) {
+              const selector = `[data-fieldpath="${ret.sliceKey}"]`;
+              const el = document.querySelector(selector) as HTMLElement | null;
+              if (el && typeof (el as any).scrollIntoView === "function") {
+                el.scrollIntoView({ block: "center", behavior: "smooth" });
+                return true;
+              }
+            }
+            return false;
+          };
+
+          let attempts = 0;
+          const maxAttempts = 10;
+          const tick = () => {
+            if (tryAnchorScroll()) return;
+            if (attempts < maxAttempts) {
+              attempts += 1;
+              setTimeout(tick, 50);
+            } else if (typeof ret.scrollY === "number") {
+              window.scrollTo({ top: ret.scrollY, behavior: "auto" });
+            }
+          };
+
+          // Start trying immediately
+          tick();
+
           localStorage.removeItem(retKey);
         }
       } catch {
