@@ -88,9 +88,174 @@ export function rebuildWorkingCopyFromFeedForm(
   feedFormState: FeedFormState,
   previousWorkingCopy: ReviewWorkingCopy
 ): ReviewWorkingCopy {
-  // TODO: Implement proper inverse mapping from FeedFormState to review working copy graph
+  const prev = previousWorkingCopy.graph || {};
+
+  // Fast-path: if feed state has no relevant slices, keep the previous graph reference unchanged
+  const hasSlices = Boolean(
+    feedFormState?.pieces?.length ||
+      feedFormState?.pieceVersions?.length ||
+      feedFormState?.mMSourceDescription ||
+      feedFormState?.mMSourcePieceVersions?.length ||
+      feedFormState?.collections?.length ||
+      feedFormState?.metronomeMarks?.length ||
+      feedFormState?.tempoIndications?.length
+  );
+  if (!hasSlices) {
+    return {
+      graph: previousWorkingCopy.graph,
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
+  // Helper lookups from feed state
+  const feedPieces = feedFormState.pieces ?? [];
+  const feedPVs = feedFormState.pieceVersions ?? [];
+  const feedCollections = feedFormState.collections ?? [];
+  const feedMovements = feedPVs.flatMap((pv) =>
+    (pv.movements ?? []).map((m) => ({ ...m, pieceVersionId: pv.id })),
+  );
+  const feedSections = feedMovements.flatMap((mv) =>
+    (mv.sections ?? []).map((s) => ({ ...s, movementId: mv.id })),
+  );
+
+  // Build tempoIndications deduped from sections
+  const tempoIndicationMap = new Map<string, { id: string; text: string }>();
+  for (const s of feedSections) {
+    const ti = s.tempoIndication;
+    if (ti && typeof ti.id === "string") {
+      tempoIndicationMap.set(ti.id, { id: ti.id, text: ti.text ?? "" });
+    }
+  }
+
+  // Source metadata (fallback to previous for fields not provided by the feed form)
+  const desc = feedFormState.mMSourceDescription ?? {};
+  const source = {
+    id: prev?.source?.id,
+    title: desc.title ?? prev?.source?.title ?? null,
+    type: desc.type ?? prev?.source?.type ?? null,
+    link: desc.link ?? prev?.source?.link ?? null,
+    permalink: prev?.source?.permalink ?? null, // feed form does not own permalink; preserve
+    year: desc.year ?? prev?.source?.year ?? null,
+    comment: desc.comment ?? prev?.source?.comment ?? "",
+  } as any;
+
+  // Collections
+  const collections = feedCollections.length
+    ? feedCollections.map((c) => ({ id: c.id, title: c.title, composerId: c.composerId }))
+    : prev?.collections ?? [];
+
+  // Pieces
+  const pieces = feedPieces.length
+    ? feedPieces.map((p) => ({
+        id: p.id,
+        title: p.title ?? null,
+        nickname: p.nickname ?? null,
+        composerId: p.composerId ?? null,
+        yearOfComposition: p.yearOfComposition ?? null,
+        collectionId: p.collectionId ?? null,
+        collectionRank: p.collectionRank ?? null,
+      }))
+    : prev?.pieces ?? [];
+
+  // Piece Versions
+  const pieceVersions = feedPVs.length
+    ? feedPVs.map((pv) => ({ id: pv.id, pieceId: pv.pieceId ?? null, category: pv.category ?? null }))
+    : prev?.pieceVersions ?? [];
+
+  // Movements
+  const movements = feedMovements.length
+    ? feedMovements.map((m) => ({ id: m.id, pieceVersionId: m.pieceVersionId, rank: m.rank, key: (m as any).key ?? null }))
+    : prev?.movements ?? [];
+
+  // Sections
+  const sections = feedSections.length
+    ? feedSections.map((s) => ({
+        id: s.id,
+        movementId: s.movementId,
+        rank: s.rank,
+        metreNumerator: s.metreNumerator,
+        metreDenominator: s.metreDenominator,
+        isCommonTime: s.isCommonTime,
+        isCutTime: s.isCutTime,
+        fastestStructuralNotesPerBar: s.fastestStructuralNotesPerBar,
+        fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar ?? null,
+        fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar ?? null,
+        fastestOrnamentalNotesPerBar: s.fastestOrnamentalNotesPerBar ?? null,
+        isFastestStructuralNoteBelCanto: s.isFastestStructuralNoteBelCanto ?? false,
+        tempoIndicationId: s.tempoIndication?.id,
+        comment: s.comment ?? "",
+        commentForReview: s.commentForReview ?? "",
+      }))
+    : prev?.sections ?? [];
+
+  // Tempo indications
+  const tempoIndications = tempoIndicationMap.size
+    ? Array.from(tempoIndicationMap.values())
+    : prev?.tempoIndications ?? [];
+
+  // Metronome marks (ignore "noMM" entries)
+  const metronomeMarks = (feedFormState.metronomeMarks ?? []).length
+    ? (feedFormState.metronomeMarks ?? [])
+        .filter((mm) => (mm as any).noMM !== true)
+        .map((mm: any) => ({
+          id: mm.id ?? `${mm.sectionId}`,
+          sectionId: mm.sectionId,
+          beatUnit: mm.beatUnit,
+          bpm: mm.bpm,
+          comment: mm.comment ?? "",
+        }))
+    : prev?.metronomeMarks ?? [];
+
+  // References & Contributions: keep previous for stability (feed form lacks reference ids)
+  const references = prev?.references ?? [];
+  const contributions = prev?.contributions ?? [];
+  const persons = prev?.persons ?? [];
+  const organizations = prev?.organizations ?? [];
+
+  // Source contents (ordering): preserve joinIds when possible
+  const prevJoinsByPv: Record<string, any> = Object.fromEntries(
+    (prev?.sourceContents ?? []).map((j: any) => [j.pieceVersionId, j]),
+  );
+  let sourceContents: any[] = prev?.sourceContents ?? [];
+  const feedJoins = feedFormState.mMSourcePieceVersions ?? [];
+  if (feedJoins.length) {
+    const pieceById: Record<string, any> = Object.fromEntries(
+      pieces.map((p: any) => [p.id, p]),
+    );
+    sourceContents = feedJoins.map((j) => {
+      const prevJoin = prevJoinsByPv[j.pieceVersionId];
+      const pv = pieceVersions.find((pv) => pv.id === j.pieceVersionId);
+      const piece = pv ? pieceById[pv.pieceId] : undefined;
+      return {
+        joinId: prevJoin?.joinId ?? `join-${j.pieceVersionId}`,
+        mMSourceId: source.id,
+        pieceVersionId: j.pieceVersionId,
+        rank: j.rank,
+        pieceId: pv?.pieceId ?? null,
+        collectionId: piece?.collectionId,
+        collectionRank: piece?.collectionRank,
+      };
+    });
+  }
+
+  const nextGraph = {
+    source,
+    collections,
+    pieces,
+    pieceVersions,
+    movements,
+    sections,
+    tempoIndications,
+    metronomeMarks,
+    references,
+    contributions,
+    persons,
+    organizations,
+    sourceContents,
+  };
+
   return {
-    graph: previousWorkingCopy.graph,
+    graph: nextGraph,
     updatedAt: new Date().toISOString(),
   };
 }
