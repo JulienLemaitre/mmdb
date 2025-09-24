@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useFeedForm } from "@/components/context/feedFormContext";
 import { GET_URL_REVIEW_CHECKLIST } from "@/utils/routes";
+import { FEED_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 
 export default function ReviewEditBanner() {
   const { state } = useFeedForm();
@@ -94,6 +95,12 @@ export default function ReviewEditBanner() {
   if (!rc || !rc.reviewEdit) return null;
 
   const onBack = () => {
+    try {
+      // Persist the current FeedFormState so the checklist can rebuild the working copy
+      localStorage.setItem(FEED_FORM_LOCAL_STORAGE_KEY, JSON.stringify(state));
+    } catch {
+      // ignore storage errors
+    }
     if (rc.reviewId) {
       router.push(GET_URL_REVIEW_CHECKLIST(rc.reviewId));
     }

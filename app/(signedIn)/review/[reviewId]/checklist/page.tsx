@@ -15,7 +15,14 @@ import { URL_REVIEW_LIST, URL_FEED } from "@/utils/routes";
 import { ApiOverview } from "@/types/reviewTypes";
 import { ReviewWorkingCopyProvider } from "@/components/context/reviewWorkingCopyContext";
 import { useReviewWorkingCopy } from "@/components/context/reviewWorkingCopyContext";
-import { buildFeedFormStateFromWorkingCopy, writeBootStateForFeedForm, type BridgeAnchors } from "@/utils/reviewEditBridge";
+import {
+  buildFeedFormStateFromWorkingCopy,
+  writeBootStateForFeedForm,
+  rebuildWorkingCopyFromFeedForm,
+  type BridgeAnchors,
+} from "@/utils/reviewEditBridge";
+import { FEED_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
+import type { FeedFormState } from "@/types/feedFormTypes";
 
 // Minimal working copy persisted in localStorage; future forms will mutate this.
 // Initialize from the overview's graph for now.
@@ -95,21 +102,32 @@ export default function ChecklistPage() {
 
     // Prepare working copy (fallback to initial graph if none yet)
     const wc = get();
-    const workingCopy = wc ?? { graph: data.graph, updatedAt: new Date().toISOString() };
+    const workingCopy = wc ?? {
+      graph: data.graph,
+      updatedAt: new Date().toISOString(),
+    };
 
     // Compose a boot state for the feed form and persist it to localStorage
-    const feedState = buildFeedFormStateFromWorkingCopy(workingCopy as any, it.fieldPath, {
-      reviewId: data.reviewId,
-      sliceKey: it.fieldPath,
-      anchors,
-    });
+    const feedState = buildFeedFormStateFromWorkingCopy(
+      workingCopy as any,
+      it.fieldPath,
+      {
+        reviewId: data.reviewId,
+        sliceKey: it.fieldPath,
+        anchors,
+      },
+    );
     writeBootStateForFeedForm(feedState);
 
     // Store return route payload to restore slice/scroll on return
     try {
       localStorage.setItem(
         `review:${data.reviewId}:returnRoute`,
-        JSON.stringify({ reviewId: data.reviewId, sliceKey: it.fieldPath, scrollY: window.scrollY }),
+        JSON.stringify({
+          reviewId: data.reviewId,
+          sliceKey: it.fieldPath,
+          scrollY: window.scrollY,
+        }),
       );
     } catch {
       // ignore storage errors
@@ -134,11 +152,12 @@ export default function ChecklistPage() {
             return;
           }
           if (res.status === 400 || res.status === 403 || res.status === 404) {
-            const reason = res.status === 403
-              ? "notOwner"
-              : res.status === 404
-              ? "notFound"
-              : "notActive"; // 400
+            const reason =
+              res.status === 403
+                ? "notOwner"
+                : res.status === 404
+                  ? "notFound"
+                  : "notActive"; // 400
             router.push(`${URL_REVIEW_LIST}?reason=${reason}`);
             return;
           }
@@ -190,9 +209,95 @@ export default function ChecklistPage() {
     );
   }, [checkedKeys, data]);
 
+  // Return from Edit mode: rebuild working copy, impact-scoped reset, recompute required, restore scroll
+  useEffect(() => {
+    if (!data) return;
+    try {
+      const raw = localStorage.getItem(FEED_FORM_LOCAL_STORAGE_KEY);
+      if (!raw) return;
+      const feedState = JSON.parse(raw) as FeedFormState;
+      const rc = feedState?.formInfo?.reviewContext;
+      if (!rc || !rc.reviewEdit || rc.reviewId !== data.reviewId) return;
+
+      const prev = get() ?? {
+        graph: data.graph,
+        updatedAt: new Date().toISOString(),
+      };
+      const next = rebuildWorkingCopyFromFeedForm(feedState, prev as any);
+
+      // Save the new working copy graph
+      save(next.graph);
+
+      // Compute impacted field paths (prev vs next working copy)
+      const impacted = computeChangedChecklistFieldPaths(
+        prev.graph as any,
+        next.graph as any,
+      );
+      const impactedKeys = new Set(toEncodedKeys(impacted));
+
+      // Recompute required checklist items for the new working graph
+      const gr = data.globallyReviewed;
+      const nextRequiredItems = expandRequiredChecklistItems(next.graph, {
+        globallyReviewed: {
+          personIds: new Set(gr?.personIds ?? []),
+          organizationIds: new Set(gr?.organizationIds ?? []),
+          collectionIds: new Set(gr?.collectionIds ?? []),
+          pieceIds: new Set(gr?.pieceIds ?? []),
+        },
+      });
+      const nextRequiredKeySet = new Set(
+        nextRequiredItems.map((it) => encodeKey(it)),
+      );
+
+      // Update checked map
+      setCheckedKeys((prevSet) => {
+        const ns = new Set(prevSet);
+        // Drop keys that are not required anymore
+        for (const k of Array.from(ns)) {
+          if (!nextRequiredKeySet.has(k)) ns.delete(k);
+        }
+        // Uncheck impacted
+        impactedKeys.forEach((k) => ns.delete(k));
+        return ns;
+      });
+
+      // Update changed flags for visual hint (against initial baseline from server)
+      const changed = computeChangedChecklistFieldPaths(
+        data.graph as any,
+        next.graph as any,
+      );
+      setChangedKeys(new Set(toEncodedKeys(changed)));
+
+      // Clear feed form storage so normal feed openings don't inherit review context
+      localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
+
+      // Restore slice scroll position
+      try {
+        const retKey = `review:${data.reviewId}:returnRoute`;
+        const retRaw = localStorage.getItem(retKey);
+        if (retRaw) {
+          const ret = JSON.parse(retRaw) as {
+            reviewId: string;
+            sliceKey?: string;
+            scrollY?: number;
+          };
+          if (typeof ret.scrollY === "number") {
+            window.scrollTo({ top: ret.scrollY, behavior: "auto" });
+          }
+          localStorage.removeItem(retKey);
+        }
+      } catch {
+        // ignore
+      }
+    } catch {
+      // ignore for now ?
+    }
+  }, [data, get, save]);
+
   const requiredItems: RequiredChecklistItem[] = useMemo(() => {
     if (!data) return [];
-    const g = data.graph;
+    const wc = get();
+    const g = wc?.graph ?? data.graph;
     const gr = data.globallyReviewed;
     const items = expandRequiredChecklistItems(g, {
       globallyReviewed: {
@@ -203,7 +308,7 @@ export default function ChecklistPage() {
       },
     });
     return items;
-  }, [data]);
+  }, [data, get]);
 
   const totals = useMemo(() => {
     const totalRequired = requiredItems.length;
@@ -232,7 +337,6 @@ export default function ChecklistPage() {
       setChangedKeys(new Set());
     }
   }, [data, reloadNonce, get]);
-
 
   function toggle(item: RequiredChecklistItem) {
     const key = encodeKey(item);
