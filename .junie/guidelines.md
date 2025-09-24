@@ -127,11 +127,15 @@ This document captures project-specific knowledge that will speed up development
 
 - Build types using Prisma provided types like you can see in the file `types/formTypes.ts`
 
-7. CI/CD and deployment notes
+7. Git
+
+- Always add to git new created files
+
+8. CI/CD and deployment notes
 
 - vercel-build script expects a reachable database and runs migrations with prisma migrate deploy. Ensure DATABASE_URL/DIRECT_URL are set in Vercel project settings. Use pooled URL for runtime (DATABASE_URL with pgbouncer) and direct URL for migrations (DIRECT_URL).
 
-8. Troubleshooting
+9. Troubleshooting
 
 - Jest failing on toThrowError: replace with toThrow (Jest 30 change).
 - Module resolution errors in tests: remember tsconfig uses bundler resolution; when importing path aliases in tests, run via next/jest which respects next config (dir: './').
