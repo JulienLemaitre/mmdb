@@ -8,7 +8,11 @@ import ReviewListClient from "./reviewListClient";
 import { getToReviewFromDb } from "@/utils/server/getToReviewFromDb";
 import { GET_URL_REVIEW_CHECKLIST } from "@/utils/routes";
 
-export default async function ReviewListPage() {
+export default async function ReviewListPage({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
   const session = await getServerSession(authOptions);
   console.log(`[ReviewListPage] session :`, session);
   if (!session || !session.user) {
@@ -36,8 +40,31 @@ export default async function ReviewListPage() {
     );
     return { items: [] };
   });
+
+  const reason = (typeof searchParams?.reason === "string" ? searchParams?.reason : undefined) as
+    | "notOwner"
+    | "notActive"
+    | "notFound"
+    | "unauthorized"
+    | undefined;
+  const reasonMessage =
+    reason === "notOwner"
+      ? "You cannot access that review. Only the assigned reviewer or an admin can open it."
+      : reason === "notActive"
+      ? "That review is not active anymore."
+      : reason === "notFound"
+      ? "The requested review was not found."
+      : reason === "unauthorized"
+      ? "Please sign in to access reviews."
+      : undefined;
+
   return (
     <div className="container mx-auto p-4">
+      {reasonMessage && (
+        <div className="mb-3 rounded border border-yellow-300 bg-yellow-50 p-2 text-sm text-yellow-800">
+          {reasonMessage}
+        </div>
+      )}
       <h1 className="text-2xl font-semibold mb-4">MM Sources to review</h1>
       <ReviewListClient items={data.items} />
     </div>

@@ -140,7 +140,12 @@ export default function ChecklistPage() {
             return;
           }
           if (res.status === 400 || res.status === 403 || res.status === 404) {
-            router.push(URL_REVIEW_LIST);
+            const reason = res.status === 403
+              ? "notOwner"
+              : res.status === 404
+              ? "notFound"
+              : "notActive"; // 400
+            router.push(`${URL_REVIEW_LIST}?reason=${reason}`);
             return;
           }
           const j = await res.json().catch(() => ({}));
