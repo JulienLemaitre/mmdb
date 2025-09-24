@@ -11,10 +11,11 @@ import {
   computeChangedChecklistFieldPaths,
   toEncodedKeys,
 } from "@/utils/reviewDiff";
-import { URL_REVIEW_LIST } from "@/utils/routes";
+import { URL_REVIEW_LIST, URL_FEED } from "@/utils/routes";
 import { ApiOverview } from "@/types/reviewTypes";
 import { ReviewWorkingCopyProvider } from "@/components/context/reviewWorkingCopyContext";
 import { useReviewWorkingCopy } from "@/components/context/reviewWorkingCopyContext";
+import { buildFeedFormStateFromWorkingCopy, writeBootStateForFeedForm, type BridgeAnchors } from "@/utils/reviewEditBridge";
 
 // Minimal working copy persisted in localStorage; future forms will mutate this.
 // Initialize from the overview's graph for now.
@@ -67,61 +68,55 @@ export default function ChecklistPage() {
   const [reloadNonce, setReloadNonce] = useState(0);
   const [storageWarning, setStorageWarning] = useState<string | null>(null);
   const [changedKeys, setChangedKeys] = useState<Set<string>>(new Set());
-  const [editState, setEditState] = useState<
-    | { kind: "MM_SOURCE" }
-    | { kind: "PIECE"; id: string }
-    | { kind: "PIECE_VERSION"; id: string }
-    | { kind: "MOVEMENT"; id: string }
-    | { kind: "SECTION"; id: string }
-    | { kind: "ORGANIZATION"; id: string }
-    | null
-  >(null);
 
   function openEditForItem(it: RequiredChecklistItem) {
-    if (it.entityType === "MM_SOURCE") {
-      setEditState({ kind: "MM_SOURCE" });
-      return;
-    }
-    if (it.entityType === "PIECE" && it.entityId) {
-      setEditState({ kind: "PIECE", id: it.entityId });
-      return;
-    }
+    if (!data) return;
+
+    // Build anchors based on the clicked entity to help the feed form focus
+    let anchors: BridgeAnchors | undefined = undefined;
     if (it.entityType === "PIECE_VERSION" && it.entityId) {
-      setEditState({ kind: "PIECE_VERSION", id: it.entityId });
-      return;
-    }
-    if (it.entityType === "MOVEMENT" && it.entityId) {
-      setEditState({ kind: "MOVEMENT", id: it.entityId });
-      return;
-    }
-    if (it.entityType === "SECTION" && it.entityId) {
-      setEditState({ kind: "SECTION", id: it.entityId });
-      return;
-    }
-    if (it.entityType === "TEMPO_INDICATION" && it.entityId) {
-      // Map to the owning section and open section editor
-      const section = (data?.graph?.sections ?? []).find(
+      anchors = { pvId: it.entityId };
+    } else if (it.entityType === "MOVEMENT" && it.entityId) {
+      anchors = { movId: it.entityId };
+    } else if (it.entityType === "SECTION" && it.entityId) {
+      anchors = { secId: it.entityId };
+    } else if (it.entityType === "TEMPO_INDICATION" && it.entityId) {
+      // Find the section that owns this tempo indication
+      const section = (data.graph?.sections ?? []).find(
         (s: any) => s.tempoIndicationId === it.entityId,
       );
-      if (section?.id) {
-        setEditState({ kind: "SECTION", id: section.id });
-        return;
-      }
-    }
-    if (it.entityType === "METRONOME_MARK" && it.entityId) {
-      // Map to the owning section via metronomeMarks array if present
-      const mm = (data?.graph?.metronomeMarks ?? []).find(
+      if (section?.id) anchors = { secId: section.id };
+    } else if (it.entityType === "METRONOME_MARK" && it.entityId) {
+      const mm = (data.graph?.metronomeMarks ?? []).find(
         (m: any) => m.id === it.entityId,
       );
-      if (mm?.sectionId) {
-        setEditState({ kind: "SECTION", id: mm.sectionId });
-        return;
-      }
+      if (mm?.sectionId) anchors = { mmId: it.entityId, secId: mm.sectionId };
     }
-    if (it.entityType === "ORGANIZATION" && it.entityId) {
-      setEditState({ kind: "ORGANIZATION", id: it.entityId });
-      return;
+
+    // Prepare working copy (fallback to initial graph if none yet)
+    const wc = get();
+    const workingCopy = wc ?? { graph: data.graph, updatedAt: new Date().toISOString() };
+
+    // Compose a boot state for the feed form and persist it to localStorage
+    const feedState = buildFeedFormStateFromWorkingCopy(workingCopy as any, it.fieldPath, {
+      reviewId: data.reviewId,
+      sliceKey: it.fieldPath,
+      anchors,
+    });
+    writeBootStateForFeedForm(feedState);
+
+    // Store return route payload to restore slice/scroll on return
+    try {
+      localStorage.setItem(
+        `review:${data.reviewId}:returnRoute`,
+        JSON.stringify({ reviewId: data.reviewId, sliceKey: it.fieldPath, scrollY: window.scrollY }),
+      );
+    } catch {
+      // ignore storage errors
     }
+
+    // Navigate to the feed form (it will consume the boot state on mount)
+    router.push(URL_FEED);
   }
 
   // Load overview
