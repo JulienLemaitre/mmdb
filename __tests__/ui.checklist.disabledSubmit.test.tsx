@@ -11,6 +11,12 @@ jest.mock("next/navigation", () => ({
   useRouter: () => ({ push: jest.fn() }),
 }));
 
+// Mock review working copy context to avoid provider requirement in the page component
+jest.mock("../components/context/reviewWorkingCopyContext", () => ({
+  ReviewWorkingCopyProvider: ({ children }: any) => children,
+  useReviewWorkingCopy: () => ({ get: () => null, save: () => {}, clear: () => {} }),
+}));
+
 describe("ChecklistPage UI", () => {
   beforeEach(() => {
     // Clear localStorage keys used by the page

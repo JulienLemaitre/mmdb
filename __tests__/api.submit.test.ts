@@ -9,6 +9,15 @@ jest.mock("next/server", () => ({
   },
 }));
 
+// Mock the DB-backed overview call used by the submit handler to avoid next-auth/openid-client
+jest.mock("../utils/server/getReviewOverview", () => ({
+  getReviewOverview: async (reviewId: string) => {
+    const { buildMockOverview } = require("../utils/reviewMock");
+    const { graph, globallyReviewed } = buildMockOverview(reviewId);
+    return { graph, globallyReviewed };
+  },
+}));
+
 const { POST: postSubmit } = require("../app/api/review/[reviewId]/submit/route");
 import { buildMockOverview } from "@/utils/reviewMock";
 import { expandRequiredChecklistItems } from "@/utils/ReviewChecklistSchema";
@@ -19,8 +28,13 @@ describe("POST /api/review/[reviewId]/submit", () => {
     const { graph } = buildMockOverview(reviewId);
     const stubReq: any = { json: async () => ({ workingCopy: graph, checklistState: [], overallComment: null }) };
     const res = await postSubmit(stubReq, { params: { reviewId } });
-    expect(res.status).toBe(400);
     const json = await res.json();
+    // Debug aid if failing
+    if (res.status !== 400) {
+      // eslint-disable-next-line no-console
+      console.log('submit incomplete debug:', res.status, json);
+    }
+    expect(res.status).toBe(400);
     expect(json.error).toMatch(/Incomplete checklist/);
     expect(json.missingCount).toBeGreaterThan(0);
   });

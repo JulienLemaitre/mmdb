@@ -9,6 +9,30 @@ jest.mock("next/server", () => ({
   },
 }));
 
+// Mock the DB-backed overview to avoid importing next-auth/openid-client in tests
+jest.mock("../utils/server/getReviewOverview", () => ({
+  getReviewOverview: async (reviewId: string) => {
+    // Minimal mock graph matching ChecklistGraph shape
+    const graph = {
+      source: { id: "src-1", title: "Mock Review Source", link: "", permalink: "", year: 1900, comment: "" },
+      collections: [],
+      pieces: [],
+      pieceVersions: [],
+      movements: [],
+      sections: [],
+      tempoIndications: [],
+      metronomeMarks: [],
+      persons: [],
+      organizations: [],
+      references: [],
+      contributions: [],
+      sourceContents: [],
+    };
+    const globallyReviewed = { personIds: [], organizationIds: [], collectionIds: [], pieceIds: [] };
+    return { graph, globallyReviewed };
+  },
+}));
+
 const { GET: getOverview } = require("../app/api/review/[reviewId]/overview/route");
 
 describe("GET /api/review/[reviewId]/overview", () => {

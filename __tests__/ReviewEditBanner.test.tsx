@@ -14,7 +14,7 @@ jest.mock('next/navigation', () => {
   }
 })
 
-jest.mock('@/components/context/feedFormContext', () => {
+jest.mock('../components/context/feedFormContext', () => {
   return {
     useFeedForm: () => ({ state: mockedState }),
   }
