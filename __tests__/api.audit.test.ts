@@ -70,3 +70,12 @@ describe("GET /api/audit", () => {
     expect(j.items).toEqual([]);
   });
 });
+
+
+it("returns nextCursor for pagination", async () => {
+  mockGetAuditLogs.mockResolvedValueOnce({ items: [{ id: "a1" }], nextCursor: "c2" });
+  const res = await getAudit({ url: "http://localhost/api/audit?reviewId=r-1&limit=1&cursor=c1" } as any);
+  expect(res.ok).toBe(true);
+  const j = await res.json();
+  expect(j.nextCursor).toBe("c2");
+});
