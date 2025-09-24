@@ -19,6 +19,7 @@ export const COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY =
 // Feed Form
 
 export const FEED_FORM_LOCAL_STORAGE_KEY = "feedForm";
+export const FEED_FORM_BOOT_KEY = "feedForm:boot";
 // @ts-ignore
 export const FEED_FORM_TEST_STATE: FeedFormState = getFeedFormTestState();
 

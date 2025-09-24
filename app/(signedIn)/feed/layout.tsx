@@ -4,6 +4,7 @@ import React from "react";
 import HelpDrawer from "@/components/HelpDrawer";
 import Steps from "@/components/multiStepMMSourceForm/Steps";
 import ResetAllForms from "@/components/ResetAllForms";
+import ReviewEditBanner from "@/components/review/ReviewEditBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -21,7 +22,11 @@ export default function FeedLayout({ children }) {
                 <Steps />
                 <ResetAllForms />
               </aside>
-              <main className="flex-1 bg-base-100 p-10">{children}</main>
+              <main className="flex-1 bg-base-100 p-10">
+                {/* Review edit-mode banner (only visible when feed form is opened from review) */}
+                <ReviewEditBanner />
+                {children}
+              </main>
             </div>
           </div>
         </div>

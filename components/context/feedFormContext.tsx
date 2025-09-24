@@ -22,6 +22,7 @@ import { feedFormReducer } from "@/components/context/feedFormReducer";
 import {
   FEED_FORM_INITIAL_STATE,
   FEED_FORM_LOCAL_STORAGE_KEY,
+  FEED_FORM_BOOT_KEY,
 } from "@/utils/constants";
 
 const FeedFormContext = createContext<
@@ -41,6 +42,16 @@ export function FeedFormProvider({
   );
 
   useEffect(() => {
+    // If a boot payload exists (coming from review edit mode), consume it
+    try {
+      const bootRaw = localStorage.getItem(FEED_FORM_BOOT_KEY);
+      if (bootRaw) {
+        localStorage.setItem(FEED_FORM_LOCAL_STORAGE_KEY, bootRaw);
+        localStorage.removeItem(FEED_FORM_BOOT_KEY);
+      }
+    } catch {
+      // ignore
+    }
     const localStorageValue = localStorageGetItem(FEED_FORM_LOCAL_STORAGE_KEY);
     if (localStorageValue) {
       console.log(`[INIT] feedForm from localStorage`, localStorageValue);
