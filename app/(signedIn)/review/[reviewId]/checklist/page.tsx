@@ -15,6 +15,7 @@ import { URL_REVIEW_LIST, URL_FEED } from "@/utils/routes";
 import { ApiOverview } from "@/types/reviewTypes";
 import { ReviewWorkingCopyProvider } from "@/components/context/reviewWorkingCopyContext";
 import { ChecklistRow } from "@/components/review/ChecklistRow";
+import { SliceHeader } from "@/components/review/SliceHeader";
 import { useReviewWorkingCopy } from "@/components/context/reviewWorkingCopyContext";
 import {
   buildFeedFormStateFromWorkingCopy,
@@ -58,6 +59,36 @@ const ENTITY_BADGE: Record<ChecklistEntityType, string> = {
   PERSON: "badge-neutral",
   ORGANIZATION: "badge-neutral",
 };
+
+const SLICE_LABELS: Record<ChecklistEntityType, string> = {
+  MM_SOURCE: "Source",
+  COLLECTION: "Collections",
+  PIECE: "Pieces",
+  PIECE_VERSION: "Piece versions",
+  MOVEMENT: "Movements",
+  SECTION: "Sections",
+  TEMPO_INDICATION: "Tempo indications",
+  METRONOME_MARK: "Metronome marks",
+  REFERENCE: "References",
+  CONTRIBUTION: "Contributions",
+  PERSON: "Persons",
+  ORGANIZATION: "Organizations",
+};
+
+const SLICE_ORDER: ChecklistEntityType[] = [
+  "MM_SOURCE",
+  "COLLECTION",
+  "PIECE",
+  "PIECE_VERSION",
+  "MOVEMENT",
+  "SECTION",
+  "TEMPO_INDICATION",
+  "METRONOME_MARK",
+  "REFERENCE",
+  "CONTRIBUTION",
+  "PERSON",
+  "ORGANIZATION",
+];
 
 export default function ChecklistPage() {
   const params = useParams();
@@ -330,6 +361,15 @@ export default function ChecklistPage() {
     return { totalRequired, checkedRequired, pct };
   }, [requiredItems, checkedKeys]);
 
+  // Group items by entity type to render sticky slice headers
+  const groupedByType = useMemo(() => {
+    const map: Partial<Record<ChecklistEntityType, RequiredChecklistItem[]>> = {};
+    for (const it of requiredItems) {
+      (map[it.entityType] = (map[it.entityType] || [])).push(it);
+    }
+    return map;
+  }, [requiredItems]);
+
   // Recompute changed keys whenever working copy or baseline (data.graph) changes
   useEffect(() => {
     if (!data) return;
@@ -474,23 +514,31 @@ export default function ChecklistPage() {
                 </tr>
               </thead>
               <tbody>
-                {requiredItems.map((it) => {
-                  const key = encodeKey(it);
-                  const isChecked = checkedKeys.has(key);
-                  const badgeClass =
-                    ENTITY_BADGE[it.entityType] || "badge-ghost";
-                  const rowChanged = changedKeys.has(key);
-                  return (
-                    <ChecklistRow
-                      key={key}
-                      item={it}
-                      checked={isChecked}
-                      changed={rowChanged}
-                      onToggle={() => toggle(it)}
-                      onEdit={() => openEditForItem(it)}
-                      entityBadge={<span className={`badge ${badgeClass}`}>{it.entityType}</span>}
-                    />
+                {SLICE_ORDER.flatMap((t) => {
+                  const group = (groupedByType as any)[t] as RequiredChecklistItem[] | undefined;
+                  if (!group || group.length === 0) return [];
+                  const header = (
+                    <SliceHeader key={`hdr-${t}`} id={`slice-${t.toLowerCase()}`} title={SLICE_LABELS[t]} />
                   );
+                  const rows = group.map((it) => {
+                    const key = encodeKey(it);
+                    const isChecked = checkedKeys.has(key);
+                    const badgeClass = ENTITY_BADGE[it.entityType] || "badge-ghost";
+                    const rowChanged = changedKeys.has(key);
+                    return (
+                      <ChecklistRow
+                        key={key}
+                        rowId={`row-${key}`}
+                        item={it}
+                        checked={isChecked}
+                        changed={rowChanged}
+                        onToggle={() => toggle(it)}
+                        onEdit={() => openEditForItem(it)}
+                        entityBadge={<span className={`badge ${badgeClass}`}>{it.entityType}</span>}
+                      />
+                    );
+                  });
+                  return [header, ...rows];
                 })}
               </tbody>
             </table>

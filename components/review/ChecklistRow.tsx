@@ -10,6 +10,7 @@ export function ChecklistRow({
   onToggle,
   onEdit,
   entityBadge,
+  rowId,
 }: {
   item: RequiredChecklistItem;
   checked: boolean;
@@ -17,6 +18,7 @@ export function ChecklistRow({
   onToggle: () => void;
   onEdit: () => void;
   entityBadge?: React.ReactNode;
+  rowId?: string;
 }) {
   const rowStateLabel = `${item.label} – ${checked ? "checked" : "unchecked"}${changed ? ", changed" : ""}`;
 
@@ -28,7 +30,7 @@ export function ChecklistRow({
     .join(" ");
 
   return (
-    <tr role="row" aria-label={rowStateLabel} className={rowClass}>
+    <tr id={rowId} role="row" aria-label={rowStateLabel} className={rowClass}>
       <td>
         <input
           type="checkbox"
