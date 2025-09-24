@@ -215,7 +215,14 @@ export default function ChecklistPage() {
     try {
       const raw = localStorage.getItem(FEED_FORM_LOCAL_STORAGE_KEY);
       if (!raw) return;
-      const feedState = JSON.parse(raw) as FeedFormState;
+      let feedState: FeedFormState | null = null;
+      try {
+        feedState = JSON.parse(raw) as FeedFormState;
+      } catch {
+        // Malformed feed form state; clear it to avoid infinite errors
+        localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
+        return;
+      }
       const rc = feedState?.formInfo?.reviewContext;
       if (!rc || !rc.reviewEdit || rc.reviewId !== data.reviewId) return;
 
@@ -589,6 +596,12 @@ export default function ChecklistPage() {
                     );
                   }
                   localStorage.removeItem(storageKey(data.reviewId));
+                  // Clear any pending return route payload
+                  try {
+                    localStorage.removeItem(`review:${data.reviewId}:returnRoute`);
+                  } catch {
+                    // ignore
+                  }
                   clear(); // clear working copy via hook
                   setCheckedKeys(new Set());
                   router.push(URL_REVIEW_LIST);
@@ -629,6 +642,12 @@ export default function ChecklistPage() {
                     );
                   }
                   localStorage.removeItem(storageKey(data.reviewId));
+                  // Clear any pending return route payload
+                  try {
+                    localStorage.removeItem(`review:${data.reviewId}:returnRoute`);
+                  } catch {
+                    // ignore
+                  }
                   clear(); // clear working copy via hook
                   setCheckedKeys(new Set());
                   router.push(URL_REVIEW_LIST);
