@@ -1,8 +1,10 @@
 import { ChecklistGraph, RequiredChecklistItem, expandRequiredChecklistItems, type ExpandOptions } from "@/utils/ReviewChecklistSchema";
+import { encodeChecklistKey, type CheckedKeySet } from "@/utils/reviewKeys";
+import React, { useMemo } from "react";
 
 export type ProgressCounts = {
   required: number;
-  checked: number; // skeleton: 0 for now
+  checked: number;
 };
 
 export type OverviewProgress = {
@@ -86,9 +88,18 @@ function attributeItemToPieceId(
   return undefined;
 }
 
-export function computeOverviewProgress(graph: ChecklistGraph, options?: ExpandOptions): OverviewProgress {
+/**
+ * Compute overview progress with optional checked key set.
+ * Single traversal; honors conditional required fields and globallyReviewed via options.
+ */
+export function computeOverviewProgress(
+  graph: ChecklistGraph,
+  options?: ExpandOptions,
+  checkedKeys?: CheckedKeySet,
+): OverviewProgress {
   const items = expandRequiredChecklistItems(graph, options);
   const idx = buildParentIndexes(graph);
+  const checked = checkedKeys ?? new Set<string>();
 
   const perPiece: Record<string, ProgressCounts> = {};
   const perCollection: Record<string, ProgressCounts> = {};
@@ -96,31 +107,49 @@ export function computeOverviewProgress(graph: ChecklistGraph, options?: ExpandO
   // Initialize from pieces/collections present in graph
   for (const p of graph.pieces ?? []) {
     perPiece[p.id] = { required: 0, checked: 0 };
-    const colId = p.collectionId as string | undefined;
+    const colId = (p as any).collectionId as string | undefined;
     if (colId && !perCollection[colId]) perCollection[colId] = { required: 0, checked: 0 };
   }
   for (const c of graph.collections ?? []) {
     if (!perCollection[c.id]) perCollection[c.id] = { required: 0, checked: 0 };
   }
 
-  // Attribute items
+  // Attribute items and tally
+  let sourceChecked = 0;
   for (const item of items) {
+    const key = encodeChecklistKey(item);
+    const isChecked = checked.has(key);
+
     const pieceId = attributeItemToPieceId(item, graph, idx);
     if (pieceId) {
-      perPiece[pieceId] = perPiece[pieceId] || { required: 0, checked: 0 };
-      perPiece[pieceId].required += 1;
+      const pp = (perPiece[pieceId] = perPiece[pieceId] || { required: 0, checked: 0 });
+      pp.required += 1;
+      if (isChecked) pp.checked += 1;
       const colId = idx.pieceToCollection[pieceId];
       if (colId) {
-        perCollection[colId] = perCollection[colId] || { required: 0, checked: 0 };
-        perCollection[colId].required += 1;
+        const pc = (perCollection[colId] = perCollection[colId] || { required: 0, checked: 0 });
+        pc.required += 1;
+        if (isChecked) pc.checked += 1;
       }
-      continue;
     }
-    // Otherwise, treat as source-level requirement
+    // source-level always accumulates
+    if (isChecked) sourceChecked += 1;
   }
 
   // Source required = total items
-  const source: ProgressCounts = { required: items.length, checked: 0 };
+  const source: ProgressCounts = { required: items.length, checked: sourceChecked };
 
   return { source, perCollection, perPiece };
+}
+
+/**
+ * React hook wrapper that memoizes overview progress based on inputs.
+ */
+export function useOverviewProgress(
+  graph: ChecklistGraph,
+  checkedKeys?: CheckedKeySet,
+  options?: ExpandOptions,
+): OverviewProgress {
+  // Note: callers should pass stable references or a primitive nonce for graph if needed
+  return useMemo(() => computeOverviewProgress(graph, options, checkedKeys), [graph, options, checkedKeys]);
 }
