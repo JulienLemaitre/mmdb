@@ -66,7 +66,6 @@ export default function ChecklistPage() {
   const [abortError, setAbortError] = useState<string | null>(null);
   const [reloadNonce, setReloadNonce] = useState(0);
   const [storageWarning, setStorageWarning] = useState<string | null>(null);
-  const [filter, setFilter] = useState<"ALL" | "UNCHECKED" | "CHANGED">("ALL");
   const [changedKeys, setChangedKeys] = useState<Set<string>>(new Set());
   const [editState, setEditState] = useState<
     | { kind: "MM_SOURCE" }
@@ -239,14 +238,6 @@ export default function ChecklistPage() {
     }
   }, [data, reloadNonce, get]);
 
-  const filteredItems = useMemo(() => {
-    if (!requiredItems) return [] as RequiredChecklistItem[];
-    if (filter === "ALL") return requiredItems;
-    if (filter === "UNCHECKED")
-      return requiredItems.filter((it) => !checkedKeys.has(encodeKey(it)));
-    // CHANGED
-    return requiredItems.filter((it) => changedKeys.has(encodeKey(it)));
-  }, [requiredItems, checkedKeys, changedKeys, filter]);
 
   function toggle(item: RequiredChecklistItem) {
     const key = encodeKey(item);
@@ -350,31 +341,8 @@ export default function ChecklistPage() {
         </div>
 
         <div className="card bg-base-100 border p-4">
-          <div className="flex items-center justify-between mb-3">
+          <div className="mb-3">
             <div className="font-semibold">Checklist items</div>
-            <div className="join">
-              <button
-                className={`btn btn-xs join-item ${filter === "ALL" ? "btn-active" : "btn-ghost"}`}
-                onClick={() => setFilter("ALL")}
-                type="button"
-              >
-                All
-              </button>
-              <button
-                className={`btn btn-xs join-item ${filter === "UNCHECKED" ? "btn-active" : "btn-ghost"}`}
-                onClick={() => setFilter("UNCHECKED")}
-                type="button"
-              >
-                Unchecked
-              </button>
-              <button
-                className={`btn btn-xs join-item ${filter === "CHANGED" ? "btn-active" : "btn-ghost"}`}
-                onClick={() => setFilter("CHANGED")}
-                type="button"
-              >
-                Changed
-              </button>
-            </div>
           </div>
           {storageWarning && (
             <div className="alert alert-warning mb-3">
@@ -399,7 +367,7 @@ export default function ChecklistPage() {
                 </tr>
               </thead>
               <tbody>
-                {filteredItems.map((it) => {
+                {requiredItems.map((it) => {
                   const key = encodeKey(it);
                   const isChecked = checkedKeys.has(key);
                   const badgeClass =
