@@ -14,6 +14,7 @@ import {
 import { URL_REVIEW_LIST, URL_FEED } from "@/utils/routes";
 import { ApiOverview } from "@/types/reviewTypes";
 import { ReviewWorkingCopyProvider } from "@/components/context/reviewWorkingCopyContext";
+import { ChecklistRow } from "@/components/review/ChecklistRow";
 import { useReviewWorkingCopy } from "@/components/context/reviewWorkingCopyContext";
 import {
   buildFeedFormStateFromWorkingCopy,
@@ -480,40 +481,15 @@ export default function ChecklistPage() {
                     ENTITY_BADGE[it.entityType] || "badge-ghost";
                   const rowChanged = changedKeys.has(key);
                   return (
-                    <tr key={key} className={rowChanged ? "bg-warning/10" : ""}>
-                      <td>
-                        <input
-                          type="checkbox"
-                          className="checkbox checkbox-primary"
-                          checked={isChecked}
-                          onChange={() => toggle(it)}
-                        />
-                      </td>
-                      <td>
-                        <span className={`badge ${badgeClass}`}>
-                          {it.entityType}
-                        </span>
-                      </td>
-                      <td>
-                        {it.label}
-                        {rowChanged && (
-                          <span className="badge badge-warning badge-outline ml-2">
-                            Changed
-                          </span>
-                        )}
-                      </td>
-                      <td className="opacity-70 text-xs">{it.fieldPath}</td>
-                      <td>
-                        <button
-                          type="button"
-                          className="btn btn-xs btn-ghost hover:btn-accent"
-                          onClick={() => openEditForItem(it)}
-                          title="Edit this entity"
-                        >
-                          Edit
-                        </button>
-                      </td>
-                    </tr>
+                    <ChecklistRow
+                      key={key}
+                      item={it}
+                      checked={isChecked}
+                      changed={rowChanged}
+                      onToggle={() => toggle(it)}
+                      onEdit={() => openEditForItem(it)}
+                      entityBadge={<span className={`badge ${badgeClass}`}>{it.entityType}</span>}
+                    />
                   );
                 })}
               </tbody>
