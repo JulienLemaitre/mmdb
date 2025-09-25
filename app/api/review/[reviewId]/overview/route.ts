@@ -5,10 +5,10 @@ import { getReviewOverview } from "@/utils/server/getReviewOverview";
 
 export async function GET(
   _req: Request,
-  { params }: { params: { reviewId: string } },
+  { params }: { params: Promise<{ reviewId: string }> },
 ) {
   try {
-    const reviewId = params.reviewId;
+    const { reviewId } = await params;
     if (!reviewId)
       return NextResponse.json({ error: "Missing reviewId" }, { status: 400 });
 

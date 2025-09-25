@@ -11,7 +11,7 @@ export default async function ChecklistLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { reviewId: string };
+  params: Promise<{ reviewId: string }>;
 }) {
   const session = await getServerSession(authOptions);
   if (!session || !session.user) {
@@ -23,7 +23,7 @@ export default async function ChecklistLayout({
     redirect(`/`);
   }
 
-  const reviewId = params?.reviewId;
+  const { reviewId } = await params;
   if (!reviewId) {
     console.warn(`[ChecklistLayout] Missing reviewId in route params`);
     redirect(`${URL_REVIEW_LIST}?reason=notFound`);

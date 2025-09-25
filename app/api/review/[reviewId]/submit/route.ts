@@ -7,8 +7,11 @@ import { composeAuditEntries } from "@/utils/auditCompose";
 // POST /api/review/[reviewId]/submit
 // Body: { workingCopy, checklistState: Array<{entityType, entityId, fieldPath, checked}>, overallComment? }
 // This mock implementation validates completeness server-side and computes diffs; it does not persist to DB yet.
-export async function POST(req: Request, { params }: { params: { reviewId: string } }) {
-  const reviewId = params.reviewId;
+export async function POST(
+  req: Request,
+  { params }: { params: Promise<{ reviewId: string }> },
+) {
+  const { reviewId } = await params;
 
   let body: any;
   try {
@@ -18,11 +21,16 @@ export async function POST(req: Request, { params }: { params: { reviewId: strin
   }
 
   const workingCopy = body?.workingCopy;
-  const checklistState = Array.isArray(body?.checklistState) ? body.checklistState : [];
+  const checklistState = Array.isArray(body?.checklistState)
+    ? body.checklistState
+    : [];
   const overallComment = body?.overallComment ?? null;
 
   if (!workingCopy || !Array.isArray(checklistState)) {
-    return NextResponse.json({ error: "Missing workingCopy or checklistState" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Missing workingCopy or checklistState" },
+      { status: 400 },
+    );
   }
 
   // Load the baseline graph from the real DB-backed overview
@@ -61,7 +69,8 @@ export async function POST(req: Request, { params }: { params: { reviewId: strin
   );
 
   const missing = requiredItems.filter(
-    (it) => !submitted.has(`${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`),
+    (it) =>
+      !submitted.has(`${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`),
   );
 
   if (missing.length > 0) {
@@ -81,7 +90,10 @@ export async function POST(req: Request, { params }: { params: { reviewId: strin
   }
 
   // Compute diffs between baseline and working copy (changed checklist field paths)
-  const changed = computeChangedChecklistFieldPaths(baselineGraph as any, workingCopy as any);
+  const changed = computeChangedChecklistFieldPaths(
+    baselineGraph as any,
+    workingCopy as any,
+  );
 
   const changedFieldPaths = changed.map((c) => c.fieldPath);
   const changedUniqueByEntityType = changed.reduce<Record<string, Set<string>>>(
@@ -98,7 +110,11 @@ export async function POST(req: Request, { params }: { params: { reviewId: strin
   );
 
   // Compose audit entries preview (no DB write in mock)
-  const auditPreview = composeAuditEntries(reviewId, baselineGraph as any, workingCopy as any);
+  const auditPreview = composeAuditEntries(
+    reviewId,
+    baselineGraph as any,
+    workingCopy as any,
+  );
 
   // MOCK transactional apply: in a real implementation, here we would:
   // - Verify Review state and ownership (IN_REVIEW) via Prisma
@@ -116,8 +132,12 @@ export async function POST(req: Request, { params }: { params: { reviewId: strin
     changedFieldPathsSample: changedFieldPaths.slice(0, 100),
   };
 
-  return NextResponse.json({ ok: true, summary, auditPreview: {
-    count: auditPreview.length,
-    entries: auditPreview.slice(0, 100),
-  }});
+  return NextResponse.json({
+    ok: true,
+    summary,
+    auditPreview: {
+      count: auditPreview.length,
+      entries: auditPreview.slice(0, 100),
+    },
+  });
 }

@@ -11,8 +11,9 @@ import { GET_URL_REVIEW_CHECKLIST } from "@/utils/routes";
 export default async function ReviewListPage({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+  const params = await searchParams;
   const session = await getServerSession(authOptions);
   console.log(`[ReviewListPage] session :`, session);
   if (!session || !session.user) {
@@ -41,22 +42,19 @@ export default async function ReviewListPage({
     return { items: [] };
   });
 
-  const reason = (typeof searchParams?.reason === "string" ? searchParams?.reason : undefined) as
-    | "notOwner"
-    | "notActive"
-    | "notFound"
-    | "unauthorized"
-    | undefined;
+  const reason = (
+    typeof params?.reason === "string" ? params?.reason : undefined
+  ) as "notOwner" | "notActive" | "notFound" | "unauthorized" | undefined;
   const reasonMessage =
     reason === "notOwner"
       ? "You cannot access that review. Only the assigned reviewer or an admin can open it."
       : reason === "notActive"
-      ? "That review is not active anymore."
-      : reason === "notFound"
-      ? "The requested review was not found."
-      : reason === "unauthorized"
-      ? "Please sign in to access reviews."
-      : undefined;
+        ? "That review is not active anymore."
+        : reason === "notFound"
+          ? "The requested review was not found."
+          : reason === "unauthorized"
+            ? "Please sign in to access reviews."
+            : undefined;
 
   return (
     <div className="container mx-auto p-4">
