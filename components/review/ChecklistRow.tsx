@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import type { RequiredChecklistItem } from "@/utils/ReviewChecklistSchema";
 
@@ -37,7 +35,7 @@ export function ChecklistRow({
       className={rowClass}
       data-fieldpath={item.fieldPath}
       data-entity-type={item.entityType}
-      data-entity-id={item.entityId ?? ''}
+      data-entity-id={item.entityId ?? ""}
     >
       <td>
         <input

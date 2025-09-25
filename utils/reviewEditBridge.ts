@@ -50,7 +50,7 @@ export function resolveStepForFieldPath(fieldPath: string): number {
 export function buildFeedFormStateFromWorkingCopy(
   workingCopy: ReviewWorkingCopy,
   fieldPath: string,
-  opts: { reviewId: string; sliceKey?: string; anchors?: BridgeAnchors }
+  opts: { reviewId: string; sliceKey?: string; anchors?: BridgeAnchors },
 ): FeedFormState {
   const step = resolveStepForFieldPath(fieldPath);
   const reviewContext: ReviewContext = {
@@ -86,7 +86,7 @@ export function buildFeedFormStateFromWorkingCopy(
 // This is a stub that currently returns the input graph unchanged.
 export function rebuildWorkingCopyFromFeedForm(
   feedFormState: FeedFormState,
-  previousWorkingCopy: ReviewWorkingCopy
+  previousWorkingCopy: ReviewWorkingCopy,
 ): ReviewWorkingCopy {
   const prev = previousWorkingCopy.graph || {};
 
@@ -98,7 +98,7 @@ export function rebuildWorkingCopyFromFeedForm(
       feedFormState?.mMSourcePieceVersions?.length ||
       feedFormState?.collections?.length ||
       feedFormState?.metronomeMarks?.length ||
-      feedFormState?.tempoIndications?.length
+      feedFormState?.tempoIndications?.length,
   );
   if (!hasSlices) {
     return {
@@ -128,7 +128,7 @@ export function rebuildWorkingCopyFromFeedForm(
   }
 
   // Source metadata (fallback to previous for fields not provided by the feed form)
-  const desc = feedFormState.mMSourceDescription ?? {};
+  const desc: any = feedFormState.mMSourceDescription ?? {};
   const source = {
     id: prev?.source?.id,
     title: desc.title ?? prev?.source?.title ?? null,
@@ -141,8 +141,12 @@ export function rebuildWorkingCopyFromFeedForm(
 
   // Collections
   const collections = feedCollections.length
-    ? feedCollections.map((c) => ({ id: c.id, title: c.title, composerId: c.composerId }))
-    : prev?.collections ?? [];
+    ? feedCollections.map((c) => ({
+        id: c.id,
+        title: c.title,
+        composerId: c.composerId,
+      }))
+    : (prev?.collections ?? []);
 
   // Pieces
   const pieces = feedPieces.length
@@ -155,17 +159,26 @@ export function rebuildWorkingCopyFromFeedForm(
         collectionId: p.collectionId ?? null,
         collectionRank: p.collectionRank ?? null,
       }))
-    : prev?.pieces ?? [];
+    : (prev?.pieces ?? []);
 
   // Piece Versions
   const pieceVersions = feedPVs.length
-    ? feedPVs.map((pv) => ({ id: pv.id, pieceId: pv.pieceId ?? null, category: pv.category ?? null }))
-    : prev?.pieceVersions ?? [];
+    ? feedPVs.map((pv) => ({
+        id: pv.id,
+        pieceId: pv.pieceId ?? null,
+        category: pv.category ?? null,
+      }))
+    : (prev?.pieceVersions ?? []);
 
   // Movements
   const movements = feedMovements.length
-    ? feedMovements.map((m) => ({ id: m.id, pieceVersionId: m.pieceVersionId, rank: m.rank, key: (m as any).key ?? null }))
-    : prev?.movements ?? [];
+    ? feedMovements.map((m) => ({
+        id: m.id,
+        pieceVersionId: m.pieceVersionId,
+        rank: m.rank,
+        key: (m as any).key ?? null,
+      }))
+    : (prev?.movements ?? []);
 
   // Sections
   const sections = feedSections.length
@@ -181,17 +194,18 @@ export function rebuildWorkingCopyFromFeedForm(
         fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar ?? null,
         fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar ?? null,
         fastestOrnamentalNotesPerBar: s.fastestOrnamentalNotesPerBar ?? null,
-        isFastestStructuralNoteBelCanto: s.isFastestStructuralNoteBelCanto ?? false,
+        isFastestStructuralNoteBelCanto:
+          s.isFastestStructuralNoteBelCanto ?? false,
         tempoIndicationId: s.tempoIndication?.id,
         comment: s.comment ?? "",
         commentForReview: s.commentForReview ?? "",
       }))
-    : prev?.sections ?? [];
+    : (prev?.sections ?? []);
 
   // Tempo indications
   const tempoIndications = tempoIndicationMap.size
     ? Array.from(tempoIndicationMap.values())
-    : prev?.tempoIndications ?? [];
+    : (prev?.tempoIndications ?? []);
 
   // Metronome marks (ignore "noMM" entries)
   const metronomeMarks = (feedFormState.metronomeMarks ?? []).length
@@ -204,7 +218,7 @@ export function rebuildWorkingCopyFromFeedForm(
           bpm: mm.bpm,
           comment: mm.comment ?? "",
         }))
-    : prev?.metronomeMarks ?? [];
+    : (prev?.metronomeMarks ?? []);
 
   // References & Contributions: keep previous for stability (feed form lacks reference ids)
   const references = prev?.references ?? [];
