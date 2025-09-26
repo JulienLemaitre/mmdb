@@ -94,7 +94,8 @@ export default function ChecklistPage() {
   const params = useParams();
   const router = useRouter();
   const reviewId = (params?.reviewId as string) ?? "";
-  const { get, save, clear } = useReviewWorkingCopy();
+  const { getWorkingCopy, saveWorkingCopy, clearWorkingCopy } =
+    useReviewWorkingCopy();
 
   const [data, setData] = useState<ApiOverview | null>(null);
   const [loading, setLoading] = useState(true);
@@ -133,7 +134,7 @@ export default function ChecklistPage() {
     }
 
     // Prepare working copy (fallback to initial graph if none yet)
-    const wc = get();
+    const wc = getWorkingCopy();
     const workingCopy = wc ?? {
       graph: data.graph,
       updatedAt: new Date().toISOString(),
@@ -215,9 +216,9 @@ export default function ChecklistPage() {
         }
         // Initialize working copy via Provider if empty:
         // Use the hook's save() only if nothing is present.
-        const current = get();
+        const current = getWorkingCopy();
         if (!current) {
-          save(j.graph);
+          saveWorkingCopy(j.graph);
         }
       } catch (e: any) {
         if (!mounted) return;
@@ -230,7 +231,7 @@ export default function ChecklistPage() {
     return () => {
       mounted = false;
     };
-  }, [reviewId, reloadNonce, router, get, save]);
+  }, [reviewId, reloadNonce, router, getWorkingCopy, saveWorkingCopy]);
 
   // Persist changes in localStorage for checked keys only (working copy is handled by the hook/provider)
   useEffect(() => {
@@ -258,14 +259,14 @@ export default function ChecklistPage() {
       const rc = feedState?.formInfo?.reviewContext;
       if (!rc || !rc.reviewEdit || rc.reviewId !== data.reviewId) return;
 
-      const prev = get() ?? {
+      const prev = getWorkingCopy() ?? {
         graph: data.graph,
         updatedAt: new Date().toISOString(),
       };
       const next = rebuildWorkingCopyFromFeedForm(feedState, prev as any);
 
       // Save the new working copy graph
-      save(next.graph);
+      saveWorkingCopy(next.graph);
 
       // Compute impacted field paths (prev vs next working copy)
       const impacted = computeChangedChecklistFieldPaths(
@@ -356,11 +357,11 @@ export default function ChecklistPage() {
     } catch {
       // ignore for now ?
     }
-  }, [data, get, save]);
+  }, [data, getWorkingCopy, saveWorkingCopy]);
 
   const requiredItems: RequiredChecklistItem[] = useMemo(() => {
     if (!data) return [];
-    const wc = get();
+    const wc = getWorkingCopy();
     const g = wc?.graph ?? data.graph;
     const gr = data.globallyReviewed;
     const items = expandRequiredChecklistItems(g, {
@@ -372,7 +373,7 @@ export default function ChecklistPage() {
       },
     });
     return items;
-  }, [data, get]);
+  }, [data, getWorkingCopy]);
 
   const totals = useMemo(() => {
     const totalRequired = requiredItems.length;
@@ -388,9 +389,10 @@ export default function ChecklistPage() {
 
   // Group items by entity type to render sticky slice headers
   const groupedByType = useMemo(() => {
-    const map: Partial<Record<ChecklistEntityType, RequiredChecklistItem[]>> = {};
+    const map: Partial<Record<ChecklistEntityType, RequiredChecklistItem[]>> =
+      {};
     for (const it of requiredItems) {
-      (map[it.entityType] = (map[it.entityType] || [])).push(it);
+      (map[it.entityType] = map[it.entityType] || []).push(it);
     }
     return map;
   }, [requiredItems]);
@@ -398,7 +400,7 @@ export default function ChecklistPage() {
   // Recompute changed keys whenever working copy or baseline (data.graph) changes
   useEffect(() => {
     if (!data) return;
-    const wc = get();
+    const wc = getWorkingCopy();
     const workingGraph = wc?.graph ?? data.graph;
     try {
       const changes = computeChangedChecklistFieldPaths(
@@ -409,7 +411,7 @@ export default function ChecklistPage() {
     } catch {
       setChangedKeys(new Set());
     }
-  }, [data, reloadNonce, get]);
+  }, [data, reloadNonce, getWorkingCopy]);
 
   function toggle(item: RequiredChecklistItem) {
     const key = encodeKey(item);
@@ -540,15 +542,22 @@ export default function ChecklistPage() {
               </thead>
               <tbody>
                 {SLICE_ORDER.flatMap((t) => {
-                  const group = (groupedByType as any)[t] as RequiredChecklistItem[] | undefined;
+                  const group = (groupedByType as any)[t] as
+                    | RequiredChecklistItem[]
+                    | undefined;
                   if (!group || group.length === 0) return [];
                   const header = (
-                    <SliceHeader key={`hdr-${t}`} id={`slice-${t.toLowerCase()}`} title={SLICE_LABELS[t]} />
+                    <SliceHeader
+                      key={`hdr-${t}`}
+                      id={`slice-${t.toLowerCase()}`}
+                      title={SLICE_LABELS[t]}
+                    />
                   );
                   const rows = group.map((it) => {
                     const key = encodeKey(it);
                     const isChecked = checkedKeys.has(key);
-                    const badgeClass = ENTITY_BADGE[it.entityType] || "badge-ghost";
+                    const badgeClass =
+                      ENTITY_BADGE[it.entityType] || "badge-ghost";
                     const rowChanged = changedKeys.has(key);
                     return (
                       <ChecklistRow
@@ -559,7 +568,11 @@ export default function ChecklistPage() {
                         changed={rowChanged}
                         onToggle={() => toggle(it)}
                         onEdit={() => openEditForItem(it)}
-                        entityBadge={<span className={`badge ${badgeClass}`}>{it.entityType}</span>}
+                        entityBadge={
+                          <span className={`badge ${badgeClass}`}>
+                            {it.entityType}
+                          </span>
+                        }
                       />
                     );
                   });
@@ -594,7 +607,7 @@ export default function ChecklistPage() {
                   setSubmitting(true);
 
                   // Load working copy graph (fallback to current data.graph)
-                  const wc = get();
+                  const wc = getWorkingCopy();
                   const workingGraph = wc?.graph ?? data.graph;
 
                   // Pre-check: ensure any changed checklist field is checked
@@ -654,11 +667,13 @@ export default function ChecklistPage() {
                   localStorage.removeItem(storageKey(data.reviewId));
                   // Clear any pending return route payload
                   try {
-                    localStorage.removeItem(`review:${data.reviewId}:returnRoute`);
+                    localStorage.removeItem(
+                      `review:${data.reviewId}:returnRoute`,
+                    );
                   } catch {
                     // ignore
                   }
-                  clear(); // clear working copy via hook
+                  clearWorkingCopy(); // clear working copy via hook
                   setCheckedKeys(new Set());
                   router.push(URL_REVIEW_LIST);
                 } catch (e: any) {
@@ -700,11 +715,13 @@ export default function ChecklistPage() {
                   localStorage.removeItem(storageKey(data.reviewId));
                   // Clear any pending return route payload
                   try {
-                    localStorage.removeItem(`review:${data.reviewId}:returnRoute`);
+                    localStorage.removeItem(
+                      `review:${data.reviewId}:returnRoute`,
+                    );
                   } catch {
                     // ignore
                   }
-                  clear(); // clear working copy via hook
+                  clearWorkingCopy(); // clear working copy via hook
                   setCheckedKeys(new Set());
                   router.push(URL_REVIEW_LIST);
                 } catch (e: any) {
@@ -723,7 +740,6 @@ export default function ChecklistPage() {
   );
 }
 
-
 // Lightweight read-only audit panel for the current review
 function AuditPanel({ reviewId }: { reviewId: string }) {
   const [items, setItems] = useState<any[]>([]);
@@ -739,9 +755,12 @@ function AuditPanel({ reviewId }: { reviewId: string }) {
       qs.set("reviewId", reviewId);
       if (cursor) qs.set("cursor", cursor);
       qs.set("limit", "20");
-      const res = await fetch(`/api/audit?${qs.toString()}`, { cache: "no-store" });
+      const res = await fetch(`/api/audit?${qs.toString()}`, {
+        cache: "no-store",
+      });
       const j = await res.json();
-      if (!res.ok) throw new Error(j?.error || `Failed to load audit (${res.status})`);
+      if (!res.ok)
+        throw new Error(j?.error || `Failed to load audit (${res.status})`);
       if (cursor) setItems((prev) => [...prev, ...(j.items || [])]);
       else setItems(j.items || []);
       setNextCursor(j.nextCursor ?? null);
@@ -762,15 +781,30 @@ function AuditPanel({ reviewId }: { reviewId: string }) {
       {error && (
         <div className="alert alert-warning mb-2">
           <span>{error}</span>
-          <button className="btn btn-xs btn-ghost ml-auto" onClick={() => setError(null)}>Dismiss</button>
+          <button
+            className="btn btn-xs btn-ghost ml-auto"
+            onClick={() => setError(null)}
+          >
+            Dismiss
+          </button>
         </div>
       )}
       <div className="flex items-center gap-2 mb-2">
-        <button type="button" className="btn btn-xs" onClick={() => load()} disabled={loading}>
+        <button
+          type="button"
+          className="btn btn-xs"
+          onClick={() => load()}
+          disabled={loading}
+        >
           {loading ? "Loading…" : "Refresh"}
         </button>
         {nextCursor && (
-          <button type="button" className="btn btn-xs btn-outline" onClick={() => load(nextCursor)} disabled={loading}>
+          <button
+            type="button"
+            className="btn btn-xs btn-outline"
+            onClick={() => load(nextCursor)}
+            disabled={loading}
+          >
             Load more
           </button>
         )}
@@ -782,8 +816,12 @@ function AuditPanel({ reviewId }: { reviewId: string }) {
           {items.map((it: any) => (
             <li key={it.id} className="border-b last:border-b-0 pb-1">
               <span className="badge badge-ghost mr-2">{it.operation}</span>
-              <span className="opacity-80 mr-2">{it.entityType}:{it.entityId}</span>
-              <span className="opacity-60">{new Date(it.createdAt).toLocaleString()}</span>
+              <span className="opacity-80 mr-2">
+                {it.entityType}:{it.entityId}
+              </span>
+              <span className="opacity-60">
+                {new Date(it.createdAt).toLocaleString()}
+              </span>
             </li>
           ))}
         </ul>

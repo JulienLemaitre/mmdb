@@ -1,14 +1,10 @@
 import React, { createContext, useCallback, useContext, useMemo } from "react";
-
-type ReviewWorkingCopy = {
-  graph: any;
-  updatedAt: string; // ISO
-};
+import { ReviewWorkingCopy } from "@/utils/reviewEditBridge";
 
 type Ctx = {
-  get(): ReviewWorkingCopy | null;
-  save(nextGraph: any): void;
-  clear(): void;
+  getWorkingCopy(): ReviewWorkingCopy | null;
+  saveWorkingCopy(nextGraph: any): void;
+  clearWorkingCopy(): void;
 };
 
 const ReviewWorkingCopyContext = createContext<Ctx | null>(null);
@@ -56,7 +52,14 @@ export function ReviewWorkingCopyProvider({
     localStorage.removeItem(key);
   }, [key]);
 
-  const value = useMemo<Ctx>(() => ({ get, save, clear }), [get, save, clear]);
+  const value = useMemo<Ctx>(
+    () => ({
+      getWorkingCopy: get,
+      saveWorkingCopy: save,
+      clearWorkingCopy: clear,
+    }),
+    [get, save, clear],
+  );
 
   // Initialize once if empty
   React.useEffect(() => {
