@@ -5,6 +5,8 @@ import { REVIEW_STATE } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { URL_REVIEW_LIST } from "@/utils/routes";
 import React from "react";
+import ReviewWorkingCopyClientProvider from "./ReviewWorkingCopyClientProvider";
+import { getReviewOverview } from "@/utils/server/getReviewOverview";
 
 export default async function ChecklistLayout({
   children,
@@ -55,5 +57,12 @@ export default async function ChecklistLayout({
     redirect(`${URL_REVIEW_LIST}?reason=notActive`);
   }
 
-  return <>{children}</>;
+  // Fetch overview graph to seed the ReviewWorkingCopyProvider
+  const { graph } = await getReviewOverview(reviewId);
+
+  return (
+    <ReviewWorkingCopyClientProvider reviewId={reviewId} initialGraph={graph}>
+      {children}
+    </ReviewWorkingCopyClientProvider>
+  );
 }
