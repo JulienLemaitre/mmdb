@@ -77,7 +77,7 @@ export default function MetronomeMarksForm({
           });
         }
       }),
-    ),
+    ) as any,
   });
 
   const computedIsDirty = checkAreFieldsDirty(dirtyFields);

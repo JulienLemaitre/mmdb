@@ -29,8 +29,8 @@ export default function PieceEditForm({
     handleSubmit,
     register,
     control,
-  } = useForm({
-    resolver: zodResolver(PieceSchema),
+  } = useForm<PieceInput>({
+    resolver: zodResolver(PieceSchema) as any,
     ...((piece || newPieceDefaultTitle) && {
       defaultValues: {
         ...piece,

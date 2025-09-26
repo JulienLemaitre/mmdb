@@ -22,8 +22,8 @@ export default function ComposerEditForm({
     handleSubmit,
     register,
     control,
-  } = useForm({
-    resolver: zodResolver(PersonSchema),
+  } = useForm<PersonInput>({
+    resolver: zodResolver(PersonSchema) as any,
     ...(composer && { defaultValues: composer }),
   });
 

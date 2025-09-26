@@ -83,13 +83,13 @@ export default function PieceVersionEditForm({
     getValues,
     setValue,
     watch,
-  } = useForm({
+  } = useForm<PieceVersionInput>({
     defaultValues: pieceVersion
       ? getPieceVersionInputFromPieceVersionState(pieceVersion)
       : {
           movements: [getMovementDefaultValues()],
         },
-    resolver: zodResolver(PieceVersionSchema),
+    resolver: zodResolver(PieceVersionSchema) as any,
   });
 
   const [tempoIndicationList, setTempoIndicationList] = useState<

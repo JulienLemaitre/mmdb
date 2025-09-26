@@ -36,9 +36,7 @@ const SourceSchema = z
     comment: z.string().optional(),
   })
   .superRefine(({ references }, ctx) => {
-    // If we find two references with the same type.value and reference, we add an error
-    const errors = references.reduce<any>((acc, reference, currentIndex) => {
-      // Determine if the same ref exists in references
+    references.forEach((reference, currentIndex) => {
       const isDuplicate = references.some(
         (existingRef, refIndex) =>
           refIndex !== currentIndex &&
@@ -46,18 +44,13 @@ const SourceSchema = z
           existingRef.reference === reference.reference,
       );
       if (isDuplicate) {
-        acc.push({
+        ctx.addIssue({
           code: "custom",
-          path: ["references", currentIndex, "reference"],
           message: "Duplicate reference",
+          path: ["references", currentIndex, "reference"],
         });
       }
-      return acc;
-    }, []);
-
-    if (errors.length > 0) {
-      errors.forEach((error) => ctx.addIssue(error));
-    }
+    });
   });
 
 const DEFAULT_VALUES: Partial<SourceDescriptionInput> = {
@@ -96,7 +89,7 @@ export default function SourceDescriptionEditForm(
     setError,
   } = useForm<SourceDescriptionInput>({
     defaultValues: sourceDescription ?? DEFAULT_VALUES,
-    resolver: zodResolver(SourceSchema),
+    resolver: zodResolver(SourceSchema) as any, // Type assertion to bypass strict overload matching
   });
 
   const computedIsDirty = checkAreFieldsDirty(dirtyFields);
