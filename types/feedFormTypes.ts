@@ -4,10 +4,10 @@ import {
   MMSourceContributionsState,
   MMSourceDescriptionState,
   MMSourcePieceVersionsState,
-  NewPieceVersionState,
   OrganizationState,
   PersonState,
   PieceState,
+  PieceVersionState,
   SourceOnPieceVersionsFormType,
   TempoIndicationState,
 } from "@/types/formTypes";
@@ -55,7 +55,7 @@ export type FeedFormState = {
   collections?: CollectionState[];
   persons?: PersonState[];
   pieces?: PieceState[];
-  pieceVersions?: NewPieceVersionState[];
+  pieceVersions?: PieceVersionState[];
   tempoIndications?: TempoIndicationState[];
   metronomeMarks?: MetronomeMarkState[];
 };

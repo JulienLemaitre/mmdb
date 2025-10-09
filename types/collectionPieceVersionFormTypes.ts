@@ -1,7 +1,7 @@
 import {
   CollectionState,
   MMSourcePieceVersionsState,
-  NewPieceVersionState,
+  PieceVersionState,
   PersonState,
   PieceState,
   TempoIndicationState,
@@ -40,7 +40,7 @@ export type CollectionPieceVersionsFormState = {
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
   persons?: PersonState[];
   pieces?: PieceState[];
-  pieceVersions?: NewPieceVersionState[];
+  pieceVersions?: PieceVersionState[];
   tempoIndications?: TempoIndicationState[];
 };
 export type PersistableCollectionPieceVersionsFormState =

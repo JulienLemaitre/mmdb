@@ -187,7 +187,6 @@ export type PieceVersionState = Pick<
   id: string;
   movements: MovementState[];
 } & IsNewProp;
-export type NewPieceVersionState = PieceVersionState;
 
 export type ReferenceState = Pick<
   Prisma.ReferenceUncheckedCreateInput,
