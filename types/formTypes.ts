@@ -214,13 +214,11 @@ export type MetronomeMarkState =
       "sectionId" | "bpm" | "comment" | "beatUnit"
     > & {
       id?: string;
-      pieceVersionRank: number;
       pieceVersionId: string;
       noMM: false;
     })
   | (Pick<Prisma.MetronomeMarkUncheckedCreateInput, "sectionId"> & {
       id?: string;
-      pieceVersionRank: number;
       pieceVersionId: string;
       noMM: true;
     });
