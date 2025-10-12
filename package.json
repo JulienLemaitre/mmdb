@@ -11,9 +11,6 @@
     "test:ci": "jest --ci",
     "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
-  "prisma": {
-    "seed": "ts-node -P tsconfig-seed.json -r tsconfig-paths/register --transpileOnly prisma/seedFromXlsx.ts"
-  },
   "dependencies": {
     "@auth/prisma-adapter": "2.11.0",
     "@heroicons/react": "2.2.0",
@@ -26,6 +23,7 @@
     "clsx": "2.1.1",
     "css-reset-and-normalize": "2.3.6",
     "d3": "7.9.0",
+    "dotenv": "^17.2.3",
     "jsonwebtoken": "9.0.2",
     "just-safe-get": "4.2.0",
     "lodash": "4.17.21",
