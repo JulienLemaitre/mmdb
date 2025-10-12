@@ -10,12 +10,15 @@ export default async function sendEmail({ type, content }) {
     JSON.stringify(content).substring(0, 500) + "...",
   );
 
+  const plain = typeof content === "string" ? content : JSON.stringify(content);
+
   const { data, error } = await resend.emails.send({
     from: "mmdb@colibriazulejos.com",
     // from: "notification@mmdb.com",
     to: "julem80+resend@pm.me",
     subject: `Mmdb [${VERCEL_ENV || "local dev"}] ${type}`,
-    html: `<p>content: ${typeof content === "string" ? content : JSON.stringify(content)}</p>`,
+    text: `content: ${plain}`,
+    html: `<p>content: ${plain}</p>`,
   });
 
   if (error) {
