@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { db } from "@/utils/db";
+import { db } from "@/utils/server/db";
 import { REVIEW_STATE } from "@prisma/client";
 import { authOptions } from "@/auth/options";
 
@@ -45,7 +45,10 @@ export async function POST(req: Request, { params }: any) {
       select: { id: true, creatorId: true, state: true, mMSourceId: true },
     });
     if (!review) {
-      return json({ error: "[review abort] Review not found" }, { status: 404 });
+      return json(
+        { error: "[review abort] Review not found" },
+        { status: 404 },
+      );
     }
 
     const isOwner = review.creatorId === session.user.id;

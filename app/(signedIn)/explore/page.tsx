@@ -12,7 +12,7 @@ import {
 import getTempoIndicationSelectList from "@/utils/getTempoIndicationSelectList";
 import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
 import getAllComposers from "@/utils/getAllComposers";
-import getPersonName from "@/components/entities/person/utils/getPersonName";
+import getPersonName from "@/utils/getPersonName";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { zodOption, zodYear } from "@/types/zodTypes";

@@ -1,4 +1,4 @@
-import { db } from "@/utils/db";
+import { db } from "@/utils/server/db";
 import { CONTRIBUTION_ROLE, KEY, NOTE_VALUE, PIECE_CATEGORY, SOURCE_TYPE } from "@prisma/client";
 import takeFirstOfPotentialRange from "@/utils/takeFirstOfPotentialRange";
 import parseValueRemoveParenthesis from "@/utils/parseValueRemoveParenthesis";

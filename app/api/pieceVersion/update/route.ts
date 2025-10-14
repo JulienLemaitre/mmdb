@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/utils/db";
-import isReqAuthorized from "@/utils/isReqAuthorized";
-import getDecodedTokenFromReq from "@/utils/getDecodedTokenFromReq";
+import { db } from "@/utils/server/db";
+import isReqAuthorized from "@/utils/server/isReqAuthorized";
+import getDecodedTokenFromReq from "@/utils/server/getDecodedTokenFromReq";
 import { Movement, PieceVersion, PrismaPromise, Section } from "@prisma/client";
 
 export async function POST(req: NextRequest) {

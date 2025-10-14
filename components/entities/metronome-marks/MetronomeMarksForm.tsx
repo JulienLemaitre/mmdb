@@ -15,7 +15,7 @@ import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import checkAreFieldsDirty from "@/utils/checkAreFieldsDirty";
 import { getStepByRank } from "@/components/multiStepMMSourceForm/stepsUtils";
-import { MetronomeMarkListSchema } from "@/utils/metronomeMarks/schema";
+import { MetronomeMarkListSchema } from "@/types/zodTypes";
 
 interface MetronomeMarksFormProps {
   sectionList: SectionStateExtendedForMMForm[];

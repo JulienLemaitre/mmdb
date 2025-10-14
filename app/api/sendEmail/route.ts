@@ -1,5 +1,5 @@
 import sendEmail from "@/serverFunction/sendEmail";
-import isReqAuthorized from "@/utils/isReqAuthorized";
+import isReqAuthorized from "@/utils/server/isReqAuthorized";
 import { NextRequest, NextResponse } from "next/server";
 
 interface RequestBody {

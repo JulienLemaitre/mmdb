@@ -3,7 +3,7 @@ import Select from "@/components/ReactSelect/Select";
 import { PersonState } from "@/types/formTypes";
 import { useRouter } from "next/navigation";
 import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";
-import getPersonName from "@/components/entities/person/utils/getPersonName";
+import getPersonName from "@/utils/getPersonName";
 
 type ComposerSelectProps = {
   composers: PersonState[];

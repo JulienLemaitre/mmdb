@@ -1,4 +1,4 @@
-import { db } from "@/utils/db";
+import { db } from "@/utils/server/db";
 import deleteNullPropertiesFromObject from "@/utils/deleteNullPropertiesFromObject";
 import { REFERENCE_TYPE } from "@prisma/client";
 

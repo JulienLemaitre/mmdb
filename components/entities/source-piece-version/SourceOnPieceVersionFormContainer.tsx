@@ -12,7 +12,7 @@ import TrashIcon from "@/components/svg/TrashIcon";
 import QuestionMarkCircleIcon from "@/components/svg/QuestionMarkCircleIcon";
 import { SinglePieceVersionFormProvider } from "@/components/context/SinglePieceVersionFormContext";
 import { CollectionPieceVersionsFormProvider } from "@/components/context/CollectionPieceVersionsFormContext";
-import getPersonName from "@/components/entities/person/utils/getPersonName";
+import getPersonName from "@/utils/getPersonName";
 import CollectionPieceVersionsFormContainer from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsFormContainer";
 import EditIcon from "@/components/svg/EditIcon";
 import dynamic from "next/dynamic";

@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { db } from "@/utils/db";
+import { db } from "@/utils/server/db";
 import { REVIEW_STATE } from "@prisma/client";
 import { authOptions } from "@/auth/options";
 

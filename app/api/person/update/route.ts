@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/utils/db";
-import isReqAuthorized from "@/utils/isReqAuthorized";
-import getDecodedTokenFromReq from "@/utils/getDecodedTokenFromReq";
+import { db } from "@/utils/server/db";
+import isReqAuthorized from "@/utils/server/isReqAuthorized";
+import getDecodedTokenFromReq from "@/utils/server/getDecodedTokenFromReq";
 
 export async function POST(req: NextRequest) {
   if (!isReqAuthorized(req)) {

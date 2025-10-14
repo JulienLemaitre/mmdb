@@ -1,4 +1,4 @@
-import { db } from "@/utils/db";
+import { db } from "@/utils/server/db";
 import * as bcrypt from "bcrypt";
 
 interface RequestBody {

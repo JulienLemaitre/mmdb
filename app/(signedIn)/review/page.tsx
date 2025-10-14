@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/options";
 import { redirect } from "next/navigation";
-import { db } from "@/utils/db";
+import { db } from "@/utils/server/db";
 import React from "react";
 import { REVIEW_STATE } from "@prisma/client";
 import ReviewListClient from "./reviewListClient";

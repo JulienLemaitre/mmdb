@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/options";
-import { db } from "@/utils/db";
+import { db } from "@/utils/server/db";
 import { REVIEW_STATE } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { URL_REVIEW_LIST } from "@/utils/routes";

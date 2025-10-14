@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/options";
-import { db } from "@/utils/db";
+import { db } from "@/utils/server/db";
 import { AUDIT_ENTITY_TYPE } from "@prisma/client";
 
 export type AuditFilter =
@@ -41,7 +41,9 @@ export async function getAuditLogs(filter: AuditFilter): Promise<AuditResult> {
   }
 
   const limitRaw = (filter as any).limit as number | undefined;
-  const limit = Number.isFinite(limitRaw) ? Math.min(Math.max(limitRaw!, 1), 100) : 50;
+  const limit = Number.isFinite(limitRaw)
+    ? Math.min(Math.max(limitRaw!, 1), 100)
+    : 50;
   const cursor = (filter as any).cursor as string | undefined;
 
   let where: any = {};
@@ -92,10 +94,12 @@ export async function getAuditLogs(filter: AuditFilter): Promise<AuditResult> {
     before: r.before as any,
     after: r.after as any,
     authorId: r.authorId,
-    createdAt: (r.createdAt as any as Date).toISOString?.() ?? String(r.createdAt),
+    createdAt:
+      (r.createdAt as any as Date).toISOString?.() ?? String(r.createdAt),
     comment: (r.comment as any) ?? null,
   }));
 
-  const nextCursor = items.length === limit ? items[items.length - 1]?.id ?? null : null;
+  const nextCursor =
+    items.length === limit ? (items[items.length - 1]?.id ?? null) : null;
   return { items, nextCursor };
 }

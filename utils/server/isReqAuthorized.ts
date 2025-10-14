@@ -1,4 +1,4 @@
-import { verifyJwt } from "@/utils/jwt";
+import { verifyJwt } from "@/utils/server/jwt";
 import { NextRequest } from "next/server";
 
 export default function isReqAuthorized(req: NextRequest) {
