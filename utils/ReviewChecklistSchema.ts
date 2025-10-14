@@ -6,6 +6,17 @@
 // - For arrays (e.g., multiple References or Contributions), the consumer should render one checklist instance per entity row.
 
 import { SourceContent } from "@/types/reviewTypes";
+import {
+  CollectionState,
+  ContributionState,
+  MetronomeMarkState,
+  MMSourceDescriptionState,
+  OrganizationState,
+  PersonState,
+  PieceState,
+  PieceVersionState,
+  TempoIndicationState,
+} from "@/types/formTypes";
 
 export type ChecklistEntityType =
   | "MM_SOURCE"
@@ -23,22 +34,18 @@ export type ChecklistEntityType =
 
 export type ChecklistGraph = {
   // Singleton source node for this review context
-  source: { id: string; [k: string]: any };
+  source: MMSourceDescriptionState;
   // Arrays of nodes in scope
-  collections?: Array<{ id: string; [k: string]: any }>;
-  pieces?: Array<{ id: string; [k: string]: any }>;
-  pieceVersions?: Array<{ id: string; [k: string]: any }>;
-  movements?: Array<{ id: string; [k: string]: any }>;
-  sections?: Array<{ id: string; [k: string]: any }>;
-  tempoIndications?: Array<{ id: string; [k: string]: any }>;
-  metronomeMarks?: Array<{ id: string; [k: string]: any }>;
-  references?: Array<{ id: string; [k: string]: any }>;
-  contributions?: Array<{ id: string; [k: string]: any }>;
-  persons?: Array<{ id: string; [k: string]: any }>;
-  organizations?: Array<{ id: string; [k: string]: any }>;
+  collections?: CollectionState[];
+  pieces?: PieceState[];
+  pieceVersions?: PieceVersionState[];
+  tempoIndications?: TempoIndicationState[];
+  metronomeMarks?: MetronomeMarkState[];
+  contributions?: ContributionState[];
+  persons?: PersonState[];
+  organizations?: OrganizationState[];
   // Ordering join rows for the source contents (MMSourcesOnPieceVersions)
-  sourceContents?: Array<SourceContent>;
-  // sourceContents?: Array<{ joinId: string; pieceVersionId: string; rank: number; [k: string]: any }>;
+  sourceContents?: SourceContent[];
 };
 
 export type RequiredPredicateCtx = {
@@ -416,18 +423,31 @@ export function expandRequiredChecklistItems(
     "PIECE",
     graph.pieces as Array<{ id: string } | undefined> as any,
   );
-  addEntityGroup(
-    "PIECE_VERSION",
-    graph.pieceVersions as Array<{ id: string } | undefined> as any,
-  );
-  addEntityGroup(
-    "MOVEMENT",
-    graph.movements as Array<{ id: string } | undefined> as any,
-  );
-  addEntityGroup(
-    "SECTION",
-    graph.sections as Array<{ id: string } | undefined> as any,
-  );
+  // Traverse nested structure for piece versions, movements, and sections
+  if (graph.pieceVersions) {
+    addEntityGroup(
+      "PIECE_VERSION",
+      graph.pieceVersions as Array<{ id: string } | undefined> as any,
+    );
+    for (const pv of graph.pieceVersions) {
+      const movements = (pv as any).movements;
+      if (movements) {
+        addEntityGroup(
+          "MOVEMENT",
+          movements as Array<{ id: string } | undefined> as any,
+        );
+        for (const m of movements) {
+          const sections = (m as any).sections;
+          if (sections) {
+            addEntityGroup(
+              "SECTION",
+              sections as Array<{ id: string } | undefined> as any,
+            );
+          }
+        }
+      }
+    }
+  }
   addEntityGroup(
     "TEMPO_INDICATION",
     graph.tempoIndications as Array<{ id: string } | undefined> as any,
@@ -435,10 +455,6 @@ export function expandRequiredChecklistItems(
   addEntityGroup(
     "METRONOME_MARK",
     graph.metronomeMarks as Array<{ id: string } | undefined> as any,
-  );
-  addEntityGroup(
-    "REFERENCE",
-    graph.references as Array<{ id: string } | undefined> as any,
   );
   addEntityGroup(
     "CONTRIBUTION",

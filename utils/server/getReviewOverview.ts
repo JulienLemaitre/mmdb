@@ -3,6 +3,7 @@ import { authOptions } from "@/auth/options";
 import { db } from "@/utils/server/db";
 import { REVIEW_STATE, REVIEWED_ENTITY_TYPE } from "@prisma/client";
 import { ChecklistGraph } from "@/utils/ReviewChecklistSchema";
+import { ContributionState } from "@/types/formTypes";
 
 /**
  * Returns the real overview data for a given reviewId.
@@ -69,6 +70,10 @@ export async function getReviewOverview(reviewId: string): Promise<{
       // Source-level contributions
       contributions: {
         select: { id: true, personId: true, organizationId: true, role: true },
+        include: {
+          person: true,
+          organization: true,
+        },
         orderBy: { createdAt: "asc" },
       },
       // Join table for source contents; requires an id on the join
@@ -247,73 +252,40 @@ export async function getReviewOverview(reviewId: string): Promise<{
       : [];
 
   // Flatten graph to ChecklistGraph shape
-  const pieces = Array.from(pieceIds).map((pid) => {
-    // find a representative pv that has this piece to read piece metadata (all should match same piece row)
-    for (const join of mmSource.pieceVersions) {
-      const pv = join.pieceVersion;
-      if (pv?.piece?.id === pid) {
-        const p = pv.piece;
-        return {
-          id: p.id,
-          title: p.title ?? null,
-          nickname: p.nickname ?? null,
-          composerId: p.composerId ?? null,
-          yearOfComposition: p.yearOfComposition ?? null,
-          collectionId: p.collectionId ?? null,
-          collectionRank: p.collectionRank ?? null,
-        };
+  const pieces = Array.from(pieceIds)
+    .map((pid) => {
+      // find a representative pv that has this piece to read piece metadata (all should match the same piece row)
+      for (const join of mmSource.pieceVersions) {
+        const pv = join.pieceVersion;
+        if (pv?.piece?.id === pid) {
+          const p = pv.piece;
+          return {
+            id: p.id,
+            title: p.title,
+            nickname: p.nickname ?? null,
+            composerId: p.composerId ?? null,
+            yearOfComposition: p.yearOfComposition ?? null,
+            collectionId: p.collectionId ?? null,
+            collectionRank: p.collectionRank ?? null,
+          };
+        }
       }
-    }
-    // Fallback if not found (should not happen)
-    return {
-      id: pid,
-      title: null,
-      nickname: null,
-      composerId: null,
-      yearOfComposition: null,
-      collectionId: null,
-      collectionRank: null,
-    };
-  });
+    })
+    .filter((p): p is NonNullable<typeof p> => p !== undefined);
 
   const pieceVersions = mmSource.pieceVersions.map((join) => ({
     id: join.pieceVersion?.id ?? join.pieceVersionId,
     pieceId: join.pieceVersion?.piece?.id ?? null,
     category: join.pieceVersion?.category ?? null,
-  }));
-
-  const movements = mmSource.pieceVersions.flatMap((join) =>
-    (join.pieceVersion?.movements ?? []).map((m) => ({
+    movements: join.pieceVersion?.movements.map((m) => ({
       id: m.id,
-      pieceVersionId: join.pieceVersion?.id ?? join.pieceVersionId,
       rank: m.rank,
       key: m.key ?? null,
+      sections: m.sections,
     })),
-  );
+  }));
 
-  const sections = mmSource.pieceVersions.flatMap((join) =>
-    (join.pieceVersion?.movements ?? []).flatMap((m) =>
-      (m.sections ?? []).map((s) => ({
-        id: s.id,
-        movementId: m.id,
-        rank: s.rank,
-        metreNumerator: s.metreNumerator,
-        metreDenominator: s.metreDenominator,
-        isCommonTime: s.isCommonTime,
-        isCutTime: s.isCutTime,
-        fastestStructuralNotesPerBar: s.fastestStructuralNotesPerBar,
-        fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar,
-        fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar,
-        fastestOrnamentalNotesPerBar: s.fastestOrnamentalNotesPerBar,
-        isFastestStructuralNoteBelCanto: s.isFastestStructuralNoteBelCanto,
-        tempoIndicationId: s.tempoIndicationId,
-        comment: s.comment ?? "",
-        commentForReview: s.commentForReview ?? "",
-      })),
-    ),
-  );
-
-  // Deduplicate tempo indications collected from sections
+  // Tempo indications collected from sections (already deduplicated ids)
   const tempoIndications = Array.from(tempoIndicationIds).map((tiId) => {
     // find first occurrence with text
     for (const join of mmSource.pieceVersions) {
@@ -328,13 +300,63 @@ export async function getReviewOverview(reviewId: string): Promise<{
     return { id: tiId, text: "" };
   });
 
-  const metronomeMarks = mmSource.metronomeMarks.map((mm) => ({
-    id: mm.id,
-    sectionId: mm.sectionId,
-    beatUnit: mm.beatUnit,
-    bpm: mm.bpm,
-    comment: mm.comment ?? "",
-  }));
+  const metronomeMarks = mmSource.metronomeMarks.map((mm) => {
+    const sourceOnPieceVersion = mmSource.pieceVersions.find((pv) =>
+      pv.pieceVersion.movements.some((m) =>
+        m.sections.some((s) => s.id === mm.sectionId),
+      ),
+    );
+    if (!sourceOnPieceVersion) {
+      throw new Error(
+        `Metronome mark sectionId ${mm.sectionId} not found in pieceVersions`,
+      );
+    }
+    return {
+      id: mm.id,
+      sectionId: mm.sectionId,
+      beatUnit: mm.beatUnit,
+      bpm: mm.bpm,
+      comment: mm.comment ?? "",
+      pieceVersionId: sourceOnPieceVersion.pieceVersion.id,
+      noMM: !mm.beatUnit,
+    };
+  });
+
+  const contributions: ContributionState[] = mmSource.contributions
+    .map((c): ContributionState | null => {
+      if (c.personId) {
+        if (!c.person) {
+          // If personId exists but person is not hydrated, skip or handle as needed
+          return null;
+        }
+        return {
+          id: c.id,
+          role: c.role,
+          person: {
+            id: c.person.id,
+            firstName: c.person.firstName ?? null,
+            lastName: c.person.lastName ?? null,
+            birthYear: c.person.birthYear ?? null,
+            deathYear: c.person.deathYear ?? null,
+          },
+        };
+      }
+      if (c.organizationId) {
+        if (!c.organization) {
+          return null;
+        }
+        return {
+          id: c.id,
+          role: c.role,
+          organization: {
+            id: c.organization.id,
+            name: c.organization.name ?? null,
+          },
+        };
+      }
+      return null;
+    })
+    .filter((x): x is ContributionState => x !== null);
 
   const sourceContents = mmSource.pieceVersions.map((join) => ({
     joinId: join.id,
@@ -355,6 +377,11 @@ export async function getReviewOverview(reviewId: string): Promise<{
       permalink: mmSource.permalink ?? null,
       year: mmSource.year ?? null,
       comment: mmSource.comment ?? null,
+      references: mmSource.references.map((r) => ({
+        id: r.id,
+        type: r.type,
+        reference: r.reference,
+      })),
     },
     collections: collections.map((c) => ({
       id: c.id,
@@ -363,21 +390,9 @@ export async function getReviewOverview(reviewId: string): Promise<{
     })),
     pieces,
     pieceVersions,
-    movements,
-    sections,
     tempoIndications,
     metronomeMarks,
-    references: mmSource.references.map((r) => ({
-      id: r.id,
-      type: r.type,
-      reference: r.reference,
-    })),
-    contributions: mmSource.contributions.map((c) => ({
-      id: c.id,
-      role: c.role,
-      personId: c.personId ?? undefined,
-      organizationId: c.organizationId ?? undefined,
-    })),
+    contributions,
     persons: persons.map((p) => ({
       id: p.id,
       firstName: p.firstName ?? null,
@@ -387,7 +402,6 @@ export async function getReviewOverview(reviewId: string): Promise<{
     })),
     organizations: organizations.map((o) => ({
       id: o.id,
-      // Keeping shape consistent with mock graph; add more fields if your graph schema expects them
       name: (o as any).name ?? null,
     })),
     sourceContents,
