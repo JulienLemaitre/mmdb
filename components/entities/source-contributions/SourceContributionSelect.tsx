@@ -1,4 +1,4 @@
-import Select from "@/components/ReactSelect/Select";
+import Select from "@/ui/form/reactSelect/Select";
 import {
   ContributionState,
   OptionInput,
@@ -8,9 +8,9 @@ import {
 import React, { useCallback, useEffect, useState } from "react";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
 import NewSourceContributionForm from "@/components/entities/source-contributions/NewSourceContributionForm";
-import Label from "@/components/Label";
+import Label from "@/ui/Label";
 import getRoleLabel from "@/utils/getRoleLabel";
-import { ReactSelectStyles } from "@/components/ReactSelect/ReactSelectStyles";
+import { reactSelectStyles } from "@/ui/form/reactSelect/reactSelectStyles";
 
 type SourceContributionSelectProps = {
   sourceContributionOptions: OptionInput[];
@@ -163,7 +163,7 @@ export default function SourceContributionSelect({
               }
             }}
             noOptionsMessage={noOptionsMessage}
-            styles={ReactSelectStyles}
+            styles={reactSelectStyles}
           />
           <Label label={`Role`} isRequired />
           <Select
@@ -181,7 +181,7 @@ export default function SourceContributionSelect({
               if (!contributionRoleOption) return;
               setRole(contributionRoleOption.value);
             }}
-            styles={ReactSelectStyles}
+            styles={reactSelectStyles}
           />
         </>
       ) : (

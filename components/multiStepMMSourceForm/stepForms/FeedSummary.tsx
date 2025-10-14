@@ -22,7 +22,7 @@ import getRoleLabel from "@/utils/getRoleLabel";
 import { SectionDetail } from "@/components/entities/section/SectionDetail";
 
 const SAVE_INFO_MODAL_ID = "save-info-modal";
-const InfoModal = dynamic(() => import("@/components/InfoModal"), {
+const InfoModal = dynamic(() => import("@/ui/modal/InfoModal"), {
   ssr: false,
 });
 

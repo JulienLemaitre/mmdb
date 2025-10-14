@@ -1,6 +1,6 @@
 import React from "react";
-import CommonTimeIcon from "@/components/svg/CommonTimeIcon";
-import CutTimeIcon from "@/components/svg/CutTimeIcon";
+import CommonTimeIcon from "@/ui/svg/CommonTimeIcon";
+import CutTimeIcon from "@/ui/svg/CutTimeIcon";
 
 function SectionMeter({ section }) {
   const { isCommonTime, isCutTime } = section;

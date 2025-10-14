@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { KEY, PIECE_CATEGORY } from "@prisma/client";
-import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
+import ControlledSelect from "@/ui/form/ControlledSelect";
 import {
   OptionInput,
   PieceVersionInput,
@@ -26,7 +26,7 @@ import {
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import getTempoIndicationSelectList from "@/utils/getTempoIndicationSelectList";
-import ArrowLeftIcon from "@/components/svg/ArrowLeftIcon";
+import ArrowLeftIcon from "@/ui/svg/ArrowLeftIcon";
 import getPieceVersionInputFromPieceVersionState from "@/utils/getPieceVersionInputFromPieceVersionState";
 
 const PieceVersionSchema = z.object({

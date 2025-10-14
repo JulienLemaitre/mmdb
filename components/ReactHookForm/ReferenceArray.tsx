@@ -1,6 +1,6 @@
 import { Control, useFieldArray } from "react-hook-form";
-import TrashIcon from "@/components/svg/TrashIcon";
-import PlusIcon from "@/components/svg/PlusIcon";
+import TrashIcon from "@/ui/svg/TrashIcon";
+import PlusIcon from "@/ui/svg/PlusIcon";
 import NewReferenceForm from "@/components/entities/reference/NewReferenceForm";
 import { ReferenceInput, SourceDescriptionInput } from "@/types/formTypes";
 import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";

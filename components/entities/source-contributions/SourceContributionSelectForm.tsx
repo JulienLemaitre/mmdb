@@ -5,11 +5,11 @@ import {
   PersonState,
 } from "@/types/formTypes";
 import { useState } from "react";
-import PlusIcon from "@/components/svg/PlusIcon";
+import PlusIcon from "@/ui/svg/PlusIcon";
 import SourceContributionSelect from "@/components/entities/source-contributions/SourceContributionSelect";
 import { CONTRIBUTION_ROLE } from "@prisma/client";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
-import TrashIcon from "@/components/svg/TrashIcon";
+import TrashIcon from "@/ui/svg/TrashIcon";
 import getRoleLabel from "@/utils/getRoleLabel";
 import _isEqual from "lodash/isEqual";
 

@@ -1,7 +1,7 @@
 // "use client";
-import Select from "@/components/ReactSelect/Select";
+import Select from "@/ui/form/reactSelect/Select";
 import { CollectionState } from "@/types/formTypes";
-import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";
+import getNoOptionsMessage from "@/ui/form/reactSelect/getNoOptionsMessage";
 
 type CollectionSelectProps = {
   collections: CollectionState[];

@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonInput } from "@/types/formTypes";
-import { FormInput } from "@/components/ReactHookForm/FormInput";
+import { FormInput } from "@/ui/form/FormInput";
 import { zodPerson } from "@/types/zodTypes";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
-import ArrowLeftIcon from "@/components/svg/ArrowLeftIcon";
+import ArrowLeftIcon from "@/ui/svg/ArrowLeftIcon";
 
 const PersonSchema = zodPerson;
 

@@ -1,8 +1,8 @@
 // "use client";
-import Select from "@/components/ReactSelect/Select";
+import Select from "@/ui/form/reactSelect/Select";
 import { PersonState } from "@/types/formTypes";
 import { useRouter } from "next/navigation";
-import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";
+import getNoOptionsMessage from "@/ui/form/reactSelect/getNoOptionsMessage";
 import getPersonName from "@/utils/getPersonName";
 
 type ComposerSelectProps = {

@@ -1,12 +1,12 @@
 import { useFieldArray } from "react-hook-form";
 import { KEY } from "@prisma/client";
-import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
+import ControlledSelect from "@/ui/form/ControlledSelect";
 import SectionArray from "@/components/ReactHookForm/SectionArray";
-import PlusIcon from "@/components/svg/PlusIcon";
-import TrashIcon from "@/components/svg/TrashIcon";
+import PlusIcon from "@/ui/svg/PlusIcon";
+import TrashIcon from "@/ui/svg/TrashIcon";
 import { getMovementDefaultValues } from "@/components/ReactHookForm/formUtils";
-import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
-import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
+import ArrowDownIcon from "@/ui/svg/ArrowDownIcon";
+import ArrowUpIcon from "@/ui/svg/ArrowUpIcon";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 
 export default function MovementArray({

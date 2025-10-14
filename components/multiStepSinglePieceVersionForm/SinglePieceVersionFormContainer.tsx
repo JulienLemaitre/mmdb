@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import SinglePieceVersionSteps from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionSteps";
 import { getStepByRank } from "@/components/multiStepSinglePieceVersionForm/stepsUtils";
-import DebugBox from "@/components/DebugBox";
+import DebugBox from "@/ui/DebugBox";
 import {
   updateSinglePieceVersionForm,
   useSinglePieceVersionForm,

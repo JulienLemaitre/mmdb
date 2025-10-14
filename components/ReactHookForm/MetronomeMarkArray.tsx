@@ -1,7 +1,7 @@
 import { useFieldArray } from "react-hook-form";
-import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
-import TrashIcon from "@/components/svg/TrashIcon";
-import { FormInput } from "@/components/ReactHookForm/FormInput";
+import ControlledSelect from "@/ui/form/ControlledSelect";
+import TrashIcon from "@/ui/svg/TrashIcon";
+import { FormInput } from "@/ui/form/FormInput";
 import { NOTE_VALUE } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import { useFeedForm } from "@/components/context/feedFormContext";

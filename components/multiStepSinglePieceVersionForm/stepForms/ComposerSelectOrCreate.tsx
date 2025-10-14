@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Loader from "@/components/Loader";
+import Loader from "@/ui/Loader";
 import ComposerSelectForm from "@/components/entities/composer/ComposerSelectForm";
 import ComposerEditForm from "@/components/entities/composer/ComposerEditForm";
 import { PersonInput, PersonState } from "@/types/formTypes";

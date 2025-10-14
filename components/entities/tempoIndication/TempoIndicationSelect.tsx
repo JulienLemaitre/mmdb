@@ -1,5 +1,5 @@
 // "use client";
-import Select from "@/components/ReactSelect/Select";
+import Select from "@/ui/form/reactSelect/Select";
 import { TempoIndicationState } from "@/types/formTypes";
 // import { useRouter } from "next/navigation";
 // import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";

@@ -18,7 +18,7 @@ import {
   PieceVersionState,
 } from "@/types/formTypes";
 import { getStepByRank } from "@/components/multiStepCollectionPieceVersionsForm/stepsUtils";
-import DebugBox from "@/components/DebugBox";
+import DebugBox from "@/ui/DebugBox";
 import { v4 as uuidv4 } from "uuid";
 import CollectionPieceVersionsSteps from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsSteps";
 import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";

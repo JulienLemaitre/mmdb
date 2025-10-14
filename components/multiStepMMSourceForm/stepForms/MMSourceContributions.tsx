@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Loader from "@/components/Loader";
+import Loader from "@/ui/Loader";
 import {
   getNewEntities,
   updateFeedForm,

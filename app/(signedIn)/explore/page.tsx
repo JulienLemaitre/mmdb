@@ -3,14 +3,14 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
-import { FormInput } from "@/components/ReactHookForm/FormInput";
+import { FormInput } from "@/ui/form/FormInput";
 import {
   PersonState,
   SearchFormInput,
   TempoIndicationState,
 } from "@/types/formTypes";
 import getTempoIndicationSelectList from "@/utils/getTempoIndicationSelectList";
-import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
+import ControlledSelect from "@/ui/form/ControlledSelect";
 import getAllComposers from "@/utils/getAllComposers";
 import getPersonName from "@/utils/getPersonName";
 import { z } from "zod";

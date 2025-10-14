@@ -3,8 +3,8 @@ import { zodYearOptional } from "@/types/zodTypes";
 import { useForm } from "react-hook-form";
 import { PieceInput } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormInput } from "@/components/ReactHookForm/FormInput";
-import ArrowLeftIcon from "@/components/svg/ArrowLeftIcon";
+import { FormInput } from "@/ui/form/FormInput";
+import ArrowLeftIcon from "@/ui/svg/ArrowLeftIcon";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 
 const PieceSchema = z.object({

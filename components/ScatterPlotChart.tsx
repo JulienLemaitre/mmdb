@@ -1,7 +1,7 @@
 import React, { MutableRefObject, useMemo, useState } from "react";
 import useD3 from "@/components/hooks/useD3";
 import * as d3 from "d3";
-import Tooltip from "@/components/Tooltip";
+import Tooltip from "@/ui/Tooltip";
 
 type ScatterPlotChartProps = {
   data: any[];

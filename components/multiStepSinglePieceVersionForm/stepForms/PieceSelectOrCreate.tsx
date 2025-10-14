@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { PieceInput, PieceState } from "@/types/formTypes";
 import { Piece } from "@prisma/client";
 import { getNewEntities } from "@/components/context/feedFormContext";
-import Loader from "@/components/Loader";
+import Loader from "@/ui/Loader";
 import PieceEditForm from "@/components/entities/piece/PieceEditForm";
 import PieceSelectForm from "@/components/entities/piece/PieceSelectForm";
 import { URL_API_GETALL_COMPOSER_PIECES } from "@/utils/routes";

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Metronome from "@/components/Metronome";
+import Metronome from "@/ui/Metronome";
 import { signOut } from "next-auth/react";
 
 function LogOut() {

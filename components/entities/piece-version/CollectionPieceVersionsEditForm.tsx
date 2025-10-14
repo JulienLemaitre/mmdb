@@ -9,19 +9,19 @@ import {
 } from "@/components/context/feedFormContext";
 import { SinglePieceVersionFormProvider } from "@/components/context/SinglePieceVersionFormContext";
 import SinglePieceVersionFormContainer from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer";
-import TrashIcon from "@/components/svg/TrashIcon";
-import PlusIcon from "@/components/svg/PlusIcon";
+import TrashIcon from "@/ui/svg/TrashIcon";
+import PlusIcon from "@/ui/svg/PlusIcon";
 import {
   MMSourcePieceVersionsState,
   PieceState,
   PieceStateWithCollectionRank,
 } from "@/types/formTypes";
-import EditIcon from "@/components/svg/EditIcon";
+import EditIcon from "@/ui/svg/EditIcon";
 import dynamic from "next/dynamic";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
-import CheckIcon from "@/components/svg/CheckIcon";
-import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
-import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
+import CheckIcon from "@/ui/svg/CheckIcon";
+import ArrowDownIcon from "@/ui/svg/ArrowDownIcon";
+import ArrowUpIcon from "@/ui/svg/ArrowUpIcon";
 
 type CollectionPieceVersionsEditFormProps = {
   isUpdateMode: boolean;
@@ -33,7 +33,7 @@ type CollectionPieceVersionsEditFormProps = {
 
 const needConfirmationModalId = "need-confirmation-modal";
 const NeedConfirmationModal = dynamic(
-  () => import("@/components/NeedConfirmationModal"),
+  () => import("@/ui/modal/NeedConfirmationModal"),
   { ssr: false },
 );
 

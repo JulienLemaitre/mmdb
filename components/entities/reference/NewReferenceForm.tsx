@@ -2,12 +2,12 @@ import React, { ChangeEvent, useState } from "react";
 import { REFERENCE_TYPE } from "@prisma/client";
 import { ReferenceInput } from "@/types/formTypes";
 import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
-import SimpleSelect from "@/components/ReactHookForm/SimpleSelect";
-import { SimpleInput } from "@/components/ReactHookForm/SimpleInput";
+import SimpleSelect from "@/ui/form/SimpleSelect";
+import { SimpleInput } from "@/ui/form/SimpleInput";
 import dynamic from "next/dynamic";
 
 const DuplicatePlateNumberWarningModal = dynamic(
-  () => import("@/components/DuplicatePlateNumberWarningModal"),
+  () => import("@/ui/modal/DuplicatePlateNumberWarningModal"),
   { ssr: false },
 );
 const duplicatePlateNumberWarningModalId = "duplicate-plate-number-modal";

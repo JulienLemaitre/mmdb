@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { URL_EXPLORE, URL_FEED, URL_REVIEW_LIST } from "@/utils/routes";
 import NavBar from "@/app/NavBar";
-import Metronome from "@/components/Metronome";
+import Metronome from "@/ui/Metronome";
 // import SnowballMetronome from "@/components/SnowballMetronome";
 
 export const metadata: Metadata = {

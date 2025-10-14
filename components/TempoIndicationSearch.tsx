@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TempoIndicationState } from "@/types/formTypes";
-import { getLabel } from "@/components/ReactHookForm/FormInput";
+import { getLabel } from "@/ui/form/FormInput";
 
 type TempoIndicationSearchProps = {
   tempoIndications: TempoIndicationState[];

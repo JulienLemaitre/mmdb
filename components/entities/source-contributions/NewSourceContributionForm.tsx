@@ -5,8 +5,8 @@ import { CONTRIBUTION_ROLE } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { getZodOptionFromEnum, zodPerson } from "@/types/zodTypes";
-import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
-import { FormInput, getLabel } from "@/components/ReactHookForm/FormInput";
+import ControlledSelect from "@/ui/form/ControlledSelect";
+import { FormInput, getLabel } from "@/ui/form/FormInput";
 import { ChangeEvent, useState } from "react";
 import {
   updateFeedForm,

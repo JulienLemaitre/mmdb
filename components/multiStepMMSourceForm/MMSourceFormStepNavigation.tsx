@@ -2,14 +2,14 @@ import {
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
-import ArrowLeftIcon from "@/components/svg/ArrowLeftIcon";
-import ResetIcon from "@/components/svg/ResetIcon";
+import ArrowLeftIcon from "@/ui/svg/ArrowLeftIcon";
+import ResetIcon from "@/ui/svg/ResetIcon";
 // import DataLossWarningModal from "@/components/DataLossWarningModal";
-import ArrowRightIcon from "@/components/svg/ArrowRightIcon";
+import ArrowRightIcon from "@/ui/svg/ArrowRightIcon";
 import dynamic from "next/dynamic";
 
 const DataLossWarningModal = dynamic(
-  () => import("@/components/DataLossWarningModal"),
+  () => import("@/ui/modal/DataLossWarningModal"),
   { ssr: false },
 );
 

@@ -13,11 +13,11 @@ import {
 } from "@/components/context/feedFormContext";
 import dynamic from "next/dynamic";
 import React, { useCallback, useState } from "react";
-import DebugBox from "@/components/DebugBox";
+import DebugBox from "@/ui/DebugBox";
 import { useSearchParams } from "next/navigation";
 
 const NeedConfirmationModal = dynamic(
-  () => import("@/components/NeedConfirmationModal"),
+  () => import("@/ui/modal/NeedConfirmationModal"),
   { ssr: false },
 );
 

@@ -1,7 +1,7 @@
 import PieceVersionSelect from "@/components/entities/piece-version/PieceVersionSelect";
 import { PieceVersionState } from "@/types/formTypes";
 import { useCallback, useEffect, useState } from "react";
-import PlusIcon from "@/components/svg/PlusIcon";
+import PlusIcon from "@/ui/svg/PlusIcon";
 
 type PieceVersionSelectFormProps = {
   pieceVersions: PieceVersionState[];

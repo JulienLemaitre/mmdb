@@ -1,7 +1,7 @@
 import "react-json-view-lite/dist/index.css";
 import { darkStyles, JsonView, allExpanded } from "react-json-view-lite";
 import { useSearchParams } from "next/navigation";
-import ClipboardIcon from "@/components/svg/ClipboardIcon";
+import ClipboardIcon from "@/ui/svg/ClipboardIcon";
 
 type DebugBoxProps = {
   title?: string;

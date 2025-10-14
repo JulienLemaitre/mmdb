@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import QuestionMarkCircleIcon from "@/components/svg/QuestionMarkCircleIcon";
+import QuestionMarkCircleIcon from "@/ui/svg/QuestionMarkCircleIcon";
 import {
   updateFeedForm,
   useFeedForm,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Loader from "@/components/Loader";
+import Loader from "@/ui/Loader";
 import CollectionSelectForm from "@/components/entities/collection/CollectionSelectForm";
 import CollectionEditForm from "@/components/entities/collection/CollectionEditForm";
 import { CollectionState, CollectionTitleInput } from "@/types/formTypes";

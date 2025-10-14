@@ -1,7 +1,7 @@
 import { FeedFormProvider } from "@/components/context/feedFormContext";
 import NavBar from "@/app/NavBar";
 import React from "react";
-import HelpDrawer from "@/components/HelpDrawer";
+import HelpDrawer from "@/ui/HelpDrawer";
 import Steps from "@/components/multiStepMMSourceForm/Steps";
 import ResetAllForms from "@/components/ResetAllForms";
 import ReviewEditBanner from "@/components/review/ReviewEditBanner";

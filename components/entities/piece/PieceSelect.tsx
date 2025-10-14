@@ -1,6 +1,6 @@
-import Select from "@/components/ReactSelect/Select";
+import Select from "@/ui/form/reactSelect/Select";
 import { PieceState } from "@/types/formTypes";
-import getNoOptionsMessage from "@/components/ReactSelect/getNoOptionsMessage";
+import getNoOptionsMessage from "@/ui/form/reactSelect/getNoOptionsMessage";
 
 type PieceSelectProps = {
   pieces: PieceState[];

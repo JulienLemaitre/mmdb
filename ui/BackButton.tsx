@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import ArrowLeftIcon from "@/components/svg/ArrowLeftIcon";
+import ArrowLeftIcon from "@/ui/svg/ArrowLeftIcon";
 
 export default function BackButton() {
   const router = useRouter();

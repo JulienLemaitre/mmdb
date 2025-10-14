@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import MetronomeMarksForm from "@/components/entities/metronome-marks/MetronomeMarksForm";
 import { useFeedForm } from "@/components/context/feedFormContext";
 import { URL_API_GETMANY_PIECEVERSIONS } from "@/utils/routes";
-import Loader from "@/components/Loader";
+import Loader from "@/ui/Loader";
 import { PieceVersionState } from "@/types/formTypes";
 import { getSectionList } from "@/utils/getSectionList";
 

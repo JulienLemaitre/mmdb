@@ -1,15 +1,15 @@
 import { useFieldArray } from "react-hook-form";
-import { FormInput } from "@/components/ReactHookForm/FormInput";
-import PlusIcon from "@/components/svg/PlusIcon";
-import TrashIcon from "@/components/svg/TrashIcon";
+import { FormInput } from "@/ui/form/FormInput";
+import PlusIcon from "@/ui/svg/PlusIcon";
+import TrashIcon from "@/ui/svg/TrashIcon";
 import { getSectionDefaultValues } from "@/components/ReactHookForm/formUtils";
-import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
-import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
-import ControlledCreatableSelect from "@/components/ReactHookForm/ControlledCreatableSelect";
+import ArrowUpIcon from "@/ui/svg/ArrowUpIcon";
+import ArrowDownIcon from "@/ui/svg/ArrowDownIcon";
+import ControlledCreatableSelect from "@/ui/form/ControlledCreatableSelect";
 import { TempoIndicationState } from "@/types/formTypes";
-import CommonTimeIcon from "@/components/svg/CommonTimeIcon";
+import CommonTimeIcon from "@/ui/svg/CommonTimeIcon";
 import React from "react";
-import CutTimeIcon from "@/components/svg/CutTimeIcon";
+import CutTimeIcon from "@/ui/svg/CutTimeIcon";
 
 export default function SectionArray({
   control,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { PieceVersionInput, PieceVersionState } from "@/types/formTypes";
 import { getNewEntities } from "@/components/context/feedFormContext";
-import Loader from "@/components/Loader";
+import Loader from "@/ui/Loader";
 import PieceVersionEditForm from "@/components/entities/piece-version/PieceVersionEditForm";
 import PieceVersionSelectForm from "@/components/entities/piece-version/PieceVersionSelectForm";
 import { URL_API_GETALL_PIECE_PIECE_VERSIONS } from "@/utils/routes";

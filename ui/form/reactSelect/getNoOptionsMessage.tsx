@@ -1,4 +1,4 @@
-import PlusIcon from "@/components/svg/PlusIcon";
+import PlusIcon from "@/ui/svg/PlusIcon";
 
 type GetNoOptionsMessageProps = {
   router?: any;

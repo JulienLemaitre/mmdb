@@ -6,10 +6,10 @@ import {
   SourceDescriptionInput,
 } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormInput } from "@/components/ReactHookForm/FormInput";
+import { FormInput } from "@/ui/form/FormInput";
 import { getZodOptionFromEnum, zodYear } from "@/types/zodTypes";
 import { REFERENCE_TYPE, SOURCE_TYPE } from "@prisma/client";
-import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
+import ControlledSelect from "@/ui/form/ControlledSelect";
 import ReferenceArray from "@/components/ReactHookForm/ReferenceArray";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
@@ -18,8 +18,8 @@ import React, { useState } from "react";
 import getMMSourceDescriptionInputFromState from "@/utils/getMMSourceDescriptionInputFromState";
 import checkAreFieldsDirty from "@/utils/checkAreFieldsDirty";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
-import XMarkIcon from "@/components/svg/XMarkIcon";
-import CheckIcon from "@/components/svg/CheckIcon";
+import XMarkIcon from "@/ui/svg/XMarkIcon";
+import CheckIcon from "@/ui/svg/CheckIcon";
 
 const SourceSchema = z
   .object({

@@ -2,10 +2,10 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormInput } from "@/components/ReactHookForm/FormInput";
+import { FormInput } from "@/ui/form/FormInput";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 import { CollectionTitleInput } from "@/types/formTypes";
-import ArrowLeftIcon from "@/components/svg/ArrowLeftIcon";
+import ArrowLeftIcon from "@/ui/svg/ArrowLeftIcon";
 
 const CollectionSchema = z.object({
   id: z.string().optional(),

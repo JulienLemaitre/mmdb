@@ -1,4 +1,4 @@
-export const ReactSelectStyles = {
+export const reactSelectStyles = {
   container: (baseStyles, state) => ({
     ...baseStyles,
     height: "2rem",

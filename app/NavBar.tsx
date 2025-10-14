@@ -1,6 +1,6 @@
-import SignInButton from "@/components/SignInButton";
+import SignInButton from "@/ui/SignInButton";
 import React from "react";
-import QuestionMarkCircleIcon from "@/components/svg/QuestionMarkCircleIcon";
+import QuestionMarkCircleIcon from "@/ui/svg/QuestionMarkCircleIcon";
 import Link from "next/link";
 
 export default function NavBar({

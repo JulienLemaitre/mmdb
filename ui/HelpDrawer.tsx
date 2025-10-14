@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import XMarkIcon from "@/components/svg/XMarkIcon";
+import XMarkIcon from "@/ui/svg/XMarkIcon";
 import { useFeedForm } from "@/components/context/feedFormContext";
 import { stepHelpContent } from "@/components/multiStepMMSourceForm/stepHelpContent";
 

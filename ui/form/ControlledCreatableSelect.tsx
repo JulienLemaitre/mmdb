@@ -1,7 +1,7 @@
 import CreatableSelect from "react-select/creatable";
 import { useController } from "react-hook-form";
 import { useState } from "react";
-import { ReactSelectStyles } from "@/components/ReactSelect/ReactSelectStyles";
+import { reactSelectStyles } from "@/ui/form/reactSelect/reactSelectStyles";
 
 const ControlledCreatableSelect = ({
   control,
@@ -65,7 +65,7 @@ const ControlledCreatableSelect = ({
         onCreateOption={handleCreateOption}
         onBlur={onBlur}
         value={value || defaultValue || null}
-        styles={ReactSelectStyles}
+        styles={reactSelectStyles}
         {...selectProps}
       />
       <div className="label-text-alt text-red-500">

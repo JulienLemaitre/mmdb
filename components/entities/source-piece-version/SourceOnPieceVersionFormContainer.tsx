@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MMSourcePieceVersionsState } from "@/types/formTypes";
-import PlusIcon from "@/components/svg/PlusIcon";
+import PlusIcon from "@/ui/svg/PlusIcon";
 import MMSourceFormStepNavigation from "@/components/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import SinglePieceVersionFormContainer from "@/components/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer";
 import {
@@ -8,13 +8,13 @@ import {
   updateFeedForm,
   useFeedForm,
 } from "@/components/context/feedFormContext";
-import TrashIcon from "@/components/svg/TrashIcon";
-import QuestionMarkCircleIcon from "@/components/svg/QuestionMarkCircleIcon";
+import TrashIcon from "@/ui/svg/TrashIcon";
+import QuestionMarkCircleIcon from "@/ui/svg/QuestionMarkCircleIcon";
 import { SinglePieceVersionFormProvider } from "@/components/context/SinglePieceVersionFormContext";
 import { CollectionPieceVersionsFormProvider } from "@/components/context/CollectionPieceVersionsFormContext";
 import getPersonName from "@/utils/getPersonName";
 import CollectionPieceVersionsFormContainer from "@/components/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsFormContainer";
-import EditIcon from "@/components/svg/EditIcon";
+import EditIcon from "@/ui/svg/EditIcon";
 import dynamic from "next/dynamic";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
@@ -23,10 +23,10 @@ import {
   NEED_CONFIRMATION_MODAL_ID,
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
-import ArrowUpIcon from "@/components/svg/ArrowUpIcon";
-import ArrowDownIcon from "@/components/svg/ArrowDownIcon";
+import ArrowUpIcon from "@/ui/svg/ArrowUpIcon";
+import ArrowDownIcon from "@/ui/svg/ArrowDownIcon";
 import PieceVersionDisplay from "@/components/entities/piece-version/PieceVersionDisplay";
-import InformationCircleIcon from "@/components/svg/InformationCircleIcon";
+import InformationCircleIcon from "@/ui/svg/InformationCircleIcon";
 
 type SourcePieceVersionSelectFormProps = {
   mMSourcePieceVersions?: MMSourcePieceVersionsState[];
@@ -36,7 +36,7 @@ type SourcePieceVersionSelectFormProps = {
 };
 
 const NeedConfirmationModal = dynamic(
-  () => import("@/components/NeedConfirmationModal"),
+  () => import("@/ui/modal/NeedConfirmationModal"),
   { ssr: false },
 );
 

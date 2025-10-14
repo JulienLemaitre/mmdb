@@ -1,9 +1,9 @@
 import { ChangeEvent } from "react";
 import { GetErrorMessage } from "@/utils/GetErrorMessage";
 import { useState } from "react";
-import EyeSlashIcon from "@/components/svg/EyeSlashIcon";
-import EyeIcon from "@/components/svg/EyeIcon";
-import LoadingSpinIcon from "@/components/svg/LoadingSpinIcon";
+import EyeSlashIcon from "@/ui/svg/EyeSlashIcon";
+import EyeIcon from "@/ui/svg/EyeIcon";
+import LoadingSpinIcon from "@/ui/svg/LoadingSpinIcon";
 import { InputMethod } from "@/types/formTypes";
 
 export function getLabel(name: string) {
