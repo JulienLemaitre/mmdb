@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ReviewWorkingCopyProvider } from "@/components/context/reviewWorkingCopyContext";
+import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
 
 export default function ReviewWorkingCopyClientProvider({
   reviewId,

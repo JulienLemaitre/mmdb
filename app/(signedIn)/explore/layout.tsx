@@ -1,4 +1,4 @@
-import NavBar from "@/app/NavBar";
+import NavBar from "@/ui/NavBar";
 
 export default function SignedInRootLayout({ children }) {
   return (

@@ -1,23 +1,23 @@
-import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import ChecklistPage from '@/app/(signedIn)/review/[reviewId]/checklist/page'
-import { ReviewWorkingCopyProvider } from '@/components/context/reviewWorkingCopyContext'
-import { buildMockOverview } from '@/utils/reviewMock'
-import { expandRequiredChecklistItems } from '@/utils/ReviewChecklistSchema'
+import React from "react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import ChecklistPage from "@/app/(signedIn)/review/[reviewId]/checklist/page";
+import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
+import { buildMockOverview } from "@/utils/reviewMock";
+import { expandRequiredChecklistItems } from "@/utils/ReviewChecklistSchema";
 
 // Mock Next.js navigation hooks with stable object identity
-const pushMock = jest.fn()
-const routerMock = { push: pushMock }
-jest.mock('next/navigation', () => ({
-  useParams: () => ({ reviewId: 'r-1' }),
+const pushMock = jest.fn();
+const routerMock = { push: pushMock };
+jest.mock("next/navigation", () => ({
+  useParams: () => ({ reviewId: "r-1" }),
   useRouter: () => routerMock,
-}))
+}));
 
 function makeOverview() {
-  const { graph, globallyReviewed } = buildMockOverview('r-1')
+  const { graph, globallyReviewed } = buildMockOverview("r-1");
   return {
-    reviewId: 'r-1',
+    reviewId: "r-1",
     graph,
     globallyReviewed: {
       personIds: globallyReviewed.personIds,
@@ -31,25 +31,29 @@ function makeOverview() {
       perCollection: {},
       perPiece: {},
     },
-  }
+  };
 }
 
-describe('ChecklistPage progress UI', () => {
+describe("ChecklistPage progress UI", () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    jest.clearAllMocks();
     // @ts-ignore
     global.fetch = jest.fn(async (input: RequestInfo | URL) => {
-      const url = typeof input === 'string' ? input : String(input)
-      if (url.includes('/api/review/r-1/overview')) {
-        return { ok: true, json: async () => makeOverview() } as any
+      const url = typeof input === "string" ? input : String(input);
+      if (url.includes("/api/review/r-1/overview")) {
+        return { ok: true, json: async () => makeOverview() } as any;
       }
-      return { ok: false, status: 404, json: async () => ({ error: 'not found' }) } as any
-    })
-    localStorage.clear()
-  })
+      return {
+        ok: false,
+        status: 404,
+        json: async () => ({ error: "not found" }),
+      } as any;
+    });
+    localStorage.clear();
+  });
 
-  it('increments progress text when a checkbox is checked', async () => {
-    const overview = makeOverview()
+  it("increments progress text when a checkbox is checked", async () => {
+    const overview = makeOverview();
     const required = expandRequiredChecklistItems(overview.graph, {
       globallyReviewed: {
         personIds: new Set(overview.globallyReviewed.personIds),
@@ -57,35 +61,36 @@ describe('ChecklistPage progress UI', () => {
         collectionIds: new Set(overview.globallyReviewed.collectionIds),
         pieceIds: new Set(overview.globallyReviewed.pieceIds),
       },
-    })
-    const total = required.length
+    });
+    const total = required.length;
 
     render(
       <ReviewWorkingCopyProvider reviewId="r-1" initialGraph={overview.graph}>
         <ChecklistPage />
       </ReviewWorkingCopyProvider>,
-    )
+    );
 
     // Wait for page
-    await screen.findByText('Checklist items')
+    await screen.findByText("Checklist items");
 
     // Initial progress shows 0 / total
-    const progressSummary = () => screen.getByText(new RegExp(`\\d+ \/ ${total} required checks`))
-    expect(progressSummary().textContent).toMatch(new RegExp(`0 \/ ${total}`))
+    const progressSummary = () =>
+      screen.getByText(new RegExp(`\\d+ / ${total} required checks`));
+    expect(progressSummary().textContent).toMatch(new RegExp(`0 / ${total}`));
 
     // Click the first checkbox
-    const checkboxes = screen.getAllByRole('checkbox')
-    expect(checkboxes.length).toBeGreaterThan(0)
-    const user = userEvent.setup()
-    await user.click(checkboxes[0])
+    const checkboxes = screen.getAllByRole("checkbox");
+    expect(checkboxes.length).toBeGreaterThan(0);
+    const user = userEvent.setup();
+    await user.click(checkboxes[0]);
 
     await waitFor(() => {
-      expect(progressSummary().textContent).toMatch(new RegExp(`1 \/ ${total}`))
-    })
-  })
+      expect(progressSummary().textContent).toMatch(new RegExp(`1 / ${total}`));
+    });
+  });
 
-  it('keeps progress counts unchanged when returning from edit (restore)', async () => {
-    const overview = makeOverview()
+  it("keeps progress counts unchanged when returning from edit (restore)", async () => {
+    const overview = makeOverview();
     const required = expandRequiredChecklistItems(overview.graph, {
       globallyReviewed: {
         personIds: new Set(overview.globallyReviewed.personIds),
@@ -93,35 +98,46 @@ describe('ChecklistPage progress UI', () => {
         collectionIds: new Set(overview.globallyReviewed.collectionIds),
         pieceIds: new Set(overview.globallyReviewed.pieceIds),
       },
-    })
-    const total = required.length
+    });
+    const total = required.length;
 
     // Pre-check the first 3 items in localStorage
-    const prechecked = required.slice(0, Math.min(3, total)).map((it) => `${it.entityType}:${it.entityId ?? ''}:${it.fieldPath}`)
-    localStorage.setItem('review:r-1:checklist', JSON.stringify(prechecked))
+    const prechecked = required
+      .slice(0, Math.min(3, total))
+      .map((it) => `${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`);
+    localStorage.setItem("review:r-1:checklist", JSON.stringify(prechecked));
 
     // Simulate return from edit with a sliceKey targeting one of the prechecked items
-    const sliceKey = required[0]?.fieldPath || 'MM_SOURCE.title'
+    const sliceKey = required[0]?.fieldPath || "MM_SOURCE.title";
     localStorage.setItem(
-      'feedForm',
-      JSON.stringify({ formInfo: { reviewContext: { reviewEdit: true, reviewId: 'r-1', sliceKey } } }),
-    )
-    localStorage.setItem('review:r-1:returnRoute', JSON.stringify({ reviewId: 'r-1', sliceKey, scrollY: 0 }))
+      "feedForm",
+      JSON.stringify({
+        formInfo: {
+          reviewContext: { reviewEdit: true, reviewId: "r-1", sliceKey },
+        },
+      }),
+    );
+    localStorage.setItem(
+      "review:r-1:returnRoute",
+      JSON.stringify({ reviewId: "r-1", sliceKey, scrollY: 0 }),
+    );
 
     render(
       <ReviewWorkingCopyProvider reviewId="r-1" initialGraph={overview.graph}>
         <ChecklistPage />
       </ReviewWorkingCopyProvider>,
-    )
+    );
 
     // Wait for page
-    await screen.findByText('Checklist items')
+    await screen.findByText("Checklist items");
 
     // Progress summary should reflect the same prechecked count
-    const checkedCount = prechecked.length
+    const checkedCount = prechecked.length;
     await waitFor(() => {
-      const el = screen.getByText(new RegExp(`\\b${checkedCount} \/ ${total} required checks`))
-      expect(el).toBeInTheDocument()
-    })
-  })
-})
+      const el = screen.getByText(
+        new RegExp(`\\b${checkedCount} / ${total} required checks`),
+      );
+      expect(el).toBeInTheDocument();
+    });
+  });
+});

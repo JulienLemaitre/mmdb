@@ -12,9 +12,13 @@ jest.mock("next/navigation", () => ({
 }));
 
 // Mock review working copy context to avoid provider requirement in the page component
-jest.mock("../components/context/reviewWorkingCopyContext", () => ({
+jest.mock("@/context/reviewWorkingCopyContext", () => ({
   ReviewWorkingCopyProvider: ({ children }: any) => children,
-  useReviewWorkingCopy: () => ({ get: () => null, save: () => {}, clear: () => {} }),
+  useReviewWorkingCopy: () => ({
+    get: () => null,
+    save: () => {},
+    clear: () => {},
+  }),
 }));
 
 describe("ChecklistPage UI", () => {
@@ -41,7 +45,9 @@ describe("ChecklistPage UI", () => {
     render(<ChecklistPage />);
 
     // Wait for the page to render the submit button
-    const submitBtn = await screen.findByRole("button", { name: /submit review/i });
+    const submitBtn = await screen.findByRole("button", {
+      name: /submit review/i,
+    });
 
     // On initial render, nothing is checked, so submit must be disabled
     await waitFor(() => expect(submitBtn).toBeDisabled());

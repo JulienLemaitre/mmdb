@@ -13,10 +13,10 @@ import {
 } from "@/utils/reviewDiff";
 import { URL_REVIEW_LIST, URL_FEED } from "@/utils/routes";
 import { ApiOverview } from "@/types/reviewTypes";
-import { ReviewWorkingCopyProvider } from "@/components/context/reviewWorkingCopyContext";
-import { ChecklistRow } from "@/components/review/ChecklistRow";
-import { SliceHeader } from "@/components/review/SliceHeader";
-import { useReviewWorkingCopy } from "@/components/context/reviewWorkingCopyContext";
+import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
+import { ChecklistRow } from "@/features/review/ChecklistRow";
+import { SliceHeader } from "@/features/review/SliceHeader";
+import { useReviewWorkingCopy } from "@/context/reviewWorkingCopyContext";
 import {
   buildFeedFormStateFromWorkingCopy,
   writeBootStateForFeedForm,

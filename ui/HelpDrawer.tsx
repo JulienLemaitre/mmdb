@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import XMarkIcon from "@/ui/svg/XMarkIcon";
-import { useFeedForm } from "@/components/context/feedFormContext";
-import { stepHelpContent } from "@/components/multiStepMMSourceForm/stepHelpContent";
+import { useFeedForm } from "@/context/feedFormContext";
+import { stepHelpContent } from "@/features/feed/multiStepMMSourceForm/stepHelpContent";
 
 const HelpDrawer = () => {
   const { currentStepRank } = useFeedForm();

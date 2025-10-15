@@ -1,4 +1,4 @@
-import sendEmail from "@/serverFunction/sendEmail";
+import sendEmail from "@/utils/server/sendEmail";
 import isReqAuthorized from "@/utils/server/isReqAuthorized";
 import { NextRequest, NextResponse } from "next/server";
 

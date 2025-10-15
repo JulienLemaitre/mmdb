@@ -1,6 +1,6 @@
 import { db } from "@/utils/server/db";
-import MMSourcesDetails from "@/components/MMSourcesDetails";
-import ShartWithNoteTypeFilter from "@/components/ShartWithNoteTypeFilter";
+import MMSourcesDetails from "@/features/explore/MMSourcesDetails";
+import ShartWithNoteTypeFilter from "@/features/explore/ShartWithNoteTypeFilter";
 import React from "react";
 import getChartDataFromMMSources from "@/utils/getChartDataFromMMSources";
 

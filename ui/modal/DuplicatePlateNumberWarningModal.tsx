@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { usePortal } from "@/components/hooks/usePortal";
+import { usePortal } from "@/hooks/usePortal";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 

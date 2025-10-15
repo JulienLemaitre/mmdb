@@ -2,7 +2,7 @@ import React from "react";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import getRoleLabel from "@/utils/getRoleLabel";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
-import SectionMeter from "@/components/entities/section/SectionMeter";
+import SectionMeter from "@/features/section/ui/SectionMeter";
 
 const Tooltip = ({
   node,
