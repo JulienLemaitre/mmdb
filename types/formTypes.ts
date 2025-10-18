@@ -201,6 +201,7 @@ export type MMSourceDescriptionState = Pick<
   id?: string;
   references: ReferenceState[];
   pieceVersions?: Pick<PieceVersionState, "id">[];
+  permalink?: string; // present when used in a review context
 } & IsNewProp &
   GoNextProp;
 
