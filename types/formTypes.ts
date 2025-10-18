@@ -191,7 +191,9 @@ export type PieceVersionState = Pick<
 export type ReferenceState = Pick<
   Prisma.ReferenceUncheckedCreateInput,
   "type" | "reference"
->;
+> & {
+  id?: string; // present when used in a review context
+};
 export type MMSourceDescriptionState = Pick<
   Prisma.MMSourceUncheckedCreateInput,
   "title" | "type" | "link" | "year" | "comment"

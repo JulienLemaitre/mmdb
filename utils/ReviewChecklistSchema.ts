@@ -313,6 +313,12 @@ export type RequiredChecklistItem = {
   entityId?: string | null;
   fieldPath: string;
   label: string;
+  lineage: {
+    collectionId?: string;
+    pieceId?: string;
+    pieceVersionId?: string;
+    movementId?: string;
+  };
 };
 
 function isRequiredField(
@@ -346,47 +352,26 @@ function isGloballyReviewed(
   }
 }
 
+/**
+ * JSDoc: Expands the full list of required checklist items from a ChecklistGraph.
+ * This function traverses the nested graph structure and generates a flat list
+ * of RequiredChecklistItem objects. Each item is enriched with a `lineage`
+ * property, containing the IDs of its parent entities (e.g., pieceId, movementId),
+ * which is essential for filtering and displaying the checklist in a sliced,
+ * hierarchical UI.
+ */
 export function expandRequiredChecklistItems(
   graph: ChecklistGraph,
   options?: ExpandOptions,
 ): RequiredChecklistItem[] {
   const items: RequiredChecklistItem[] = [];
 
-  // MM_SOURCE fields (singleton). Always include the logical ordering item.
-  for (const field of REVIEW_CHECKLIST_SCHEMA.MM_SOURCE.fields) {
-    const ctx: RequiredPredicateCtx = {
-      graph,
-      entityType: "MM_SOURCE",
-      entityId: null,
-      fieldRelativePath: field.path,
-    };
-    if (!isRequiredField(field, ctx)) continue;
-    items.push({
-      entityType: "MM_SOURCE",
-      entityId: null,
-      fieldPath: buildFieldPath("MM_SOURCE", null, field.path),
-      label: field.label,
-    });
-  }
-
-  // Per-join rank checks for ordering within source
-  const includeJoins = options?.includePerJoinOrderChecks ?? true;
-  if (includeJoins && Array.isArray(graph.sourceContents)) {
-    for (const row of graph.sourceContents) {
-      if (!row?.joinId) continue;
-      items.push({
-        entityType: "MM_SOURCE",
-        entityId: null,
-        fieldPath: buildSourceJoinRankPath(String(row.joinId)),
-        label: "Rank in source",
-      });
-    }
-  }
-
-  // Helper to add items per entity array based on schema
+  // Central helper to add items for a group of entities.
+  // It now accepts and attaches the `lineage` object.
   const addEntityGroup = (
     entityType: ChecklistEntityType,
     nodes: Array<{ id: string }> | undefined,
+    lineage: RequiredChecklistItem["lineage"] = {},
   ) => {
     if (!nodes || nodes.length === 0) return;
     const schema = REVIEW_CHECKLIST_SCHEMA[entityType];
@@ -410,64 +395,100 @@ export function expandRequiredChecklistItems(
           entityId: n.id,
           fieldPath: buildFieldPath(entityType, n.id, field.path),
           label: field.label,
+          lineage, // Attach the complete lineage to each item
         });
       }
     }
   };
 
-  addEntityGroup(
-    "COLLECTION",
-    graph.collections as Array<{ id: string } | undefined> as any,
-  );
-  addEntityGroup(
-    "PIECE",
-    graph.pieces as Array<{ id: string } | undefined> as any,
-  );
-  // Traverse nested structure for piece versions, movements, and sections
-  if (graph.pieceVersions) {
+  // --- 1. Source Level Entities ---
+  // These have no parent lineage and belong to the "Summary" slice.
+  addEntityGroup("MM_SOURCE", [graph.source as any]);
+  if (graph.source.references) {
     addEntityGroup(
-      "PIECE_VERSION",
-      graph.pieceVersions as Array<{ id: string } | undefined> as any,
+      "REFERENCE",
+      graph.source.references as Array<{ id: string }>,
     );
+  }
+  if (graph.contributions) {
+    addEntityGroup(
+      "CONTRIBUTION",
+      graph.contributions as Array<{ id: string }>,
+    );
+  }
+  // Add special checklist items for source contents ordering
+  const includeJoins = options?.includePerJoinOrderChecks ?? true;
+  if (includeJoins && Array.isArray(graph.sourceContents)) {
+    for (const row of graph.sourceContents) {
+      if (!row?.joinId) continue;
+      items.push({
+        entityType: "MM_SOURCE",
+        entityId: null,
+        fieldPath: buildSourceJoinRankPath(String(row.joinId)),
+        label: `Rank for piece in source`,
+        lineage: {},
+      });
+    }
+  }
+
+  // --- 2. Top-Level Standalone Entities ---
+  // These also have no parent lineage in this context.
+  addEntityGroup("PERSON", graph.persons);
+  addEntityGroup("ORGANIZATION", graph.organizations);
+  addEntityGroup("COLLECTION", graph.collections);
+  addEntityGroup("PIECE", graph.pieces);
+  addEntityGroup("TEMPO_INDICATION", graph.tempoIndications);
+
+  // --- 3. Piece Structure (Nested Traversal) ---
+  // This loop builds the lineage context as it descends.
+  if (graph.pieceVersions) {
     for (const pv of graph.pieceVersions) {
+      const piece = graph.pieces?.find((p) => p.id === pv.pieceId);
+      const pvLineage: RequiredChecklistItem["lineage"] = {
+        collectionId: piece?.collectionId ?? undefined,
+        pieceId: pv.pieceId ?? undefined,
+        pieceVersionId: pv.id,
+      };
+      addEntityGroup("PIECE_VERSION", [pv as any], pvLineage);
+
       const movements = (pv as any).movements;
       if (movements) {
-        addEntityGroup(
-          "MOVEMENT",
-          movements as Array<{ id: string } | undefined> as any,
-        );
         for (const m of movements) {
+          const movLineage = { ...pvLineage, movementId: m.id };
+          addEntityGroup("MOVEMENT", [m as any], movLineage);
+
           const sections = (m as any).sections;
           if (sections) {
-            addEntityGroup(
-              "SECTION",
-              sections as Array<{ id: string } | undefined> as any,
-            );
+            addEntityGroup("SECTION", sections, movLineage);
           }
         }
       }
     }
   }
-  addEntityGroup(
-    "TEMPO_INDICATION",
-    graph.tempoIndications as Array<{ id: string } | undefined> as any,
-  );
-  addEntityGroup(
-    "METRONOME_MARK",
-    graph.metronomeMarks as Array<{ id: string } | undefined> as any,
-  );
-  addEntityGroup(
-    "CONTRIBUTION",
-    graph.contributions as Array<{ id: string } | undefined> as any,
-  );
-  addEntityGroup(
-    "PERSON",
-    graph.persons as Array<{ id: string } | undefined> as any,
-  );
-  addEntityGroup(
-    "ORGANIZATION",
-    graph.organizations as Array<{ id: string } | undefined> as any,
-  );
+
+  // --- 4. Final Entities That Require Lineage Lookup ---
+  if (graph.metronomeMarks) {
+    for (const mm of graph.metronomeMarks) {
+      if (!mm.sectionId) continue;
+      let mmLineage: RequiredChecklistItem["lineage"] | undefined;
+      for (const pv of graph.pieceVersions ?? []) {
+        for (const m of (pv as any).movements ?? []) {
+          if (m.sections?.some((s: any) => s.id === mm.sectionId)) {
+            const piece = graph.pieces?.find((p) => p.id === pv.pieceId);
+            mmLineage = {
+              collectionId: piece?.collectionId ?? undefined,
+              pieceId: pv.pieceId,
+              pieceVersionId: pv.id,
+              movementId: m.id,
+            };
+            break;
+          }
+        }
+        if (mmLineage) break;
+      }
+      addEntityGroup("METRONOME_MARK", [mm as any], mmLineage);
+    }
+  }
 
   return items;
 }
