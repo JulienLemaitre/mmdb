@@ -109,28 +109,28 @@ export default function ChecklistPage() {
   const [storageWarning, setStorageWarning] = useState<string | null>(null);
   const [changedKeys, setChangedKeys] = useState<Set<string>>(new Set());
 
-  function openEditForItem(it: RequiredChecklistItem) {
+  function openEditForItem(item: RequiredChecklistItem) {
     if (!data) return;
 
     // Build anchors based on the clicked entity to help the feed form focus
     let anchors: BridgeAnchors | undefined = undefined;
-    if (it.entityType === "PIECE_VERSION" && it.entityId) {
-      anchors = { pvId: it.entityId };
-    } else if (it.entityType === "MOVEMENT" && it.entityId) {
-      anchors = { movId: it.entityId };
-    } else if (it.entityType === "SECTION" && it.entityId) {
-      anchors = { secId: it.entityId };
-    } else if (it.entityType === "TEMPO_INDICATION" && it.entityId) {
+    if (item.entityType === "PIECE_VERSION" && item.entityId) {
+      anchors = { pvId: item.entityId };
+    } else if (item.entityType === "MOVEMENT" && item.entityId) {
+      anchors = { movId: item.entityId };
+    } else if (item.entityType === "SECTION" && item.entityId) {
+      anchors = { secId: item.entityId };
+    } else if (item.entityType === "TEMPO_INDICATION" && item.entityId) {
       // Find the section that owns this tempo indication
       const section = (data.graph?.sections ?? []).find(
-        (s: any) => s.tempoIndicationId === it.entityId,
+        (s: any) => s.tempoIndicationId === item.entityId,
       );
       if (section?.id) anchors = { secId: section.id };
-    } else if (it.entityType === "METRONOME_MARK" && it.entityId) {
+    } else if (item.entityType === "METRONOME_MARK" && item.entityId) {
       const mm = (data.graph?.metronomeMarks ?? []).find(
-        (m: any) => m.id === it.entityId,
+        (m: any) => m.id === item.entityId,
       );
-      if (mm?.sectionId) anchors = { mmId: it.entityId, secId: mm.sectionId };
+      if (mm?.sectionId) anchors = { mmId: item.entityId, secId: mm.sectionId };
     }
 
     // Prepare working copy (fallback to initial graph if none yet)
@@ -143,10 +143,10 @@ export default function ChecklistPage() {
     // Compose a boot state for the feed form and persist it to localStorage
     const feedState = buildFeedFormStateFromWorkingCopy(
       workingCopy as any,
-      it.fieldPath,
+      item,
       {
         reviewId: data.reviewId,
-        sliceKey: it.fieldPath,
+        sliceKey: item.fieldPath,
         anchors,
       },
     );
@@ -158,7 +158,7 @@ export default function ChecklistPage() {
         `review:${data.reviewId}:returnRoute`,
         JSON.stringify({
           reviewId: data.reviewId,
-          sliceKey: it.fieldPath,
+          sliceKey: item.fieldPath,
           scrollY: window.scrollY,
         }),
       );

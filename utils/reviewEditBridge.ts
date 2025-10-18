@@ -1,13 +1,15 @@
 // Bridge between Review working copy and Feed Form state
-// Phase 2 – Scaffolding
-// This file provides type stubs and placeholder functions to be implemented in subsequent steps.
 
 import { FeedFormState, ReviewContext } from "@/types/feedFormTypes";
 import { FEED_FORM_BOOT_KEY } from "@/utils/constants";
+import {
+  ChecklistGraph,
+  RequiredChecklistItem,
+} from "@/utils/ReviewChecklistSchema";
 
 // Minimal structure for the review working copy we operate on
 export type ReviewWorkingCopy = {
-  graph: any; // ChecklistGraph (client shape)
+  graph: ChecklistGraph; // ChecklistGraph (client shape)
   updatedAt: string; // ISO timestamp
 };
 
@@ -20,7 +22,7 @@ export type BridgeAnchors = {
 };
 
 // Draft mapping from entity types in checklist field paths to feed form step ranks
-// NOTE: This is a placeholder; the concrete ranks must align with stepsUtils.ts
+// TODO: align to MMSource, SinglePiece and Collection stepsUtils.ts files
 export const STEP_FOR_ENTITY: Record<string, number> = {
   MM_SOURCE: 1, // source metadata/contributions
   COLLECTION: 1, // collection description step (within source/pieces)
@@ -45,226 +47,135 @@ export function resolveStepForFieldPath(fieldPath: string): number {
   return STEP_FOR_ENTITY[root] ?? 0;
 }
 
-// Build a FeedFormState from a review working copy and the clicked checklist fieldPath
-// This is a stub returning the current persisted feed form state shape filled with minimal formInfo
+// Build a FeedFormState from a review working copy and the clicked checklist item
 export function buildFeedFormStateFromWorkingCopy(
   workingCopy: ReviewWorkingCopy,
-  fieldPath: string,
+  clickedItem: RequiredChecklistItem, // Accept the whole item
   opts: { reviewId: string; sliceKey?: string; anchors?: BridgeAnchors },
 ): FeedFormState {
-  const step = resolveStepForFieldPath(fieldPath);
+  // TODO: replace with the proper formInfo properties to deduce the current step
+  const step = resolveStepForFieldPath(clickedItem.fieldPath);
+
+  // Build anchors directly from the item's lineage, which is now reliable
+  const anchors: BridgeAnchors = {
+    pvId: clickedItem.lineage.pieceVersionId,
+    movId: clickedItem.lineage.movementId,
+    // You can add more as needed, e.g., for a specific section
+    ...(clickedItem.entityType === "SECTION" && clickedItem.entityId
+      ? {
+          secId: clickedItem.entityId,
+        }
+      : {}),
+  };
+
   const reviewContext: ReviewContext = {
-    reviewId: opts.reviewId,
+    reviewId: opts.reviewId, // This needs to be passed in `opts`
     reviewEdit: true,
     updatedAt: new Date().toISOString(),
-    anchors: opts.anchors,
+    anchors,
   };
 
-  // TODO: Map workingCopy.graph to full FeedFormState structure
-  const stub: FeedFormState = {
+  // Since the shapes are aligned, this is now mostly a deep copy.
+  const feedState: FeedFormState = {
     formInfo: {
       currentStepRank: step,
-      introDone: true,
+      introDone: true, // Always skip the intro in review-edit mode
       reviewContext,
     },
-    // The rest of the fields will be populated in a later step
-    mMSourceDescription: undefined,
-    mMSourceContributions: [],
-    mMSourcePieceVersions: [],
-    organizations: [],
-    collections: [],
-    persons: [],
-    pieces: [],
-    pieceVersions: [],
-    tempoIndications: [],
-    metronomeMarks: [],
+    // Deep-copy all the relevant slices from the working copy graph
+    mMSourceDescription: { ...workingCopy.graph.source },
+    mMSourceContributions: [...(workingCopy.graph.contributions ?? [])],
+    mMSourcePieceVersions: [...(workingCopy.graph.sourceContents ?? [])],
+    organizations: [...(workingCopy.graph.organizations ?? [])],
+    collections: [...(workingCopy.graph.collections ?? [])],
+    persons: [...(workingCopy.graph.persons ?? [])],
+    pieces: [...(workingCopy.graph.pieces ?? [])],
+    pieceVersions: [...(workingCopy.graph.pieceVersions ?? [])],
+    tempoIndications: [...(workingCopy.graph.tempoIndications ?? [])],
+    metronomeMarks: [...(workingCopy.graph.metronomeMarks ?? [])],
   };
-  return stub;
+  return feedState;
 }
 
-// Rebuild the review working copy graph from a feed form state (inverse mapping of the above)
-// This is a stub that currently returns the input graph unchanged.
+/**
+ * JSDoc: Rebuilds the review's working copy graph from the state of the feed form.
+ *
+ * This function creates the next version of the `ChecklistGraph` after a user
+ * finishes an editing session in the `feedForm`. It treats the incoming
+ * `feedFormState` as the definitive source of truth. Any entities removed
+ * by the user in the form will be absent from the new working copy.
+ *
+ * It performs a direct translation from the `FeedFormState` shape to the
+ * `ChecklistGraph` shape, reconstructs any derived data (like `tempoIndications`),
+ * and preserves immutable system fields (like `permalink`) from the previous copy.
+ */
 export function rebuildWorkingCopyFromFeedForm(
   feedFormState: FeedFormState,
   previousWorkingCopy: ReviewWorkingCopy,
 ): ReviewWorkingCopy {
-  const prev = previousWorkingCopy.graph || {};
+  const prevGraph = previousWorkingCopy.graph || {};
 
-  // Fast-path: if feed state has no relevant slices, keep the previous graph reference unchanged
-  const hasSlices = Boolean(
-    feedFormState?.pieces?.length ||
-      feedFormState?.pieceVersions?.length ||
-      feedFormState?.mMSourceDescription ||
-      feedFormState?.mMSourcePieceVersions?.length ||
-      feedFormState?.collections?.length ||
-      feedFormState?.metronomeMarks?.length ||
-      feedFormState?.tempoIndications?.length,
-  );
-  if (!hasSlices) {
-    return {
-      graph: previousWorkingCopy.graph,
-      updatedAt: new Date().toISOString(),
-    };
+  // If the feedFormState is not from a review edit session, do nothing.
+  if (!feedFormState?.formInfo?.reviewContext) {
+    return previousWorkingCopy;
   }
 
-  // Helper lookups from feed state
-  const feedPieces = feedFormState.pieces ?? [];
-  const feedPVs = feedFormState.pieceVersions ?? [];
-  const feedCollections = feedFormState.collections ?? [];
-  const feedMovements = feedPVs.flatMap((pv) =>
-    (pv.movements ?? []).map((m) => ({ ...m, pieceVersionId: pv.id })),
-  );
-  const feedSections = feedMovements.flatMap((mv) =>
-    (mv.sections ?? []).map((s) => ({ ...s, movementId: mv.id })),
-  );
+  // The incoming feedFormState is the source of truth.
+  // Default to empty arrays for any missing top-level properties.
+  const source = {
+    ...prevGraph.source, // Preserve non-editable fields like id, permalink
+    ...feedFormState.mMSourceDescription,
+  };
+  const contributions = feedFormState.mMSourceContributions ?? [];
+  const organizations = feedFormState.organizations ?? [];
+  const persons = feedFormState.persons ?? [];
+  const collections = feedFormState.collections ?? [];
+  const pieces = feedFormState.pieces ?? [];
+  const pieceVersions = feedFormState.pieceVersions ?? [];
+  const metronomeMarks = feedFormState.metronomeMarks ?? [];
 
-  // Build tempoIndications deduped from sections
+  // Rebuild derived data: `tempoIndications` are collected from within the piece structure.
   const tempoIndicationMap = new Map<string, { id: string; text: string }>();
-  for (const s of feedSections) {
-    const ti = s.tempoIndication;
-    if (ti && typeof ti.id === "string") {
-      tempoIndicationMap.set(ti.id, { id: ti.id, text: ti.text ?? "" });
+  for (const pv of pieceVersions) {
+    for (const m of (pv as any).movements ?? []) {
+      for (const s of (m as any).sections ?? []) {
+        const ti = s.tempoIndication;
+        if (ti?.id) {
+          tempoIndicationMap.set(ti.id, { id: ti.id, text: ti.text ?? "" });
+        }
+      }
     }
   }
+  const tempoIndications = Array.from(tempoIndicationMap.values());
 
-  // Source metadata (fallback to previous for fields not provided by the feed form)
-  const desc: any = feedFormState.mMSourceDescription ?? {};
-  const source = {
-    id: prev?.source?.id,
-    title: desc.title ?? prev?.source?.title ?? null,
-    type: desc.type ?? prev?.source?.type ?? null,
-    link: desc.link ?? prev?.source?.link ?? null,
-    permalink: prev?.source?.permalink ?? null, // feed form does not own permalink; preserve
-    year: desc.year ?? prev?.source?.year ?? null,
-    comment: desc.comment ?? prev?.source?.comment ?? "",
-  } as any;
-
-  // Collections
-  const collections = feedCollections.length
-    ? feedCollections.map((c) => ({
-        id: c.id,
-        title: c.title,
-        composerId: c.composerId,
-      }))
-    : (prev?.collections ?? []);
-
-  // Pieces
-  const pieces = feedPieces.length
-    ? feedPieces.map((p) => ({
-        id: p.id,
-        title: p.title ?? null,
-        nickname: p.nickname ?? null,
-        composerId: p.composerId ?? null,
-        yearOfComposition: p.yearOfComposition ?? null,
-        collectionId: p.collectionId ?? null,
-        collectionRank: p.collectionRank ?? null,
-      }))
-    : (prev?.pieces ?? []);
-
-  // Piece Versions
-  const pieceVersions = feedPVs.length
-    ? feedPVs.map((pv) => ({
-        id: pv.id,
-        pieceId: pv.pieceId ?? null,
-        category: pv.category ?? null,
-      }))
-    : (prev?.pieceVersions ?? []);
-
-  // Movements
-  const movements = feedMovements.length
-    ? feedMovements.map((m) => ({
-        id: m.id,
-        pieceVersionId: m.pieceVersionId,
-        rank: m.rank,
-        key: (m as any).key ?? null,
-      }))
-    : (prev?.movements ?? []);
-
-  // Sections
-  const sections = feedSections.length
-    ? feedSections.map((s) => ({
-        id: s.id,
-        movementId: s.movementId,
-        rank: s.rank,
-        metreNumerator: s.metreNumerator,
-        metreDenominator: s.metreDenominator,
-        isCommonTime: s.isCommonTime,
-        isCutTime: s.isCutTime,
-        fastestStructuralNotesPerBar: s.fastestStructuralNotesPerBar,
-        fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar ?? null,
-        fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar ?? null,
-        fastestOrnamentalNotesPerBar: s.fastestOrnamentalNotesPerBar ?? null,
-        isFastestStructuralNoteBelCanto:
-          s.isFastestStructuralNoteBelCanto ?? false,
-        tempoIndicationId: s.tempoIndication?.id,
-        comment: s.comment ?? "",
-        commentForReview: s.commentForReview ?? "",
-      }))
-    : (prev?.sections ?? []);
-
-  // Tempo indications
-  const tempoIndications = tempoIndicationMap.size
-    ? Array.from(tempoIndicationMap.values())
-    : (prev?.tempoIndications ?? []);
-
-  // Metronome marks (ignore "noMM" entries)
-  const metronomeMarks = (feedFormState.metronomeMarks ?? []).length
-    ? (feedFormState.metronomeMarks ?? [])
-        .filter((mm) => (mm as any).noMM !== true)
-        .map((mm: any) => ({
-          id: mm.id ?? `${mm.sectionId}`,
-          sectionId: mm.sectionId,
-          beatUnit: mm.beatUnit,
-          bpm: mm.bpm,
-          comment: mm.comment ?? "",
-        }))
-    : (prev?.metronomeMarks ?? []);
-
-  // References & Contributions: keep previous for stability (feed form lacks reference ids)
-  const references = prev?.references ?? [];
-  const contributions = prev?.contributions ?? [];
-  const persons = prev?.persons ?? [];
-  const organizations = prev?.organizations ?? [];
-
-  // Source contents (ordering): preserve joinIds when possible
-  const prevJoinsByPv: Record<string, any> = Object.fromEntries(
-    (prev?.sourceContents ?? []).map((j: any) => [j.pieceVersionId, j]),
-  );
-  let sourceContents: any[] = prev?.sourceContents ?? [];
-  const feedJoins = feedFormState.mMSourcePieceVersions ?? [];
-  if (feedJoins.length) {
-    const pieceById: Record<string, any> = Object.fromEntries(
-      pieces.map((p: any) => [p.id, p]),
-    );
-    sourceContents = feedJoins.map((j) => {
-      const prevJoin = prevJoinsByPv[j.pieceVersionId];
+  // Rebuild derived data: `sourceContents` needs to be enriched with data
+  // from the newly defined pieces and pieceVersions.
+  const sourceContents = (feedFormState.mMSourcePieceVersions ?? []).map(
+    (j) => {
       const pv = pieceVersions.find((pv) => pv.id === j.pieceVersionId);
-      const piece = pv ? pieceById[pv.pieceId] : undefined;
+      const piece = pv ? pieces.find((p) => p.id === pv.pieceId) : undefined;
       return {
-        joinId: prevJoin?.joinId ?? `join-${j.pieceVersionId}`,
+        joinId: `join-${j.pieceVersionId}`, // Regenerate joinId for simplicity
         mMSourceId: source.id,
         pieceVersionId: j.pieceVersionId,
         rank: j.rank,
-        pieceId: pv?.pieceId ?? null,
-        collectionId: piece?.collectionId,
-        collectionRank: piece?.collectionRank,
+        pieceId: pv?.pieceId as string, // TODO: replace by type safeguards for mandatory entities in workingCopy (coming from persisted MMSource)
+        collectionId: piece?.collectionId ?? undefined,
+        collectionRank: piece?.collectionRank ?? undefined,
       };
-    });
-  }
+    },
+  );
 
-  const nextGraph = {
+  const nextGraph: ChecklistGraph = {
     source,
+    contributions,
+    organizations,
+    persons,
     collections,
     pieces,
     pieceVersions,
-    movements,
-    sections,
-    tempoIndications,
     metronomeMarks,
-    references,
-    contributions,
-    persons,
-    organizations,
+    tempoIndications,
     sourceContents,
   };
 
