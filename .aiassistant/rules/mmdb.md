@@ -30,3 +30,7 @@ apply: always
 ## Tools
 - Follow project-specific tooling or linters
 - Use version control best practices (e.g., atomic commits, meaningful messages)
+
+## AI Collaboration Rules
+
+- **Minimal Edits**: When suggesting code modifications, you MUST provide snippets of the changed code within the existing file context. You MUST NOT rewrite entire files unless specifically asked to do so. If you believe a full rewrite is necessary, you MUST ask for permission first.
