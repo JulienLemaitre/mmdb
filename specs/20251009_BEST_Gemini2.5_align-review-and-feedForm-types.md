@@ -373,15 +373,28 @@ You are absolutely right. The old model of grouping by `entityType` is obsolete 
 
 My advice must change to reflect this deeper understanding. Here is a new, detailed roadmap that replaces the previous one from Step 1.2 onwards. This plan is built around your core insight: enriching `RequiredChecklistItem` is the key to enabling the new UI.
 
----
+## Me
+
+I think I should remove this highlighted first part of `expandRequiredChecklistItems` following your Step 3.1. But I'm unsure concerning the `options?.includePerJoinOrderChecks` and `graph.sourceContents` .
+What do you suggest?
+
+## AI
+
+Of course. You've correctly deduced the next logical step. The new UI paradigm requires a fundamental shift in how the checklist is generated. My previous roadmap was a stepping stone, but your questions have clarified the final destination.
+
+You are right to question the highlighted code. In the new architecture, it's redundant and inconsistent. The `addEntityGroup` helper should be the *only* mechanism for adding items to the list. We will replace the entire body of `expandRequiredChecklistItems` with a cleaner, more powerful traversal logic.
+
+Regarding `sourceContents`, these represent the *ordering* of pieces within the source. They are conceptually fields on the `MM_SOURCE` itself. We will treat them as such, generating special checklist items that belong to the `MM_SOURCE` but are derived from the `sourceContents` array.
+
+Here is the detailed, replacement roadmap starting from Step 1.2, built around your insights.
 
 ### **Consolidated Roadmap 2.0: Building the Sliced Review UI**
 
-This roadmap details the refactoring required to create a hierarchical checklist structure, which is the prerequisite for building your desired multi-screen review interface.
+*(This is the complete and final version of the roadmap, replacing the previous one from Step 1.2 onwards)*
 
 #### **Phase 1: Rearchitecting the Checklist for Hierarchical Context**
 
-**Step 1.2 (Revised): Redefine `RequiredChecklistItem` to Include Full `lineage`**
+**Step 1.2 (Revised): Redefine `RequiredChecklistItem` with Full `lineage`**
 
 This is the foundational change. We will modify the `RequiredChecklistItem` type in `utils/ReviewChecklistSchema.ts` to include a `lineage` property. This object will hold the IDs of all parent entities, giving every item a complete contextual address.
 
@@ -406,23 +419,45 @@ function isRequiredField(
 ```
 
 
-**Step 1.3 (Revised): Implement Context-Aware Checklist Expansion**
+**Step 1.3 (Revised): Implement Full Context-Aware Checklist Expansion**
 
-We will refactor `expandRequiredChecklistItems` to perform a "context-aware traversal." As it descends into the nested `ChecklistGraph`, it will pass down the accumulating `lineage` of parent IDs. This ensures every generated checklist item has the full context it needs.
-
-This includes properly handling nested `references` and `contributions` as you correctly pointed out.
+We will completely rewrite the `expandRequiredChecklistItems` function. The old manual loops will be removed in favor of a single, consistent traversal pattern that builds and passes down the `lineage` context at every step.
 
 ```typescript
 // ... existing code ...
-// Helper to add items per entity array based on schema
+  }
+}
+
+/**
+ * JSDoc: Expands the full list of required checklist items from a ChecklistGraph.
+ * This function traverses the nested graph structure and generates a flat list
+ * of RequiredChecklistItem objects. Each item is enriched with a `lineage`
+ * property, containing the IDs of its parent entities (e.g., pieceId, movementId),
+ * which is essential for filtering and displaying the checklist in a sliced,
+ * hierarchical UI.
+ */
+export function expandRequiredChecklistItems(
+  graph: ChecklistGraph,
+  options?: ExpandOptions,
+): RequiredChecklistItem[] {
+  const items: RequiredChecklistItem[] = [];
+
+  // Central helper to add items for a group of entities.
+  // It now accepts and attaches the `lineage` object.
   const addEntityGroup = (
     entityType: ChecklistEntityType,
     nodes: Array<{ id: string }> | undefined,
-    lineage: RequiredChecklistItem["lineage"] = {}, // Pass down lineage
+    lineage: RequiredChecklistItem["lineage"] = {},
   ) => {
     if (!nodes || nodes.length === 0) return;
     const schema = REVIEW_CHECKLIST_SCHEMA[entityType];
-// ... existing code ...
+    for (const n of nodes) {
+      if (
+        schema.doNotReviewTwice &&
+        isGloballyReviewed(entityType, n.id, options)
+      ) {
+        continue;
+      }
       for (const field of schema.fields) {
         const ctx: RequiredPredicateCtx = {
           graph,
@@ -436,15 +471,15 @@ This includes properly handling nested `references` and `contributions` as you c
           entityId: n.id,
           fieldPath: buildFieldPath(entityType, n.id, field.path),
           label: field.label,
-          lineage, // Attach the lineage to each item
+          lineage, // Attach the complete lineage to each item
         });
       }
     }
   };
 
-  // --- Source Level ---
+  // --- 1. Source Level Entities ---
+  // These have no parent lineage and belong to the "Summary" slice.
   addEntityGroup("MM_SOURCE", [graph.source as any]);
-  // Handle nested references and contributions within the source
   if (graph.source.references) {
     addEntityGroup(
       "REFERENCE",
@@ -454,30 +489,32 @@ This includes properly handling nested `references` and `contributions` as you c
   if (graph.contributions) {
     addEntityGroup("CONTRIBUTION", graph.contributions);
   }
+  // Add special checklist items for source contents ordering
+  const includeJoins = options?.includePerJoinOrderChecks ?? true;
+  if (includeJoins && Array.isArray(graph.sourceContents)) {
+    for (const row of graph.sourceContents) {
+      if (!row?.joinId) continue;
+      items.push({
+        entityType: "MM_SOURCE",
+        entityId: null,
+        fieldPath: buildSourceJoinRankPath(String(row.joinId)),
+        label: `Rank for piece in source`,
+        lineage: {},
+      });
+    }
+  }
 
-  // --- Standalone Entities ---
-  addEntityGroup(
-    "COLLECTION",
-    graph.collections as Array<{ id: string } | undefined> as any,
-  );
-  addEntityGroup(
-    "PIECE",
-    graph.pieces as Array<{ id: string } | undefined> as any,
-  );
-  addEntityGroup(
-    "PERSON",
-    graph.persons as Array<{ id: string } | undefined> as any,
-  );
-  addEntityGroup(
-    "ORGANIZATION",
-    graph.organizations as Array<{ id: string } | undefined> as any,
-  );
-  addEntityGromup(
-    "TEMPO_INDICATION",
-    graph.tempoIndications as Array<{ id: string } | undefined> as any,
-  );
 
-  // --- Nested Traversal for Piece Structure ---
+  // --- 2. Top-Level Standalone Entities ---
+  // These also have no parent lineage in this context.
+  addEntityGroup("PERSON", graph.persons);
+  addEntityGroup("ORGANIZATION", graph.organizations);
+  addEntityGroup("COLLECTION", graph.collections);
+  addEntityGroup("PIECE", graph.pieces);
+  addEntityGroup("TEMPO_INDICATION", graph.tempoIndications);
+
+  // --- 3. Piece Structure (Nested Traversal) ---
+  // This loop builds the lineage context as it descends.
   if (graph.pieceVersions) {
     for (const pv of graph.pieceVersions) {
       const piece = graph.pieces?.find((p) => p.id === pv.pieceId);
@@ -503,12 +540,10 @@ This includes properly handling nested `references` and `contributions` as you c
     }
   }
 
-  // --- Final Entities ---
-  // Metronome Marks need to find their lineage
+  // --- 4. Final Entities That Require Lineage Lookup ---
   if (graph.metronomeMarks) {
     for (const mm of graph.metronomeMarks) {
       if (!mm.sectionId) continue;
-      // Find the section to build the lineage
       let mmLineage: RequiredChecklistItem["lineage"] | undefined;
       for (const pv of graph.pieceVersions ?? []) {
         for (const m of (pv as any).movements ?? []) {
@@ -536,10 +571,11 @@ This includes properly handling nested `references` and `contributions` as you c
 
 **Step 1.4: Adapt UI and Ancillary Logic**
 
-The component at `app/(signedIn)/review/[reviewId]/checklist/page.tsx` is the primary consumer of the checklist. It must be refactored to manage the new UI state.
+The component at `app/(signedIn)/review/[reviewId]/checklist/page.tsx` must be refactored to manage the new UI state.
 
-*   **Remove Old Grouping:** The `groupedByType` and `SLICE_ORDER` logic is now obsolete and should be removed.
-*   **Introduce UI State:** Add a state to manage the current view. This will control which "slice" of the review is visible.
+*   **Remove Old Grouping:** The `groupedByType` and `SLICE_ORDER` logic is now obsolete and must be removed.
+*   **Introduce UI State:** Add a state to manage the current view, which will control which "slice" of the review is visible.
+
 ```typescript
 type ReviewView =
       | { view: "SUMMARY" }
@@ -549,7 +585,7 @@ type ReviewView =
     const [currentView, setCurrentView] = useState<ReviewView>({ view: "SUMMARY" });
 ```
 
-*   **Controller Logic:** The main component will now act as a controller, filtering the master `requiredItems` list based on the `currentView` and passing the filtered list to the appropriate slice component.
+*   **Controller Logic:** The main component will now act as a controller. It will generate the `allRequiredItems` list once and then pass filtered subsets of that list to the appropriate slice component based on the `currentView`.
 
 ---
 
@@ -557,22 +593,23 @@ type ReviewView =
 
 **Step 2.1: Create Reusable Slice Components**
 
-Create a new directory `components/review/slices` and build the components for each view. They will receive the filtered checklist items and the full graph as props.
+Create a new directory `components/review/slices` and build the components for each view.
 
 *   **`SummarySlice.tsx`**:
-    *   Displays `MM_SOURCE`, `CONTRIBUTION`, and `REFERENCE` items.
-    *   Renders a navigable list of all unique collections and pieces involved in the review, which allows the user to switch the `currentView`.
+    *   Receives items where `lineage.pieceId` and `lineage.collectionId` are both `undefined`.
+    *   Displays checklist items for `MM_SOURCE`, `REFERENCE`, `CONTRIBUTION`, etc.
+    *   Renders a navigable list of all unique collections and pieces from the full `graph`, allowing the user to click one to switch the `currentView`.
 
 *   **`CollectionSlice.tsx`**:
     *   Receives a `collectionId`.
-    *   Filters items where `item.lineage.collectionId === collectionId`.
-    *   Displays checklist items for the `COLLECTION` entity itself, plus a list of pieces within that collection.
+    *   Is passed items filtered by `item.lineage.collectionId === collectionId`.
+    *   Displays checklist items for the `COLLECTION` entity and provides navigation to the pieces within it.
 
 *   **`PieceSlice.tsx`**:
     *   Receives a `pieceId`.
-    *   Filters items where `item.lineage.pieceId === pieceId`.
-    *   This component will contain the most complex rendering logic, displaying the hierarchy of `PieceVersion` -> `Movement` -> `Section`.
-    *   For each section, it will find the corresponding `MetronomeMark` from the graph and display its checklist items inline.
+    *   Is passed items filtered by `item.lineage.pieceId === pieceId`.
+    *   This component will contain the most complex but most natural rendering logic, displaying the hierarchy of `PieceVersion` -> `Movement` -> `Section`.
+    *   For each rendered `Section`, it will find the corresponding `MetronomeMark` checklist items and render them inline, fulfilling a core spec requirement.
 
 **Step 2.2: Update the Main Page to Use Slices**
 
@@ -585,7 +622,7 @@ const allRequiredItems = useMemo(() => expandRequiredChecklistItems(graph), [gra
 
 // ...
 return (
-  // ... outer layout ...
+  // ... outer layout and progress bars ...
   {currentView.view === 'SUMMARY' && (
     <SummarySlice
       items={allRequiredItems.filter(it => !it.lineage.pieceId && !it.lineage.collectionId)}
@@ -598,9 +635,10 @@ return (
       pieceId={currentView.pieceId}
       items={allRequiredItems.filter(it => it.lineage.pieceId === currentView.pieceId)}
       graph={graph}
+      onNavigate={setCurrentView}
     />
   )}
-  {/* ... other views ... */}
+  {/* ... other views for COLLECTION etc. ... */}
 )
 ```
 
@@ -611,12 +649,291 @@ return (
 
 **Step 3.1: Enhance the "Edit" Action**
 
-The `openEditForItem` function becomes more robust. When a user clicks "Edit" on an item:
+The `openEditForItem` function in `checklist/page.tsx` becomes much more robust. When a user clicks "Edit" on an item:
 *   The `RequiredChecklistItem` now contains the full `lineage`.
 *   This makes creating the `anchors` payload for `reviewEditBridge` trivial and error-proof. For a `SECTION` item, all parent IDs (`pieceVersionId`, `movementId`) are immediately available from `item.lineage`.
 
 **Step 3.2: Refine the "Return from Edit" Logic**
 
-The `returnRoute` payload stored in `localStorage` should be updated to store the `currentView` object. This ensures that when the user returns from the `feedForm`, you can restore them to the *exact same slice* they were on (e.g., viewing `Piece_XYZ`). The scroll restoration can then use the `fieldPath` to pinpoint the exact item within that slice.
+The `returnRoute` payload stored in `localStorage` should be updated to store the `currentView` object. This ensures that when the user returns from the `feedForm`, the app can restore them to the *exact same slice* they were on (e.g., viewing `Piece_XYZ`). The scroll restoration can then use the item's unique `fieldPath` to pinpoint the exact checkbox within that slice.
 
-This new, detailed roadmap directly incorporates your insights and provides a clear path to building the sophisticated, user-friendly review interface you envision.
+This new, detailed roadmap directly incorporates your insights and provides a clear and robust path to building the sophisticated, user-friendly review interface you envision.
+
+## Me
+
+I've implemented 1.3, but before going to 1.4, I have some existing files crying for types issues: @file:reviewDiff.ts , @file:reviewEditBridge.ts and @file:auditCompose.ts .
+I need to have a clear idea of the path I will adopt concerning these different part of the review functionalities.
+
+We now have an `expandRequiredChecklistItems` function that generate a flat map of entitites (of type `ChecklistEntityType` ) from the `ChecklistGraph` type graph that adopt the same nested structure as `FeedFormState` .
+
+When it comes to @file:reviewEditBridge.ts , since this is the bridge between workingCopy and feedFormState, it should be organized around the nested structure, I guess.
+But we have to check the way `buildFeedFormStateFromWorkingCopy` is used also in @file:page.tsx .
+
+And concerning @file:auditCompose.ts and @file:reviewDiff.ts what is the right way to proceed between nested `ChecklistGraph` entries and flat `ChecklistEntityType` usage that exists?
+
+I need clarification about all these consideration please.
+
+## AI
+
+This is an excellent set of questions. You've successfully navigated Step 1.3, and now you're looking at the ripple effect, which is exactly the right way to think about this refactoring. You've correctly identified that the files that *consume* or *analyze* the `ChecklistGraph` are now broken because their core assumptions have changed.
+
+Let's clarify the path forward for each of these files. The central principle is this:
+
+**The `ChecklistGraph` is now the single, nested source of truth. Any function that needs to find, compare, or transform entities within it must now *traverse* the nested structure.**
+
+Here is the strategy for each file, breaking down the "why" and the "how."
+
+### 1. `reviewEditBridge.ts`: The Translator
+
+*   **Its Role:** This file is the "translator" between the review's `workingCopy.graph` and the `feedForm`'s `FeedFormState`.
+*   **The Path Forward:** You are correct, it should be fully organized around the nested structure. Since we've aligned the shapes of `ChecklistGraph` and `FeedFormState`, this translation becomes incredibly simple.
+
+**`buildFeedFormStateFromWorkingCopy`:**
+This function's job is to take the entire current state of the review (`workingCopy`) and package it up for the `feedForm`. It's not a stub anymore; it should perform a full, deep copy.
+
+```typescript
+// ... existing code ...
+export function buildFeedFormStateFromWorkingCopy(
+  workingCopy: ReviewWorkingCopy,
+  clickedItem: RequiredChecklistItem, // Accept the whole item
+): FeedFormState {
+  // Resolve step from the entity type, which is still valid
+  const step = resolveStepForFieldPath(clickedItem.fieldPath);
+
+  // Build anchors directly from the item's lineage, which is now reliable
+  const anchors: BridgeAnchors = {
+    pvId: clickedItem.lineage.pieceVersionId,
+    movId: clickedItem.lineage.movementId,
+    // You can add more as needed, e.g., for a specific section
+    // secId: clickedItem.entityType === 'SECTION' ? clickedItem.entityId : undefined,
+  };
+
+  const reviewContext: ReviewContext = {
+    reviewId: opts.reviewId, // This needs to be passed in `opts`
+    reviewEdit: true,
+    updatedAt: new Date().toISOString(),
+    anchors,
+  };
+
+  // Since the shapes are aligned, this is now mostly a deep copy.
+  const feedState: FeedFormState = {
+    formInfo: {
+      currentStepRank: step,
+      introDone: true, // Always skip the intro in review-edit mode
+      reviewContext,
+    },
+    // Deep-copy all the relevant slices from the working copy graph
+    mMSourceDescription: { ...workingCopy.graph.source },
+    contributions: [...(workingCopy.graph.contributions ?? [])],
+    mMSourcePieceVersions: [...(workingCopy.graph.sourceContents ?? [])],
+    organizations: [...(workingCopy.graph.organizations ?? [])],
+    collections: [...(workingCopy.graph.collections ?? [])],
+    persons: [...(workingCopy.graph.persons ?? [])],
+    pieces: [...(workingCopy.graph.pieces ?? [])],
+    pieceVersions: [...(workingCopy.graph.pieceVersions ?? [])],
+    tempoIndications: [...(workingCopy.graph.tempoIndications ?? [])],
+    metronomeMarks: [...(workingCopy.graph.metronomeMarks ?? [])],
+  };
+  return feedState;
+}
+
+// Rebuild the review working copy graph from a feed form state (inverse mapping of the above)
+// This function becomes even simpler: the feed form's state IS the new graph.
+export function rebuildWorkingCopyFromFeedForm(
+// ... existing code ...
+```
+
+**(Note:** I've adjusted the function signature to take the full `clickedItem` to make anchor generation cleaner).
+
+**Usage in `page.tsx`:**
+Your `openEditForItem` function will now pass the whole `item` to the bridge. The bridge handles the rest. This simplifies the page's responsibility.
+
+### 2. `reviewDiff.ts` and `auditCompose.ts`: The Analyzers
+
+These two files share the same problem: they need to find and compare a specific entity (like a `Movement` with ID `xyz`) in both the `baseline` and `working` graphs. The old method of looking for a top-level `graph.movements` array is gone.
+
+*   **The Path Forward:** Both files must be refactored to **traverse the nested graph structure** to find the entities they need to compare. The most robust way to do this is to make the diffing and composing logic itself recursive.
+
+#### Strategy for `reviewDiff.ts`
+
+The `computeChangedChecklistFieldPaths` function currently iterates through a flat list of entity types. We will change it to recursively traverse the graph.
+
+```typescript
+// ... existing code ...
+ * - If sourceContents arrays exist, also emits per-join rank changed field paths (source.pieceVersions[joinId].rank).
+ */
+export function computeChangedChecklistFieldPaths(
+  baseline: ChecklistGraph,
+  working: ChecklistGraph,
+): ChangedChecklistItem[] {
+  const out: ChangedChecklistItem[] = [];
+
+  // Create helper to find a node in a list by ID
+  const findNode = (list: Array<{ id: string }> | undefined, id: string) =>
+    list?.find((item) => item.id === id);
+
+  // Recursive traversal function
+  const traverseAndCompare = (
+    baselineGraph: ChecklistGraph,
+    workingGraph: ChecklistGraph,
+  ) => {
+    // 1. Compare MM_SOURCE
+    const sourceSchema = REVIEW_CHECKLIST_SCHEMA.MM_SOURCE;
+    for (const field of sourceSchema.fields) {
+      if (
+        norm((baselineGraph.source as any)?.[field.path]) !==
+        norm((workingGraph.source as any)?.[field.path])
+      ) {
+        out.push({
+          entityType: "MM_SOURCE",
+          entityId: baselineGraph.source.id,
+          fieldPath: buildFieldPath("MM_SOURCE", null, field.path),
+        });
+      }
+    }
+
+    // 2. Compare top-level entity lists (Persons, Orgs, etc.)
+    const topLevelTypes: ChecklistEntityType[] = [
+      "PERSON",
+      "ORGANIZATION",
+      "COLLECTION",
+      "PIECE",
+      "TEMPO_INDICATION",
+      "REFERENCE",
+      "CONTRIBUTION",
+    ];
+    for (const type of topLevelTypes) {
+      const baseList = (baselineGraph as any)[`${ENTITY_PREFIX[type]}s`] ?? [];
+      const workList = (workingGraph as any)[`${ENTITY_PREFIX[type]}s`] ?? [];
+      const allIds = new Set([
+        ...baseList.map((n: any) => n.id),
+        ...workList.map((n: any) => n.id),
+      ]);
+      for (const id of allIds) {
+        const bNode = findNode(baseList, id);
+        const wNode = findNode(workList, id);
+        // ... (add logic for CREATE/DELETE if needed)
+        if (bNode && wNode) {
+          for (const field of REVIEW_CHECKLIST_SCHEMA[type].fields) {
+            if (norm(bNode[field.path]) !== norm(wNode[field.path])) {
+              out.push({
+                entityType: type,
+                entityId: id,
+                fieldPath: buildFieldPath(type, id, field.path),
+              });
+            }
+          }
+        }
+      }
+    }
+
+    // 3. Recursively compare Piece Versions and their children
+    const allPvIds = new Set([
+      ...(baselineGraph.pieceVersions ?? []).map((pv) => pv.id),
+      ...(workingGraph.pieceVersions ?? []).map((pv) => pv.id),
+    ]);
+
+    for (const pvId of allPvIds) {
+      const bPv = findNode(baselineGraph.pieceVersions, pvId);
+      const wPv = findNode(workingGraph.pieceVersions, pvId);
+
+      // ... compare pieceVersion fields ...
+
+      // Recurse into movements
+      const allMovIds = new Set([
+        ...(bPv?.movements ?? []).map((m: any) => m.id),
+        ...(wPv?.movements ?? []).map((m: any) => m.id),
+      ]);
+      for (const movId of allMovIds) {
+        const bMov = findNode(bPv?.movements, movId);
+        const wMov = findNode(wPv?.movements, movId);
+
+        // ... compare movement fields ...
+
+        // Recurse into sections
+        // ... and so on
+      }
+    }
+    // ... compare MetronomeMarks and other entities that might be nested ...
+  };
+
+  traverseAndCompare(baseline, working);
+  return out;
+}
+
+function getNestedValue(obj: any, path: string): any {
+// ... existing code ...
+```
+
+**(Note:** The `reviewDiff` refactor is complex. The key is to adopt the recursive traversal pattern. You can see how it starts by comparing source, then top-level lists, then dives into `pieceVersions`.)
+
+#### Strategy for `auditCompose.ts`
+
+This file has the exact same problem as `reviewDiff`. It needs to find the "before" and "after" version of an entity. We will solve it the same way: by traversing the graph.
+
+```typescript
+// ... existing code ...
+// Helper to pick an entity slice from the graph lists by traversing
+function findNodeInGraph(
+  graph: ChecklistGraph,
+  entityType: ChecklistEntityType,
+  entityId: string,
+): any | null {
+  // Simple cases for top-level arrays
+  const topLevelProp = (GRAPH_PROP as any)[entityType];
+  if (topLevelProp && topLevelProp !== "_SINGLE" && topLevelProp !== "_JOINS") {
+    return (graph as any)[topLevelProp]?.find((n: any) => n.id === entityId) ?? null;
+  }
+
+  // Traversal cases for nested entities
+  if (entityType === "MOVEMENT" || entityType === "SECTION") {
+    for (const pv of graph.pieceVersions ?? []) {
+      for (const mov of (pv as any).movements ?? []) {
+        if (entityType === "MOVEMENT" && mov.id === entityId) {
+          return mov;
+        }
+        for (const sec of (mov as any).sections ?? []) {
+          if (entityType === "SECTION" && sec.id === entityId) {
+            return sec;
+          }
+        }
+      }
+    }
+  }
+
+  return null;
+}
+
+// ... in composeAuditEntries ...
+// ...
+  const entries: AuditEntry[] = [];
+  for (const { entityType, entityId } of Object.values(byKey)) {
+    let before: any | null = null;
+    let after: any | null = null;
+    const resolvedId: string = entityId ?? working.source?.id ?? "unknown";
+
+    if (entityType === "MM_SOURCE") {
+      before = { ...(baseline.source ?? {}) };
+      after = { ...(working.source ?? {}) };
+      // ... ordering snapshots
+    } else if (entityId) {
+      // Use the new traversal helper for all other types
+      before = findNodeInGraph(baseline, entityType, entityId);
+      after = findNodeInGraph(working, entityType, entityId);
+    }
+
+    // ... same logic to create/push entry ...
+// ... existing code ...
+```
+
+
+By creating a `findNodeInGraph` helper, you centralize the traversal logic and make `composeAuditEntries` clean and readable again. This helper effectively replaces the old, broken `findNode` logic for nested entities.
+
+### Summary of the Path Forward
+
+1.  **Embrace Traversal:** Accept that any code analyzing the `ChecklistGraph` must now navigate its nested structure.
+2.  **Refactor `reviewDiff.ts`:** Change its core logic from a flat iteration to a recursive, parallel traversal of the `baseline` and `working` graphs.
+3.  **Refactor `auditCompose.ts`:** Create a `findNodeInGraph` helper that can locate any entity, no matter how deeply nested, and use it to find the `before` and `after` states.
+4.  **Complete `reviewEditBridge.ts`:** Implement `buildFeedFormStateFromWorkingCopy` as a simple, deep copy from the `workingCopy.graph` to the `FeedFormState`, as their structures are now aligned.
+
+This approach resolves all the type issues you're seeing and correctly aligns your utility functions with the new, more powerful nested data model.
