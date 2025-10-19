@@ -24,31 +24,24 @@ export type BridgeAnchors = {
 // Draft mapping from entity types in checklist field paths to feed form step ranks
 // TODO: align to MMSource, SinglePiece and Collection stepsUtils.ts files
 export const STEP_FOR_ENTITY: Record<string, number> = {
-  source: 1, // source metadata/contributions
-  // MM_SOURCE: 1, // source metadata/contributions
-  COLLECTION: 1, // collection description step (within source/pieces)
-  PIECE: 1, // piece description step
-  pieceVersion: 2, // structure step (piece versions/movements)
-  // PIECE_VERSION: 2, // structure step (piece versions/movements)
+  source: 1,
+  collection: 1,
+  piece: 1,
+  pieceVersion: 2,
   movement: 2,
-  // MOVEMENT: 2,
   section: 2,
-  // SECTION: 2,
-  TEMPO_INDICATION: 2,
-  metronomeMark: 3, // dedicated MM step in the form
-  // METRONOME_MARK: 3, // dedicated MM step in the form
-  reference: 1, // source metadata step
-  // REFERENCE: 1, // source metadata step
-  CONTRIBUTION: 1, // source contributions step
-  PERSON: 1, // metadata (via contributions)
-  ORGANIZATION: 1, // metadata (via contributions)
+  tempoIndication: 2,
+  metronomeMark: 3,
+  reference: 1,
+  contribution: 1,
+  person: 1,
+  organization: 1,
 };
 
 // Heuristic, to be replaced with the definitive table-driven mapping based on actual fieldPath schema
 export function resolveStepForFieldPath(fieldPath: string): number {
-  // fieldPath examples (expected):
-  // MM_SOURCE.title, PIECE:{pieceId}.title, PIECE_VERSION:{pvId}.movements[...]
-  // We only extract the root entity name before the first dot or colon
+  // fieldPath examples: source.title, piece[p-1].title
+  // We only extract the root entity name before the first dot or bracket
   const root = fieldPath.split(".")[0]?.split("[")[0] ?? "";
   return STEP_FOR_ENTITY[root] ?? 0;
 }

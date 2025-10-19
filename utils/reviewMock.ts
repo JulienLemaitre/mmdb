@@ -26,24 +26,30 @@ export function buildMockOverview(reviewId: string): MockOverview {
   const tiBId = "ti-2";
   const mmAId = "mm-1";
   const mmBId = "mm-2";
+  const personId = "person-1";
+  const refId = "ref-1";
+  const contribId = "cont-1";
 
   const graph: ChecklistGraph = {
     source: {
       id: sourceId,
       title: `Mock Review Source ${reviewId}`,
-      type: "SCORE",
+      type: "EDITION",
       link: "https://example.com/score",
       permalink: "https://perma.example/score",
       year: 1820,
       comment: "Demo comment",
+      references: [
+        { id: refId, type: "ISMN", reference: "https://example.com/op10" },
+      ],
     },
-    collections: [{ id: collectionId, title: "Op. 10", composerId: "person-1" }],
+    collections: [{ id: collectionId, title: "Op. 10", composerId: personId }],
     pieces: [
       {
         id: pieceAId,
         title: "Op. 10 No. 1",
         nickname: "Allegro",
-        composerId: "person-1",
+        composerId: personId,
         yearOfComposition: 1798,
         collectionId,
         collectionRank: 1,
@@ -52,69 +58,104 @@ export function buildMockOverview(reviewId: string): MockOverview {
         id: pieceBId,
         title: "Op. 10 No. 2",
         nickname: "Adagio",
-        composerId: "person-1",
+        composerId: personId,
         yearOfComposition: 1798,
         collectionId,
         collectionRank: 2,
       },
     ],
     pieceVersions: [
-      { id: pvAId, pieceId: pieceAId, category: "URTEXT" },
-      { id: pvBId, pieceId: pieceBId, category: "URTEXT" },
-    ],
-    movements: [
-      { id: movA1Id, pieceVersionId: pvAId, rank: 1, key: "C minor" },
-      { id: movB1Id, pieceVersionId: pvBId, rank: 1, key: "F major" },
-    ],
-    sections: [
       {
-        id: secA1Id,
-        movementId: movA1Id,
-        rank: 1,
-        metreNumerator: 4,
-        metreDenominator: 4,
-        isCommonTime: true,
-        isCutTime: false,
-        fastestStructuralNotesPerBar: 16,
-        fastestStaccatoNotesPerBar: 16,
-        fastestRepeatedNotesPerBar: 16,
-        fastestOrnamentalNotesPerBar: 16,
-        isFastestStructuralNoteBelCanto: false,
-        tempoIndicationId: tiAId,
-        comment: "",
-        commentForReview: "",
+        id: pvAId,
+        pieceId: pieceAId,
+        category: "VOCAL",
+        movements: [
+          {
+            id: movA1Id,
+            rank: 1,
+            key: "C_MINOR",
+            sections: [
+              {
+                id: secA1Id,
+                rank: 1,
+                metreNumerator: 4,
+                metreDenominator: 4,
+                isCommonTime: true,
+                isCutTime: false,
+                fastestStructuralNotesPerBar: 16,
+                tempoIndication: { id: tiAId, text: "tempoInd-1" },
+                comment: "",
+              },
+            ],
+          },
+        ],
       },
       {
-        id: secB1Id,
-        movementId: movB1Id,
-        rank: 1,
-        metreNumerator: 3,
-        metreDenominator: 4,
-        isCommonTime: false,
-        isCutTime: false,
-        fastestStructuralNotesPerBar: 12,
-        fastestStaccatoNotesPerBar: 12,
-        fastestRepeatedNotesPerBar: 12,
-        fastestOrnamentalNotesPerBar: 12,
-        isFastestStructuralNoteBelCanto: false,
-        tempoIndicationId: tiBId,
-        comment: "",
-        commentForReview: "",
+        id: pvBId,
+        pieceId: pieceBId,
+        category: "KEYBOARD",
+        movements: [
+          {
+            id: movB1Id,
+            rank: 1,
+            key: "F_MAJOR",
+            sections: [
+              {
+                id: secB1Id,
+                rank: 1,
+                metreNumerator: 3,
+                metreDenominator: 4,
+                isCommonTime: false,
+                isCutTime: false,
+                fastestStructuralNotesPerBar: 12,
+                tempoIndication: { id: tiBId, text: "tempoInd-2" },
+                comment: "",
+              },
+            ],
+          },
+        ],
       },
     ],
     tempoIndications: [
-      { id: tiAId, text: "Allegro" },
-      { id: tiBId, text: "Andante" },
+      { id: tiAId, text: "tempoInd-1" },
+      { id: tiBId, text: "tempoInd-2" },
     ],
     metronomeMarks: [
-      { id: mmAId, sectionId: secA1Id, beatUnit: "quarter", bpm: 120, comment: "" },
-      { id: mmBId, sectionId: secB1Id, beatUnit: "quarter", bpm: 88, comment: "" },
+      {
+        id: mmAId,
+        sectionId: secA1Id,
+        beatUnit: "QUARTER",
+        bpm: 120,
+        comment: "",
+        noMM: false,
+        pieceVersionId: pvAId,
+      },
+      {
+        id: mmBId,
+        sectionId: secB1Id,
+        beatUnit: "QUARTER",
+        bpm: 88,
+        comment: "",
+        noMM: false,
+        pieceVersionId: pvBId,
+      },
     ],
-    references: [{ id: "ref-1", type: "URL", reference: "https://example.com/op10" }],
-    contributions: [{ id: "cont-1", role: "MM_PROVIDER", personId: "person-1" }],
+    contributions: [
+      {
+        id: contribId,
+        role: "MM_PROVIDER",
+        person: {
+          id: personId,
+          firstName: "Ludwig",
+          lastName: "Beethoven",
+          birthYear: 1770,
+          deathYear: 1827,
+        },
+      },
+    ],
     persons: [
       {
-        id: "person-1",
+        id: personId,
         firstName: "Ludwig",
         lastName: "Beethoven",
         birthYear: 1770,
@@ -145,7 +186,7 @@ export function buildMockOverview(reviewId: string): MockOverview {
   };
 
   const globallyReviewed = {
-    personIds: ["person-1"],
+    personIds: [personId],
     organizationIds: [],
     collectionIds: [],
     pieceIds: [],

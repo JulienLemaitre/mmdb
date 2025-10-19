@@ -7,10 +7,7 @@ import {
   expandRequiredChecklistItems,
   type RequiredChecklistItem,
 } from "@/utils/ReviewChecklistSchema";
-import {
-  computeChangedChecklistFieldPaths,
-  toEncodedKeys,
-} from "@/utils/reviewDiff";
+import { computeChangedChecklistFieldPaths } from "@/utils/reviewDiff";
 import { URL_REVIEW_LIST, URL_FEED } from "@/utils/routes";
 import { ApiOverview } from "@/types/reviewTypes";
 import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
@@ -37,13 +34,13 @@ function storageKey(reviewId: string) {
   return `review:${reviewId}:checklist`;
 }
 
-function encodeKey(it: {
-  entityType: ChecklistEntityType;
-  entityId?: string | null;
-  fieldPath: string;
-}) {
-  return `${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`;
-}
+// function encodeKey(it: {
+//   entityType: ChecklistEntityType;
+//   entityId?: string | null;
+//   fieldPath: string;
+// }) {
+//   return `${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`;
+// }
 
 const ENTITY_BADGE: Record<ChecklistEntityType, string> = {
   MM_SOURCE: "badge-info",
@@ -273,7 +270,7 @@ export default function ChecklistPage() {
         prev.graph as any,
         next.graph as any,
       );
-      const impactedKeys = new Set(toEncodedKeys(impacted));
+      const impactedKeys = new Set(impacted.map((c) => c.fieldPath));
 
       // Recompute required checklist items for the new working graph
       const gr = data.globallyReviewed;
@@ -286,7 +283,7 @@ export default function ChecklistPage() {
         },
       });
       const nextRequiredKeySet = new Set(
-        nextRequiredItems.map((it) => encodeKey(it)),
+        nextRequiredItems.map((it) => it.fieldPath),
       );
 
       // Update checked map
@@ -306,7 +303,7 @@ export default function ChecklistPage() {
         data.graph as any,
         next.graph as any,
       );
-      setChangedKeys(new Set(toEncodedKeys(changed)));
+      setChangedKeys(new Set(changed.map((c) => c.fieldPath)));
 
       // Clear feed form storage so normal feed openings don't inherit review context
       localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
@@ -378,7 +375,7 @@ export default function ChecklistPage() {
   const totals = useMemo(() => {
     const totalRequired = requiredItems.length;
     const checkedRequired = requiredItems.filter((i) =>
-      checkedKeys.has(encodeKey(i)),
+      checkedKeys.has(i.fieldPath),
     ).length;
     const pct =
       totalRequired === 0
@@ -407,14 +404,14 @@ export default function ChecklistPage() {
         data.graph,
         workingGraph,
       );
-      setChangedKeys(new Set(toEncodedKeys(changes)));
+      setChangedKeys(new Set(changes.map((c) => c.fieldPath)));
     } catch {
       setChangedKeys(new Set());
     }
   }, [data, reloadNonce, getWorkingCopy]);
 
   function toggle(item: RequiredChecklistItem) {
-    const key = encodeKey(item);
+    const key = item.fieldPath;
     setCheckedKeys((prev) => {
       const next = new Set(prev);
       if (next.has(key)) next.delete(key);
@@ -554,7 +551,7 @@ export default function ChecklistPage() {
                     />
                   );
                   const rows = group.map((it) => {
-                    const key = encodeKey(it);
+                    const key = it.fieldPath;
                     const isChecked = checkedKeys.has(key);
                     const badgeClass =
                       ENTITY_BADGE[it.entityType] || "badge-ghost";
@@ -615,9 +612,9 @@ export default function ChecklistPage() {
                     data.graph,
                     workingGraph,
                   );
-                  const changeKeys = new Set(toEncodedKeys(changes));
+                  const changeKeys = new Set(changes.map((c) => c.fieldPath));
                   const requiredKeyMap = new Map(
-                    requiredItems.map((it) => [encodeKey(it), it]),
+                    requiredItems.map((it) => [it.fieldPath, it]),
                   );
                   const relevantChangeKeys = Array.from(changeKeys).filter(
                     (k) => requiredKeyMap.has(k),
@@ -638,7 +635,7 @@ export default function ChecklistPage() {
                   }
 
                   const requiredItemsChecked = requiredItems
-                    .filter((it) => checkedKeys.has(encodeKey(it)))
+                    .filter((it) => checkedKeys.has(it.fieldPath))
                     .map((it) => ({
                       entityType: it.entityType,
                       entityId: it.entityId ?? null,

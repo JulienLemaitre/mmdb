@@ -95,6 +95,13 @@ export function computeChangedChecklistFieldPaths(
             fieldPath: buildFieldPath(entityType, node.id, field.path),
           });
         }
+
+        // Also handle children of created/deleted entities
+        if (entityType === "PIECE_VERSION") {
+          diffEntityArray("MOVEMENT", bNode?.movements, wNode?.movements);
+        } else if (entityType === "MOVEMENT") {
+          diffEntityArray("SECTION", bNode?.sections, wNode?.sections);
+        }
       }
     }
   };
@@ -119,9 +126,11 @@ export function computeChangedChecklistFieldPaths(
   for (const type of topLevelTypes) {
     const prop = ENTITY_PREFIX[type];
     const bList =
-      (baseline as any)[`${prop}s`] ?? (baseline.source as any)[prop] ?? [];
+      (baseline as any)[`${prop}s`] ??
+      (baseline.source as any)[`${prop}s`] ??
+      [];
     const wList =
-      (working as any)[`${prop}s`] ?? (working.source as any)[prop] ?? [];
+      (working as any)[`${prop}s`] ?? (working.source as any)[`${prop}s`] ?? [];
     diffEntityArray(type, bList, wList);
   }
 
@@ -154,10 +163,11 @@ export function computeChangedChecklistFieldPaths(
 }
 
 /**
+ * DEPRECATED: This function is no longer needed as `fieldPath` is now the unique key.
  * From the changed items list, produce encoded keys used by the checklist UI
  */
 export function toEncodedKeys(changes: ChangedChecklistItem[]): string[] {
-  return changes.map(
-    (c) => `${c.entityType}:${c.entityId ?? ""}:${c.fieldPath}`,
-  );
+  // This function body is now incorrect and should not be used.
+  // Returning fieldPath directly is the new pattern.
+  return changes.map((c) => c.fieldPath);
 }
