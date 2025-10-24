@@ -111,26 +111,27 @@ export function computeChangedChecklistFieldPaths(
     compareNodes("MM_SOURCE", baseline.source, working.source);
   }
 
-  // 2. Diff top-level arrays
+  // 2. Diff nested and top-level arrays
+  diffEntityArray(
+    "REFERENCE",
+    baseline.source?.references,
+    working.source?.references,
+  );
+
   const topLevelTypes: ChecklistEntityType[] = [
     "PERSON",
     "ORGANIZATION",
     "COLLECTION",
     "PIECE",
     "TEMPO_INDICATION",
-    "REFERENCE",
     "CONTRIBUTION",
     "METRONOME_MARK",
   ];
 
   for (const type of topLevelTypes) {
     const prop = ENTITY_PREFIX[type];
-    const bList =
-      (baseline as any)[`${prop}s`] ??
-      (baseline.source as any)[`${prop}s`] ??
-      [];
-    const wList =
-      (working as any)[`${prop}s`] ?? (working.source as any)[`${prop}s`] ?? [];
+    const bList = (baseline as any)[`${prop}s`];
+    const wList = (working as any)[`${prop}s`];
     diffEntityArray(type, bList, wList);
   }
 

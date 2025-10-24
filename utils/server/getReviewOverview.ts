@@ -69,7 +69,6 @@ export async function getReviewOverview(reviewId: string): Promise<{
       },
       // Source-level contributions
       contributions: {
-        select: { id: true, personId: true, organizationId: true, role: true },
         include: {
           person: true,
           organization: true,
