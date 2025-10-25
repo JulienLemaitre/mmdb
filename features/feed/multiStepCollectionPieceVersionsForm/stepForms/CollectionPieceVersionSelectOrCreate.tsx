@@ -1,5 +1,5 @@
 import React from "react";
-import { MMSourcePieceVersionsState } from "@/types/formTypes";
+import { MMSourceOnPieceVersionsState } from "@/types/formTypes";
 import { getNewEntities } from "@/context/feedFormContext";
 import CollectionPieceVersionsEditForm from "@/features/pieceVersion/CollectionPieceVersionsEditForm";
 import { FeedFormState } from "@/types/feedFormTypes";
@@ -8,7 +8,7 @@ type CollectionPieceVersionSelectOrCreateProps = {
   feedFormState: FeedFormState;
   selectedCollectionId: string;
   onSubmitSourceOnPieceVersions: (
-    piecePieceVersions: MMSourcePieceVersionsState[],
+    piecePieceVersions: MMSourceOnPieceVersionsState[],
   ) => void;
   isUpdateMode: boolean;
 };

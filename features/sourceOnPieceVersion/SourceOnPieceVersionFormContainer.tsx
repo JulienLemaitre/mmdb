@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MMSourcePieceVersionsState } from "@/types/formTypes";
+import { MMSourceOnPieceVersionsState } from "@/types/formTypes";
 import PlusIcon from "@/ui/svg/PlusIcon";
 import MMSourceFormStepNavigation from "@/features/feed/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import SinglePieceVersionFormContainer from "@/features/feed/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer";
@@ -29,7 +29,7 @@ import PieceVersionDisplay from "@/features/pieceVersion/PieceVersionDisplay";
 import InformationCircleIcon from "@/ui/svg/InformationCircleIcon";
 
 type SourcePieceVersionSelectFormProps = {
-  mMSourcePieceVersions?: MMSourcePieceVersionsState[];
+  mMSourcePieceVersions?: MMSourceOnPieceVersionsState[];
   onSubmit: (option: { goToNextStep: boolean }) => void;
   submitTitle?: string;
   title?: string;
@@ -96,7 +96,7 @@ const SourceOnPieceVersionFormContainer = ({
   };
 
   const onEditMMSourcePieceVersion = (
-    mmSourceOnPieceVersion: MMSourcePieceVersionsState,
+    mmSourceOnPieceVersion: MMSourceOnPieceVersionsState,
   ) => {
     const { pieceVersionId, rank } = mmSourceOnPieceVersion;
 
@@ -643,14 +643,14 @@ export default SourceOnPieceVersionFormContainer;
 
 // Utility function to gather the data into groups with all related information from feedFormState
 function processMMSourcePieceVersionsForDisplay(
-  mMSourcePieceVersions: MMSourcePieceVersionsState[],
+  mMSourcePieceVersions: MMSourceOnPieceVersionsState[],
   feedFormState: any,
 ) {
   const processedGroups: Array<{
     type: "collection" | "single";
     collection?: any;
     items: Array<{
-      mMSourcePieceVersion: MMSourcePieceVersionsState;
+      mMSourcePieceVersion: MMSourceOnPieceVersionsState;
       pieceVersion: any;
       piece: any;
       composer: any;

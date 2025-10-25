@@ -205,7 +205,7 @@ export type MMSourceDescriptionState = Pick<
 } & IsNewProp &
   GoNextProp;
 
-export type MMSourcePieceVersionsState = Pick<
+export type MMSourceOnPieceVersionsState = Pick<
   Prisma.MMSourcesOnPieceVersionsUncheckedCreateInput,
   "rank" | "pieceVersionId"
 > &

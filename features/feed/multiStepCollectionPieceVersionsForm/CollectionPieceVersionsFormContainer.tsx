@@ -7,7 +7,7 @@ import {
   CollectionInput,
   CollectionState,
   CollectionTitleInput,
-  MMSourcePieceVersionsState,
+  MMSourceOnPieceVersionsState,
   PersonInput,
   PersonState,
   PiecePieceVersion,
@@ -285,7 +285,7 @@ function CollectionPieceVersionsFormContainer({
   };
 
   const onSubmitSourceOnPieceVersions = (
-    sourceOnPieceVersions: MMSourcePieceVersionsState[],
+    sourceOnPieceVersions: MMSourceOnPieceVersionsState[],
   ) => {
     // Check if all the pieceVersions are in feedFormState
     if (

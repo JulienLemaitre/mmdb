@@ -3,7 +3,7 @@ import {
   MetronomeMarkState,
   MMSourceContributionsState,
   MMSourceDescriptionState,
-  MMSourcePieceVersionsState,
+  MMSourceOnPieceVersionsState,
   OrganizationState,
   PersonState,
   PieceState,
@@ -50,7 +50,7 @@ export type FeedFormState = {
   formInfo?: FeedFormInfo;
   mMSourceDescription?: MMSourceDescriptionState;
   mMSourceContributions?: MMSourceContributionsState;
-  mMSourcePieceVersions?: MMSourcePieceVersionsState[];
+  mMSourcePieceVersions?: MMSourceOnPieceVersionsState[];
   organizations?: OrganizationState[];
   collections?: CollectionState[];
   persons?: PersonState[];

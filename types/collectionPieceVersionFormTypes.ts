@@ -1,6 +1,6 @@
 import {
   CollectionState,
-  MMSourcePieceVersionsState,
+  MMSourceOnPieceVersionsState,
   PieceVersionState,
   PersonState,
   PieceState,
@@ -37,7 +37,7 @@ export type CollectionPieceVersionsFormInfo = {
 export type CollectionPieceVersionsFormState = {
   formInfo: CollectionPieceVersionsFormInfo;
   collection?: Partial<CollectionState & { isComposerNew?: boolean }>;
-  mMSourcePieceVersions?: MMSourcePieceVersionsState[];
+  mMSourcePieceVersions?: MMSourceOnPieceVersionsState[];
   persons?: PersonState[];
   pieces?: PieceState[];
   pieceVersions?: PieceVersionState[];

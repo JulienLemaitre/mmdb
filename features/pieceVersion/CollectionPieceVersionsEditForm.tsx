@@ -9,7 +9,7 @@ import SinglePieceVersionFormContainer from "@/features/feed/multiStepSinglePiec
 import TrashIcon from "@/ui/svg/TrashIcon";
 import PlusIcon from "@/ui/svg/PlusIcon";
 import {
-  MMSourcePieceVersionsState,
+  MMSourceOnPieceVersionsState,
   PieceState,
   PieceStateWithCollectionRank,
 } from "@/types/formTypes";
@@ -24,7 +24,7 @@ type CollectionPieceVersionsEditFormProps = {
   isUpdateMode: boolean;
   isPreexistingCollectionUpdate: boolean;
   onSubmitSourceOnPieceVersions: (
-    piecePieceVersions: MMSourcePieceVersionsState[],
+    piecePieceVersions: MMSourceOnPieceVersionsState[],
   ) => void;
 };
 
@@ -101,7 +101,7 @@ function CollectionPieceVersionsEditForm({
 
   const onEditCollectionPieceVersion = (
     collectionPieceVersion:
-      | MMSourcePieceVersionsState
+      | MMSourceOnPieceVersionsState
       | PieceStateWithCollectionRank,
   ) => {
     let pieceVersion, piece, rank;
