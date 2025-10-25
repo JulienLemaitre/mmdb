@@ -19,7 +19,7 @@ export default function NavBar({
       </div>
       <div className="flex-1 px-2 mx-2 text-center flex justify-center">
         {isHome ? null : (
-          <Link className="btn btn-ghost normal-case text-xl" href="/public">
+          <Link className="btn btn-ghost normal-case text-xl" href="/">
             MM Database
           </Link>
         )}
