@@ -1,4 +1,4 @@
-import type { ChecklistEntityType } from "@/utils/ReviewChecklistSchema";
+import type { ChecklistEntityType } from "@/features/review/ReviewChecklistSchema";
 
 export type ChecklistEncodable = {
   entityType: ChecklistEntityType;

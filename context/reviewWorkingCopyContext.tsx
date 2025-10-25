@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useMemo } from "react";
-import { ReviewWorkingCopy } from "@/utils/reviewEditBridge";
+import { ReviewWorkingCopy } from "@/features/review/reviewEditBridge";
 
 type Ctx = {
   getWorkingCopy(): ReviewWorkingCopy | null;

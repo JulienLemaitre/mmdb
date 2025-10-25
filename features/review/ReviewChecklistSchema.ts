@@ -318,7 +318,6 @@ export type GloballyReviewed = {
 
 export type ExpandOptions = {
   globallyReviewed?: GloballyReviewed;
-  includePerJoinOrderChecks?: boolean; // default true
 };
 
 export type RequiredChecklistItem = {

@@ -1,7 +1,7 @@
-import { computeOverviewProgress } from "@/utils/reviewProgress";
-import { expandRequiredChecklistItems } from "@/utils/ReviewChecklistSchema";
-import { buildMockOverview } from "@/utils/reviewMock";
-import { encodeChecklistKey } from "@/utils/reviewKeys";
+import { computeOverviewProgress } from "@/features/review/reviewProgress";
+import { expandRequiredChecklistItems } from "@/features/review/ReviewChecklistSchema";
+import { buildMockOverview } from "@/features/review/reviewMock";
+import { encodeChecklistKey } from "@/features/review/reviewKeys";
 
 describe("reviewProgress with checked aggregation", () => {
   it("counts checked items at source level when a checked set is provided", () => {
@@ -48,7 +48,9 @@ describe("reviewProgress with checked aggregation", () => {
 
     // Resolve the owning pieceId for that section via movement -> pieceVersion -> piece
     const mv = (graph.movements ?? []).find((m) => m.id === sec.movementId)!;
-    const pv = (graph.pieceVersions ?? []).find((v) => v.id === mv.pieceVersionId)!;
+    const pv = (graph.pieceVersions ?? []).find(
+      (v) => v.id === mv.pieceVersionId,
+    )!;
     const piece = (graph.pieces ?? []).find((p) => p.id === pv.pieceId)!;
     const collectionId = piece.collectionId as string | undefined;
 

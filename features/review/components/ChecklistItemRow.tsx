@@ -2,7 +2,7 @@ import React from "react";
 import {
   ChecklistGraph,
   RequiredChecklistItem,
-} from "@/utils/ReviewChecklistSchema";
+} from "@/features/review/ReviewChecklistSchema";
 import { getItemValue } from "@/features/review/utils/getItemValue";
 
 type Props = {

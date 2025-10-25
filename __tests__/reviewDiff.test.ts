@@ -1,6 +1,6 @@
-import { computeChangedChecklistFieldPaths } from "@/utils/reviewDiff";
-import { buildMockOverview } from "@/utils/reviewMock";
-import { ChecklistGraph } from "@/utils/ReviewChecklistSchema";
+import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
+import { buildMockOverview } from "@/features/review/reviewMock";
+import { ChecklistGraph } from "@/features/review/ReviewChecklistSchema";
 
 // Deep clone utility to ensure tests have isolated data
 function clone<T>(v: T): T {

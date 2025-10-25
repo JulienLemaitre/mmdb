@@ -3,8 +3,8 @@ import {
   buildFieldPath,
   buildSourceJoinRankPath,
   expandRequiredChecklistItems,
-} from "@/utils/ReviewChecklistSchema";
-import { buildMockOverview } from "@/utils/reviewMock";
+} from "@/features/review/ReviewChecklistSchema";
+import { buildMockOverview } from "@/features/review/reviewMock";
 
 describe("ReviewChecklistSchema helpers", () => {
   it("buildFieldPath follows convention for source and others", () => {

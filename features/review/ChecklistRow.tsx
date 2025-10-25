@@ -1,5 +1,5 @@
 import React from "react";
-import type { RequiredChecklistItem } from "@/utils/ReviewChecklistSchema";
+import type { RequiredChecklistItem } from "@/features/review/ReviewChecklistSchema";
 
 export function ChecklistRow({
   item,

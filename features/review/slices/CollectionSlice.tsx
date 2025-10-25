@@ -1,7 +1,7 @@
 import {
   ChecklistGraph,
   RequiredChecklistItem,
-} from "@/utils/ReviewChecklistSchema";
+} from "@/features/review/ReviewChecklistSchema";
 import { ReviewView } from "@/app/(signedIn)/review/[reviewId]/checklist/page";
 import { ChecklistItemRow } from "../components/ChecklistItemRow";
 

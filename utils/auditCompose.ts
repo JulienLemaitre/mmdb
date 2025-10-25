@@ -2,8 +2,8 @@ import {
   ChecklistGraph,
   ChecklistEntityType,
   ENTITY_PREFIX,
-} from "@/utils/ReviewChecklistSchema";
-import { computeChangedChecklistFieldPaths } from "@/utils/reviewDiff";
+} from "@/features/review/ReviewChecklistSchema";
+import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
 
 export type AuditOperation = "CREATE" | "UPDATE" | "DELETE";
 

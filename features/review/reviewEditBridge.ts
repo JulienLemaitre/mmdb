@@ -5,7 +5,7 @@ import { FEED_FORM_BOOT_KEY } from "@/utils/constants";
 import {
   ChecklistGraph,
   RequiredChecklistItem,
-} from "@/utils/ReviewChecklistSchema";
+} from "@/features/review/ReviewChecklistSchema";
 
 // Minimal structure for the review working copy we operate on
 export type ReviewWorkingCopy = {

@@ -1,4 +1,4 @@
-import { ChecklistGraph } from "@/utils/ReviewChecklistSchema";
+import { ChecklistGraph } from "@/features/review/ReviewChecklistSchema";
 
 export type MockOverview = {
   graph: ChecklistGraph;

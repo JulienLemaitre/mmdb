@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { expandRequiredChecklistItems } from "@/utils/ReviewChecklistSchema";
+import { expandRequiredChecklistItems } from "@/features/review/ReviewChecklistSchema";
 import { getReviewOverview } from "@/utils/server/getReviewOverview";
-import { computeChangedChecklistFieldPaths } from "@/utils/reviewDiff";
+import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
 import { composeAuditEntries } from "@/utils/auditCompose";
 
 // POST /api/review/[reviewId]/submit

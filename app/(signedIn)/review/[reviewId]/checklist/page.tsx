@@ -6,8 +6,8 @@ import {
   expandRequiredChecklistItems,
   type ChecklistGraph,
   type RequiredChecklistItem,
-} from "@/utils/ReviewChecklistSchema";
-import { computeChangedChecklistFieldPaths } from "@/utils/reviewDiff";
+} from "@/features/review/ReviewChecklistSchema";
+import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
 import { URL_REVIEW_LIST, URL_FEED } from "@/utils/routes";
 import { ApiOverview } from "@/types/reviewTypes";
 import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
@@ -16,7 +16,7 @@ import {
   buildFeedFormStateFromWorkingCopy,
   writeBootStateForFeedForm,
   rebuildWorkingCopyFromFeedForm,
-} from "@/utils/reviewEditBridge";
+} from "@/features/review/reviewEditBridge";
 import { FEED_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 import { SummarySlice } from "@/features/review/slices/SummarySlice";
 import { CollectionSlice } from "@/features/review/slices/CollectionSlice";

@@ -2,8 +2,8 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import ChecklistPage from "@/app/(signedIn)/review/[reviewId]/checklist/page";
-import { buildMockOverview } from "@/utils/reviewMock";
-import { computeOverviewProgress } from "@/utils/reviewProgress";
+import { buildMockOverview } from "@/features/review/reviewMock";
+import { computeOverviewProgress } from "@/features/review/reviewProgress";
 
 // Mock next/navigation hooks
 jest.mock("next/navigation", () => ({

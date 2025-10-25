@@ -2,7 +2,7 @@ import {
   ChecklistGraph,
   ENTITY_PREFIX,
   RequiredChecklistItem,
-} from "@/utils/ReviewChecklistSchema";
+} from "@/features/review/ReviewChecklistSchema";
 
 export function getItemValue({
   item,

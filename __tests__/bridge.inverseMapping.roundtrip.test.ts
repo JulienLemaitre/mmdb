@@ -1,12 +1,12 @@
 import { describe, it, expect, beforeEach } from "@jest/globals";
-import { buildMockOverview } from "@/utils/reviewMock";
+import { buildMockOverview } from "@/features/review/reviewMock";
 import type { FeedFormState } from "@/types/feedFormTypes";
 import {
   rebuildWorkingCopyFromFeedForm,
   type ReviewWorkingCopy,
-} from "@/utils/reviewEditBridge";
-import { computeChangedChecklistFieldPaths } from "@/utils/reviewDiff";
-import { buildFieldPath } from "@/utils/ReviewChecklistSchema";
+} from "@/features/review/reviewEditBridge";
+import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
+import { buildFieldPath } from "@/features/review/ReviewChecklistSchema";
 
 function toChangedKeySet(
   changes: Array<{

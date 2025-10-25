@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { computeOverviewProgress } from "@/utils/reviewProgress";
+import { computeOverviewProgress } from "@/features/review/reviewProgress";
 import { ApiOverview } from "@/types/reviewTypes";
 import { getReviewOverview } from "@/utils/server/getReviewOverview";
 

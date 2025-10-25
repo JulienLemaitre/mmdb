@@ -5,7 +5,7 @@ import {
   buildFieldPath,
   buildSourceJoinRankPath,
   ENTITY_PREFIX,
-} from "@/utils/ReviewChecklistSchema";
+} from "@/features/review/ReviewChecklistSchema";
 
 export type ChangedChecklistItem = {
   entityType: ChecklistEntityType;

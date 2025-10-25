@@ -1,7 +1,7 @@
 import {
   buildFieldPath,
   ChecklistEntityType,
-} from "@/utils/ReviewChecklistSchema";
+} from "@/features/review/ReviewChecklistSchema";
 
 export type SourceDescriptionValues = {
   title?: string | null;

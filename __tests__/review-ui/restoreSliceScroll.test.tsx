@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import { buildMockOverview } from "@/utils/reviewMock";
-import { expandRequiredChecklistItems } from "@/utils/ReviewChecklistSchema";
+import { buildMockOverview } from "@/features/review/reviewMock";
+import { expandRequiredChecklistItems } from "@/features/review/ReviewChecklistSchema";
 import ChecklistPage from "@/app/(signedIn)/review/[reviewId]/checklist/page";
 import { FEED_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 

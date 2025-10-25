@@ -1,5 +1,13 @@
-import { ChecklistGraph, RequiredChecklistItem, expandRequiredChecklistItems, type ExpandOptions } from "@/utils/ReviewChecklistSchema";
-import { encodeChecklistKey, type CheckedKeySet } from "@/utils/reviewKeys";
+import {
+  ChecklistGraph,
+  RequiredChecklistItem,
+  expandRequiredChecklistItems,
+  type ExpandOptions,
+} from "@/features/review/ReviewChecklistSchema";
+import {
+  encodeChecklistKey,
+  type CheckedKeySet,
+} from "@/features/review/reviewKeys";
 import React, { useMemo } from "react";
 
 export type ProgressCounts = {
@@ -24,10 +32,12 @@ function buildParentIndexes(graph: ChecklistGraph) {
     if (pv && pv.id && pv.pieceId) pieceVersionToPiece[pv.id] = pv.pieceId;
   }
   for (const mv of graph.movements ?? []) {
-    if (mv && mv.id && mv.pieceVersionId) movementToPieceVersion[mv.id] = mv.pieceVersionId;
+    if (mv && mv.id && mv.pieceVersionId)
+      movementToPieceVersion[mv.id] = mv.pieceVersionId;
   }
   for (const sec of graph.sections ?? []) {
-    if (sec && sec.id && sec.movementId) sectionToMovement[sec.id] = sec.movementId;
+    if (sec && sec.id && sec.movementId)
+      sectionToMovement[sec.id] = sec.movementId;
   }
   for (const mm of graph.metronomeMarks ?? []) {
     if (mm && mm.id && mm.sectionId) mmToSection[mm.id] = mm.sectionId;
@@ -77,7 +87,9 @@ function attributeItemToPieceId(
   }
   // TEMPO_INDICATION may be attached to SECTION via section.tempoIndicationId; we attribute by section if present in graph
   if (item.entityType === "TEMPO_INDICATION" && item.entityId) {
-    const section = (graph.sections ?? []).find((s) => s.tempoIndicationId === item.entityId);
+    const section = (graph.sections ?? []).find(
+      (s) => s.tempoIndicationId === item.entityId,
+    );
     if (section) {
       const mvId = idx.sectionToMovement[section.id];
       const pvId = mvId ? idx.movementToPieceVersion[mvId] : undefined;
@@ -108,7 +120,8 @@ export function computeOverviewProgress(
   for (const p of graph.pieces ?? []) {
     perPiece[p.id] = { required: 0, checked: 0 };
     const colId = (p as any).collectionId as string | undefined;
-    if (colId && !perCollection[colId]) perCollection[colId] = { required: 0, checked: 0 };
+    if (colId && !perCollection[colId])
+      perCollection[colId] = { required: 0, checked: 0 };
   }
   for (const c of graph.collections ?? []) {
     if (!perCollection[c.id]) perCollection[c.id] = { required: 0, checked: 0 };
@@ -122,12 +135,18 @@ export function computeOverviewProgress(
 
     const pieceId = attributeItemToPieceId(item, graph, idx);
     if (pieceId) {
-      const pp = (perPiece[pieceId] = perPiece[pieceId] || { required: 0, checked: 0 });
+      const pp = (perPiece[pieceId] = perPiece[pieceId] || {
+        required: 0,
+        checked: 0,
+      });
       pp.required += 1;
       if (isChecked) pp.checked += 1;
       const colId = idx.pieceToCollection[pieceId];
       if (colId) {
-        const pc = (perCollection[colId] = perCollection[colId] || { required: 0, checked: 0 });
+        const pc = (perCollection[colId] = perCollection[colId] || {
+          required: 0,
+          checked: 0,
+        });
         pc.required += 1;
         if (isChecked) pc.checked += 1;
       }
@@ -137,7 +156,10 @@ export function computeOverviewProgress(
   }
 
   // Source required = total items
-  const source: ProgressCounts = { required: items.length, checked: sourceChecked };
+  const source: ProgressCounts = {
+    required: items.length,
+    checked: sourceChecked,
+  };
 
   return { source, perCollection, perPiece };
 }
@@ -151,5 +173,8 @@ export function useOverviewProgress(
   options?: ExpandOptions,
 ): OverviewProgress {
   // Note: callers should pass stable references or a primitive nonce for graph if needed
-  return useMemo(() => computeOverviewProgress(graph, options, checkedKeys), [graph, options, checkedKeys]);
+  return useMemo(
+    () => computeOverviewProgress(graph, options, checkedKeys),
+    [graph, options, checkedKeys],
+  );
 }

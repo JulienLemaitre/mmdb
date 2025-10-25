@@ -1,5 +1,5 @@
 import { composeAuditEntries } from "@/utils/auditCompose";
-import { buildMockOverview } from "@/utils/reviewMock";
+import { buildMockOverview } from "@/features/review/reviewMock";
 
 function deepClone<T>(v: T): T {
   return JSON.parse(JSON.stringify(v));

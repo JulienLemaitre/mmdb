@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ChecklistRow } from "@/features/review/ChecklistRow";
-import type { RequiredChecklistItem } from "@/utils/ReviewChecklistSchema";
+import type { RequiredChecklistItem } from "@/features/review/ReviewChecklistSchema";
 
 function makeItem(
   overrides: Partial<RequiredChecklistItem> = {},

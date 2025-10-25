@@ -6,12 +6,12 @@ import {
   buildFeedFormStateFromWorkingCopy,
   rebuildWorkingCopyFromFeedForm,
   type ReviewWorkingCopy,
-} from "@/utils/reviewEditBridge";
+} from "@/features/review/reviewEditBridge";
 import { FEED_FORM_BOOT_KEY } from "@/utils/constants";
 import {
   RequiredChecklistItem,
   ChecklistGraph,
-} from "@/utils/ReviewChecklistSchema";
+} from "@/features/review/ReviewChecklistSchema";
 import { FeedFormState } from "@/types/feedFormTypes";
 
 // Mock data that reflects the new nested ChecklistGraph structure.
