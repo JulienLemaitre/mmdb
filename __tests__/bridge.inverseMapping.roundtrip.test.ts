@@ -114,7 +114,7 @@ describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
           })),
       })),
       // Ordering slice for source contents
-      mMSourceOnPieceVersions: (graph.sourceContents ?? []).map((j) => ({
+      mMSourceOnPieceVersions: (graph.sourceOnPieceVersions ?? []).map((j) => ({
         rank: j.rank,
         pieceVersionId: j.pieceVersionId,
       })),
@@ -127,8 +127,9 @@ describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
         comment: x.comment ?? "",
         pieceVersionId: pvId,
         pieceVersionRank:
-          (graph.sourceContents ?? []).find((j) => j.pieceVersionId === pvId)
-            ?.rank ?? 1,
+          (graph.sourceOnPieceVersions ?? []).find(
+            (j) => j.pieceVersionId === pvId,
+          )?.rank ?? 1,
         noMM: false,
       })),
       persons: graph.persons as any,

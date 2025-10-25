@@ -37,7 +37,7 @@ describe("ChecklistPage UI", () => {
         reviewId: "r-1",
         graph,
         globallyReviewed,
-        sourceContents: graph.sourceContents,
+        sourceOnPieceVersions: graph.sourceOnPieceVersions,
         progress,
       }),
     } as any);

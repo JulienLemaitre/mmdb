@@ -84,7 +84,9 @@ export function buildFeedFormStateFromWorkingCopy(
     // Deep-copy all the relevant slices from the working copy graph
     mMSourceDescription: { ...workingCopy.graph.source },
     mMSourceContributions: [...(workingCopy.graph.contributions ?? [])],
-    mMSourceOnPieceVersions: [...(workingCopy.graph.sourceContents ?? [])],
+    mMSourceOnPieceVersions: [
+      ...(workingCopy.graph.sourceOnPieceVersions ?? []),
+    ],
     organizations: [...(workingCopy.graph.organizations ?? [])],
     collections: [...(workingCopy.graph.collections ?? [])],
     persons: [...(workingCopy.graph.persons ?? [])],
@@ -147,23 +149,23 @@ export function rebuildWorkingCopyFromFeedForm(
   }
   const tempoIndications = Array.from(tempoIndicationMap.values());
 
-  // Rebuild derived data: `sourceContents` needs to be enriched with data
+  // Rebuild derived data: `sourceOnPieceVersions` needs to be enriched with data
   // from the newly defined pieces and pieceVersions.
-  const sourceContents = (feedFormState.mMSourceOnPieceVersions ?? []).map(
-    (j) => {
-      const pv = pieceVersions.find((pv) => pv.id === j.pieceVersionId);
-      const piece = pv ? pieces.find((p) => p.id === pv.pieceId) : undefined;
-      return {
-        joinId: `join-${j.pieceVersionId}`, // Regenerate joinId for simplicity
-        mMSourceId: source.id,
-        pieceVersionId: j.pieceVersionId,
-        rank: j.rank,
-        pieceId: pv?.pieceId as string, // TODO: replace by type safeguards for mandatory entities in workingCopy (coming from persisted MMSource)
-        collectionId: piece?.collectionId ?? undefined,
-        collectionRank: piece?.collectionRank ?? undefined,
-      };
-    },
-  );
+  const sourceOnPieceVersions = (
+    feedFormState.mMSourceOnPieceVersions ?? []
+  ).map((j) => {
+    const pv = pieceVersions.find((pv) => pv.id === j.pieceVersionId);
+    const piece = pv ? pieces.find((p) => p.id === pv.pieceId) : undefined;
+    return {
+      joinId: `join-${j.pieceVersionId}`, // Regenerate joinId for simplicity
+      mMSourceId: source.id,
+      pieceVersionId: j.pieceVersionId,
+      rank: j.rank,
+      pieceId: pv?.pieceId as string, // TODO: replace by type safeguards for mandatory entities in workingCopy (coming from persisted MMSource)
+      collectionId: piece?.collectionId ?? undefined,
+      collectionRank: piece?.collectionRank ?? undefined,
+    };
+  });
 
   const nextGraph: ChecklistGraph = {
     source,
@@ -175,7 +177,7 @@ export function rebuildWorkingCopyFromFeedForm(
     pieceVersions,
     metronomeMarks,
     tempoIndications,
-    sourceContents,
+    sourceOnPieceVersions,
   };
 
   return {

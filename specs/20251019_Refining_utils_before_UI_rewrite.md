@@ -64,7 +64,7 @@ export function buildFeedFormStateFromWorkingCopy(
     // Deep-copy all the relevant slices from the working copy graph
     mMSourceDescription: { ...workingCopy.graph.source },
     contributions: [...(workingCopy.graph.contributions ?? [])],
-    mMSourceOnPieceVersions: [...(workingCopy.graph.sourceContents ?? [])],
+    mMSourceOnPieceVersions: [...(workingCopy.graph.sourceOnPieceVersions ?? [])],
     organizations: [...(workingCopy.graph.organizations ?? [])],
     collections: [...(workingCopy.graph.collections ?? [])],
     persons: [...(workingCopy.graph.persons ?? [])],
@@ -99,7 +99,7 @@ The `computeChangedChecklistFieldPaths` function currently iterates through a fl
 
 ```typescript
 // ... existing code ...
- * - If sourceContents arrays exist, also emits per-join rank changed field paths (source.pieceVersions[joinId].rank).
+ * - If sourceOnPieceVersions arrays exist, also emits per-join rank changed field paths (source.pieceVersions[joinId].rank).
  */
 export function computeChangedChecklistFieldPaths(
   baseline: ChecklistGraph,

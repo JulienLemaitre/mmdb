@@ -14,7 +14,7 @@ export async function GET(
 
     const { graph, globallyReviewed } = await getReviewOverview(reviewId);
 
-    if (!graph.sourceContents) {
+    if (!graph.sourceOnPieceVersions) {
       return NextResponse.json(
         { error: "No content found in MM source" },
         { status: 400 },
@@ -34,7 +34,7 @@ export async function GET(
       reviewId,
       graph,
       globallyReviewed,
-      sourceContents: graph.sourceContents,
+      sourceOnPieceVersions: graph.sourceOnPieceVersions,
       progress,
     };
 

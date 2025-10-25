@@ -142,12 +142,12 @@ export function computeChangedChecklistFieldPaths(
     working.pieceVersions,
   );
 
-  // 4. Diff sourceContents (ranks)
+  // 4. Diff sourceOnPieceVersions (ranks)
   const bRanks = new Map(
-    (baseline.sourceContents ?? []).map((j) => [j.joinId, j.rank]),
+    (baseline.sourceOnPieceVersions ?? []).map((j) => [j.joinId, j.rank]),
   );
   const wRanks = new Map(
-    (working.sourceContents ?? []).map((j) => [j.joinId, j.rank]),
+    (working.sourceOnPieceVersions ?? []).map((j) => [j.joinId, j.rank]),
   );
   const allJoinIds = new Set([...bRanks.keys(), ...wRanks.keys()]);
   for (const joinId of allJoinIds) {

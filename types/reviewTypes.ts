@@ -1,4 +1,4 @@
-export type SourceContent = {
+export type SourceOnPieceVersion = {
   joinId: string;
   mMSourceId: string;
   pieceVersionId: string;
@@ -18,7 +18,7 @@ export type ApiOverview = {
     collectionIds: string[];
     pieceIds: string[];
   };
-  sourceContents: Array<SourceContent>;
+  sourceOnPieceVersions: Array<SourceOnPieceVersion>;
   progress: {
     source: { required: number; checked: number };
     perCollection: Record<string, { required: number; checked: number }>;

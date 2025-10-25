@@ -163,7 +163,7 @@ export function buildMockOverview(reviewId: string): MockOverview {
       },
     ],
     organizations: [],
-    sourceContents: [
+    sourceOnPieceVersions: [
       {
         joinId: "join-1",
         mMSourceId: sourceId,

@@ -1,7 +1,9 @@
 import { composeAuditEntries } from "@/utils/auditCompose";
 import { buildMockOverview } from "@/utils/reviewMock";
 
-function deepClone<T>(v: T): T { return JSON.parse(JSON.stringify(v)); }
+function deepClone<T>(v: T): T {
+  return JSON.parse(JSON.stringify(v));
+}
 
 describe("auditCompose", () => {
   it("emits UPDATE entry for MM_SOURCE with contentsOrder snapshots when source title changes", () => {
@@ -17,6 +19,8 @@ describe("auditCompose", () => {
     expect((src!.after as any).title).toBe("New title");
     expect((src!.before as any).contentsOrder).toBeTruthy();
     expect((src!.after as any).contentsOrder).toBeTruthy();
-    expect(((src!.before as any).contentsOrder as any[]).length).toBe((graph.sourceContents ?? []).length);
+    expect(((src!.before as any).contentsOrder as any[]).length).toBe(
+      (graph.sourceOnPieceVersions ?? []).length,
+    );
   });
 });

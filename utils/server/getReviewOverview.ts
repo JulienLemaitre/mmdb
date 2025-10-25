@@ -357,7 +357,7 @@ export async function getReviewOverview(reviewId: string): Promise<{
     })
     .filter((x): x is ContributionState => x !== null);
 
-  const sourceContents = mmSource.pieceVersions.map((join) => ({
+  const sourceOnPieceVersions = mmSource.pieceVersions.map((join) => ({
     joinId: join.id,
     mMSourceId: mmSource.id,
     pieceVersionId: join.pieceVersion?.id ?? join.pieceVersionId,
@@ -403,7 +403,7 @@ export async function getReviewOverview(reviewId: string): Promise<{
       id: o.id,
       name: (o as any).name ?? null,
     })),
-    sourceContents,
+    sourceOnPieceVersions,
   };
 
   return { graph, globallyReviewed };

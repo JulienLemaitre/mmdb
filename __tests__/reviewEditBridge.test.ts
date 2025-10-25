@@ -89,7 +89,7 @@ const mockWorkingCopy: ReviewWorkingCopy = {
         pieceVersionId: "pv-1",
       },
     ],
-    sourceContents: [
+    sourceOnPieceVersions: [
       {
         joinId: "join-1",
         mMSourceId: "source-1",
@@ -169,7 +169,7 @@ describe("reviewEditBridge utilities", () => {
       );
       expect(feedState.mMSourceDescription?.title).toBe("Test Source");
       expect(feedState.mMSourceOnPieceVersions).toEqual(
-        mockWorkingCopy.graph.sourceContents,
+        mockWorkingCopy.graph.sourceOnPieceVersions,
       );
       // Ensure it's a copy, not a reference
       expect(feedState.pieces).not.toBe(mockWorkingCopy.graph.pieces);

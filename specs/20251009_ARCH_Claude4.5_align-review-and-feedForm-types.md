@@ -97,7 +97,7 @@ export type ChecklistGraph = {
   contributions?: ContributionState[];
   persons?: PersonState[];
   organizations?: OrganizationState[];
-  sourceContents?: SourceContent[];
+  sourceOnPieceVersions?: SourceOnPieceVersion[];
 };
 ```
 

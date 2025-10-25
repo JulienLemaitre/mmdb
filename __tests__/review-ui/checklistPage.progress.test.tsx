@@ -25,7 +25,7 @@ function makeOverview() {
       collectionIds: globallyReviewed.collectionIds,
       pieceIds: globallyReviewed.pieceIds,
     },
-    sourceContents: graph.sourceContents,
+    sourceOnPieceVersions: graph.sourceOnPieceVersions,
     progress: {
       source: { required: 0, checked: 0 },
       perCollection: {},

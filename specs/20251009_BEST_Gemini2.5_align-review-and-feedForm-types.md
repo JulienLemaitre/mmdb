@@ -168,7 +168,7 @@ export type ChecklistGraph = {
   persons?: PersonState[];
   organizations?: OrganizationState[];
   // Ordering join rows for the source contents (MMSourcesOnPieceVersions)
-  sourceContents?: Array<SourceContent>;
+  sourceOnPieceVersions?: Array<SourceOnPieceVersion>;
 };
 
 export type ApiOverview = {
@@ -375,7 +375,7 @@ My advice must change to reflect this deeper understanding. Here is a new, detai
 
 ## Me
 
-I think I should remove this highlighted first part of `expandRequiredChecklistItems` following your Step 3.1. But I'm unsure concerning the `options?.includePerJoinOrderChecks` and `graph.sourceContents` .
+I think I should remove this highlighted first part of `expandRequiredChecklistItems` following your Step 3.1. But I'm unsure concerning the `options?.includePerJoinOrderChecks` and `graph.sourceOnPieceVersions` .
 What do you suggest?
 
 ## AI
@@ -384,7 +384,7 @@ Of course. You've correctly deduced the next logical step. The new UI paradigm r
 
 You are right to question the highlighted code. In the new architecture, it's redundant and inconsistent. The `addEntityGroup` helper should be the *only* mechanism for adding items to the list. We will replace the entire body of `expandRequiredChecklistItems` with a cleaner, more powerful traversal logic.
 
-Regarding `sourceContents`, these represent the *ordering* of pieces within the source. They are conceptually fields on the `MM_SOURCE` itself. We will treat them as such, generating special checklist items that belong to the `MM_SOURCE` but are derived from the `sourceContents` array.
+Regarding `sourceOnPieceVersions`, these represent the *ordering* of pieces within the source. They are conceptually fields on the `MM_SOURCE` itself. We will treat them as such, generating special checklist items that belong to the `MM_SOURCE` but are derived from the `sourceOnPieceVersions` array.
 
 Here is the detailed, replacement roadmap starting from Step 1.2, built around your insights.
 
@@ -491,8 +491,8 @@ export function expandRequiredChecklistItems(
   }
   // Add special checklist items for source contents ordering
   const includeJoins = options?.includePerJoinOrderChecks ?? true;
-  if (includeJoins && Array.isArray(graph.sourceContents)) {
-    for (const row of graph.sourceContents) {
+  if (includeJoins && Array.isArray(graph.sourceOnPieceVersions)) {
+    for (const row of graph.sourceOnPieceVersions) {
       if (!row?.joinId) continue;
       items.push({
         entityType: "MM_SOURCE",

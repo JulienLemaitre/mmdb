@@ -35,8 +35,8 @@ describe("computeChangedChecklistFieldPaths with nested graph", () => {
 
   it("detects per-join rank changes for source contents", () => {
     const working = clone(baseline);
-    const a = working.sourceContents![0];
-    const b = working.sourceContents![1];
+    const a = working.sourceOnPieceVersions![0];
+    const b = working.sourceOnPieceVersions![1];
     [a.rank, b.rank] = [b.rank, a.rank]; // Swap ranks
 
     const changes = computeChangedChecklistFieldPaths(baseline, working);

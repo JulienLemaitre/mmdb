@@ -5,7 +5,7 @@
 // - Person and Organization are included here but should be filtered out when they already appear in ReviewedEntity.
 // - For arrays (e.g., multiple References or Contributions), the consumer should render one checklist instance per entity row.
 
-import { SourceContent } from "@/types/reviewTypes";
+import { SourceOnPieceVersion } from "@/types/reviewTypes";
 import {
   CollectionState,
   ContributionState,
@@ -45,7 +45,7 @@ export type ChecklistGraph = {
   persons?: PersonState[];
   organizations?: OrganizationState[];
   // Ordering join rows for the source contents (MMSourcesOnPieceVersions)
-  sourceContents?: SourceContent[];
+  sourceOnPieceVersions?: SourceOnPieceVersion[];
 };
 
 export type RequiredPredicateCtx = {
@@ -325,7 +325,7 @@ export type RequiredChecklistItem = {
   entityType: ChecklistEntityType;
   entityId?: string | null;
   fieldPath: string;
-  field: ChecklistField | SourceContent;
+  field: ChecklistField | SourceOnPieceVersion;
   label: string;
   lineage: {
     collectionId?: string;
