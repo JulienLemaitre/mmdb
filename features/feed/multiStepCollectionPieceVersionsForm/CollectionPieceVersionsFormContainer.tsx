@@ -266,12 +266,12 @@ function CollectionPieceVersionsFormContainer({
 
     const payloadArray = piecePieceVersions.map((ppv, index) => ({
       pieceVersionId: ppv.pieceVersionId,
-      rank: (feedFormState.mMSourcePieceVersions || []).length + index + 1,
+      rank: (feedFormState.mMSourceOnPieceVersions || []).length + index + 1,
     }));
 
     console.log(`[onAddSourceOnPieceVersions] payloadArray :`, payloadArray);
 
-    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+    updateFeedForm(feedFormDispatch, "mMSourceOnPieceVersions", {
       array: payloadArray,
     });
 
@@ -309,7 +309,7 @@ function CollectionPieceVersionsFormContainer({
         .collectionFirstMMSourceOnPieceVersionRank === "number"
         ? collectionPieceVersionFormState.formInfo
             .collectionFirstMMSourceOnPieceVersionRank // First sourceOnPieceVersion.rank in case of update
-        : (feedFormState.mMSourcePieceVersions || []).length) - 1;
+        : (feedFormState.mMSourceOnPieceVersions || []).length) - 1;
     const payloadArray = sourceOnPieceVersions
       .toSorted((a, b) => (a.rank > b.rank ? 1 : -1))
       .map((sopv) => ({
@@ -319,7 +319,7 @@ function CollectionPieceVersionsFormContainer({
 
     console.log(`[onSubmitSourceOnPieceVersions] payloadArray :`, payloadArray);
 
-    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+    updateFeedForm(feedFormDispatch, "mMSourceOnPieceVersions", {
       array: payloadArray,
       isCollectionUpdate,
     });

@@ -168,7 +168,7 @@ describe("reviewEditBridge utilities", () => {
         mockWorkingCopy.graph.pieceVersions,
       );
       expect(feedState.mMSourceDescription?.title).toBe("Test Source");
-      expect(feedState.mMSourcePieceVersions).toEqual(
+      expect(feedState.mMSourceOnPieceVersions).toEqual(
         mockWorkingCopy.graph.sourceContents,
       );
       // Ensure it's a copy, not a reference

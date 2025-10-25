@@ -6,7 +6,7 @@ export default function getCollectionCreateInput(
   state: PersistableFeedFormState,
   creatorId: string,
 ): Prisma.CollectionCreateManyInput[] {
-  // Find all the collections with a property isNew = true in the state.collections array, which id is referred to by a collectionId property of an object in state.pieces array, of which id is referred to by a pieceId property of an object in state.pieceVersions array, which id is referred to by a pieceVersionId property of an object in state.mMSourcePieceVersions array.
+  // Find all the collections with a property isNew = true in the state.collections array, which id is referred to by a collectionId property of an object in state.pieces array, of which id is referred to by a pieceId property of an object in state.pieceVersions array, which id is referred to by a pieceVersionId property of an object in state.mMSourceOnPieceVersions array.
   const newCollections = state.collections.filter((collection) => {
     if (!collection.isNew) {
       console.log(
@@ -33,7 +33,7 @@ export default function getCollectionCreateInput(
       return false;
     }
 
-    return state.mMSourcePieceVersions.some(
+    return state.mMSourceOnPieceVersions.some(
       (mms) => mms.pieceVersionId === pieceVersion.id,
     );
   });

@@ -84,7 +84,7 @@ export function buildFeedFormStateFromWorkingCopy(
     // Deep-copy all the relevant slices from the working copy graph
     mMSourceDescription: { ...workingCopy.graph.source },
     mMSourceContributions: [...(workingCopy.graph.contributions ?? [])],
-    mMSourcePieceVersions: [...(workingCopy.graph.sourceContents ?? [])],
+    mMSourceOnPieceVersions: [...(workingCopy.graph.sourceContents ?? [])],
     organizations: [...(workingCopy.graph.organizations ?? [])],
     collections: [...(workingCopy.graph.collections ?? [])],
     persons: [...(workingCopy.graph.persons ?? [])],
@@ -149,7 +149,7 @@ export function rebuildWorkingCopyFromFeedForm(
 
   // Rebuild derived data: `sourceContents` needs to be enriched with data
   // from the newly defined pieces and pieceVersions.
-  const sourceContents = (feedFormState.mMSourcePieceVersions ?? []).map(
+  const sourceContents = (feedFormState.mMSourceOnPieceVersions ?? []).map(
     (j) => {
       const pv = pieceVersions.find((pv) => pv.id === j.pieceVersionId);
       const piece = pv ? pieces.find((p) => p.id === pv.pieceId) : undefined;

@@ -142,7 +142,7 @@ Authorization and roles
     - MM Source: map source metadata, references, contributions to feed form slices.
     - Collections/Pieces/Persons/Organizations: populate their arrays; preserve IDs.
     - PieceVersions with Movements/Sections: populate the nested structure; preserve IDs and ranks.
-    - MMSourcesOnPieceVersions ordering: map to mMSourcePieceVersions with join semantics preserved where applicable.
+    - MMSourcesOnPieceVersions ordering: map to mMSourceOnPieceVersions with join semantics preserved where applicable.
     - MetronomeMarks: associate to sectionId and pieceVersionId as used by the feed form.
 - Anchor resolution:
     - Derive “anchor ids” from fieldPath (e.g., pieceVersionId, movementId, sectionId, metronomeMarkId) to drive step selection and in-form focus.

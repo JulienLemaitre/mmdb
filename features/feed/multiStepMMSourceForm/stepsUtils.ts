@@ -2,7 +2,7 @@ import { FeedFormStep, SectionStateExtendedForMMForm } from "@/types/formTypes";
 import Intro from "@/features/feed/multiStepMMSourceForm/stepForms/Intro";
 import MMSourceDescription from "@/features/feed/multiStepMMSourceForm/stepForms/MMSourceDescription";
 import MMSourceContributions from "@/features/feed/multiStepMMSourceForm/stepForms/MMSourceContributions";
-import MMSourcePieceVersions from "@/features/feed/multiStepMMSourceForm/stepForms/MMSourcePieceVersions";
+import MMSourceOnPieceVersions from "@/features/feed/multiStepMMSourceForm/stepForms/MMSourceOnPieceVersions";
 import MetronomeMarks from "@/features/feed/multiStepMMSourceForm/stepForms/MetronomeMarks";
 import FeedSummary from "@/features/feed/multiStepMMSourceForm/stepForms/FeedSummary";
 import { getSectionList } from "@/utils/getSectionList";
@@ -37,12 +37,12 @@ export const steps: FeedFormStep[] = [
   },
   {
     rank: 3,
-    id: "mMSourcePieceVersions",
+    id: "mMSourceOnPieceVersions",
     actionTypes: [
       "collections",
       "editedSourceOnPieceVersions",
       "formInfo",
-      "mMSourcePieceVersions",
+      "mMSourceOnPieceVersions",
       "organizations",
       "persons",
       "pieces",
@@ -51,9 +51,9 @@ export const steps: FeedFormStep[] = [
     ],
     title: "Pieces and Versions",
     isComplete: (state) =>
-      (state?.mMSourcePieceVersions?.length || 0) > 0 &&
-      !!state?.formInfo?.allSourcePieceVersionsDone,
-    Component: MMSourcePieceVersions,
+      (state?.mMSourceOnPieceVersions?.length || 0) > 0 &&
+      !!state?.formInfo?.allSourceOnPieceVersionsDone,
+    Component: MMSourceOnPieceVersions,
   },
   {
     rank: 4,
@@ -62,11 +62,11 @@ export const steps: FeedFormStep[] = [
     title: "Metronome Marks",
     isComplete: (state) => {
       // Need to build the sectionList and validate marks for each section
-      if (!state?.mMSourcePieceVersions?.length) return false;
+      if (!state?.mMSourceOnPieceVersions?.length) return false;
 
       // Ensure we have all required pieceVersions in state (isComplete must be sync)
       const neededIds = new Set(
-        state.mMSourcePieceVersions.map((s) => s.pieceVersionId),
+        state.mMSourceOnPieceVersions.map((s) => s.pieceVersionId),
       );
       const inState = (state.pieceVersions || []).filter((pv) =>
         neededIds.has(pv.id),

@@ -28,11 +28,11 @@ export const collectionFormSteps: CollectionPieceVersionsFormStep[] = [
     title: "Pieces and Versions",
     rank: 2,
     isComplete: (state) =>
-      (state?.mMSourcePieceVersions?.length || 0) > 0 &&
-      !!state?.formInfo?.allSourcePieceVersionsDone,
+      (state?.mMSourceOnPieceVersions?.length || 0) > 0 &&
+      !!state?.formInfo?.allSourceOnPieceVersionsDone,
     Component: CollectionPieceVersionSelectOrCreate,
     actionTypes: [
-      "mMSourcePieceVersions",
+      "mMSourceOnPieceVersions",
       "formInfo",
       "editedSourceOnPieceVersions",
       "organizations",

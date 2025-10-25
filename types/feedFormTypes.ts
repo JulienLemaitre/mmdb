@@ -26,7 +26,7 @@ export type PieceFormAction =
   | { type: "tempoIndications"; payload: any }
   | { type: "mMSourceDescription"; payload: any }
   | { type: "mMSourceContributions"; payload: any }
-  | { type: "mMSourcePieceVersions"; payload: any }
+  | { type: "mMSourceOnPieceVersions"; payload: any }
   | { type: "editedSourceOnPieceVersions"; payload: any }
   | { type: "metronomeMarks"; payload: any };
 export type Dispatch = (action: PieceFormAction) => void;
@@ -42,7 +42,7 @@ export type FeedFormInfo = {
   introDone?: boolean;
   isSourceOnPieceVersionformOpen?: boolean;
   formType?: SourceOnPieceVersionsFormType;
-  allSourcePieceVersionsDone?: boolean;
+  allSourceOnPieceVersionsDone?: boolean;
   allSourceContributionsDone?: boolean;
   reviewContext?: ReviewContext; // present when the feed form is opened from review edit mode
 };
@@ -50,7 +50,7 @@ export type FeedFormState = {
   formInfo?: FeedFormInfo;
   mMSourceDescription?: MMSourceDescriptionState;
   mMSourceContributions?: MMSourceContributionsState;
-  mMSourcePieceVersions?: MMSourceOnPieceVersionsState[];
+  mMSourceOnPieceVersions?: MMSourceOnPieceVersionsState[];
   organizations?: OrganizationState[];
   collections?: CollectionState[];
   persons?: PersonState[];

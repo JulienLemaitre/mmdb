@@ -47,8 +47,8 @@ function CollectionPieceVersionsEditForm({
     useState<SinglePieceVersionFormState | null>(null);
 
   const isSinglePieceUpdateMode = isUpdateMode;
-  const collectionPieceVersions = state.mMSourcePieceVersions || [];
-  const newPieceDefaultTitle = `${state?.collection?.title} No.${(state.mMSourcePieceVersions || []).length + 1}`;
+  const collectionPieceVersions = state.mMSourceOnPieceVersions || [];
+  const newPieceDefaultTitle = `${state?.collection?.title} No.${(state.mMSourceOnPieceVersions || []).length + 1}`;
   const composerId = state?.collection?.composerId;
   const { pieceIdsNeedingVersions } = state.formInfo;
   const piecesNeedingVersion = pieceIdsNeedingVersions?.reduce<PieceState[]>(
@@ -107,7 +107,7 @@ function CollectionPieceVersionsEditForm({
     let pieceVersion, piece, rank;
 
     if ("pieceVersionId" in collectionPieceVersion) {
-      // MMSourcePieceVersionsState
+      // MMSourceOnPieceVersionsState
       const { pieceVersionId, rank: cpvRank } = collectionPieceVersion;
       pieceVersion = getEntityByIdOrKey(
         feedFormState,
@@ -136,7 +136,7 @@ function CollectionPieceVersionsEditForm({
     const singlePieceVersionFormEditState: SinglePieceVersionFormState = {
       formInfo: {
         currentStepRank: 0,
-        mMSourcePieceVersionRank: rank,
+        mMSourceOnPieceVersionRank: rank,
       },
       composer: {
         id: composer.id,
@@ -161,7 +161,7 @@ function CollectionPieceVersionsEditForm({
   };
 
   const onDeletePieceVersion = (pieceVersionId) => {
-    updateCollectionPieceVersionsForm(dispatch, "mMSourcePieceVersions", {
+    updateCollectionPieceVersionsForm(dispatch, "mMSourceOnPieceVersions", {
       deleteIdArray: [pieceVersionId],
       idKey: "pieceVersionId",
     });
@@ -169,25 +169,26 @@ function CollectionPieceVersionsEditForm({
   };
 
   const onMovePiece = (pieceVersionId: string, direction: "up" | "down") => {
-    // Get the mMSourcePieceVersion for this piece version
-    const mMSourcePieceVersion = (state.mMSourcePieceVersions || []).find(
+    // Get the mMSourceOnPieceVersion for this piece version
+    const mMSourceOnPieceVersion = (state.mMSourceOnPieceVersions || []).find(
       (spv) => spv.pieceVersionId === pieceVersionId,
     );
 
-    if (!mMSourcePieceVersion) {
+    if (!mMSourceOnPieceVersion) {
       console.log(`[onMovePiece] Piece version not found: ${pieceVersionId}`);
       return;
     }
 
     // Check boundaries based on direction
     if (direction === "up") {
-      if (mMSourcePieceVersion.rank <= 1) {
+      if (mMSourceOnPieceVersion.rank <= 1) {
         console.log(`[onMovePiece] Piece is already at the top`);
         return;
       }
     } else {
       if (
-        mMSourcePieceVersion.rank >= (state.mMSourcePieceVersions || []).length
+        mMSourceOnPieceVersion.rank >=
+        (state.mMSourceOnPieceVersions || []).length
       ) {
         console.log(`[onMovePiece] Piece is already at the bottom`);
         return;
@@ -195,7 +196,7 @@ function CollectionPieceVersionsEditForm({
     }
 
     // Move the piece
-    updateCollectionPieceVersionsForm(dispatch, "mMSourcePieceVersions", {
+    updateCollectionPieceVersionsForm(dispatch, "mMSourceOnPieceVersions", {
       movePiece: {
         pieceVersionId,
         direction,
@@ -222,7 +223,7 @@ function CollectionPieceVersionsEditForm({
 
     updateCollectionPieceVersionsForm(
       dispatch,
-      "mMSourcePieceVersions",
+      "mMSourceOnPieceVersions",
       payload,
     );
   };

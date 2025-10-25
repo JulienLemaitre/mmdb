@@ -64,7 +64,7 @@ export function buildFeedFormStateFromWorkingCopy(
     // Deep-copy all the relevant slices from the working copy graph
     mMSourceDescription: { ...workingCopy.graph.source },
     contributions: [...(workingCopy.graph.contributions ?? [])],
-    mMSourcePieceVersions: [...(workingCopy.graph.sourceContents ?? [])],
+    mMSourceOnPieceVersions: [...(workingCopy.graph.sourceContents ?? [])],
     organizations: [...(workingCopy.graph.organizations ?? [])],
     collections: [...(workingCopy.graph.collections ?? [])],
     persons: [...(workingCopy.graph.persons ?? [])],

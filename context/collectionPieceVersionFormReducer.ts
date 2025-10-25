@@ -20,7 +20,7 @@ const arrayEntities = [
   "pieces",
   "pieceVersions",
   "tempoIndications",
-  "mMSourcePieceVersions",
+  "mMSourceOnPieceVersions",
   "pieceIdsNeedingVersions",
 ];
 
@@ -162,17 +162,21 @@ function collectionPieceVersionsFormReducerCore(
     }
 
     // Handle moving a piece up or down
-    if (action.payload?.movePiece && action.type === "mMSourcePieceVersions") {
+    if (
+      action.payload?.movePiece &&
+      action.type === "mMSourceOnPieceVersions"
+    ) {
       const { pieceVersionId, direction } = action.payload.movePiece;
 
-      // Find the mMSourcePieceVersion to move
-      const mMSourcePieceVersionToMove = newState.mMSourcePieceVersions?.find(
-        (spv) => spv.pieceVersionId === pieceVersionId,
-      );
+      // Find the mMSourceOnPieceVersion to move
+      const mMSourceOnPieceVersionToMove =
+        newState.mMSourceOnPieceVersions?.find(
+          (spv) => spv.pieceVersionId === pieceVersionId,
+        );
 
-      if (!mMSourcePieceVersionToMove) {
+      if (!mMSourceOnPieceVersionToMove) {
         console.warn(
-          `[collectionPieceVersionsFormReducer] Cannot find mMSourcePieceVersion to move for pieceVersionId: ${pieceVersionId}`,
+          `[collectionPieceVersionsFormReducer] Cannot find mMSourceOnPieceVersion to move for pieceVersionId: ${pieceVersionId}`,
         );
         console.groupEnd();
         return state;
@@ -181,11 +185,11 @@ function collectionPieceVersionsFormReducerCore(
       // Find the target rank
       const targetRank =
         direction === "up"
-          ? mMSourcePieceVersionToMove.rank - 1
-          : mMSourcePieceVersionToMove.rank + 1;
+          ? mMSourceOnPieceVersionToMove.rank - 1
+          : mMSourceOnPieceVersionToMove.rank + 1;
 
       // Find the piece at the target rank
-      const pieceAtTargetRank = newState.mMSourcePieceVersions?.find(
+      const pieceAtTargetRank = newState.mMSourceOnPieceVersions?.find(
         (spv) => spv.rank === targetRank,
       );
 
@@ -198,13 +202,13 @@ function collectionPieceVersionsFormReducerCore(
       }
 
       // Simple case: swap with a single piece
-      const updatedPieces = newState.mMSourcePieceVersions
+      const updatedPieces = newState.mMSourceOnPieceVersions
         ?.map((spv) => {
           if (spv.pieceVersionId === pieceVersionId) {
             return { ...spv, rank: targetRank };
           }
           if (spv.pieceVersionId === pieceAtTargetRank.pieceVersionId) {
-            return { ...spv, rank: mMSourcePieceVersionToMove.rank };
+            return { ...spv, rank: mMSourceOnPieceVersionToMove.rank };
           }
           return spv;
         })
@@ -212,7 +216,7 @@ function collectionPieceVersionsFormReducerCore(
 
       newState = {
         ...newState,
-        mMSourcePieceVersions: updatedPieces,
+        mMSourceOnPieceVersions: updatedPieces,
       };
 
       console.groupEnd();

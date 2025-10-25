@@ -222,9 +222,9 @@ export function isEntityUsed(
     );
   }
   if (entityName === "pieceVersions") {
-    return (state.mMSourcePieceVersions || []).some(
-      (mMSourcePieceVersion) =>
-        mMSourcePieceVersion.pieceVersionId === entity.id,
+    return (state.mMSourceOnPieceVersions || []).some(
+      (mMSourceOnPieceVersion) =>
+        mMSourceOnPieceVersion.pieceVersionId === entity.id,
     );
   }
   if (entityName === "collections") {

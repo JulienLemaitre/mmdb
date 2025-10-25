@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
   const mandatoryFields = [
     "mMSourceDescription",
     "mMSourceContributions",
-    "mMSourcePieceVersions",
+    "mMSourceOnPieceVersions",
     "metronomeMarks",
   ];
   const missingMandatoryFields = mandatoryFields.filter(
@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
         });
 
         // Compute sectionCount for this MM Source purely from the submitted state
-        const includedPieceVersionIds = state.mMSourcePieceVersions.map(
+        const includedPieceVersionIds = state.mMSourceOnPieceVersions.map(
           (pv) => pv.pieceVersionId,
         );
         const includedPieceVersions = state.pieceVersions.filter((pv) =>

@@ -39,7 +39,7 @@ export default function getMMSourceAndRelatedEntitiesDBInputFromState(
       ),
     },
     pieceVersions: {
-      create: state.mMSourcePieceVersions.map((mMSourceOnPieceVersion) =>
+      create: state.mMSourceOnPieceVersions.map((mMSourceOnPieceVersion) =>
         getMMSourcesOnPieceVersionsDBInputFromState(
           mMSourceOnPieceVersion,
           state,

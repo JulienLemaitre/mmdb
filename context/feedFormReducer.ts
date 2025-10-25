@@ -128,7 +128,7 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
     if (
       array &&
       isCollectionUpdate &&
-      action.type === "mMSourcePieceVersions"
+      action.type === "mMSourceOnPieceVersions"
     ) {
       // Find the collectionId from the first item in the sourceOnPieceVersion array
       if (array.length === 0) {
@@ -175,7 +175,7 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
           ?.filter(Boolean) || [];
 
       const existingCollectionSourceOnPieceVersions = (
-        state.mMSourcePieceVersions || []
+        state.mMSourceOnPieceVersions || []
       ).filter((spv) => collectionPieceVersionIds.includes(spv.pieceVersionId));
 
       const collectionCountBefore =
@@ -186,16 +186,16 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
       );
 
       // Items that come before this collection
-      const itemsBeforeCollection = (state.mMSourcePieceVersions || []).filter(
-        (spv) => spv.rank < startingRank,
-      );
+      const itemsBeforeCollection = (
+        state.mMSourceOnPieceVersions || []
+      ).filter((spv) => spv.rank < startingRank);
       console.log(
         `[feedFormReducer] itemsBeforeCollection length :`,
         itemsBeforeCollection.length,
       );
 
       // Get items that come after this collection in the source
-      const itemsAfterCollection = (state.mMSourcePieceVersions || []).filter(
+      const itemsAfterCollection = (state.mMSourceOnPieceVersions || []).filter(
         (spv) => spv.rank > startingRank + collectionCountBefore - 1,
       );
       console.log(
@@ -250,17 +250,21 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
     }
 
     // Handle moving a piece up or down
-    if (action.payload?.movePiece && action.type === "mMSourcePieceVersions") {
+    if (
+      action.payload?.movePiece &&
+      action.type === "mMSourceOnPieceVersions"
+    ) {
       const { pieceVersionId, direction } = action.payload.movePiece;
 
-      // Find the mMSourcePieceVersions to move
-      const mMSourcePieceVersionsToMove = newState.mMSourcePieceVersions?.find(
-        (spv) => spv.pieceVersionId === pieceVersionId,
-      );
+      // Find the mMSourceOnPieceVersions to move
+      const mMSourceOnPieceVersionsToMove =
+        newState.mMSourceOnPieceVersions?.find(
+          (spv) => spv.pieceVersionId === pieceVersionId,
+        );
 
-      if (!mMSourcePieceVersionsToMove) {
+      if (!mMSourceOnPieceVersionsToMove) {
         console.warn(
-          `[feedFormReducer] Cannot find mMSourcePieceVersions to move for pieceVersionId: ${pieceVersionId}`,
+          `[feedFormReducer] Cannot find mMSourceOnPieceVersions to move for pieceVersionId: ${pieceVersionId}`,
         );
         return state;
       }
@@ -268,11 +272,11 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
       // Find the target rank
       const targetRank =
         direction === "up"
-          ? mMSourcePieceVersionsToMove.rank - 1
-          : mMSourcePieceVersionsToMove.rank + 1;
+          ? mMSourceOnPieceVersionsToMove.rank - 1
+          : mMSourceOnPieceVersionsToMove.rank + 1;
 
       // Find the piece at the target rank
-      const pieceAtTargetRank = newState.mMSourcePieceVersions?.find(
+      const pieceAtTargetRank = newState.mMSourceOnPieceVersions?.find(
         (spv) => spv.rank === targetRank,
       );
 
@@ -320,28 +324,28 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
             )
             ?.map((pv) => pv.id) || [];
 
-        // Find all mMSourcePieceVersions for this collection
-        const collectionMMSourcePieceVersions =
-          newState.mMSourcePieceVersions?.filter((spv) =>
+        // Find all mMSourceOnPieceVersions for this collection
+        const collectionMMSourceOnPieceVersions =
+          newState.mMSourceOnPieceVersions?.filter((spv) =>
             collectionPieceVersionIds.includes(spv.pieceVersionId),
           );
 
         if (
-          !collectionMMSourcePieceVersions ||
-          collectionMMSourcePieceVersions.length === 0
+          !collectionMMSourceOnPieceVersions ||
+          collectionMMSourceOnPieceVersions.length === 0
         ) {
           console.warn(
-            `[feedFormReducer] Cannot find mMSourcePieceVersions for collection: ${piece.collectionId}`,
+            `[feedFormReducer] Cannot find mMSourceOnPieceVersions for collection: ${piece.collectionId}`,
           );
           return state;
         }
 
         // Find the first and last ranks in the collection
         const collectionFirstRank = Math.min(
-          ...collectionMMSourcePieceVersions.map((spv) => spv.rank),
+          ...collectionMMSourceOnPieceVersions.map((spv) => spv.rank),
         );
         const collectionLastRank = Math.max(
-          ...collectionMMSourcePieceVersions.map((spv) => spv.rank),
+          ...collectionMMSourceOnPieceVersions.map((spv) => spv.rank),
         );
         const collectionLength = collectionLastRank - collectionFirstRank + 1;
         console.log(`[] collectionLength :`, collectionLength);
@@ -352,11 +356,11 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
         );
 
         // Update the ranks - true swap between single piece and collection
-        const updatedMMSourcePieceVersions = newState.mMSourcePieceVersions
+        const updatedMMSourceOnPieceVersions = newState.mMSourceOnPieceVersions
           ?.map((spv) => {
-            // If this is the mMSourcePieceVersion being moved (single piece)
+            // If this is the mMSourceOnPieceVersion being moved (single piece)
             if (spv.pieceVersionId === pieceVersionId) {
-              // Move the single mMSourcePieceVersion by the length of the collection being swapped with
+              // Move the single mMSourceOnPieceVersion by the length of the collection being swapped with
               return {
                 ...spv,
                 rank:
@@ -366,7 +370,7 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
               };
             }
 
-            // If this mMSourcePieceVersion is in the swapped collection
+            // If this mMSourceOnPieceVersion is in the swapped collection
             if (collectionPieceVersionIds.includes(spv.pieceVersionId)) {
               // Move the entire collection one rank up or down
               return {
@@ -381,19 +385,19 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
 
         newState = {
           ...newState,
-          mMSourcePieceVersions: updatedMMSourcePieceVersions,
+          mMSourceOnPieceVersions: updatedMMSourceOnPieceVersions,
         };
 
         return newState;
       } else {
         // Simple case: swap with a single piece
-        const updatedPieces = newState.mMSourcePieceVersions
+        const updatedPieces = newState.mMSourceOnPieceVersions
           ?.map((spv) => {
             if (spv.pieceVersionId === pieceVersionId) {
               return { ...spv, rank: targetRank };
             }
             if (spv.pieceVersionId === pieceAtTargetRank.pieceVersionId) {
-              return { ...spv, rank: mMSourcePieceVersionsToMove.rank };
+              return { ...spv, rank: mMSourceOnPieceVersionsToMove.rank };
             }
             return spv;
           })
@@ -401,7 +405,7 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
 
         newState = {
           ...newState,
-          mMSourcePieceVersions: updatedPieces,
+          mMSourceOnPieceVersions: updatedPieces,
         };
 
         return newState;
@@ -411,7 +415,7 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
     // Handle moving a collection up or down
     if (
       action.payload?.moveCollection &&
-      action.type === "mMSourcePieceVersions"
+      action.type === "mMSourceOnPieceVersions"
     ) {
       const { collectionId, direction } = action.payload.moveCollection;
       console.log(`[moveCollection] :`, {
@@ -429,8 +433,8 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
           )
           ?.map((pv) => pv.id) || [];
 
-      // Find all mMSourcePieceVersions for this collection
-      const collectionPieces = newState.mMSourcePieceVersions?.filter((spv) =>
+      // Find all mMSourceOnPieceVersions for this collection
+      const collectionPieces = newState.mMSourceOnPieceVersions?.filter((spv) =>
         collectionPieceVersionIds.includes(spv.pieceVersionId),
       );
 
@@ -448,11 +452,13 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
       // Find the target rank (before or after the collection)
       const targetRank = direction === "up" ? firstRank - 1 : lastRank + 1;
 
-      // Find the mMSourcePieceVersion at the target rank
-      const mMSourcePieceVersionAtTargetRank =
-        newState.mMSourcePieceVersions?.find((spv) => spv.rank === targetRank);
+      // Find the mMSourceOnPieceVersion at the target rank
+      const mMSourceOnPieceVersionAtTargetRank =
+        newState.mMSourceOnPieceVersions?.find(
+          (spv) => spv.rank === targetRank,
+        );
 
-      if (!mMSourcePieceVersionAtTargetRank) {
+      if (!mMSourceOnPieceVersionAtTargetRank) {
         console.warn(
           `[feedFormReducer] Cannot find piece at rank ${targetRank}`,
         );
@@ -461,12 +467,12 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
 
       // Check if the piece at target rank is part of a collection
       const targetPieceVersion = newState.pieceVersions?.find(
-        (pv) => pv.id === mMSourcePieceVersionAtTargetRank.pieceVersionId,
+        (pv) => pv.id === mMSourceOnPieceVersionAtTargetRank.pieceVersionId,
       );
 
       if (!targetPieceVersion) {
         console.warn(
-          `[feedFormReducer] Cannot find piece version for pieceVersionId: ${mMSourcePieceVersionAtTargetRank.pieceVersionId}`,
+          `[feedFormReducer] Cannot find piece version for pieceVersionId: ${mMSourceOnPieceVersionAtTargetRank.pieceVersionId}`,
         );
         return state;
       }
@@ -504,15 +510,15 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
           otherCollectionPieceVersionIds,
         );
 
-        // Find all mMSourcePieceVersions for the other collection
-        const otherCollectionMMSourcePieceVersions =
-          newState.mMSourcePieceVersions?.filter((spv) =>
+        // Find all mMSourceOnPieceVersions for the other collection
+        const otherCollectionMMSourceOnPieceVersions =
+          newState.mMSourceOnPieceVersions?.filter((spv) =>
             otherCollectionPieceVersionIds.includes(spv.pieceVersionId),
           );
 
         if (
-          !otherCollectionMMSourcePieceVersions ||
-          otherCollectionMMSourcePieceVersions.length === 0
+          !otherCollectionMMSourceOnPieceVersions ||
+          otherCollectionMMSourceOnPieceVersions.length === 0
         ) {
           console.warn(
             `[feedFormReducer] Cannot find pieces for other collection: ${targetPiece.collectionId}`,
@@ -522,18 +528,18 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
 
         // Find the first and last ranks in the other collection
         const otherFirstRank = Math.min(
-          ...otherCollectionMMSourcePieceVersions.map((spv) => spv.rank),
+          ...otherCollectionMMSourceOnPieceVersions.map((spv) => spv.rank),
         );
         const otherLastRank = Math.max(
-          ...otherCollectionMMSourcePieceVersions.map((spv) => spv.rank),
+          ...otherCollectionMMSourceOnPieceVersions.map((spv) => spv.rank),
         );
         console.log(`[] otherFirstRank :`, otherFirstRank);
         console.log(`[] otherLastRank :`, otherLastRank);
 
         // Update the ranks - we need to swap the positions of the two collection's pieces by the length of the other collection
-        const updatedPieces = newState.mMSourcePieceVersions
+        const updatedPieces = newState.mMSourceOnPieceVersions
           ?.map((spv) => {
-            // If this mMSourcePieceVersion is in the collection being moved
+            // If this mMSourceOnPieceVersion is in the collection being moved
             if (collectionPieceVersionIds.includes(spv.pieceVersionId)) {
               const otherCollectionLength = otherLastRank - otherFirstRank + 1;
               return {
@@ -545,7 +551,7 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
               };
             }
 
-            // If this mMSourcePieceVersion is in the other collection being swapped
+            // If this mMSourceOnPieceVersion is in the other collection being swapped
             if (otherCollectionPieceVersionIds.includes(spv.pieceVersionId)) {
               const collectionLength = lastRank - firstRank + 1;
               return {
@@ -563,7 +569,7 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
 
         newState = {
           ...newState,
-          mMSourcePieceVersions: updatedPieces,
+          mMSourceOnPieceVersions: updatedPieces,
         };
 
         return newState;
@@ -574,16 +580,18 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
           collectionPieceVersionIds,
         );
         // Simple case: swap with a single piece
-        let mMSourcePieceVersionsToSwap = [mMSourcePieceVersionAtTargetRank];
+        let mMSourceOnPieceVersionsToSwap = [
+          mMSourceOnPieceVersionAtTargetRank,
+        ];
         console.log(
-          `[] mMSourcePieceVersionsToSwap :`,
-          mMSourcePieceVersionsToSwap,
+          `[] mMSourceOnPieceVersionsToSwap :`,
+          mMSourceOnPieceVersionsToSwap,
         );
 
         // Update the ranks
-        const updatedPieces = newState.mMSourcePieceVersions
+        const updatedPieces = newState.mMSourceOnPieceVersions
           ?.map((spv) => {
-            // If this mMSourcePieceVersion is in the collection being moved
+            // If this mMSourceOnPieceVersion is in the collection being moved
             if (collectionPieceVersionIds.includes(spv.pieceVersionId)) {
               return {
                 ...spv,
@@ -591,9 +599,9 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
               };
             }
 
-            // If this is the mMSourcePieceVersion to swap with
+            // If this is the mMSourceOnPieceVersion to swap with
             if (
-              mMSourcePieceVersionsToSwap.some(
+              mMSourceOnPieceVersionsToSwap.some(
                 (spvts) => spvts.pieceVersionId === spv.pieceVersionId,
               )
             ) {
@@ -614,7 +622,7 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
 
         newState = {
           ...newState,
-          mMSourcePieceVersions: updatedPieces,
+          mMSourceOnPieceVersions: updatedPieces,
         };
 
         return newState;
@@ -664,13 +672,13 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
       // });
     }
 
-    // Make sure mMSourcePieceVersions ranks are continuous and begin at 1
-    newState.mMSourcePieceVersions = (newState.mMSourcePieceVersions || []).map(
-      (mMSourcePieceVersion, index) => ({
-        ...mMSourcePieceVersion,
-        rank: index + 1,
-      }),
-    );
+    // Make sure mMSourceOnPieceVersions ranks are continuous and begin at 1
+    newState.mMSourceOnPieceVersions = (
+      newState.mMSourceOnPieceVersions || []
+    ).map((mMSourceOnPieceVersion, index) => ({
+      ...mMSourceOnPieceVersion,
+      rank: index + 1,
+    }));
 
     return newState;
   } else {

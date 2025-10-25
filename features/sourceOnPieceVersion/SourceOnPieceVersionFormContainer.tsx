@@ -28,8 +28,8 @@ import ArrowDownIcon from "@/ui/svg/ArrowDownIcon";
 import PieceVersionDisplay from "@/features/pieceVersion/PieceVersionDisplay";
 import InformationCircleIcon from "@/ui/svg/InformationCircleIcon";
 
-type SourcePieceVersionSelectFormProps = {
-  mMSourcePieceVersions?: MMSourceOnPieceVersionsState[];
+type SourceOnPieceVersionSelectFormProps = {
+  mMSourceOnPieceVersions?: MMSourceOnPieceVersionsState[];
   onSubmit: (option: { goToNextStep: boolean }) => void;
   submitTitle?: string;
   title?: string;
@@ -41,11 +41,11 @@ const NeedConfirmationModal = dynamic(
 );
 
 const SourceOnPieceVersionFormContainer = ({
-  mMSourcePieceVersions = [],
+  mMSourceOnPieceVersions = [],
   onSubmit,
   submitTitle,
   title,
-}: SourcePieceVersionSelectFormProps) => {
+}: SourceOnPieceVersionSelectFormProps) => {
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
   const [
     singlePieceVersionUpdateInitState,
@@ -61,7 +61,7 @@ const SourceOnPieceVersionFormContainer = ({
   const isFormOpen = !!feedFormState.formInfo?.isSourceOnPieceVersionformOpen;
   const formType = feedFormState.formInfo?.formType;
   const isIntro =
-    feedFormState?.mMSourcePieceVersions?.length === 0 && !isFormOpen;
+    feedFormState?.mMSourceOnPieceVersions?.length === 0 && !isFormOpen;
 
   // For needConfirmation modal
   const [pieceVersionToDiscardId, setPieceVersionToDiscardId] = useState<
@@ -95,7 +95,7 @@ const SourceOnPieceVersionFormContainer = ({
     });
   };
 
-  const onEditMMSourcePieceVersion = (
+  const onEditMMSourceOnPieceVersion = (
     mmSourceOnPieceVersion: MMSourceOnPieceVersionsState,
   ) => {
     const { pieceVersionId, rank } = mmSourceOnPieceVersion;
@@ -120,7 +120,7 @@ const SourceOnPieceVersionFormContainer = ({
     const singlePieceVersionFormEditState: SinglePieceVersionFormState = {
       formInfo: {
         currentStepRank: 0,
-        mMSourcePieceVersionRank: rank,
+        mMSourceOnPieceVersionRank: rank,
       },
       composer: {
         id: composer.id,
@@ -139,7 +139,7 @@ const SourceOnPieceVersionFormContainer = ({
     setPieceVersionToDiscardId(pieceVersionId);
   };
   const onDeletePieceVersion = (pieceVersionId) => {
-    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+    updateFeedForm(feedFormDispatch, "mMSourceOnPieceVersions", {
       deleteIdArray: [pieceVersionId],
       idKey: "pieceVersionId",
     });
@@ -153,14 +153,14 @@ const SourceOnPieceVersionFormContainer = ({
           (p) => p.id === pv.pieceId && p.collectionId === collectionId,
         ),
     );
-    const collectionMMSourcePieceVersionList =
-      feedFormState.mMSourcePieceVersions?.filter((mMSourcePieceVersions) =>
+    const collectionMMSourceOnPieceVersionList =
+      feedFormState.mMSourceOnPieceVersions?.filter((mMSourceOnPieceVersions) =>
         collectionPieceVersionList?.some(
-          (pv) => pv.id === mMSourcePieceVersions.pieceVersionId,
+          (pv) => pv.id === mMSourceOnPieceVersions.pieceVersionId,
         ),
       );
     const collectionFirstMMSourceOnPieceVersionRank =
-      collectionMMSourcePieceVersionList?.[0]?.rank;
+      collectionMMSourceOnPieceVersionList?.[0]?.rank;
     if (!collectionFirstMMSourceOnPieceVersionRank) {
       console.log(
         `[onEditCollection] No piece version rank found for collection ${collectionId}`,
@@ -188,7 +188,7 @@ const SourceOnPieceVersionFormContainer = ({
           ...(collection.title && { title: collection.title }),
           ...(collection.isNew && { isNew: collection.isNew }),
         },
-        mMSourcePieceVersions: collectionMMSourcePieceVersionList.map(
+        mMSourceOnPieceVersions: collectionMMSourceOnPieceVersionList.map(
           (spv, index) => ({ ...spv, rank: index + 1 }),
         ),
       };
@@ -201,7 +201,7 @@ const SourceOnPieceVersionFormContainer = ({
     setCollectionToDiscardId(collectionId);
   };
   const onDeleteCollection = (collectionId) => {
-    // mMSourcePieceVersions to be deleted are selected by their pieceVersionId
+    // mMSourceOnPieceVersions to be deleted are selected by their pieceVersionId
     const pieceVersionIdListToDelete = (feedFormState.pieceVersions || [])
       .filter((pv) =>
         feedFormState.pieces?.some(
@@ -210,7 +210,7 @@ const SourceOnPieceVersionFormContainer = ({
       )
       .map((pv) => pv.id);
 
-    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+    updateFeedForm(feedFormDispatch, "mMSourceOnPieceVersions", {
       deleteIdArray: pieceVersionIdListToDelete,
       idKey: "pieceVersionId",
     });
@@ -227,12 +227,12 @@ const SourceOnPieceVersionFormContainer = ({
       )
       .map((pv) => pv.id);
 
-    // Get all mMSourcePieceVersions for this collection
-    const collectionMMSourcePieceVersions = (
-      feedFormState.mMSourcePieceVersions || []
+    // Get all mMSourceOnPieceVersions for this collection
+    const collectionMMSourceOnPieceVersions = (
+      feedFormState.mMSourceOnPieceVersions || []
     ).filter((spv) => collectionPieceVersionIds.includes(spv.pieceVersionId));
 
-    if (collectionMMSourcePieceVersions.length === 0) {
+    if (collectionMMSourceOnPieceVersions.length === 0) {
       console.log(
         `[onMoveCollection] No piece versions found for collection ${collectionId}`,
       );
@@ -242,7 +242,7 @@ const SourceOnPieceVersionFormContainer = ({
     // Check boundaries based on direction
     if (direction === "up") {
       const firstRank = Math.min(
-        ...collectionMMSourcePieceVersions.map((spv) => spv.rank),
+        ...collectionMMSourceOnPieceVersions.map((spv) => spv.rank),
       );
 
       if (firstRank <= 1) {
@@ -251,17 +251,17 @@ const SourceOnPieceVersionFormContainer = ({
       }
     } else {
       const lastRank = Math.max(
-        ...collectionMMSourcePieceVersions.map((spv) => spv.rank),
+        ...collectionMMSourceOnPieceVersions.map((spv) => spv.rank),
       );
 
-      if (lastRank >= (feedFormState.mMSourcePieceVersions || []).length) {
+      if (lastRank >= (feedFormState.mMSourceOnPieceVersions || []).length) {
         console.log(`[onMoveCollection] Collection is already at the bottom`);
         return;
       }
     }
 
     // Move the collection
-    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+    updateFeedForm(feedFormDispatch, "mMSourceOnPieceVersions", {
       moveCollection: {
         collectionId,
         direction,
@@ -270,26 +270,26 @@ const SourceOnPieceVersionFormContainer = ({
   };
 
   const onMovePiece = (pieceVersionId: string, direction: "up" | "down") => {
-    // Get the mMSourcePieceVersion for this piece version
-    const mMSourcePieceVersion = (
-      feedFormState.mMSourcePieceVersions || []
+    // Get the mMSourceOnPieceVersion for this piece version
+    const mMSourceOnPieceVersion = (
+      feedFormState.mMSourceOnPieceVersions || []
     ).find((spv) => spv.pieceVersionId === pieceVersionId);
 
-    if (!mMSourcePieceVersion) {
+    if (!mMSourceOnPieceVersion) {
       console.log(`[onMovePiece] Piece version not found: ${pieceVersionId}`);
       return;
     }
 
     // Check boundaries based on direction
     if (direction === "up") {
-      if (mMSourcePieceVersion.rank <= 1) {
+      if (mMSourceOnPieceVersion.rank <= 1) {
         console.log(`[onMovePiece] Piece is already at the top`);
         return;
       }
     } else {
       if (
-        mMSourcePieceVersion.rank >=
-        (feedFormState.mMSourcePieceVersions || []).length
+        mMSourceOnPieceVersion.rank >=
+        (feedFormState.mMSourceOnPieceVersions || []).length
       ) {
         console.log(`[onMovePiece] Piece is already at the bottom`);
         return;
@@ -297,7 +297,7 @@ const SourceOnPieceVersionFormContainer = ({
     }
 
     // Move the piece
-    updateFeedForm(feedFormDispatch, "mMSourcePieceVersions", {
+    updateFeedForm(feedFormDispatch, "mMSourceOnPieceVersions", {
       movePiece: {
         pieceVersionId,
         direction,
@@ -394,8 +394,8 @@ const SourceOnPieceVersionFormContainer = ({
         <>
           {!isIntro && <h1 className="mb-4 text-4xl font-bold">{title}</h1>}
           <ul className="my-4 space-y-4">
-            {processMMSourcePieceVersionsForDisplay(
-              mMSourcePieceVersions,
+            {processMMSourceOnPieceVersionsForDisplay(
+              mMSourceOnPieceVersions,
               feedFormState,
             ).map((group, groupIndex) => {
               if (group.type === "collection") {
@@ -458,8 +458,8 @@ const SourceOnPieceVersionFormContainer = ({
                               }}
                               disabled={
                                 groupIndex ===
-                                processMMSourcePieceVersionsForDisplay(
-                                  mMSourcePieceVersions,
+                                processMMSourceOnPieceVersionsForDisplay(
+                                  mMSourceOnPieceVersions,
                                   feedFormState,
                                 ).length -
                                   1
@@ -475,14 +475,14 @@ const SourceOnPieceVersionFormContainer = ({
                       <div className="py-1">
                         {group.items.map((item) => (
                           <div
-                            key={`${groupIndex}-${item.mMSourcePieceVersion.pieceVersionId}-${item.mMSourcePieceVersion.rank}`}
+                            key={`${groupIndex}-${item.mMSourceOnPieceVersion.pieceVersionId}-${item.mMSourceOnPieceVersion.rank}`}
                             className="px-6 py-2"
                           >
                             <div className="flex items-center gap-3">
                               <div className="grow">
                                 <div className="flex items-center gap-2">
                                   <h4 className="text-base font-medium text-secondary">
-                                    {`${item.mMSourcePieceVersion.rank} - ${item.piece.title}`}
+                                    {`${item.mMSourceOnPieceVersion.rank} - ${item.piece.title}`}
                                   </h4>
                                   <div
                                     className="tooltip tooltip-right"
@@ -509,14 +509,14 @@ const SourceOnPieceVersionFormContainer = ({
                 const item = group.items[0];
                 return (
                   <li
-                    key={`single-${item.mMSourcePieceVersion.pieceVersionId}-${item.mMSourcePieceVersion.rank}`}
+                    key={`single-${item.mMSourceOnPieceVersion.pieceVersionId}-${item.mMSourceOnPieceVersion.rank}`}
                   >
                     <div className="px-4 py-3 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-xs hover:bg-primary/5 transition-all duration-150">
                       <div className="flex gap-4 items-center justify-between">
                         <div className="grow">
                           <div className="flex items-center gap-2">
                             <h4 className="text-base font-bold text-secondary">
-                              {`${item.mMSourcePieceVersion.rank} - ${item.piece.title}`}
+                              {`${item.mMSourceOnPieceVersion.rank} - ${item.piece.title}`}
                               <span className="text-base font-normal">
                                 {!!item.composer &&
                                   ` - ${getPersonName(item.composer)}`}
@@ -537,8 +537,8 @@ const SourceOnPieceVersionFormContainer = ({
                             type="button"
                             className="btn btn-sm btn-ghost hover:bg-accent hover:text-neutral"
                             onClick={() =>
-                              onEditMMSourcePieceVersion(
-                                item.mMSourcePieceVersion,
+                              onEditMMSourceOnPieceVersion(
+                                item.mMSourceOnPieceVersion,
                               )
                             }
                           >
@@ -549,7 +549,7 @@ const SourceOnPieceVersionFormContainer = ({
                             className="btn btn-sm btn-ghost hover:bg-error hover:text-neutral"
                             onClick={() =>
                               onDeletePieceVersionInit(
-                                item.mMSourcePieceVersion.pieceVersionId,
+                                item.mMSourceOnPieceVersion.pieceVersionId,
                               )
                             }
                           >
@@ -560,11 +560,11 @@ const SourceOnPieceVersionFormContainer = ({
                             className="btn btn-sm btn-ghost disabled:bg-transparent"
                             onClick={() =>
                               onMovePiece(
-                                item.mMSourcePieceVersion.pieceVersionId,
+                                item.mMSourceOnPieceVersion.pieceVersionId,
                                 "up",
                               )
                             }
-                            disabled={item.mMSourcePieceVersion.rank === 1}
+                            disabled={item.mMSourceOnPieceVersion.rank === 1}
                           >
                             ↑
                           </button>
@@ -573,13 +573,13 @@ const SourceOnPieceVersionFormContainer = ({
                             className="btn btn-sm btn-ghost disabled:bg-transparent"
                             onClick={() =>
                               onMovePiece(
-                                item.mMSourcePieceVersion.pieceVersionId,
+                                item.mMSourceOnPieceVersion.pieceVersionId,
                                 "down",
                               )
                             }
                             disabled={
-                              item.mMSourcePieceVersion.rank ===
-                              mMSourcePieceVersions.length
+                              item.mMSourceOnPieceVersion.rank ===
+                              mMSourceOnPieceVersions.length
                             }
                           >
                             ↓
@@ -614,7 +614,9 @@ const SourceOnPieceVersionFormContainer = ({
           <MMSourceFormStepNavigation
             onSave={() => onSubmit({ goToNextStep: false })}
             onSaveAndGoToNextStep={() => onSubmit({ goToNextStep: true })}
-            isNextDisabled={!(mMSourcePieceVersions.length > 0 && !isFormOpen)}
+            isNextDisabled={
+              !(mMSourceOnPieceVersions.length > 0 && !isFormOpen)
+            }
             submitTitle={submitTitle}
             onGoToPrevStep={onFormClose}
           />
@@ -642,15 +644,15 @@ const SourceOnPieceVersionFormContainer = ({
 export default SourceOnPieceVersionFormContainer;
 
 // Utility function to gather the data into groups with all related information from feedFormState
-function processMMSourcePieceVersionsForDisplay(
-  mMSourcePieceVersions: MMSourceOnPieceVersionsState[],
+function processMMSourceOnPieceVersionsForDisplay(
+  mMSourceOnPieceVersions: MMSourceOnPieceVersionsState[],
   feedFormState: any,
 ) {
   const processedGroups: Array<{
     type: "collection" | "single";
     collection?: any;
     items: Array<{
-      mMSourcePieceVersion: MMSourceOnPieceVersionsState;
+      mMSourceOnPieceVersion: MMSourceOnPieceVersionsState;
       pieceVersion: any;
       piece: any;
       composer: any;
@@ -660,11 +662,11 @@ function processMMSourcePieceVersionsForDisplay(
 
   let currentGroup: (typeof processedGroups)[0] | null = null;
 
-  mMSourcePieceVersions.forEach((mMSourcePieceVersion) => {
+  mMSourceOnPieceVersions.forEach((mMSourceOnPieceVersion) => {
     const pieceVersion = getEntityByIdOrKey(
       feedFormState,
       "pieceVersions",
-      mMSourcePieceVersion.pieceVersionId,
+      mMSourceOnPieceVersion.pieceVersionId,
     );
     const piece = getEntityByIdOrKey(
       feedFormState,
@@ -683,7 +685,7 @@ function processMMSourcePieceVersionsForDisplay(
     );
 
     const item = {
-      mMSourcePieceVersion,
+      mMSourceOnPieceVersion,
       pieceVersion,
       piece,
       composer,

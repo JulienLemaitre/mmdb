@@ -13,7 +13,7 @@ function MetronomeMarks() {
   useEffect(() => {
     const statePieceVersionIds: string[] = [];
     const dbPieceVersionIds: string[] = [];
-    state.mMSourcePieceVersions!.forEach((SoPV) => {
+    state.mMSourceOnPieceVersions!.forEach((SoPV) => {
       if (state.pieceVersions!.some((pv) => pv.id === SoPV.pieceVersionId)) {
         statePieceVersionIds.push(SoPV.pieceVersionId);
       } else {
@@ -50,7 +50,7 @@ function MetronomeMarks() {
     } else {
       setPieceVersions(pieceVersionsFromState);
     }
-  }, [state.mMSourcePieceVersions, state.pieceVersions]);
+  }, [state.mMSourceOnPieceVersions, state.pieceVersions]);
 
   const sectionList = useMemo(() => {
     if (!pieceVersions || pieceVersions.length === 0) return [];

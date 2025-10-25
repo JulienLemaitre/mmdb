@@ -343,9 +343,9 @@ export function assertsIsPersistableFeedFormState(
       "mMSourceContributions" in valueToTest &&
       Array.isArray(valueToTest.mMSourceContributions) &&
       valueToTest.mMSourceContributions.length > 0 &&
-      "mMSourcePieceVersions" in valueToTest &&
-      Array.isArray(valueToTest.mMSourcePieceVersions) &&
-      valueToTest.mMSourcePieceVersions.length > 0 &&
+      "mMSourceOnPieceVersions" in valueToTest &&
+      Array.isArray(valueToTest.mMSourceOnPieceVersions) &&
+      valueToTest.mMSourceOnPieceVersions.length > 0 &&
       "metronomeMarks" in valueToTest &&
       Array.isArray(valueToTest.metronomeMarks) &&
       valueToTest.metronomeMarks.length > 0 &&

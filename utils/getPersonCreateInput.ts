@@ -45,7 +45,7 @@ export default function getPersonCreateInput(
         return false;
       }
 
-      return state.mMSourcePieceVersions.some((mms) =>
+      return state.mMSourceOnPieceVersions.some((mms) =>
         pieceVersionList.some((pv) => pv.id === mms.pieceVersionId),
       );
     }
