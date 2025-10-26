@@ -1,7 +1,6 @@
 import { computeOverviewProgress } from "@/features/review/reviewProgress";
-import { expandRequiredChecklistItems } from "@/features/review/ReviewChecklistSchema";
 import { buildMockOverview } from "@/features/review/reviewMock";
-import { encodeChecklistKey } from "@/features/review/reviewKeys";
+import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
 
 describe("reviewProgress with checked aggregation", () => {
   it("counts checked items at source level when a checked set is provided", () => {
@@ -18,7 +17,7 @@ describe("reviewProgress with checked aggregation", () => {
     const items = expandRequiredChecklistItems(graph, options);
     // Mark first 5 as checked
     const firstFive = items.slice(0, 5);
-    const checked = new Set(firstFive.map((it) => encodeChecklistKey(it)));
+    const checked = new Set(firstFive.map((it) => it.fieldPath));
 
     const prog = computeOverviewProgress(graph, options, checked);
     expect(prog.source.required).toBe(items.length);
@@ -39,7 +38,15 @@ describe("reviewProgress with checked aggregation", () => {
     const items = expandRequiredChecklistItems(graph, options);
 
     // Pick the first section and find all its checklist items
-    const sec = (graph.sections ?? [])[0];
+    let sec;
+    for (const pv of graph.pieceVersions ?? []) {
+      for (const mv of pv.movements ?? []) {
+        for (const s of mv.sections ?? []) {
+          sec = s;
+        }
+      }
+    }
+
     expect(sec).toBeTruthy();
     const sectionItems = items.filter(
       (it) => it.entityType === "SECTION" && it.entityId === sec.id,
@@ -47,14 +54,21 @@ describe("reviewProgress with checked aggregation", () => {
     expect(sectionItems.length).toBeGreaterThan(0);
 
     // Resolve the owning pieceId for that section via movement -> pieceVersion -> piece
-    const mv = (graph.movements ?? []).find((m) => m.id === sec.movementId)!;
-    const pv = (graph.pieceVersions ?? []).find(
-      (v) => v.id === mv.pieceVersionId,
-    )!;
-    const piece = (graph.pieces ?? []).find((p) => p.id === pv.pieceId)!;
+    const piece = (graph.pieces ?? []).find((p) => {
+      return graph.pieceVersions?.some((pv) => {
+        return (
+          pv.pieceId === p.id &&
+          pv.movements?.some((mv) => {
+            return mv.sections?.some((s) => {
+              return s.id === sec.id;
+            });
+          })
+        );
+      });
+    })!;
     const collectionId = piece.collectionId as string | undefined;
 
-    const checked = new Set(sectionItems.map((it) => encodeChecklistKey(it)));
+    const checked = new Set(sectionItems.map((it) => it.fieldPath));
     const prog = computeOverviewProgress(graph, options, checked);
 
     // Source-level checked equals number of section fields we marked

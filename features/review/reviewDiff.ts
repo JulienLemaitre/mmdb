@@ -162,13 +162,3 @@ export function computeChangedChecklistFieldPaths(
 
   return out;
 }
-
-/**
- * DEPRECATED: This function is no longer needed as `fieldPath` is now the unique key.
- * From the changed items list, produce encoded keys used by the checklist UI
- */
-export function toEncodedKeys(changes: ChangedChecklistItem[]): string[] {
-  // This function body is now incorrect and should not be used.
-  // Returning fieldPath directly is the new pattern.
-  return changes.map((c) => c.fieldPath);
-}

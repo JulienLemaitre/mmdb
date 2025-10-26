@@ -1,15 +1,12 @@
 import {
   ChecklistGraph,
   RequiredChecklistItem,
-  expandRequiredChecklistItems,
   type ExpandOptions,
 } from "@/features/review/ReviewChecklistSchema";
-import {
-  encodeChecklistKey,
-  type CheckedKeySet,
-} from "@/features/review/reviewKeys";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
+import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
 
+export type CheckedKeySet = ReadonlySet<string> | Set<string>;
 export type ProgressCounts = {
   required: number;
   checked: number;
@@ -30,21 +27,21 @@ function buildParentIndexes(graph: ChecklistGraph) {
 
   for (const pv of graph.pieceVersions ?? []) {
     if (pv && pv.id && pv.pieceId) pieceVersionToPiece[pv.id] = pv.pieceId;
+
+    for (const mvt of pv.movements ?? []) {
+      if (mvt && mvt.id && pv.id) movementToPieceVersion[mvt.id] = pv.id;
+      for (const sec of mvt.sections ?? []) {
+        if (sec && sec.id && mvt.id) sectionToMovement[sec.id] = mvt.id;
+      }
+    }
   }
-  for (const mv of graph.movements ?? []) {
-    if (mv && mv.id && mv.pieceVersionId)
-      movementToPieceVersion[mv.id] = mv.pieceVersionId;
-  }
-  for (const sec of graph.sections ?? []) {
-    if (sec && sec.id && sec.movementId)
-      sectionToMovement[sec.id] = sec.movementId;
-  }
+
   for (const mm of graph.metronomeMarks ?? []) {
     if (mm && mm.id && mm.sectionId) mmToSection[mm.id] = mm.sectionId;
   }
   const pieceToCollection: Record<string, string | undefined> = {};
   for (const p of graph.pieces ?? []) {
-    if (p && p.id) pieceToCollection[p.id] = p.collectionId;
+    if (p && p.id && p.collectionId) pieceToCollection[p.id] = p.collectionId;
   }
   return {
     pieceVersionToPiece,
@@ -87,14 +84,21 @@ function attributeItemToPieceId(
   }
   // TEMPO_INDICATION may be attached to SECTION via section.tempoIndicationId; we attribute by section if present in graph
   if (item.entityType === "TEMPO_INDICATION" && item.entityId) {
-    const section = (graph.sections ?? []).find(
-      (s) => s.tempoIndicationId === item.entityId,
-    );
-    if (section) {
-      const mvId = idx.sectionToMovement[section.id];
-      const pvId = mvId ? idx.movementToPieceVersion[mvId] : undefined;
-      return pvId ? idx.pieceVersionToPiece[pvId] : undefined;
+    let pieceId: string | undefined;
+
+    for (const pv of graph.pieceVersions ?? []) {
+      for (const mv of pv.movements ?? []) {
+        for (const sec of mv.sections ?? []) {
+          if (sec.tempoIndication?.id === item.entityId) {
+            const mvId = idx.sectionToMovement[sec.id];
+            const pvId = mvId ? idx.movementToPieceVersion[mvId] : undefined;
+            pieceId = pvId ? idx.pieceVersionToPiece[pvId] : undefined;
+            if (pieceId) return pieceId; // Early return once found
+          }
+        }
+      }
     }
+    return pieceId;
   }
   // REFERENCE or CONTRIBUTION or PERSON/ORGANIZATION are not attributed to a piece in this simple rollup; keep them at source-level
   return undefined;
@@ -130,7 +134,7 @@ export function computeOverviewProgress(
   // Attribute items and tally
   let sourceChecked = 0;
   for (const item of items) {
-    const key = encodeChecklistKey(item);
+    const key = item.fieldPath;
     const isChecked = checked.has(key);
 
     const pieceId = attributeItemToPieceId(item, graph, idx);
