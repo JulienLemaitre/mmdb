@@ -1,4 +1,6 @@
 // Mock NextResponse.json to avoid depending on global Request in next/server
+import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
+
 jest.mock("next/server", () => ({
   NextResponse: {
     json: (obj: any, init?: any) => ({
@@ -22,7 +24,6 @@ const {
   POST: postSubmit,
 } = require("../app/api/review/[reviewId]/submit/route");
 import { buildMockOverview } from "@/features/review/reviewMock";
-import { expandRequiredChecklistItems } from "@/features/review/ReviewChecklistSchema";
 
 describe("POST /api/review/[reviewId]/submit", () => {
   it("rejects when checklist is incomplete", async () => {

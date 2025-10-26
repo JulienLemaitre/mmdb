@@ -4,8 +4,8 @@ import userEvent from "@testing-library/user-event";
 import ChecklistPage from "@/app/(signedIn)/review/[reviewId]/checklist/page";
 import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
 import { buildMockOverview } from "@/features/review/reviewMock";
-import { expandRequiredChecklistItems } from "@/features/review/ReviewChecklistSchema";
 import { URL_REVIEW_LIST } from "@/utils/routes";
+import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
 
 // Mock navigation hooks
 const pushMock = jest.fn();

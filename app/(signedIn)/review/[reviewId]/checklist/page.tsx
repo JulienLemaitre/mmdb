@@ -3,7 +3,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import {
-  expandRequiredChecklistItems,
   type ChecklistGraph,
   type RequiredChecklistItem,
 } from "@/features/review/ReviewChecklistSchema";
@@ -22,6 +21,7 @@ import { SummarySlice } from "@/features/review/slices/SummarySlice";
 import { CollectionSlice } from "@/features/review/slices/CollectionSlice";
 import { PieceSlice } from "@/features/review/slices/PieceSlice";
 import { FeedFormState } from "@/types/feedFormTypes";
+import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
 
 // State definition for the view controller
 export type ReviewView =

@@ -1,6 +1,6 @@
 import { computeOverviewProgress } from "@/features/review/reviewProgress";
-import { expandRequiredChecklistItems } from "@/features/review/ReviewChecklistSchema";
 import { buildMockOverview } from "@/features/review/reviewMock";
+import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
 
 describe("reviewProgress", () => {
   it("computes source required equal to expanded checklist length", () => {

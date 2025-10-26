@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { expandRequiredChecklistItems } from "@/features/review/ReviewChecklistSchema";
 import { getReviewOverview } from "@/utils/server/getReviewOverview";
 import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
 import { composeAuditEntries } from "@/utils/auditCompose";
+import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
 
 // POST /api/review/[reviewId]/submit
 // Body: { workingCopy, checklistState: Array<{entityType, entityId, fieldPath, checked}>, overallComment? }
