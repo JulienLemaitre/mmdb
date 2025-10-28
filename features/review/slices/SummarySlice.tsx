@@ -26,14 +26,16 @@ export function SummarySlice({
 }: Props) {
   console.log(`[] graph :`, graph);
   // Filter for items to display in this slice
-  const sourceItems = items.filter(
-    (it) => it.entityType === "MM_SOURCE" || it.entityType === "REFERENCE",
-  );
+  const sourceItems = items.filter((it) => it.entityType === "MM_SOURCE");
+  const referenceItems = items.filter((it) => it.entityType === "REFERENCE");
   const contributionItems = items.filter(
     (it) => it.entityType === "CONTRIBUTION",
   );
+  console.log(`[] contributionItems :`, contributionItems);
   const personItems = items.filter((it) => it.entityType === "PERSON");
   const orgItems = items.filter((it) => it.entityType === "ORGANIZATION");
+
+  // TODO is lacking the review of persons and orgs that need to be reviewed
 
   return (
     <div>
@@ -42,6 +44,47 @@ export function SummarySlice({
       <table className="table table-sm">
         <tbody>
           {sourceItems.map((item) => (
+            <ChecklistItemRow
+              key={item.fieldPath}
+              item={item}
+              graph={graph}
+              checked={checkedKeys.has(item.fieldPath)}
+              changed={changedKeys.has(item.fieldPath)}
+              onToggle={() => onToggle(item)}
+              onEdit={() => onEdit(item)}
+            />
+          ))}
+          {/* Add other groups like contributions, persons, etc. */}
+        </tbody>
+      </table>
+
+      {referenceItems.length > 0 && (
+        <>
+          <h2 className="text-xl font-bold mt-6 mb-4">References</h2>
+          <table className="table table-sm">
+            <tbody>
+              {referenceItems.map((item) => (
+                <ChecklistItemRow
+                  key={item.fieldPath}
+                  item={item}
+                  graph={graph}
+                  checked={checkedKeys.has(item.fieldPath)}
+                  changed={changedKeys.has(item.fieldPath)}
+                  onToggle={() => onToggle(item)}
+                  onEdit={() => onEdit(item)}
+                />
+              ))}
+              {/* Add other groups like contributions, persons, etc. */}
+            </tbody>
+          </table>
+        </>
+      )}
+
+      <h2 className="text-xl font-bold mt-6 mb-4">Contributions</h2>
+      {/* Checklist Table */}
+      <table className="table table-sm">
+        <tbody>
+          {contributionItems.map((item) => (
             <ChecklistItemRow
               key={item.fieldPath}
               item={item}
