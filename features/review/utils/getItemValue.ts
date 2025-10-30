@@ -12,12 +12,18 @@ export function getItemValue({
   item: RequiredChecklistItem;
   graph: ChecklistGraph;
 }) {
+  console.log("[getItemValue]", { item, graph });
   if (item.entityType === "MM_SOURCE" && "path" in item.field) {
     return graph.source[item.field.path];
   }
   const graphPropName = `${ENTITY_PREFIX[item.entityType]}s`;
 
-  if (graph[graphPropName] && "path" in item.field) {
+  if (
+    !["MOVEMENT", "SECTION", "MM_SOURCE_ON_PIECE_VERSION"].includes(
+      item.entityType,
+    ) &&
+    "path" in item.field
+  ) {
     const entity = graph[graphPropName]?.find((e) => e.id === item.entityId);
     console.log(`[] entity :`, entity);
     console.log(
@@ -59,12 +65,29 @@ function findEntityValueInGraphById({
   graph: ChecklistGraph;
 }) {
   const fieldPath = "path" in item.field ? item.field.path : item.fieldPath;
-  if (item.entityType === "PIECE")
-    return graph.pieces?.find((p) => p.id === item.entityId)?.[fieldPath];
-  if (item.entityType === "PIECE_VERSION")
-    return graph.pieceVersions?.find((pv) => pv.id === item.entityId)?.[
-      fieldPath
-    ];
+  // if (item.entityType === "PIECE")
+  //   return graph.pieces?.find((p) => p.id === item.entityId)?.[fieldPath];
+  // if (item.entityType === "PIECE_VERSION")
+  //   return graph.pieceVersions?.find((pv) => pv.id === item.entityId)?.[
+  //     fieldPath
+  //   ];
+  if (
+    item.entityType === "MM_SOURCE_ON_PIECE_VERSION" &&
+    "path" in item.field &&
+    item.field.path === "rank"
+  ) {
+    const entity = graph.sourceOnPieceVersions?.find(
+      (e) => e.joinId === item.entityId,
+    );
+    console.log(`[MM_SOURCE_ON_PIECE_VERSION] entity :`, entity);
+    const sourceOnPieceVersion = graph.sourceOnPieceVersions?.find(
+      (sopv) => sopv.joinId === item.entityId,
+    );
+    const piece = graph.pieces?.find(
+      (p) => p.id === sourceOnPieceVersion?.pieceId,
+    );
+    return `${entity?.rank}. ${piece?.title}`;
+  }
   if (item.entityType === "MOVEMENT") {
     for (const pv of graph.pieceVersions ?? []) {
       for (const mv of pv.movements ?? []) {
@@ -93,14 +116,14 @@ function findEntityValueInGraphById({
       }
     }
   }
-  if (item.entityType === "METRONOME_MARK")
-    return graph.metronomeMarks?.find((mm) => mm.id === item.entityId)?.[
-      fieldPath
-    ];
-  if (item.entityType === "TEMPO_INDICATION")
-    return graph.tempoIndications?.find((ti) => ti.id === item.entityId)?.[
-      fieldPath
-    ];
+  // if (item.entityType === "METRONOME_MARK")
+  //   return graph.metronomeMarks?.find((mm) => mm.id === item.entityId)?.[
+  //     fieldPath
+  //   ];
+  // if (item.entityType === "TEMPO_INDICATION")
+  //   return graph.tempoIndications?.find((ti) => ti.id === item.entityId)?.[
+  //     fieldPath
+  //   ];
   if (item.entityType === "REFERENCE")
     return graph.source?.references?.find((ref) => ref.id === item.entityId)?.[
       fieldPath

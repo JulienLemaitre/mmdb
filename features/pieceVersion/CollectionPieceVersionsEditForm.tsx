@@ -304,17 +304,16 @@ function CollectionPieceVersionsEditForm({
                     );
                   })}
               </ul>
-              {areAllNeededPieceVersionSet && (
-                <div className="flex gap-4 items-center mt-6">
-                  <button
-                    className="btn btn-primary"
-                    type="button"
-                    onClick={onSubmit}
-                  >
-                    {`Submit (all pieces set)`}
-                  </button>
-                </div>
-              )}
+              <div className="flex gap-4 items-center mt-6">
+                <button
+                  className="btn btn-primary"
+                  type="button"
+                  onClick={onSubmit}
+                  disabled={!areAllNeededPieceVersionSet}
+                >
+                  {`Submit (${areAllNeededPieceVersionSet ? `all pieces set` : `some pieces not set`})`}
+                </button>
+              </div>
             </>
           )}
           {!isExistingCollectionAddingProcess && (

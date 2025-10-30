@@ -15,8 +15,7 @@ export default async function ReviewListPage({
 }) {
   const params = await searchParams;
   const session = await getServerSession(authOptions);
-  console.log(`[ReviewListPage] session :`, session);
-  if (!session || !session.user) {
+  if (!session?.user) {
     redirect("/login");
   }
   const role = (session.user as any).role as string | undefined;

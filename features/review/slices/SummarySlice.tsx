@@ -27,7 +27,11 @@ export function SummarySlice({
   console.log(`[] graph :`, graph);
   // Filter for items to display in this slice
   const sourceItems = items.filter((it) => it.entityType === "MM_SOURCE");
+  const sourceOnPieceVersions = items.filter(
+    (it) => it.entityType === "MM_SOURCE_ON_PIECE_VERSION",
+  );
   const referenceItems = items.filter((it) => it.entityType === "REFERENCE");
+  console.log(`[] referenceItems :`, referenceItems);
   const contributionItems = items.filter(
     (it) => it.entityType === "CONTRIBUTION",
   );
@@ -85,6 +89,25 @@ export function SummarySlice({
       <table className="table table-sm">
         <tbody>
           {contributionItems.map((item) => (
+            <ChecklistItemRow
+              key={item.fieldPath}
+              item={item}
+              graph={graph}
+              checked={checkedKeys.has(item.fieldPath)}
+              changed={changedKeys.has(item.fieldPath)}
+              onToggle={() => onToggle(item)}
+              onEdit={() => onEdit(item)}
+            />
+          ))}
+          {/* Add other groups like contributions, persons, etc. */}
+        </tbody>
+      </table>
+
+      <h2 className="text-xl font-bold mt-6 mb-4">Order of pieces</h2>
+      {/* Checklist Table */}
+      <table className="table table-sm">
+        <tbody>
+          {sourceOnPieceVersions.map((item) => (
             <ChecklistItemRow
               key={item.fieldPath}
               item={item}
