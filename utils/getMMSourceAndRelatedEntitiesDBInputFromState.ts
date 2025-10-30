@@ -17,6 +17,11 @@ export default function getMMSourceAndRelatedEntitiesDBInputFromState(
   // Convert the 'type' and 'references' properties to match the SourceDescriptionInput type
   const mMSourceInput: Prisma.MMSourceCreateInput = {
     id,
+    creator: {
+      connect: {
+        id: creatorId,
+      },
+    },
     ...(title ? { title } : {}),
     year,
     link,

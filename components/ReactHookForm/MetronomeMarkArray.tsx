@@ -32,7 +32,6 @@ function processSectionsForDisplay(
   }> = [];
 
   let currentGroup: (typeof processedGroups)[0] | null = null;
-  console.log(`[] sectionList :`, sectionList);
 
   sectionList.forEach((section, index) => {
     const piece = feedFormState.pieces?.find(
@@ -141,7 +140,6 @@ export default function MetronomeMarkArray({
   };
 
   const organizedData = processSectionsForDisplay(sectionList, state);
-  console.log(`[] organizedData :`, organizedData);
 
   const renderSectionForm = ({
     section,
