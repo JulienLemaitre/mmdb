@@ -19,9 +19,12 @@ export function getItemValue({
   const graphPropName = `${ENTITY_PREFIX[item.entityType]}s`;
 
   if (
-    !["MOVEMENT", "SECTION", "MM_SOURCE_ON_PIECE_VERSION"].includes(
-      item.entityType,
-    ) &&
+    ![
+      "MOVEMENT",
+      "SECTION",
+      "REFERENCE",
+      "MM_SOURCE_ON_PIECE_VERSION",
+    ].includes(item.entityType) &&
     "path" in item.field
   ) {
     const entity = graph[graphPropName]?.find((e) => e.id === item.entityId);
