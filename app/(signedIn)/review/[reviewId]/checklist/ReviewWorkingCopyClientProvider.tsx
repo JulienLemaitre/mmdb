@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
+import { ChecklistGraph } from "@/features/review/ReviewChecklistSchema";
 
 export default function ReviewWorkingCopyClientProvider({
   reviewId,
@@ -9,7 +10,7 @@ export default function ReviewWorkingCopyClientProvider({
   children,
 }: {
   reviewId: string;
-  initialGraph: any;
+  initialGraph: ChecklistGraph;
   children: React.ReactNode;
 }) {
   return (

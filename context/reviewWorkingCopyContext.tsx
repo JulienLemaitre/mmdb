@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useContext, useMemo } from "react";
 import { ReviewWorkingCopy } from "@/features/review/reviewEditBridge";
+import { ChecklistGraph } from "@/features/review/ReviewChecklistSchema";
 
 type Ctx = {
   getWorkingCopy(): ReviewWorkingCopy | null;
@@ -15,7 +16,7 @@ export function ReviewWorkingCopyProvider({
   initialGraph,
 }: {
   reviewId: string;
-  initialGraph: any;
+  initialGraph: ChecklistGraph;
   children: React.ReactNode;
 }) {
   const key = useMemo(() => `review:${reviewId}:workingCopy`, [reviewId]);
