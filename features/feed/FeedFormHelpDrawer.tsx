@@ -5,7 +5,7 @@ import XMarkIcon from "@/ui/svg/XMarkIcon";
 import { useFeedForm } from "@/context/feedFormContext";
 import { stepHelpContent } from "@/features/feed/multiStepMMSourceForm/stepHelpContent";
 
-const HelpDrawer = () => {
+const FeedFormHelpDrawer = () => {
   const { currentStepRank } = useFeedForm();
   const [isSectonHelpChecked, setIsSectonHelpChecked] = useState(true);
   const toggleSectionHelp = () => {
@@ -153,4 +153,4 @@ const HelpDrawer = () => {
   );
 };
 
-export default HelpDrawer;
+export default FeedFormHelpDrawer;

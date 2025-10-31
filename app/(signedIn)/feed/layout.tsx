@@ -1,7 +1,7 @@
 import { FeedFormProvider } from "@/context/feedFormContext";
 import NavBar from "@/ui/NavBar";
 import React from "react";
-import HelpDrawer from "@/ui/HelpDrawer";
+import FeedFormHelpDrawer from "@/features/feed/FeedFormHelpDrawer";
 import Steps from "@/features/feed/multiStepMMSourceForm/Steps";
 import ResetAllForms from "@/features/feed/ResetAllForms";
 import ReviewEditBanner from "@/features/review/ReviewEditBanner";
@@ -30,7 +30,7 @@ export default function FeedLayout({ children }) {
             </div>
           </div>
         </div>
-        <HelpDrawer />
+        <FeedFormHelpDrawer />
       </FeedFormProvider>
     </div>
   );
