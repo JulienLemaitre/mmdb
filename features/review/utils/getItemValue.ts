@@ -12,7 +12,6 @@ export function getItemValue({
   item: RequiredChecklistItem;
   graph: ChecklistGraph;
 }) {
-  console.log("[getItemValue]", { item, graph });
   if (item.entityType === "MM_SOURCE" && "path" in item.field) {
     return graph.source[item.field.path];
   }
@@ -28,13 +27,6 @@ export function getItemValue({
     "path" in item.field
   ) {
     const entity = graph[graphPropName]?.find((e) => e.id === item.entityId);
-    console.log(`[] entity :`, entity);
-    console.log(
-      `[] graphPropName :`,
-      graphPropName,
-      `entity[item.field.path]`,
-      entity[item.field.path],
-    );
 
     if (graphPropName === "contributions") {
       if ("personId" === item.field.path) {
@@ -51,8 +43,7 @@ export function getItemValue({
   if ("path" in item.field) {
     return findEntityValueInGraphById({ item, graph });
   } else {
-    console.log(`[getItemValue] No path in item.field :`, item.field);
-    console.log({
+    console.warn(`[getItemValue] No path in item.field :`, item.field, {
       item,
       graphPropName,
       "ENTITY_PREFIX[item.entityType]": ENTITY_PREFIX[item.entityType],
@@ -82,7 +73,6 @@ function findEntityValueInGraphById({
     const entity = graph.sourceOnPieceVersions?.find(
       (e) => e.joinId === item.entityId,
     );
-    console.log(`[MM_SOURCE_ON_PIECE_VERSION] entity :`, entity);
     const sourceOnPieceVersion = graph.sourceOnPieceVersions?.find(
       (sopv) => sopv.joinId === item.entityId,
     );
@@ -132,7 +122,7 @@ function findEntityValueInGraphById({
       fieldPath
     ];
 
-  console.log(
+  console.warn(
     `[findEntityInGraphById] Nothing found for item`,
     JSON.stringify(item),
   );

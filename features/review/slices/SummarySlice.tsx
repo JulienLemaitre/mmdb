@@ -4,6 +4,7 @@ import {
 } from "@/features/review/ReviewChecklistSchema";
 import { ReviewView } from "@/app/(signedIn)/review/[reviewId]/checklist/page";
 import { ChecklistItemRow } from "../components/ChecklistItemRow";
+import { processSourceOnPieceVersionsForDisplay } from "@/features/review/utils/ProcessSourceOnPieceVersionsForDisplay";
 
 type Props = {
   graph: ChecklistGraph;
@@ -25,6 +26,8 @@ export function SummarySlice({
   onNavigate,
 }: Props) {
   console.log(`[] graph :`, graph);
+  const sourceOnPieceVersionGroups =
+    processSourceOnPieceVersionsForDisplay(graph);
   // Filter for items to display in this slice
   const sourceItems = items.filter((it) => it.entityType === "MM_SOURCE");
   const sourceOnPieceVersions = items.filter(
@@ -126,31 +129,39 @@ export function SummarySlice({
       <div className="mt-8">
         <h3 className="font-semibold mb-2">Navigate to:</h3>
         <div className="flex flex-col gap-2">
-          {graph.collections?.map((coll) => {
-            console.log(`[] coll :`, coll);
-            return (
-              <button
-                key={coll.id}
-                className="btn btn-outline justify-start"
-                onClick={() =>
-                  onNavigate({ view: "COLLECTION", collectionId: coll.id })
-                }
-              >
-                Collection: {coll.title}
-              </button>
-            );
+          {sourceOnPieceVersionGroups.map((group, groupindex) => {
+            if (group.type === "collection") {
+              return (
+                <button
+                  key={group.collection.id}
+                  className="btn btn-outline btn-primary justify-start"
+                  onClick={() =>
+                    onNavigate({
+                      view: "COLLECTION",
+                      collectionId: group.collection.id,
+                    })
+                  }
+                >
+                  Collection: {group.collection.title}
+                </button>
+              );
+            } else {
+              // Single piece (not part of a full collection)
+              const item = group.items[0];
+
+              return (
+                <button
+                  key={item.piece.id}
+                  className="btn btn-outline btn-secondary justify-start"
+                  onClick={() =>
+                    onNavigate({ view: "PIECE", pieceId: item.piece.id })
+                  }
+                >
+                  Piece: {item.piece.title}
+                </button>
+              );
+            }
           })}
-          {graph.pieces
-            ?.filter((p) => !p.collectionId) // Show only pieces not in a collection
-            .map((piece) => (
-              <button
-                key={piece.id}
-                className="btn btn-outline btn-secondary justify-start"
-                onClick={() => onNavigate({ view: "PIECE", pieceId: piece.id })}
-              >
-                Piece: {piece.title}
-              </button>
-            ))}
         </div>
       </div>
     </div>

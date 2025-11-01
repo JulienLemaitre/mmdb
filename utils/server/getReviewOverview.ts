@@ -222,7 +222,16 @@ export async function getReviewOverview(reviewId: string): Promise<{
     collectionIds.size > 0
       ? await db.collection.findMany({
           where: { id: { in: Array.from(collectionIds) } },
-          select: { id: true, title: true, composerId: true },
+          select: {
+            id: true,
+            title: true,
+            composerId: true,
+            _count: {
+              select: {
+                pieces: true,
+              },
+            },
+          },
         })
       : [];
 
@@ -386,6 +395,7 @@ export async function getReviewOverview(reviewId: string): Promise<{
       id: c.id,
       title: c.title ?? null,
       composerId: c.composerId ?? null,
+      pieceCount: c._count.pieces,
     })),
     pieces,
     pieceVersions,

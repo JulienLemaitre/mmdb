@@ -1,6 +1,6 @@
 import { updateFeedForm, useFeedForm } from "@/context/feedFormContext";
 import { getStepByRank } from "@/features/feed/multiStepMMSourceForm/stepsUtils";
-import SourceOnPieceVersionFormContainer from "@/features/sourceOnPieceVersion/SourceOnPieceVersionFormContainer";
+import SourceOnPieceVersionFormContainer from "@/features/feed/multiStepMMSourceForm/components/SourceOnPieceVersionFormContainer";
 
 const MMSourceOnPieceVersions = () => {
   const { dispatch, currentStepRank, state } = useFeedForm();

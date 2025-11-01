@@ -43,7 +43,14 @@ export function buildMockOverview(reviewId: string): MockOverview {
         { id: refId, type: "ISMN", reference: "https://example.com/op10" },
       ],
     },
-    collections: [{ id: collectionId, title: "Op. 10", composerId: personId }],
+    collections: [
+      {
+        id: collectionId,
+        title: "Op. 10",
+        composerId: personId,
+        pieceCount: 2,
+      },
+    ],
     pieces: [
       {
         id: pieceAId,

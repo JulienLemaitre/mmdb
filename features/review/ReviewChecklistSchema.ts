@@ -37,7 +37,7 @@ export type ChecklistGraph = {
   // Singleton source node for this review context
   source: MMSourceDescriptionState & { id: string };
   // Arrays of nodes in scope
-  collections?: CollectionState[];
+  collections?: (CollectionState & { pieceCount: number })[];
   pieces: PieceState[];
   pieceVersions: PieceVersionState[];
   tempoIndications?: TempoIndicationState[];

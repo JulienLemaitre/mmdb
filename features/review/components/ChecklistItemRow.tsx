@@ -23,7 +23,6 @@ export function ChecklistItemRow({
   onEdit,
 }: Props) {
   const value = getItemValue({ item, graph });
-  console.log(`[ChecklistItemRow] typeof value`, typeof value, value);
 
   return (
     <tr
