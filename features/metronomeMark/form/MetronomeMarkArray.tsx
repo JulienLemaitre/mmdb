@@ -232,9 +232,9 @@ export default function MetronomeMarkArray({
             label={`Beat unit`}
             classNames="mt-0"
             control={control}
-            options={Object.keys(NOTE_VALUE).map((key) => ({
-              value: key,
-              label: formatToPhraseCase(key),
+            options={Object.keys(NOTE_VALUE).map((noteValue) => ({
+              value: noteValue,
+              label: formatToPhraseCase(noteValue),
             }))}
             isRequired={!isNoMMChecked}
             isDisabled={isNoMMChecked}

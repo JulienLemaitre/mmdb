@@ -8,6 +8,9 @@ import {
   RequiredPredicateCtx,
   REVIEW_CHECKLIST_SCHEMA,
 } from "@/features/review/ReviewChecklistSchema";
+import getPersonName from "@/utils/getPersonName";
+import getItemValueDisplay from "@/features/review/utils/getItemValueDisplay";
+import { SectionState } from "@/types/formTypes";
 
 /**
  * JSDoc: Expands the full list of required checklist items from a ChecklistGraph.
@@ -47,12 +50,84 @@ export function expandRequiredChecklistItems(
           fieldRelativePath: field.path,
         };
         if (!isRequiredField(field, ctx)) continue;
+
+        // Get item value
+        let value;
+        switch (entityType) {
+          case "CONTRIBUTION": {
+            const contribution = graph.contributions.find((c) => c.id === n.id);
+            if (!contribution) {
+              console.warn(`Contribution not found for node`, n);
+              continue;
+            }
+            if ("person" in contribution) {
+              if (field.path !== "personId") {
+                value = contribution[field.path];
+              } else {
+                const personId = contribution.person.id;
+                const person = graph.persons?.find((p) => p.id === personId);
+                value = person && getPersonName(person);
+              }
+            } else if ("organization" in contribution) {
+              if (field.path !== "organizationId") {
+                value = contribution[field.path];
+              } else {
+                const organizationId = contribution.organization.id;
+                const organization = graph.organizations?.find(
+                  (o) => o.id === organizationId,
+                );
+                value = organization?.name;
+              }
+            } else {
+              console.warn(`Unexpected contribution type for node`, n);
+            }
+            break;
+          }
+          case "MM_SOURCE_ON_PIECE_VERSION": {
+            const sourceOnPieceVersion = graph.sourceOnPieceVersions.find(
+              (sopv) => sopv.joinId === n.id,
+            );
+            if (!sourceOnPieceVersion) {
+              console.warn(`SourceOnPieceVersion not found for node`, n);
+              continue;
+            }
+            value = sourceOnPieceVersion[field.path];
+            break;
+          }
+          case "SECTION": {
+            if (field.path === "tempoIndicationId") {
+              const tempoIndicationId = (n as SectionState).tempoIndication?.id;
+              const tempoIndication = graph.tempoIndications?.find(
+                (ti) => ti.id === tempoIndicationId,
+              );
+              value = tempoIndication?.text;
+            } else {
+              value = n[field.path];
+            }
+            break;
+          }
+          default: {
+            if (typeof n[field.path] === "undefined") {
+              console.log(`undefined n[field.path] for node`, n);
+            }
+            value = n[field.path];
+            break;
+          }
+        }
+
+        value = getItemValueDisplay({
+          entityType,
+          fieldPath: field.path,
+          value,
+        });
+
         items.push({
           entityType,
           entityId: n.id,
           field,
           fieldPath: buildFieldPath(entityType, n.id, field.path),
           label: field.label,
+          value,
           lineage, // Attach the complete lineage to each item
         });
       }
@@ -80,20 +155,6 @@ export function expandRequiredChecklistItems(
       id: string;
     }>,
   );
-  // // Add special checklist items for source contents ordering
-  // if (Array.isArray(graph.sourceOnPieceVersions)) {
-  //   for (const row of graph.sourceOnPieceVersions) {
-  //     if (!row?.joinId) continue;
-  //     items.push({
-  //       entityType: "MM_SOURCE",
-  //       entityId: null,
-  //       fieldPath: buildSourceJoinRankPath(String(row.joinId)),
-  //       field: row,
-  //       label: `Rank for piece in source`,
-  //       lineage: {},
-  //     });
-  //   }
-  // }
 
   // --- 2. Top-Level Standalone Entities ---
   // These also have no parent lineage in this context.

@@ -7,7 +7,7 @@ import TrashIcon from "@/ui/svg/TrashIcon";
 import { getMovementDefaultValues } from "@/features/movement/utils/getMovementDefaultValues";
 import ArrowDownIcon from "@/ui/svg/ArrowDownIcon";
 import ArrowUpIcon from "@/ui/svg/ArrowUpIcon";
-import formatToPhraseCase from "@/utils/formatToPhraseCase";
+import getKeyLabel from "@/utils/getKeyLabel";
 
 export default function MovementArray({
   control,
@@ -80,7 +80,7 @@ export default function MovementArray({
                 control={control}
                 options={Object.values(KEY).map((key) => ({
                   value: key,
-                  label: formatToPhraseCase(key),
+                  label: getKeyLabel(key),
                 }))}
                 isRequired={true}
                 fieldError={errors?.movements?.[index]?.key}

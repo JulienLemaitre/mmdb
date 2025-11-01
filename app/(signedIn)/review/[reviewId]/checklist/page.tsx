@@ -51,7 +51,6 @@ export default function ChecklistPage() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [aborting, setAborting] = useState(false);
   const [abortError, setAbortError] = useState<string | null>(null);
-  const [reloadNonce, setReloadNonce] = useState(0);
   const [storageWarning, setStorageWarning] = useState<string | null>(null);
 
   // New state for controlling which slice is visible
@@ -77,6 +76,7 @@ export default function ChecklistPage() {
       },
     });
   }, [workingGraph, data?.globallyReviewed]);
+  console.log(`[checklist page] allRequiredItems :`, allRequiredItems);
 
   const changedKeys = useMemo(() => {
     if (!data?.graph || !workingGraph) return new Set<string>();
@@ -181,7 +181,7 @@ export default function ChecklistPage() {
     return () => {
       mounted = false;
     };
-  }, [reviewId, reloadNonce, router, getWorkingCopy, saveWorkingCopy]);
+  }, [reviewId, router, getWorkingCopy, saveWorkingCopy]);
 
   // Persist checked keys to localStorage
   useEffect(() => {
@@ -252,7 +252,7 @@ export default function ChecklistPage() {
     } catch (e) {
       console.error("Error handling return from edit:", e);
     }
-  }, [data, saveWorkingCopy, getWorkingCopy, allRequiredItems]);
+  }, [data, workingGraph, saveWorkingCopy, getWorkingCopy, allRequiredItems]);
 
   if (loading || !workingGraph) return <div className="p-6">Loading…</div>;
   if (error)

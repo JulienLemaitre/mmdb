@@ -51,7 +51,6 @@ export function PieceSlice({
             <ChecklistItemRow
               key={item.fieldPath}
               item={item}
-              graph={graph}
               onToggle={() => rest.onToggle(item)}
               onEdit={() => rest.onEdit(item)}
               checked={rest.checkedKeys.has(item.fieldPath)}
@@ -77,7 +76,6 @@ export function PieceSlice({
                   <ChecklistItemRow
                     key={item.fieldPath}
                     item={item}
-                    graph={graph}
                     onToggle={() => rest.onToggle(item)}
                     onEdit={() => rest.onEdit(item)}
                     checked={rest.checkedKeys.has(item.fieldPath)}
@@ -101,7 +99,6 @@ export function PieceSlice({
                     .map((item) => (
                       <ChecklistItemRow
                         key={item.fieldPath}
-                        graph={graph}
                         item={item}
                         onToggle={() => rest.onToggle(item)}
                         onEdit={() => rest.onEdit(item)}
@@ -122,7 +119,6 @@ export function PieceSlice({
                     .map((item) => (
                       <ChecklistItemRow
                         key={item.fieldPath}
-                        graph={graph}
                         item={item}
                         onToggle={() => rest.onToggle(item)}
                         onEdit={() => rest.onEdit(item)}

@@ -55,7 +55,6 @@ export function CollectionSlice({
         <tbody>
           {collectionItems.map((item) => (
             <ChecklistItemRow
-              graph={graph}
               key={item.fieldPath}
               item={item}
               checked={rest.checkedKeys.has(item.fieldPath)}

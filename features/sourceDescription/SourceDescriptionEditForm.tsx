@@ -20,6 +20,7 @@ import checkAreFieldsDirty from "@/utils/checkAreFieldsDirty";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 import XMarkIcon from "@/ui/svg/XMarkIcon";
 import CheckIcon from "@/ui/svg/CheckIcon";
+import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 
 const SourceSchema = z
   .object({
@@ -56,7 +57,7 @@ const SourceSchema = z
 const DEFAULT_VALUES: Partial<SourceDescriptionInput> = {
   type: {
     value: SOURCE_TYPE.EDITION,
-    label: formatToPhraseCase(SOURCE_TYPE.EDITION),
+    label: getSourceTypeLabel(SOURCE_TYPE.EDITION),
   },
   year: undefined,
   title: "",

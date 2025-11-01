@@ -41,13 +41,6 @@ export function processSourceOnPieceVersionsForDisplay(graph: ChecklistGraph) {
       );
       includeCollection =
         sourceCollectionPieceCount.length === collectionPieceCount;
-      console.log(
-        `include collection ${piece.collectionId}:`,
-        includeCollection,
-      );
-      console.log(
-        `collection piece count: ${collectionPieceCount}, source collection piece count: ${sourceCollectionPieceCount.length}`,
-      );
     }
     const collection =
       includeCollection &&

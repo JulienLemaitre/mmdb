@@ -34,11 +34,9 @@ export function SummarySlice({
     (it) => it.entityType === "MM_SOURCE_ON_PIECE_VERSION",
   );
   const referenceItems = items.filter((it) => it.entityType === "REFERENCE");
-  console.log(`[] referenceItems :`, referenceItems);
   const contributionItems = items.filter(
     (it) => it.entityType === "CONTRIBUTION",
   );
-  console.log(`[] contributionItems :`, contributionItems);
   const personItems = items.filter((it) => it.entityType === "PERSON");
   const orgItems = items.filter((it) => it.entityType === "ORGANIZATION");
 
@@ -54,7 +52,6 @@ export function SummarySlice({
             <ChecklistItemRow
               key={item.fieldPath}
               item={item}
-              graph={graph}
               checked={checkedKeys.has(item.fieldPath)}
               changed={changedKeys.has(item.fieldPath)}
               onToggle={() => onToggle(item)}
@@ -74,7 +71,6 @@ export function SummarySlice({
                 <ChecklistItemRow
                   key={item.fieldPath}
                   item={item}
-                  graph={graph}
                   checked={checkedKeys.has(item.fieldPath)}
                   changed={changedKeys.has(item.fieldPath)}
                   onToggle={() => onToggle(item)}
@@ -95,7 +91,6 @@ export function SummarySlice({
             <ChecklistItemRow
               key={item.fieldPath}
               item={item}
-              graph={graph}
               checked={checkedKeys.has(item.fieldPath)}
               changed={changedKeys.has(item.fieldPath)}
               onToggle={() => onToggle(item)}
@@ -114,7 +109,6 @@ export function SummarySlice({
             <ChecklistItemRow
               key={item.fieldPath}
               item={item}
-              graph={graph}
               checked={checkedKeys.has(item.fieldPath)}
               changed={changedKeys.has(item.fieldPath)}
               onToggle={() => onToggle(item)}
@@ -131,6 +125,14 @@ export function SummarySlice({
         <div className="flex flex-col gap-2">
           {sourceOnPieceVersionGroups.map((group, groupindex) => {
             if (group.type === "collection") {
+              const composer = graph.persons?.find(
+                (p) => p.id === group.collection.composerId,
+              );
+              // console.group(`COLLECTION`);
+              // console.log(`[collection] group :`, group);
+              // console.log(`[collection] composer :`, composer);
+              // console.log(`[collection] group.items :`, group.items);
+              // console.groupEnd();
               return (
                 <button
                   key={group.collection.id}

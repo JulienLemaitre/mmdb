@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  ChecklistGraph,
-  RequiredChecklistItem,
-} from "@/features/review/ReviewChecklistSchema";
-import { getItemValue } from "@/features/review/utils/getItemValue";
+import { RequiredChecklistItem } from "@/features/review/ReviewChecklistSchema";
 
 type Props = {
-  graph: ChecklistGraph;
   item: RequiredChecklistItem;
   checked: boolean;
   changed: boolean;
@@ -16,14 +11,11 @@ type Props = {
 
 export function ChecklistItemRow({
   item,
-  graph,
   checked,
   changed,
   onToggle,
   onEdit,
 }: Props) {
-  const value = getItemValue({ item, graph });
-
   return (
     <tr
       data-fieldpath={item.fieldPath}
@@ -38,7 +30,7 @@ export function ChecklistItemRow({
         />
       </td>
       <td>{item.label}</td>
-      <td>{value || "-"}</td>
+      <td>{item.value || "-"}</td>
       <td>
         <button className="btn btn-xs btn-ghost" onClick={onEdit}>
           Edit

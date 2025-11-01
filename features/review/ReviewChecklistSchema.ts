@@ -334,6 +334,7 @@ export type RequiredChecklistItem = {
   fieldPath: string;
   field: ChecklistField | SourceOnPieceVersion;
   label: string;
+  value: any;
   lineage: {
     collectionId?: string;
     pieceId?: string;
