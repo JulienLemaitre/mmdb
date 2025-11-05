@@ -45,7 +45,7 @@ export const STEP_FOR_ENTITY: Record<ChecklistEntityType, number> = {
 export type FeedBootType = {
   feedFormState: FeedFormState;
   singlePieceVersionFormState?: SinglePieceVersionFormState;
-  collectionPieceVersionFormState?: CollectionPieceVersionsFormState;
+  collectionPieceVersionsFormState?: CollectionPieceVersionsFormState;
 };
 
 export function resolveStepFromReviewItem(
@@ -347,6 +347,7 @@ export function rebuildWorkingCopyFromFeedForm(
     tempoIndications,
     sourceOnPieceVersions,
   };
+  console.log(`[rebuildWorkingCopyFromFeedForm] nextGraph :`, nextGraph);
 
   return {
     graph: nextGraph,
@@ -358,7 +359,7 @@ export function rebuildWorkingCopyFromFeedForm(
 export function writeBootStateForFeedForm({
   feedFormState,
   singlePieceVersionFormState,
-  collectionPieceVersionFormState,
+  collectionPieceVersionsFormState,
 }: FeedBootType) {
   try {
     localStorage.setItem(
@@ -366,7 +367,7 @@ export function writeBootStateForFeedForm({
       JSON.stringify({
         feedFormState,
         singlePieceVersionFormState,
-        collectionPieceVersionFormState,
+        collectionPieceVersionsFormState,
       }),
     );
   } catch {

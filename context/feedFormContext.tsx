@@ -56,10 +56,10 @@ export function FeedFormProvider({
           JSON.stringify(bootRaw.feedFormState),
         );
 
-        if (bootRaw.collectionPieceVersionFormState) {
+        if (bootRaw.collectionPieceVersionsFormState) {
           localStorage.setItem(
             COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-            JSON.stringify(bootRaw.collectionPieceVersionFormState),
+            JSON.stringify(bootRaw.collectionPieceVersionsFormState),
           );
         }
         if (bootRaw.singlePieceVersionFormState) {

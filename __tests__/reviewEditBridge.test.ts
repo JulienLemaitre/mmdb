@@ -1,11 +1,12 @@
 import { describe, it, expect, beforeEach } from "@jest/globals";
 import {
-  resolveStepForFieldPath,
+  resolveStepFromReviewItem,
   writeBootStateForFeedForm,
   consumeBootStateForFeedForm,
-  buildFeedFormStateFromWorkingCopy,
+  buildFeedFormBootStateFromWorkingCopy,
   rebuildWorkingCopyFromFeedForm,
   type ReviewWorkingCopy,
+  type FeedBootType,
 } from "@/features/review/reviewEditBridge";
 import { FEED_FORM_BOOT_KEY } from "@/utils/constants";
 import {
@@ -23,6 +24,14 @@ const mockWorkingCopy: ReviewWorkingCopy = {
       title: "Test Source",
       references: [{ id: "ref-1", type: "ISBN", reference: "123" }],
     },
+    collections: [
+      {
+        id: "coll-1",
+        title: "Test Collection",
+        pieceCount: 1,
+        composerId: "person-1",
+      },
+    ],
     contributions: [
       {
         id: "contrib-1",
@@ -51,6 +60,7 @@ const mockWorkingCopy: ReviewWorkingCopy = {
         title: "My Piece",
         collectionId: "coll-1",
         composerId: "person-1",
+        collectionRank: 1,
       },
     ],
     pieceVersions: [
@@ -106,42 +116,84 @@ describe("reviewEditBridge utilities", () => {
     localStorage.clear();
   });
 
-  it("resolveStepForFieldPath maps by root entity token", () => {
-    expect(resolveStepForFieldPath("source.title")).toBe(1);
-    expect(resolveStepForFieldPath("pieceVersion[pv123].category")).toBe(2);
-    expect(resolveStepForFieldPath("movement[mv1].rank")).toBe(2);
-    expect(resolveStepForFieldPath("section[sec1].metreNumerator")).toBe(2);
-    expect(resolveStepForFieldPath("metronomeMark[mm1].bpm")).toBe(3);
-    expect(resolveStepForFieldPath("reference[ref1].type")).toBe(1);
-    expect(resolveStepForFieldPath("UNKNOWN[foo].bar")).toBe(0);
+  it("resolveStepFromReviewItem maps entity types to step numbers", () => {
+    // Basic cases
+    expect(
+      resolveStepFromReviewItem(
+        { entityType: "MM_SOURCE" } as any,
+        mockWorkingCopy,
+      ),
+    ).toBe(1);
+    expect(
+      resolveStepFromReviewItem(
+        { entityType: "METRONOME_MARK" } as any,
+        mockWorkingCopy,
+      ),
+    ).toBe(4);
+
+    // Person who IS a contributor
+    expect(
+      resolveStepFromReviewItem(
+        { entityType: "PERSON", entityId: "person-1" } as any,
+        mockWorkingCopy,
+      ),
+    ).toBe(2);
+
+    // Person who is NOT a contributor (e.g. a composer)
+    const composerOnlyWC: ReviewWorkingCopy = {
+      graph: {
+        contributions: [],
+      },
+    } as any;
+    expect(
+      resolveStepFromReviewItem(
+        { entityType: "PERSON", entityId: "any-person" } as any,
+        composerOnlyWC,
+      ),
+    ).toBe(3);
+
+    // Unknown entity
+    expect(
+      resolveStepFromReviewItem(
+        { entityType: "GARBAGE" } as any,
+        mockWorkingCopy,
+      ),
+    ).toBe(0);
   });
 
   it("writeBootStateForFeedForm and consumeBootStateForFeedForm round-trip via localStorage", () => {
-    const payload = {
-      formInfo: {
-        currentStepRank: 2,
-        reviewContext: {
-          reviewId: "r1",
-          reviewEdit: true,
-          updatedAt: new Date().toISOString(),
+    const payload: FeedBootType = {
+      feedFormState: {
+        formInfo: {
+          currentStepRank: 2,
+          reviewContext: {
+            reviewId: "r1",
+            reviewEdit: true,
+            updatedAt: new Date().toISOString(),
+          },
         },
-      },
+      } as FeedFormState,
     };
-    writeBootStateForFeedForm(payload as any);
+    writeBootStateForFeedForm(payload);
     const consumed = consumeBootStateForFeedForm();
     expect(localStorage.getItem(FEED_FORM_BOOT_KEY)).toBeNull();
-    expect(consumed?.formInfo?.currentStepRank).toBe(2);
-    expect(consumed?.formInfo?.reviewContext?.reviewId).toBe("r1");
+    expect(consumed?.feedFormState.formInfo?.currentStepRank).toBe(2);
+    expect(consumed?.feedFormState.formInfo?.reviewContext?.reviewId).toBe(
+      "r1",
+    );
   });
 
-  describe("buildFeedFormStateFromWorkingCopy", () => {
-    it("should correctly build a FeedFormState, copying all graph data", () => {
+  describe("buildFeedFormBootStateFromWorkingCopy", () => {
+    it("should correctly build a full boot state for a collection piece item", () => {
       const clickedItem: RequiredChecklistItem = {
         entityType: "SECTION",
         entityId: "sec-1",
         fieldPath: "section[sec-1].metreNumerator",
+        field: { path: "metreNumerator", label: "Metre numerator" },
+        value: 4,
         label: "Metre",
         lineage: {
+          collectionId: "coll-1",
           pieceId: "piece-1",
           pieceVersionId: "pv-1",
           movementId: "mov-1",
@@ -149,30 +201,62 @@ describe("reviewEditBridge utilities", () => {
       };
 
       const opts = { reviewId: "rev-xyz" };
-      const feedState = buildFeedFormStateFromWorkingCopy(
+      const bootState = buildFeedFormBootStateFromWorkingCopy(
         mockWorkingCopy,
         clickedItem,
         opts,
       );
+      const {
+        feedFormState,
+        collectionPieceVersionsFormState,
+        singlePieceVersionFormState,
+      } = bootState;
 
-      // Check formInfo and context
-      expect(feedState.formInfo?.currentStepRank).toBe(2);
-      expect(feedState.formInfo?.reviewContext?.reviewId).toBe("rev-xyz");
-      expect(feedState.formInfo?.reviewContext?.anchors?.pvId).toBe("pv-1");
-      expect(feedState.formInfo?.reviewContext?.anchors?.movId).toBe("mov-1");
-      expect(feedState.formInfo?.reviewContext?.anchors?.secId).toBe("sec-1");
+      // Check feedFormState formInfo and context
+      expect(feedFormState.formInfo?.currentStepRank).toBe(3); // SECTION is step 3
+      expect(feedFormState.formInfo?.reviewContext?.reviewId).toBe("rev-xyz");
+      expect(feedFormState.formInfo?.reviewContext?.anchors?.pvId).toBe("pv-1");
+      expect(feedFormState.formInfo?.reviewContext?.anchors?.movId).toBe(
+        "mov-1",
+      );
+      expect(feedFormState.formInfo?.reviewContext?.anchors?.secId).toBe(
+        "sec-1",
+      );
+      expect(feedFormState.formInfo?.isSourceOnPieceVersionformOpen).toBe(true);
+      expect(feedFormState.formInfo?.formType).toBe("collection");
 
-      // Check that graph data is copied
-      expect(feedState.pieces).toEqual(mockWorkingCopy.graph.pieces);
-      expect(feedState.pieceVersions).toEqual(
+      // Check that graph data is copied to feedFormState
+      expect(feedFormState.pieces).toEqual(mockWorkingCopy.graph.pieces);
+      expect(feedFormState.pieceVersions).toEqual(
         mockWorkingCopy.graph.pieceVersions,
       );
-      expect(feedState.mMSourceDescription?.title).toBe("Test Source");
-      expect(feedState.mMSourceOnPieceVersions).toEqual(
+      expect(feedFormState.mMSourceDescription?.title).toBe("Test Source");
+      expect(feedFormState.mMSourceOnPieceVersions).toEqual(
         mockWorkingCopy.graph.sourceOnPieceVersions,
       );
       // Ensure it's a copy, not a reference
-      expect(feedState.pieces).not.toBe(mockWorkingCopy.graph.pieces);
+      expect(feedFormState.pieces).not.toBe(mockWorkingCopy.graph.pieces);
+
+      // Check collectionPieceVersionsFormState
+      expect(collectionPieceVersionsFormState).not.toBeNull();
+      expect(
+        collectionPieceVersionsFormState?.formInfo.isSinglePieceVersionFormOpen,
+      ).toBe(true);
+      expect(collectionPieceVersionsFormState?.collection?.title).toBe(
+        "Test Collection",
+      );
+      expect(
+        collectionPieceVersionsFormState?.mMSourceOnPieceVersions?.[0]
+          .pieceVersionId,
+      ).toBe("pv-1");
+
+      // Check singlePieceVersionFormState
+      expect(singlePieceVersionFormState).not.toBeNull();
+      expect(
+        singlePieceVersionFormState?.formInfo.currentStepRank,
+      ).toBeUndefined();
+      expect(singlePieceVersionFormState?.piece?.id).toBe("piece-1");
+      expect(singlePieceVersionFormState?.composer?.id).toBe("person-1");
     });
   });
 
