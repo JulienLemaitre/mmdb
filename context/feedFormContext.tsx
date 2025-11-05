@@ -22,8 +22,13 @@ import { feedFormReducer } from "@/context/feedFormReducer";
 import {
   FEED_FORM_INITIAL_STATE,
   FEED_FORM_LOCAL_STORAGE_KEY,
-  FEED_FORM_BOOT_KEY,
+  COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+  SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
+import {
+  consumeBootStateForFeedForm,
+  FeedBootType,
+} from "@/features/review/reviewEditBridge";
 
 const FeedFormContext = createContext<
   | {
@@ -44,10 +49,25 @@ export function FeedFormProvider({
   useEffect(() => {
     // If a boot payload exists (coming from review edit mode), consume it
     try {
-      const bootRaw = localStorage.getItem(FEED_FORM_BOOT_KEY);
+      const bootRaw: FeedBootType | null = consumeBootStateForFeedForm();
       if (bootRaw) {
-        localStorage.setItem(FEED_FORM_LOCAL_STORAGE_KEY, bootRaw);
-        localStorage.removeItem(FEED_FORM_BOOT_KEY);
+        localStorage.setItem(
+          FEED_FORM_LOCAL_STORAGE_KEY,
+          JSON.stringify(bootRaw.feedFormState),
+        );
+
+        if (bootRaw.collectionPieceVersionFormState) {
+          localStorage.setItem(
+            COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+            JSON.stringify(bootRaw.collectionPieceVersionFormState),
+          );
+        }
+        if (bootRaw.singlePieceVersionFormState) {
+          localStorage.setItem(
+            SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+            JSON.stringify(bootRaw.singlePieceVersionFormState),
+          );
+        }
       }
     } catch {
       // ignore

@@ -12,7 +12,7 @@ import { ApiOverview } from "@/types/reviewTypes";
 import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
 import { useReviewWorkingCopy } from "@/context/reviewWorkingCopyContext";
 import {
-  buildFeedFormStateFromWorkingCopy,
+  buildFeedFormBootStateFromWorkingCopy,
   writeBootStateForFeedForm,
   rebuildWorkingCopyFromFeedForm,
 } from "@/features/review/reviewEditBridge";
@@ -118,12 +118,12 @@ export default function ChecklistPage() {
   function openEditForItem(item: RequiredChecklistItem) {
     if (!data || !workingGraph) return;
 
-    const feedState = buildFeedFormStateFromWorkingCopy(
+    const bootState = buildFeedFormBootStateFromWorkingCopy(
       { graph: workingGraph, updatedAt: new Date().toISOString() },
       item,
       { reviewId: data.reviewId },
     );
-    writeBootStateForFeedForm(feedState);
+    writeBootStateForFeedForm(bootState);
 
     // Store return route payload, now with the view state
     try {
@@ -134,7 +134,7 @@ export default function ChecklistPage() {
     } catch {
       // ignore
     }
-    router.push(URL_FEED);
+    router.push(URL_FEED + "?debug=true");
   }
 
   // --- Effects ---
