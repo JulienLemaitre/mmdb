@@ -32,7 +32,6 @@ export function PieceSlice({
   const pieceItems = items.filter(
     (it) => it.entityType === "PIECE" || it.entityType === "PIECE_VERSION",
   );
-  console.log(`[PieceSlice] pieceItems :`, pieceItems);
 
   return (
     <div>

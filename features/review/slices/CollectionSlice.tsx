@@ -4,6 +4,7 @@ import {
 } from "@/features/review/ReviewChecklistSchema";
 import { ReviewView } from "@/app/(signedIn)/review/[reviewId]/checklist/page";
 import { ChecklistItemRow } from "../components/ChecklistItemRow";
+import { useMemo } from "react";
 
 type Props = {
   graph: ChecklistGraph;
@@ -23,22 +24,29 @@ export function CollectionSlice({
   onNavigate,
   ...rest
 }: Props) {
-  const collection = graph.collections?.find((c) => c.id === collectionId);
+  const collection = useMemo(
+    () => graph.collections?.find((c) => c.id === collectionId),
+    [graph.collections, collectionId],
+  );
+
+  // Items specific to the collection entity itself
+  const collectionItems = useMemo(
+    () =>
+      items.filter(
+        (it) => it.entityType === "COLLECTION" && it.entityId === collectionId,
+      ),
+    [collectionId, items],
+  );
+
+  // Pieces that belong to this collection
+  const piecesInCollection = useMemo(
+    () => (graph.pieces ?? []).filter((p) => p.collectionId === collectionId),
+    [collectionId, graph.pieces],
+  );
+
   if (!collection) {
     return <div>Collection not found.</div>;
   }
-
-  // Items specific to the collection entity itself
-  const collectionItems = items.filter(
-    (it) => it.entityType === "COLLECTION" && it.entityId === collectionId,
-  );
-  console.log(`[CollectionSlice] collectionItems :`, collectionItems);
-
-  // Pieces that belong to this collection
-  const piecesInCollection = (graph.pieces ?? []).filter(
-    (p) => p.collectionId === collectionId,
-  );
-  console.log(`[CollectionSlice] piecesInCollection :`, piecesInCollection);
 
   return (
     <div>

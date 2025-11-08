@@ -22,7 +22,7 @@ import { CollectionSlice } from "@/features/review/slices/CollectionSlice";
 import { PieceSlice } from "@/features/review/slices/PieceSlice";
 import { FeedFormState } from "@/types/feedFormTypes";
 import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
-import { prodLog } from "@/utils/debugLogger";
+import { debug, prodLog } from "@/utils/debugLogger";
 // import AuditPanel from "@/features/review/components/AuditPanel";
 
 // State definition for the view controller
@@ -58,6 +58,8 @@ export default function ChecklistPage() {
   const [currentView, setCurrentView] = useState<ReviewView>({
     view: "SUMMARY",
   });
+  const isCollectionView = currentView.view === "COLLECTION";
+  const isPieceView = currentView.view === "PIECE";
 
   const allRequiredItems = useMemo(() => {
     if (!workingGraph || !reviewData?.globallyReviewed) {
@@ -73,6 +75,40 @@ export default function ChecklistPage() {
       },
     });
   }, [workingGraph, reviewData?.globallyReviewed]);
+
+  const summaryItemList = useMemo(() => {
+    return allRequiredItems.filter(
+      (it) => !it.lineage.pieceId && !it.lineage.collectionId,
+    );
+  }, [allRequiredItems]);
+  const collectionItemList = useMemo(() => {
+    return isCollectionView
+      ? allRequiredItems.filter(
+          (it) => it.lineage.collectionId === currentView.collectionId,
+        )
+      : [];
+  }, [allRequiredItems, isCollectionView, currentView]);
+  const pieceItemList = useMemo(() => {
+    return isPieceView
+      ? allRequiredItems.filter(
+          (it) => it.lineage.pieceId === currentView.pieceId,
+        )
+      : [];
+  }, [allRequiredItems, isPieceView, currentView]);
+
+  const requiredItemLeft = allRequiredItems.filter(
+    (item) =>
+      !summaryItemList.some((i) => i.fieldPath === item.fieldPath) &&
+      collectionItemList.some((i) => i.fieldPath === item.fieldPath) &&
+      pieceItemList.some((i) => i.fieldPath === item.fieldPath),
+  );
+  debug.group("requiredItems");
+  debug.info(`[] allRequiredItems :`, allRequiredItems);
+  debug.info(`[] summaryItemList :`, summaryItemList);
+  debug.info(`[] collectionItemList :`, collectionItemList);
+  debug.info(`[] pieceItemList :`, pieceItemList);
+  debug.info(`[] requiredItemLeft :`, requiredItemLeft);
+  debug.groupEnd();
 
   const changedKeys = useMemo(() => {
     if (!reviewData?.graph || !workingGraph) {
@@ -332,28 +368,19 @@ export default function ChecklistPage() {
 
         <div className="card bg-base-100 border p-4">
           {currentView.view === "SUMMARY" && (
-            <SummarySlice
-              items={allRequiredItems.filter(
-                (it) => !it.lineage.pieceId && !it.lineage.collectionId,
-              )}
-              {...commonSliceProps}
-            />
+            <SummarySlice items={summaryItemList} {...commonSliceProps} />
           )}
           {currentView.view === "COLLECTION" && (
             <CollectionSlice
               collectionId={currentView.collectionId}
-              items={allRequiredItems.filter(
-                (it) => it.lineage.collectionId === currentView.collectionId,
-              )}
+              items={collectionItemList}
               {...commonSliceProps}
             />
           )}
           {currentView.view === "PIECE" && (
             <PieceSlice
               pieceId={currentView.pieceId}
-              items={allRequiredItems.filter(
-                (it) => it.lineage.pieceId === currentView.pieceId,
-              )}
+              items={pieceItemList}
               {...commonSliceProps}
             />
           )}
