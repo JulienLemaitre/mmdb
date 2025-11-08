@@ -25,7 +25,6 @@ export function SummarySlice({
   onEdit,
   onNavigate,
 }: Props) {
-  console.log(`[] graph :`, graph);
   const sourceOnPieceVersionGroups =
     processSourceOnPieceVersionsForDisplay(graph);
   // Filter for items to display in this slice

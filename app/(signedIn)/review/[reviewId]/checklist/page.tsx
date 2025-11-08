@@ -22,6 +22,8 @@ import { CollectionSlice } from "@/features/review/slices/CollectionSlice";
 import { PieceSlice } from "@/features/review/slices/PieceSlice";
 import { FeedFormState } from "@/types/feedFormTypes";
 import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
+import { prodLog } from "@/utils/debugLogger";
+// import AuditPanel from "@/features/review/components/AuditPanel";
 
 // State definition for the view controller
 export type ReviewView =
@@ -43,7 +45,7 @@ export default function ChecklistPage() {
   const { getWorkingCopy, saveWorkingCopy, clearWorkingCopy } =
     useReviewWorkingCopy();
 
-  const [data, setData] = useState<ApiOverview | null>(null);
+  const [reviewData, setReviewData] = useState<ApiOverview | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [checkedKeys, setCheckedKeys] = useState<Set<string>>(new Set());
@@ -52,21 +54,16 @@ export default function ChecklistPage() {
   const [aborting, setAborting] = useState(false);
   const [abortError, setAbortError] = useState<string | null>(null);
   const [storageWarning, setStorageWarning] = useState<string | null>(null);
-
-  // New state for controlling which slice is visible
+  const [workingGraph, setWorkingGraph] = useState<ChecklistGraph | null>(null);
   const [currentView, setCurrentView] = useState<ReviewView>({
     view: "SUMMARY",
   });
 
-  // --- Derived State ---
-  const workingGraph: ChecklistGraph | undefined = useMemo(
-    () => getWorkingCopy()?.graph ?? data?.graph,
-    [data?.graph, getWorkingCopy],
-  );
-
   const allRequiredItems = useMemo(() => {
-    if (!workingGraph || !data?.globallyReviewed) return [];
-    const gr = data.globallyReviewed;
+    if (!workingGraph || !reviewData?.globallyReviewed) {
+      return [];
+    }
+    const gr = reviewData.globallyReviewed;
     return expandRequiredChecklistItems(workingGraph, {
       globallyReviewed: {
         personIds: new Set(gr.personIds ?? []),
@@ -75,21 +72,22 @@ export default function ChecklistPage() {
         pieceIds: new Set(gr.pieceIds ?? []),
       },
     });
-  }, [workingGraph, data?.globallyReviewed]);
-  console.log(`[checklist page] allRequiredItems :`, allRequiredItems);
+  }, [workingGraph, reviewData?.globallyReviewed]);
 
   const changedKeys = useMemo(() => {
-    if (!data?.graph || !workingGraph) return new Set<string>();
+    if (!reviewData?.graph || !workingGraph) {
+      return new Set<string>();
+    }
     try {
       const changes = computeChangedChecklistFieldPaths(
-        data.graph,
+        reviewData.graph,
         workingGraph,
       );
       return new Set(changes.map((c) => c.fieldPath));
     } catch {
       return new Set<string>();
     }
-  }, [data?.graph, workingGraph]);
+  }, [reviewData?.graph, workingGraph]);
 
   const totals = useMemo(() => {
     const totalRequired = allRequiredItems.length;
@@ -116,19 +114,19 @@ export default function ChecklistPage() {
   }
 
   function openEditForItem(item: RequiredChecklistItem) {
-    if (!data || !workingGraph) return;
+    if (!reviewData || !workingGraph) return;
 
     const bootState = buildFeedFormBootStateFromWorkingCopy(
       { graph: workingGraph, updatedAt: new Date().toISOString() },
       item,
-      { reviewId: data.reviewId },
+      { reviewId: reviewData.reviewId },
     );
     writeBootStateForFeedForm(bootState);
 
     // Store return route payload, now with the view state
     try {
       localStorage.setItem(
-        returnRouteKey(data.reviewId),
+        returnRouteKey(reviewData.reviewId),
         JSON.stringify({ currentView, fieldPath: item.fieldPath }),
       );
     } catch {
@@ -156,20 +154,24 @@ export default function ChecklistPage() {
             );
           return;
         }
-        const j = (await res.json()) as ApiOverview;
+        const reviewData = (await res.json()) as ApiOverview;
         if (!mounted) return;
-        setData(j);
-        const raw = localStorage.getItem(storageKey(j.reviewId));
+        setReviewData(reviewData);
+        const raw = localStorage.getItem(storageKey(reviewData.reviewId));
         if (raw) {
           try {
             setCheckedKeys(new Set(JSON.parse(raw) as string[]));
           } catch {
             setStorageWarning("Local progress was corrupt and has been reset.");
-            localStorage.removeItem(storageKey(j.reviewId));
+            localStorage.removeItem(storageKey(reviewData.reviewId));
           }
         }
-        if (!getWorkingCopy()) {
-          saveWorkingCopy(j.graph);
+        const wcGraph = getWorkingCopy()?.graph;
+        if (wcGraph) {
+          setWorkingGraph(wcGraph);
+        } else {
+          saveWorkingCopy(reviewData.graph);
+          setWorkingGraph(reviewData.graph);
         }
       } catch (e: any) {
         if (mounted) setError(e?.message || String(e));
@@ -185,30 +187,33 @@ export default function ChecklistPage() {
 
   // Persist checked keys to localStorage
   useEffect(() => {
-    if (data?.reviewId) {
+    if (reviewData?.reviewId) {
       localStorage.setItem(
-        storageKey(data.reviewId),
+        storageKey(reviewData.reviewId),
         JSON.stringify(Array.from(checkedKeys)),
       );
     }
-  }, [checkedKeys, data?.reviewId]);
+  }, [checkedKeys, reviewData?.reviewId]);
 
   // Handle return from edit mode
   useEffect(() => {
-    if (!data || !workingGraph) return;
+    if (!reviewData || !workingGraph) {
+      return;
+    }
     try {
       const raw = localStorage.getItem(FEED_FORM_LOCAL_STORAGE_KEY);
       if (!raw) return;
       const feedState = JSON.parse(raw) as FeedFormState;
       const rc = feedState?.formInfo?.reviewContext;
-      if (!rc || !rc.reviewEdit || rc.reviewId !== data.reviewId) return;
+      if (!rc || !rc.reviewEdit || rc.reviewId !== reviewData.reviewId) return;
 
       const prevWc = {
-        graph: getWorkingCopy()?.graph ?? data.graph,
+        graph: workingGraph,
         updatedAt: getWorkingCopy()?.updatedAt ?? new Date().toISOString(),
       };
       const nextWc = rebuildWorkingCopyFromFeedForm(feedState, prevWc as any);
       saveWorkingCopy(nextWc.graph);
+      setWorkingGraph(nextWc.graph);
 
       const impacted = computeChangedChecklistFieldPaths(
         prevWc.graph,
@@ -230,7 +235,7 @@ export default function ChecklistPage() {
 
       localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
 
-      const retKey = returnRouteKey(data.reviewId);
+      const retKey = returnRouteKey(reviewData.reviewId);
       const retRaw = localStorage.getItem(retKey);
       if (retRaw) {
         const ret = JSON.parse(retRaw) as {
@@ -250,9 +255,15 @@ export default function ChecklistPage() {
         localStorage.removeItem(retKey);
       }
     } catch (e) {
-      console.error("Error handling return from edit:", e);
+      prodLog.error("[return from edit] Error:", e);
     }
-  }, [data, workingGraph, saveWorkingCopy, getWorkingCopy, allRequiredItems]);
+  }, [
+    reviewData,
+    workingGraph,
+    saveWorkingCopy,
+    getWorkingCopy,
+    allRequiredItems,
+  ]);
 
   if (loading || !workingGraph) return <div className="p-6">Loading…</div>;
   if (error)
@@ -261,7 +272,7 @@ export default function ChecklistPage() {
         <div className="text-error">{error}</div>
       </div>
     );
-  if (!data) return <div className="p-6">No data</div>;
+  if (!reviewData) return <div className="p-6">No data</div>;
 
   const submitDisabled =
     submitting ||
@@ -278,14 +289,16 @@ export default function ChecklistPage() {
 
   return (
     <ReviewWorkingCopyProvider
-      reviewId={data.reviewId}
-      initialGraph={data.graph}
+      reviewId={reviewData.reviewId}
+      initialGraph={reviewData.graph}
     >
       <div className="container mx-auto p-4 space-y-6">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold">Piece Review Checklist</h1>
-            <p className="text-sm opacity-80">Review ID: {data.reviewId}</p>
+            <p className="text-sm opacity-80">
+              Review ID: {reviewData.reviewId}
+            </p>
           </div>
         </div>
 
@@ -346,10 +359,10 @@ export default function ChecklistPage() {
           )}
         </div>
 
-        <div className="card bg-base-100 border p-4">
+        {/*<div className="card bg-base-100 border p-4">
           <div className="font-semibold mb-2">Audit events (read-only)</div>
-          <AuditPanel reviewId={data.reviewId} />
-        </div>
+          <AuditPanel reviewId={reviewData.reviewId} />
+        </div>*/}
 
         <div className="flex flex-col gap-2">
           {submitError && (
@@ -362,12 +375,12 @@ export default function ChecklistPage() {
               className="btn btn-primary"
               disabled={submitDisabled}
               onClick={async () => {
-                if (!data || !workingGraph) return;
+                if (!reviewData || !workingGraph) return;
                 try {
                   setSubmitting(true);
                   // Submission logic remains the same...
                   const res = await fetch(
-                    `/api/review/${data.reviewId}/submit`,
+                    `/api/review/${reviewData.reviewId}/submit`,
                     {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
@@ -385,8 +398,8 @@ export default function ChecklistPage() {
                   );
                   if (!res.ok) throw new Error("Submit failed");
                   clearWorkingCopy();
-                  localStorage.removeItem(storageKey(data.reviewId));
-                  localStorage.removeItem(returnRouteKey(data.reviewId));
+                  localStorage.removeItem(storageKey(reviewData.reviewId));
+                  localStorage.removeItem(returnRouteKey(reviewData.reviewId));
                   router.push(URL_REVIEW_LIST);
                 } catch (e: any) {
                   setSubmitError(e.message);
@@ -402,16 +415,16 @@ export default function ChecklistPage() {
               className="btn btn-neutral"
               disabled={aborting}
               onClick={async () => {
-                if (!data) return;
+                if (!reviewData) return;
                 if (!window.confirm("Abort this review?")) return;
                 try {
                   setAborting(true);
-                  await fetch(`/api/review/${data.reviewId}/abort`, {
+                  await fetch(`/api/review/${reviewData.reviewId}/abort`, {
                     method: "POST",
                   });
                   clearWorkingCopy();
-                  localStorage.removeItem(storageKey(data.reviewId));
-                  localStorage.removeItem(returnRouteKey(data.reviewId));
+                  localStorage.removeItem(storageKey(reviewData.reviewId));
+                  localStorage.removeItem(returnRouteKey(reviewData.reviewId));
                   router.push(URL_REVIEW_LIST);
                 } catch (e: any) {
                   setAbortError(e.message);
@@ -426,44 +439,5 @@ export default function ChecklistPage() {
         </div>
       </div>
     </ReviewWorkingCopyProvider>
-  );
-}
-
-// Lightweight read-only audit panel
-function AuditPanel({ reviewId }: { reviewId: string }) {
-  const [items, setItems] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    async function load() {
-      setLoading(true);
-      const res = await fetch(`/api/audit?reviewId=${reviewId}&limit=20`);
-      const j = await res.json();
-      setItems(j.items || []);
-      setLoading(false);
-    }
-    load();
-  }, [reviewId]);
-
-  return (
-    <div>
-      {loading && <div className="text-sm">Loading events...</div>}
-      {items.length === 0 && !loading && (
-        <div className="text-sm opacity-70">No audit events yet.</div>
-      )}
-      <ul className="text-sm space-y-1 max-h-64 overflow-auto">
-        {items.map((it: any) => (
-          <li key={it.id} className="border-b last:border-b-0 pb-1">
-            <span className="badge badge-ghost mr-2">{it.operation}</span>
-            <span className="opacity-80 mr-2">
-              {it.entityType}:{it.entityId}
-            </span>
-            <span className="opacity-60">
-              {new Date(it.createdAt).toLocaleString()}
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 }

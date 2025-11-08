@@ -1,3 +1,5 @@
+import { ChecklistGraph } from "@/features/review/ReviewChecklistSchema";
+
 export type SourceOnPieceVersion = {
   joinId: string;
   mMSourceId: string;
@@ -11,7 +13,7 @@ export type SourceOnPieceVersion = {
 // API payload shape from /api/review/[reviewId]/overview
 export type ApiOverview = {
   reviewId: string;
-  graph: any; // ChecklistGraph-like
+  graph: ChecklistGraph; // ChecklistGraph-like
   globallyReviewed: {
     personIds: string[];
     organizationIds: string[];

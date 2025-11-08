@@ -9,14 +9,15 @@ import { FEED_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 export default function ReviewEditBanner() {
   const { state } = useFeedForm();
   const router = useRouter();
-  const rc = state.formInfo?.reviewContext;
+  const reviewContext = state.formInfo?.reviewContext;
   const appliedRef = useRef(false);
 
   useEffect(() => {
-    if (!rc || !rc.reviewEdit || appliedRef.current) return;
+    if (!reviewContext || !reviewContext.reviewEdit || appliedRef.current)
+      return;
     // Try to scroll/focus the target anchor after the form step mounts.
     // We retry a few times to accommodate lazy rendering.
-    const anchors = rc.anchors;
+    const anchors = reviewContext.anchors;
     if (!anchors) return;
 
     let cancelled = false;
@@ -90,9 +91,9 @@ export default function ReviewEditBanner() {
       cancelled = true;
       clearTimeout(t);
     };
-  }, [rc]);
+  }, [reviewContext]);
 
-  if (!rc || !rc.reviewEdit) return null;
+  if (!reviewContext || !reviewContext.reviewEdit) return null;
 
   const onBack = () => {
     try {
@@ -101,8 +102,8 @@ export default function ReviewEditBanner() {
     } catch {
       // ignore storage errors
     }
-    if (rc.reviewId) {
-      router.push(GET_URL_REVIEW_CHECKLIST(rc.reviewId));
+    if (reviewContext.reviewId) {
+      router.push(GET_URL_REVIEW_CHECKLIST(reviewContext.reviewId));
     }
   };
 

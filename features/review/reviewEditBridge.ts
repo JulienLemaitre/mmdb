@@ -10,6 +10,7 @@ import {
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 import { getEntityByIdOrKey } from "@/context/feedFormContext";
+import { debug } from "@/utils/debugLogger";
 
 // Minimal structure for the review working copy we operate on
 export type ReviewWorkingCopy = {
@@ -347,7 +348,7 @@ export function rebuildWorkingCopyFromFeedForm(
     tempoIndications,
     sourceOnPieceVersions,
   };
-  console.log(`[rebuildWorkingCopyFromFeedForm] nextGraph :`, nextGraph);
+  debug.info(`[rebuildWorkingCopyFromFeedForm] nextGraph :`, nextGraph);
 
   return {
     graph: nextGraph,
