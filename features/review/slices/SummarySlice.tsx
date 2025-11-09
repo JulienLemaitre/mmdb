@@ -29,7 +29,7 @@ export function SummarySlice({
     processSourceOnPieceVersionsForDisplay(graph);
   // Filter for items to display in this slice
   const sourceItems = items.filter((it) => it.entityType === "MM_SOURCE");
-  const sourceOnPieceVersions = items.filter(
+  const sourceOnPieceVersionItems = items.filter(
     (it) => it.entityType === "MM_SOURCE_ON_PIECE_VERSION",
   );
   const referenceItems = items.filter((it) => it.entityType === "REFERENCE");
@@ -37,14 +37,13 @@ export function SummarySlice({
     (it) => it.entityType === "CONTRIBUTION",
   );
   const personItems = items.filter((it) => it.entityType === "PERSON");
-  const orgItems = items.filter((it) => it.entityType === "ORGANIZATION");
-
-  // TODO is lacking the review of persons and orgs that need to be reviewed
+  const organizationItems = items.filter(
+    (it) => it.entityType === "ORGANIZATION",
+  );
 
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">Summary & Source Details</h2>
-      {/* Checklist Table */}
       <table className="table table-sm">
         <tbody>
           {sourceItems.map((item) => (
@@ -57,7 +56,6 @@ export function SummarySlice({
               onEdit={() => onEdit(item)}
             />
           ))}
-          {/* Add other groups like contributions, persons, etc. */}
         </tbody>
       </table>
 
@@ -76,14 +74,12 @@ export function SummarySlice({
                   onEdit={() => onEdit(item)}
                 />
               ))}
-              {/* Add other groups like contributions, persons, etc. */}
             </tbody>
           </table>
         </>
       )}
 
       <h2 className="text-xl font-bold mt-6 mb-4">Contributions</h2>
-      {/* Checklist Table */}
       <table className="table table-sm">
         <tbody>
           {contributionItems.map((item) => (
@@ -96,15 +92,13 @@ export function SummarySlice({
               onEdit={() => onEdit(item)}
             />
           ))}
-          {/* Add other groups like contributions, persons, etc. */}
         </tbody>
       </table>
 
       <h2 className="text-xl font-bold mt-6 mb-4">Order of pieces</h2>
-      {/* Checklist Table */}
       <table className="table table-sm">
         <tbody>
-          {sourceOnPieceVersions.map((item) => (
+          {sourceOnPieceVersionItems.map((item) => (
             <ChecklistItemRow
               key={item.fieldPath}
               item={item}
@@ -114,9 +108,52 @@ export function SummarySlice({
               onEdit={() => onEdit(item)}
             />
           ))}
-          {/* Add other groups like contributions, persons, etc. */}
         </tbody>
       </table>
+
+      {personItems.length > 0 && (
+        <>
+          <h2 className="text-xl font-bold mt-6 mb-4">
+            Person infos to review
+          </h2>
+          <table className="table table-sm">
+            <tbody>
+              {personItems.map((item) => (
+                <ChecklistItemRow
+                  key={item.fieldPath}
+                  item={item}
+                  checked={checkedKeys.has(item.fieldPath)}
+                  changed={changedKeys.has(item.fieldPath)}
+                  onToggle={() => onToggle(item)}
+                  onEdit={() => onEdit(item)}
+                />
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+
+      {organizationItems.length > 0 && (
+        <>
+          <h2 className="text-xl font-bold mt-6 mb-4">
+            Organization infos to review
+          </h2>
+          <table className="table table-sm">
+            <tbody>
+              {organizationItems.map((item) => (
+                <ChecklistItemRow
+                  key={item.fieldPath}
+                  item={item}
+                  checked={checkedKeys.has(item.fieldPath)}
+                  changed={changedKeys.has(item.fieldPath)}
+                  onToggle={() => onToggle(item)}
+                  onEdit={() => onEdit(item)}
+                />
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
 
       {/* Navigation Section */}
       <div className="mt-8">
@@ -127,11 +164,6 @@ export function SummarySlice({
               const composer = graph.persons?.find(
                 (p) => p.id === group.collection.composerId,
               );
-              // console.group(`COLLECTION`);
-              // console.log(`[collection] group :`, group);
-              // console.log(`[collection] composer :`, composer);
-              // console.log(`[collection] group.items :`, group.items);
-              // console.groupEnd();
               return (
                 <button
                   key={group.collection.id}

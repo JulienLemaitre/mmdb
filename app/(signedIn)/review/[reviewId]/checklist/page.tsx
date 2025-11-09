@@ -76,24 +76,79 @@ export default function ChecklistPage() {
     });
   }, [workingGraph, reviewData?.globallyReviewed]);
 
+  const uncheckedKeys = allRequiredItems.filter(
+    (item) => !checkedKeys.has(item.fieldPath),
+  );
+  debug.log("uncheckedKeys", uncheckedKeys);
+
   const summaryItemList = useMemo(() => {
     return allRequiredItems.filter(
       (it) => !it.lineage.pieceId && !it.lineage.collectionId,
     );
   }, [allRequiredItems]);
   const collectionItemList = useMemo(() => {
-    return isCollectionView
-      ? allRequiredItems.filter(
-          (it) => it.lineage.collectionId === currentView.collectionId,
-        )
-      : [];
+    if (!isCollectionView) return [];
+    const itemListWithCollectionLineage = allRequiredItems.filter(
+      (it) => it.lineage.collectionId === currentView.collectionId,
+    );
+    const collectionTypeItemList = allRequiredItems
+      .filter((item) => item.entityType === "COLLECTION")
+      .map((item) => ({
+        ...item,
+        ...(item.entityId && {
+          lineage: { ...item?.lineage, collectionId: item.entityId },
+        }),
+      }));
+    return [...itemListWithCollectionLineage, ...collectionTypeItemList];
   }, [allRequiredItems, isCollectionView, currentView]);
   const pieceItemList = useMemo(() => {
-    return isPieceView
-      ? allRequiredItems.filter(
-          (it) => it.lineage.pieceId === currentView.pieceId,
-        )
-      : [];
+    if (!isPieceView) return [];
+    const itemListWithPieceLineage = allRequiredItems.filter(
+      (it) => it.lineage.pieceId === currentView.pieceId,
+    );
+    const pieceTypeItemList = allRequiredItems
+      .filter((item) => item.entityType === "PIECE")
+      .map((item) => {
+        const pieceVersion = allRequiredItems.find(
+          (it) =>
+            it.entityType === "PIECE_VERSION" &&
+            "path" in it.field &&
+            it.field.path === "category" &&
+            item.entityId === it.lineage?.pieceId,
+        );
+        return {
+          ...item,
+          lineage: {
+            ...(pieceVersion?.lineage?.pieceId && {
+              pieceId: pieceVersion?.lineage?.pieceId,
+            }),
+            ...(pieceVersion?.lineage?.collectionId && {
+              collectionId: pieceVersion?.lineage?.collectionId,
+            }),
+          },
+        };
+      });
+    // TODO: include tempo indication per se ?
+    // const tempoIndicationList = allRequiredItems
+    //   .filter((item) => item.entityType === "TEMPO_INDICATION")
+    //   .map((item) => {
+    //     const section = allRequiredItems.find(
+    //       (it) =>
+    //         it.entityType === "SECTION" &&
+    //         "path" in it.field &&
+    //         it.field.path === "tempoIndicationId" &&
+    //         item.value === it.value,
+    //     );
+    //     return {
+    //       ...item,
+    //       lineage: section?.lineage || {},
+    //     };
+    //   });
+    return [
+      ...itemListWithPieceLineage,
+      ...pieceTypeItemList,
+      // ...tempoIndicationList,
+    ];
   }, [allRequiredItems, isPieceView, currentView]);
 
   const requiredItemLeft = allRequiredItems.filter(

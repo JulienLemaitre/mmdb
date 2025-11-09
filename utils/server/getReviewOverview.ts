@@ -160,7 +160,7 @@ export async function getReviewOverview(reviewId: string): Promise<{
     if (c.organizationId) organizationIds.add(c.organizationId);
   }
 
-  // From source contents (piece graph)
+  // From sourceOnPieceVersions (piece graph)
   for (const join of mmSource.pieceVersions) {
     const pv = join.pieceVersion;
     if (!pv) continue;

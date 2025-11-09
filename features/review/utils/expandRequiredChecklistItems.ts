@@ -162,7 +162,9 @@ export function expandRequiredChecklistItems(
   addEntityGroup("ORGANIZATION", graph.organizations);
   addEntityGroup("COLLECTION", graph.collections);
   addEntityGroup("PIECE", graph.pieces);
-  addEntityGroup("TEMPO_INDICATION", graph.tempoIndications);
+
+  // TODO: include tempo indications per se in the checklist ?
+  // addEntityGroup("TEMPO_INDICATION", graph.tempoIndications);
 
   // --- 3. Piece Structure (Nested Traversal) ---
   // This loop builds the lineage context as it descends.
