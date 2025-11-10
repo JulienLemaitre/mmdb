@@ -11,6 +11,7 @@ import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 import { getEntityByIdOrKey } from "@/context/feedFormContext";
 import { debug } from "@/utils/debugLogger";
+import { getNewUuid } from "@/utils/getNewUuid";
 
 // Minimal structure for the review working copy we operate on
 export type ReviewWorkingCopy = {
@@ -325,8 +326,17 @@ export function rebuildWorkingCopyFromFeedForm(
   ).map((j) => {
     const pv = pieceVersions.find((pv) => pv.id === j.pieceVersionId);
     const piece = pv ? pieces.find((p) => p.id === pv.pieceId) : undefined;
+    // We need to find the joinId from the previous graph, because there is none in the feedFormState.
+    // If this is a newly created sourceOnPieceVersion, we generate a new joinId.
+    const prevSourceOnPieceVersion = prevGraph?.sourceOnPieceVersions.find(
+      (spv) => spv.pieceVersionId === j.pieceVersionId,
+    );
+    console.log(
+      `[rebuildWorkingCopyFromFeedForm] prevSourceOnPieceVersion :`,
+      prevSourceOnPieceVersion,
+    );
     return {
-      joinId: `join-${j.pieceVersionId}`, // Regenerate joinId for simplicity
+      joinId: prevSourceOnPieceVersion?.joinId ?? `join-${getNewUuid()}`, // Regenerate joinId for simplicity
       mMSourceId: source.id,
       pieceVersionId: j.pieceVersionId,
       rank: j.rank,
