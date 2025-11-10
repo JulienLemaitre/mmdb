@@ -3,6 +3,7 @@ import { getReviewOverview } from "@/utils/server/getReviewOverview";
 import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
 import { composeAuditEntries } from "@/utils/auditCompose";
 import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
+import { debug } from "@/utils/debugLogger";
 
 // POST /api/review/[reviewId]/submit
 // Body: { workingCopy, checklistState: Array<{entityType, entityId, fieldPath, checked}>, overallComment? }
@@ -17,6 +18,7 @@ export async function POST(
   try {
     body = await req.json();
   } catch {
+    debug.error("Invalid JSON body");
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
@@ -25,8 +27,13 @@ export async function POST(
     ? body.checklistState
     : [];
   const overallComment = body?.overallComment ?? null;
+  console.log(`[] workingCopy`, JSON.stringify(workingCopy, null, 2));
+  console.log(`[] checklistState`, JSON.stringify(checklistState, null, 2));
 
   if (!workingCopy || !Array.isArray(checklistState)) {
+    debug.error(
+      `Missing : ${!workingCopy ? "workingCopy" : ""} ${!Array.isArray(checklistState) ? "checklistState" : ""}`,
+    );
     return NextResponse.json(
       { error: "Missing workingCopy or checklistState" },
       { status: 400 },
@@ -48,6 +55,7 @@ export async function POST(
     else if (lc.startsWith("forbidden")) status = 403;
     else if (lc.includes("must be") || lc.includes("required")) status = 400;
     else if (lc.includes("not found")) status = 404;
+    debug.error(`getReviewOverview error: ${status} ${msg}`);
     return NextResponse.json({ error: msg }, { status });
   }
 
@@ -60,18 +68,27 @@ export async function POST(
       pieceIds: new Set(globallyReviewed.pieceIds ?? []),
     },
   });
+  debug.info(
+    "requiredItems keys",
+    requiredItems.map(
+      (it) => `${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`,
+    ),
+  );
 
   // Build a map of submitted checks for quick lookup
   const submitted = new Set(
-    checklistState
-      .filter((c: any) => c && c.checked)
-      .map((c: any) => `${c.entityType}:${c.entityId ?? ""}:${c.fieldPath}`),
+    checklistState.map(
+      (c: any) => `${c.entityType}:${c.entityId ?? ""}:${c.fieldPath}`,
+    ),
   );
+
+  debug.info(`[] submitted`, JSON.stringify(submitted, null, 2));
 
   const missing = requiredItems.filter(
     (it) =>
       !submitted.has(`${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`),
   );
+  debug.info(`[] missing`, JSON.stringify(missing, null, 2));
 
   if (missing.length > 0) {
     return NextResponse.json(

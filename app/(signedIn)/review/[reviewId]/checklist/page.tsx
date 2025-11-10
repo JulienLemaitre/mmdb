@@ -157,13 +157,14 @@ export default function ChecklistPage() {
       collectionItemList.some((i) => i.fieldPath === item.fieldPath) &&
       pieceItemList.some((i) => i.fieldPath === item.fieldPath),
   );
-  debug.group("requiredItems");
-  debug.info(`[] allRequiredItems :`, allRequiredItems);
-  debug.info(`[] summaryItemList :`, summaryItemList);
-  debug.info(`[] collectionItemList :`, collectionItemList);
-  debug.info(`[] pieceItemList :`, pieceItemList);
-  debug.info(`[] requiredItemLeft :`, requiredItemLeft);
-  debug.groupEnd();
+
+  // debug.group("requiredItems");
+  // debug.info(`[] allRequiredItems :`, allRequiredItems);
+  // debug.info(`[] summaryItemList :`, summaryItemList);
+  // debug.info(`[] collectionItemList :`, collectionItemList);
+  // debug.info(`[] pieceItemList :`, pieceItemList);
+  // debug.info(`[] requiredItemLeft :`, requiredItemLeft);
+  // debug.groupEnd();
 
   const changedKeys = useMemo(() => {
     if (!reviewData?.graph || !workingGraph) {
@@ -246,6 +247,7 @@ export default function ChecklistPage() {
           return;
         }
         const reviewData = (await res.json()) as ApiOverview;
+        debug.log("reviewData", reviewData);
         if (!mounted) return;
         setReviewData(reviewData);
         const raw = localStorage.getItem(storageKey(reviewData.reviewId));
@@ -260,9 +262,11 @@ export default function ChecklistPage() {
         const wcGraph = getWorkingCopy()?.graph;
         if (wcGraph) {
           setWorkingGraph(wcGraph);
+          debug.info("NEW WORKING GRAPH: ", reviewData.graph);
         } else {
           saveWorkingCopy(reviewData.graph);
           setWorkingGraph(reviewData.graph);
+          debug.info("NEW WORKING GRAPH: ", reviewData.graph);
         }
       } catch (e: any) {
         if (mounted) setError(e?.message || String(e));
@@ -305,6 +309,7 @@ export default function ChecklistPage() {
       const nextWc = rebuildWorkingCopyFromFeedForm(feedState, prevWc as any);
       saveWorkingCopy(nextWc.graph);
       setWorkingGraph(nextWc.graph);
+      debug.info("NEW WORKING GRAPH: ", nextWc.graph);
 
       const impacted = computeChangedChecklistFieldPaths(
         prevWc.graph,
@@ -478,7 +483,14 @@ export default function ChecklistPage() {
                       }),
                     },
                   );
-                  if (!res.ok) throw new Error("Submit failed");
+                  if (!res.ok)
+                    throw new Error(
+                      `Submit failed ${res.status} ${res.statusText} ${await res.text()}`,
+                    );
+                  // log result on success
+                  const result = (await res.json()) as {};
+                  debug.log("submit result", result);
+
                   clearWorkingCopy();
                   localStorage.removeItem(storageKey(reviewData.reviewId));
                   localStorage.removeItem(returnRouteKey(reviewData.reviewId));

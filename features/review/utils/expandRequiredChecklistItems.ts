@@ -11,6 +11,8 @@ import {
 import getPersonName from "@/utils/getPersonName";
 import getItemValueDisplay from "@/features/review/utils/getItemValueDisplay";
 import { SectionState } from "@/types/formTypes";
+import { debug } from "@/utils/debugLogger";
+import { isCollectionCompleteInChecklistGraph } from "@/features/review/utils/isCollectionCompleteInChecklistGraph";
 
 /**
  * JSDoc: Expands the full list of required checklist items from a ChecklistGraph.
