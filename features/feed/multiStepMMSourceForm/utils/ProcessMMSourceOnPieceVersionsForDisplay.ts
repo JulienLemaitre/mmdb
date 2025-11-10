@@ -1,6 +1,6 @@
 // Utility function to gather the data into groups with all related information from feedFormState
 import { MMSourceOnPieceVersionsState } from "@/types/formTypes";
-import { getEntityByIdOrKey } from "@/context/feedFormContext";
+import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
 
 export function processMMSourceOnPieceVersionsForDisplay(
   mMSourceOnPieceVersions: MMSourceOnPieceVersionsState[],

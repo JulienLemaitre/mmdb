@@ -1,5 +1,6 @@
 import React from "react";
-import { getEntityByIdOrKey, useFeedForm } from "@/context/feedFormContext";
+import { useFeedForm } from "@/context/feedFormContext";
+import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
 import { useSinglePieceVersionForm } from "@/context/singlePieceVersionFormContext";
 import { getStepByRank } from "@/features/feed/multiStepSinglePieceVersionForm/stepsUtils";
 

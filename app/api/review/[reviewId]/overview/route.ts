@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { computeOverviewProgress } from "@/features/review/reviewProgress";
 import { ApiOverview } from "@/types/reviewTypes";
 import { getReviewOverview } from "@/utils/server/getReviewOverview";
+import { prodLog } from "@/utils/debugLogger";
 
 export async function GET(
   _req: Request,
@@ -50,6 +51,7 @@ export async function GET(
     else if (lc.includes("required") || lc.includes("must be")) status = 400;
     else if (lc.includes("not found")) status = 404;
 
+    prodLog.info(`getReviewOverview error: ${status} ${msg}`);
     return NextResponse.json({ error: msg }, { status });
   }
 }

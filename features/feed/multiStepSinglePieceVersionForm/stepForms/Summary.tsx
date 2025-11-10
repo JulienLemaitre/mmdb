@@ -1,5 +1,5 @@
 import React from "react";
-import { getEntityByIdOrKey } from "@/context/feedFormContext";
+import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
 import { FeedFormState } from "@/types/feedFormTypes";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import getKeyLabel from "@/utils/getKeyLabel";

@@ -1,7 +1,8 @@
 // Utility function to gather the data into groups with all related information from graph
 import { MMSourceOnPieceVersionsState } from "@/types/formTypes";
-import { getEntityByIdOrKey } from "@/context/feedFormContext";
+import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
 import { ChecklistGraph } from "@/features/review/ReviewChecklistSchema";
+import { isCollectionCompleteInChecklistGraph } from "@/features/review/utils/isCollectionCompleteInChecklistGraph";
 
 export function processSourceOnPieceVersionsForDisplay(graph: ChecklistGraph) {
   const processedGroups: Array<{
@@ -28,20 +29,12 @@ export function processSourceOnPieceVersionsForDisplay(graph: ChecklistGraph) {
     const piece = getEntityByIdOrKey(graph, "pieces", pieceVersion.pieceId);
 
     // Set collection only if the mMSource contains all the pieces of this collection
-    let includeCollection = false;
-    if (piece.collectionId) {
-      const pieceCollection = getEntityByIdOrKey(
+    let includeCollection =
+      !piece.collectionId &&
+      isCollectionCompleteInChecklistGraph({
+        collectionId: piece.collectionId,
         graph,
-        "collections",
-        piece.collectionId,
-      );
-      const collectionPieceCount = pieceCollection.pieceCount;
-      const sourceCollectionPieceCount = graph.pieces.filter(
-        (p) => p.collectionId === piece.collectionId,
-      );
-      includeCollection =
-        sourceCollectionPieceCount.length === collectionPieceCount;
-    }
+      });
     const collection =
       includeCollection &&
       getEntityByIdOrKey(graph, "collections", piece.collectionId);

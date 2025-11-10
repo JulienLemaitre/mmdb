@@ -11,7 +11,6 @@ import {
 import getPersonName from "@/utils/getPersonName";
 import getItemValueDisplay from "@/features/review/utils/getItemValueDisplay";
 import { SectionState } from "@/types/formTypes";
-import { debug } from "@/utils/debugLogger";
 import { isCollectionCompleteInChecklistGraph } from "@/features/review/utils/isCollectionCompleteInChecklistGraph";
 
 /**
@@ -162,8 +161,21 @@ export function expandRequiredChecklistItems(
   // These also have no parent lineage in this context.
   addEntityGroup("PERSON", graph.persons);
   addEntityGroup("ORGANIZATION", graph.organizations);
-  addEntityGroup("COLLECTION", graph.collections);
   addEntityGroup("PIECE", graph.pieces);
+
+  // only add collections if they are entirely included in the source
+  if (graph.collections) {
+    for (const c of graph.collections) {
+      if (
+        isCollectionCompleteInChecklistGraph({
+          collectionId: c.id,
+          graph,
+        })
+      ) {
+        addEntityGroup("COLLECTION", graph.collections);
+      }
+    }
+  }
 
   // TODO: include tempo indications per se in the checklist ?
   // addEntityGroup("TEMPO_INDICATION", graph.tempoIndications);

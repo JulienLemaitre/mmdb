@@ -298,14 +298,3 @@ export function isEntityUsed(
   }
   return false;
 }
-
-export function getEntityByIdOrKey(
-  state: FeedFormState,
-  entityName: string,
-  id: string,
-  key = "id",
-) {
-  if (Array.isArray(state?.[entityName])) {
-    return state[entityName].find((entity) => entity[key] === id);
-  }
-}

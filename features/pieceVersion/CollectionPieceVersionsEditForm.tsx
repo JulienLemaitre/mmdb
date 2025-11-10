@@ -3,7 +3,8 @@ import {
   updateCollectionPieceVersionsForm,
   useCollectionPieceVersionsForm,
 } from "@/context/collectionPieceVersionsFormContext";
-import { getEntityByIdOrKey, useFeedForm } from "@/context/feedFormContext";
+import { useFeedForm } from "@/context/feedFormContext";
+import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
 import { SinglePieceVersionFormProvider } from "@/context/singlePieceVersionFormContext";
 import SinglePieceVersionFormContainer from "@/features/feed/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer";
 import TrashIcon from "@/ui/svg/TrashIcon";

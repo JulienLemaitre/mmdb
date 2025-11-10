@@ -61,12 +61,12 @@ export default function ChecklistPage() {
   const isCollectionView = currentView.view === "COLLECTION";
   const isPieceView = currentView.view === "PIECE";
 
-  const allRequiredItems = useMemo(() => {
+  const { allRequiredItems } = useMemo(() => {
     if (!workingGraph || !reviewData?.globallyReviewed) {
-      return [];
+      return { allRequiredItems: [], uncheckedKeys: [] };
     }
     const gr = reviewData.globallyReviewed;
-    return expandRequiredChecklistItems(workingGraph, {
+    const newAllRequiredItems = expandRequiredChecklistItems(workingGraph, {
       globallyReviewed: {
         personIds: new Set(gr.personIds ?? []),
         organizationIds: new Set(gr.organizationIds ?? []),
@@ -74,18 +74,22 @@ export default function ChecklistPage() {
         pieceIds: new Set(gr.pieceIds ?? []),
       },
     });
-  }, [workingGraph, reviewData?.globallyReviewed]);
+    debug.log("newAllRequiredItems", newAllRequiredItems);
 
-  const uncheckedKeys = allRequiredItems.filter(
-    (item) => !checkedKeys.has(item.fieldPath),
-  );
-  debug.log("uncheckedKeys", uncheckedKeys);
+    const uncheckedKeys = newAllRequiredItems.filter(
+      (item) => !checkedKeys.has(item.fieldPath),
+    );
+    debug.log("uncheckedKeys", uncheckedKeys);
+
+    return { allRequiredItems: newAllRequiredItems, uncheckedKeys };
+  }, [workingGraph, checkedKeys, reviewData?.globallyReviewed]);
 
   const summaryItemList = useMemo(() => {
     return allRequiredItems.filter(
       (it) => !it.lineage.pieceId && !it.lineage.collectionId,
     );
   }, [allRequiredItems]);
+
   const collectionItemList = useMemo(() => {
     if (!isCollectionView) return [];
     const itemListWithCollectionLineage = allRequiredItems.filter(
@@ -101,6 +105,7 @@ export default function ChecklistPage() {
       }));
     return [...itemListWithCollectionLineage, ...collectionTypeItemList];
   }, [allRequiredItems, isCollectionView, currentView]);
+
   const pieceItemList = useMemo(() => {
     if (!isPieceView) return [];
     const itemListWithPieceLineage = allRequiredItems.filter(
@@ -150,21 +155,6 @@ export default function ChecklistPage() {
       // ...tempoIndicationList,
     ];
   }, [allRequiredItems, isPieceView, currentView]);
-
-  const requiredItemLeft = allRequiredItems.filter(
-    (item) =>
-      !summaryItemList.some((i) => i.fieldPath === item.fieldPath) &&
-      collectionItemList.some((i) => i.fieldPath === item.fieldPath) &&
-      pieceItemList.some((i) => i.fieldPath === item.fieldPath),
-  );
-
-  // debug.group("requiredItems");
-  // debug.info(`[] allRequiredItems :`, allRequiredItems);
-  // debug.info(`[] summaryItemList :`, summaryItemList);
-  // debug.info(`[] collectionItemList :`, collectionItemList);
-  // debug.info(`[] pieceItemList :`, pieceItemList);
-  // debug.info(`[] requiredItemLeft :`, requiredItemLeft);
-  // debug.groupEnd();
 
   const changedKeys = useMemo(() => {
     if (!reviewData?.graph || !workingGraph) {
