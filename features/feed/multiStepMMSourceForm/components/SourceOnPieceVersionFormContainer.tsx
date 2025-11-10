@@ -3,11 +3,8 @@ import { MMSourceOnPieceVersionsState } from "@/types/formTypes";
 import PlusIcon from "@/ui/svg/PlusIcon";
 import MMSourceFormStepNavigation from "@/features/feed/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import SinglePieceVersionFormContainer from "@/features/feed/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer";
-import {
-  getEntityByIdOrKey,
-  updateFeedForm,
-  useFeedForm,
-} from "@/context/feedFormContext";
+import { updateFeedForm, useFeedForm } from "@/context/feedFormContext";
+import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
 import TrashIcon from "@/ui/svg/TrashIcon";
 import QuestionMarkCircleIcon from "@/ui/svg/QuestionMarkCircleIcon";
 import { SinglePieceVersionFormProvider } from "@/context/singlePieceVersionFormContext";
