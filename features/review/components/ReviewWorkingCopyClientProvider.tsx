@@ -2,7 +2,8 @@
 
 import React from "react";
 import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
-import { ChecklistGraph } from "@/features/review/ReviewChecklistSchema";
+
+import { ChecklistGraph } from "@/types/reviewTypes";
 
 export default function ReviewWorkingCopyClientProvider({
   reviewId,

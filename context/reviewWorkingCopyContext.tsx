@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useContext, useMemo } from "react";
 import { ReviewWorkingCopy } from "@/features/review/reviewEditBridge";
-import { ChecklistGraph } from "@/features/review/ReviewChecklistSchema";
+
+import { ChecklistGraph } from "@/types/reviewTypes";
 
 type Ctx = {
   getWorkingCopy(): ReviewWorkingCopy | null;

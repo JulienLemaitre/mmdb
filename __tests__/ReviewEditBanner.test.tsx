@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import ReviewEditBanner from "@/features/review/ReviewEditBanner";
+import ReviewEditBanner from "@/features/review/components/ReviewEditBanner";
 import { FEED_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 
 // Allow per-test control of mocked state and router

@@ -1,7 +1,7 @@
 import {
   buildFieldPath,
   buildSourceJoinRankPath,
-} from "@/features/review/ReviewChecklistSchema";
+} from "@/features/review/reviewChecklistSchema";
 import { buildMockOverview } from "@/features/review/reviewMock";
 import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
 

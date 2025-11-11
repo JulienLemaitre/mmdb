@@ -1,10 +1,7 @@
-import {
-  ChecklistGraph,
-  RequiredChecklistItem,
-} from "@/features/review/ReviewChecklistSchema";
 import { ReviewView } from "@/app/(signedIn)/review/[reviewId]/checklist/page";
 import { ChecklistItemRow } from "../components/ChecklistItemRow";
-import { processSourceOnPieceVersionsForDisplay } from "@/features/review/utils/ProcessSourceOnPieceVersionsForDisplay";
+import { processSourceOnPieceVersionsForDisplay } from "@/features/review/utils/processSourceOnPieceVersionsForDisplay";
+import { ChecklistGraph, RequiredChecklistItem } from "@/types/reviewTypes";
 
 type Props = {
   graph: ChecklistGraph;
@@ -159,11 +156,11 @@ export function SummarySlice({
       <div className="mt-8">
         <h3 className="font-semibold mb-2">Navigate to:</h3>
         <div className="flex flex-col gap-2">
-          {sourceOnPieceVersionGroups.map((group, groupindex) => {
+          {sourceOnPieceVersionGroups.map((group) => {
             if (group.type === "collection") {
-              const composer = graph.persons?.find(
-                (p) => p.id === group.collection.composerId,
-              );
+              // const composer = graph.persons?.find(
+              //   (p) => p.id === group.collection.composerId,
+              // );
               return (
                 <button
                   key={group.collection.id}

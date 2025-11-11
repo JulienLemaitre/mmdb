@@ -1,6 +1,6 @@
 import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
 import { buildMockOverview } from "@/features/review/reviewMock";
-import { buildSourceJoinRankPath } from "@/features/review/ReviewChecklistSchema";
+import { buildSourceJoinRankPath } from "@/features/review/reviewChecklistSchema";
 
 describe("reviewDiff rank change detection (per-join)", () => {
   it("emits changed field paths for join ranks that changed and nothing else", () => {

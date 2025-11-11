@@ -1,10 +1,10 @@
-import {
-  ChecklistGraph,
-  RequiredChecklistItem,
-  type ExpandOptions,
-} from "@/features/review/ReviewChecklistSchema";
 import { useMemo } from "react";
 import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
+import {
+  ChecklistGraph,
+  ExpandOptions,
+  RequiredChecklistItem,
+} from "@/types/reviewTypes";
 
 export type CheckedKeySet = ReadonlySet<string> | Set<string>;
 export type ProgressCounts = {

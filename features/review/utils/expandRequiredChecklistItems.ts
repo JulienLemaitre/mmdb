@@ -1,17 +1,19 @@
 import {
   buildFieldPath,
+  REVIEW_CHECKLIST_SCHEMA,
+} from "@/features/review/reviewChecklistSchema";
+import getPersonName from "@/utils/getPersonName";
+import getItemValueDisplay from "@/features/review/utils/getItemValueDisplay";
+import { SectionState } from "@/types/formTypes";
+import { isCollectionCompleteInChecklistGraph } from "@/features/review/utils/isCollectionCompleteInChecklistGraph";
+import {
   ChecklistEntityType,
   ChecklistField,
   ChecklistGraph,
   ExpandOptions,
   RequiredChecklistItem,
   RequiredPredicateCtx,
-  REVIEW_CHECKLIST_SCHEMA,
-} from "@/features/review/ReviewChecklistSchema";
-import getPersonName from "@/utils/getPersonName";
-import getItemValueDisplay from "@/features/review/utils/getItemValueDisplay";
-import { SectionState } from "@/types/formTypes";
-import { isCollectionCompleteInChecklistGraph } from "@/features/review/utils/isCollectionCompleteInChecklistGraph";
+} from "@/types/reviewTypes";
 
 /**
  * JSDoc: Expands the full list of required checklist items from a ChecklistGraph.

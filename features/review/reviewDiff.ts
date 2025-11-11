@@ -1,11 +1,10 @@
 import {
   REVIEW_CHECKLIST_SCHEMA,
-  ChecklistEntityType,
-  ChecklistGraph,
   buildFieldPath,
   buildSourceJoinRankPath,
   ENTITY_PREFIX,
-} from "@/features/review/ReviewChecklistSchema";
+} from "@/features/review/reviewChecklistSchema";
+import { ChecklistEntityType, ChecklistGraph } from "@/types/reviewTypes";
 
 export type ChangedChecklistItem = {
   entityType: ChecklistEntityType;

@@ -1,4 +1,3 @@
-import { ChecklistEntityType } from "@/features/review/ReviewChecklistSchema";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import {
   CONTRIBUTION_ROLE,
@@ -12,6 +11,7 @@ import getKeyLabel from "@/utils/getKeyLabel";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
 import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
 import getRoleLabel from "@/utils/getRoleLabel";
+import { ChecklistEntityType } from "@/types/reviewTypes";
 
 const valueFormatFunctions = [
   {

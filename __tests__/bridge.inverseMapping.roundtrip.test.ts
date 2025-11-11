@@ -6,7 +6,7 @@ import {
   type ReviewWorkingCopy,
 } from "@/features/review/reviewEditBridge";
 import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
-import { buildFieldPath } from "@/features/review/ReviewChecklistSchema";
+import { buildFieldPath } from "@/features/review/reviewChecklistSchema";
 
 function toChangedKeySet(
   changes: Array<{

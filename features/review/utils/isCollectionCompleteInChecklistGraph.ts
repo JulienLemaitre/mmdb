@@ -1,6 +1,6 @@
-import { ChecklistGraph } from "@/features/review/ReviewChecklistSchema";
 import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
 import { debug } from "@/utils/debugLogger";
+import { ChecklistGraph } from "@/types/reviewTypes";
 
 export function isCollectionCompleteInChecklistGraph({
   collectionId,

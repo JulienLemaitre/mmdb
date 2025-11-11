@@ -1,10 +1,7 @@
-import {
-  ChecklistGraph,
-  RequiredChecklistItem,
-} from "@/features/review/ReviewChecklistSchema";
 import { ReviewView } from "@/app/(signedIn)/review/[reviewId]/checklist/page";
 import { ChecklistItemRow } from "../components/ChecklistItemRow";
 import { useMemo } from "react";
+import { ChecklistGraph, RequiredChecklistItem } from "@/types/reviewTypes";
 
 type Props = {
   graph: ChecklistGraph;

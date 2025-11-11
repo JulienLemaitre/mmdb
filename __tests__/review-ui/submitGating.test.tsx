@@ -1,8 +1,9 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ChecklistRow } from "@/features/review/ChecklistRow";
-import type { RequiredChecklistItem } from "@/features/review/ReviewChecklistSchema";
+import { ChecklistRow } from "@/features/review/components/ChecklistRow";
+
+import { RequiredChecklistItem } from "@/types/reviewTypes";
 
 function mkItem(label: string, id: string): RequiredChecklistItem {
   return {

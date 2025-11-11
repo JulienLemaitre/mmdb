@@ -2,16 +2,16 @@
 
 import { FeedFormState, ReviewContext } from "@/types/feedFormTypes";
 import { FEED_FORM_BOOT_KEY } from "@/utils/constants";
-import {
-  ChecklistEntityType,
-  ChecklistGraph,
-  RequiredChecklistItem,
-} from "@/features/review/ReviewChecklistSchema";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
 import { debug } from "@/utils/debugLogger";
 import { getNewUuid } from "@/utils/getNewUuid";
+import {
+  ChecklistEntityType,
+  ChecklistGraph,
+  RequiredChecklistItem,
+} from "@/types/reviewTypes";
 
 // Minimal structure for the review working copy we operate on
 export type ReviewWorkingCopy = {

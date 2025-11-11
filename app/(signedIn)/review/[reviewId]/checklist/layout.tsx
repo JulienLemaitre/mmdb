@@ -5,7 +5,7 @@ import { REVIEW_STATE } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { URL_REVIEW_LIST } from "@/utils/routes";
 import React from "react";
-import ReviewWorkingCopyClientProvider from "./ReviewWorkingCopyClientProvider";
+import ReviewWorkingCopyClientProvider from "@/features/review/components/ReviewWorkingCopyClientProvider";
 import { getReviewOverview } from "@/utils/server/getReviewOverview";
 
 export default async function ChecklistLayout({

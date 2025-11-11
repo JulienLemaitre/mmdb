@@ -1,5 +1,6 @@
 import { FeedFormState } from "@/types/feedFormTypes";
-import { ChecklistGraph } from "@/features/review/ReviewChecklistSchema";
+
+import { ChecklistGraph } from "@/types/reviewTypes";
 
 export function getEntityByIdOrKey(
   state: FeedFormState | ChecklistGraph,

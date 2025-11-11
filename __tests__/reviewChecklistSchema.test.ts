@@ -3,7 +3,7 @@ import {
   getChecklistFields,
   isDoNotReviewTwice,
   REVIEW_CHECKLIST_SCHEMA,
-} from "@/features/review/ReviewChecklistSchema";
+} from "@/features/review/reviewChecklistSchema";
 
 describe("ReviewChecklistSchema basics", () => {
   it("exposes fields for SECTION including rank and metre fields", () => {

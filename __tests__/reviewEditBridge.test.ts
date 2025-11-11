@@ -9,11 +9,8 @@ import {
   type FeedBootType,
 } from "@/features/review/reviewEditBridge";
 import { FEED_FORM_BOOT_KEY } from "@/utils/constants";
-import {
-  RequiredChecklistItem,
-  ChecklistGraph,
-} from "@/features/review/ReviewChecklistSchema";
 import { FeedFormState } from "@/types/feedFormTypes";
+import { ChecklistGraph, RequiredChecklistItem } from "@/types/reviewTypes";
 
 // Mock data that reflects the new nested ChecklistGraph structure.
 const mockWorkingCopy: ReviewWorkingCopy = {

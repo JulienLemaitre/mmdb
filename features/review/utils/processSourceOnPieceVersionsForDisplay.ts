@@ -1,8 +1,8 @@
 // Utility function to gather the data into groups with all related information from graph
 import { MMSourceOnPieceVersionsState } from "@/types/formTypes";
 import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
-import { ChecklistGraph } from "@/features/review/ReviewChecklistSchema";
 import { isCollectionCompleteInChecklistGraph } from "@/features/review/utils/isCollectionCompleteInChecklistGraph";
+import { ChecklistGraph } from "@/types/reviewTypes";
 
 export function processSourceOnPieceVersionsForDisplay(graph: ChecklistGraph) {
   const processedGroups: Array<{

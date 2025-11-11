@@ -2,13 +2,13 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import {
-  type ChecklistGraph,
-  type RequiredChecklistItem,
-} from "@/features/review/ReviewChecklistSchema";
 import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
 import { URL_REVIEW_LIST, URL_FEED } from "@/utils/routes";
-import { ApiOverview } from "@/types/reviewTypes";
+import {
+  ApiOverview,
+  ChecklistGraph,
+  RequiredChecklistItem,
+} from "@/types/reviewTypes";
 import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
 import { useReviewWorkingCopy } from "@/context/reviewWorkingCopyContext";
 import {

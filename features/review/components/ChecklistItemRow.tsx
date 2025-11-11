@@ -1,5 +1,6 @@
 import React from "react";
-import { RequiredChecklistItem } from "@/features/review/ReviewChecklistSchema";
+
+import { RequiredChecklistItem } from "@/types/reviewTypes";
 
 type Props = {
   item: RequiredChecklistItem;

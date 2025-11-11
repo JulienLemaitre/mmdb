@@ -4,7 +4,7 @@ import React from "react";
 import FeedFormHelpDrawer from "@/features/feed/FeedFormHelpDrawer";
 import Steps from "@/features/feed/multiStepMMSourceForm/Steps";
 import ResetAllForms from "@/features/feed/ResetAllForms";
-import ReviewEditBanner from "@/features/review/ReviewEditBanner";
+import ReviewEditBanner from "@/features/review/components/ReviewEditBanner";
 
 export const dynamic = "force-dynamic";
 

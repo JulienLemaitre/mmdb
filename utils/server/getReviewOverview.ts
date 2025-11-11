@@ -2,8 +2,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/options";
 import { db } from "@/utils/server/db";
 import { REVIEW_STATE, REVIEWED_ENTITY_TYPE } from "@prisma/client";
-import { ChecklistGraph } from "@/features/review/ReviewChecklistSchema";
 import { ContributionState } from "@/types/formTypes";
+import { ChecklistGraph } from "@/types/reviewTypes";
 
 /**
  * Returns the real overview data for a given reviewId.
