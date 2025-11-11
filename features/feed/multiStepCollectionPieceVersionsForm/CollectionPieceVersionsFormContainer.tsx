@@ -23,6 +23,7 @@ import React, { useCallback, useEffect } from "react";
 import CollectionPieceVersionFormSummary from "@/features/feed/multiStepSinglePieceVersionForm/CollectionPieceVersionFormSummary";
 import { COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 import { URL_API_GETALL_COLLECTION_PIECES } from "@/utils/routes";
+import { MakeOptional } from "@/types/typescriptUtils";
 
 type CollectionPieceVersionFormProps = {
   onFormClose: () => void;
@@ -173,7 +174,7 @@ function CollectionPieceVersionsFormContainer({
       console.error("[ERROR] No composer selected for collection creation.");
       return;
     }
-    const newCollection: CollectionState = {
+    const newCollection: MakeOptional<CollectionState, "pieceCount"> = {
       ...collection,
       composerId: selectedComposerId,
       id: collection.id || uuidv4(),
@@ -220,6 +221,7 @@ function CollectionPieceVersionsFormContainer({
         id: collection.id,
         composerId: collection.composerId,
         title: collection.title,
+        pieceCount: collection.pieceCount,
       },
       reset: true,
       next: true,
@@ -269,11 +271,23 @@ function CollectionPieceVersionsFormContainer({
       rank: (feedFormState.mMSourceOnPieceVersions || []).length + index + 1,
     }));
 
-    console.log(`[onAddSourceOnPieceVersions] payloadArray :`, payloadArray);
+    console.log(`[onSubmitPiecePieceVersions] payloadArray :`, payloadArray);
 
     updateFeedForm(feedFormDispatch, "mMSourceOnPieceVersions", {
       array: payloadArray,
     });
+
+    // update pieceCount in feedFormState.collections
+    if (collectionPieceVersionFormState?.collection) {
+      updateFeedForm(feedFormDispatch, "collections", {
+        array: [
+          {
+            ...collectionPieceVersionFormState?.collection,
+            pieceCount: payloadArray.length,
+          },
+        ],
+      });
+    }
 
     // Reset localStorage
     console.log(
@@ -323,6 +337,17 @@ function CollectionPieceVersionsFormContainer({
       array: payloadArray,
       isCollectionUpdate,
     });
+    // update pieceCount in feedFormState.collections
+    if (collectionPieceVersionFormState?.collection) {
+      updateFeedForm(feedFormDispatch, "collections", {
+        array: [
+          {
+            ...collectionPieceVersionFormState?.collection,
+            pieceCount: payloadArray.length,
+          },
+        ],
+      });
+    }
 
     // Change the corresponding piece.collectionRank if it has changed
     const piecePayloadArray = (feedFormState.pieces || []).reduce<PieceState[]>(
@@ -355,7 +380,10 @@ function CollectionPieceVersionsFormContainer({
       },
       [],
     );
-    console.log(`[] piecePayloadArray :`, piecePayloadArray);
+    console.log(
+      `[onSubmitSourceOnPieceVersions] piecePayloadArray :`,
+      piecePayloadArray,
+    );
     updateFeedForm(feedFormDispatch, "pieces", {
       array: piecePayloadArray,
     });

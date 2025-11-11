@@ -295,12 +295,9 @@ export function rebuildWorkingCopyFromFeedForm(
   const organizations = feedFormState.organizations ?? [];
   const persons = feedFormState.persons ?? [];
   const collections =
-    feedFormState.collections?.map((c) => ({
-      ...c,
-      pieceCount:
-        feedFormState.pieces?.filter((p) => p.collectionId === c.id).length ||
-        NaN,
-    })) ?? [];
+    feedFormState.collections?.filter((c) =>
+      feedFormState.pieces?.some((p) => p.collectionId === c.id),
+    ) ?? [];
   const pieces = feedFormState.pieces ?? [];
   const pieceVersions = feedFormState.pieceVersions ?? [];
   const metronomeMarks = feedFormState.metronomeMarks ?? [];

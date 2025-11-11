@@ -1,6 +1,7 @@
 import { db } from "@/utils/server/db";
 import deleteNullPropertiesFromObject from "@/utils/deleteNullPropertiesFromObject";
 import { Prisma } from "@prisma/client";
+import { CollectionState } from "@/types/formTypes";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -14,34 +15,37 @@ export async function GET(request: Request) {
     id: true,
     composerId: true,
     title: true,
-    // pieces: {
-    //   select: {
-    //     id: true,
-    //     title: true,
-    //     nickname: true,
-    //     yearOfComposition: true,
-    //   },
-    // },
+    _count: {
+      select: {
+        pieces: true,
+      },
+    },
   });
 
   type CollectionWithPieces = Prisma.CollectionGetPayload<{
     select: typeof collectionSelect;
   }>;
 
+  let collections = [] as CollectionState[];
   const collectionsWithPiecesResult = await db.collection.findMany({
     where: {
       composerId: composerId,
     },
     select: collectionSelect,
   });
-  const collectionsWithPieces = collectionsWithPiecesResult.map(
-    (collection: CollectionWithPieces) => {
-      return collection
-        ? deleteNullPropertiesFromObject(collection) // We ensure properties will not be initiated with null values
-        : null;
-    },
-  );
-  // TODO: explore for type: https://stackoverflow.com/a/69943634/4676117
+  if (collectionsWithPiecesResult.length > 0) {
+    collections = collectionsWithPiecesResult
+      .map((collection: CollectionWithPieces) =>
+        deleteNullPropertiesFromObject(collection),
+      )
+      .map((c) => ({
+        id: c.id,
+        title: c.title ?? null,
+        composerId: c.composerId ?? null,
+        pieceCount: c._count.pieces,
+      }));
+    // TODO: explore for type: https://stackoverflow.com/a/69943634/4676117
+  }
 
-  return Response.json({ collections: collectionsWithPieces });
+  return Response.json({ collections });
 }

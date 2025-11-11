@@ -122,7 +122,7 @@ export type ContributionStateWithoutId =
 export type CollectionState = WithRequiredId<
   Pick<Prisma.CollectionUncheckedCreateInput, "id" | "composerId" | "title">
 > &
-  IsNewProp;
+  IsNewProp & { pieceCount: number };
 
 export type PieceState = WithRequiredId<
   Pick<
@@ -247,6 +247,7 @@ export type CollectionInput = Pick<
   Prisma.CollectionUncheckedCreateInput,
   "composerId" | "title"
 > & {
+  pieceCount?: number;
   id?: string;
 };
 export type CollectionTitleInput = Pick<
