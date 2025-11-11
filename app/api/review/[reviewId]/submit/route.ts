@@ -27,12 +27,15 @@ export async function POST(
     ? body.checklistState
     : [];
   const overallComment = body?.overallComment ?? null;
-  console.log(`[] workingCopy`, JSON.stringify(workingCopy, null, 2));
-  console.log(`[] checklistState`, JSON.stringify(checklistState, null, 2));
 
   if (!workingCopy || !Array.isArray(checklistState)) {
     debug.error(
       `Missing : ${!workingCopy ? "workingCopy" : ""} ${!Array.isArray(checklistState) ? "checklistState" : ""}`,
+    );
+    debug.error(`[error] workingCopy`, JSON.stringify(workingCopy, null, 2));
+    debug.error(
+      `[error] checklistState`,
+      JSON.stringify(checklistState, null, 2),
     );
     return NextResponse.json(
       { error: "Missing workingCopy or checklistState" },
@@ -44,9 +47,9 @@ export async function POST(
   let baselineGraph: any;
   let globallyReviewed: any;
   try {
-    const ov = await getReviewOverview(reviewId);
-    baselineGraph = ov.graph;
-    globallyReviewed = ov.globallyReviewed;
+    const reviewOverview = await getReviewOverview(reviewId);
+    baselineGraph = reviewOverview.graph;
+    globallyReviewed = reviewOverview.globallyReviewed;
   } catch (err: any) {
     const msg = err instanceof Error ? err.message : String(err);
     const lc = msg.toLowerCase();
@@ -68,12 +71,6 @@ export async function POST(
       pieceIds: new Set(globallyReviewed.pieceIds ?? []),
     },
   });
-  debug.info(
-    "requiredItems keys",
-    requiredItems.map(
-      (it) => `${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`,
-    ),
-  );
 
   // Build a map of submitted checks for quick lookup
   const submitted = new Set(
@@ -82,15 +79,20 @@ export async function POST(
     ),
   );
 
-  debug.info(`[] submitted`, JSON.stringify(submitted, null, 2));
-
   const missing = requiredItems.filter(
     (it) =>
       !submitted.has(`${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`),
   );
-  debug.info(`[] missing`, JSON.stringify(missing, null, 2));
 
   if (missing.length > 0) {
+    debug.error(
+      "requiredItems keys",
+      requiredItems.map(
+        (it) => `${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`,
+      ),
+    );
+    debug.error(`[] submitted`, JSON.stringify(submitted, null, 2));
+    debug.error(`[] missing`, JSON.stringify(missing, null, 2));
     return NextResponse.json(
       {
         error: "Incomplete checklist: some required items are not checked",
