@@ -30,7 +30,7 @@ export function processSourceOnPieceVersionsForDisplay(graph: ChecklistGraph) {
 
     // Set collection only if the mMSource contains all the pieces of this collection
     let includeCollection =
-      !piece.collectionId &&
+      piece.collectionId &&
       isCollectionCompleteInChecklistGraph({
         collectionId: piece.collectionId,
         graph,

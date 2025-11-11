@@ -8,12 +8,14 @@ export function isCollectionCompleteInChecklistGraph({
 }: {
   collectionId: string;
   graph: ChecklistGraph;
-}) {
+}): boolean {
+  if (!collectionId) return false;
   const pieceCollection = getEntityByIdOrKey(
     graph,
     "collections",
     collectionId,
   );
+  if (!pieceCollection) return false;
   const collectionPieceCount = pieceCollection.pieceCount;
   const sourceCollectionPieceCount = graph.pieces.filter(
     (p) => p.collectionId === collectionId,

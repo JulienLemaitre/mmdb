@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getReviewOverview } from "@/utils/server/getReviewOverview";
 import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
-import { composeAuditEntries } from "@/utils/auditCompose";
+import { composeAuditEntries } from "@/features/review/utils/auditCompose";
 import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
 import { debug } from "@/utils/debugLogger";
 

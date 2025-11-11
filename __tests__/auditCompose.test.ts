@@ -1,4 +1,4 @@
-import { composeAuditEntries } from "@/utils/auditCompose";
+import { composeAuditEntries } from "@/features/review/utils/auditCompose";
 import { buildMockOverview } from "@/features/review/reviewMock";
 
 function deepClone<T>(v: T): T {
