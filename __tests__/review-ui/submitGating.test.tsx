@@ -10,7 +10,15 @@ function mkItem(label: string, id: string): RequiredChecklistItem {
     entityType: "SECTION",
     entityId: id,
     fieldPath: `SECTION:${id}:rank`,
+    field: {
+      path: "rank",
+      label,
+    },
     label,
+    value: 1,
+    lineage: {
+      sectionId: id,
+    },
   };
 }
 
