@@ -16,7 +16,8 @@ export default function upsertEntityInState({
     return state;
   }
 
-  // If we find an entity in state with the same id, we update it
+  // If we find an entity in state with the same id, we REPLACE it
+  // TODO: a shelf cange is ready to implement proper replace, but we need to be sure it will not break anything
   const isEntityInState = newState[entityName]?.find(
     (stateEntity) => entity[idKey] && stateEntity[idKey] === entity[idKey],
   );
