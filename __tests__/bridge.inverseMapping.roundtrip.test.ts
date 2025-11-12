@@ -30,20 +30,31 @@ describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
 
     // Baseline ids
     const pieceId = graph.pieces![0]!.id;
-    const pvId = graph.pieceVersions!.find((pv) => pv.pieceId === pieceId)!.id;
-    const movement = graph.movements!.find((m) => m.pieceVersionId === pvId)!;
+    const pieceVersion = graph.pieceVersions!.find(
+      (pv) => pv.pieceId === pieceId,
+    )!;
+    const pvId = pieceVersion.id;
+    const movement = (pieceVersion as any).movements[0]!;
     const movementId = movement.id;
-    const section = graph.sections!.find((s) => s.movementId === movementId)!;
+    const section = (movement as any).sections[0]!;
     const sectionId = section.id;
     const mm = graph.metronomeMarks!.find((m) => m.sectionId === sectionId)!;
     const mmId = mm.id;
     const ti = graph.tempoIndications!.find(
-      (t) => t.id === section.tempoIndicationId,
+      (t) => t.id === section.tempoIndication.id,
     )!;
 
     // Craft a feed form state reflecting the baseline graph, with edits
     const feedState: FeedFormState = {
-      formInfo: { currentStepRank: 0, introDone: true },
+      formInfo: {
+        currentStepRank: 0,
+        introDone: true,
+        reviewContext: {
+          reviewId: "rev-rr-1", // Using the same reviewId as in buildMockOverview
+          reviewEdit: true,
+          updatedAt: new Date().toISOString(),
+        },
+      },
       // Minimal source description slice
       mMSourceDescription: {
         id: graph.source.id,
@@ -52,7 +63,8 @@ describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
         link: graph.source.link,
         year: graph.source.year,
         comment: graph.source.comment,
-        references: (graph.references ?? []).map((r) => ({
+        references: (graph.source.references ?? []).map((r) => ({
+          id: r.id,
           type: r.type,
           reference: r.reference,
         })),
@@ -62,6 +74,7 @@ describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
         id: c.id,
         title: c.title,
         composerId: c.composerId,
+        pieceCount: c.pieceCount,
       })),
       pieces: (graph.pieces ?? []).map((p) => ({
         id: p.id,
@@ -76,42 +89,34 @@ describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
         id: pv.id,
         category: pv.category,
         pieceId: pv.pieceId!,
-        movements: (graph.movements ?? [])
-          .filter((m) => m.pieceVersionId === pv.id)
-          .map((mv) => ({
-            id: mv.id,
-            rank: mv.rank,
-            key: mv.id === movementId ? "G major" : mv.key, // EDIT: change movement key
-            sections: (graph.sections ?? [])
-              .filter((s) => s.movementId === mv.id)
-              .map((s) => ({
-                id: s.id,
-                movementId: mv.id,
-                rank: s.rank,
-                metreNumerator: s.metreNumerator,
-                metreDenominator:
-                  s.id === sectionId
-                    ? s.metreDenominator + 1
-                    : s.metreDenominator, // EDIT: change metre denominator
-                isCommonTime: s.isCommonTime,
-                isCutTime: s.isCutTime,
-                fastestStructuralNotesPerBar: s.fastestStructuralNotesPerBar,
-                fastestStaccatoNotesPerBar:
-                  s.fastestStaccatoNotesPerBar ?? null,
-                fastestRepeatedNotesPerBar:
-                  s.fastestRepeatedNotesPerBar ?? null,
-                fastestOrnamentalNotesPerBar:
-                  s.fastestOrnamentalNotesPerBar ?? null,
-                isFastestStructuralNoteBelCanto:
-                  s.isFastestStructuralNoteBelCanto ?? false,
-                tempoIndication: {
-                  id: s.tempoIndicationId,
-                  text: ti.text, // unchanged
-                },
-                comment: s.comment ?? "",
-                commentForReview: s.commentForReview ?? "",
-              })),
+        movements: ((pv as any).movements ?? []).map((mv: any) => ({
+          id: mv.id,
+          rank: mv.rank,
+          key: mv.id === movementId ? "G major" : mv.key, // EDIT: change movement key
+          sections: ((mv as any).sections ?? []).map((s: any) => ({
+            id: s.id,
+            movementId: mv.id,
+            rank: s.rank,
+            metreNumerator: s.metreNumerator,
+            metreDenominator:
+              s.id === sectionId ? s.metreDenominator + 1 : s.metreDenominator, // EDIT: change metre denominator
+            isCommonTime: s.isCommonTime,
+            isCutTime: s.isCutTime,
+            fastestStructuralNotesPerBar: s.fastestStructuralNotesPerBar,
+            fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar ?? null,
+            fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar ?? null,
+            fastestOrnamentalNotesPerBar:
+              s.fastestOrnamentalNotesPerBar ?? null,
+            isFastestStructuralNoteBelCanto:
+              s.isFastestStructuralNoteBelCanto ?? false,
+            tempoIndication: {
+              id: s.tempoIndicationId,
+              text: ti.text, // unchanged
+            },
+            comment: s.comment ?? "",
+            commentForReview: s.commentForReview ?? "",
           })),
+        })),
       })),
       // Ordering slice for source contents
       mMSourceOnPieceVersions: (graph.sourceOnPieceVersions ?? []).map((j) => ({
@@ -119,19 +124,25 @@ describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
         pieceVersionId: j.pieceVersionId,
       })),
       // Metronome marks slice with one edited bpm
-      metronomeMarks: (graph.metronomeMarks ?? []).map((x) => ({
-        id: x.id,
-        sectionId: x.sectionId,
-        beatUnit: x.beatUnit,
-        bpm: x.id === mmId ? x.bpm + 5 : x.bpm, // EDIT: change bpm
-        comment: x.comment ?? "",
-        pieceVersionId: pvId,
-        pieceVersionRank:
-          (graph.sourceOnPieceVersions ?? []).find(
-            (j) => j.pieceVersionId === pvId,
-          )?.rank ?? 1,
-        noMM: false,
-      })),
+      metronomeMarks: (graph.metronomeMarks ?? []).map((x) => {
+        if (x.noMM) {
+          return {
+            id: x.id,
+            sectionId: x.sectionId,
+            pieceVersionId: x.pieceVersionId,
+            noMM: true,
+          };
+        }
+        return {
+          id: x.id,
+          sectionId: x.sectionId,
+          beatUnit: x.beatUnit,
+          bpm: x.id === mmId ? x.bpm + 5 : x.bpm, // EDIT: change bpm
+          comment: x.comment ?? "",
+          pieceVersionId: x.pieceVersionId,
+          noMM: false,
+        };
+      }),
       persons: graph.persons as any,
       organizations: graph.organizations as any,
       tempoIndications: graph.tempoIndications as any,
@@ -148,15 +159,23 @@ describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
     const nextPiece = next.graph.pieces!.find((p) => p.id === pieceId)!;
     expect(nextPiece.title).toBe("Changed Title");
 
-    const nextMovement = next.graph.movements!.find(
-      (m) => m.id === movementId,
+    const nextPieceVersion = next.graph.pieceVersions!.find(
+      (pv) => pv.id === pvId,
+    )!;
+    const nextMovement = (nextPieceVersion as any).movements.find(
+      (m: any) => m.id === movementId,
     )!;
     expect(nextMovement.key).toBe("G major");
 
-    const nextSection = next.graph.sections!.find((s) => s.id === sectionId)!;
+    const nextSection = (nextMovement as any).sections.find(
+      (s: any) => s.id === sectionId,
+    )!;
     expect(nextSection.metreDenominator).toBe(section.metreDenominator + 1);
 
     const nextMM = next.graph.metronomeMarks!.find((m) => m.id === mmId)!;
+    if (mm.noMM || nextMM.noMM) {
+      throw new Error("Metronome marks should have values for this test");
+    }
     expect(nextMM.bpm).toBe(mm.bpm + 5);
 
     // Diff vs baseline should include the changed field paths

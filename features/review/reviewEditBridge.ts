@@ -258,7 +258,7 @@ export function buildFeedFormBootStateFromWorkingCopy(
       singlePieceVersionFormState,
     }),
   };
-  console.log(`[] feedFormBootState :`, feedFormBootState);
+  console.log(`[] feedFormBootState :`, JSON.stringify(feedFormBootState));
   return feedFormBootState;
 }
 
@@ -328,10 +328,6 @@ export function rebuildWorkingCopyFromFeedForm(
     const prevSourceOnPieceVersion = prevGraph?.sourceOnPieceVersions.find(
       (spv) => spv.pieceVersionId === j.pieceVersionId,
     );
-    console.log(
-      `[rebuildWorkingCopyFromFeedForm] prevSourceOnPieceVersion :`,
-      prevSourceOnPieceVersion,
-    );
     return {
       joinId: prevSourceOnPieceVersion?.joinId ?? `join-${getNewUuid()}`, // Regenerate joinId for simplicity
       mMSourceId: source.id,
@@ -355,7 +351,6 @@ export function rebuildWorkingCopyFromFeedForm(
     tempoIndications,
     sourceOnPieceVersions,
   };
-  debug.info(`[rebuildWorkingCopyFromFeedForm] nextGraph :`, nextGraph);
 
   return {
     graph: nextGraph,
