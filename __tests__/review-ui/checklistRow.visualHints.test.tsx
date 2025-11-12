@@ -11,8 +11,16 @@ function makeItem(
   return {
     entityType: "SECTION",
     entityId: "sec-1",
-    fieldPath: "SECTION:sec-1:rank",
+    fieldPath: `SECTION:sec-1:rank`,
+    field: {
+      path: "rank",
+      label: "Rank",
+    },
     label: "Section rank",
+    value: 1,
+    lineage: {
+      sectionId: "sec-1",
+    },
     ...overrides,
   };
 }
