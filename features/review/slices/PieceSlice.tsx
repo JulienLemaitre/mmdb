@@ -27,7 +27,9 @@ export function PieceSlice({
   if (!piece || !pieceVersion) return <div>Piece not found.</div>;
 
   const pieceItems = items.filter(
-    (it) => it.entityType === "PIECE" || it.entityType === "PIECE_VERSION",
+    (it) =>
+      it.lineage.pieceId === pieceId &&
+      (it.entityType === "PIECE" || it.entityType === "PIECE_VERSION"),
   );
 
   return (
