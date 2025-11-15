@@ -252,11 +252,11 @@ export default function ChecklistPage() {
         const wcGraph = getWorkingCopy()?.graph;
         if (wcGraph) {
           setWorkingGraph(wcGraph);
-          debug.info("NEW WORKING GRAPH: ", reviewData.graph);
+          debug.info("NEW WORKING GRAPH from stored workingCopy: ", wcGraph);
         } else {
           saveWorkingCopy(reviewData.graph);
           setWorkingGraph(reviewData.graph);
-          debug.info("NEW WORKING GRAPH: ", reviewData.graph);
+          debug.info("NEW WORKING GRAPH from reviewData: ", reviewData.graph);
         }
       } catch (e: any) {
         if (mounted) setError(e?.message || String(e));
@@ -299,7 +299,7 @@ export default function ChecklistPage() {
       const nextWc = rebuildWorkingCopyFromFeedForm(feedState, prevWc as any);
       saveWorkingCopy(nextWc.graph);
       setWorkingGraph(nextWc.graph);
-      debug.info("NEW WORKING GRAPH: ", nextWc.graph);
+      debug.info("NEW WORKING GRAPH from rebuilt workingCopy: ", nextWc.graph);
 
       const impacted = computeChangedChecklistFieldPaths(
         prevWc.graph,
