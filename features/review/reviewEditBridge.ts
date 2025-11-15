@@ -5,7 +5,6 @@ import { FEED_FORM_BOOT_KEY } from "@/utils/constants";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
-import { debug } from "@/utils/debugLogger";
 import { getNewUuid } from "@/utils/getNewUuid";
 import {
   ChecklistEntityType,
@@ -329,7 +328,7 @@ export function rebuildWorkingCopyFromFeedForm(
       (spv) => spv.pieceVersionId === j.pieceVersionId,
     );
     return {
-      joinId: prevSourceOnPieceVersion?.joinId ?? `join-${getNewUuid()}`, // Regenerate joinId for simplicity
+      joinId: prevSourceOnPieceVersion?.joinId ?? getNewUuid(), // Regenerate joinId for simplicity
       mMSourceId: source.id,
       pieceVersionId: j.pieceVersionId,
       rank: j.rank,
