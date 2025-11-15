@@ -8,7 +8,10 @@ function json(data: unknown, init?: any) {
   return NextResponse.json(data as any, init as any);
 }
 
-export async function POST(req: Request, { params }: any) {
+export async function POST(
+  req: Request,
+  props: { params: Promise<{ reviewId: string }> },
+) {
   try {
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
@@ -23,7 +26,7 @@ export async function POST(req: Request, { params }: any) {
       );
     }
 
-    const reviewId = params?.reviewId as string | undefined;
+    const { reviewId } = await props.params;
     if (!reviewId) {
       return json(
         { error: "[review abort] reviewId is required in route params" },
