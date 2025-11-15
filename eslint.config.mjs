@@ -1,30 +1,29 @@
-import { fixupConfigRules } from "@eslint/compat";
-import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
+import nextConfig from "eslint-config-next";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
-import path from "path";
-import { fileURLToPath } from "url";
+import testingLibrary from "eslint-plugin-testing-library";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-});
-
-const eslintConfig = [
-  // Base JavaScript recommended rules
+/**
+ * Flat ESLint config for:
+ * - ESLint 9.x
+ * - Next.js 16.x
+ * - TypeScript via @typescript-eslint
+ * - Testing Library for React tests
+ *
+ * Notes:
+ * - No @eslint/compat or @eslint/eslintrc usage.
+ * - eslint-config-next is used as a flat config (spread into the array).
+ */
+// eslint-disable-next-line import/no-anonymous-default-export
+export default [
+  // Base JS recommended rules
   js.configs.recommended,
 
-  // Next.js configuration
-  ...fixupConfigRules(compat.extends("next/core-web-vitals")),
+  // Next.js + React rules (flat config from eslint-config-next@16)
+  ...nextConfig,
 
-  // Prettier configuration (should be last to override conflicting rules)
-  ...fixupConfigRules(compat.extends("prettier")),
-
-  // Global language options
+  // Global language options and common globals
   {
     languageOptions: {
       ecmaVersion: "latest",
@@ -43,7 +42,7 @@ const eslintConfig = [
     },
   },
 
-  // TypeScript-specific rules
+  // TypeScript-specific config
   {
     files: ["**/*.ts", "**/*.tsx"],
     languageOptions: {
@@ -61,9 +60,9 @@ const eslintConfig = [
       "@typescript-eslint": tseslint,
     },
     rules: {
-      // Disable the base rule for TypeScript files
+      // Disable the base rule for TS files
       "no-unused-vars": "off",
-      // Enable TypeScript-specific rule with underscore support
+      // TS-aware unused vars rule with underscore support
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {
@@ -75,7 +74,7 @@ const eslintConfig = [
     },
   },
 
-  // Jest configuration for test files
+  // Jest / Testing globals in test files
   {
     files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
     languageOptions: {
@@ -94,11 +93,9 @@ const eslintConfig = [
     },
   },
 
-  // Testing Library configuration for test files
+  // Testing Library rules for React tests (flat config from the plugin)
   {
     files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
-    ...fixupConfigRules(compat.extends("plugin:testing-library/react"))[0],
+    ...testingLibrary.configs.react,
   },
 ];
-
-export default eslintConfig;
