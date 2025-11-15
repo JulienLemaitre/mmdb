@@ -2,8 +2,8 @@ import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
 export default withAuth(
-  // This is the middleware
-  function middleware(req) {
+  // This is the proxy
+  function proxy(req) {
     const userRole: string =
       typeof req.nextauth?.token?.role === "string"
         ? req.nextauth?.token?.role
@@ -15,7 +15,7 @@ export default withAuth(
     const decodedAccessToken =
       accessToken &&
       JSON.parse(Buffer.from(accessToken.split(".")[1], "base64").toString());
-    // console.log(`[Auth middleware] decodedAccessToken :`, decodedAccessToken);
+    // console.log(`[Auth proxy] decodedAccessToken :`, decodedAccessToken);
 
     const accessTokenExpires: number =
       decodedAccessToken && decodedAccessToken["exp"] * 1000;
@@ -24,7 +24,7 @@ export default withAuth(
       accessTokenExpires && Date.now() < Number(accessTokenExpires)
     );
     // console.log(
-    //   `[Auth middleware] isAuthorizedForPrivateRoutes :`,
+    //   `[Auth proxy] isAuthorizedForPrivateRoutes :`,
     //   hasValidToken,
     // );
 
@@ -33,7 +33,7 @@ export default withAuth(
         return NextResponse.rewrite(new URL("/logout", req.url));
       }
       if (!["REVIEWER", "ADMIN"].includes(userRole)) {
-        console.log(`[middleware] Not Authorized :`, userRole);
+        console.log(`[proxy] Not Authorized :`, userRole);
         return NextResponse.rewrite(new URL("/not-authorized", req.url));
       }
     }
@@ -59,7 +59,7 @@ export default withAuth(
   {
     callbacks: {
       authorized: ({ token }) => {
-        // console.log(`[middleware auhtorized] token :`, token);
+        // console.log(`[proxy auhtorized] token :`, token);
         return !!token;
       },
     },
