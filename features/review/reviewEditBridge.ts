@@ -287,7 +287,7 @@ export function rebuildWorkingCopyFromFeedForm(
   // The incoming feedFormState is the source of truth.
   // Default to empty arrays for any missing top-level properties.
   const source = {
-    ...prevGraph.source, // Preserve non-editable fields like id, permalink
+    ...prevGraph.source, // Preserve non-editable fields like id, permalink, enteredBy
     ...feedFormState.mMSourceDescription,
   };
   const contributions = feedFormState.mMSourceContributions ?? [];

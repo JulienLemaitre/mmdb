@@ -62,6 +62,7 @@ export async function getReviewOverview(reviewId: string): Promise<{
       permalink: true,
       year: true,
       comment: true,
+      creator: { select: { id: true, name: true, email: true } },
       // Source-level references
       references: {
         select: { id: true, type: true, reference: true },
@@ -385,6 +386,7 @@ export async function getReviewOverview(reviewId: string): Promise<{
       permalink: mmSource.permalink ?? null,
       year: mmSource.year ?? null,
       comment: mmSource.comment ?? null,
+      enteredBy: mmSource.creator,
       references: mmSource.references.map((r) => ({
         id: r.id,
         type: r.type,

@@ -17,7 +17,7 @@ const SignInButton = () => {
           <button
             type="button"
             onClick={() => signOut({ callbackUrl: "/" })}
-            className="text-red-600"
+            className="btn btn-neutral"
           >
             Sign out
           </button>
@@ -35,7 +35,7 @@ const SignInButton = () => {
           <button
             type="button"
             onClick={() => signIn()}
-            className="text-sky-600"
+            className="btn btn-secondary"
           >
             Sign In
           </button>

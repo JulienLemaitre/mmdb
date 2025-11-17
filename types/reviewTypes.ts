@@ -37,7 +37,10 @@ export type ChecklistEntityType =
 
 export type ChecklistGraph = {
   // Singleton source node for this review context
-  source: MMSourceDescriptionState & { id: string };
+  source: MMSourceDescriptionState & {
+    id: string;
+    enteredBy: { id: string; name: string | null; email: string | null } | null;
+  };
   // Arrays of nodes in scope
   collections?: (CollectionState & { pieceCount: number })[];
   pieces: PieceState[];

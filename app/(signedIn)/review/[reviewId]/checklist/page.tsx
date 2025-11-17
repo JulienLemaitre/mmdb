@@ -379,19 +379,12 @@ export default function ChecklistPage() {
       initialGraph={reviewData.graph}
     >
       <div className="container mx-auto p-4 space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold">Piece Review Checklist</h1>
-            <p className="text-sm opacity-80">
-              Review ID: {reviewData.reviewId}
-            </p>
-          </div>
-        </div>
-
         <div className="card bg-info/10 p-4">
-          <div className="font-medium mb-1">Source</div>
-          <div className="text-sm">
-            Title: {workingGraph.source?.title ?? "(no title)"}
+          <div className="font-medium mb-1">
+            Source title : {workingGraph.source?.title ?? "(no title)"}
+          </div>
+          <div className="text-md">
+            Editor : {workingGraph.source?.enteredBy?.name ?? "(no editor)"}
           </div>
         </div>
 
