@@ -8,6 +8,8 @@ import ReviewListClient from "./reviewListClient";
 import { getToReviewFromDb } from "@/utils/server/getToReviewFromDb";
 import { GET_URL_REVIEW_CHECKLIST } from "@/utils/routes";
 
+export const dynamic = "force-dynamic";
+
 export default async function ReviewListPage({
   searchParams,
 }: {
