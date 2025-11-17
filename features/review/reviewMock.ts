@@ -27,6 +27,7 @@ export function buildMockOverview(reviewId: string): MockOverview {
   const mmAId = "mm-1";
   const mmBId = "mm-2";
   const personId = "person-1";
+  const editorId = "account-1";
   const refId = "ref-1";
   const contribId = "cont-1";
 
@@ -39,6 +40,11 @@ export function buildMockOverview(reviewId: string): MockOverview {
       permalink: "https://perma.example/score",
       year: 1820,
       comment: "Demo comment",
+      enteredBy: {
+        id: editorId,
+        name: "John Doe",
+        email: "john.doe@example.com",
+      },
       references: [
         { id: refId, type: "ISMN", reference: "https://example.com/op10" },
       ],
