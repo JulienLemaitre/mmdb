@@ -32,8 +32,8 @@ export function ChecklistItemRow({
       </td>
       <td>{item.label}</td>
       <td>{item.value || "-"}</td>
-      <td>
-        <button className="btn btn-xs btn-ghost" onClick={onEdit}>
+      <td className="py-0">
+        <button className="btn btn-md btn-ghost" onClick={onEdit}>
           Edit
         </button>
       </td>

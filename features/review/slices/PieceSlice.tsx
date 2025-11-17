@@ -43,7 +43,7 @@ export function PieceSlice({
       <h2 className="text-xl font-bold mb-4">Piece: {piece.title}</h2>
 
       {/* Piece and Piece Version items */}
-      <table className="table table-sm mb-6">
+      <table className="table table-md mb-6">
         <tbody>
           {pieceItems.map((item) => (
             <ChecklistItemRow
@@ -62,7 +62,7 @@ export function PieceSlice({
       {(pieceVersion as any).movements?.map((mov: any) => (
         <div key={mov.id} className="mb-6">
           <h3 className="font-semibold text-lg">Movement {mov.rank}</h3>
-          <table className="table table-sm mb-4">
+          <table className="table table-md mb-4">
             <tbody>
               {items
                 .filter(
@@ -86,7 +86,7 @@ export function PieceSlice({
           {mov.sections?.map((sec: any) => (
             <div key={sec.id} className="pl-4 border-l-2 ml-4 mb-4">
               <h4 className="font-semibold">Section {sec.rank}</h4>
-              <table className="table table-sm">
+              <table className="table table-md">
                 <tbody>
                   {/* Section Items */}
                   {items

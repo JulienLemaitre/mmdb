@@ -56,7 +56,7 @@ export function CollectionSlice({
       <h2 className="text-xl font-bold mb-4">Collection: {collection.title}</h2>
 
       {/* Collection's own checklist items */}
-      <table className="table table-sm mb-6">
+      <table className="table table-md mb-6">
         <tbody>
           {collectionItems.map((item) => (
             <ChecklistItemRow

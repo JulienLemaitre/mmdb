@@ -41,7 +41,7 @@ export function SummarySlice({
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">Summary & Source Details</h2>
-      <table className="table table-sm">
+      <table className="table table-md">
         <tbody>
           {sourceItems.map((item) => (
             <ChecklistItemRow
@@ -59,7 +59,7 @@ export function SummarySlice({
       {referenceItems.length > 0 && (
         <>
           <h2 className="text-xl font-bold mt-6 mb-4">References</h2>
-          <table className="table table-sm">
+          <table className="table table-md">
             <tbody>
               {referenceItems.map((item) => (
                 <ChecklistItemRow
@@ -77,7 +77,7 @@ export function SummarySlice({
       )}
 
       <h2 className="text-xl font-bold mt-6 mb-4">Contributions</h2>
-      <table className="table table-sm">
+      <table className="table table-md">
         <tbody>
           {contributionItems.map((item) => (
             <ChecklistItemRow
@@ -93,7 +93,7 @@ export function SummarySlice({
       </table>
 
       <h2 className="text-xl font-bold mt-6 mb-4">Order of pieces</h2>
-      <table className="table table-sm">
+      <table className="table table-md">
         <tbody>
           {sourceOnPieceVersionItems.map((item) => (
             <ChecklistItemRow
@@ -113,7 +113,7 @@ export function SummarySlice({
           <h2 className="text-xl font-bold mt-6 mb-4">
             Person infos to review
           </h2>
-          <table className="table table-sm">
+          <table className="table table-md">
             <tbody>
               {personItems.map((item) => (
                 <ChecklistItemRow
@@ -135,7 +135,7 @@ export function SummarySlice({
           <h2 className="text-xl font-bold mt-6 mb-4">
             Organization infos to review
           </h2>
-          <table className="table table-sm">
+          <table className="table table-md">
             <tbody>
               {organizationItems.map((item) => (
                 <ChecklistItemRow
