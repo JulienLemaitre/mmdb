@@ -140,6 +140,24 @@ export function expandRequiredChecklistItems(
             }
             break;
           }
+          case "COLLECTION": {
+            if (field.path === "composerId") {
+              const person = graph.persons?.find((p) => p.id === n[field.path]);
+              if (!person) {
+                debug.warn(`Person not found :`, {
+                  entityType,
+                  lineage,
+                  n,
+                });
+                continue;
+              } else {
+                value = getPersonName(person);
+              }
+            } else {
+              value = n[field.path];
+            }
+            break;
+          }
           default: {
             if (typeof n[field.path] === "undefined") {
               debug.warn(`undefined n[${field.path}] :`, {
