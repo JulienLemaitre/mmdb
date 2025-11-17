@@ -14,6 +14,7 @@ import {
   RequiredChecklistItem,
   RequiredPredicateCtx,
 } from "@/types/reviewTypes";
+import { debug } from "@/utils/debugLogger";
 
 /**
  * JSDoc: Expands the full list of required checklist items from a ChecklistGraph.
@@ -60,7 +61,11 @@ export function expandRequiredChecklistItems(
           case "CONTRIBUTION": {
             const contribution = graph.contributions.find((c) => c.id === n.id);
             if (!contribution) {
-              console.warn(`Contribution not found for node`, n);
+              debug.warn(`Contribution not found :`, {
+                entityType,
+                lineage,
+                n,
+              });
               continue;
             }
             if ("person" in contribution) {
@@ -82,7 +87,11 @@ export function expandRequiredChecklistItems(
                 value = organization?.name;
               }
             } else {
-              console.warn(`Unexpected contribution type for node`, n);
+              debug.warn(`Unexpected contribution type :`, {
+                entityType,
+                lineage,
+                n,
+              });
             }
             break;
           }
@@ -91,7 +100,11 @@ export function expandRequiredChecklistItems(
               (sopv) => sopv.joinId === n.id,
             );
             if (!sourceOnPieceVersion) {
-              console.warn(`SourceOnPieceVersion not found for node`, n);
+              debug.warn(`SourceOnPieceVersion not found :`, {
+                entityType,
+                lineage,
+                n,
+              });
               continue;
             }
             value = sourceOnPieceVersion[field.path];
@@ -109,9 +122,31 @@ export function expandRequiredChecklistItems(
             }
             break;
           }
+          case "PIECE": {
+            if (field.path === "composerId") {
+              const person = graph.persons?.find((p) => p.id === n[field.path]);
+              if (!person) {
+                debug.warn(`Person not found :`, {
+                  entityType,
+                  lineage,
+                  n,
+                });
+                continue;
+              } else {
+                value = getPersonName(person);
+              }
+            } else {
+              value = n[field.path];
+            }
+            break;
+          }
           default: {
             if (typeof n[field.path] === "undefined") {
-              console.log(`undefined n[field.path] for node`, n);
+              debug.warn(`undefined n[${field.path}] :`, {
+                entityType,
+                lineage,
+                n,
+              });
             }
             value = n[field.path];
             break;
