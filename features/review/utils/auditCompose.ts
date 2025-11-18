@@ -1,31 +1,12 @@
 import { ENTITY_PREFIX } from "@/features/review/reviewChecklistSchema";
 import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
-import { ChecklistEntityType, ChecklistGraph } from "@/types/reviewTypes";
-
-export type AuditOperation = "CREATE" | "UPDATE" | "DELETE";
-
-export type AuditEntityType =
-  | "PERSON"
-  | "ORGANIZATION"
-  | "COLLECTION"
-  | "PIECE"
-  | "PIECE_VERSION"
-  | "MOVEMENT"
-  | "SECTION"
-  | "TEMPO_INDICATION"
-  | "METRONOME_MARK"
-  | "MM_SOURCE"
-  | "REFERENCE"
-  | "CONTRIBUTION";
-
-export type AuditEntry = {
-  reviewId: string;
-  entityType: AuditEntityType;
-  entityId: string;
-  operation: AuditOperation;
-  before: any | null;
-  after: any | null;
-};
+import {
+  AuditEntityType,
+  AuditEntry,
+  AuditOperation,
+  ChecklistEntityType,
+  ChecklistGraph,
+} from "@/types/reviewTypes";
 
 export function toAuditEntityType(t: ChecklistEntityType): AuditEntityType {
   return t as unknown as AuditEntityType;

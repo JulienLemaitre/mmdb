@@ -132,3 +132,53 @@ export type ApiOverview = {
     perPiece: Record<string, { required: number; checked: number }>;
   };
 };
+
+// Audit
+export type AuditOperation = "CREATE" | "UPDATE" | "DELETE";
+
+export type AuditEntityType =
+  | "PERSON"
+  | "ORGANIZATION"
+  | "COLLECTION"
+  | "PIECE"
+  | "PIECE_VERSION"
+  | "MOVEMENT"
+  | "SECTION"
+  | "TEMPO_INDICATION"
+  | "METRONOME_MARK"
+  | "MM_SOURCE"
+  | "REFERENCE"
+  | "CONTRIBUTION";
+
+export type AuditEntry = {
+  reviewId: string;
+  entityType: AuditEntityType;
+  entityId: string;
+  operation: AuditOperation;
+  before: any | null;
+  after: any | null;
+};
+
+export type SuccessSumary = {
+  reviewId: string;
+  overallComment: any;
+  requiredCount: number;
+  submittedCheckedCount: number;
+  changedCount: number;
+  entitiesTouched: Record<string, number>;
+  changedFieldPathsSample: string[];
+};
+export type AuditPreview = {
+  count: number;
+  entries: AuditEntry[];
+};
+export type ReviewSubmitSuccess = {
+  ok: true;
+  summary: SuccessSumary;
+  auditPreview: AuditPreview;
+};
+export type ReviewSubmitError = {
+  error: string;
+  missing?: RequiredChecklistItem[];
+  missingCount?: number;
+};

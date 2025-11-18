@@ -7,7 +7,8 @@ type InfoModalProps = {
   type: ModalType;
   modalId: string;
   onClose?: () => void;
-  description: string;
+  description?: string;
+  content?: React.ReactNode;
 };
 
 function getTitleFromType(type: ModalType) {
@@ -23,7 +24,13 @@ function getTitleFromType(type: ModalType) {
   }
 }
 
-function InfoModal({ type, modalId, onClose, description }: InfoModalProps) {
+function InfoModal({
+  type,
+  modalId,
+  onClose,
+  description,
+  content = null,
+}: InfoModalProps) {
   const portalContainer = usePortal();
   const onCloseFn = () => {
     if (typeof onClose === "function") onClose();
@@ -34,9 +41,12 @@ function InfoModal({ type, modalId, onClose, description }: InfoModalProps) {
 
   return createPortal(
     <dialog id={modalId} className="modal">
-      <div className="modal-box">
-        <h3 className="font-bold text-lg">{getTitleFromType(type)}</h3>
-        <p className="py-2">{description}</p>
+      <div className="modal-box w-11/12 max-w-7xl">
+        <h3 className={`font-bold text-lg text-${type}`}>
+          {getTitleFromType(type)}
+        </h3>
+        {description && <p className="py-2">{description}</p>}
+        {content}
         <div className="modal-action">
           <button className="btn btn-primary" onClick={onCloseFn}>
             Continue

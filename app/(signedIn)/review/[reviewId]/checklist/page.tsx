@@ -8,6 +8,8 @@ import {
   ApiOverview,
   ChecklistGraph,
   RequiredChecklistItem,
+  ReviewSubmitError,
+  ReviewSubmitSuccess,
 } from "@/types/reviewTypes";
 import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
 import { useReviewWorkingCopy } from "@/context/reviewWorkingCopyContext";
@@ -23,6 +25,7 @@ import { PieceSlice } from "@/features/review/slices/PieceSlice";
 import { FeedFormState } from "@/types/feedFormTypes";
 import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
 import { debug, prodLog } from "@/utils/debugLogger";
+import dynamic from "next/dynamic";
 // import AuditPanel from "@/features/review/components/AuditPanel";
 
 // State definition for the view controller
@@ -38,6 +41,11 @@ function returnRouteKey(reviewId: string) {
   return `review:${reviewId}:returnRoute`;
 }
 
+const REVIEW_SUBMIT_INFO_MODAL_ID = "review-submit-info-modal";
+const InfoModal = dynamic(() => import("@/ui/modal/InfoModal"), {
+  ssr: false,
+});
+
 export default function ChecklistPage() {
   const params = useParams();
   const router = useRouter();
@@ -50,7 +58,11 @@ export default function ChecklistPage() {
   const [error, setError] = useState<string | null>(null);
   const [checkedKeys, setCheckedKeys] = useState<Set<string>>(new Set());
   const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<ReviewSubmitError | null>(
+    null,
+  );
+  const [submitSuccess, setSubmitSuccess] =
+    useState<ReviewSubmitSuccess | null>(null);
   const [aborting, setAborting] = useState(false);
   const [abortError, setAbortError] = useState<string | null>(null);
   const [storageWarning, setStorageWarning] = useState<string | null>(null);
@@ -60,6 +72,29 @@ export default function ChecklistPage() {
   });
   const isCollectionView = currentView.view === "COLLECTION";
   const isPieceView = currentView.view === "PIECE";
+
+  const onInfoModalOpen = (modalId: string) => {
+    //@ts-ignore => Daisy UI modal has an unconventional showModal method
+    document?.getElementById(modalId)?.showModal();
+  };
+  const onInfoModalClosed = (modalId: string) => {
+    //@ts-ignore => Daisy UI modal has an unconventional showModal method
+    document?.getElementById(modalId)?.showModal(false);
+    if (submitSuccess && reviewData) {
+      clearWorkingCopy();
+      localStorage.removeItem(storageKey(reviewData.reviewId));
+      localStorage.removeItem(returnRouteKey(reviewData.reviewId));
+      router.push(URL_REVIEW_LIST);
+    }
+    setSubmitSuccess(null);
+    setSubmitError(null);
+  };
+
+  useEffect(() => {
+    if (!submitError && !submitSuccess) return;
+
+    onInfoModalOpen(REVIEW_SUBMIT_INFO_MODAL_ID);
+  }, [submitError, submitSuccess]);
 
   const { allRequiredItems } = useMemo(() => {
     if (!workingGraph || !reviewData?.globallyReviewed) {
@@ -435,9 +470,6 @@ export default function ChecklistPage() {
         </div>*/}
 
         <div className="flex flex-col gap-2">
-          {submitError && (
-            <div className="text-sm text-error">{submitError}</div>
-          )}
           {abortError && <div className="text-sm text-error">{abortError}</div>}
           <div className="flex items-center gap-3">
             <button
@@ -448,7 +480,6 @@ export default function ChecklistPage() {
                 if (!reviewData || !workingGraph) return;
                 try {
                   setSubmitting(true);
-                  // Submission logic remains the same...
                   const res = await fetch(
                     `/api/review/${reviewData.reviewId}/submit`,
                     {
@@ -466,18 +497,21 @@ export default function ChecklistPage() {
                       }),
                     },
                   );
-                  if (!res.ok)
-                    throw new Error(
-                      `Submit failed ${res.status} ${res.statusText} ${await res.text()}`,
-                    );
-                  // log result on success
-                  const result = (await res.json()) as {};
+                  // if (!res.ok)
+                  //   throw new Error(
+                  //     `Submit failed ${res.type} ${res.status} ${res.statusText} ${await res.text()}`,
+                  //   );
+
+                  const result = (await res.json()) as any;
                   debug.log("submit result", result);
 
-                  clearWorkingCopy();
-                  localStorage.removeItem(storageKey(reviewData.reviewId));
-                  localStorage.removeItem(returnRouteKey(reviewData.reviewId));
-                  router.push(URL_REVIEW_LIST);
+                  if (result?.error) {
+                    setSubmitError(result);
+                    return;
+                  } else {
+                    setSubmitSuccess(result);
+                    return;
+                  }
                 } catch (e: any) {
                   setSubmitError(e.message);
                 } finally {
@@ -515,6 +549,108 @@ export default function ChecklistPage() {
           </div>
         </div>
       </div>
+      <InfoModal
+        modalId={REVIEW_SUBMIT_INFO_MODAL_ID}
+        type={submitSuccess ? "success" : "error"}
+        content={
+          submitSuccess ? (
+            <>
+              <div className="font-semibold">
+                Review submitted successfully!
+              </div>
+              <div className="text-md mt-6">{`Summary`}</div>
+              <div className="text-sm">
+                {Object.entries(submitSuccess.summary).map(([k, v]) => (
+                  <div key={k}>
+                    <span className="font-semibold">{k}:</span>{" "}
+                    {typeof v === "string" || typeof v === "number"
+                      ? v
+                      : JSON.stringify(v)}
+                  </div>
+                ))}
+              </div>
+              {submitSuccess.auditPreview.count > 0 ? (
+                <>
+                  <div className="text-md mt-6">{`auditPreview`}</div>
+                  <div className="overflow-x-auto">
+                    <table className="table table-xs">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>entityType</th>
+                          <th>entityId</th>
+                          <th>operation</th>
+                          <th>before</th>
+                          <th>after</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {submitSuccess.auditPreview.entries?.map((e, index) => (
+                          <tr key={e.entityType + e.entityId + e.operation}>
+                            <th>{index + 1}</th>
+                            <td>{e.entityType}</td>
+                            <td>{e.entityId}</td>
+                            <td>{e.operation}</td>
+                            <td>{JSON.stringify(e.before, null, 2)}</td>
+                            <td>{JSON.stringify(e.after, null, 2)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+              ) : (
+                <div className="text-sm mt-6">
+                  {`No change were recorded for this review.`}
+                </div>
+              )}
+            </>
+          ) : submitError ? (
+            <>
+              <div className="font-semibold text-error">
+                Review submitted failed!
+              </div>
+              <div className="text-md mt-6">{submitError.error}</div>
+              <div className="text-sm mt-6">{`${submitError.missingCount} Missing checks:`}</div>
+              <div className="overflow-x-auto">
+                <table className="table table-xs">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>entityType</th>
+                      {/*<th>entityId</th>*/}
+                      {/*<th>fieldPath</th>*/}
+                      <th>field.path</th>
+                      <th>label</th>
+                      <th>value</th>
+                      <th>lineage</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {submitError.missing?.map((m, index) => (
+                      <tr key={m.entityId + m.fieldPath}>
+                        <th>{index + 1}</th>
+                        <td>{m.entityType}</td>
+                        {/*<td>{m.entityId}</td>*/}
+                        {/*<td>{m.fieldPath}</td>*/}
+                        <td>
+                          {"path" in m.field
+                            ? m.field.path
+                            : JSON.stringify(m.field)}
+                        </td>
+                        <td>{m.label}</td>
+                        <td>{m.value}</td>
+                        <td>{JSON.stringify(m.lineage, null, 2)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          ) : null
+        }
+        onClose={() => onInfoModalClosed(REVIEW_SUBMIT_INFO_MODAL_ID)}
+      />
     </ReviewWorkingCopyProvider>
   );
 }
