@@ -138,6 +138,7 @@ export async function POST(
     workingCopy as any,
   );
 
+  // TODO: apply changes to the real DB
   // MOCK transactional apply: in a real implementation, here we would:
   // - Verify Review state and ownership (IN_REVIEW) via Prisma
   // - Apply CRUD changes in a single transaction and write AuditLog rows
