@@ -138,12 +138,12 @@ export async function POST(
     workingCopy as any,
   );
 
-  // TODO: apply changes to the real DB
-  // MOCK transactional apply: in a real implementation, here we would:
-  // - Verify Review state and ownership (IN_REVIEW) via Prisma
-  // - Apply CRUD changes in a single transaction and write AuditLog rows
-  // - Upsert ReviewedEntity rows as per rules
-  // - Flip Review and MMSource states to APPROVED
+  // MOCK transactional apply fro now
+  // TODO: real implementation, here we need:
+  //  - Verify Review state and ownership (IN_REVIEW) via Prisma
+  //  - single transaction to apply CRUD changes and write audit log rows
+  //  - Upsert ReviewedEntity rows as per rules
+  //  - Flip Review state and MMSource reviewState to APPROVED
 
   const summary = {
     reviewId,
