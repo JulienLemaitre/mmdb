@@ -730,6 +730,20 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
         role: "EDITOR",
         emailVerified: now,
         passwordHash: "$2b$10$MzyyBYDN9laDrVzGuYkbZuNuZOkmptdA8tp4DExQ/2tYOQPIm6ivS",
+      },
+      {
+        name: "Yuri Bellicanta",
+        email: "theclavierist@gmail.com",
+        role: "EDITOR",
+        emailVerified: now,
+        passwordHash: "$2b$10$NISl.xlzTptmRWK1v3MPy.euB0LWQUh/92kJKsntYIKf6cCTknxfm",
+      },
+      {
+        name: "Raimon Garriga",
+        email: "raimongarriga@gmail.com",
+        role: "EDITOR",
+        emailVerified: now,
+        passwordHash: "$2b$10$ymBKs7pzrBTexrIGdYtOEeHSStGplzMS6Ocop5yP2MUCOwOvOhrLG",
       }
     ],
   })
