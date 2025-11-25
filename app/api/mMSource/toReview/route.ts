@@ -4,22 +4,18 @@ import { db } from "@/utils/server/db";
 import { REVIEW_STATE } from "@prisma/client";
 import { authOptions } from "@/auth/options";
 
-function json(data: unknown, init?: any) {
-  return NextResponse.json(data as any, init as any);
-}
-
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
-      return json(
+      return NextResponse.json(
         { error: "[mMSource toReview] Unauthorized" },
         { status: 401 },
       );
     }
     const role = session.user.role;
     if (!role || !["REVIEWER", "ADMIN"].includes(role)) {
-      return json(
+      return NextResponse.json(
         { error: "[mMSource toReview] Forbidden: reviewer role required" },
         { status: 403 },
       );
@@ -98,10 +94,10 @@ export async function GET() {
       };
     });
 
-    return json({ items: data });
+    return NextResponse.json({ items: data });
   } catch (err) {
     console.error("/api/mm-sources/to-review error:", err);
-    return json(
+    return NextResponse.json(
       { error: "[mMSource toReview] Unexpected error" },
       { status: 500 },
     );

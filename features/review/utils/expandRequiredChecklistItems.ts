@@ -177,15 +177,29 @@ export function expandRequiredChecklistItems(
           value,
         });
 
-        items.push({
-          entityType,
-          entityId: n.id,
-          field,
-          fieldPath: buildFieldPath(entityType, n.id, field.path),
-          label: field.label,
-          value,
-          lineage, // Attach the complete lineage to each item
-        });
+        try {
+          items.push({
+            entityType,
+            entityId: n.id,
+            field,
+            fieldPath: buildFieldPath(entityType, n.id, field.path),
+            label: field.label,
+            value,
+            lineage, // Attach the complete lineage to each item
+          });
+        } catch (e) {
+          console.error(
+            "[expandRequiredChecklistItems] Error computing field path",
+            {
+              entityType,
+              field,
+              n,
+            },
+          );
+          throw new Error(
+            `[expandRequiredChecklistItems] Error computing field path for entity ${entityType}, field ${JSON.stringify(field)} and node ${JSON.stringify(n)} : ${e instanceof Error ? e.message : e}`,
+          );
+        }
       }
     }
   };

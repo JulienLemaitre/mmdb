@@ -289,6 +289,11 @@ export function rebuildWorkingCopyFromFeedForm(
   const source = {
     ...prevGraph.source, // Preserve non-editable fields like id, permalink, enteredBy
     ...feedFormState.mMSourceDescription,
+    references: [
+      ...(feedFormState.mMSourceDescription?.references || []).map((r) => {
+        return { ...r, id: r.id || getNewUuid() };
+      }),
+    ],
   };
   const contributions = feedFormState.mMSourceContributions ?? [];
   const organizations = feedFormState.organizations ?? [];

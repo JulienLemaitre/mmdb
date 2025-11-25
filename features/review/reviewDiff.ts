@@ -52,11 +52,27 @@ export function computeChangedChecklistFieldPaths(
       const bValue = norm(getNestedValue(bNode, f.path));
       const wValue = norm(getNestedValue(wNode, f.path));
       if (bValue !== wValue) {
-        out.push({
-          entityType,
-          entityId: bNode?.id ?? wNode?.id,
-          fieldPath: buildFieldPath(entityType, bNode?.id ?? wNode?.id, f.path),
-        });
+        try {
+          out.push({
+            entityType,
+            entityId: bNode?.id ?? wNode?.id,
+            fieldPath: buildFieldPath(
+              entityType,
+              bNode?.id ?? wNode?.id,
+              f.path,
+            ),
+          });
+        } catch (e) {
+          console.error("Error computing field path", {
+            entityType,
+            f,
+            bNode,
+            wNode,
+          });
+          throw new Error(
+            `[computeChangedChecklistFieldPaths] Error computing field path for entity ${entityType}, field ${JSON.stringify(f)}, bNode ${JSON.stringify(bNode)}, wNode ${JSON.stringify(wNode)} : ${e instanceof Error ? e.message : e}`,
+          );
+        }
       }
     }
   };
@@ -88,11 +104,22 @@ export function computeChangedChecklistFieldPaths(
         const node = bNode ?? wNode;
         const schema = REVIEW_CHECKLIST_SCHEMA[entityType];
         for (const field of schema.fields) {
-          out.push({
-            entityType,
-            entityId: node.id,
-            fieldPath: buildFieldPath(entityType, node.id, field.path),
-          });
+          try {
+            out.push({
+              entityType,
+              entityId: node.id,
+              fieldPath: buildFieldPath(entityType, node.id, field.path),
+            });
+          } catch (e) {
+            console.error("Error computing CREATE / DELETE field path", {
+              entityType,
+              field,
+              node,
+            });
+            throw new Error(
+              `[computeChangedChecklistFieldPaths] Error computing CREATE / DELETE field path for entity ${entityType}, field ${JSON.stringify(field)}, node ${JSON.stringify(node)} : ${e instanceof Error ? e.message : e}`,
+            );
+          }
         }
 
         // Also handle children of created/deleted entities
