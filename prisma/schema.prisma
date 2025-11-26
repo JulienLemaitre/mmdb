@@ -154,7 +154,7 @@ model MMSource {
   creator        User?                      @relation(fields: [creatorId], references: [id])
   creatorId      String?                    @db.Uuid
   comment        String?
-  sectionCount   Int             @default(0)
+  sectionCount   Int                        @default(0)
 
   // Review process
   reviewState REVIEW_STATE @default(PENDING)
@@ -389,6 +389,7 @@ enum REVIEWED_ENTITY_TYPE {
   ORGANIZATION
   COLLECTION
   PIECE
+  PIECE_VERSION
 }
 
 enum AUDIT_ENTITY_TYPE {
