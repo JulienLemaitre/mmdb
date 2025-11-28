@@ -101,20 +101,23 @@ export default function ChecklistPage() {
       return { allRequiredItems: [], uncheckedKeys: [] };
     }
     const gr = reviewData.globallyReviewed;
+    // TODO: Add requiredItems for deleted items by comparing reviewData.graph with workingGraph.
+    //  We need to provide a way to identify deleted items in the graph so that can be double-checked server-side before submitting.
     const newAllRequiredItems = expandRequiredChecklistItems(workingGraph, {
       globallyReviewed: {
         personIds: new Set(gr.personIds ?? []),
         organizationIds: new Set(gr.organizationIds ?? []),
         collectionIds: new Set(gr.collectionIds ?? []),
         pieceIds: new Set(gr.pieceIds ?? []),
+        pieceVersionIds: new Set(gr.pieceVersionIds ?? []),
       },
     });
-    debug.log("newAllRequiredItems", newAllRequiredItems);
+    // debug.log("newAllRequiredItems", newAllRequiredItems);
 
     const uncheckedKeys = newAllRequiredItems.filter(
       (item) => !checkedKeys.has(item.fieldPath),
     );
-    debug.log("uncheckedKeys", uncheckedKeys);
+    // debug.log("uncheckedKeys", uncheckedKeys);
 
     return { allRequiredItems: newAllRequiredItems, uncheckedKeys };
   }, [workingGraph, checkedKeys, reviewData?.globallyReviewed]);
@@ -234,10 +237,20 @@ export default function ChecklistPage() {
     if (!reviewData || !workingGraph) return;
 
     const bootState = buildFeedFormBootStateFromWorkingCopy(
-      { graph: workingGraph, updatedAt: new Date().toISOString() },
+      {
+        graph: workingGraph,
+        updatedAt: new Date().toISOString(),
+      },
+      reviewData?.globallyReviewed,
       item,
       { reviewId: reviewData.reviewId },
     );
+    if (!bootState?.feedFormState?.formInfo?.reviewContext) {
+      console.error(
+        "ERROR: Something went wrong in buildFeedFormBootStateFromWorkingCopy",
+      );
+      return;
+    }
     writeBootStateForFeedForm(bootState);
 
     // Store return route payload, now with the view state

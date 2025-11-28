@@ -88,15 +88,21 @@ export type ReviewChecklistSchema = Record<
   ChecklistEntitySchema
 >;
 
-export type GloballyReviewed = {
+export type GloballyReviewedEntitySets = {
   personIds?: Set<string>;
   organizationIds?: Set<string>;
   collectionIds?: Set<string>;
   pieceIds?: Set<string>;
+  pieceVersionIds?: Set<string>;
 };
 
 export type ExpandOptions = {
-  globallyReviewed?: GloballyReviewed;
+  globallyReviewed?: GloballyReviewedEntitySets;
+};
+
+export type NodeLike = {
+  id: string;
+  [key: string]: unknown;
 };
 
 export type RequiredChecklistItem = {
@@ -115,16 +121,19 @@ export type RequiredChecklistItem = {
   };
 };
 
+export type GloballyReviewedEntityArrays = {
+  personIds: string[];
+  organizationIds: string[];
+  collectionIds: string[];
+  pieceIds: string[];
+  pieceVersionIds: string[];
+};
+
 // API payload shape from /api/review/[reviewId]/overview
 export type ApiOverview = {
   reviewId: string;
   graph: ChecklistGraph; // ChecklistGraph-like
-  globallyReviewed: {
-    personIds: string[];
-    organizationIds: string[];
-    collectionIds: string[];
-    pieceIds: string[];
-  };
+  globallyReviewed: GloballyReviewedEntityArrays;
   sourceOnPieceVersions: Array<SourceOnPieceVersion>;
   progress: {
     source: { required: number; checked: number };

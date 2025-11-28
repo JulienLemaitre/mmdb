@@ -9,8 +9,11 @@ import { getNewUuid } from "@/utils/getNewUuid";
 import {
   ChecklistEntityType,
   ChecklistGraph,
+  GloballyReviewedEntityArrays,
   RequiredChecklistItem,
 } from "@/types/reviewTypes";
+import { isCollectionCompleteInChecklistGraph } from "@/features/review/utils/isCollectionCompleteInChecklistGraph";
+import { debug } from "@/utils/debugLogger";
 
 // Minimal structure for the review working copy we operate on
 export type ReviewWorkingCopy = {
@@ -71,11 +74,12 @@ export function resolveStepFromReviewItem(
 // Build a FeedFormState from a review working copy and the clicked checklist item
 export function buildFeedFormBootStateFromWorkingCopy(
   workingCopy: ReviewWorkingCopy,
+  globallyReviewed: GloballyReviewedEntityArrays,
   clickedItem: RequiredChecklistItem, // Accept the whole item
   opts: { reviewId: string; sliceKey?: string; anchors?: BridgeAnchors },
 ): FeedBootType {
-  // TODO: handle the "to be reviewed only once" entities that effectively need to be reviewed
-
+  debug.info("clickedItem", clickedItem);
+  debug.info("workingCopy", workingCopy);
   ////////////////////// CollectionPieceVersionsForm State /////////////////////////////////////////
 
   // Is the clickeItem from a complete collection included in the mMSource ?
@@ -91,78 +95,98 @@ export function buildFeedFormBootStateFromWorkingCopy(
       "collections",
       collectionId,
     );
-    const collectionPieceCount = pieceCollection.pieceCount;
-    const collectionPiecesInSource = workingCopy.graph.pieces.filter(
-      (p) => p.collectionId === collectionId,
-    );
+    if (pieceCollection) {
+      const collectionPieceCount = pieceCollection.pieceCount;
+      const collectionPiecesInSource = workingCopy.graph.pieces.filter(
+        (p) => p.collectionId === collectionId,
+      );
 
-    // Collection context must be built only if the complete collection is included in the mMSource
-    isCollectionFormOpen =
-      collectionPiecesInSource.length === collectionPieceCount;
+      // Collection context must be built only if the complete collection is included in the mMSource
+      isCollectionFormOpen =
+        collectionPiecesInSource.length === collectionPieceCount;
 
-    if (isCollectionFormOpen) {
-      console.log(`--- isCollectionFormOpen: building collection context ---`);
-      try {
-        // Find rank of collection first piece in mMSource
-        const collectionFirstPiece = collectionPiecesInSource.find(
-          (p) => p.collectionRank === 1,
+      if (isCollectionFormOpen) {
+        console.log(
+          `--- isCollectionFormOpen: building collection context ---`,
         );
-        if (!collectionFirstPiece) {
-          console.warn(
-            `No collection first piece found for collectionPiecesInSource`,
-            JSON.stringify(collectionPiecesInSource, null, 2),
+        try {
+          // Find rank of collection first piece in mMSource
+          const collectionFirstPiece = collectionPiecesInSource.find(
+            (p) => p.collectionRank === 1,
           );
-          throw new Error("No collection first piece found");
-        }
-
-        const collectionFirstMMSourceOnPieceVersionRank =
-          workingCopy.graph.sourceOnPieceVersions.find(
-            (sopv) => sopv.pieceId === collectionFirstPiece?.id,
-          )?.rank;
-
-        if (!collectionFirstMMSourceOnPieceVersionRank) {
-          console.warn(
-            `No sourceOnPieceVersion found for collection first piece`,
-            JSON.stringify(collectionFirstPiece),
-          );
-          throw new Error(
-            "No sourceOnPieceVersion found for collection first piece",
-          );
-        }
-
-        collectionPieceVersionsFormState = {
-          formInfo: {
-            currentStepRank: 1, // TODO
-            isSinglePieceVersionFormOpen: [
-              "PIECE",
-              "PIECE_VERSION",
-              "MOVEMENT",
-              "SECTION",
-              "TEMPO_INDICATION",
-            ].includes(clickedItem.entityType),
-            allSourceOnPieceVersionsDone: true,
-            collectionFirstMMSourceOnPieceVersionRank,
-          },
-          collection: {
-            composerId: pieceCollection.composerId,
-            title: pieceCollection.title,
-          },
-          mMSourceOnPieceVersions: collectionPiecesInSource.map((piece) => {
-            const pieceVersion = workingCopy.graph.pieceVersions.find(
-              (pv) => pv.pieceId === piece.id,
+          if (!collectionFirstPiece) {
+            console.warn(
+              `No collection first piece found for collectionPiecesInSource`,
+              JSON.stringify(collectionPiecesInSource, null, 2),
             );
-            return {
-              pieceVersionId: pieceVersion?.id as string,
-              rank: piece?.collectionRank as number,
-            };
-          }),
-          persons: [],
-          pieces: [],
-          pieceVersions: [],
-          tempoIndications: [],
-        };
-      } catch (error) {
-        console.error("Error building collection context:", error);
+            throw new Error("No collection first piece found");
+          }
+
+          const collectionFirstMMSourceOnPieceVersionRank =
+            workingCopy.graph.sourceOnPieceVersions.find(
+              (sopv) => sopv.pieceId === collectionFirstPiece?.id,
+            )?.rank;
+
+          if (!collectionFirstMMSourceOnPieceVersionRank) {
+            console.warn(
+              `No sourceOnPieceVersion found for collection first piece`,
+              JSON.stringify(collectionFirstPiece),
+            );
+            throw new Error(
+              "No sourceOnPieceVersion found for collection first piece",
+            );
+          }
+
+          function getCurrentCollectionStepRank(clickedItem): number {
+            if (clickedItem.entityType === "COLLECTION") {
+              if (clickedItem.field.path.includes("composer")) {
+                return 0;
+              }
+              return 1;
+            }
+            return 2;
+          }
+
+          collectionPieceVersionsFormState = {
+            formInfo: {
+              currentStepRank: getCurrentCollectionStepRank(clickedItem),
+              isSinglePieceVersionFormOpen: [
+                "PIECE",
+                "PIECE_VERSION",
+                "MOVEMENT",
+                "SECTION",
+                "TEMPO_INDICATION",
+              ].includes(clickedItem.entityType),
+              allSourceOnPieceVersionsDone: true,
+              collectionFirstMMSourceOnPieceVersionRank,
+            },
+            collection: {
+              composerId: pieceCollection.composerId,
+              isComposerNew: !globallyReviewed?.personIds?.includes(
+                pieceCollection.composerId,
+              ),
+              title: pieceCollection.title,
+              isNew: !globallyReviewed?.collectionIds?.includes(
+                pieceCollection.id,
+              ),
+            },
+            mMSourceOnPieceVersions: collectionPiecesInSource.map((piece) => {
+              const pieceVersion = workingCopy.graph.pieceVersions.find(
+                (pv) => pv.pieceId === piece.id,
+              );
+              return {
+                pieceVersionId: pieceVersion?.id as string,
+                rank: piece?.collectionRank as number,
+              };
+            }),
+            persons: [],
+            pieces: [],
+            pieceVersions: [],
+            tempoIndications: [],
+          };
+        } catch (error) {
+          console.error("Error building collection context:", error);
+        }
       }
     }
   }
@@ -174,26 +198,53 @@ export function buildFeedFormBootStateFromWorkingCopy(
 
   if (pieceId) {
     console.log(`--- pieceId: building singlePiece context ---`);
+    isSinglePieceFormOpen = true;
 
     const piece = getEntityByIdOrKey(workingCopy.graph, "pieces", pieceId);
-    const pieceVersionId = clickedItem?.lineage?.pieceVersionId;
+    const pieceVersion = getEntityByIdOrKey(
+      workingCopy.graph,
+      "pieceVersions",
+      pieceId,
+      "pieceId",
+    );
+    // const pieceVersionId = clickedItem?.lineage?.pieceVersionId;
 
-    const currentStepRank = {
-      PERSON: 1,
-      PIECE: 2,
-      PIECE_VERSION: 3,
-    }[clickedItem.entityType];
+    function getCurrentSinglePieceStepRank(clickedItem): number {
+      if (clickedItem.entityType === "PIECE") {
+        if (clickedItem.field.path.includes("composer")) {
+          return 0;
+        }
+        return 1;
+      }
+      if (clickedItem.entityType === "PIECE_VERSION") {
+        return 2;
+      }
+      return 3;
+    }
 
     singlePieceVersionFormState = {
       formInfo: {
-        currentStepRank,
+        currentStepRank: getCurrentSinglePieceStepRank(clickedItem),
         ...(isCollectionFormOpen && {
           mMSourceOnPieceVersionRank: piece.collectionRank,
         }),
       },
-      composer: { id: piece.composerId },
-      piece: { id: piece.id },
-      pieceVersion: { id: pieceVersionId },
+      composer: {
+        id: piece.composerId,
+        isNew: !globallyReviewed?.personIds?.includes(piece.composerId),
+      },
+      piece: {
+        id: piece.id,
+        isNew: !globallyReviewed?.pieceIds?.includes(piece.id),
+      },
+      pieceVersion: pieceVersion
+        ? {
+            id: pieceVersion.id,
+            isNew: !globallyReviewed?.pieceVersionIds?.includes(
+              pieceVersion.id,
+            ),
+          }
+        : undefined,
     };
   }
 
@@ -228,8 +279,7 @@ export function buildFeedFormBootStateFromWorkingCopy(
       reviewContext,
 
       ...((isCollectionFormOpen || isSinglePieceFormOpen) && {
-        isSourceOnPieceVersionformOpen:
-          isCollectionFormOpen || isSinglePieceFormOpen,
+        isSourceOnPieceVersionformOpen: true,
         formType: isCollectionFormOpen ? "collection" : "single",
       }),
     },
@@ -239,11 +289,43 @@ export function buildFeedFormBootStateFromWorkingCopy(
     mMSourceOnPieceVersions: [
       ...(workingCopy.graph.sourceOnPieceVersions ?? []),
     ],
-    organizations: [...(workingCopy.graph.organizations ?? [])],
-    collections: [...(workingCopy.graph.collections ?? [])],
-    persons: [...(workingCopy.graph.persons ?? [])],
-    pieces: [...(workingCopy.graph.pieces ?? [])],
-    pieceVersions: [...(workingCopy.graph.pieceVersions ?? [])],
+    organizations: [
+      ...(workingCopy.graph.organizations ?? []).map((o) => ({
+        ...o,
+        isNew: !globallyReviewed?.organizationIds?.includes(o.id),
+      })),
+    ],
+    collections: [
+      ...(workingCopy.graph.collections ?? [])
+        .filter((c) =>
+          isCollectionCompleteInChecklistGraph({
+            collectionId: c.id,
+            graph: workingCopy.graph,
+          }),
+        )
+        .map((c) => ({
+          ...c,
+          isNew: !globallyReviewed?.collectionIds?.includes(c.id),
+        })),
+    ],
+    persons: [
+      ...(workingCopy.graph.persons ?? []).map((p) => ({
+        ...p,
+        isNew: !globallyReviewed?.personIds?.includes(p.id),
+      })),
+    ],
+    pieces: [
+      ...(workingCopy.graph.pieces ?? []).map((p) => ({
+        ...p,
+        isNew: !globallyReviewed?.pieceIds?.includes(p.id),
+      })),
+    ],
+    pieceVersions: [
+      ...(workingCopy.graph.pieceVersions ?? []).map((pv) => ({
+        ...pv,
+        isNew: !globallyReviewed?.pieceVersionIds?.includes(pv.id),
+      })),
+    ],
     tempoIndications: [...(workingCopy.graph.tempoIndications ?? [])],
     metronomeMarks: [...(workingCopy.graph.metronomeMarks ?? [])],
   };
@@ -290,21 +372,22 @@ export function rebuildWorkingCopyFromFeedForm(
     ...prevGraph.source, // Preserve non-editable fields like id, permalink, enteredBy
     ...feedFormState.mMSourceDescription,
     references: [
-      ...(feedFormState.mMSourceDescription?.references || []).map((r) => {
-        return { ...r, id: r.id || getNewUuid() };
-      }),
+      ...(feedFormState.mMSourceDescription?.references || []).map(forceId),
     ],
   };
-  const contributions = feedFormState.mMSourceContributions ?? [];
-  const organizations = feedFormState.organizations ?? [];
-  const persons = feedFormState.persons ?? [];
-  const collections =
+  const contributions = (feedFormState.mMSourceContributions ?? []).map(
+    forceId,
+  );
+  const organizations = (feedFormState.organizations ?? []).map(forceId);
+  const persons = (feedFormState.persons ?? []).map(forceId);
+  const collections = (
     feedFormState.collections?.filter((c) =>
       feedFormState.pieces?.some((p) => p.collectionId === c.id),
-    ) ?? [];
-  const pieces = feedFormState.pieces ?? [];
-  const pieceVersions = feedFormState.pieceVersions ?? [];
-  const metronomeMarks = feedFormState.metronomeMarks ?? [];
+    ) ?? []
+  ).map(forceId);
+  const pieces = (feedFormState.pieces ?? []).map(forceId);
+  const pieceVersions = (feedFormState.pieceVersions ?? []).map(forceId);
+  const metronomeMarks = (feedFormState.metronomeMarks ?? []).map(forceId);
 
   // Rebuild derived data: `tempoIndications` are collected from within the piece structure.
   const tempoIndicationMap = new Map<string, { id: string; text: string }>();
@@ -314,6 +397,8 @@ export function rebuildWorkingCopyFromFeedForm(
         const ti = s.tempoIndication;
         if (ti?.id) {
           tempoIndicationMap.set(ti.id, { id: ti.id, text: ti.text ?? "" });
+        } else {
+          console.warn(`No tempoIndication id for section ${s.id}`, ti);
         }
       }
     }
@@ -359,6 +444,14 @@ export function rebuildWorkingCopyFromFeedForm(
   return {
     graph: nextGraph,
     updatedAt: new Date().toISOString(),
+  };
+}
+
+function forceId(entity: any) {
+  if (!entity) return entity;
+  return {
+    ...entity,
+    id: entity.id || getNewUuid(),
   };
 }
 

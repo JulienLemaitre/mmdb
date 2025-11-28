@@ -11,6 +11,7 @@ import {
   ChecklistField,
   ChecklistGraph,
   ExpandOptions,
+  NodeLike,
   RequiredChecklistItem,
   RequiredPredicateCtx,
 } from "@/types/reviewTypes";
@@ -34,7 +35,7 @@ export function expandRequiredChecklistItems(
   // It now accepts and attaches the `lineage` object.
   const addEntityGroup = (
     entityType: ChecklistEntityType,
-    nodes: Array<{ id: string }> | undefined,
+    nodes: NodeLike[] | undefined,
     lineage: RequiredChecklistItem["lineage"] = {},
   ) => {
     if (!nodes || nodes.length === 0) return;
@@ -134,6 +135,25 @@ export function expandRequiredChecklistItems(
                 continue;
               } else {
                 value = getPersonName(person);
+              }
+            } else if (
+              ["collectionId", "collectionRank"].includes(field.path)
+            ) {
+              const collection = graph.collections?.find(
+                (c) => c.id === n.collectionId,
+              );
+              if (!collection) {
+                debug.warn(`Collection not found :`, {
+                  entityType,
+                  lineage,
+                  n,
+                });
+                continue;
+              } else {
+                value =
+                  field.path === "collectionId"
+                    ? collection.title
+                    : n[field.path];
               }
             } else {
               value = n[field.path];
@@ -330,6 +350,8 @@ function isGloballyReviewed(
       return !!sets?.collectionIds?.has(entityId);
     case "PIECE":
       return !!sets?.pieceIds?.has(entityId);
+    case "PIECE_VERSION":
+      return !!sets?.pieceVersionIds?.has(entityId);
     default:
       return false;
   }

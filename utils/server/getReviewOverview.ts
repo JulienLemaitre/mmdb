@@ -3,7 +3,10 @@ import { authOptions } from "@/auth/options";
 import { db } from "@/utils/server/db";
 import { REVIEW_STATE, REVIEWED_ENTITY_TYPE } from "@prisma/client";
 import { ContributionState } from "@/types/formTypes";
-import { ChecklistGraph } from "@/types/reviewTypes";
+import {
+  ChecklistGraph,
+  GloballyReviewedEntityArrays,
+} from "@/types/reviewTypes";
 
 /**
  * Returns the real overview data for a given reviewId.
@@ -11,12 +14,7 @@ import { ChecklistGraph } from "@/types/reviewTypes";
  */
 export async function getReviewOverview(reviewId: string): Promise<{
   graph: ChecklistGraph;
-  globallyReviewed: {
-    personIds: string[];
-    organizationIds: string[];
-    collectionIds: string[];
-    pieceIds: string[];
-  };
+  globallyReviewed: GloballyReviewedEntityArrays;
 }> {
   const session = await getServerSession(authOptions);
   if (!session || !session.user) {
@@ -148,11 +146,12 @@ export async function getReviewOverview(reviewId: string): Promise<{
     throw new Error("MM Source not found");
   }
 
-  // Collect ids to query globally reviewed registry and to hydrate collections/persons/orgs
+  // Collect ids to query globally reviewed registry and to hydrate collections/persons/organizations/pieces/pieceVersions
   const personIds = new Set<string>();
   const organizationIds = new Set<string>();
   const collectionIds = new Set<string>();
   const pieceIds = new Set<string>();
+  const pieceVersionIds = new Set<string>();
   const tempoIndicationIds = new Set<string>();
 
   // From contributions
@@ -165,6 +164,7 @@ export async function getReviewOverview(reviewId: string): Promise<{
   for (const join of mmSource.pieceVersions) {
     const pv = join.pieceVersion;
     if (!pv) continue;
+    pieceVersionIds.add(pv.id);
     const p = pv.piece;
     if (p) {
       pieceIds.add(p.id);
@@ -198,6 +198,10 @@ export async function getReviewOverview(reviewId: string): Promise<{
           entityType: REVIEWED_ENTITY_TYPE.PIECE,
           entityId: { in: Array.from(pieceIds) },
         },
+        {
+          entityType: REVIEWED_ENTITY_TYPE.PIECE_VERSION,
+          entityId: { in: Array.from(pieceVersionIds) },
+        },
       ],
     },
     select: { entityType: true, entityId: true },
@@ -215,6 +219,9 @@ export async function getReviewOverview(reviewId: string): Promise<{
       .map((r) => r.entityId),
     pieceIds: reviewed
       .filter((r) => r.entityType === REVIEWED_ENTITY_TYPE.PIECE)
+      .map((r) => r.entityId),
+    pieceVersionIds: reviewed
+      .filter((r) => r.entityType === REVIEWED_ENTITY_TYPE.PIECE_VERSION)
       .map((r) => r.entityId),
   };
 
