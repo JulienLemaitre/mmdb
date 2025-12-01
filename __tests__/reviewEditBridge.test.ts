@@ -200,6 +200,13 @@ describe("reviewEditBridge utilities", () => {
       const opts = { reviewId: "rev-xyz" };
       const bootState = buildFeedFormBootStateFromWorkingCopy(
         mockWorkingCopy,
+        {
+          personIds: [],
+          organizationIds: [],
+          collectionIds: [],
+          pieceIds: [],
+          pieceVersionIds: [],
+        },
         clickedItem,
         opts,
       );
