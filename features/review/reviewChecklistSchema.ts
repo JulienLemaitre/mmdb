@@ -15,7 +15,6 @@ import {
 export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
   MM_SOURCE: {
     entity: "MM_SOURCE",
-    graphProperty: "source",
     fields: [
       { path: "title", label: "Source title" }, // nullable in schema, still must be reviewed
       { path: "type", label: "Source type" },
@@ -31,13 +30,11 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
 
   MM_SOURCE_ON_PIECE_VERSION: {
     entity: "MM_SOURCE_ON_PIECE_VERSION",
-    graphProperty: "sourceOnPieceVersions",
     fields: [{ path: "rank", label: "Rank" }],
   },
 
   COLLECTION: {
     entity: "COLLECTION",
-    graphProperty: "collections",
     doNotReviewTwice: true,
     // Description-only: all fields from Collection table that are edited directly for a collection
     fields: [
@@ -49,7 +46,6 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
 
   PIECE: {
     entity: "PIECE",
-    graphProperty: "pieces",
     doNotReviewTwice: true,
     // Description-only: fields on Piece itself (not PieceVersion/child entities)
     fields: [
@@ -64,7 +60,7 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
 
   PIECE_VERSION: {
     entity: "PIECE_VERSION",
-    graphProperty: "pieceVersions",
+    doNotReviewTwice: true,
     fields: [
       { path: "category", label: "Piece version category" },
       // pieceId is implied by context
@@ -73,7 +69,7 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
 
   MOVEMENT: {
     entity: "MOVEMENT",
-    // graphProperty: "movements",
+    doNotReviewTwice: true,
     fields: [
       { path: "rank", label: "Movement rank" },
       { path: "key", label: "Key" },
@@ -82,7 +78,7 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
 
   SECTION: {
     entity: "SECTION",
-    // graphProperty: "sections",
+    doNotReviewTwice: true,
     fields: [
       { path: "rank", label: "Section rank" },
       { path: "metreNumerator", label: "Metre numerator" },
@@ -117,13 +113,11 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
 
   TEMPO_INDICATION: {
     entity: "TEMPO_INDICATION",
-    graphProperty: "tempoIndications",
     fields: [{ path: "text", label: "Tempo indication text" }],
   },
 
   METRONOME_MARK: {
     entity: "METRONOME_MARK",
-    graphProperty: "metronomeMarks",
     fields: [
       { path: "beatUnit", label: "Beat unit (note value)" },
       { path: "bpm", label: "BPM" },
@@ -133,7 +127,6 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
 
   REFERENCE: {
     entity: "REFERENCE",
-    // graphProperty: "references",
     fields: [
       { path: "type", label: "Reference type" },
       { path: "reference", label: "Reference value" },
@@ -142,7 +135,6 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
 
   CONTRIBUTION: {
     entity: "CONTRIBUTION",
-    graphProperty: "contributions",
     fields: [
       { path: "role", label: "Contribution role" },
       {
@@ -164,7 +156,6 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
 
   PERSON: {
     entity: "PERSON",
-    graphProperty: "persons",
     doNotReviewTwice: true,
     fields: [
       { path: "firstName", label: "First name" },
@@ -176,7 +167,6 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
 
   ORGANIZATION: {
     entity: "ORGANIZATION",
-    graphProperty: "organizations",
     doNotReviewTwice: true,
     fields: [{ path: "name", label: "Organization name" }],
   },

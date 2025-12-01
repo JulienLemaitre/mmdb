@@ -76,7 +76,6 @@ export type ChecklistField = {
 
 export type ChecklistEntitySchema = {
   entity: ChecklistEntityType;
-  graphProperty?: keyof ChecklistGraph;
   // If true, omit from the checklist when a ReviewedEntity flag exists for this entity row.
   doNotReviewTwice?: boolean;
   // The fields that must be checked for this entity.
