@@ -69,7 +69,6 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
 
   MOVEMENT: {
     entity: "MOVEMENT",
-    doNotReviewTwice: true,
     fields: [
       { path: "rank", label: "Movement rank" },
       { path: "key", label: "Key" },
@@ -78,7 +77,6 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
 
   SECTION: {
     entity: "SECTION",
-    doNotReviewTwice: true,
     fields: [
       { path: "rank", label: "Section rank" },
       { path: "metreNumerator", label: "Metre numerator" },

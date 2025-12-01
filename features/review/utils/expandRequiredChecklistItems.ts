@@ -47,6 +47,22 @@ export function expandRequiredChecklistItems(
       ) {
         continue;
       }
+
+      // We don't include movements and sections in checklist items if its parent pieceVersion has already been reviewed
+      if (["MOVEMENT", "SECTION"].includes(entityType)) {
+        if (
+          lineage.pieceVersionId &&
+          isGloballyReviewed("PIECE_VERSION", lineage.pieceVersionId, options)
+        ) {
+          debug.warn(
+            `Skipping ${entityType} ${n.id} as its parent pieceVersion has already been reviewed: ${lineage.pieceVersionId}`,
+          );
+          continue;
+        } else {
+          debug.info(`Including ${entityType} ${n.id} in checklist`);
+        }
+      }
+
       for (const field of schema.fields) {
         const ctx: RequiredPredicateCtx = {
           graph,
