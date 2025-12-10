@@ -14,7 +14,7 @@ jest.mock("next-auth", () => ({
   getServerSession: (...args: any[]) => getServerSessionMock(...args),
 }));
 
-import { REVIEW_STATE } from "@prisma/client";
+import { REVIEW_STATE } from "@/prisma/client/enums";
 
 const reviewFindUnique = jest.fn();
 const reviewUpdate = jest.fn();

@@ -1,4 +1,4 @@
-import { NOTE_VALUE } from "@prisma/client";
+import { NOTE_VALUE } from "@/prisma/client/enums";
 
 export default function getNoteValueLabel(noteValue: NOTE_VALUE) {
   switch (noteValue) {

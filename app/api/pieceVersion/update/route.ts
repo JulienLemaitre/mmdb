@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/server/db";
 import isReqAuthorized from "@/utils/server/isReqAuthorized";
 import getDecodedTokenFromReq from "@/utils/server/getDecodedTokenFromReq";
-import { Movement, PieceVersion, PrismaPromise, Section } from "@prisma/client";
+import { Movement, PieceVersion, Section } from "@/prisma/client";
+import { PrismaPromise } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
   if (!isReqAuthorized(req)) {

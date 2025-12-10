@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { PieceInput, PieceState } from "@/types/formTypes";
-import { Piece } from "@prisma/client";
+import { Piece } from "@/prisma/client";
 import { getNewEntities } from "@/context/feedFormContext";
 import Loader from "@/ui/Loader";
 import PieceEditForm from "@/features/piece/form/PieceEditForm";
@@ -8,7 +8,7 @@ import PieceSelectForm from "@/features/piece/form/PieceSelectForm";
 import { URL_API_GETALL_COMPOSER_PIECES } from "@/utils/routes";
 import { FeedFormState } from "@/types/feedFormTypes";
 
-type PieceSelectOrCreate = {
+type PieceSelectOrCreateProps = {
   feedFormState: FeedFormState;
   onPieceCreated: (piece: PieceInput) => void;
   onPieceSelect: (piece: PieceState) => void;
@@ -36,7 +36,7 @@ function PieceSelectOrCreate({
   isUpdateMode,
   hasComposerJustBeenCreated,
   hasPieceJustBeenCreated,
-}: PieceSelectOrCreate) {
+}: PieceSelectOrCreateProps) {
   const isCollectionCreation = !!isCollectionMode && !isUpdateMode;
 
   const [pieces, setPieces] = useState<Piece[] | null>(null);

@@ -7,7 +7,7 @@ import {
 import { useState } from "react";
 import PlusIcon from "@/ui/svg/PlusIcon";
 import SourceContributionSelect from "@/features/sourceContribution/SourceContributionSelect";
-import { CONTRIBUTION_ROLE } from "@prisma/client";
+import { CONTRIBUTION_ROLE } from "@/prisma/client/enums";
 import MMSourceFormStepNavigation from "@/features/feed/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import TrashIcon from "@/ui/svg/TrashIcon";
 import getRoleLabel from "@/utils/getRoleLabel";

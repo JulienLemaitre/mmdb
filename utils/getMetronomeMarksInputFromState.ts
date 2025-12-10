@@ -1,6 +1,6 @@
 import { MetronomeMarkInput, MetronomeMarkState } from "@/types/formTypes";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
-import { NOTE_VALUE } from "@prisma/client";
+import { NOTE_VALUE } from "@/prisma/client/enums";
 
 export default function getMetronomeMarkInputFromState(
   metronomeMark: MetronomeMarkState,

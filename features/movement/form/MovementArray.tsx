@@ -1,5 +1,5 @@
 import { useFieldArray } from "react-hook-form";
-import { KEY } from "@prisma/client";
+import { KEY } from "@/prisma/client/enums";
 import ControlledSelect from "@/ui/form/ControlledSelect";
 import SectionArray from "@/features/section/form/SectionArray";
 import PlusIcon from "@/ui/svg/PlusIcon";

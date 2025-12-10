@@ -1,4 +1,4 @@
-import { SOURCE_TYPE } from "@prisma/client";
+import { SOURCE_TYPE } from "@/prisma/client/enums";
 
 export default function getSourceTypeLabel(sourceType: SOURCE_TYPE): string {
   switch (sourceType) {

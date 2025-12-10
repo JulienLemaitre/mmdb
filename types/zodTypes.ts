@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { NOTE_VALUE } from "@prisma/client";
+import { NOTE_VALUE } from "@/prisma/client/enums";
 
 export const zodYear = z.coerce
   .number<string>()

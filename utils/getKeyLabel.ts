@@ -1,4 +1,4 @@
-import { KEY } from "@prisma/client";
+import { KEY } from "@/prisma/client/enums";
 
 export default function getKeyLabel(key: KEY) {
   switch (key) {

@@ -1,4 +1,4 @@
-import { REFERENCE_TYPE } from "@prisma/client";
+import { REFERENCE_TYPE } from "@/prisma/client/enums";
 
 export default function getReferenceTypeLabel(
   referenceType: REFERENCE_TYPE,

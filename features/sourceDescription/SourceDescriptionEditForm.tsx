@@ -8,7 +8,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormInput } from "@/ui/form/FormInput";
 import { getZodOptionFromEnum, zodYear } from "@/types/zodTypes";
-import { REFERENCE_TYPE, SOURCE_TYPE } from "@prisma/client";
+import { REFERENCE_TYPE, SOURCE_TYPE } from "@/prisma/client/enums";
 import ControlledSelect from "@/ui/form/ControlledSelect";
 import ReferenceArray from "@/features/reference/form/ReferenceArray";
 import MMSourceFormStepNavigation from "@/features/feed/multiStepMMSourceForm/MMSourceFormStepNavigation";

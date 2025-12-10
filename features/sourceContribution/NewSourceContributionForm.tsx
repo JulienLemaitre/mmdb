@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import { ContributionInput } from "@/types/formTypes";
-import { CONTRIBUTION_ROLE } from "@prisma/client";
+import { CONTRIBUTION_ROLE } from "@/prisma/client/enums";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { getZodOptionFromEnum, zodPerson } from "@/types/zodTypes";

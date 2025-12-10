@@ -5,7 +5,8 @@ import type {
   PIECE_CATEGORY,
   REFERENCE_TYPE,
   SOURCE_TYPE,
-} from "@prisma/client";
+} from "@/prisma/client/enums";
+import type { Prisma } from "@/prisma/client";
 import { FC } from "react";
 import { WithRequiredId } from "@/types/typescriptUtils";
 import { FeedFormState, PersistableFeedFormState } from "@/types/feedFormTypes";

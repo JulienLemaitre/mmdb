@@ -5,7 +5,7 @@ import {
   NOTE_VALUE,
   REFERENCE_TYPE,
   SOURCE_TYPE,
-} from "@prisma/client";
+} from "@/prisma/client";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import getKeyLabel from "@/utils/getKeyLabel";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
