@@ -1,10 +1,16 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 
 declare global {
   var cachedPrisma: PrismaClient;
 }
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL,
+  extensions: ["pgcrypto"],
+});
 
 const prismaOptions = {
+  adapter,
   transactionOptions: {
     maxWait: 5000, // default: 2000
     timeout: 10000, // default: 5000

@@ -3,7 +3,6 @@ import type {
   KEY,
   NOTE_VALUE,
   PIECE_CATEGORY,
-  Prisma,
   REFERENCE_TYPE,
   SOURCE_TYPE,
 } from "@prisma/client";
