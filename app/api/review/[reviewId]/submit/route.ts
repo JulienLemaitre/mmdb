@@ -51,7 +51,7 @@ export async function POST(
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const workingCopy = body?.workingCopy;
+  const workingCopy = body?.workingCopy as ChecklistGraph;
   const checklistState = Array.isArray(body?.checklistState)
     ? body.checklistState
     : [];
@@ -110,12 +110,15 @@ export async function POST(
   }
 
   // 3. Validate Completeness (Server Authoritative)
-  const requiredItems = expandRequiredChecklistItems(baselineGraph, {
+  // We validate against the workingCopy because the reviewer might have deleted items (which removes the requirement to check them)
+  // or added new items (which creates new requirements). The baseline is only used for diffing/persistence.
+  const requiredItems = expandRequiredChecklistItems(workingCopy, {
     globallyReviewed: {
       personIds: new Set(globallyReviewed.personIds ?? []),
       organizationIds: new Set(globallyReviewed.organizationIds ?? []),
       collectionIds: new Set(globallyReviewed.collectionIds ?? []),
       pieceIds: new Set(globallyReviewed.pieceIds ?? []),
+      pieceVersionIds: new Set(globallyReviewed.pieceVersionIds ?? []),
     },
   });
 
@@ -479,38 +482,50 @@ export async function POST(
             where: { id: c.id },
             update: {
               role: c.role,
-              personId: c.personId || null,
-              organizationId: c.organizationId || null,
+              ...("person" in c
+                ? {
+                    personId: c.person.id,
+                  }
+                : {
+                    organizationId: c.organization.id,
+                  }),
             },
             create: {
               id: c.id,
               mMSourceId: review.mMSourceId,
               role: c.role,
-              personId: c.personId || null,
-              organizationId: c.organizationId || null,
+              ...("person" in c
+                ? {
+                    personId: c.person.id,
+                  }
+                : {
+                    organizationId: c.organization.id,
+                  }),
             },
           });
         }
 
         // Upsert Metronome Marks
         for (const mm of workingCopy.metronomeMarks || []) {
-          await tx.metronomeMark.upsert({
-            where: { id: mm.id },
-            update: {
-              sectionId: mm.sectionId,
-              beatUnit: mm.beatUnit,
-              bpm: mm.bpm,
-              comment: mm.comment,
-            },
-            create: {
-              id: mm.id,
-              mMSourceId: review.mMSourceId,
-              sectionId: mm.sectionId,
-              beatUnit: mm.beatUnit,
-              bpm: mm.bpm,
-              comment: mm.comment,
-            },
-          });
+          if (!mm.noMM) {
+            await tx.metronomeMark.upsert({
+              where: { id: mm.id },
+              update: {
+                sectionId: mm.sectionId,
+                beatUnit: mm.beatUnit,
+                bpm: mm.bpm,
+                comment: mm.comment,
+              },
+              create: {
+                id: mm.id,
+                mMSourceId: review.mMSourceId,
+                sectionId: mm.sectionId,
+                beatUnit: mm.beatUnit,
+                bpm: mm.bpm,
+                comment: mm.comment,
+              },
+            });
+          }
         }
 
         // --- E. Associations (MMSourcesOnPieceVersions) ---
@@ -549,12 +564,13 @@ export async function POST(
         }
 
         // --- G. Global Reviewed Flags ---
-        // Upsert ReviewedEntity for Person, Organization, Collection, Piece
+        // Upsert ReviewedEntity for Person, Organization, Collection, Piece and PieceVersion
         const reviewedEntityPayloads: {
           type: REVIEWED_ENTITY_TYPE;
           id: string;
         }[] = [];
 
+        // TODO: make sure we don't register multiple reviewed entities for the same entityType_entityId pair.'
         // Collect IDs
         workingCopy.persons?.forEach((p) =>
           reviewedEntityPayloads.push({ type: "PERSON", id: p.id }),
@@ -568,7 +584,11 @@ export async function POST(
         workingCopy.pieces?.forEach((p) =>
           reviewedEntityPayloads.push({ type: "PIECE", id: p.id }),
         );
+        workingCopy.pieceVersions?.forEach((pv) =>
+          reviewedEntityPayloads.push({ type: "PIECE_VERSION", id: pv.id }),
+        );
 
+        // TODO: Make sure an existing reviewedEntity entityType_entityId will not be updated with the more recent reviewer id and date. We need another record if we really want to register both.
         for (const item of reviewedEntityPayloads) {
           await tx.reviewedEntity.upsert({
             where: {
