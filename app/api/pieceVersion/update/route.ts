@@ -4,7 +4,7 @@ import { db } from "@/utils/server/db";
 import isReqAuthorized from "@/utils/server/isReqAuthorized";
 import getDecodedTokenFromReq from "@/utils/server/getDecodedTokenFromReq";
 import { Movement, PieceVersion, Section } from "@/prisma/client";
-import { PrismaPromise } from "@prisma/client";
+import { Prisma } from "@/prisma/client";
 
 export async function POST(req: NextRequest) {
   if (!isReqAuthorized(req)) {
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     movements: Omit<Movement, "createdAt" | "updatedAt" | "pieceVersionId">[];
   };
   type Operation = Section | Movement | SelectedPieceVersion;
-  const operations: PrismaPromise<Operation>[] = [];
+  const operations: Prisma.PrismaPromise<Operation>[] = [];
 
   // Fetch the current piece version with its movements and sections ids
   const currentPieceVersion = await db.pieceVersion.findUnique({

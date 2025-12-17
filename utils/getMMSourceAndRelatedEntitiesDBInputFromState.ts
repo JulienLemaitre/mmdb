@@ -1,4 +1,4 @@
-import { Prisma } from ".prisma/client";
+import { Prisma } from "@/prisma/client";
 import { SOURCE_TYPE } from "@/prisma/client/enums";
 import getMMSourceContributionDBInputFromState from "@/utils/getMMSourceContributionDBInputFromState";
 import getMMSourcesOnPieceVersionsDBInputFromState from "@/utils/getMMSourcesOnPieceVersionsDBInputFromState";
