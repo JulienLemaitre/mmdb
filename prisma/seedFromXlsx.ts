@@ -1,5 +1,5 @@
 import { db } from "@/utils/server/db";
-import { CONTRIBUTION_ROLE, KEY, NOTE_VALUE, PIECE_CATEGORY, SOURCE_TYPE } from "@prisma/client";
+import { CONTRIBUTION_ROLE, KEY, NOTE_VALUE, PIECE_CATEGORY, SOURCE_TYPE } from "@/prisma/client/enums";
 import takeFirstOfPotentialRange from "@/utils/takeFirstOfPotentialRange";
 import parseValueRemoveParenthesis from "@/utils/parseValueRemoveParenthesis";
 import getNotesPerBarCollectionFromNotesPerSecondCollection

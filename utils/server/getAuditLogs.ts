@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/options";
 import { db } from "@/utils/server/db";
-import { AUDIT_ENTITY_TYPE } from "@prisma/client";
+import { AUDIT_ENTITY_TYPE } from "@/prisma/client/enums";
 
 export type AuditFilter =
   | { mode: "review"; reviewId: string; cursor?: string | null; limit?: number }

@@ -1,6 +1,6 @@
 import { db } from "@/utils/server/db";
 import deleteNullPropertiesFromObject from "@/utils/deleteNullPropertiesFromObject";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@/prisma/client";
 import { CollectionState } from "@/types/formTypes";
 
 export async function GET(request: Request) {
@@ -11,7 +11,7 @@ export async function GET(request: Request) {
       status: 400,
     });
 
-  const collectionSelect = Prisma.validator<Prisma.CollectionSelect>()({
+  const collectionSelect = {
     id: true,
     composerId: true,
     title: true,
@@ -20,7 +20,7 @@ export async function GET(request: Request) {
         pieces: true,
       },
     },
-  });
+  } satisfies Prisma.CollectionSelect;
 
   type CollectionWithPieces = Prisma.CollectionGetPayload<{
     select: typeof collectionSelect;

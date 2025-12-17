@@ -13,7 +13,7 @@ import {
   Prisma,
   REVIEW_STATE,
   REVIEWED_ENTITY_TYPE,
-} from "@prisma/client";
+} from "@/prisma/client";
 import { ChecklistGraph } from "@/types/reviewTypes";
 
 // POST /api/review/[reviewId]/submit

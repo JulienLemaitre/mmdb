@@ -3,7 +3,7 @@ import { authOptions } from "@/auth/options";
 import { redirect } from "next/navigation";
 import { db } from "@/utils/server/db";
 import React from "react";
-import { REVIEW_STATE } from "@prisma/client";
+import { REVIEW_STATE } from "@/prisma/client/enums";
 import ReviewListClient from "./reviewListClient";
 import { getToReviewFromDb } from "@/utils/server/getToReviewFromDb";
 import { GET_URL_REVIEW_CHECKLIST } from "@/utils/routes";

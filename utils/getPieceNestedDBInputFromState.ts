@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@/prisma/client";
 import { PieceState } from "@/types/formTypes";
 import { PersistableFeedFormState } from "@/types/feedFormTypes";
 

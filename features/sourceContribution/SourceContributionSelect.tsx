@@ -6,7 +6,7 @@ import {
   PersonState,
 } from "@/types/formTypes";
 import React, { useCallback, useEffect, useState } from "react";
-import { CONTRIBUTION_ROLE } from "@prisma/client";
+import { CONTRIBUTION_ROLE } from "@/prisma/client/enums";
 import NewSourceContributionForm from "@/features/sourceContribution/NewSourceContributionForm";
 import Label from "@/ui/Label";
 import getRoleLabel from "@/utils/getRoleLabel";

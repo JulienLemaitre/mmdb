@@ -1,6 +1,6 @@
 import { db } from "@/utils/server/db";
 import deleteNullPropertiesFromObject from "@/utils/deleteNullPropertiesFromObject";
-import { REFERENCE_TYPE } from "@prisma/client";
+import { REFERENCE_TYPE } from "@/prisma/client/enums";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

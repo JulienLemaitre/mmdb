@@ -2,7 +2,7 @@ import { useFieldArray } from "react-hook-form";
 import ControlledSelect from "@/ui/form/ControlledSelect";
 import TrashIcon from "@/ui/svg/TrashIcon";
 import { FormInput } from "@/ui/form/FormInput";
-import { NOTE_VALUE } from "@prisma/client";
+import { NOTE_VALUE } from "@/prisma/client/enums";
 import React, { useEffect, useState } from "react";
 import { useFeedForm } from "@/context/feedFormContext";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2023",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -8,7 +8,7 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "CommonJS",
+    "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -20,13 +20,16 @@
       }
     ],
     "paths": {
-      "@/assets/*": ["./assets/*"],
-      "@/components/*": ["./components/*"],
-      "@/hooks/*": ["./hooks/*"],
-      "@/lib/*": ["./lib/*"],
-      "@/prisma/*": ["./prisma/*"],
-      "@/styles/*": ["./styles/*"],
-      "@/utils/*": ["./utils/*"]
+      "@/prisma/client": ["./prisma/client/client"],
+      "@/*": ["./*"],
+      "@/auth": ["./auth.ts"]
+      //      "@/assets/*": ["./assets/*"],
+      //      "@/components/*": ["./components/*"],
+      //      "@/hooks/*": ["./hooks/*"],
+      //      "@/lib/*": ["./lib/*"],
+      //      "@/prisma/*": ["./prisma/*"],
+      //      "@/styles/*": ["./styles/*"],
+      //      "@/utils/*": ["./utils/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

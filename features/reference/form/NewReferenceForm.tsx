@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import { REFERENCE_TYPE } from "@prisma/client";
+import { REFERENCE_TYPE } from "@/prisma/client/enums";
 import { ReferenceInput } from "@/types/formTypes";
 import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
 import SimpleSelect from "@/ui/form/SimpleSelect";

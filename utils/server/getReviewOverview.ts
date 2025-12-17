@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/options";
 import { db } from "@/utils/server/db";
-import { REVIEW_STATE, REVIEWED_ENTITY_TYPE } from "@prisma/client";
+import { REVIEW_STATE, REVIEWED_ENTITY_TYPE } from "@/prisma/client/enums";
 import { ContributionState } from "@/types/formTypes";
 import {
   ChecklistGraph,

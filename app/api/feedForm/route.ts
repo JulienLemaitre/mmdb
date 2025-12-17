@@ -1,6 +1,6 @@
 import { db } from "@/utils/server/db";
 import { assertsIsPersistableFeedFormState } from "@/types/formTypes";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import getMMSourceAndRelatedEntitiesDBInputFromState from "@/utils/getMMSourceAndRelatedEntitiesDBInputFromState";
 import getMetronomeMarkDBInputFromState from "@/utils/getMetronomeMarkDBInputFromState";

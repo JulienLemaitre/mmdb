@@ -1,5 +1,5 @@
 import getNotesPerBarFromNotesPerSecond from "./getNotesPerBarFromNotesPerSecond";
-import { NOTE_VALUE } from "@prisma/client";
+import { NOTE_VALUE } from "@/prisma/client/enums";
 
 //   [gNPSFNPB RESULT] notesPerSecond: 2 | {"notesPerBar":4,"meterNumerator":4,"meterDenominator":4,"bpm":120,"beatUnit":"QUARTER"}
 //   [gNPSFNPB RESULT] notesPerSecond: 1 | {"notesPerBar":3,"meterNumerator":6,"meterDenominator":8,"bpm":80,"beatUnit":"DOTTED_EIGHTH"}

@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { KEY, PIECE_CATEGORY } from "@prisma/client";
+import { KEY, PIECE_CATEGORY } from "@/prisma/client/enums";
 import ControlledSelect from "@/ui/form/ControlledSelect";
 import {
   OptionInput,
