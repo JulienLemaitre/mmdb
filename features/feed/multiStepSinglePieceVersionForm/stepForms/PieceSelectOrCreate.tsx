@@ -49,12 +49,7 @@ function PieceSelectOrCreate({
     (piece) => piece.id === selectedPieceId,
   );
   const isNewPieceUpdate = isUpdateMode && !!newSelectedPiece;
-  const [isEditMode, setIsEditMode] = useState(
-    isCollectionCreation ||
-      hasComposerJustBeenCreated ||
-      hasPieceJustBeenCreated ||
-      isNewPieceUpdate,
-  );
+  const [isEditModeInternal, setIsEditModeInternal] = useState(false);
   let pieceFullList = [...(pieces || []), ...(newPieces || [])];
 
   // If we have new pieces, we need to sort the pieceFullList
@@ -65,6 +60,17 @@ function PieceSelectOrCreate({
       return 0;
     });
   }
+
+  // Derived state: we are in edit mode if internal state is true,
+  // OR if we are in a specific initial state (creation/update),
+  // OR if loading is finished and we have no pieces to show.
+  const isEditMode =
+    isEditModeInternal ||
+    isCollectionCreation ||
+    hasComposerJustBeenCreated ||
+    hasPieceJustBeenCreated ||
+    isNewPieceUpdate ||
+    (!isLoading && pieceFullList.length === 0);
 
   // If composer has not been created in this singlePieceVersionForm, we fetch all his composition pieces
   useEffect(() => {
@@ -100,16 +106,9 @@ function PieceSelectOrCreate({
     }
   }, [selectedComposerId, isLoading]);
 
-  // If pieces have been loaded, and we found none in db or in state, we shift to piece creation mode
-  useEffect(() => {
-    if (!isLoading && pieceFullList.length === 0) {
-      setIsEditMode(true);
-    }
-  }, [isLoading, pieceFullList.length]);
-
   const onInitPieceCreation = () => {
     onInitPieceCreationFn();
-    setIsEditMode(true);
+    setIsEditModeInternal(true);
   };
 
   const onCancelPieceEdition = () => {
@@ -117,7 +116,7 @@ function PieceSelectOrCreate({
       onCancelPieceCreation();
     }
     setIsLoading(true);
-    setIsEditMode(false);
+    setIsEditModeInternal(false);
   };
 
   if (isLoading) return <Loader />;
