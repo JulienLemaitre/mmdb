@@ -565,31 +565,52 @@ export async function POST(
 
         // --- G. Global Reviewed Flags ---
         // Upsert ReviewedEntity for Person, Organization, Collection, Piece and PieceVersion
-        const reviewedEntityPayloads: {
-          type: REVIEWED_ENTITY_TYPE;
-          id: string;
-        }[] = [];
+        // FIX: Deduplicate entries and SKIP entities that were already globally reviewed
+        // to prevent overwriting the original reviewer's record with the current user's ID.
 
-        // TODO: make sure we don't register multiple reviewed entities for the same entityType_entityId pair.'
-        // Collect IDs
+        const reviewedEntityPayloads = new Map<
+          string,
+          { type: REVIEWED_ENTITY_TYPE; id: string }
+        >();
+
+        const addToPayload = (
+          type: REVIEWED_ENTITY_TYPE,
+          id: string | undefined,
+          alreadyReviewedIds: string[] | undefined | null,
+        ) => {
+          if (!id) return;
+          // 1. Deduplication check
+          const key = `${type}:${id}`;
+          if (reviewedEntityPayloads.has(key)) return;
+
+          // 2. Global Review check: If it was already reviewed, the UI hid it,
+          // so the current user did NOT review it. Do not touch the DB record.
+          if (alreadyReviewedIds?.includes(id)) return;
+
+          reviewedEntityPayloads.set(key, { type, id });
+        };
+
         workingCopy.persons?.forEach((p) =>
-          reviewedEntityPayloads.push({ type: "PERSON", id: p.id }),
+          addToPayload("PERSON", p.id, globallyReviewed.personIds),
         );
         workingCopy.organizations?.forEach((o) =>
-          reviewedEntityPayloads.push({ type: "ORGANIZATION", id: o.id }),
+          addToPayload("ORGANIZATION", o.id, globallyReviewed.organizationIds),
         );
         workingCopy.collections?.forEach((c) =>
-          reviewedEntityPayloads.push({ type: "COLLECTION", id: c.id }),
+          addToPayload("COLLECTION", c.id, globallyReviewed.collectionIds),
         );
         workingCopy.pieces?.forEach((p) =>
-          reviewedEntityPayloads.push({ type: "PIECE", id: p.id }),
+          addToPayload("PIECE", p.id, globallyReviewed.pieceIds),
         );
         workingCopy.pieceVersions?.forEach((pv) =>
-          reviewedEntityPayloads.push({ type: "PIECE_VERSION", id: pv.id }),
+          addToPayload(
+            "PIECE_VERSION",
+            pv.id,
+            globallyReviewed.pieceVersionIds,
+          ),
         );
 
-        // TODO: Make sure an existing reviewedEntity entityType_entityId will not be updated with the more recent reviewer id and date. We need another record if we really want to register both.
-        for (const item of reviewedEntityPayloads) {
+        for (const item of reviewedEntityPayloads.values()) {
           await tx.reviewedEntity.upsert({
             where: {
               entityType_entityId: {
