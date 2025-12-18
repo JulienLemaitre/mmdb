@@ -7,6 +7,15 @@ import getNotesPerBarCollectionFromNotesPerSecondCollection
 import { TEMPO_INDICATION_NONE_ID } from "@/utils/constants";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 
+import fs from 'node:fs';
+import path from 'node:path';
+import util from 'node:util';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import readXlsxFile from 'read-excel-file/node';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const EXCLUDED_OPUSES = new Set<number>([18, 59]);
 
 function deriveCollectionLabelFromTitle(title: string) {
@@ -35,11 +44,6 @@ function logTestError(bpm, ...props) {
     console.log(props)
   }
 }
-
-const fs = require('fs');
-const path = require('path');
-const util = require('util')
-const readXlsxFile = require('read-excel-file/node')
 
 const readdir = util.promisify(fs.readdir);
 const stat = util.promisify(fs.stat);
@@ -512,7 +516,7 @@ async function getDatas() {
 
   // If it exists, just import it
   if (parsedDataOutputExists) {
-    const parsedDataOutput = require(parsedDataOutputPath).default
+    const parsedDataOutput = (await import(pathToFileURL(parsedDataOutputPath).href)).default
     return parsedDataOutput
   }
 
