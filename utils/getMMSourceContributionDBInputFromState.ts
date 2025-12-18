@@ -2,7 +2,7 @@ import {
   assertsContributionHasPersonOrOrganization,
   ContributionState,
 } from "@/types/formTypes";
-import { Prisma } from ".prisma/client";
+import { Prisma } from "@/prisma/client";
 
 export default function getMMSourceContributionDBInputFromState(
   contribution: ContributionState,

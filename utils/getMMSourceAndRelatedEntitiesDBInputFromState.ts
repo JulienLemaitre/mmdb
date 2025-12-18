@@ -1,5 +1,5 @@
-import { Prisma } from ".prisma/client";
-import { SOURCE_TYPE } from "@prisma/client";
+import { Prisma } from "@/prisma/client";
+import { SOURCE_TYPE } from "@/prisma/client/enums";
 import getMMSourceContributionDBInputFromState from "@/utils/getMMSourceContributionDBInputFromState";
 import getMMSourcesOnPieceVersionsDBInputFromState from "@/utils/getMMSourcesOnPieceVersionsDBInputFromState";
 import { PersistableFeedFormState } from "@/types/feedFormTypes";
@@ -44,7 +44,7 @@ export default function getMMSourceAndRelatedEntitiesDBInputFromState(
       ),
     },
     pieceVersions: {
-      create: state.mMSourcePieceVersions.map((mMSourceOnPieceVersion) =>
+      create: state.mMSourceOnPieceVersions.map((mMSourceOnPieceVersion) =>
         getMMSourcesOnPieceVersionsDBInputFromState(
           mMSourceOnPieceVersion,
           state,

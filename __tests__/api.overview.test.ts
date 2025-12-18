@@ -14,7 +14,14 @@ jest.mock("../utils/server/getReviewOverview", () => ({
   getReviewOverview: async (reviewId: string) => {
     // Minimal mock graph matching ChecklistGraph shape
     const graph = {
-      source: { id: "src-1", title: "Mock Review Source", link: "", permalink: "", year: 1900, comment: "" },
+      source: {
+        id: "src-1",
+        title: "Mock Review Source",
+        link: "",
+        permalink: "",
+        year: 1900,
+        comment: "",
+      },
       collections: [],
       pieces: [],
       pieceVersions: [],
@@ -26,14 +33,21 @@ jest.mock("../utils/server/getReviewOverview", () => ({
       organizations: [],
       references: [],
       contributions: [],
-      sourceContents: [],
+      sourceOnPieceVersions: [],
     };
-    const globallyReviewed = { personIds: [], organizationIds: [], collectionIds: [], pieceIds: [] };
+    const globallyReviewed = {
+      personIds: [],
+      organizationIds: [],
+      collectionIds: [],
+      pieceIds: [],
+    };
     return { graph, globallyReviewed };
   },
 }));
 
-const { GET: getOverview } = require("../app/api/review/[reviewId]/overview/route");
+const {
+  GET: getOverview,
+} = require("../app/api/review/[reviewId]/overview/route");
 
 describe("GET /api/review/[reviewId]/overview", () => {
   it("returns the mock graph and progress for a reviewId", async () => {
@@ -43,7 +57,7 @@ describe("GET /api/review/[reviewId]/overview", () => {
     const json = await res.json();
     expect(json.reviewId).toBe("r-1");
     expect(json.graph?.source?.title).toMatch(/Mock Review Source/);
-    expect(Array.isArray(json.sourceContents)).toBe(true);
+    expect(Array.isArray(json.sourceOnPieceVersions)).toBe(true);
     expect(json.progress?.source?.required).toBeGreaterThan(0);
   });
 });

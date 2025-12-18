@@ -8,7 +8,7 @@ export default function getCollectionsPieceVersionsFormTestState() {
       title: "First Collec",
       isNew: true,
     },
-    mMSourcePieceVersions: [],
+    mMSourceOnPieceVersions: [],
     persons: [],
     pieces: [],
     pieceVersions: [],

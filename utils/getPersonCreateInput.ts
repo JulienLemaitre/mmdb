@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@/prisma/client";
 import { PersistableFeedFormState } from "@/types/feedFormTypes";
 
 // Prepare the data for persistence in DB of new Persons
@@ -45,7 +45,7 @@ export default function getPersonCreateInput(
         return false;
       }
 
-      return state.mMSourcePieceVersions.some((mms) =>
+      return state.mMSourceOnPieceVersions.some((mms) =>
         pieceVersionList.some((pv) => pv.id === mms.pieceVersionId),
       );
     }

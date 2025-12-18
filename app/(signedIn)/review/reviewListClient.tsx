@@ -100,7 +100,7 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
         <div className="overflow-x-auto">
           <table className="min-w-full border-collapse">
             <thead>
-              <tr className="text-left text-sm text-gray-700">
+              <tr className="text-left text-sm">
                 <th className="border-b p-2">Title</th>
                 <th className="border-b p-2">Composers</th>
                 <th className="border-b p-2">Online score</th>
@@ -144,7 +144,7 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
                     <td className="border-b p-2">{created}</td>
                     <td className="border-b p-2 text-right">
                       <button
-                        className="rounded bg-black px-3 py-1 text-white disabled:opacity-50"
+                        className="btn btn-primary px-3 py-1 text-white disabled:opacity-50"
                         onClick={() => onStart(it.id)}
                         disabled={isBusy}
                       >

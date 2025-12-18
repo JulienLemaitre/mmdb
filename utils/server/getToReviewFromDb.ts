@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
-import { db } from "@/utils/db";
-import { REVIEW_STATE } from "@prisma/client";
+import { db } from "@/utils/server/db";
+import { REVIEW_STATE } from "@/prisma/client/enums";
 import { authOptions } from "@/auth/options";
 
 export async function getToReviewFromDb(): Promise<{

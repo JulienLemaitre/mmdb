@@ -11,7 +11,9 @@ jest.mock("next/server", () => ({
 
 // Mocks for next-auth and Prisma db
 const getServerSessionMock = jest.fn();
-jest.mock("next-auth", () => ({ getServerSession: (...args: any[]) => getServerSessionMock(...args) }));
+jest.mock("next-auth", () => ({
+  getServerSession: (...args: any[]) => getServerSessionMock(...args),
+}));
 
 // Build a controllable db mock
 const mMSourceFindUnique = jest.fn();
@@ -30,7 +32,7 @@ const dbMock = {
   $transaction: async (cb: any) => cb(tx),
 };
 
-jest.mock("../utils/db", () => ({ db: dbMock }));
+jest.mock("../utils/server/db", () => ({ db: dbMock }));
 
 const { POST: startPost } = require("../app/api/review/start/route");
 
@@ -71,7 +73,11 @@ describe("POST /api/review/start", () => {
 
   it("returns 400 when reviewer tries to review own source", async () => {
     session({ id: "u-1", role: "REVIEWER" });
-    mMSourceFindUnique.mockResolvedValue({ id: "src-1", creatorId: "u-1", reviewState: "PENDING" });
+    mMSourceFindUnique.mockResolvedValue({
+      id: "src-1",
+      creatorId: "u-1",
+      reviewState: "PENDING",
+    });
     const req: any = { json: async () => ({ mmSourceId: "src-1" }) };
     const res = await startPost(req);
     expect(res.status).toBe(400);
@@ -81,7 +87,11 @@ describe("POST /api/review/start", () => {
 
   it("returns 409 when an active review exists", async () => {
     session({ id: "u-1", role: "REVIEWER" });
-    mMSourceFindUnique.mockResolvedValue({ id: "src-1", creatorId: "other", reviewState: "PENDING" });
+    mMSourceFindUnique.mockResolvedValue({
+      id: "src-1",
+      creatorId: "other",
+      reviewState: "PENDING",
+    });
     reviewFindFirst.mockResolvedValue({ id: "rev-active" });
     const req: any = { json: async () => ({ mmSourceId: "src-1" }) };
     const res = await startPost(req);
@@ -92,7 +102,11 @@ describe("POST /api/review/start", () => {
 
   it("creates a review and flips source state when ok", async () => {
     session({ id: "u-1", role: "REVIEWER" });
-    mMSourceFindUnique.mockResolvedValue({ id: "src-1", creatorId: "other", reviewState: "PENDING" });
+    mMSourceFindUnique.mockResolvedValue({
+      id: "src-1",
+      creatorId: "other",
+      reviewState: "PENDING",
+    });
     reviewFindFirst.mockResolvedValue(null);
     reviewCreate.mockResolvedValue({ id: "rev-1" });
     mMSourceUpdate.mockResolvedValue({});

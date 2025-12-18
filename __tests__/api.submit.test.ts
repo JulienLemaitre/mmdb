@@ -1,4 +1,6 @@
 // Mock NextResponse.json to avoid depending on global Request in next/server
+import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
+
 jest.mock("next/server", () => ({
   NextResponse: {
     json: (obj: any, init?: any) => ({
@@ -12,27 +14,34 @@ jest.mock("next/server", () => ({
 // Mock the DB-backed overview call used by the submit handler to avoid next-auth/openid-client
 jest.mock("../utils/server/getReviewOverview", () => ({
   getReviewOverview: async (reviewId: string) => {
-    const { buildMockOverview } = require("../utils/reviewMock");
+    const { buildMockOverview } = require("../features/review/reviewMock");
     const { graph, globallyReviewed } = buildMockOverview(reviewId);
     return { graph, globallyReviewed };
   },
 }));
 
-const { POST: postSubmit } = require("../app/api/review/[reviewId]/submit/route");
-import { buildMockOverview } from "@/utils/reviewMock";
-import { expandRequiredChecklistItems } from "@/utils/ReviewChecklistSchema";
+const {
+  POST: postSubmit,
+} = require("../app/api/review/[reviewId]/submit/route");
+import { buildMockOverview } from "@/features/review/reviewMock";
 
 describe("POST /api/review/[reviewId]/submit", () => {
   it("rejects when checklist is incomplete", async () => {
     const reviewId = "r-1";
     const { graph } = buildMockOverview(reviewId);
-    const stubReq: any = { json: async () => ({ workingCopy: graph, checklistState: [], overallComment: null }) };
+    const stubReq: any = {
+      json: async () => ({
+        workingCopy: graph,
+        checklistState: [],
+        overallComment: null,
+      }),
+    };
     const res = await postSubmit(stubReq, { params: { reviewId } });
     const json = await res.json();
     // Debug aid if failing
     if (res.status !== 400) {
       // eslint-disable-next-line no-console
-      console.log('submit incomplete debug:', res.status, json);
+      console.log("submit incomplete debug:", res.status, json);
     }
     expect(res.status).toBe(400);
     expect(json.error).toMatch(/Incomplete checklist/);
@@ -50,8 +59,19 @@ describe("POST /api/review/[reviewId]/submit", () => {
         pieceIds: new Set(globallyReviewed.pieceIds ?? []),
       },
     });
-    const checklistState = required.map((it) => ({ entityType: it.entityType, entityId: it.entityId ?? null, fieldPath: it.fieldPath, checked: true }));
-    const stubReq: any = { json: async () => ({ workingCopy: graph, checklistState, overallComment: "ok" }) };
+    const checklistState = required.map((it) => ({
+      entityType: it.entityType,
+      entityId: it.entityId ?? null,
+      fieldPath: it.fieldPath,
+      checked: true,
+    }));
+    const stubReq: any = {
+      json: async () => ({
+        workingCopy: graph,
+        checklistState,
+        overallComment: "ok",
+      }),
+    };
     const res = await postSubmit(stubReq, { params: { reviewId } });
     expect(res.ok).toBe(true);
     const json = await res.json();

@@ -1,15 +1,23 @@
-import { REVIEW_CHECKLIST_SCHEMA, buildFieldPath, buildSourceJoinRankPath, expandRequiredChecklistItems } from "@/utils/ReviewChecklistSchema";
-import { buildMockOverview } from "@/utils/reviewMock";
+import {
+  buildFieldPath,
+  buildSourceJoinRankPath,
+} from "@/features/review/reviewChecklistSchema";
+import { buildMockOverview } from "@/features/review/reviewMock";
+import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
 
 describe("ReviewChecklistSchema helpers", () => {
   it("buildFieldPath follows convention for source and others", () => {
     expect(buildFieldPath("MM_SOURCE", null, "title")).toBe("source.title");
     expect(buildFieldPath("PIECE", "p-1", "title")).toBe("piece[p-1].title");
-    expect(buildFieldPath("SECTION", "s-1", "metreNumerator")).toBe("section[s-1].metreNumerator");
+    expect(buildFieldPath("SECTION", "s-1", "metreNumerator")).toBe(
+      "section[s-1].metreNumerator",
+    );
   });
 
   it("buildSourceJoinRankPath uses joinId in bracket", () => {
-    expect(buildSourceJoinRankPath("join-123")).toBe("source.pieceVersions[join-123].rank");
+    expect(buildSourceJoinRankPath("join-123")).toBe(
+      "source.pieceVersions[join-123].rank",
+    );
   });
 
   it("expandRequiredChecklistItems includes MM_SOURCE fields and per-join rank items", () => {
@@ -17,19 +25,21 @@ describe("ReviewChecklistSchema helpers", () => {
     const items = expandRequiredChecklistItems(graph);
     const labels = items.map((i) => i.label);
     // Source title, type, link, permalink, year, comment, contents.order logical, and per-join Rank in source
-    expect(labels).toEqual(expect.arrayContaining([
-      "Source title",
-      "Source type",
-      "Link to online score",
-      "Permalink",
-      "Publication year",
-      "Source comment",
-      "Ordering of pieces and versions",
-      "Rank in source",
-    ]));
-    // Expect as many per-join rank checks as there are sourceContents rows
+    expect(labels).toEqual(
+      expect.arrayContaining([
+        "Source title",
+        "Source type",
+        "Link to online score",
+        "Permalink",
+        "Publication year",
+        "Source comment",
+        "Ordering of pieces and versions",
+        "Rank in source",
+      ]),
+    );
+    // Expect as many per-join rank checks as there are sourceOnPieceVersions rows
     const perJoin = items.filter((i) => i.label === "Rank in source");
-    expect(perJoin).toHaveLength(graph.sourceContents?.length ?? 0);
+    expect(perJoin).toHaveLength(graph.sourceOnPieceVersions?.length ?? 0);
   });
 
   it("respects globallyReviewed filtering for PERSON and does not include their fields", () => {
@@ -42,6 +52,8 @@ describe("ReviewChecklistSchema helpers", () => {
         pieceIds: new Set(),
       },
     });
-    expect(items.find((i) => i.fieldPath.startsWith("person["))).toBeUndefined();
+    expect(
+      items.find((i) => i.fieldPath.startsWith("person[")),
+    ).toBeUndefined();
   });
 });

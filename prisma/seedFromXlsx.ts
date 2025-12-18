@@ -1,5 +1,5 @@
-import { db } from "@/utils/db";
-import { CONTRIBUTION_ROLE, KEY, NOTE_VALUE, PIECE_CATEGORY, SOURCE_TYPE } from "@prisma/client";
+import { db } from "@/utils/server/db";
+import { CONTRIBUTION_ROLE, KEY, NOTE_VALUE, PIECE_CATEGORY, SOURCE_TYPE } from "@/prisma/client/enums";
 import takeFirstOfPotentialRange from "@/utils/takeFirstOfPotentialRange";
 import parseValueRemoveParenthesis from "@/utils/parseValueRemoveParenthesis";
 import getNotesPerBarCollectionFromNotesPerSecondCollection
@@ -730,6 +730,20 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
         role: "EDITOR",
         emailVerified: now,
         passwordHash: "$2b$10$MzyyBYDN9laDrVzGuYkbZuNuZOkmptdA8tp4DExQ/2tYOQPIm6ivS",
+      },
+      {
+        name: "Yuri Bellicanta",
+        email: "theclavierist@gmail.com",
+        role: "EDITOR",
+        emailVerified: now,
+        passwordHash: "$2b$10$NISl.xlzTptmRWK1v3MPy.euB0LWQUh/92kJKsntYIKf6cCTknxfm",
+      },
+      {
+        name: "Raimon Garriga",
+        email: "raimongarriga@gmail.com",
+        role: "EDITOR",
+        emailVerified: now,
+        passwordHash: "$2b$10$ymBKs7pzrBTexrIGdYtOEeHSStGplzMS6Ocop5yP2MUCOwOvOhrLG",
       }
     ],
   })

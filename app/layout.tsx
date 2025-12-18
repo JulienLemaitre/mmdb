@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import React from "react";
 import { Inter } from "next/font/google";
-import Providers from "@/components/Providers";
+import Providers from "@/ui/Providers";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { MODAL_AREA_ID } from "@/utils/constants";

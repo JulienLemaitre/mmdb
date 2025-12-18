@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/utils/db";
+import { db } from "@/utils/server/db";
 // import isReqAuthorized from "@/utils/isReqAuthorized";
 import { SearchFormInput } from "@/types/formTypes";
 // import getDecodedTokenFromReq from "@/utils/getDecodedTokenFromReq";

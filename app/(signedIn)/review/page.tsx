@@ -1,12 +1,14 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/options";
 import { redirect } from "next/navigation";
-import { db } from "@/utils/db";
+import { db } from "@/utils/server/db";
 import React from "react";
-import { REVIEW_STATE } from "@prisma/client";
+import { REVIEW_STATE } from "@/prisma/client/enums";
 import ReviewListClient from "./reviewListClient";
 import { getToReviewFromDb } from "@/utils/server/getToReviewFromDb";
 import { GET_URL_REVIEW_CHECKLIST } from "@/utils/routes";
+
+export const dynamic = "force-dynamic";
 
 export default async function ReviewListPage({
   searchParams,
@@ -15,8 +17,7 @@ export default async function ReviewListPage({
 }) {
   const params = await searchParams;
   const session = await getServerSession(authOptions);
-  console.log(`[ReviewListPage] session :`, session);
-  if (!session || !session.user) {
+  if (!session?.user) {
     redirect("/login");
   }
   const role = (session.user as any).role as string | undefined;

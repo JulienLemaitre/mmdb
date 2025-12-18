@@ -5,7 +5,7 @@ export default function getFeedFormTestState() {
       introDone: true,
       isSourceOnPieceVersionformOpen: false,
       formType: "single",
-      allSourcePieceVersionsDone: true,
+      allSourceOnPieceVersionsDone: true,
     },
     mMSourceContributions: [
       {
@@ -16,7 +16,7 @@ export default function getFeedFormTestState() {
         role: "MM_PROVIDER",
       },
     ],
-    mMSourcePieceVersions: [
+    mMSourceOnPieceVersions: [
       { pieceVersionId: "e267b0a4-6304-4403-8d88-04442c87cadc", rank: 1 },
       { pieceVersionId: "c8c6274e-0bfc-40d6-86d2-f16b99017663", rank: 2 },
       { pieceVersionId: "69ad3242-01b6-426b-9d92-bdc812f0d6db", rank: 3 },

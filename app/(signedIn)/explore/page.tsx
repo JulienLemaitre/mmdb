@@ -3,30 +3,30 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
-import { FormInput } from "@/components/ReactHookForm/FormInput";
+import { FormInput } from "@/ui/form/FormInput";
 import {
   PersonState,
   SearchFormInput,
   TempoIndicationState,
 } from "@/types/formTypes";
 import getTempoIndicationSelectList from "@/utils/getTempoIndicationSelectList";
-import ControlledSelect from "@/components/ReactHookForm/ControlledSelect";
+import ControlledSelect from "@/ui/form/ControlledSelect";
 import getAllComposers from "@/utils/getAllComposers";
-import getPersonName from "@/components/entities/person/utils/getPersonName";
+import getPersonName from "@/utils/getPersonName";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { zodOption, zodYear } from "@/types/zodTypes";
 import getKeyLabel from "@/utils/getKeyLabel";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
-import ShartWithNoteTypeFilter from "@/components/ShartWithNoteTypeFilter";
+import ShartWithNoteTypeFilter from "@/features/explore/ShartWithNoteTypeFilter";
 import Link from "next/link";
-import TempoIndicationSearch from "@/components/TempoIndicationSearch";
+import TempoIndicationSearch from "@/features/explore/TempoIndicationSearch";
 import { ChartDatum } from "@/types/chartTypes";
 import GetChartDataFromPieceVersions from "@/utils/getChartDataFromPieceVersions";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
-import SectionMeter from "@/components/entities/section/SectionMeter";
+import SectionMeter from "@/features/section/ui/SectionMeter";
 
 // TODO: What do we want in addition to what is already there:
 //  1. Show all mms that result in speeds of more / less than X notes per second with a selection of note type (strutural, repeated etc.) e.g. show me all Sources that have MMs that result in more than 15 nps (structural)

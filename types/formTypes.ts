@@ -3,10 +3,10 @@ import type {
   KEY,
   NOTE_VALUE,
   PIECE_CATEGORY,
-  Prisma,
   REFERENCE_TYPE,
   SOURCE_TYPE,
-} from "@prisma/client";
+} from "@/prisma/client/enums";
+import type { Prisma } from "@/prisma/client";
 import { FC } from "react";
 import { WithRequiredId } from "@/types/typescriptUtils";
 import { FeedFormState, PersistableFeedFormState } from "@/types/feedFormTypes";
@@ -122,7 +122,7 @@ export type ContributionStateWithoutId =
 export type CollectionState = WithRequiredId<
   Pick<Prisma.CollectionUncheckedCreateInput, "id" | "composerId" | "title">
 > &
-  IsNewProp;
+  IsNewProp & { pieceCount: number };
 
 export type PieceState = WithRequiredId<
   Pick<
@@ -191,7 +191,9 @@ export type PieceVersionState = Pick<
 export type ReferenceState = Pick<
   Prisma.ReferenceUncheckedCreateInput,
   "type" | "reference"
->;
+> & {
+  id?: string; // present when used in a review context
+};
 export type MMSourceDescriptionState = Pick<
   Prisma.MMSourceUncheckedCreateInput,
   "title" | "type" | "link" | "year" | "comment"
@@ -199,10 +201,11 @@ export type MMSourceDescriptionState = Pick<
   id?: string;
   references: ReferenceState[];
   pieceVersions?: Pick<PieceVersionState, "id">[];
+  permalink?: string; // present when used in a review context
 } & IsNewProp &
   GoNextProp;
 
-export type MMSourcePieceVersionsState = Pick<
+export type MMSourceOnPieceVersionsState = Pick<
   Prisma.MMSourcesOnPieceVersionsUncheckedCreateInput,
   "rank" | "pieceVersionId"
 > &
@@ -214,13 +217,11 @@ export type MetronomeMarkState =
       "sectionId" | "bpm" | "comment" | "beatUnit"
     > & {
       id?: string;
-      pieceVersionRank: number;
       pieceVersionId: string;
       noMM: false;
     })
   | (Pick<Prisma.MetronomeMarkUncheckedCreateInput, "sectionId"> & {
       id?: string;
-      pieceVersionRank: number;
       pieceVersionId: string;
       noMM: true;
     });
@@ -246,6 +247,7 @@ export type CollectionInput = Pick<
   Prisma.CollectionUncheckedCreateInput,
   "composerId" | "title"
 > & {
+  pieceCount?: number;
   id?: string;
 };
 export type CollectionTitleInput = Pick<
@@ -336,14 +338,15 @@ export function assertsIsPersistableFeedFormState(
       typeof valueToTest === "object" &&
       "formInfo" in valueToTest &&
       typeof valueToTest["formInfo"] === "object" &&
+      typeof valueToTest["formInfo"]["reviewContext"] === "undefined" && // Not persistable if used in a review
       "mMSourceDescription" in valueToTest &&
       typeof valueToTest["mMSourceDescription"] === "object" &&
       "mMSourceContributions" in valueToTest &&
       Array.isArray(valueToTest.mMSourceContributions) &&
       valueToTest.mMSourceContributions.length > 0 &&
-      "mMSourcePieceVersions" in valueToTest &&
-      Array.isArray(valueToTest.mMSourcePieceVersions) &&
-      valueToTest.mMSourcePieceVersions.length > 0 &&
+      "mMSourceOnPieceVersions" in valueToTest &&
+      Array.isArray(valueToTest.mMSourceOnPieceVersions) &&
+      valueToTest.mMSourceOnPieceVersions.length > 0 &&
       "metronomeMarks" in valueToTest &&
       Array.isArray(valueToTest.metronomeMarks) &&
       valueToTest.metronomeMarks.length > 0 &&

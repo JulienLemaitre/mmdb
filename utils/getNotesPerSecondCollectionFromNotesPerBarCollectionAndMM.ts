@@ -1,4 +1,4 @@
-import { MetronomeMark, Section } from "@prisma/client";
+import { MetronomeMark, Section } from "@/prisma/client";
 import { NotesPerSecondCollection } from "./notesCalculation";
 import getNotesPerSecondFromNotesPerBar from "./getNotesPerSecondFromNotesPerBar";
 

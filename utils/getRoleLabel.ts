@@ -1,4 +1,4 @@
-import { CONTRIBUTION_ROLE } from "@prisma/client";
+import { CONTRIBUTION_ROLE } from "@/prisma/client/enums";
 
 export default function getRoleLabel(role: CONTRIBUTION_ROLE) {
   switch (role) {

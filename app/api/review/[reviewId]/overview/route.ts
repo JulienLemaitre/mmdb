@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { computeOverviewProgress } from "@/utils/reviewProgress";
+import { computeOverviewProgress } from "@/features/review/reviewProgress";
 import { ApiOverview } from "@/types/reviewTypes";
 import { getReviewOverview } from "@/utils/server/getReviewOverview";
+import { prodLog } from "@/utils/debugLogger";
 
 export async function GET(
   _req: Request,
@@ -14,7 +15,7 @@ export async function GET(
 
     const { graph, globallyReviewed } = await getReviewOverview(reviewId);
 
-    if (!graph.sourceContents) {
+    if (!graph.sourceOnPieceVersions) {
       return NextResponse.json(
         { error: "No content found in MM source" },
         { status: 400 },
@@ -34,7 +35,7 @@ export async function GET(
       reviewId,
       graph,
       globallyReviewed,
-      sourceContents: graph.sourceContents,
+      sourceOnPieceVersions: graph.sourceOnPieceVersions,
       progress,
     };
 
@@ -50,6 +51,7 @@ export async function GET(
     else if (lc.includes("required") || lc.includes("must be")) status = 400;
     else if (lc.includes("not found")) status = 404;
 
+    prodLog.info(`getReviewOverview error: ${status} ${msg}`);
     return NextResponse.json({ error: msg }, { status });
   }
 }

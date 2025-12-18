@@ -1,10 +1,10 @@
-import { FeedFormProvider } from "@/components/context/feedFormContext";
-import NavBar from "@/app/NavBar";
+import { FeedFormProvider } from "@/context/feedFormContext";
+import NavBar from "@/ui/NavBar";
 import React from "react";
-import HelpDrawer from "@/components/HelpDrawer";
-import Steps from "@/components/multiStepMMSourceForm/Steps";
-import ResetAllForms from "@/components/ResetAllForms";
-import ReviewEditBanner from "@/components/review/ReviewEditBanner";
+import FeedFormHelpDrawer from "@/features/feed/FeedFormHelpDrawer";
+import Steps from "@/features/feed/multiStepMMSourceForm/Steps";
+import ResetAllForms from "@/features/feed/ResetAllForms";
+import ReviewEditBanner from "@/features/review/components/ReviewEditBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -30,7 +30,7 @@ export default function FeedLayout({ children }) {
             </div>
           </div>
         </div>
-        <HelpDrawer />
+        <FeedFormHelpDrawer />
       </FeedFormProvider>
     </div>
   );

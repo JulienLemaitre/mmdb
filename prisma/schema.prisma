@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
+  provider        = "prisma-client"
+  output          = "./client"
   previewFeatures = ["postgresqlExtensions"]
 }
 
@@ -11,10 +12,7 @@ generator dbml {
 }
 
 datasource db {
-  provider   = "postgresql"
-  url        = env("DATABASE_URL")
-  directUrl  = env("DIRECT_URL")
-  extensions = [pgcrypto]
+  provider = "postgresql"
 }
 
 model Collection {
@@ -154,7 +152,7 @@ model MMSource {
   creator        User?                      @relation(fields: [creatorId], references: [id])
   creatorId      String?                    @db.Uuid
   comment        String?
-  sectionCount   Int             @default(0)
+  sectionCount   Int                        @default(0)
 
   // Review process
   reviewState REVIEW_STATE @default(PENDING)
@@ -389,6 +387,7 @@ enum REVIEWED_ENTITY_TYPE {
   ORGANIZATION
   COLLECTION
   PIECE
+  PIECE_VERSION
 }
 
 enum AUDIT_ENTITY_TYPE {

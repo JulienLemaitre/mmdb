@@ -1,5 +1,5 @@
 import { noteDurationValue } from "./notesCalculation";
-import { NOTE_VALUE } from "@prisma/client";
+import { NOTE_VALUE } from "@/prisma/client/enums";
 
 /**
  * Calculates the number of notes per bar that must be executed, from the given number of notes per second, beat unit and bpm.

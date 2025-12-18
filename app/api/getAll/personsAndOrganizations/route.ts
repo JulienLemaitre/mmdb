@@ -1,4 +1,4 @@
-import { db } from "@/utils/db";
+import { db } from "@/utils/server/db";
 
 export async function GET(request: Request) {
   // Fetch all persons

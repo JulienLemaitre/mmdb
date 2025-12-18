@@ -1,6 +1,6 @@
-import { db } from "@/utils/db";
+import { db } from "@/utils/server/db";
 import * as bcrypt from "bcrypt";
-import { signJwtAccessToken } from "@/utils/jwt";
+import { signJwtAccessToken } from "@/utils/server/jwt";
 
 interface RequestBody {
   email: string;

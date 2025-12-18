@@ -1,7 +1,7 @@
 export type SinglePieceVersionFormInfo = {
   currentStepRank: number;
-  allSourcePieceVersionsDone?: boolean;
-  mMSourcePieceVersionRank?: number;
+  allSourceOnPieceVersionsDone?: boolean;
+  mMSourceOnPieceVersionRank?: number;
 };
 
 export type SinglePieceVersionFormState = {

@@ -1,6 +1,6 @@
 import {
   CollectionState,
-  MMSourcePieceVersionsState,
+  MMSourceOnPieceVersionsState,
   PieceVersionState,
   PersonState,
   PieceState,
@@ -24,12 +24,12 @@ export type CollectionPieceVersionsFormAction =
   | { type: "pieces"; payload: any }
   | { type: "pieceVersions"; payload: any }
   | { type: "tempoIndications"; payload: any }
-  | { type: "mMSourcePieceVersions"; payload: any };
+  | { type: "mMSourceOnPieceVersions"; payload: any };
 export type Dispatch = (action: CollectionPieceVersionsFormAction) => void;
 export type CollectionPieceVersionsFormInfo = {
   currentStepRank: number;
   isSinglePieceVersionFormOpen?: boolean;
-  allSourcePieceVersionsDone?: boolean;
+  allSourceOnPieceVersionsDone?: boolean;
   collectionFirstMMSourceOnPieceVersionRank?: number;
   pieceIdsNeedingVersions?: string[];
 };
@@ -37,7 +37,7 @@ export type CollectionPieceVersionsFormInfo = {
 export type CollectionPieceVersionsFormState = {
   formInfo: CollectionPieceVersionsFormInfo;
   collection?: Partial<CollectionState & { isComposerNew?: boolean }>;
-  mMSourcePieceVersions?: MMSourcePieceVersionsState[];
+  mMSourceOnPieceVersions?: MMSourceOnPieceVersionsState[];
   persons?: PersonState[];
   pieces?: PieceState[];
   pieceVersions?: PieceVersionState[];

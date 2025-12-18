@@ -1,5 +1,6 @@
 import { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { debug } from "@/utils/debugLogger";
 
 const API_URL = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}/api`
@@ -63,11 +64,8 @@ export const authOptions: NextAuthOptions = {
       }
     },
     async jwt({ token, account, user }) {
-      console.log(`[jwt cb] token`, JSON.stringify(token));
-      console.log(`[jwt cb] account`, JSON.stringify(account));
-      console.log(`[jwt cb] user`, JSON.stringify(user));
       if (account && user) {
-        console.log(`[jwt cb] -- First-time login --`);
+        debug.info(`[jwt cb] -- First-time login --`);
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;

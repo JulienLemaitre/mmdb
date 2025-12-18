@@ -15,15 +15,13 @@ export default function getMetronomeMarkStateFromInput(
         `Could not find section info with index ${index} in sectionList: ${sectionList}`,
       );
     }
-    const { rank: pieceVersionRank, pieceVersionId } =
-      sectionInfo.mMSourceOnPieceVersion;
+    const { pieceVersionId } = sectionInfo.mMSourceOnPieceVersion;
     const { sectionId, noMM } = mMinput;
 
     const metronomeMarkState: MetronomeMarkState = noMM
       ? {
           sectionId,
           noMM: true,
-          pieceVersionRank,
           pieceVersionId,
         }
       : {
@@ -32,7 +30,6 @@ export default function getMetronomeMarkStateFromInput(
           comment: mMinput.comment,
           beatUnit: mMinput.beatUnit.value,
           noMM: false,
-          pieceVersionRank,
           pieceVersionId,
         };
     return metronomeMarkState;

@@ -1,5 +1,8 @@
 import { FeedFormState } from "@/types/feedFormTypes";
-import { PieceVersionState, SectionStateExtendedForMMForm } from "@/types/formTypes";
+import {
+  PieceVersionState,
+  SectionStateExtendedForMMForm,
+} from "@/types/formTypes";
 
 /**
  * Build the section list used to collect metronome marks.
@@ -9,11 +12,14 @@ export function getSectionList(
   state: FeedFormState,
   pieceVersions: PieceVersionState[],
 ): SectionStateExtendedForMMForm[] {
-  if (!state.mMSourcePieceVersions || state.mMSourcePieceVersions.length === 0) {
+  if (
+    !state.mMSourceOnPieceVersions ||
+    state.mMSourceOnPieceVersions.length === 0
+  ) {
     return [];
   }
 
-  return state.mMSourcePieceVersions.reduce<SectionStateExtendedForMMForm[]>(
+  return state.mMSourceOnPieceVersions.reduce<SectionStateExtendedForMMForm[]>(
     (sectionList, mMSourceOnPieceVersion) => {
       const pieceVersion = pieceVersions.find(
         (pv) => pv.id === mMSourceOnPieceVersion.pieceVersionId,

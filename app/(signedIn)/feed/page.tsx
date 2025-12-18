@@ -1,4 +1,4 @@
-import MMSourceForm from "@/components/multiStepMMSourceForm/MMSourceForm";
+import MMSourceForm from "@/features/feed/multiStepMMSourceForm/MMSourceForm";
 
 const FeedPage = () => {
   return (

@@ -7,7 +7,7 @@ export default function computeMMSourceToPersistFromState(
     ...state.mMSourceDescription,
     references: state.mMSourceDescription?.references,
     contributions: state.mMSourceContributions,
-    pieceVersions: state.mMSourcePieceVersions?.map((pvs) => {
+    pieceVersions: state.mMSourceOnPieceVersions?.map((pvs) => {
       const pieceVersion = state.pieceVersions?.find(
         (pv) => pv.id === pvs.pieceVersionId,
       );

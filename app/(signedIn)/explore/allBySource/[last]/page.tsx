@@ -1,6 +1,6 @@
-import { db } from "@/utils/db";
-import MMSourcesDetails from "@/components/MMSourcesDetails";
-import ShartWithNoteTypeFilter from "@/components/ShartWithNoteTypeFilter";
+import { db } from "@/utils/server/db";
+import MMSourcesDetails from "@/features/explore/MMSourcesDetails";
+import ShartWithNoteTypeFilter from "@/features/explore/ShartWithNoteTypeFilter";
 import React from "react";
 import getChartDataFromMMSources from "@/utils/getChartDataFromMMSources";
 
@@ -89,16 +89,12 @@ const getData = async ({ last }) => {
   };
 };
 
-export default async function Page(
-  props: {
-    params: Promise<{ last: string }>;
-  }
-) {
+export default async function Page(props: {
+  params: Promise<{ last: string }>;
+}) {
   const params = await props.params;
 
-  const {
-    last
-  } = params;
+  const { last } = params;
 
   const { mMSources } = await getData({ last });
   const chartData = getChartDataFromMMSources({ mMSources });

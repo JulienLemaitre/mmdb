@@ -1,31 +1,33 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { db } from "@/utils/db";
-import { REVIEW_STATE } from "@prisma/client";
+import { db } from "@/utils/server/db";
+import { REVIEW_STATE } from "@/prisma/client/enums";
 import { authOptions } from "@/auth/options";
 
-function json(data: unknown, init?: any) {
-  return NextResponse.json(data as any, init as any);
-}
-
-export async function POST(req: Request, { params }: any) {
+export async function POST(
+  req: Request,
+  props: { params: Promise<{ reviewId: string }> },
+) {
   try {
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
-      return json({ error: "[review abort] Unauthorized" }, { status: 401 });
+      return NextResponse.json(
+        { error: "[review abort] Unauthorized" },
+        { status: 401 },
+      );
     }
 
     const role = session.user.role;
     if (!role || !["REVIEWER", "ADMIN"].includes(role)) {
-      return json(
+      return NextResponse.json(
         { error: "[review abort] Forbidden: reviewer role required" },
         { status: 403 },
       );
     }
 
-    const reviewId = params?.reviewId as string | undefined;
+    const { reviewId } = await props.params;
     if (!reviewId) {
-      return json(
+      return NextResponse.json(
         { error: "[review abort] reviewId is required in route params" },
         { status: 400 },
       );
@@ -45,20 +47,23 @@ export async function POST(req: Request, { params }: any) {
       select: { id: true, creatorId: true, state: true, mMSourceId: true },
     });
     if (!review) {
-      return json({ error: "[review abort] Review not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "[review abort] Review not found" },
+        { status: 404 },
+      );
     }
 
     const isOwner = review.creatorId === session.user.id;
     const isAdmin = role === "ADMIN";
     if (!isOwner && !isAdmin) {
-      return json(
+      return NextResponse.json(
         { error: "[review abort] Forbidden: only owner or admin" },
         { status: 403 },
       );
     }
 
     if (review.state !== REVIEW_STATE.IN_REVIEW) {
-      return json(
+      return NextResponse.json(
         { error: "[review abort] Review is not active (IN_REVIEW)" },
         { status: 400 },
       );
@@ -82,9 +87,17 @@ export async function POST(req: Request, { params }: any) {
       });
     });
 
-    return json({ ok: true, reviewId, abortedAt, reason: reason ?? null });
+    return NextResponse.json({
+      ok: true,
+      reviewId,
+      abortedAt,
+      reason: reason ?? null,
+    });
   } catch (err) {
     console.error("/api/reviews/[reviewId]/abort error:", err);
-    return json({ error: "[gUNX006] Unexpected error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "[gUNX006] Unexpected error" },
+      { status: 500 },
+    );
   }
 }
