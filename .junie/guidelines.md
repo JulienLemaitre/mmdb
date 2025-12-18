@@ -89,7 +89,7 @@ This document captures project-specific knowledge that will speed up development
   - Reset DB (drops all, re-applies, seeds): npx prisma migrate reset
 
 - Seed data
-  - prisma.seed script is defined in package.json and uses ts-node with tsconfig-seed.json:
+  - prisma.seed script is defined in package.json and uses tsx with tsconfig-seed.json:
     - npx prisma db seed
   - The seeding pipeline parses Excel files and caches an intermediate output in prisma/output/parsedDataOutput.js. If this file exists, the slow parsing steps are skipped. Delete it to re-run full parsing.
 

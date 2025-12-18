@@ -9,7 +9,7 @@ export default defineConfig({
   // what script to run for "prisma db seed"
   migrations: {
     path: "./prisma/migrations",
-    seed: "ts-node -P tsconfig-seed.json -r tsconfig-paths/register --transpileOnly prisma/seedFromXlsx.ts",
+    seed: "tsx --tsconfig tsconfig-seed.json prisma/seedFromXlsx.ts",
   },
 
   // Configuration for the database view entities.
