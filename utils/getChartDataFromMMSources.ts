@@ -19,20 +19,15 @@ export default function getChartDataFromMMSources({
   const chartData: ChartDatum[] = [];
 
   mMSources.forEach((mMSource, index) => {
+    const { year } = mMSource;
     mMSource.pieceVersions.forEach((pvs) => {
       const piece = pvs.pieceVersion.piece;
-      if (
-        typeof piece.yearOfComposition === "number" &&
-        piece.yearOfComposition < minDate
-      ) {
-        minDate = piece.yearOfComposition;
+      if (typeof year === "number" && year < minDate) {
+        minDate = year;
         console.log(`[] minDate :`, minDate);
       }
-      if (
-        typeof piece.yearOfComposition === "number" &&
-        piece.yearOfComposition > maxDate
-      ) {
-        maxDate = piece.yearOfComposition;
+      if (typeof year === "number" && year > maxDate) {
+        maxDate = year;
       }
       const composer = piece.composer;
       const composerName = composer.firstName + " " + composer.lastName;
@@ -53,7 +48,7 @@ export default function getChartDataFromMMSources({
                 .replace(/fastest/g, "")
                 .replace(/NotesPerSecond/g, "")
                 .toLowerCase();
-              const mmData: any = { xVal: piece.yearOfComposition };
+              const mmData: any = { xVal: year };
               mmData.yVal = notesPerSecond[notesPerSecondElement];
               if (mmData.yVal > maxNotesPerSecond) {
                 maxNotesPerSecond = mmData.yVal;
