@@ -33,16 +33,16 @@ function ScatterPlotChart({
     () =>
       data.reduce(
         (minMaxArray, dataNode) => {
-          const yearOfComposition = dataNode.meta?.piece?.yearOfComposition;
+          const sourceYear = dataNode.meta?.mm?.mMSource?.year;
           let min = minMaxArray[0];
           let max = minMaxArray[1];
-          if (typeof yearOfComposition === "number") {
+          if (typeof sourceYear === "number") {
             min = minMaxArray[0]
-              ? Math.min(minMaxArray[0], yearOfComposition)
-              : yearOfComposition;
+              ? Math.min(minMaxArray[0], sourceYear)
+              : sourceYear;
             max = minMaxArray[1]
-              ? Math.max(minMaxArray[1], yearOfComposition)
-              : yearOfComposition;
+              ? Math.max(minMaxArray[1], sourceYear)
+              : sourceYear;
           }
           const maxNotesPerSecond = Math.max(minMaxArray[2], dataNode.yVal);
           return [min, max, maxNotesPerSecond];
