@@ -62,6 +62,7 @@ describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
         type: graph.source.type,
         link: graph.source.link,
         year: graph.source.year,
+        isYearEstimated: graph.source.isYearEstimated,
         comment: graph.source.comment,
         references: (graph.source.references ?? []).map((r) => ({
           id: r.id,

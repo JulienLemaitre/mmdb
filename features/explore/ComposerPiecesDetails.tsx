@@ -4,6 +4,7 @@ import getKeyLabel from "@/utils/getKeyLabel";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
 import SectionMeter from "@/features/section/ui/SectionMeter";
+import { displaySourceYear } from "@/utils/displaySourceYear";
 
 export default function ComposerPiecesDetails({ person }) {
   return (
@@ -357,7 +358,7 @@ export default function ComposerPiecesDetails({ person }) {
                         <div className="mr-4">Source:</div>
                         <div>
                           <div className="">
-                            {pieceSource.mMSource.year} -{" "}
+                            {displaySourceYear(pieceSource.mMSource)} -{" "}
                             {getSourceTypeLabel(pieceSource.mMSource.type)}
                           </div>
                           {pieceSource.mMSource.title && (

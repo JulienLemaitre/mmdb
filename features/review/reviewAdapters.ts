@@ -7,6 +7,7 @@ export type SourceDescriptionValues = {
   link?: string | null;
   permalink?: string | null;
   year?: number | null;
+  isYearEstimated?: boolean | null;
   comment?: string | null;
 };
 
@@ -44,6 +45,7 @@ export const SourceDescriptionAdapter = {
       link: s.link ?? "",
       permalink: s.permalink ?? "",
       year: s.year ?? null,
+      isYearEstimated: s.isYearEstimated ?? false,
       comment: s.comment ?? "",
     };
   },
@@ -63,6 +65,8 @@ export const SourceDescriptionAdapter = {
       affected.push(relToFull("permalink"));
     if ((values.year ?? null) !== (before.year ?? null))
       affected.push(relToFull("year"));
+    if ((values.isYearEstimated ?? null) !== (before.isYearEstimated ?? null))
+      affected.push(relToFull("isYearEstimated"));
     if ((values.comment ?? null) !== (before.comment ?? null))
       affected.push(relToFull("comment"));
     return {

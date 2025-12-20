@@ -43,6 +43,7 @@ export type MMSourceMinAggregateOutputType = {
   link: string | null
   permalink: string | null
   year: number | null
+  isYearEstimated: boolean | null
   creatorId: string | null
   comment: string | null
   sectionCount: number | null
@@ -58,6 +59,7 @@ export type MMSourceMaxAggregateOutputType = {
   link: string | null
   permalink: string | null
   year: number | null
+  isYearEstimated: boolean | null
   creatorId: string | null
   comment: string | null
   sectionCount: number | null
@@ -73,6 +75,7 @@ export type MMSourceCountAggregateOutputType = {
   link: number
   permalink: number
   year: number
+  isYearEstimated: number
   creatorId: number
   comment: number
   sectionCount: number
@@ -100,6 +103,7 @@ export type MMSourceMinAggregateInputType = {
   link?: true
   permalink?: true
   year?: true
+  isYearEstimated?: true
   creatorId?: true
   comment?: true
   sectionCount?: true
@@ -115,6 +119,7 @@ export type MMSourceMaxAggregateInputType = {
   link?: true
   permalink?: true
   year?: true
+  isYearEstimated?: true
   creatorId?: true
   comment?: true
   sectionCount?: true
@@ -130,6 +135,7 @@ export type MMSourceCountAggregateInputType = {
   link?: true
   permalink?: true
   year?: true
+  isYearEstimated?: true
   creatorId?: true
   comment?: true
   sectionCount?: true
@@ -232,6 +238,7 @@ export type MMSourceGroupByOutputType = {
   link: string
   permalink: string
   year: number
+  isYearEstimated: boolean
   creatorId: string | null
   comment: string | null
   sectionCount: number
@@ -270,6 +277,7 @@ export type MMSourceWhereInput = {
   link?: Prisma.StringFilter<"MMSource"> | string
   permalink?: Prisma.StringFilter<"MMSource"> | string
   year?: Prisma.IntFilter<"MMSource"> | number
+  isYearEstimated?: Prisma.BoolFilter<"MMSource"> | boolean
   creatorId?: Prisma.UuidNullableFilter<"MMSource"> | string | null
   comment?: Prisma.StringNullableFilter<"MMSource"> | string | null
   sectionCount?: Prisma.IntFilter<"MMSource"> | number
@@ -291,6 +299,7 @@ export type MMSourceOrderByWithRelationInput = {
   link?: Prisma.SortOrder
   permalink?: Prisma.SortOrder
   year?: Prisma.SortOrder
+  isYearEstimated?: Prisma.SortOrder
   creatorId?: Prisma.SortOrderInput | Prisma.SortOrder
   comment?: Prisma.SortOrderInput | Prisma.SortOrder
   sectionCount?: Prisma.SortOrder
@@ -315,6 +324,7 @@ export type MMSourceWhereUniqueInput = Prisma.AtLeast<{
   link?: Prisma.StringFilter<"MMSource"> | string
   permalink?: Prisma.StringFilter<"MMSource"> | string
   year?: Prisma.IntFilter<"MMSource"> | number
+  isYearEstimated?: Prisma.BoolFilter<"MMSource"> | boolean
   creatorId?: Prisma.UuidNullableFilter<"MMSource"> | string | null
   comment?: Prisma.StringNullableFilter<"MMSource"> | string | null
   sectionCount?: Prisma.IntFilter<"MMSource"> | number
@@ -336,6 +346,7 @@ export type MMSourceOrderByWithAggregationInput = {
   link?: Prisma.SortOrder
   permalink?: Prisma.SortOrder
   year?: Prisma.SortOrder
+  isYearEstimated?: Prisma.SortOrder
   creatorId?: Prisma.SortOrderInput | Prisma.SortOrder
   comment?: Prisma.SortOrderInput | Prisma.SortOrder
   sectionCount?: Prisma.SortOrder
@@ -359,6 +370,7 @@ export type MMSourceScalarWhereWithAggregatesInput = {
   link?: Prisma.StringWithAggregatesFilter<"MMSource"> | string
   permalink?: Prisma.StringWithAggregatesFilter<"MMSource"> | string
   year?: Prisma.IntWithAggregatesFilter<"MMSource"> | number
+  isYearEstimated?: Prisma.BoolWithAggregatesFilter<"MMSource"> | boolean
   creatorId?: Prisma.UuidNullableWithAggregatesFilter<"MMSource"> | string | null
   comment?: Prisma.StringNullableWithAggregatesFilter<"MMSource"> | string | null
   sectionCount?: Prisma.IntWithAggregatesFilter<"MMSource"> | number
@@ -374,6 +386,7 @@ export type MMSourceCreateInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
   reviewState?: $Enums.REVIEW_STATE
@@ -394,6 +407,7 @@ export type MMSourceUncheckedCreateInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   creatorId?: string | null
   comment?: string | null
   sectionCount?: number
@@ -414,6 +428,7 @@ export type MMSourceUpdateInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
   reviewState?: Prisma.EnumREVIEW_STATEFieldUpdateOperationsInput | $Enums.REVIEW_STATE
@@ -434,6 +449,7 @@ export type MMSourceUncheckedUpdateInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -454,6 +470,7 @@ export type MMSourceCreateManyInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   creatorId?: string | null
   comment?: string | null
   sectionCount?: number
@@ -469,6 +486,7 @@ export type MMSourceUpdateManyMutationInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
   reviewState?: Prisma.EnumREVIEW_STATEFieldUpdateOperationsInput | $Enums.REVIEW_STATE
@@ -483,6 +501,7 @@ export type MMSourceUncheckedUpdateManyInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -503,6 +522,7 @@ export type MMSourceCountOrderByAggregateInput = {
   link?: Prisma.SortOrder
   permalink?: Prisma.SortOrder
   year?: Prisma.SortOrder
+  isYearEstimated?: Prisma.SortOrder
   creatorId?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   sectionCount?: Prisma.SortOrder
@@ -523,6 +543,7 @@ export type MMSourceMaxOrderByAggregateInput = {
   link?: Prisma.SortOrder
   permalink?: Prisma.SortOrder
   year?: Prisma.SortOrder
+  isYearEstimated?: Prisma.SortOrder
   creatorId?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   sectionCount?: Prisma.SortOrder
@@ -538,6 +559,7 @@ export type MMSourceMinOrderByAggregateInput = {
   link?: Prisma.SortOrder
   permalink?: Prisma.SortOrder
   year?: Prisma.SortOrder
+  isYearEstimated?: Prisma.SortOrder
   creatorId?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   sectionCount?: Prisma.SortOrder
@@ -688,6 +710,7 @@ export type MMSourceCreateWithoutMetronomeMarksInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
   reviewState?: $Enums.REVIEW_STATE
@@ -707,6 +730,7 @@ export type MMSourceUncheckedCreateWithoutMetronomeMarksInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   creatorId?: string | null
   comment?: string | null
   sectionCount?: number
@@ -742,6 +766,7 @@ export type MMSourceUpdateWithoutMetronomeMarksInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
   reviewState?: Prisma.EnumREVIEW_STATEFieldUpdateOperationsInput | $Enums.REVIEW_STATE
@@ -761,6 +786,7 @@ export type MMSourceUncheckedUpdateWithoutMetronomeMarksInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -780,6 +806,7 @@ export type MMSourceCreateWithoutPieceVersionsInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
   reviewState?: $Enums.REVIEW_STATE
@@ -799,6 +826,7 @@ export type MMSourceUncheckedCreateWithoutPieceVersionsInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   creatorId?: string | null
   comment?: string | null
   sectionCount?: number
@@ -834,6 +862,7 @@ export type MMSourceUpdateWithoutPieceVersionsInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
   reviewState?: Prisma.EnumREVIEW_STATEFieldUpdateOperationsInput | $Enums.REVIEW_STATE
@@ -853,6 +882,7 @@ export type MMSourceUncheckedUpdateWithoutPieceVersionsInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -872,6 +902,7 @@ export type MMSourceCreateWithoutReferencesInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
   reviewState?: $Enums.REVIEW_STATE
@@ -891,6 +922,7 @@ export type MMSourceUncheckedCreateWithoutReferencesInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   creatorId?: string | null
   comment?: string | null
   sectionCount?: number
@@ -926,6 +958,7 @@ export type MMSourceUpdateWithoutReferencesInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
   reviewState?: Prisma.EnumREVIEW_STATEFieldUpdateOperationsInput | $Enums.REVIEW_STATE
@@ -945,6 +978,7 @@ export type MMSourceUncheckedUpdateWithoutReferencesInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -964,6 +998,7 @@ export type MMSourceCreateWithoutContributionsInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
   reviewState?: $Enums.REVIEW_STATE
@@ -983,6 +1018,7 @@ export type MMSourceUncheckedCreateWithoutContributionsInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   creatorId?: string | null
   comment?: string | null
   sectionCount?: number
@@ -1018,6 +1054,7 @@ export type MMSourceUpdateWithoutContributionsInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
   reviewState?: Prisma.EnumREVIEW_STATEFieldUpdateOperationsInput | $Enums.REVIEW_STATE
@@ -1037,6 +1074,7 @@ export type MMSourceUncheckedUpdateWithoutContributionsInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1056,6 +1094,7 @@ export type MMSourceCreateWithoutCreatorInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
   reviewState?: $Enums.REVIEW_STATE
@@ -1075,6 +1114,7 @@ export type MMSourceUncheckedCreateWithoutCreatorInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
   reviewState?: $Enums.REVIEW_STATE
@@ -1123,6 +1163,7 @@ export type MMSourceScalarWhereInput = {
   link?: Prisma.StringFilter<"MMSource"> | string
   permalink?: Prisma.StringFilter<"MMSource"> | string
   year?: Prisma.IntFilter<"MMSource"> | number
+  isYearEstimated?: Prisma.BoolFilter<"MMSource"> | boolean
   creatorId?: Prisma.UuidNullableFilter<"MMSource"> | string | null
   comment?: Prisma.StringNullableFilter<"MMSource"> | string | null
   sectionCount?: Prisma.IntFilter<"MMSource"> | number
@@ -1138,6 +1179,7 @@ export type MMSourceCreateWithoutReviewsInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
   reviewState?: $Enums.REVIEW_STATE
@@ -1157,6 +1199,7 @@ export type MMSourceUncheckedCreateWithoutReviewsInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   creatorId?: string | null
   comment?: string | null
   sectionCount?: number
@@ -1192,6 +1235,7 @@ export type MMSourceUpdateWithoutReviewsInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
   reviewState?: Prisma.EnumREVIEW_STATEFieldUpdateOperationsInput | $Enums.REVIEW_STATE
@@ -1211,6 +1255,7 @@ export type MMSourceUncheckedUpdateWithoutReviewsInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1230,6 +1275,7 @@ export type MMSourceCreateManyCreatorInput = {
   link: string
   permalink: string
   year: number
+  isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
   reviewState?: $Enums.REVIEW_STATE
@@ -1244,6 +1290,7 @@ export type MMSourceUpdateWithoutCreatorInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
   reviewState?: Prisma.EnumREVIEW_STATEFieldUpdateOperationsInput | $Enums.REVIEW_STATE
@@ -1263,6 +1310,7 @@ export type MMSourceUncheckedUpdateWithoutCreatorInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
   reviewState?: Prisma.EnumREVIEW_STATEFieldUpdateOperationsInput | $Enums.REVIEW_STATE
@@ -1282,6 +1330,7 @@ export type MMSourceUncheckedUpdateManyWithoutCreatorInput = {
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
   reviewState?: Prisma.EnumREVIEW_STATEFieldUpdateOperationsInput | $Enums.REVIEW_STATE
@@ -1363,6 +1412,7 @@ export type MMSourceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   link?: boolean
   permalink?: boolean
   year?: boolean
+  isYearEstimated?: boolean
   creatorId?: boolean
   comment?: boolean
   sectionCount?: boolean
@@ -1385,6 +1435,7 @@ export type MMSourceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   link?: boolean
   permalink?: boolean
   year?: boolean
+  isYearEstimated?: boolean
   creatorId?: boolean
   comment?: boolean
   sectionCount?: boolean
@@ -1401,6 +1452,7 @@ export type MMSourceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   link?: boolean
   permalink?: boolean
   year?: boolean
+  isYearEstimated?: boolean
   creatorId?: boolean
   comment?: boolean
   sectionCount?: boolean
@@ -1417,6 +1469,7 @@ export type MMSourceSelectScalar = {
   link?: boolean
   permalink?: boolean
   year?: boolean
+  isYearEstimated?: boolean
   creatorId?: boolean
   comment?: boolean
   sectionCount?: boolean
@@ -1425,7 +1478,7 @@ export type MMSourceSelectScalar = {
   updatedAt?: boolean
 }
 
-export type MMSourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "type" | "link" | "permalink" | "year" | "creatorId" | "comment" | "sectionCount" | "reviewState" | "createdAt" | "updatedAt", ExtArgs["result"]["mMSource"]>
+export type MMSourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "type" | "link" | "permalink" | "year" | "isYearEstimated" | "creatorId" | "comment" | "sectionCount" | "reviewState" | "createdAt" | "updatedAt", ExtArgs["result"]["mMSource"]>
 export type MMSourceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pieceVersions?: boolean | Prisma.MMSource$pieceVersionsArgs<ExtArgs>
   references?: boolean | Prisma.MMSource$referencesArgs<ExtArgs>
@@ -1459,6 +1512,7 @@ export type $MMSourcePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     link: string
     permalink: string
     year: number
+    isYearEstimated: boolean
     creatorId: string | null
     comment: string | null
     sectionCount: number
@@ -1900,6 +1954,7 @@ export interface MMSourceFieldRefs {
   readonly link: Prisma.FieldRef<"MMSource", 'String'>
   readonly permalink: Prisma.FieldRef<"MMSource", 'String'>
   readonly year: Prisma.FieldRef<"MMSource", 'Int'>
+  readonly isYearEstimated: Prisma.FieldRef<"MMSource", 'Boolean'>
   readonly creatorId: Prisma.FieldRef<"MMSource", 'String'>
   readonly comment: Prisma.FieldRef<"MMSource", 'String'>
   readonly sectionCount: Prisma.FieldRef<"MMSource", 'Int'>

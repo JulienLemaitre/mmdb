@@ -7,6 +7,7 @@ import getNoteValueLabel from "@/utils/getNoteValueLabel";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
 import SectionMeter from "@/features/section/ui/SectionMeter";
+import { displaySourceYear } from "@/utils/displaySourceYear";
 
 export default function MMSourceDetails({ mMSource }) {
   // Gather collections
@@ -72,7 +73,7 @@ export default function MMSourceDetails({ mMSource }) {
                       <div className="mr-4">Source:</div>
                       <div>
                         <div className="">
-                          {`${mMSource.year} - ${getSourceTypeLabel(mMSource.type)} ${
+                          {`${displaySourceYear(mMSource)} - ${getSourceTypeLabel(mMSource.type)} ${
                             mMSource?.createdAt
                               ? `[
                             created ${mMSource?.createdAt?.toLocaleString()} ]`

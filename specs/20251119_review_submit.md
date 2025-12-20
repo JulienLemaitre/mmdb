@@ -114,7 +114,7 @@ Iterate through `workingCopy` lists: `persons`, `organizations`, `tempoIndicatio
 #### C. Hierarchical Upserts
 This requires traversing the graph top-down to ensure parent IDs exist before children are attached.
 
-1.  **MMSource**: Update `title`, `type`, `link`, `permalink`, `year`, `comment`.
+1.  **MMSource**: Update `title`, `type`, `link`, `permalink`, `year`, `isYearEstimated`, `comment`.
 2.  **References**:
     *   Sync the list: Delete missing, Create new, Update existing.
 3.  **Contributions**:

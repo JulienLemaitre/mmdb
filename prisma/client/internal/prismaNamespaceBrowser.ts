@@ -206,6 +206,7 @@ export const MMSourceScalarFieldEnum = {
   link: 'link',
   permalink: 'permalink',
   year: 'year',
+  isYearEstimated: 'isYearEstimated',
   creatorId: 'creatorId',
   comment: 'comment',
   sectionCount: 'sectionCount',

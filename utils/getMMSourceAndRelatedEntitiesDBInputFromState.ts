@@ -11,7 +11,7 @@ export default function getMMSourceAndRelatedEntitiesDBInputFromState(
   creatorId: string,
 ): Prisma.MMSourceCreateInput {
   const { mMSourceDescription } = state;
-  const { id, title, year, type, link, comment, references } =
+  const { id, title, year, isYearEstimated, type, link, comment, references } =
     mMSourceDescription;
 
   // Convert the 'type' and 'references' properties to match the SourceDescriptionInput type
@@ -24,6 +24,7 @@ export default function getMMSourceAndRelatedEntitiesDBInputFromState(
     },
     ...(title ? { title } : {}),
     year,
+    isYearEstimated,
     link,
     permalink: getIMSLPPermaLink(link),
     type: type as SOURCE_TYPE,

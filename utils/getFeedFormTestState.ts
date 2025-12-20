@@ -300,6 +300,7 @@ export default function getFeedFormTestState() {
     mMSourceDescription: {
       title: "In enim laboris plac",
       year: 2017,
+      isYearEstimated: false,
       type: "EDITION",
       link: "https://www.qerocedehuzuvi.net",
       comment: "Eligendi iusto alias",

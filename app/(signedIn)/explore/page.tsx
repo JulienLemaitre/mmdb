@@ -27,6 +27,7 @@ import GetChartDataFromPieceVersions from "@/utils/getChartDataFromPieceVersions
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
 import SectionMeter from "@/features/section/ui/SectionMeter";
+import { displaySourceYear } from "@/utils/displaySourceYear";
 
 // TODO: What do we want in addition to what is already there:
 //  1. Show all mms that result in speeds of more / less than X notes per second with a selection of note type (strutural, repeated etc.) e.g. show me all Sources that have MMs that result in more than 15 nps (structural)
@@ -642,7 +643,7 @@ function SearchPage() {
                             <div className="mr-4">Source:</div>
                             <div>
                               <div className="">
-                                {mMSource.year} -{" "}
+                                {displaySourceYear(mMSource)} -{" "}
                                 {getSourceTypeLabel(mMSource.type)}
                               </div>
                               {mMSource.title && (

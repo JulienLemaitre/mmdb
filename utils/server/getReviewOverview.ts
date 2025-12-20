@@ -59,6 +59,7 @@ export async function getReviewOverview(reviewId: string): Promise<{
       link: true,
       permalink: true,
       year: true,
+      isYearEstimated: true,
       comment: true,
       creator: { select: { id: true, name: true, email: true } },
       // Source-level references
@@ -392,6 +393,7 @@ export async function getReviewOverview(reviewId: string): Promise<{
       link: mmSource.link ?? null,
       permalink: mmSource.permalink ?? null,
       year: mmSource.year ?? null,
+      isYearEstimated: mmSource.isYearEstimated ?? null,
       comment: mmSource.comment ?? null,
       enteredBy: mmSource.creator,
       references: mmSource.references.map((r) => ({

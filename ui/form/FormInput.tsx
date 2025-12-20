@@ -29,11 +29,17 @@ const transformActions = {
     rawValue.replace(/^0+/, "").replace(/\D/g, "").substring(0, 4),
 };
 
-function getControllerProps(
-  field: ControllerRenderProps,
-  inputMode: InputMethod,
-  onInputChange?: () => void,
-) {
+function getControllerProps({
+  field,
+  inputMode,
+  onInputChange,
+  type,
+}: {
+  field: ControllerRenderProps;
+  inputMode: InputMethod;
+  onInputChange?: () => void;
+  type: string;
+}) {
   const registerProps = getRegisterProps({ name: field.name, inputMode });
   let controllerProps: any = {
     rules: registerProps,
@@ -65,6 +71,13 @@ function getControllerProps(
     if (typeof onInputChange === "function") {
       onInputChange();
     }
+  }
+
+  if (type === "checkbox") {
+    controllerProps.onChange = (event: ChangeEvent<HTMLInputElement>) => {
+      console.log(`[checkbox] onChange :`, event.target.checked);
+      field.onChange(event.target.checked);
+    };
   }
 
   return controllerProps;
@@ -150,10 +163,19 @@ export function FormInput({
           name={name}
           render={({ field }) => (
             <input
-              className={`input input-sm input-bordered ${inputClassName} flex-1`}
+              className={
+                type === "checkbox"
+                  ? `checkbox checkbox-primary ${inputClassName}`
+                  : `input input-sm input-bordered ${inputClassName} flex-1`
+              }
               inputMode={inputMode}
               {...(defaultValue ? { defaultValue } : {})}
-              {...(getControllerProps(field, inputMode, onInputChange) || {})}
+              {...(getControllerProps({
+                field,
+                inputMode,
+                onInputChange,
+                type,
+              }) || {})}
               onBlur={field.onBlur}
               ref={field.ref}
               name={field.name}
