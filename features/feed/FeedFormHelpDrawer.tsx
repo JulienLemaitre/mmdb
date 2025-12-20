@@ -32,13 +32,33 @@ const FeedFormHelpDrawer = () => {
       ></label>
       <ul className="menu p-4 w-fit min-h-full bg-base-200 text-base-content">
         {/* Sidebar content here */}
-        <div className="pb-2">
+        <div className="pb-2 flex justify-between items-center w-full">
           <label
             htmlFor="my-drawer-4"
             className="drawer-button btn btn-link h-auto min-h-fit px-0 align-bottom"
           >
             <XMarkIcon className="w-7 h-7" />
           </label>
+          <div className="flex">
+            Tutorials:
+            <a
+              className="link link-primary mx-2"
+              href="/pdf/MM_Database_User_Guide_V3.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              PDF
+            </a>
+            {` | `}
+            <a
+              className="link link-primary ml-2"
+              href="https://www.youtube.com/watch?v=27UqZXgnqvU"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              video
+            </a>
+          </div>
         </div>
 
         <div role="tablist" className="tabs tabs-bordered">
