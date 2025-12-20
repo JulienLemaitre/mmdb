@@ -1,23 +1,27 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import XMarkIcon from "@/ui/svg/XMarkIcon";
 import { useFeedForm } from "@/context/feedFormContext";
 import { stepHelpContent } from "@/features/feed/multiStepMMSourceForm/stepHelpContent";
 
 const FeedFormHelpDrawer = () => {
   const { currentStepRank } = useFeedForm();
-  const [isSectonHelpChecked, setIsSectonHelpChecked] = useState(true);
-  const toggleSectionHelp = () => {
-    setIsSectonHelpChecked(!isSectonHelpChecked);
-  };
-
-  useEffect(() => {
-    // When we change the form step, we check the section help only if it exists
-    setIsSectonHelpChecked(!!stepHelpContent[currentStepRank]);
-  }, [currentStepRank]);
+  const [activeHelpTabInternal, setActiveHelpTabInternal] = useState<
+    "contextual" | "glossary"
+  >("contextual");
 
   const SectionHelp = stepHelpContent[currentStepRank];
+
+  const toggleSectionHelp = useCallback(() => {
+    setActiveHelpTabInternal(
+      !!SectionHelp && activeHelpTabInternal === "glossary"
+        ? "contextual"
+        : "glossary",
+    );
+  }, [SectionHelp, activeHelpTabInternal, setActiveHelpTabInternal]);
+
+  const activeHelpTab = SectionHelp ? activeHelpTabInternal : "glossary";
 
   return (
     <div className="drawer-side" tabIndex={-1}>
@@ -28,13 +32,33 @@ const FeedFormHelpDrawer = () => {
       ></label>
       <ul className="menu p-4 w-fit min-h-full bg-base-200 text-base-content">
         {/* Sidebar content here */}
-        <div className="pb-2">
+        <div className="pb-2 flex justify-between items-center w-full">
           <label
             htmlFor="my-drawer-4"
             className="drawer-button btn btn-link h-auto min-h-fit px-0 align-bottom"
           >
             <XMarkIcon className="w-7 h-7" />
           </label>
+          <div className="flex">
+            Tutorials:
+            <a
+              className="link link-primary mx-2"
+              href="/pdf/MM_Database_User_Guide_V3.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              PDF
+            </a>
+            {` | `}
+            <a
+              className="link link-primary ml-2"
+              href="https://www.youtube.com/watch?v=27UqZXgnqvU"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              video
+            </a>
+          </div>
         </div>
 
         <div role="tablist" className="tabs tabs-bordered">
@@ -45,7 +69,7 @@ const FeedFormHelpDrawer = () => {
             role="tab"
             className="tab"
             aria-label="Section help"
-            checked={isSectonHelpChecked}
+            checked={activeHelpTab === "contextual"}
             onChange={toggleSectionHelp}
             disabled={!SectionHelp}
             tabIndex={-1}
@@ -61,7 +85,7 @@ const FeedFormHelpDrawer = () => {
             role="tab"
             className="tab"
             aria-label="Glossary"
-            checked={!isSectonHelpChecked}
+            checked={activeHelpTab === "glossary"}
             onChange={toggleSectionHelp}
             tabIndex={-1}
           />
@@ -127,13 +151,16 @@ const FeedFormHelpDrawer = () => {
                 <li>- Metronome mark</li>
               </ul>
               <p>
-                If any of the three characteristics above change, a new section
-                must be entered. For each section created, the maximum number of
-                notes per bar for each structural, staccato, repeated and
-                ornamental notes is entered. If the tempo indication changes
-                within a sonata movement, but no new metronome mark is given,
-                the section in question should be entered without a metronome
-                mark.
+                If{" "}
+                <strong>
+                  any of the three characteristics above change, a new section
+                  must be entered
+                </strong>
+                . For each section created, the maximum number of notes per bar
+                for each structural, staccato, repeated and ornamental notes is
+                entered. If the tempo indication changes within a sonata
+                movement, but no new metronome mark is given, the section in
+                question should be entered without a metronome mark.
               </p>
               <p>
                 A{" "}
