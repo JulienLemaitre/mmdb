@@ -1,23 +1,27 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import XMarkIcon from "@/ui/svg/XMarkIcon";
 import { useFeedForm } from "@/context/feedFormContext";
 import { stepHelpContent } from "@/features/feed/multiStepMMSourceForm/stepHelpContent";
 
 const FeedFormHelpDrawer = () => {
   const { currentStepRank } = useFeedForm();
-  const [isSectonHelpChecked, setIsSectonHelpChecked] = useState(true);
-  const toggleSectionHelp = () => {
-    setIsSectonHelpChecked(!isSectonHelpChecked);
-  };
-
-  useEffect(() => {
-    // When we change the form step, we check the section help only if it exists
-    setIsSectonHelpChecked(!!stepHelpContent[currentStepRank]);
-  }, [currentStepRank]);
+  const [activeHelpTabInternal, setActiveHelpTabInternal] = useState<
+    "contextual" | "glossary"
+  >("contextual");
 
   const SectionHelp = stepHelpContent[currentStepRank];
+
+  const toggleSectionHelp = useCallback(() => {
+    setActiveHelpTabInternal(
+      !!SectionHelp && activeHelpTabInternal === "glossary"
+        ? "contextual"
+        : "glossary",
+    );
+  }, [SectionHelp, activeHelpTabInternal, setActiveHelpTabInternal]);
+
+  const activeHelpTab = SectionHelp ? activeHelpTabInternal : "glossary";
 
   return (
     <div className="drawer-side" tabIndex={-1}>
@@ -45,7 +49,7 @@ const FeedFormHelpDrawer = () => {
             role="tab"
             className="tab"
             aria-label="Section help"
-            checked={isSectonHelpChecked}
+            checked={activeHelpTab === "contextual"}
             onChange={toggleSectionHelp}
             disabled={!SectionHelp}
             tabIndex={-1}
@@ -61,7 +65,7 @@ const FeedFormHelpDrawer = () => {
             role="tab"
             className="tab"
             aria-label="Glossary"
-            checked={!isSectonHelpChecked}
+            checked={activeHelpTab === "glossary"}
             onChange={toggleSectionHelp}
             tabIndex={-1}
           />
@@ -127,13 +131,16 @@ const FeedFormHelpDrawer = () => {
                 <li>- Metronome mark</li>
               </ul>
               <p>
-                If any of the three characteristics above change, a new section
-                must be entered. For each section created, the maximum number of
-                notes per bar for each structural, staccato, repeated and
-                ornamental notes is entered. If the tempo indication changes
-                within a sonata movement, but no new metronome mark is given,
-                the section in question should be entered without a metronome
-                mark.
+                If{" "}
+                <strong>
+                  any of the three characteristics above change, a new section
+                  must be entered
+                </strong>
+                . For each section created, the maximum number of notes per bar
+                for each structural, staccato, repeated and ornamental notes is
+                entered. If the tempo indication changes within a sonata
+                movement, but no new metronome mark is given, the section in
+                question should be entered without a metronome mark.
               </p>
               <p>
                 A{" "}
