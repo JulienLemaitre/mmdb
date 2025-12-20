@@ -28,6 +28,7 @@ const SourceSchema = z
     type: getZodOptionFromEnum(SOURCE_TYPE),
     link: z.string().trim().url(),
     year: zodYear,
+    isYearEstimated: z.boolean(),
     references: z.array(
       z.object({
         type: getZodOptionFromEnum(REFERENCE_TYPE),
@@ -60,6 +61,7 @@ const DEFAULT_VALUES: Partial<SourceDescriptionInput> = {
     label: getSourceTypeLabel(SOURCE_TYPE.EDITION),
   },
   year: undefined,
+  isYearEstimated: false,
   title: "",
   link: "",
   comment: "",
@@ -199,13 +201,21 @@ export default function SourceDescriptionEditForm(
           isRequired={true}
           fieldError={errors.type}
         />
-        <FormInput
-          name="year"
-          isRequired
-          label="Year of publication"
-          inputMode="numeric"
-          {...{ register, errors, control }}
-        />
+        <div className="flex gap-4 items-center">
+          <FormInput
+            name="year"
+            isRequired
+            label="Year of publication"
+            inputMode="numeric"
+            {...{ register, errors, control }}
+          />
+          <FormInput
+            name="isYearEstimated"
+            type="checkbox"
+            label="Is year estimated?"
+            {...{ register, errors, control }}
+          />
+        </div>
         <FormInput
           name="title"
           label="Title of the source"

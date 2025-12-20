@@ -34,6 +34,7 @@ export type ChartDatum = {
         type: string;
         link: string;
         year: string;
+        isYearEstimated: boolean;
         references: string;
         contributions: string;
         creator: string;

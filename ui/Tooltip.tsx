@@ -3,6 +3,7 @@ import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import getRoleLabel from "@/utils/getRoleLabel";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
 import SectionMeter from "@/features/section/ui/SectionMeter";
+import { displaySourceYear } from "@/utils/displaySourceYear";
 
 const Tooltip = ({
   node,
@@ -39,7 +40,8 @@ const Tooltip = ({
       </div>
       <div>{`bpm: ${getNoteValueLabel(mm.beatUnit)} = ${mm.bpm}`}</div>
       <div>
-        source: {mMSource.year} - {getSourceTypeLabel(mMSource.type)}
+        source: {displaySourceYear(mMSource)} -{" "}
+        {getSourceTypeLabel(mMSource.type)}
       </div>
       {mMSource.title && <div className="">{mMSource.title}</div>}
       {mMSource.contributions.map((contribution) => (

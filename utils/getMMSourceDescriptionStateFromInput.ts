@@ -6,13 +6,14 @@ import {
 export default function getMMSourceDescriptionStateFromInput(
   sourceDescriptionInput: SourceDescriptionInput,
 ): MMSourceDescriptionState {
-  const { id, title, year, type, link, comment, references } =
+  const { id, title, year, isYearEstimated, type, link, comment, references } =
     sourceDescriptionInput;
 
   const sourceDescriptionState: MMSourceDescriptionState = {
     id,
     title: title ?? null,
-    year: year,
+    year,
+    isYearEstimated,
     type: type.value as MMSourceDescriptionState["type"],
     link,
     comment: comment ?? null,

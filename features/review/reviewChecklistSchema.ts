@@ -22,6 +22,7 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
       { path: "link", label: "Link to online score" },
       { path: "permalink", label: "Permalink" },
       { path: "year", label: "Publication year" },
+      { path: "isYearEstimated", label: "Is publication year an estimation?" },
       { path: "comment", label: "Source comment" },
       // // Logical checklist item for ordering within the source (Phase 2E field path convention)
       // { path: "contents.order", label: "Ordering of pieces and versions" },

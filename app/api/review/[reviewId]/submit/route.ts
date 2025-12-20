@@ -457,6 +457,7 @@ export async function POST(
             link: workingCopy.source.link,
             permalink: workingCopy.source.permalink,
             year: workingCopy.source.year,
+            isYearEstimated: workingCopy.source.isYearEstimated,
             comment: workingCopy.source.comment,
           },
         });

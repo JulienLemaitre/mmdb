@@ -32,6 +32,7 @@ describe("ReviewChecklistSchema helpers", () => {
         "Link to online score",
         "Permalink",
         "Publication year",
+        "Is publication year an estimation?",
         "Source comment",
         "Ordering of pieces and versions",
         "Rank in source",

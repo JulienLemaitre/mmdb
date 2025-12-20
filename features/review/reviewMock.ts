@@ -39,6 +39,7 @@ export function buildMockOverview(reviewId: string): MockOverview {
       link: "https://example.com/score",
       permalink: "https://perma.example/score",
       year: 1820,
+      isYearEstimated: false,
       comment: "Demo comment",
       enteredBy: {
         id: editorId,

@@ -20,6 +20,7 @@ jest.mock("../utils/server/getReviewOverview", () => ({
         link: "",
         permalink: "",
         year: 1900,
+        isYearEstimated: false,
         comment: "",
       },
       collections: [],

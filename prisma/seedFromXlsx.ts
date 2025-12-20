@@ -328,6 +328,7 @@ async function processDataFromXlsx(dataSheetList: any) {
             permalink: getIMSLPPermaLink(rowData.link),
           }),
           year: typeof rowData.yearOfPublication === 'number' ? rowData.yearOfPublication : parseInt(rowData.yearOfPublication),
+          isYearEstimated: false,
           ...(rowData.additionalNotes && {comment: rowData.additionalNotes}),
           contributions: [],
         }
@@ -1102,6 +1103,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
             link: source.link,
             permalink: source.permalink || getIMSLPPermaLink(source.link),
             year: source.year,
+            isYearEstimated: source.isYearEstimated,
             ...(source.comment && { comment: source.comment }),
             sectionCount: sectionCountForThisPiece,
             pieceVersions: {

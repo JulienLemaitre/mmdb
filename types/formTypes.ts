@@ -199,6 +199,7 @@ export type MMSourceDescriptionState = Pick<
   "title" | "type" | "link" | "year" | "comment"
 > & {
   id?: string;
+  isYearEstimated: boolean;
   references: ReferenceState[];
   pieceVersions?: Pick<PieceVersionState, "id">[];
   permalink?: string; // present when used in a review context
@@ -292,6 +293,7 @@ export type SourceDescriptionInput = Pick<
   comment?: string;
   title?: string;
   year: number;
+  isYearEstimated: boolean;
   references: ReferenceInput[];
   type: OptionInputTyped<SOURCE_TYPE>;
 };

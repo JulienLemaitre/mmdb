@@ -293,6 +293,7 @@ describe("reviewEditBridge utilities", () => {
           type: "EDITION",
           link: "https://testmock.test",
           year: 1980,
+          isYearEstimated: false,
           references: [],
         },
         pieces: [
@@ -347,6 +348,7 @@ describe("reviewEditBridge utilities", () => {
           type: "EDITION",
           link: "https://testmock.test",
           year: 1980,
+          isYearEstimated: false,
           references: [],
         },
       };

@@ -17,6 +17,7 @@ import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 import getRoleLabel from "@/utils/getRoleLabel";
 import { SectionDetail } from "@/features/section/ui/SectionDetail";
+import { displaySourceYear } from "@/utils/displaySourceYear";
 
 const SAVE_INFO_MODAL_ID = "save-info-modal";
 const InfoModal = dynamic(() => import("@/ui/modal/InfoModal"), {
@@ -209,7 +210,7 @@ function FeedSummary() {
                 )}
                 <div>
                   {mMSourceToPersist.year ? (
-                    `${mMSourceToPersist.year}`
+                    `${displaySourceYear({ year: mMSourceToPersist.year, isYearEstimated: !!mMSourceToPersist.isYearEstimated })}`
                   ) : (
                     <span className="italic">
                       No year of publication provided

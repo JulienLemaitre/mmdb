@@ -12,14 +12,15 @@ export default function getMMSourceDescriptionInputFromState(
     return;
   }
 
-  const { id, title, year, type, link, comment, references } =
+  const { id, title, year, isYearEstimated, type, link, comment, references } =
     sourceDescription;
 
   // Convert the 'type' and 'references' properties to match the SourceDescriptionInput type
   const sourceDescriptionInput: SourceDescriptionInput = {
     id,
     ...(title ? { title } : {}),
-    year: year,
+    year,
+    isYearEstimated,
     link,
     type: { value: type, label: formatToPhraseCase(type) },
     ...(comment ? { comment } : {}),

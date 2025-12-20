@@ -24,6 +24,7 @@ export async function GET(request: Request) {
       type: true,
       link: true,
       year: true,
+      isYearEstimated: true,
       comment: true,
       references: {
         select: {
