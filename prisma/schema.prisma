@@ -139,20 +139,21 @@ model MMSourcesOnPieceVersions {
 }
 
 model MMSource {
-  id             String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  title          String? // ?? Is it usefull ?
-  pieceVersions  MMSourcesOnPieceVersions[] // A source is composed of one or more pieceVersions
-  type           SOURCE_TYPE
-  link           String
-  permalink      String
-  year           Int
-  references     Reference[] // A source can have many references
-  contributions  Contribution[] // A source can have many Contributions
-  metronomeMarks MetronomeMark[] // A source can have many metronome marks
-  creator        User?                      @relation(fields: [creatorId], references: [id])
-  creatorId      String?                    @db.Uuid
-  comment        String?
-  sectionCount   Int                        @default(0)
+  id              String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title           String? // ?? Is it usefull ?
+  pieceVersions   MMSourcesOnPieceVersions[] // A source is composed of one or more pieceVersions
+  type            SOURCE_TYPE
+  link            String
+  permalink       String
+  year            Int
+  isYearEstimated Boolean                    @default(false)
+  references      Reference[] // A source can have many references
+  contributions   Contribution[] // A source can have many Contributions
+  metronomeMarks  MetronomeMark[] // A source can have many metronome marks
+  creator         User?                      @relation(fields: [creatorId], references: [id])
+  creatorId       String?                    @db.Uuid
+  comment         String?
+  sectionCount    Int                        @default(0)
 
   // Review process
   reviewState REVIEW_STATE @default(PENDING)

@@ -144,6 +144,7 @@ Table MMSource {
   link String [not null]
   permalink String [not null]
   year Int [not null]
+  isYearEstimated Boolean [not null, default: false]
   references Reference [not null]
   contributions Contribution [not null]
   metronomeMarks MetronomeMark [not null]
