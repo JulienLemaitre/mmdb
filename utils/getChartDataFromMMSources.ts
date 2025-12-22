@@ -3,10 +3,12 @@ import { ChartDatum } from "@/types/chartTypes";
 
 type GetChartDataFromMMSourcesProps = {
   mMSources?: any[];
+  sectionFilterFn?: (section: any) => boolean;
 };
 
 export default function getChartDataFromMMSources({
   mMSources,
+  sectionFilterFn,
 }: GetChartDataFromMMSourcesProps): ChartDatum[] {
   if (!mMSources || !Array.isArray(mMSources)) {
     console.error("[getChartDataFromMMSources] Invalid mMSources input");
@@ -37,6 +39,7 @@ export default function getChartDataFromMMSources({
         const hasMultipleSections = mvt.sections.length > 1;
 
         mvt.sections.forEach((section) => {
+          if (sectionFilterFn && !sectionFilterFn(section)) return;
           section?.metronomeMarks?.forEach((MM) => {
             const notesPerSecond =
               getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM({

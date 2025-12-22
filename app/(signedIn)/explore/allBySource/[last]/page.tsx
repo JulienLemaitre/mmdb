@@ -1,8 +1,8 @@
 import { db } from "@/utils/server/db";
-import MMSourcesDetails from "@/features/explore/MMSourcesDetails";
-import ShartWithNoteTypeFilter from "@/features/explore/ShartWithNoteTypeFilter";
+// import MMSourcesDetails from "@/features/explore/MMSourcesDetails";
 import React from "react";
 import getChartDataFromMMSources from "@/utils/getChartDataFromMMSources";
+import AllBySourceList from "@/features/explore/AllBySourceList";
 
 // TODO remove these lines if it updates properly when a new piece is registered, without them.
 // const dynamic = "force-dynamic";
@@ -35,6 +35,7 @@ const getData = async ({ last }) => {
           organization: true,
         },
       },
+      creator: true,
       references: true,
       pieceVersions: {
         include: {
@@ -100,10 +101,6 @@ export default async function Page(props: {
   const chartData = getChartDataFromMMSources({ mMSources });
 
   return (
-    <main className="p-8">
-      <div>{`Data created in the last ${last} day${Number(last) > 1 ? "s" : ""}.`}</div>
-      <ShartWithNoteTypeFilter chartData={chartData} />
-      <MMSourcesDetails mMSources={mMSources} />
-    </main>
+    <AllBySourceList mMSources={mMSources} chartData={chartData} last={last} />
   );
 }

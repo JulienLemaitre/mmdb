@@ -208,7 +208,7 @@ function FeedSummary() {
                     {`${getSourceTypeLabel(mMSourceToPersist.type)}`}
                   </div>
                 )}
-                <div>
+                <div className="pr-3 border-r border-info/20">
                   {mMSourceToPersist.year ? (
                     `${displaySourceYear({ year: mMSourceToPersist.year, isYearEstimated: !!mMSourceToPersist.isYearEstimated })}`
                   ) : (
@@ -217,6 +217,11 @@ function FeedSummary() {
                     </span>
                   )}
                 </div>
+                {session?.user?.name && (
+                  <div className="text-info/70">
+                    Entry by {session.user.name}
+                  </div>
+                )}
               </div>
             </div>
 

@@ -17,6 +17,12 @@ const symbolSize = 40;
 const tooltipWidth = 230;
 const nodeTransitionDuration = 300;
 const axisColor = "#979797";
+const speedColors = [
+  { threshold: 15, color: "#ef4444", label: "Very Fast (>= 15 n/s)" }, // Red 500
+  { threshold: 11, color: "#fb923c", label: "Fast (>= 11 n/s)" }, // Orange 400
+  { threshold: 8, color: "#fde68a", label: "Moderate (>= 8 n/s)" }, // Amber 200
+  { threshold: 0, color: "#ffffff", label: "Slow (< 8 n/s)" }, // White
+];
 
 function ScatterPlotChart({
   data,
@@ -92,6 +98,45 @@ function ScatterPlotChart({
       yAxis
         .attr("transform", `translate(${margin.left},0)`)
         .call(d3.axisLeft(yScale));
+
+      // Create background speed zones
+      let backgroundZones = svg.select(".background-zones");
+      if (backgroundZones.empty()) {
+        backgroundZones = svg
+          .insert("g", ":first-child")
+          .attr("class", "background-zones");
+      }
+
+      const backgroundData = [
+        { yStart: 0, yEnd: 8, color: speedColors[3].color },
+        { yStart: 8, yEnd: 11, color: speedColors[2].color },
+        { yStart: 11, yEnd: 15, color: speedColors[1].color },
+        {
+          yStart: 15,
+          yEnd: Math.max(maxNotesPerSecond, 16),
+          color: speedColors[0].color,
+        },
+      ];
+
+      backgroundZones
+        .selectAll("rect")
+        .data(backgroundData)
+        .join("rect")
+        .attr("x", margin.left)
+        .attr("width", propWidth - margin.right - margin.left)
+        .attr("y", (d) => {
+          const yEnd = Math.min(d.yEnd, yScale.domain()[1]);
+          return yScale(yEnd);
+        })
+        .attr("height", (d) => {
+          const yStart = Math.max(d.yStart, yScale.domain()[0]);
+          const yEnd = Math.min(d.yEnd, yScale.domain()[1]);
+          const y1 = yScale(yStart);
+          const y2 = yScale(yEnd);
+          return Math.max(0, y1 - y2);
+        })
+        .attr("fill", (d) => d.color)
+        .attr("opacity", 0.15);
 
       // Get the actual ticks from the y-axis
       const yAxisTicks = yAxis
@@ -400,6 +445,7 @@ function ScatterPlotChart({
           marginLeft: "0px",
         }}
       >
+        <g className="background-zones" />
         <g className="grid-lines" />
         <g className="plot-area" />
         <g className="x-axis" />

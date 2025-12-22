@@ -1,3 +1,5 @@
+"use client";
+
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import React, { Fragment } from "react";
 import getKeyLabel from "@/utils/getKeyLabel";
