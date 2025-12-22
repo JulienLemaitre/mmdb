@@ -4,14 +4,31 @@ import ShartWithNoteTypeFilter from "@/features/explore/ShartWithNoteTypeFilter"
 import React, { useState } from "react";
 import MMSourceSummary from "@/features/explore/MMSourceSummary";
 
-export default function AllBySourceList({ mMSources, chartData, last }) {
+export default function AllBySourceList({
+  mMSources,
+  chartData,
+  last,
+  message,
+}: {
+  mMSources: any[];
+  chartData: any[];
+  last?: string;
+  message?: string;
+}) {
   const [sortBySpeed, setSortBySpeed] = useState(false);
 
   return (
     <main className="p-8">
-      <div className="flex justify-between items-center mb-4">
-        <div>{`Data created in the last ${last} day${Number(last) > 1 ? "s" : ""}.`}</div>
-      </div>
+      {last && (
+        <div className="flex justify-between items-center mb-4">
+          <div>{`Data created in the last ${last} day${Number(last) > 1 ? "s" : ""}.`}</div>
+        </div>
+      )}
+      {message && (
+        <div className="flex justify-between items-center mb-4">
+          <div className="text-lg font-medium">{message}</div>
+        </div>
+      )}
 
       <ShartWithNoteTypeFilter chartData={chartData} />
 

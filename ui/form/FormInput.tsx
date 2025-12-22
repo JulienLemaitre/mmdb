@@ -203,7 +203,7 @@ export function FormInput({
         )}
       </div>
       {GetErrorMessage(errorMessage) && (
-        <div className="label-text-alt text-red-500 absolute top-full">
+        <div className="label-text-alt text-red-500 mt-1">
           {GetErrorMessage(errorMessage)}
         </div>
       )}

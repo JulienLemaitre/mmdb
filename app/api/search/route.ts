@@ -22,60 +22,66 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
   console.log(`[POST search] body :`, body);
-  const { startYear, endYear, tempoIndicationIds, composer } =
-    body as SearchFormInput;
+  const {
+    startYear,
+    endYear,
+    tempoIndicationIds = [],
+    composer,
+  } = body as SearchFormInput;
 
-  const pieceVersions = await db.pieceVersion.findMany({
+  const mMSources = await db.mMSource.findMany({
     where: {
-      piece: {
-        yearOfComposition: { gte: startYear, lte: endYear },
-        ...(composer ? { composer: { id: composer.value } } : {}),
-      },
-      ...(tempoIndicationIds.length > 0
-        ? {
-            movements: {
-              some: {
-                sections: {
-                  some: {
-                    tempoIndication: {
-                      id: {
-                        in: tempoIndicationIds,
-                      },
-                      // text: {
-                      //   contains: "Allegro",
-                      //   // contains: tempoIndication.label,
-                      // },
-                    },
-                  },
-                },
-              },
+      pieceVersions: {
+        some: {
+          pieceVersion: {
+            piece: {
+              yearOfComposition: { gte: startYear, lte: endYear },
+              ...(composer ? { composer: { id: composer.value } } : {}),
             },
-          }
-        : {}),
-    },
-    include: {
-      piece: {
-        include: {
-          composer: true,
-          collection: true,
-        },
-      },
-      movements: {
-        include: {
-          sections: {
-            include: {
-              tempoIndication: true,
-              metronomeMarks: {
-                include: {
-                  mMSource: {
-                    include: {
-                      contributions: {
-                        include: {
-                          person: true,
-                          organization: true,
+            ...(tempoIndicationIds.length > 0
+              ? {
+                  movements: {
+                    some: {
+                      sections: {
+                        some: {
+                          tempoIndication: {
+                            id: {
+                              in: tempoIndicationIds,
+                            },
+                          },
                         },
                       },
-                      references: true,
+                    },
+                  },
+                }
+              : {}),
+          },
+        },
+      },
+    },
+    include: {
+      contributions: {
+        include: {
+          person: true,
+          organization: true,
+        },
+      },
+      references: true,
+      pieceVersions: {
+        include: {
+          pieceVersion: {
+            include: {
+              piece: {
+                include: {
+                  collection: true,
+                  composer: true,
+                },
+              },
+              movements: {
+                include: {
+                  sections: {
+                    include: {
+                      tempoIndication: true,
                     },
                   },
                 },
@@ -84,23 +90,31 @@ export async function POST(req: NextRequest) {
           },
         },
       },
-      mMSources: {
-        include: {
-          mMSource: {
-            include: {
-              contributions: {
-                include: {
-                  person: true,
-                  organization: true,
-                },
-              },
-              references: true,
-            },
-          },
-        },
-      },
+      metronomeMarks: true,
+    },
+    orderBy: {
+      createdAt: "desc",
     },
   });
 
-  return NextResponse.json(pieceVersions);
+  const mMSourcesWithMMsMapped = mMSources.map((mMSource) => ({
+    ...mMSource,
+    pieceVersions: mMSource.pieceVersions.map((pvs) => ({
+      ...pvs,
+      pieceVersion: {
+        ...pvs.pieceVersion,
+        movements: pvs.pieceVersion.movements.map((mv) => ({
+          ...mv,
+          sections: mv.sections.map((section) => ({
+            ...section,
+            metronomeMarks: mMSource.metronomeMarks.filter(
+              (mm) => mm.sectionId === section.id,
+            ),
+          })),
+        })),
+      },
+    })),
+  }));
+
+  return NextResponse.json(mMSourcesWithMMsMapped);
 }

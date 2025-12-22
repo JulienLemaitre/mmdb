@@ -81,7 +81,7 @@ const ControlledSelect = ({
         styles={reactSelectStyles}
         {...selectProps}
       />
-      <div className="label-text-alt text-red-500 absolute top-full">
+      <div className="label-text-alt text-red-500 mt-1">
         {fieldError?.message || fieldError?.value?.message}
       </div>
     </div>
