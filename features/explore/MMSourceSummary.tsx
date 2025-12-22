@@ -6,7 +6,13 @@ import { displaySourceYear } from "@/utils/displaySourceYear";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 
-export default function MMSourceSummary({ mMSource }) {
+export default function MMSourceSummary({
+  mMSource,
+  sortBySpeed = false,
+}: {
+  mMSource: any;
+  sortBySpeed?: boolean;
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   // Calculate number of pieces
@@ -52,6 +58,11 @@ export default function MMSourceSummary({ mMSource }) {
       });
     });
   });
+
+  // Sort speeds if requested
+  const displaySpeeds = sortBySpeed
+    ? [...speeds].sort((a, b) => a - b)
+    : speeds;
 
   const getSpeedColor = (speed: number) => {
     if (speed >= 15) return "bg-red-500";
@@ -117,8 +128,8 @@ export default function MMSourceSummary({ mMSource }) {
 
       {/* Speed indicator line */}
       <div className="flex h-1.5 w-full">
-        {speeds.length > 0 ? (
-          speeds.map((speed, i) => (
+        {displaySpeeds.length > 0 ? (
+          displaySpeeds.map((speed, i) => (
             <div
               key={i}
               className={`flex-1 h-full ${getSpeedColor(speed)} border-r border-gray-100/20 last:border-0`}
