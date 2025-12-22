@@ -1,8 +1,9 @@
 import { db } from "@/utils/server/db";
-import MMSourcesDetails from "@/features/explore/MMSourcesDetails";
+// import MMSourcesDetails from "@/features/explore/MMSourcesDetails";
 import ShartWithNoteTypeFilter from "@/features/explore/ShartWithNoteTypeFilter";
 import React from "react";
 import getChartDataFromMMSources from "@/utils/getChartDataFromMMSources";
+import MMSourceSummary from "@/features/explore/MMSourceSummary";
 
 // TODO remove these lines if it updates properly when a new piece is registered, without them.
 // const dynamic = "force-dynamic";
@@ -103,7 +104,13 @@ export default async function Page(props: {
     <main className="p-8">
       <div>{`Data created in the last ${last} day${Number(last) > 1 ? "s" : ""}.`}</div>
       <ShartWithNoteTypeFilter chartData={chartData} />
-      <MMSourcesDetails mMSources={mMSources} />
+      {/*<MMSourcesDetails mMSources={mMSources} />*/}
+      {mMSources.map((mMSource) => {
+        // console.log("comp-" + mMSource.id);
+        return (
+          <MMSourceSummary key={"comp-" + mMSource.id} mMSource={mMSource} />
+        );
+      })}
     </main>
   );
 }
