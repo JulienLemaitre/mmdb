@@ -23,6 +23,27 @@ export default function MMSourceSummary({
   // Calculate number of pieces
   const pieceCount = mMSource.pieceVersions.length;
 
+  // Identify collection or pieces for display
+  const allCollections = mMSource.pieceVersions
+    .map((pvs: any) => pvs.pieceVersion?.piece?.collection)
+    .filter((c: any) => c !== null);
+
+  const uniqueCollectionIds = new Set(allCollections.map((c: any) => c.id));
+  const isCompleteCollection =
+    uniqueCollectionIds.size === 1 &&
+    allCollections.length === mMSource.pieceVersions.length;
+
+  const collectionName = isCompleteCollection ? allCollections[0].title : null;
+  const pieceTitles = !isCompleteCollection
+    ? Array.from(
+        new Set(
+          mMSource.pieceVersions.map(
+            (pvs: any) => pvs.pieceVersion?.piece?.title,
+          ),
+        ),
+      ).join(", ")
+    : null;
+
   // Collect all speed computations for the indicator line
   const speeds: number[] = [];
   mMSource.pieceVersions.forEach((pvs) => {
@@ -83,6 +104,11 @@ export default function MMSourceSummary({
         <div className="p-4 border-l-2 border-l-info/10 hover:border-l-info transition-all duration-150">
           <div className="flex justify-between items-start">
             <div className="flex-1">
+              <div className="mb-1">
+                <span className="text-lg font-semibold text-info">
+                  {collectionName || pieceTitles}
+                </span>
+              </div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="font-bold text-lg text-info">
                   {displaySourceYear(mMSource)} -{" "}
@@ -99,6 +125,7 @@ export default function MMSourceSummary({
                 {mMSource.createdAt && (
                   <span>
                     Entry: {new Date(mMSource.createdAt).toLocaleDateString()}
+                    {mMSource.creator?.name && ` by ${mMSource.creator.name}`}
                   </span>
                 )}
                 <span>
@@ -122,42 +149,48 @@ export default function MMSourceSummary({
               )}
 
               {mMSource.references && mMSource.references.length > 0 && (
-                <div className="mb-2 text-xs">
-                  <h4 className="uppercase text-[10px] text-info font-bold mb-0.5">
-                    References
-                  </h4>
-                  <ul className="list-disc pl-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+                <div className="mb-1 text-xs flex flex-wrap items-baseline gap-x-2">
+                  <span className="uppercase text-[10px] text-info font-bold shrink-0">
+                    References:
+                  </span>
+                  <div className="flex flex-wrap gap-x-2">
                     {mMSource.references.map((ref: any, idx: number) => (
-                      <li key={idx}>
+                      <span key={idx}>
                         <span className="font-medium">
                           {getReferenceTypeLabel(ref.type)}:{" "}
                         </span>
                         {ref.reference}
-                      </li>
+                        {idx < mMSource.references.length - 1 && (
+                          <span className="ml-2 text-base-content/30">/</span>
+                        )}
+                      </span>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               )}
 
               {mMSource.contributions && mMSource.contributions.length > 0 && (
-                <div className="text-xs">
-                  <h4 className="uppercase text-[10px] text-info font-bold mb-0.5">
-                    Contributors
-                  </h4>
-                  <ul className="list-disc pl-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+                <div className="text-xs flex flex-wrap items-baseline gap-x-2">
+                  <span className="uppercase text-[10px] text-info font-bold shrink-0">
+                    Contributors:
+                  </span>
+                  <div className="flex flex-wrap gap-x-2">
                     {mMSource.contributions.map(
                       (contribution: any, idx: number) => (
-                        <li key={idx}>
+                        <span key={idx}>
                           <span className="font-medium">
                             {getRoleLabel(contribution.role)}:{" "}
                           </span>
                           {contribution.person
                             ? `${contribution.person.firstName} ${contribution.person.lastName}`
                             : contribution.organization?.name}
-                        </li>
+                          {idx < mMSource.contributions.length - 1 && (
+                            <span className="ml-2 text-base-content/30">/</span>
+                          )}
+                        </span>
                       ),
                     )}
-                  </ul>
+                  </div>
                 </div>
               )}
             </div>

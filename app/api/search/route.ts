@@ -66,6 +66,7 @@ export async function POST(req: NextRequest) {
           organization: true,
         },
       },
+      creator: true,
       references: true,
       pieceVersions: {
         include: {

@@ -35,6 +35,7 @@ const getData = async ({ last }) => {
           organization: true,
         },
       },
+      creator: true,
       references: true,
       pieceVersions: {
         include: {
