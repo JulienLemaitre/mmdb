@@ -39,7 +39,16 @@ function PieceVersionSelectOrCreate({
   const [existingPieceVersions, setExistingPieceVersions] = useState<
     PieceVersionState[] | null
   >(null);
-  const [isLoading, setIsLoading] = useState(!isDataFetchDisabled);
+
+  // TRACKING STATE: Keeps track of which ID corresponds to the currently loaded data
+  const [fetchedPieceId, setFetchedPieceId] = useState<string | null>(null);
+
+  // DERIVED STATE: We are loading if we have an ID to fetch, fetching isn't disabled,
+  // and the data we have in memory doesn't match the selected ID.
+  const isLoading =
+    !isDataFetchDisabled &&
+    !!selectedPieceId &&
+    fetchedPieceId !== selectedPieceId;
 
   const newPieceVersions: PieceVersionState[] = getNewEntities(
     feedFormState,
@@ -68,30 +77,34 @@ function PieceVersionSelectOrCreate({
     );
 
   // Fetch all pieceVersions for selectedPieceId
-  // => triggered by isLoading = true
+  // Consolidated Effect: Only fetches data. Does not manage "start loading" state.
   useEffect(() => {
-    if (!isLoading) {
-      console.log(
-        `[useEffect] DON'T Fetch pieceVersions for selectedPieceId ${selectedPieceId}`,
-      );
+    // Only proceed if the derived isLoading is true
+    if (!isLoading || !selectedPieceId) {
       return;
     }
 
+    let isMounted = true;
     console.log(
       `[useEffect] Fetch pieceVersions for selectedPieceId ${selectedPieceId}`,
     );
+
     fetch(URL_API_GETALL_PIECE_PIECE_VERSIONS + "?pieceId=" + selectedPieceId, {
       cache: "no-store",
     })
       .then((res) => res.json())
       .then((data) => {
-        const pieceVersions: PieceVersionState[] = data?.pieceVersions;
-        if (!pieceVersions?.length) {
-          console.log(
-            `[PieceVersionSelectOrCreate useEffect] No piece version found for piece ${selectedPieceId}`,
-          );
-        } else {
-          setExistingPieceVersions(pieceVersions);
+        if (isMounted) {
+          const pieceVersions: PieceVersionState[] = data?.pieceVersions;
+          setExistingPieceVersions(pieceVersions || []);
+          if ((pieceVersions || [])?.length === 0) {
+            console.log(
+              `[PieceVersionSelectOrCreate useEffect] No pieceVersions found for pieceId ${selectedPieceId} => SWITCH to edition mode.`,
+            );
+            setIsEditMode(true);
+          }
+          // Mark this ID as successfully fetched. This implicitly sets isLoading to false.
+          setFetchedPieceId(selectedPieceId);
         }
       })
       .catch((err) => {
@@ -99,18 +112,17 @@ function PieceVersionSelectOrCreate({
           `[fetch("URL_API_GETALL_PIECE_PIECE_VERSIONS?pieceId=${selectedPieceId}")] err :`,
           err,
         );
-      })
-      .finally(() => {
-        setIsLoading(false);
+        if (isMounted) {
+          // On error, we technically "finished" attempting to fetch this ID
+          setExistingPieceVersions([]);
+          setFetchedPieceId(selectedPieceId);
+        }
       });
-  }, [isLoading, selectedPieceId]);
 
-  // Set isLoading = true to trigger pieceVersion data fetching on selectedPieceId change
-  useEffect(() => {
-    if (!isDataFetchDisabled) {
-      setIsLoading(true);
-    }
-  }, [isDataFetchDisabled, selectedPieceId]);
+    return () => {
+      isMounted = false;
+    };
+  }, [isLoading, selectedPieceId]);
 
   const onInitPieceVersionCreation = () => {
     onInitPieceVersionCreationFn();
@@ -121,7 +133,9 @@ function PieceVersionSelectOrCreate({
     if (hasPieceVersionJustBeenCreated) {
       onCancelPieceVersionCreation();
     }
-    setIsLoading(true);
+    // Force a re-fetch (refresh) by resetting the tracking ID.
+    // This makes (null !== selectedPieceId) true, causing isLoading to become true.
+    setFetchedPieceId(null);
     setIsEditMode(false);
   };
 
