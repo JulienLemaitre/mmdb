@@ -12,9 +12,11 @@ import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/g
 export default function MMSourceSummary({
   mMSource,
   sortBySpeed = false,
+  tempoIndicationIds = [],
 }: {
   mMSource: any;
   sortBySpeed?: boolean;
+  tempoIndicationIds?: string[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -26,6 +28,14 @@ export default function MMSourceSummary({
   mMSource.pieceVersions.forEach((pvs) => {
     pvs.pieceVersion.movements.forEach((mv) => {
       mv.sections.forEach((section) => {
+        // Filter by tempo indication if provided
+        if (
+          tempoIndicationIds.length > 0 &&
+          !tempoIndicationIds.includes(section?.tempoIndication?.id)
+        ) {
+          return;
+        }
+
         section.metronomeMarks.forEach((mm) => {
           if (mm.noMM) return;
           try {
@@ -194,7 +204,10 @@ export default function MMSourceSummary({
       {/* Expandable details */}
       {isOpen && (
         <div className="p-2 sm:p-4 border-t border-base-300 bg-base-100">
-          <MMSourceDetailsCompact mMSource={mMSource} />
+          <MMSourceDetailsCompact
+            mMSource={mMSource}
+            tempoIndicationIds={tempoIndicationIds}
+          />
         </div>
       )}
     </div>

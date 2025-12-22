@@ -7,8 +7,10 @@ import { SectionDetail } from "@/features/section/ui/SectionDetail";
 
 export default function MMSourceDetailsCompact({
   mMSource,
+  tempoIndicationIds = [],
 }: {
   mMSource: any;
+  tempoIndicationIds?: string[];
 }) {
   // Utility function to organize piece versions into groups by collection
   // Adapted from FeedSummary.tsx
@@ -33,6 +35,16 @@ export default function MMSourceDetailsCompact({
     sortedPvs.forEach((pvs: any) => {
       const pieceVersion = pvs.pieceVersion;
       if (!pieceVersion) return;
+
+      // Filter pieceVersion based on whether it contains any of the selected tempo indications
+      if (tempoIndicationIds.length > 0) {
+        const hasMatchingSection = pieceVersion.movements?.some((mv: any) =>
+          mv.sections?.some((section: any) =>
+            tempoIndicationIds.includes(section?.tempoIndication?.id),
+          ),
+        );
+        if (!hasMatchingSection) return;
+      }
 
       const piece = pieceVersion?.piece;
       const collection = piece?.collection;
@@ -133,8 +145,17 @@ export default function MMSourceDetailsCompact({
 
                           {/* Movements and Sections */}
                           <div className="py-1">
-                            {pieceVersion.movements?.map(
-                              (movement: any, mvtIndex: number) => (
+                            {pieceVersion.movements
+                              ?.filter((mv: any) => {
+                                if (tempoIndicationIds.length === 0)
+                                  return true;
+                                return mv.sections?.some((section: any) =>
+                                  tempoIndicationIds.includes(
+                                    section?.tempoIndication?.id,
+                                  ),
+                                );
+                              })
+                              .map((movement: any, mvtIndex: number) => (
                                 <div
                                   key={`mvt-${mvtIndex}`}
                                   className={
@@ -153,16 +174,23 @@ export default function MMSourceDetailsCompact({
                                   )}
 
                                   <div className="ml-1 space-y-1 py-1">
-                                    {movement.sections?.map((section: any) => (
-                                      <SectionDetail
-                                        key={section.id}
-                                        section={section}
-                                      />
-                                    ))}
+                                    {movement.sections
+                                      ?.filter((section: any) => {
+                                        if (tempoIndicationIds.length === 0)
+                                          return true;
+                                        return tempoIndicationIds.includes(
+                                          section?.tempoIndication?.id,
+                                        );
+                                      })
+                                      .map((section: any) => (
+                                        <SectionDetail
+                                          key={section.id}
+                                          section={section}
+                                        />
+                                      ))}
                                   </div>
                                 </div>
-                              ),
-                            )}
+                              ))}
                           </div>
                         </div>
                       );
@@ -208,8 +236,16 @@ export default function MMSourceDetailsCompact({
 
                   {/* Movements and Sections */}
                   <div className="py-1">
-                    {pieceVersion.movements?.map(
-                      (movement: any, mvtIndex: number) => (
+                    {pieceVersion.movements
+                      ?.filter((mv: any) => {
+                        if (tempoIndicationIds.length === 0) return true;
+                        return mv.sections?.some((section: any) =>
+                          tempoIndicationIds.includes(
+                            section?.tempoIndication?.id,
+                          ),
+                        );
+                      })
+                      .map((movement: any, mvtIndex: number) => (
                         <div
                           key={`mvt-${mvtIndex}`}
                           className={
@@ -227,16 +263,23 @@ export default function MMSourceDetailsCompact({
                           )}
 
                           <div className="ml-1 space-y-1 py-1">
-                            {movement.sections?.map((section: any) => (
-                              <SectionDetail
-                                key={section.id}
-                                section={section}
-                              />
-                            ))}
+                            {movement.sections
+                              ?.filter((section: any) => {
+                                if (tempoIndicationIds.length === 0)
+                                  return true;
+                                return tempoIndicationIds.includes(
+                                  section?.tempoIndication?.id,
+                                );
+                              })
+                              .map((section: any) => (
+                                <SectionDetail
+                                  key={section.id}
+                                  section={section}
+                                />
+                              ))}
                           </div>
                         </div>
-                      ),
-                    )}
+                      ))}
                   </div>
                 </div>
               </li>

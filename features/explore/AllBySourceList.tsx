@@ -9,11 +9,13 @@ export default function AllBySourceList({
   chartData,
   last,
   message,
+  tempoIndicationIds = [],
 }: {
   mMSources: any[];
   chartData: any[];
   last?: string;
   message?: string;
+  tempoIndicationIds?: string[];
 }) {
   const [sortBySpeed, setSortBySpeed] = useState(false);
 
@@ -55,6 +57,7 @@ export default function AllBySourceList({
           key={"comp-" + mMSource.id}
           mMSource={mMSource}
           sortBySpeed={sortBySpeed}
+          tempoIndicationIds={tempoIndicationIds}
         />
       ))}
     </main>

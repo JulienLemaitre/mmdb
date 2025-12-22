@@ -290,6 +290,7 @@ function SearchPage() {
             mMSources={mMSourceResults}
             chartData={chartData}
             message={`Search results: ${mMSourceResults.length} source${mMSourceResults.length > 1 ? "s" : ""} found.`}
+            tempoIndicationIds={lastSearch.tempoIndicationIds}
           />
         </div>
       )}
