@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import MMSourceDetails from "./MMSourceDetails";
+import MMSourceDetailsCompact from "./MMSourceDetailsCompact";
 import { displaySourceYear } from "@/utils/displaySourceYear";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
+import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
+import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
+import getRoleLabel from "@/utils/getRoleLabel";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 
 export default function MMSourceSummary({
@@ -17,16 +20,6 @@ export default function MMSourceSummary({
 
   // Calculate number of pieces
   const pieceCount = mMSource.pieceVersions.length;
-
-  // Get contributors
-  const contributors = mMSource.contributions
-    .map((c) => {
-      const name = c.person
-        ? `${c.person.firstName} ${c.person.lastName}`
-        : c.organization?.name;
-      return `${c.role}: ${name}`;
-    })
-    .join(", ");
 
   // Collect all speed computations for the indicator line
   const speeds: number[] = [];
@@ -72,57 +65,114 @@ export default function MMSourceSummary({
   };
 
   return (
-    <div className="my-4 border border-base-300 rounded-lg overflow-hidden shadow-sm">
+    <div className="my-4 border border-base-300 rounded-lg overflow-hidden shadow-sm transition-all duration-200">
       <div
-        className="p-4 cursor-pointer hover:bg-base-200 transition-colors flex justify-between items-center bg-base-100"
+        className="cursor-pointer hover:bg-base-200 transition-colors bg-base-100"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="font-bold text-lg">
-              {displaySourceYear(mMSource)} -{" "}
-              {getSourceTypeLabel(mMSource.type)}
-            </span>
-            {mMSource.title && (
-              <span className="text-base-content/70">| {mMSource.title}</span>
-            )}
+        <div className="p-4 border-l-2 border-l-info/10 hover:border-l-info transition-all duration-150">
+          <div className="flex justify-between items-start">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-bold text-lg text-info">
+                  {displaySourceYear(mMSource)} -{" "}
+                  {getSourceTypeLabel(mMSource.type)}
+                </span>
+                {mMSource.title && (
+                  <span className="text-info font-medium">
+                    | {mMSource.title}
+                  </span>
+                )}
+              </div>
+
+              <div className="text-xs text-base-content/70 flex flex-wrap gap-x-4 gap-y-1 mb-2">
+                {mMSource.createdAt && (
+                  <span>
+                    Entry: {new Date(mMSource.createdAt).toLocaleDateString()}
+                  </span>
+                )}
+                <span>
+                  Pieces: <span className="font-bold">{pieceCount}</span>
+                </span>
+              </div>
+
+              {mMSource.link && (
+                <div className="mb-2 text-xs">
+                  <span className="font-semibold">Link: </span>
+                  <a
+                    href={getIMSLPPermaLink(mMSource.link)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="link link-primary break-all"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {mMSource.link}
+                  </a>
+                </div>
+              )}
+
+              {mMSource.references && mMSource.references.length > 0 && (
+                <div className="mb-2 text-xs">
+                  <h4 className="uppercase text-[10px] text-info font-bold mb-0.5">
+                    References
+                  </h4>
+                  <ul className="list-disc pl-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+                    {mMSource.references.map((ref: any, idx: number) => (
+                      <li key={idx}>
+                        <span className="font-medium">
+                          {getReferenceTypeLabel(ref.type)}:{" "}
+                        </span>
+                        {ref.reference}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {mMSource.contributions && mMSource.contributions.length > 0 && (
+                <div className="text-xs">
+                  <h4 className="uppercase text-[10px] text-info font-bold mb-0.5">
+                    Contributors
+                  </h4>
+                  <ul className="list-disc pl-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+                    {mMSource.contributions.map(
+                      (contribution: any, idx: number) => (
+                        <li key={idx}>
+                          <span className="font-medium">
+                            {getRoleLabel(contribution.role)}:{" "}
+                          </span>
+                          {contribution.person
+                            ? `${contribution.person.firstName} ${contribution.person.lastName}`
+                            : contribution.organization?.name}
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                </div>
+              )}
+            </div>
+
+            <div className="ml-4">
+              <button
+                className={`btn btn-ghost btn-sm btn-circle transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
-          <div className="text-sm flex flex-wrap gap-x-4 gap-y-1">
-            {contributors && (
-              <span className="text-base-content/80">{contributors}</span>
-            )}
-            <span className="text-base-content/80">
-              Pieces:{" "}
-              <span className="font-medium text-base-content">
-                {pieceCount}
-              </span>
-            </span>
-            {mMSource.createdAt && (
-              <span className="text-base-content/60 italic text-xs">
-                Entry: {new Date(mMSource.createdAt).toLocaleDateString()}
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <button
-            className={`btn btn-ghost btn-sm btn-circle transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m19.5 8.25-7.5 7.5-7.5-7.5"
-              />
-            </svg>
-          </button>
         </div>
       </div>
 
@@ -143,8 +193,8 @@ export default function MMSourceSummary({
 
       {/* Expandable details */}
       {isOpen && (
-        <div className="p-4 border-t border-base-300 bg-base-50">
-          <MMSourceDetails mMSource={mMSource} />
+        <div className="p-2 sm:p-4 border-t border-base-300 bg-base-100">
+          <MMSourceDetailsCompact mMSource={mMSource} />
         </div>
       )}
     </div>
