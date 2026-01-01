@@ -65,3 +65,19 @@ export const COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE: CollectionPieceVersion
     pieceVersions: [],
     tempoIndications: [],
   };
+
+export const userRole = {
+  USER: "USER",
+  EDITOR: "EDITOR",
+  REVIEWER: "REVIEWER",
+  ADMIN: "ADMIN",
+} as const;
+
+export type UserRole = (typeof userRole)[keyof typeof userRole];
+
+export const userRoleOrderedList = [
+  userRole.USER,
+  userRole.EDITOR,
+  userRole.REVIEWER,
+  userRole.ADMIN,
+] as const;

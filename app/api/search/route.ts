@@ -1,63 +1,66 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/server/db";
-// import isReqAuthorized from "@/utils/isReqAuthorized";
 import { SearchFormInput } from "@/types/formTypes";
-// import getDecodedTokenFromReq from "@/utils/getDecodedTokenFromReq";
-// import { OptionInput } from "@/types/formTypes";
+import { hasMinimalRole } from "@/utils/server/hasMinimalRole";
+import { userRole } from "@/utils/constants";
+import {
+  forbiddenResponse,
+  unauthorizedResponse,
+} from "@/utils/server/apiRouteResponse";
+import { prodLog } from "@/utils/debugLogger";
 
 export async function POST(req: NextRequest) {
-  // if (!isReqAuthorized(req)) {
-  //   return new Response(JSON.stringify({ error: "Unauthorized" }), {
-  //     status: 401,
-  //   });
-  // }
+  try {
+    const isAuthorized = await hasMinimalRole(userRole.EDITOR);
 
-  // const decodedToken = await getDecodedTokenFromReq(req);
-  // const creatorId = decodedToken?.id;
-  // if (!creatorId) {
-  //   return new Response(JSON.stringify({ error: "Unauthorized creator" }), {
-  //     status: 401,
-  //   });
-  // }
+    if (!isAuthorized) {
+      return forbiddenResponse();
+    }
+  } catch (_e) {
+    return unauthorizedResponse();
+  }
 
   const body = await req.json();
-  console.log(`[POST search] body :`, body);
+  prodLog.info(`[POST search] body :`, body);
   const {
     startYear,
     endYear,
     tempoIndicationIds = [],
     composer,
   } = body as SearchFormInput;
+  const hasTempoIndicationIds = tempoIndicationIds.length > 0;
 
   const mMSources = await db.mMSource.findMany({
     where: {
-      pieceVersions: {
-        some: {
-          pieceVersion: {
-            piece: {
-              yearOfComposition: { gte: startYear, lte: endYear },
-              ...(composer ? { composer: { id: composer.value } } : {}),
-            },
-            ...(tempoIndicationIds.length > 0
-              ? {
-                  movements: {
-                    some: {
-                      sections: {
-                        some: {
-                          tempoIndication: {
-                            id: {
-                              in: tempoIndicationIds,
+      year: { gte: startYear, lte: endYear },
+      ...((hasTempoIndicationIds || composer) && {
+        pieceVersions: {
+          some: {
+            pieceVersion: {
+              ...(composer
+                ? { piece: { composer: { id: composer.value } } }
+                : {}),
+              ...(hasTempoIndicationIds
+                ? {
+                    movements: {
+                      some: {
+                        sections: {
+                          some: {
+                            tempoIndication: {
+                              id: {
+                                in: tempoIndicationIds,
+                              },
                             },
                           },
                         },
                       },
                     },
-                  },
-                }
-              : {}),
+                  }
+                : {}),
+            },
           },
         },
-      },
+      }),
     },
     include: {
       contributions: {
