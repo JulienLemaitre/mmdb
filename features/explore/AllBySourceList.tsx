@@ -1,6 +1,6 @@
 "use client";
 
-import ShartWithNoteTypeFilter from "@/features/explore/ShartWithNoteTypeFilter";
+import ChartWithNoteTypeFilter from "@/features/explore/ChartWithNoteTypeFilter";
 import React, { useState } from "react";
 import MMSourceSummary from "@/features/explore/MMSourceSummary";
 
@@ -32,7 +32,7 @@ export default function AllBySourceList({
         </div>
       )}
 
-      <ShartWithNoteTypeFilter chartData={chartData} />
+      <ChartWithNoteTypeFilter chartData={chartData} />
 
       <div className="flex items-center gap-2">
         <span className="text-sm font-medium">Order segments by:</span>

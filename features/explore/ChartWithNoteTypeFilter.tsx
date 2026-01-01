@@ -7,7 +7,7 @@ type ShartWithNoteTypeFilterProps = {
   chartData: ChartDatum[];
 };
 
-export default function ShartWithNoteTypeFilter({
+export default function ChartWithNoteTypeFilter({
   chartData,
 }: ShartWithNoteTypeFilterProps) {
   const [notesToShow, setNotesToShow] = useState({
@@ -33,7 +33,11 @@ export default function ShartWithNoteTypeFilter({
                 <span className="label-text mr-2">{noteType}</span>
                 <input
                   type="checkbox"
-                  checked={notesToShow[noteType.toLowerCase()]}
+                  checked={
+                    notesToShow[
+                      noteType.toLowerCase() as keyof typeof notesToShow
+                    ]
+                  }
                   className="checkbox checkbox-xs"
                   onChange={(e) => {
                     setNotesToShow((cur) => ({
