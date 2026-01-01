@@ -28,7 +28,7 @@ const Tooltip = ({
 
   return (
     <div
-      className={`rounded-md bg-gray-300 text-gray-800 dark:bg-gray-900 dark:text-gray-300 p-2 text-sm shadow-md absolute pointer-events-none transition-all ease-in-out duration-250`}
+      className={`rounded-md bg-gray-300 text-gray-800 dark:bg-gray-900 dark:text-gray-300 p-2 text-sm shadow-md fixed pointer-events-none transition-all ease-in-out duration-250`}
       style={{ left, top, bottom, width, opacity }}
     >
       <h2 className="card-title text-sm">{`${(data.yVal || data.y).toFixed(2)} - ${noteType}`}</h2>

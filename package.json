@@ -26,6 +26,7 @@
     "css-reset-and-normalize": "2.3.6",
     "d3": "7.9.0",
     "dotenv": "17.2.3",
+    "framer-motion": "12.23.26",
     "jsonwebtoken": "9.0.3",
     "just-safe-get": "4.2.0",
     "lodash": "4.17.21",

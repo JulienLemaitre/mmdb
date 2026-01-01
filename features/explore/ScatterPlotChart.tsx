@@ -330,7 +330,7 @@ function ScatterPlotChart({
                   .style("fill", "red");
                 setTooltipData(d);
                 setTooltipOpacity(1);
-                setTooltipPosition({ x: event.pageX, y: event.pageY });
+                setTooltipPosition({ x: event.clientX, y: event.clientY });
               })
               .on("mouseout", function (event, d) {
                 //@ts-ignore
@@ -456,18 +456,18 @@ function ScatterPlotChart({
         width={`${tooltipWidth}px`}
         left={
           tooltipPosition.x < (width + margin.left) / 2
-            ? `${tooltipPosition.x + 10}px`
-            : `${tooltipPosition.x - tooltipWidth - 70}px`
+            ? `${tooltipPosition.x + 30}px`
+            : `${tooltipPosition.x - tooltipWidth - 30}px`
         }
         top={
           tooltipPosition.y < (height + margin.top) / 2
-            ? `${tooltipPosition.y - 150}px`
+            ? `${Math.max(10, tooltipPosition.y - 20)}px`
             : undefined
         }
         bottom={
           tooltipPosition.y < (height + margin.top) / 2
             ? undefined
-            : `${propHeight - tooltipPosition.y + 50}px`
+            : `${Math.max(10, propHeight - tooltipPosition.y + 50)}px`
         }
         opacity={tooltipOpacity}
       />

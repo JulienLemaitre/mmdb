@@ -22,6 +22,10 @@ import TempoIndicationSearch from "@/features/explore/TempoIndicationSearch";
 import { ChartDatum } from "@/types/chartTypes";
 import getChartDataFromMMSources from "@/utils/getChartDataFromMMSources";
 import AllBySourceList from "@/features/explore/AllBySourceList";
+import {
+  toastNotificationAction,
+  useToastNotification,
+} from "@/context/toastNotification";
 
 // TODO: What do we want in addition to what is already there:
 //  1. Show all mms that result in speeds of more / less than X notes per second with a selection of note type (strutural, repeated etc.) e.g. show me all Sources that have MMs that result in more than 15 nps (structural)
@@ -39,6 +43,7 @@ const searchFormSchema = z.object({
 });
 
 function SearchPage() {
+  const { notify } = useToastNotification();
   const {
     register,
     handleSubmit,
@@ -137,6 +142,10 @@ function SearchPage() {
 
   const onInvalid = (errors: any) => {
     console.log(`[onInvalid] form errors :`, errors);
+    notify(
+      toastNotificationAction.ERROR,
+      "Form Validation Error: Please check the fields marked in red.",
+    );
   };
 
   return (
@@ -148,37 +157,6 @@ function SearchPage() {
         </Link>
       </div>
 
-      {Object.keys(errors).length > 0 && (
-        <div className="alert alert-error mb-6">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="stroke-current shrink-0 h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <div>
-            <h3 className="font-bold">Form Validation Error</h3>
-            <div className="text-xs">
-              Please check the fields marked in red.
-              <ul className="list-disc pl-4 mt-1">
-                {Object.entries(errors).map(([key, error]: [string, any]) => (
-                  <li key={key}>
-                    {key}: {error?.message || "Invalid value"}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      )}
-
       <form
         className="flex"
         onSubmit={handleSubmit(onSubmit, onInvalid)}
@@ -187,14 +165,14 @@ function SearchPage() {
         <div className="w-1/3">
           <FormInput
             name="startYear"
-            label="Start Date of composition"
+            label="Min Date of publication"
             inputMode="numeric"
             isRequired
             {...{ control, errors, register }}
           />
           <FormInput
             name="endYear"
-            label="End Date of composition"
+            label="Max Date of publication"
             inputMode="numeric"
             isRequired
             {...{ control, errors, register }}
