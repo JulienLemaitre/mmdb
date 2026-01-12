@@ -1,3 +1,6 @@
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
 const nextJest = require("next/jest");
 
 const createJestConfig = nextJest({
@@ -9,6 +12,9 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testEnvironment: "jest-environment-jsdom",
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/$1",
+  },
 };
 
 // // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
@@ -22,11 +28,13 @@ const customJestConfig = {
 // Take the returned async function...
 const asyncConfig = createJestConfig(customJestConfig);
 
-// and wrap it...
-module.exports = async () => {
+// Export using ESM syntax
+const jestConfig = async () => {
   const config = await asyncConfig();
   config.transformIgnorePatterns = [
     "/node_modules/(?!uuid)/", // transform uuid package to use it in tests
   ];
   return config;
 };
+
+export default jestConfig;
