@@ -37,6 +37,19 @@ function makeOverview() {
 describe("Review lifecycle UI integration: submit flow", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+
+    // Mock HTMLDialogElement methods for JSDOM
+    HTMLDialogElement.prototype.showModal = jest.fn(function (
+      this: HTMLDialogElement,
+    ) {
+      this.setAttribute("open", "");
+    });
+    HTMLDialogElement.prototype.close = jest.fn(function (
+      this: HTMLDialogElement,
+    ) {
+      this.removeAttribute("open");
+    });
+
     // @ts-ignore
     global.fetch = jest.fn(
       async (input: RequestInfo | URL, init?: RequestInit) => {
@@ -45,7 +58,23 @@ describe("Review lifecycle UI integration: submit flow", () => {
           return { ok: true, json: async () => makeOverview() } as any;
         }
         if (url.includes("/api/review/r-1/submit")) {
-          return { ok: true, json: async () => ({ ok: true }) } as any;
+          const summary = {
+            reviewId: "r-1",
+            overallComment: "super review",
+            requiredCount: 66,
+            submittedCheckedCount: 70,
+            changedCount: 0,
+            entitiesTouched: [],
+            changedFieldPathsSample: [],
+          };
+          const auditPreview = {
+            count: 0,
+            entries: [],
+          };
+          return {
+            ok: true,
+            json: async () => ({ ok: true, summary, auditPreview }),
+          } as any;
         }
         return {
           ok: false,
@@ -60,9 +89,7 @@ describe("Review lifecycle UI integration: submit flow", () => {
   it("submits when all required are pre-checked, clears local storage, and navigates to review list", async () => {
     const overview = makeOverview();
     const required = expandRequiredChecklistItems(overview.graph);
-    const allKeys = required.map(
-      (it) => `${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`,
-    );
+    const allKeys = required.map((it) => it.fieldPath);
 
     // Pre-populate checked keys so submit button is enabled without clicking all checkboxes
     localStorage.setItem("review:r-1:checklist", JSON.stringify(allKeys));
@@ -82,6 +109,13 @@ describe("Review lifecycle UI integration: submit flow", () => {
 
     const user = userEvent.setup();
     await user.click(submit);
+
+    // Wait for the success modal to appear
+    await screen.findByText(/Review submitted successfully/i);
+
+    // Find and click the close button in the modal to trigger the redirect logic
+    const closeBtn = screen.getByRole("button", { name: /close/i }); // Adjust name if it's "OK" or similar
+    await user.click(closeBtn);
 
     // Expect navigation to review list
     await waitFor(() => {

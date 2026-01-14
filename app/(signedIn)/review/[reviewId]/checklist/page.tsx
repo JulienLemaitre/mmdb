@@ -69,8 +69,8 @@ export default function ChecklistPage() {
   const [currentView, setCurrentView] = useState<ReviewView>({
     view: "SUMMARY",
   });
-  const isCollectionView = currentView.view === "COLLECTION";
-  const isPieceView = currentView.view === "PIECE";
+  const isCollectionView = currentView?.view === "COLLECTION";
+  const isPieceView = currentView?.view === "PIECE";
 
   const onInfoModalOpen = (modalId: string) => {
     //@ts-ignore => Daisy UI modal has an unconventional showModal method
@@ -391,7 +391,9 @@ export default function ChecklistPage() {
           currentView: ReviewView;
           fieldPath?: string;
         };
-        setCurrentView(ret.currentView);
+        if (ret.currentView) {
+          setCurrentView(ret.currentView);
+        }
         // Simplified scroll restoration
         setTimeout(() => {
           if (ret.fieldPath) {
@@ -501,6 +503,7 @@ export default function ChecklistPage() {
           <div className="flex items-center gap-3">
             <button
               type="button"
+              role="button"
               className="btn btn-primary"
               disabled={submitDisabled}
               onClick={async () => {

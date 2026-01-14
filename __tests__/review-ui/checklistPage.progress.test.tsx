@@ -9,9 +9,18 @@ import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequ
 // Mock Next.js navigation hooks with stable object identity
 const pushMock = jest.fn();
 const routerMock = { push: pushMock };
+
 jest.mock("next/navigation", () => ({
   useParams: () => ({ reviewId: "r-1" }),
   useRouter: () => routerMock,
+}));
+
+jest.mock("@/features/review/reviewEditBridge", () => ({
+  ...jest.requireActual("@/features/review/reviewEditBridge"),
+  rebuildWorkingCopyFromFeedForm: (_state: any, prev: any) => ({
+    ...prev,
+    updatedAt: new Date().toISOString(),
+  }),
 }));
 
 function makeOverview() {
@@ -104,7 +113,7 @@ describe("ChecklistPage progress UI", () => {
     // Pre-check the first 3 items in localStorage
     const prechecked = required
       .slice(0, Math.min(3, total))
-      .map((it) => `${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`);
+      .map((it) => it.fieldPath);
     localStorage.setItem("review:r-1:checklist", JSON.stringify(prechecked));
 
     // Simulate return from edit with a sliceKey targeting one of the prechecked items

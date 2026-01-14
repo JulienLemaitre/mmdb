@@ -10,6 +10,14 @@ jest.mock("next/navigation", () => ({
   useRouter: () => ({ push: jest.fn() }),
 }));
 
+jest.mock("@/features/review/reviewEditBridge", () => ({
+  ...jest.requireActual("@/features/review/reviewEditBridge"),
+  rebuildWorkingCopyFromFeedForm: (_state: any, prev: any) => ({
+    ...prev,
+    updatedAt: new Date().toISOString(),
+  }),
+}));
+
 // Use the real provider so the hook in the page can resolve
 import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
 import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
@@ -67,12 +75,16 @@ describe("Back-to-review restoration (slice + scroll)", () => {
     // Also set a return-route payload with both sliceKey and scrollY
     localStorage.setItem(
       "review:r-1:returnRoute",
-      JSON.stringify({ reviewId: "r-1", sliceKey, scrollY: 123 }),
+      JSON.stringify({
+        currentView: { view: "SUMMARY" }, // Provide the actual view object
+        fieldPath: sliceKey, // page.tsx expects 'fieldPath', not 'sliceKey'
+      }),
     );
 
     // Spy on scrollIntoView to verify anchor scrolling is used (jsdom lacks it by default)
     (HTMLElement.prototype as any).scrollIntoView = jest.fn();
     const spy = (HTMLElement.prototype as any).scrollIntoView as jest.Mock;
+    // TODO: implement scrollIntoView call so this test passes
 
     render(
       <ReviewWorkingCopyProvider reviewId="r-1" initialGraph={overview.graph}>
@@ -81,7 +93,7 @@ describe("Back-to-review restoration (slice + scroll)", () => {
     );
 
     // Wait for the checklist to appear
-    await screen.findByText("Checklist items");
+    await screen.findByText("Checklist items"); // TODO: choose an existing text from the interface
 
     // Expect anchor-based scrolling to have been triggered
     await waitFor(() => {
