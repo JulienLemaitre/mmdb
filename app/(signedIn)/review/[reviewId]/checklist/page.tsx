@@ -79,7 +79,7 @@ export default function ChecklistPage() {
 
   const onInfoModalClosed = (modalId: string) => {
     //@ts-ignore => Daisy UI modal has an unconventional showModal method
-    document?.getElementById(modalId)?.showModal(false);
+    document?.getElementById(modalId)?.close();
     if (submitSuccess && reviewData) {
       clearWorkingCopy();
       localStorage.removeItem(storageKey(reviewData.reviewId));
