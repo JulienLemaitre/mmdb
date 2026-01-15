@@ -34,12 +34,14 @@ describe("ReviewChecklistSchema helpers", () => {
         "Publication year",
         "Is publication year an estimation?",
         "Source comment",
-        "Ordering of pieces and versions",
-        "Rank in source",
+        // "Ordering of pieces and versions",
+        "Rank",
+        "Reference type",
+        "Reference value",
       ]),
     );
     // Expect as many per-join rank checks as there are sourceOnPieceVersions rows
-    const perJoin = items.filter((i) => i.label === "Rank in source");
+    const perJoin = items.filter((i) => i.label === "Rank");
     expect(perJoin).toHaveLength(graph.sourceOnPieceVersions?.length ?? 0);
   });
 

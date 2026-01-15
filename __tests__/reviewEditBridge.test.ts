@@ -196,6 +196,10 @@ describe("reviewEditBridge utilities", () => {
           movementId: "mov-1",
         },
       };
+      const computedStep = resolveStepFromReviewItem(
+        clickedItem,
+        mockWorkingCopy,
+      );
 
       const opts = { reviewId: "rev-xyz" };
       const bootState = buildFeedFormBootStateFromWorkingCopy(
@@ -230,9 +234,14 @@ describe("reviewEditBridge utilities", () => {
       expect(feedFormState.formInfo?.formType).toBe("collection");
 
       // Check that graph data is copied to feedFormState
-      expect(feedFormState.pieces).toEqual(mockWorkingCopy.graph.pieces);
+      expect(feedFormState.pieces).toEqual(
+        mockWorkingCopy.graph.pieces.map((p: any) => ({ ...p, isNew: true })),
+      );
       expect(feedFormState.pieceVersions).toEqual(
-        mockWorkingCopy.graph.pieceVersions,
+        mockWorkingCopy.graph.pieceVersions.map((pv: any) => ({
+          ...pv,
+          isNew: true,
+        })),
       );
       expect(feedFormState.mMSourceDescription?.title).toBe("Test Source");
       expect(feedFormState.mMSourceOnPieceVersions).toEqual(
@@ -256,9 +265,9 @@ describe("reviewEditBridge utilities", () => {
 
       // Check singlePieceVersionFormState
       expect(singlePieceVersionFormState).not.toBeNull();
-      expect(
-        singlePieceVersionFormState?.formInfo.currentStepRank,
-      ).toBeUndefined();
+      expect(singlePieceVersionFormState?.formInfo.currentStepRank).toBe(
+        computedStep,
+      );
       expect(singlePieceVersionFormState?.piece?.id).toBe("piece-1");
       expect(singlePieceVersionFormState?.composer?.id).toBe("person-1");
     });

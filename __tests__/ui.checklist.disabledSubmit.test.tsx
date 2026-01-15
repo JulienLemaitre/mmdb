@@ -12,18 +12,26 @@ jest.mock("next/navigation", () => ({
 }));
 
 // Mock review working copy context to avoid provider requirement in the page component
+const mockWorkingCopy = { graph: null as any };
+
+// Mock review working copy context to avoid provider requirement in the page component
 jest.mock("@/context/reviewWorkingCopyContext", () => ({
   ReviewWorkingCopyProvider: ({ children }: any) => children,
   useReviewWorkingCopy: () => ({
-    get: () => null,
-    save: () => {},
-    clear: () => {},
+    getWorkingCopy: () => mockWorkingCopy,
+    saveWorkingCopy: (g: any) => {
+      mockWorkingCopy.graph = g;
+    },
+    clearWorkingCopy: () => {
+      mockWorkingCopy.graph = null;
+    },
   }),
 }));
 
 describe("ChecklistPage UI", () => {
   beforeEach(() => {
     // Clear localStorage keys used by the page
+    mockWorkingCopy.graph = null;
     localStorage.clear();
   });
 

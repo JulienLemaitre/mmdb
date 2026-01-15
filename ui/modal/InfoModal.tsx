@@ -48,8 +48,8 @@ function InfoModal({
         {description && <p className="py-2">{description}</p>}
         {content}
         <div className="modal-action">
-          <button className="btn btn-primary" onClick={onCloseFn}>
-            Continue
+          <button role="button" className="btn btn-primary" onClick={onCloseFn}>
+            Close
           </button>
         </div>
       </div>

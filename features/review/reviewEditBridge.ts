@@ -78,8 +78,8 @@ export function buildFeedFormBootStateFromWorkingCopy(
   clickedItem: RequiredChecklistItem, // Accept the whole item
   opts: { reviewId: string; sliceKey?: string; anchors?: BridgeAnchors },
 ): FeedBootType {
-  debug.info("clickedItem", clickedItem);
-  debug.info("workingCopy", workingCopy);
+  // debug.info("clickedItem", clickedItem);
+  // debug.info("workingCopy", workingCopy);
   ////////////////////// CollectionPieceVersionsForm State /////////////////////////////////////////
 
   // Is the clickeItem from a complete collection included in the mMSource ?

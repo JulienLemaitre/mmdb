@@ -13,10 +13,11 @@ jest.mock("next/server", () => ({
 jest.mock("../utils/server/getReviewOverview", () => ({
   getReviewOverview: async (reviewId: string) => {
     // Minimal mock graph matching ChecklistGraph shape
-    const graph = {
+    const mockGraph = {
       source: {
         id: "src-1",
         title: "Mock Review Source",
+        type: "EDITION",
         link: "",
         permalink: "",
         year: 1900,
@@ -42,7 +43,7 @@ jest.mock("../utils/server/getReviewOverview", () => ({
       collectionIds: [],
       pieceIds: [],
     };
-    return { graph, globallyReviewed };
+    return { graph: mockGraph, globallyReviewed };
   },
 }));
 

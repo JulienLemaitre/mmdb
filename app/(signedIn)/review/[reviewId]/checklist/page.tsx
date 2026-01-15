@@ -11,7 +11,6 @@ import {
   ReviewSubmitError,
   ReviewSubmitSuccess,
 } from "@/types/reviewTypes";
-import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
 import { useReviewWorkingCopy } from "@/context/reviewWorkingCopyContext";
 import {
   buildFeedFormBootStateFromWorkingCopy,
@@ -70,16 +69,17 @@ export default function ChecklistPage() {
   const [currentView, setCurrentView] = useState<ReviewView>({
     view: "SUMMARY",
   });
-  const isCollectionView = currentView.view === "COLLECTION";
-  const isPieceView = currentView.view === "PIECE";
+  const isCollectionView = currentView?.view === "COLLECTION";
+  const isPieceView = currentView?.view === "PIECE";
 
   const onInfoModalOpen = (modalId: string) => {
     //@ts-ignore => Daisy UI modal has an unconventional showModal method
     document?.getElementById(modalId)?.showModal();
   };
+
   const onInfoModalClosed = (modalId: string) => {
     //@ts-ignore => Daisy UI modal has an unconventional showModal method
-    document?.getElementById(modalId)?.showModal(false);
+    document?.getElementById(modalId)?.close();
     if (submitSuccess && reviewData) {
       clearWorkingCopy();
       localStorage.removeItem(storageKey(reviewData.reviewId));
@@ -285,9 +285,14 @@ export default function ChecklistPage() {
           return;
         }
         const reviewData = (await res.json()) as ApiOverview;
-        debug.log("reviewData", reviewData);
+        // debug.log("reviewData", JSON.stringify(reviewData));
         if (!mounted) return;
-        setReviewData(reviewData);
+        debug.info("SET reviewData");
+        setReviewData((prev) => {
+          // Only update if the reviewId has actually changed or we have no data
+          if (prev?.reviewId === reviewData.reviewId) return prev;
+          return reviewData;
+        });
         const raw = localStorage.getItem(storageKey(reviewData.reviewId));
         if (raw) {
           try {
@@ -300,11 +305,17 @@ export default function ChecklistPage() {
         const wcGraph = getWorkingCopy()?.graph;
         if (wcGraph) {
           setWorkingGraph(wcGraph);
-          debug.info("NEW WORKING GRAPH from stored workingCopy: ", wcGraph);
+          debug.info(
+            "NEW WORKING GRAPH from stored workingCopy: ",
+            JSON.stringify(wcGraph),
+          );
         } else {
           saveWorkingCopy(reviewData.graph);
           setWorkingGraph(reviewData.graph);
-          debug.info("NEW WORKING GRAPH from reviewData: ", reviewData.graph);
+          debug.info(
+            "NEW WORKING GRAPH from reviewData: ",
+            JSON.stringify(reviewData.graph),
+          );
         }
       } catch (e: any) {
         if (mounted) setError(e?.message || String(e));
@@ -316,7 +327,8 @@ export default function ChecklistPage() {
     return () => {
       mounted = false;
     };
-  }, [reviewId, router, getWorkingCopy, saveWorkingCopy]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reviewId]);
 
   // Persist checked keys to localStorage
   useEffect(() => {
@@ -347,7 +359,10 @@ export default function ChecklistPage() {
       const nextWc = rebuildWorkingCopyFromFeedForm(feedState, prevWc as any);
       saveWorkingCopy(nextWc.graph);
       setWorkingGraph(nextWc.graph);
-      debug.info("NEW WORKING GRAPH from rebuilt workingCopy: ", nextWc.graph);
+      debug.info(
+        "NEW WORKING GRAPH from rebuilt workingCopy: ",
+        JSON.stringify(nextWc.graph),
+      );
 
       const impacted = computeChangedChecklistFieldPaths(
         prevWc.graph,
@@ -376,7 +391,9 @@ export default function ChecklistPage() {
           currentView: ReviewView;
           fieldPath?: string;
         };
-        setCurrentView(ret.currentView);
+        if (ret.currentView) {
+          setCurrentView(ret.currentView);
+        }
         // Simplified scroll restoration
         setTimeout(() => {
           if (ret.fieldPath) {
@@ -422,10 +439,7 @@ export default function ChecklistPage() {
   };
 
   return (
-    <ReviewWorkingCopyProvider
-      reviewId={reviewData.reviewId}
-      initialGraph={reviewData.graph}
-    >
+    <>
       <div className="container mx-auto p-4 space-y-6">
         <div className="card bg-info/10 p-4">
           <div className="font-medium mb-1">
@@ -450,6 +464,8 @@ export default function ChecklistPage() {
             max={100}
           />
         </div>
+
+        <div className="text-md text-secondary">Checklist items</div>
 
         {storageWarning && (
           <div className="alert alert-warning">
@@ -487,6 +503,7 @@ export default function ChecklistPage() {
           <div className="flex items-center gap-3">
             <button
               type="button"
+              role="button"
               className="btn btn-primary"
               disabled={submitDisabled}
               onClick={async () => {
@@ -664,6 +681,6 @@ export default function ChecklistPage() {
         }
         onClose={() => onInfoModalClosed(REVIEW_SUBMIT_INFO_MODAL_ID)}
       />
-    </ReviewWorkingCopyProvider>
+    </>
   );
 }
