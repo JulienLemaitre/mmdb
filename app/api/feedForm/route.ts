@@ -13,6 +13,17 @@ import { fetchAPI } from "@/utils/fetchAPI";
 import getAccessTokenFromReq from "@/utils/server/getAccessTokenFromReq";
 import { FeedFormState } from "@/types/feedFormTypes";
 
+/**
+ * Handles the POST request to persist a feed form state into the database, including related entities such as composers, organizations,
+ * collections, metronome marks, and MM Source data. This method also performs necessary validation, logs the request, and sends notification emails.
+ *
+ * @param {NextRequest} request - The incoming HTTP request object containing the feed form state and authorization token.
+ * @return {Promise<NextResponse>} A response indicating the success or failure of the operation. Potential responses include:
+ * - 401 Unauthorized if the request lacks proper authorization.
+ * - 400 Bad Request if mandatory fields are missing.
+ * - 500 Internal Server Error if a database transaction fails.
+ * - 200 OK along with the persisted entities upon successful completion.
+ */
 export async function POST(request: NextRequest) {
   if (!isReqAuthorized(request)) {
     return NextResponse.json({ error: `Unauthorized` }, { status: 401 });

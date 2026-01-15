@@ -15,9 +15,7 @@ function toChangedKeySet(
     fieldPath: string;
   }>,
 ) {
-  return new Set(
-    changes.map((c) => `${c.entityType}:${c.entityId ?? ""}:${c.fieldPath}`),
-  );
+  return new Set(changes.map((c) => c.fieldPath));
 }
 
 describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
@@ -111,7 +109,7 @@ describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
             isFastestStructuralNoteBelCanto:
               s.isFastestStructuralNoteBelCanto ?? false,
             tempoIndication: {
-              id: s.tempoIndicationId,
+              id: ti.id,
               text: ti.text, // unchanged
             },
             comment: s.comment ?? "",
@@ -186,25 +184,15 @@ describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
     );
     const changed = toChangedKeySet(changes);
 
+    expect(changed.has(buildFieldPath("PIECE", pieceId, "title"))).toBe(true);
+    expect(changed.has(buildFieldPath("MOVEMENT", movementId, "key"))).toBe(
+      true,
+    );
     expect(
-      changed.has(
-        `PIECE:${pieceId}:${buildFieldPath("PIECE", pieceId, "title")}`,
-      ),
+      changed.has(buildFieldPath("SECTION", sectionId, "metreDenominator")),
     ).toBe(true);
-    expect(
-      changed.has(
-        `MOVEMENT:${movementId}:${buildFieldPath("MOVEMENT", movementId, "key")}`,
-      ),
-    ).toBe(true);
-    expect(
-      changed.has(
-        `SECTION:${sectionId}:${buildFieldPath("SECTION", sectionId, "metreDenominator")}`,
-      ),
-    ).toBe(true);
-    expect(
-      changed.has(
-        `METRONOME_MARK:${mmId}:${buildFieldPath("METRONOME_MARK", mmId, "bpm")}`,
-      ),
-    ).toBe(true);
+    expect(changed.has(buildFieldPath("METRONOME_MARK", mmId, "bpm"))).toBe(
+      true,
+    );
   });
 });

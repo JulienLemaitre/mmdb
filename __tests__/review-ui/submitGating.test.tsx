@@ -29,16 +29,14 @@ function TestChecklist() {
     [],
   );
 
-  const allChecked = items.every(
-    (it) => checked[`${it.entityType}:${it.entityId}:${it.fieldPath}`],
-  );
+  const allChecked = items.every((it) => checked[it.fieldPath]);
 
   return (
     <div>
       <table>
         <tbody>
           {items.map((it) => {
-            const key = `${it.entityType}:${it.entityId}:${it.fieldPath}`;
+            const key = it.fieldPath;
             return (
               <ChecklistRow
                 key={key}

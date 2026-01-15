@@ -15,6 +15,7 @@ import {
   REVIEWED_ENTITY_TYPE,
 } from "@/prisma/client";
 import { ChecklistGraph } from "@/types/reviewTypes";
+import sendEmail from "@/utils/server/sendEmail";
 
 // POST /api/review/[reviewId]/submit
 // Body: { workingCopy, checklistState: Array<{entityType, entityId, fieldPath, checked}>, overallComment? }
@@ -123,23 +124,14 @@ export async function POST(
   });
 
   // Build a map of submitted checks for quick lookup
-  const submitted = new Set(
-    checklistState.map(
-      (c: any) => `${c.entityType}:${c.entityId ?? ""}:${c.fieldPath}`,
-    ),
-  );
+  const submitted = new Set(checklistState.map((it: any) => it.fieldPath));
 
-  const missing = requiredItems.filter(
-    (it) =>
-      !submitted.has(`${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`),
-  );
+  const missing = requiredItems.filter((it) => !submitted.has(it.fieldPath));
 
   if (missing.length > 0) {
     debug.error(
       "requiredItems keys",
-      requiredItems.map(
-        (it) => `${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`,
-      ),
+      requiredItems.map((it) => it.fieldPath),
     );
     debug.error(
       `[review submit] submitted`,
@@ -176,7 +168,53 @@ export async function POST(
     return acc;
   }, {});
 
-  // 5. Persist to Database (Transactional)
+  const logSummary = {
+    reviewId,
+    workingCopy,
+    checklistState,
+    reviewInit: review,
+    baselineGraph,
+    globallyReviewed,
+    overallComment,
+    requiredCount: requiredItems.length,
+    submittedCheckedCount: submitted.size,
+    requiredItems,
+    auditEntries,
+    changedFieldPaths,
+    changedCount: changedFieldPaths.length,
+    entitiesTouched: Object.fromEntries(
+      Object.entries(changedUniqueByEntityType).map(([k, v]) => [k, v.size]),
+    ),
+  };
+
+  // 5. Send log email before database persistence
+  await sendEmail({
+    type: "Review submit data",
+    content: logSummary,
+  })
+    .then((result) => {
+      if (result.error) {
+        console.error(
+          `[api/review/${reviewId}/submit] data sendEmail ERROR :`,
+          result.error,
+        );
+      } else {
+        console.log(
+          `[api/review/${reviewId}/submit] data sendEmail result :`,
+          result,
+        );
+      }
+    })
+    .catch((err) =>
+      console.error(
+        `[api/review/${reviewId}/submit] data sendEmail ERROR :`,
+        err.status,
+        err.message,
+      ),
+    );
+
+  // 6. Persist to Database (Transactional)
+  const txDebug: any = {};
   try {
     await db.$transaction(
       async (tx) => {
@@ -195,7 +233,7 @@ export async function POST(
           .filter((id) => id && !workingRefIds.has(id));
         if (removedRefIds.length > 0) {
           debug.log(`[review submit] DELETING removedRefIds`, removedRefIds);
-          await tx.reference.deleteMany({
+          txDebug.removedReferences = await tx.reference.deleteMany({
             where: { id: { in: removedRefIds as string[] } },
           });
         }
@@ -212,7 +250,7 @@ export async function POST(
             `[review submit] DELETING removedContribIds`,
             removedContribIds,
           );
-          await tx.contribution.deleteMany({
+          txDebug.removedContributions = await tx.contribution.deleteMany({
             where: { id: { in: removedContribIds as string[] } },
           });
         }
@@ -226,7 +264,7 @@ export async function POST(
           .filter((id) => id && !workingMMIds.has(id));
         if (removedMMIds.length > 0) {
           debug.log(`[review submit] DELETING removedMMIds`, removedMMIds);
-          await tx.metronomeMark.deleteMany({
+          txDebug.removedMetronomeMarks = await tx.metronomeMark.deleteMany({
             where: { id: { in: removedMMIds as string[] } },
           });
         }
@@ -274,15 +312,21 @@ export async function POST(
 
           if (removedSecIds.length > 0) {
             debug.log(`[review submit] DELETING removedSecIds`, removedSecIds);
-            await tx.section.deleteMany({
-              where: { id: { in: removedSecIds } },
-            });
+            if (!txDebug.removedSections) txDebug.removedSections = [];
+            txDebug.removedSections.push(
+              await tx.section.deleteMany({
+                where: { id: { in: removedSecIds } },
+              }),
+            );
           }
           if (removedMovIds.length > 0) {
             debug.log(`[review submit] DELETING removedMovIds`, removedMovIds);
-            await tx.movement.deleteMany({
-              where: { id: { in: removedMovIds } },
-            });
+            if (!txDebug.removedMovements) txDebug.removedMovements = [];
+            txDebug.removedMovements.push(
+              await tx.movement.deleteMany({
+                where: { id: { in: removedMovIds } },
+              }),
+            );
           }
         }
 
@@ -290,158 +334,189 @@ export async function POST(
 
         // Persons
         for (const p of workingCopy.persons || []) {
-          await tx.person.upsert({
-            where: { id: p.id },
-            update: {
-              firstName: p.firstName,
-              lastName: p.lastName,
-              birthYear: p.birthYear,
-              deathYear: p.deathYear,
-            },
-            create: {
-              id: p.id,
-              firstName: p.firstName,
-              lastName: p.lastName,
-              birthYear: p.birthYear,
-              deathYear: p.deathYear,
-              creatorId: review.creatorId,
-            },
-          });
+          if (!txDebug.upsertedPersons) txDebug.upsertedPersons = [];
+          txDebug.upsertedPersons.push(
+            await tx.person.upsert({
+              where: { id: p.id },
+              update: {
+                firstName: p.firstName,
+                lastName: p.lastName,
+                birthYear: p.birthYear,
+                deathYear: p.deathYear,
+              },
+              create: {
+                id: p.id,
+                firstName: p.firstName,
+                lastName: p.lastName,
+                birthYear: p.birthYear,
+                deathYear: p.deathYear,
+                creatorId: review.creatorId,
+              },
+            }),
+          );
         }
 
         // Organizations
         for (const o of workingCopy.organizations || []) {
-          await tx.organization.upsert({
-            where: { id: o.id },
-            update: { name: o.name },
-            create: { id: o.id, name: o.name, creatorId: review.creatorId },
-          });
+          if (!txDebug.upsertedOrganizations)
+            txDebug.upsertedOrganizations = [];
+          txDebug.upsertedOrganizations.push(
+            await tx.organization.upsert({
+              where: { id: o.id },
+              update: { name: o.name },
+              create: { id: o.id, name: o.name, creatorId: review.creatorId },
+            }),
+          );
         }
 
         // TempoIndications
         for (const ti of workingCopy.tempoIndications || []) {
-          await tx.tempoIndication.upsert({
-            where: { id: ti.id },
-            update: { text: ti.text },
-            create: { id: ti.id, text: ti.text, creatorId: review.creatorId },
-          });
+          if (!txDebug.upsertedTempoIndications)
+            txDebug.upsertedTempoIndications = [];
+          txDebug.upsertedTempoIndications.push(
+            await tx.tempoIndication.upsert({
+              where: { id: ti.id },
+              update: { text: ti.text },
+              create: { id: ti.id, text: ti.text, creatorId: review.creatorId },
+            }),
+          );
         }
 
         // --- C. Hierarchical Upserts ---
 
         // Collections
         for (const c of workingCopy.collections || []) {
-          await tx.collection.upsert({
-            where: { id: c.id },
-            update: {
-              title: c.title,
-              composerId: c.composerId,
-            },
-            create: {
-              id: c.id,
-              title: c.title,
-              composerId: c.composerId,
-              creatorId: review.creatorId,
-            },
-          });
+          if (!txDebug.upsertedCollections) txDebug.upsertedCollections = [];
+          txDebug.upsertedCollections.push(
+            await tx.collection.upsert({
+              where: { id: c.id },
+              update: {
+                title: c.title,
+                composerId: c.composerId,
+              },
+              create: {
+                id: c.id,
+                title: c.title,
+                composerId: c.composerId,
+                creatorId: review.creatorId,
+              },
+            }),
+          );
         }
 
         // Pieces
         for (const p of workingCopy.pieces || []) {
-          await tx.piece.upsert({
-            where: { id: p.id },
-            update: {
-              title: p.title,
-              nickname: p.nickname,
-              yearOfComposition: p.yearOfComposition,
-              composerId: p.composerId,
-              collectionId: p.collectionId,
-              collectionRank: p.collectionRank,
-            },
-            create: {
-              id: p.id,
-              title: p.title,
-              nickname: p.nickname,
-              yearOfComposition: p.yearOfComposition,
-              composerId: p.composerId,
-              collectionId: p.collectionId,
-              collectionRank: p.collectionRank,
-              creatorId: review.creatorId,
-            },
-          });
+          if (!txDebug.upsertedPieces) txDebug.upsertedPieces = [];
+          txDebug.upsertedPieces.push(
+            await tx.piece.upsert({
+              where: { id: p.id },
+              update: {
+                title: p.title,
+                nickname: p.nickname,
+                yearOfComposition: p.yearOfComposition,
+                composerId: p.composerId,
+                collectionId: p.collectionId,
+                collectionRank: p.collectionRank,
+              },
+              create: {
+                id: p.id,
+                title: p.title,
+                nickname: p.nickname,
+                yearOfComposition: p.yearOfComposition,
+                composerId: p.composerId,
+                collectionId: p.collectionId,
+                collectionRank: p.collectionRank,
+                creatorId: review.creatorId,
+              },
+            }),
+          );
         }
 
         // PieceVersions & Structure
         for (const pv of workingCopy.pieceVersions || []) {
-          await tx.pieceVersion.upsert({
-            where: { id: pv.id },
-            update: {
-              category: pv.category,
-              pieceId: pv.pieceId,
-            },
-            create: {
-              id: pv.id,
-              category: pv.category,
-              pieceId: pv.pieceId,
-              creatorId: review.creatorId,
-            },
-          });
+          if (!txDebug.upsertedPieceVersions)
+            txDebug.upsertedPieceVersions = [];
+          txDebug.upsertedPieceVersions.push(
+            await tx.pieceVersion.upsert({
+              where: { id: pv.id },
+              update: {
+                category: pv.category,
+                pieceId: pv.pieceId,
+              },
+              create: {
+                id: pv.id,
+                category: pv.category,
+                pieceId: pv.pieceId,
+                creatorId: review.creatorId,
+              },
+            }),
+          );
 
           const movements = (pv as any).movements || [];
           for (const m of movements) {
-            await tx.movement.upsert({
-              where: { id: m.id },
-              update: {
-                rank: m.rank,
-                key: m.key,
-              },
-              create: {
-                id: m.id,
-                pieceVersionId: pv.id,
-                rank: m.rank,
-                key: m.key,
-              },
-            });
+            if (!txDebug.upsertedMovements) txDebug.upsertedMovements = [];
+            txDebug.upsertedMovements.push(
+              await tx.movement.upsert({
+                where: { id: m.id },
+                update: {
+                  rank: m.rank,
+                  key: m.key,
+                },
+                create: {
+                  id: m.id,
+                  pieceVersionId: pv.id,
+                  rank: m.rank,
+                  key: m.key,
+                },
+              }),
+            );
 
             const sections = (m as any).sections || [];
             for (const s of sections) {
-              await tx.section.upsert({
-                where: { id: s.id },
-                update: {
-                  rank: s.rank,
-                  metreNumerator: s.metreNumerator,
-                  metreDenominator: s.metreDenominator,
-                  isCommonTime: s.isCommonTime,
-                  isCutTime: s.isCutTime,
-                  fastestStructuralNotesPerBar: s.fastestStructuralNotesPerBar,
-                  fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar,
-                  fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar,
-                  fastestOrnamentalNotesPerBar: s.fastestOrnamentalNotesPerBar,
-                  isFastestStructuralNoteBelCanto:
-                    s.isFastestStructuralNoteBelCanto,
-                  tempoIndicationId: s.tempoIndication.id, // Validated by previous TI upsert
-                  comment: s.comment,
-                  commentForReview: s.commentForReview,
-                },
-                create: {
-                  id: s.id,
-                  movementId: m.id,
-                  rank: s.rank,
-                  metreNumerator: s.metreNumerator,
-                  metreDenominator: s.metreDenominator,
-                  isCommonTime: s.isCommonTime,
-                  isCutTime: s.isCutTime,
-                  fastestStructuralNotesPerBar: s.fastestStructuralNotesPerBar,
-                  fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar,
-                  fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar,
-                  fastestOrnamentalNotesPerBar: s.fastestOrnamentalNotesPerBar,
-                  isFastestStructuralNoteBelCanto:
-                    s.isFastestStructuralNoteBelCanto,
-                  tempoIndicationId: s.tempoIndication.id,
-                  comment: s.comment,
-                  commentForReview: s.commentForReview,
-                },
-              });
+              if (!txDebug.upsertedSections) txDebug.upsertedSections = [];
+              txDebug.upsertedSections.push(
+                await tx.section.upsert({
+                  where: { id: s.id },
+                  update: {
+                    rank: s.rank,
+                    metreNumerator: s.metreNumerator,
+                    metreDenominator: s.metreDenominator,
+                    isCommonTime: s.isCommonTime,
+                    isCutTime: s.isCutTime,
+                    fastestStructuralNotesPerBar:
+                      s.fastestStructuralNotesPerBar,
+                    fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar,
+                    fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar,
+                    fastestOrnamentalNotesPerBar:
+                      s.fastestOrnamentalNotesPerBar,
+                    isFastestStructuralNoteBelCanto:
+                      s.isFastestStructuralNoteBelCanto,
+                    tempoIndicationId: s.tempoIndication.id, // Validated by previous TI upsert
+                    comment: s.comment,
+                    commentForReview: s.commentForReview,
+                  },
+                  create: {
+                    id: s.id,
+                    movementId: m.id,
+                    rank: s.rank,
+                    metreNumerator: s.metreNumerator,
+                    metreDenominator: s.metreDenominator,
+                    isCommonTime: s.isCommonTime,
+                    isCutTime: s.isCutTime,
+                    fastestStructuralNotesPerBar:
+                      s.fastestStructuralNotesPerBar,
+                    fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar,
+                    fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar,
+                    fastestOrnamentalNotesPerBar:
+                      s.fastestOrnamentalNotesPerBar,
+                    isFastestStructuralNoteBelCanto:
+                      s.isFastestStructuralNoteBelCanto,
+                    tempoIndicationId: s.tempoIndication.id,
+                    comment: s.comment,
+                    commentForReview: s.commentForReview,
+                  },
+                }),
+              );
             }
           }
         }
@@ -449,7 +524,7 @@ export async function POST(
         // --- D. Source & Direct Children ---
 
         // Update MM Source
-        await tx.mMSource.update({
+        txDebug.mMSource = await tx.mMSource.update({
           where: { id: review.mMSourceId },
           data: {
             title: workingCopy.source.title,
@@ -465,92 +540,105 @@ export async function POST(
         // Upsert References
         for (const r of workingCopy.source.references || []) {
           if (!r.id) continue; // Should have ID
-          await tx.reference.upsert({
-            where: { id: r.id },
-            update: { type: r.type, reference: r.reference },
-            create: {
-              id: r.id,
-              mMSourceId: review.mMSourceId,
-              type: r.type,
-              reference: r.reference,
-            },
-          });
+          if (!txDebug.upsertedReferences) txDebug.upsertedReferences = [];
+          txDebug.upsertedReferences.push(
+            await tx.reference.upsert({
+              where: { id: r.id },
+              update: { type: r.type, reference: r.reference },
+              create: {
+                id: r.id,
+                mMSourceId: review.mMSourceId,
+                type: r.type,
+                reference: r.reference,
+              },
+            }),
+          );
         }
 
         // Upsert Contributions
         for (const c of workingCopy.contributions || []) {
-          await tx.contribution.upsert({
-            where: { id: c.id },
-            update: {
-              role: c.role,
-              ...("person" in c
-                ? {
-                    personId: c.person.id,
-                  }
-                : {
-                    organizationId: c.organization.id,
-                  }),
-            },
-            create: {
-              id: c.id,
-              mMSourceId: review.mMSourceId,
-              role: c.role,
-              ...("person" in c
-                ? {
-                    personId: c.person.id,
-                  }
-                : {
-                    organizationId: c.organization.id,
-                  }),
-            },
-          });
+          if (!txDebug.upsertedContributions)
+            txDebug.upsertedContributions = [];
+          txDebug.upsertedContributions.push(
+            await tx.contribution.upsert({
+              where: { id: c.id },
+              update: {
+                role: c.role,
+                ...("person" in c
+                  ? {
+                      personId: c.person.id,
+                    }
+                  : {
+                      organizationId: c.organization.id,
+                    }),
+              },
+              create: {
+                id: c.id,
+                mMSourceId: review.mMSourceId,
+                role: c.role,
+                ...("person" in c
+                  ? {
+                      personId: c.person.id,
+                    }
+                  : {
+                      organizationId: c.organization.id,
+                    }),
+              },
+            }),
+          );
         }
 
         // Upsert Metronome Marks
         for (const mm of workingCopy.metronomeMarks || []) {
           if (!mm.noMM) {
-            await tx.metronomeMark.upsert({
-              where: { id: mm.id },
-              update: {
-                sectionId: mm.sectionId,
-                beatUnit: mm.beatUnit,
-                bpm: mm.bpm,
-                comment: mm.comment,
-              },
-              create: {
-                id: mm.id,
-                mMSourceId: review.mMSourceId,
-                sectionId: mm.sectionId,
-                beatUnit: mm.beatUnit,
-                bpm: mm.bpm,
-                comment: mm.comment,
-              },
-            });
+            if (!txDebug.upsertedMetronomeMarks)
+              txDebug.upsertedMetronomeMarks = [];
+            txDebug.upsertedMetronomeMarks.push(
+              await tx.metronomeMark.upsert({
+                where: { id: mm.id },
+                update: {
+                  sectionId: mm.sectionId,
+                  beatUnit: mm.beatUnit,
+                  bpm: mm.bpm,
+                  comment: mm.comment,
+                },
+                create: {
+                  id: mm.id,
+                  mMSourceId: review.mMSourceId,
+                  sectionId: mm.sectionId,
+                  beatUnit: mm.beatUnit,
+                  bpm: mm.bpm,
+                  comment: mm.comment,
+                },
+              }),
+            );
           }
         }
 
         // --- E. Associations (MMSourcesOnPieceVersions) ---
         // Full replacement strategy to ensure ranks are correct
-        await tx.mMSourcesOnPieceVersions.deleteMany({
-          where: { mMSourceId: review.mMSourceId },
-        });
+        txDebug.deletedMMSourcesOnPieceVersions =
+          await tx.mMSourcesOnPieceVersions.deleteMany({
+            where: { mMSourceId: review.mMSourceId },
+          });
 
         if (
           workingCopy.sourceOnPieceVersions &&
           workingCopy.sourceOnPieceVersions.length > 0
         ) {
-          await tx.mMSourcesOnPieceVersions.createMany({
-            data: workingCopy.sourceOnPieceVersions.map((sopv) => ({
-              mMSourceId: review.mMSourceId,
-              pieceVersionId: sopv.pieceVersionId,
-              rank: sopv.rank,
-            })),
-          });
+          txDebug.createdMMSourcesOnPieceVersions =
+            await tx.mMSourcesOnPieceVersions.createMany({
+              data: workingCopy.sourceOnPieceVersions.map((sopv) => ({
+                mMSourceId: review.mMSourceId,
+                pieceVersionId: sopv.pieceVersionId,
+                rank: sopv.rank,
+              })),
+            });
         }
 
         // --- F. Audit Logging ---
         if (auditEntries.length > 0) {
-          await tx.auditLog.createMany({
+          txDebug.auditLogs = await tx.auditLog.createMany({
             data: auditEntries.map((entry) => ({
               reviewId: entry.reviewId,
               entityType: entry.entityType as AUDIT_ENTITY_TYPE,
@@ -612,30 +700,34 @@ export async function POST(
         );
 
         for (const item of reviewedEntityPayloads.values()) {
-          await tx.reviewedEntity.upsert({
-            where: {
-              entityType_entityId: {
+          if (!txDebug.upsertedReviewedEntities)
+            txDebug.upsertedReviewedEntities = [];
+          txDebug.upsertedReviewedEntities.push(
+            await tx.reviewedEntity.upsert({
+              where: {
+                entityType_entityId: {
+                  entityType: item.type,
+                  entityId: item.id,
+                },
+              },
+              update: {
+                reviewedAt: new Date(),
+                reviewedById: userId,
+                reviewId: reviewId,
+              },
+              create: {
                 entityType: item.type,
                 entityId: item.id,
+                reviewedById: userId,
+                reviewId: reviewId,
               },
-            },
-            update: {
-              reviewedAt: new Date(),
-              reviewedById: userId,
-              reviewId: reviewId,
-            },
-            create: {
-              entityType: item.type,
-              entityId: item.id,
-              reviewedById: userId,
-              reviewId: reviewId,
-            },
-          });
+            }),
+          );
         }
 
         // --- H. Finalize State ---
         const now = new Date();
-        await tx.review.update({
+        txDebug.finalReviewUpdate = await tx.review.update({
           where: { id: reviewId },
           data: {
             state: REVIEW_STATE.APPROVED,
@@ -644,7 +736,7 @@ export async function POST(
           },
         });
 
-        await tx.mMSource.update({
+        txDebug.finalMMSourceUpdate = await tx.mMSource.update({
           where: { id: review.mMSourceId },
           data: {
             reviewState: REVIEW_STATE.APPROVED,
@@ -653,6 +745,35 @@ export async function POST(
       },
       { timeout: 20000 }, // Extended timeout for large transactions
     );
+
+    // Send txDebug log by email
+    await sendEmail({
+      type: "Review submit transaction debug",
+      content: {
+        reviewId,
+        txDebug,
+      },
+    })
+      .then((result) => {
+        if (result.error) {
+          console.error(
+            `[api/review/${reviewId}/submit] tx sendEmail ERROR :`,
+            result.error,
+          );
+        } else {
+          console.log(
+            `[api/review/${reviewId}/submit] tx sendEmail result :`,
+            result,
+          );
+        }
+      })
+      .catch((err) =>
+        console.error(
+          `[api/review/${reviewId}/submit] tx sendEmail ERROR :`,
+          err.status,
+          err.message,
+        ),
+      );
 
     const summary = {
       reviewId,
@@ -675,11 +796,15 @@ export async function POST(
         count: auditEntries.length,
         entries: auditEntries.slice(0, 100),
       },
+      txDebug,
     });
   } catch (err: any) {
     debug.error("Review submit transaction error:", err);
     return NextResponse.json(
-      { error: `Transaction failed: ${err.message}` },
+      {
+        error: `Transaction failed: ${err.message}`,
+        txDebug,
+      },
       { status: 500 },
     );
   }
