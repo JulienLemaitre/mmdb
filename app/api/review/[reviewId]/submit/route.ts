@@ -123,23 +123,14 @@ export async function POST(
   });
 
   // Build a map of submitted checks for quick lookup
-  const submitted = new Set(
-    checklistState.map(
-      (c: any) => `${c.entityType}:${c.entityId ?? ""}:${c.fieldPath}`,
-    ),
-  );
+  const submitted = new Set(checklistState.map((it: any) => it.fieldPath));
 
-  const missing = requiredItems.filter(
-    (it) =>
-      !submitted.has(`${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`),
-  );
+  const missing = requiredItems.filter((it) => !submitted.has(it.fieldPath));
 
   if (missing.length > 0) {
     debug.error(
       "requiredItems keys",
-      requiredItems.map(
-        (it) => `${it.entityType}:${it.entityId ?? ""}:${it.fieldPath}`,
-      ),
+      requiredItems.map((it) => it.fieldPath),
     );
     debug.error(
       `[review submit] submitted`,
