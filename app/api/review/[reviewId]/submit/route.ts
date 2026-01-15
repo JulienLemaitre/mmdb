@@ -15,6 +15,7 @@ import {
   REVIEWED_ENTITY_TYPE,
 } from "@/prisma/client";
 import { ChecklistGraph } from "@/types/reviewTypes";
+import sendEmail from "@/utils/server/sendEmail";
 
 // POST /api/review/[reviewId]/submit
 // Body: { workingCopy, checklistState: Array<{entityType, entityId, fieldPath, checked}>, overallComment? }
@@ -167,7 +168,52 @@ export async function POST(
     return acc;
   }, {});
 
-  // 5. Persist to Database (Transactional)
+  const logSummary = {
+    reviewId,
+    workingCopy,
+    checklistState,
+    reviewInit: review,
+    baselineGraph,
+    globallyReviewed,
+    overallComment,
+    requiredCount: requiredItems.length,
+    submittedCheckedCount: submitted.size,
+    requiredItems,
+    auditEntries,
+    changedFieldPaths,
+    changedCount: changedFieldPaths.length,
+    entitiesTouched: Object.fromEntries(
+      Object.entries(changedUniqueByEntityType).map(([k, v]) => [k, v.size]),
+    ),
+  };
+
+  // 5. Send log email before database persistence
+  await sendEmail({
+    type: "Review Before submit",
+    content: logSummary,
+  })
+    .then((result) => {
+      if (result.error) {
+        console.error(
+          `[api/review/${reviewId}/submit] sendEmail ERROR :`,
+          result.error,
+        );
+      } else {
+        console.log(
+          `[api/review/${reviewId}/submit] sendEmail result :`,
+          result,
+        );
+      }
+    })
+    .catch((err) =>
+      console.error(
+        `[api/feedForm] sendEmail ERROR :`,
+        err.status,
+        err.message,
+      ),
+    );
+
+  // 6. Persist to Database (Transactional)
   try {
     await db.$transaction(
       async (tx) => {
