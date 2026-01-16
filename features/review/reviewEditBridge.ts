@@ -78,8 +78,8 @@ export function buildFeedFormBootStateFromWorkingCopy(
   clickedItem: RequiredChecklistItem, // Accept the whole item
   opts: { reviewId: string; sliceKey?: string; anchors?: BridgeAnchors },
 ): FeedBootType {
-  // debug.info("clickedItem", clickedItem);
-  // debug.info("workingCopy", workingCopy);
+  debug.info("clickedItem", clickedItem);
+  debug.info("workingCopy", workingCopy);
   ////////////////////// CollectionPieceVersionsForm State /////////////////////////////////////////
 
   // Is the clickeItem from a complete collection included in the mMSource ?
@@ -207,7 +207,12 @@ export function buildFeedFormBootStateFromWorkingCopy(
       pieceId,
       "pieceId",
     );
-    // const pieceVersionId = clickedItem?.lineage?.pieceVersionId;
+    const sourceOnPieceVersion = getEntityByIdOrKey(
+      workingCopy.graph,
+      "sourceOnPieceVersions",
+      pieceVersion.id,
+      "pieceVersionId",
+    );
 
     function getCurrentSinglePieceStepRank(clickedItem): number {
       if (clickedItem.entityType === "PIECE") {
@@ -216,7 +221,7 @@ export function buildFeedFormBootStateFromWorkingCopy(
         }
         return 1;
       }
-      if (clickedItem.entityType === "PIECE_VERSION") {
+      if (["PIECE_VERSION", "SECTION"].includes(clickedItem.entityType)) {
         return 2;
       }
       return 3;
@@ -225,9 +230,7 @@ export function buildFeedFormBootStateFromWorkingCopy(
     singlePieceVersionFormState = {
       formInfo: {
         currentStepRank: getCurrentSinglePieceStepRank(clickedItem),
-        ...(isCollectionFormOpen && {
-          mMSourceOnPieceVersionRank: piece.collectionRank,
-        }),
+        mMSourceOnPieceVersionRank: sourceOnPieceVersion.rank,
       },
       composer: {
         id: piece.composerId,
