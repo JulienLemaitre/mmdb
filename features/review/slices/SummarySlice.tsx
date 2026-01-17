@@ -9,6 +9,7 @@ type Props = {
   checkedKeys: Set<string>;
   changedKeys: Set<string>;
   onToggle: (item: RequiredChecklistItem) => void;
+  onToggleAll: (items: RequiredChecklistItem[]) => void;
   onEdit: (item: RequiredChecklistItem) => void;
   onNavigate: (view: ReviewView) => void;
 };
@@ -19,6 +20,7 @@ export function SummarySlice({
   checkedKeys,
   changedKeys,
   onToggle,
+  onToggleAll,
   onEdit,
   onNavigate,
 }: Props) {
@@ -40,7 +42,15 @@ export function SummarySlice({
 
   return (
     <div>
-      <h2 className="text-xl font-bold mb-4">Summary & Source Details</h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-bold">Summary & Source Details</h2>
+        <button
+          className="btn btn-sm btn-outline"
+          onClick={() => onToggleAll(sourceItems)}
+        >
+          Check all
+        </button>
+      </div>
       <table className="table table-md">
         <tbody>
           {sourceItems.map((item) => (
@@ -58,7 +68,15 @@ export function SummarySlice({
 
       {referenceItems.length > 0 && (
         <>
-          <h2 className="text-xl font-bold mt-6 mb-4">References</h2>
+          <div className="flex items-center justify-between mt-6 mb-4">
+            <h2 className="text-xl font-bold">References</h2>
+            <button
+              className="btn btn-sm btn-outline"
+              onClick={() => onToggleAll(referenceItems)}
+            >
+              Check all
+            </button>
+          </div>
           <table className="table table-md">
             <tbody>
               {referenceItems.map((item) => (
@@ -76,7 +94,15 @@ export function SummarySlice({
         </>
       )}
 
-      <h2 className="text-xl font-bold mt-6 mb-4">Contributions</h2>
+      <div className="flex items-center justify-between mt-6 mb-4">
+        <h2 className="text-xl font-bold">Contributions</h2>
+        <button
+          className="btn btn-sm btn-outline"
+          onClick={() => onToggleAll(contributionItems)}
+        >
+          Check all
+        </button>
+      </div>
       <table className="table table-md">
         <tbody>
           {contributionItems.map((item) => (
@@ -92,7 +118,15 @@ export function SummarySlice({
         </tbody>
       </table>
 
-      <h2 className="text-xl font-bold mt-6 mb-4">Order of pieces</h2>
+      <div className="flex items-center justify-between mt-6 mb-4">
+        <h2 className="text-xl font-bold">Order of pieces</h2>
+        <button
+          className="btn btn-sm btn-outline"
+          onClick={() => onToggleAll(sourceOnPieceVersionItems)}
+        >
+          Check all
+        </button>
+      </div>
       <table className="table table-md">
         <tbody>
           {sourceOnPieceVersionItems.map((item) => (
@@ -110,9 +144,15 @@ export function SummarySlice({
 
       {personItems.length > 0 && (
         <>
-          <h2 className="text-xl font-bold mt-6 mb-4">
-            Person infos to review
-          </h2>
+          <div className="flex items-center justify-between mt-6 mb-4">
+            <h2 className="text-xl font-bold">Person infos to review</h2>
+            <button
+              className="btn btn-sm btn-outline"
+              onClick={() => onToggleAll(personItems)}
+            >
+              Check all
+            </button>
+          </div>
           <table className="table table-md">
             <tbody>
               {personItems.map((item) => (
@@ -132,9 +172,15 @@ export function SummarySlice({
 
       {organizationItems.length > 0 && (
         <>
-          <h2 className="text-xl font-bold mt-6 mb-4">
-            Organization infos to review
-          </h2>
+          <div className="flex items-center justify-between mt-6 mb-4">
+            <h2 className="text-xl font-bold">Organization infos to review</h2>
+            <button
+              className="btn btn-sm btn-outline"
+              onClick={() => onToggleAll(organizationItems)}
+            >
+              Check all
+            </button>
+          </div>
           <table className="table table-md">
             <tbody>
               {organizationItems.map((item) => (
