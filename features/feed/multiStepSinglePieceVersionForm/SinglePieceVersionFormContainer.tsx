@@ -284,6 +284,7 @@ const SinglePieceVersionFormContainer = ({
 
     const pieceVersionState = getPieceVersionStateFromInput({
       pieceVersionInput: pieceVersionData,
+      pieceVersionId: selectedPieceVersionId,
       pieceId: selectedPieceId,
     });
     pieceVersionState.isNew = true;
