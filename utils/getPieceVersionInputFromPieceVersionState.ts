@@ -11,6 +11,7 @@ import formatToPhraseCase from "@/utils/formatToPhraseCase";
 
 function getSectionInputFromSectionState(sectionState: SectionState) {
   const sectionInput: SectionInput = {
+    id: sectionState.id,
     metreNumerator: sectionState.metreNumerator,
     metreDenominator: sectionState.metreDenominator,
     fastestStructuralNotesPerBar: sectionState.fastestStructuralNotesPerBar,
@@ -33,6 +34,7 @@ function getSectionInputFromSectionState(sectionState: SectionState) {
 
 function getMovementInputFromMovementState(movementState: MovementState) {
   const movementInput: MovementInput = {
+    id: movementState.id,
     key: { value: movementState.key, label: getKeyLabel(movementState.key) },
     sections: movementState.sections.map(getSectionInputFromSectionState),
   };

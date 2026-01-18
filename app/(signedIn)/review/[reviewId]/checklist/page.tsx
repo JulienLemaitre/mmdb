@@ -233,6 +233,19 @@ export default function ChecklistPage() {
     });
   }
 
+  function toggleCheckedAll(items: RequiredChecklistItem[]) {
+    setCheckedKeys((prev) => {
+      const next = new Set(prev);
+      const allChecked = items.every((item) => next.has(item.fieldPath));
+      if (allChecked) {
+        items.forEach((item) => next.delete(item.fieldPath));
+      } else {
+        items.forEach((item) => next.add(item.fieldPath));
+      }
+      return next;
+    });
+  }
+
   function openEditForItem(item: RequiredChecklistItem) {
     if (!reviewData || !workingGraph) return;
 
@@ -434,6 +447,7 @@ export default function ChecklistPage() {
     checkedKeys,
     changedKeys,
     onToggle: toggleChecked,
+    onToggleAll: toggleCheckedAll,
     onEdit: openEditForItem,
     onNavigate: setCurrentView,
   };

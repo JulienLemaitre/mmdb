@@ -10,6 +10,7 @@ type Props = {
   checkedKeys: Set<string>;
   changedKeys: Set<string>;
   onToggle: (item: RequiredChecklistItem) => void;
+  onToggleAll: (items: RequiredChecklistItem[]) => void;
   onEdit: (item: RequiredChecklistItem) => void;
   onNavigate: (view: ReviewView) => void;
 };
@@ -19,6 +20,7 @@ export function CollectionSlice({
   collectionId,
   items,
   onNavigate,
+  onToggleAll,
   ...rest
 }: Props) {
   const collection = useMemo(
@@ -53,7 +55,15 @@ export function CollectionSlice({
       >
         &larr; Back to Summary
       </button>
-      <h2 className="text-xl font-bold mb-4">Collection: {collection.title}</h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-bold">Collection: {collection.title}</h2>
+        <button
+          className="btn btn-sm btn-outline"
+          onClick={() => onToggleAll(collectionItems)}
+        >
+          Check all
+        </button>
+      </div>
 
       {/* Collection's own checklist items */}
       <table className="table table-md mb-6">
