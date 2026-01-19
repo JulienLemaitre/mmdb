@@ -31,7 +31,11 @@ export function ChecklistItemRow({
         />
       </td>
       <td>{item.label}</td>
-      <td>{item.value || "-"}</td>
+      <td>
+        {typeof item.value === "boolean"
+          ? item.value.toString()
+          : (item.value ?? "-")}
+      </td>
       <td className="py-0">
         <button className="btn btn-md btn-ghost" onClick={onEdit}>
           Edit
