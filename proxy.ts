@@ -38,6 +38,16 @@ export default withAuth(
       }
     }
 
+    if (req.nextUrl.pathname.startsWith("/admin")) {
+      if (!hasValidToken) {
+        return NextResponse.rewrite(new URL("/logout", req.url));
+      }
+      if (userRole !== "ADMIN") {
+        console.log(`[proxy] Not Authorized :`, userRole);
+        return NextResponse.rewrite(new URL("/not-authorized", req.url));
+      }
+    }
+
     if (req.nextUrl.pathname.startsWith("/feed")) {
       if (!hasValidToken) {
         return NextResponse.rewrite(new URL("/logout", req.url));
@@ -67,5 +77,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/feed/:path*", "/explore/:path*", "/review/:path*"],
+  matcher: ["/admin/:path*", "/feed/:path*", "/explore/:path*", "/review/:path*"],
 };

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { URL_EXPLORE, URL_FEED, URL_REVIEW_LIST } from "@/utils/routes";
 import NavBar from "@/ui/NavBar";
+import AdminLink from "@/ui/AdminLink";
 // import Metronome from "@/ui/Metronome";
 import SnowballMetronome from "@/ui/SnowballMetronome";
 
@@ -37,6 +38,7 @@ export default function Home() {
           <Link href={URL_REVIEW_LIST} className="btn btn-primary">
             Review
           </Link>
+          <AdminLink />
         </div>
       </div>
     </>
