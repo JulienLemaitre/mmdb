@@ -671,7 +671,7 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
     data: {
       name: "Arjun Wasan",
       email: "arjunwasan@gmail.com",
-      role: "EDITOR",
+      role: "ADMIN",
       emailVerified: now,
       passwordHash: "$2a$10$7EEZGctSWdX99AYhIVv.WuVPjSFUdlPcHsnQaSibin.YVilNJBBk2",
     }
@@ -704,21 +704,21 @@ async function seedDB({pieceList}: {pieceList: any[]}) {
       {
         name: "Setfan Pospiech",
         email: "st.pospiech@web.de",
-        role: "REVIEWER",
+        role: "ADMIN",
         emailVerified: now,
         passwordHash: "$2a$10$NgfYJUZgxR8PxENV.2aE4.xJc.ayim2wljlquH.7xP01gbMbeBT3S",
       },
       {
         name: "Wim Winters",
         email: "wwinters@telenet.be",
-        role: "REVIEWER",
+        role: "ADMIN",
         emailVerified: now,
         passwordHash: "$2a$10$xa0I2y70qbNl3yC7AZepXuEO07WAcyNX2nRx4/dqWvHz5CdsbZ6uS",
       },
       {
         name: "Johan Van Kerckhoven",
         email: "johan.vankerckhoven@gmail.com",
-        role: "REVIEWER",
+        role: "ADMIN",
         emailVerified: now,
         passwordHash: "$2b$10$8WUBFEwrTadSwzKCOT8FjuQk63QAM.vQi8Kjyu6xHtJ7WnYx/.zmO",
       },
