@@ -48,7 +48,7 @@ describe("POST /api/review/[reviewId]/submit", () => {
     expect(json.missingCount).toBeGreaterThan(0);
   });
 
-  it("accepts when all required items are checked and returns summary + auditPreview", async () => {
+  it("accepts when all required items are checked and returns summary", async () => {
     const reviewId = "r-2";
     const { graph, globallyReviewed } = buildMockOverview(reviewId);
     const required = expandRequiredChecklistItems(graph, {
@@ -78,7 +78,5 @@ describe("POST /api/review/[reviewId]/submit", () => {
     expect(json.ok).toBe(true);
     expect(json.summary.requiredCount).toBe(required.length);
     expect(json.summary.submittedCheckedCount).toBeGreaterThan(0);
-    expect(json.auditPreview).toBeDefined();
-    expect(typeof json.auditPreview.count).toBe("number");
   });
 });

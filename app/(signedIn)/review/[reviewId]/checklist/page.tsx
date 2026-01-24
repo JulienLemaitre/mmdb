@@ -25,6 +25,7 @@ import { FeedFormState } from "@/types/feedFormTypes";
 import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
 import { debug, prodLog } from "@/utils/debugLogger";
 import dynamic from "next/dynamic";
+import ReviewAuditLogPanel from "@/features/review/ReviewAuditLogPanel";
 // import AuditPanel from "@/features/review/components/AuditPanel";
 
 // State definition for the view controller
@@ -599,55 +600,25 @@ export default function ChecklistPage() {
         content={
           submitSuccess ? (
             <>
-              <div className="font-semibold">
-                Review submitted successfully!
-              </div>
-              <div className="text-md mt-6">{`Summary`}</div>
-              <div className="text-sm">
-                {Object.entries(submitSuccess.summary).map(([k, v]) => (
-                  <div key={k}>
-                    <span className="font-semibold">{k}:</span>{" "}
-                    {typeof v === "string" || typeof v === "number"
-                      ? v
-                      : JSON.stringify(v)}
-                  </div>
-                ))}
-              </div>
-              {submitSuccess.auditPreview.count > 0 ? (
-                <>
-                  <div className="text-md mt-6">{`auditPreview`}</div>
-                  <div className="overflow-x-auto">
-                    <table className="table table-xs">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>entityType</th>
-                          <th>entityId</th>
-                          <th>operation</th>
-                          <th>before</th>
-                          <th>after</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {submitSuccess.auditPreview.entries?.map((e, index) => (
-                          <tr key={e.entityType + e.entityId + e.operation}>
-                            <th>{index + 1}</th>
-                            <td>{e.entityType}</td>
-                            <td>{e.entityId}</td>
-                            <td>{e.operation}</td>
-                            <td>{JSON.stringify(e.before, null, 2)}</td>
-                            <td>{JSON.stringify(e.after, null, 2)}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </>
-              ) : (
-                <div className="text-sm mt-6">
-                  {`No change were recorded for this review.`}
+              <ReviewAuditLogPanel
+                reviewId={reviewData?.reviewId ?? reviewId}
+                enabled={!!submitSuccess}
+              >
+                <div className="font-semibold">
+                  Review submitted successfully!
                 </div>
-              )}
+                <div className="text-md mt-6">{`Summary`}</div>
+                <div className="text-sm">
+                  {Object.entries(submitSuccess.summary).map(([k, v]) => (
+                    <div key={k}>
+                      <span className="font-semibold">{k}:</span>{" "}
+                      {typeof v === "string" || typeof v === "number"
+                        ? v
+                        : JSON.stringify(v)}
+                    </div>
+                  ))}
+                </div>
+              </ReviewAuditLogPanel>
             </>
           ) : submitError ? (
             <>

@@ -1,19 +1,24 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { AuditLogItem, AuditLogResult } from "@/types/auditTypes";
-import { formatDateTime } from "@/features/admin/formatters";
 import AuditLogHeader from "@/features/audit/AuditLogHeader";
 import AuditLogContent from "@/features/audit/AuditLogContent";
+import { AuditLogItem, AuditLogResult } from "@/types/auditTypes";
+import { formatDateTime } from "@/features/admin/formatters";
 
 const PAGE_SIZE = 50;
 
 type Props = {
-  reviewId: string | null;
-  onCloseAction: () => void;
+  reviewId: string;
+  enabled?: boolean;
+  children?: React.ReactNode;
 };
 
-export default function AuditLogViewer({ reviewId, onCloseAction }: Props) {
+export default function ReviewAuditLogPanel({
+  reviewId,
+  enabled = true,
+  children,
+}: Props) {
   const [items, setItems] = useState<AuditLogItem[]>([]);
   const [reviewMeta, setReviewMeta] = useState<AuditLogResult["review"]>(null);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
@@ -22,16 +27,17 @@ export default function AuditLogViewer({ reviewId, onCloseAction }: Props) {
 
   const fetchLogs = useCallback(
     async ({ cursor, append }: { cursor?: string | null; append?: boolean }) => {
-      if (!reviewId) return;
+      if (!enabled) return;
       setLoading(true);
       setError(null);
       try {
         const params = new URLSearchParams();
-        params.set("reviewId", reviewId);
         params.set("limit", String(PAGE_SIZE));
         if (cursor) params.set("cursor", cursor);
 
-        const res = await fetch(`/api/admin/audit-logs?${params.toString()}`);
+        const res = await fetch(
+          `/api/review/${reviewId}/audit-logs?${params.toString()}`,
+        );
         const data = (await res.json()) as AuditLogResult & { error?: string };
 
         if (!res.ok) {
@@ -47,55 +53,44 @@ export default function AuditLogViewer({ reviewId, onCloseAction }: Props) {
         setLoading(false);
       }
     },
-    [reviewId],
+    [reviewId, enabled],
   );
 
   useEffect(() => {
-    if (!reviewId) return;
+    if (!enabled) return;
     setItems([]);
     setNextCursor(null);
     setReviewMeta(null);
     fetchLogs({});
-  }, [reviewId, fetchLogs]);
+  }, [reviewId, enabled, fetchLogs]);
 
   const handleLoadMore = () => {
     if (!nextCursor || loading) return;
     fetchLogs({ cursor: nextCursor, append: true });
   };
 
-  if (!reviewId) return null;
-
   const headerTitle = reviewMeta?.sourceTitle || "Audit log";
   const headerAuthor = reviewMeta?.authorName || "-";
   const headerDate = reviewMeta?.date ? formatDateTime(reviewMeta.date) : "-";
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
-      role="dialog"
-      aria-modal="true"
-    >
-      <div className="w-full max-w-5xl rounded bg-base-100 p-4 shadow-lg max-h-[85vh] overflow-y-auto">
-        <AuditLogHeader
-          title={headerTitle}
-          subtitle={`${headerAuthor} · ${headerDate}`}
-          action={
-            <button type="button" className="btn btn-sm" onClick={onCloseAction}>
-              Close
-            </button>
-          }
-        />
+    <div className="space-y-4">
+      <AuditLogHeader
+        title={headerTitle}
+        subtitle={`${headerAuthor} · ${headerDate}`}
+      />
 
-        {error ? <div className="text-sm text-red-600">{error}</div> : null}
+      {children}
 
-        <AuditLogContent
-          items={items}
-          nextCursor={nextCursor}
-          loading={loading}
-          onLoadMoreAction={handleLoadMore}
-          resetKey={reviewId}
-        />
-      </div>
+      {error ? <div className="text-sm text-red-600">{error}</div> : null}
+
+      <AuditLogContent
+        items={items}
+        nextCursor={nextCursor}
+        loading={loading}
+        onLoadMoreAction={handleLoadMore}
+        resetKey={reviewId}
+      />
     </div>
   );
 }

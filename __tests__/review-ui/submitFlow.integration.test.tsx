@@ -67,13 +67,23 @@ describe("Review lifecycle UI integration: submit flow", () => {
             entitiesTouched: [],
             changedFieldPathsSample: [],
           };
-          const auditPreview = {
-            count: 0,
-            entries: [],
-          };
           return {
             ok: true,
-            json: async () => ({ ok: true, summary, auditPreview }),
+            json: async () => ({ ok: true, summary }),
+          } as any;
+        }
+        if (url.includes("/api/review/r-1/audit-logs")) {
+          return {
+            ok: true,
+            json: async () => ({
+              items: [],
+              nextCursor: null,
+              review: {
+                sourceTitle: "Test Source",
+                authorName: "Reviewer",
+                date: new Date().toISOString(),
+              },
+            }),
           } as any;
         }
         return {
