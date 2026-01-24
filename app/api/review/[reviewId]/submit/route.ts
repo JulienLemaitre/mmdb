@@ -792,10 +792,6 @@ export async function POST(
     return NextResponse.json({
       ok: true,
       summary,
-      auditPreview: {
-        count: auditEntries.length,
-        entries: auditEntries.slice(0, 100),
-      },
       txDebug,
     });
   } catch (err: any) {

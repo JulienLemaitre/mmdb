@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} h-screen w-screen`}>
+      <body className={`${inter.variable} min-h-screen w-screen`}>
         <Providers>
           <div className="w-full h-full flex flex-col">{children}</div>
           <div id="modal"></div>

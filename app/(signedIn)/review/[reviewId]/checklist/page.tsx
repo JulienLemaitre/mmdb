@@ -25,7 +25,11 @@ import { FeedFormState } from "@/types/feedFormTypes";
 import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
 import { debug, prodLog } from "@/utils/debugLogger";
 import dynamic from "next/dynamic";
-// import AuditPanel from "@/features/review/components/AuditPanel";
+import ReviewAuditLogPanel from "@/features/review/ReviewAuditLogPanel";
+import AuditLogHeader from "@/features/audit/AuditLogHeader";
+import AuditLogContent from "@/features/audit/AuditLogContent";
+import { composeAuditEntries } from "@/features/review/utils/auditCompose";
+import { AuditLogItem } from "@/types/auditTypes";
 
 // State definition for the view controller
 export type ReviewView =
@@ -69,6 +73,9 @@ export default function ChecklistPage() {
   const [currentView, setCurrentView] = useState<ReviewView>({
     view: "SUMMARY",
   });
+  const [showDiff, setShowDiff] = useState(false);
+  const [diffItems, setDiffItems] = useState<AuditLogItem[]>([]);
+  const [diffTimestamp, setDiffTimestamp] = useState<string | null>(null);
   const isCollectionView = currentView?.view === "COLLECTION";
   const isPieceView = currentView?.view === "PIECE";
 
@@ -451,16 +458,51 @@ export default function ChecklistPage() {
     onEdit: openEditForItem,
     onNavigate: setCurrentView,
   };
+  const handleShowDiff = () => {
+    if (!reviewData || !workingGraph) return;
+    const entries = composeAuditEntries(
+      reviewId,
+      reviewData.graph,
+      workingGraph,
+    );
+    const now = new Date().toISOString();
+    const items: AuditLogItem[] = entries.map((entry, index) => ({
+      id: `${entry.entityType}-${entry.entityId}-${entry.operation}-${index}`,
+      reviewId,
+      entityType: entry.entityType,
+      entityId: entry.entityId,
+      operation: entry.operation,
+      before: entry.before ?? null,
+      after: entry.after ?? null,
+      authorId: null,
+      createdAt: now,
+      comment: null,
+    }));
+    setDiffItems(items);
+    setDiffTimestamp(now);
+    setShowDiff(true);
+  };
 
   return (
     <>
       <div className="container mx-auto p-4 space-y-6">
         <div className="card bg-info/10 p-4">
-          <div className="font-medium mb-1">
-            Source title : {workingGraph.source?.title ?? "(no title)"}
-          </div>
-          <div className="text-md">
-            Editor : {workingGraph.source?.enteredBy?.name ?? "(no editor)"}
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div className="font-medium mb-1">
+                Source title : {workingGraph.source?.title ?? "(no title)"}
+              </div>
+              <div className="text-md">
+                Editor : {workingGraph.source?.enteredBy?.name ?? "(no editor)"}
+              </div>
+            </div>
+            <button
+              type="button"
+              className="btn btn-sm"
+              onClick={handleShowDiff}
+            >
+              Show diff
+            </button>
           </div>
         </div>
 
@@ -506,11 +548,6 @@ export default function ChecklistPage() {
             />
           )}
         </div>
-
-        {/*<div className="card bg-base-100 border p-4">
-          <div className="font-semibold mb-2">Audit events (read-only)</div>
-          <AuditPanel reviewId={reviewData.reviewId} />
-        </div>*/}
 
         <div className="flex flex-col gap-2">
           {abortError && <div className="text-sm text-error">{abortError}</div>}
@@ -599,55 +636,25 @@ export default function ChecklistPage() {
         content={
           submitSuccess ? (
             <>
-              <div className="font-semibold">
-                Review submitted successfully!
-              </div>
-              <div className="text-md mt-6">{`Summary`}</div>
-              <div className="text-sm">
-                {Object.entries(submitSuccess.summary).map(([k, v]) => (
-                  <div key={k}>
-                    <span className="font-semibold">{k}:</span>{" "}
-                    {typeof v === "string" || typeof v === "number"
-                      ? v
-                      : JSON.stringify(v)}
-                  </div>
-                ))}
-              </div>
-              {submitSuccess.auditPreview.count > 0 ? (
-                <>
-                  <div className="text-md mt-6">{`auditPreview`}</div>
-                  <div className="overflow-x-auto">
-                    <table className="table table-xs">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>entityType</th>
-                          <th>entityId</th>
-                          <th>operation</th>
-                          <th>before</th>
-                          <th>after</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {submitSuccess.auditPreview.entries?.map((e, index) => (
-                          <tr key={e.entityType + e.entityId + e.operation}>
-                            <th>{index + 1}</th>
-                            <td>{e.entityType}</td>
-                            <td>{e.entityId}</td>
-                            <td>{e.operation}</td>
-                            <td>{JSON.stringify(e.before, null, 2)}</td>
-                            <td>{JSON.stringify(e.after, null, 2)}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </>
-              ) : (
-                <div className="text-sm mt-6">
-                  {`No change were recorded for this review.`}
+              <ReviewAuditLogPanel
+                reviewId={reviewData?.reviewId ?? reviewId}
+                enabled={!!submitSuccess}
+              >
+                <div className="font-semibold">
+                  Review submitted successfully!
                 </div>
-              )}
+                <div className="text-md mt-6">{`Summary`}</div>
+                <div className="text-sm">
+                  {Object.entries(submitSuccess.summary).map(([k, v]) => (
+                    <div key={k}>
+                      <span className="font-semibold">{k}:</span>{" "}
+                      {typeof v === "string" || typeof v === "number"
+                        ? v
+                        : JSON.stringify(v)}
+                    </div>
+                  ))}
+                </div>
+              </ReviewAuditLogPanel>
             </>
           ) : submitError ? (
             <>
@@ -695,6 +702,36 @@ export default function ChecklistPage() {
         }
         onClose={() => onInfoModalClosed(REVIEW_SUBMIT_INFO_MODAL_ID)}
       />
+
+      {showDiff ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="w-full max-w-5xl rounded bg-base-100 p-4 shadow-lg max-h-[85vh] overflow-y-auto">
+            <AuditLogHeader
+              title={workingGraph.source?.title ?? "Audit log"}
+              action={
+                <button
+                  type="button"
+                  className="btn btn-sm"
+                  onClick={() => setShowDiff(false)}
+                >
+                  Close
+                </button>
+              }
+            />
+            <AuditLogContent
+              items={diffItems}
+              nextCursor={null}
+              loading={false}
+              resetKey={diffTimestamp ?? undefined}
+              emptyLabel="No changes detected."
+            />
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }

@@ -13,7 +13,7 @@ export default function NavBar({
   isHome?: boolean;
 }) {
   return (
-    <div className="navbar bg-base-100 px-4">
+    <div className="navbar bg-base-100 px-4 sticky top-0 z-40 shadow-sm">
       <div className="flex-none">
         {title ? <span className="text-lg font-bold">{title}</span> : null}
       </div>

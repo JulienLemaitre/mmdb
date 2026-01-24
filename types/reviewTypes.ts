@@ -176,14 +176,9 @@ export type SuccessSumary = {
   entitiesTouched: Record<string, number>;
   changedFieldPathsSample: string[];
 };
-export type AuditPreview = {
-  count: number;
-  entries: AuditEntry[];
-};
 export type ReviewSubmitSuccess = {
   ok: true;
   summary: SuccessSumary;
-  auditPreview: AuditPreview;
 };
 export type ReviewSubmitError = {
   error: string;
