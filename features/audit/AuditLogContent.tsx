@@ -20,6 +20,7 @@ type Props = {
   loading?: boolean;
   onLoadMoreAction?: () => void;
   resetKey?: string;
+  emptyLabel?: string;
 };
 
 type ViewState = {
@@ -143,6 +144,7 @@ export default function AuditLogContent({
   loading = false,
   onLoadMoreAction,
   resetKey,
+  emptyLabel = "No audit logs found.",
 }: Props) {
   const [viewState, setViewState] = useState<ViewState>({
     resetKey,
@@ -231,7 +233,7 @@ export default function AuditLogContent({
             {items.length === 0 && !loading ? (
               <tr>
                 <td colSpan={3} className="text-center text-sm text-gray-500">
-                  No audit logs found.
+                  {emptyLabel}
                 </td>
               </tr>
             ) : null}
@@ -324,19 +326,21 @@ export default function AuditLogContent({
         </table>
       </div>
 
-      <div className="flex items-center gap-3">
-        <button
-          type="button"
-          className="btn btn-sm"
-          onClick={onLoadMoreAction}
-          disabled={!nextCursor || loading}
-        >
-          {loading ? "Loading..." : PAGE_SIZE_LABEL}
-        </button>
-        {nextCursor ? null : (
-          <span className="text-xs text-gray-500">End of results</span>
-        )}
-      </div>
+      {onLoadMoreAction ? (
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            className="btn btn-sm"
+            onClick={onLoadMoreAction}
+            disabled={!nextCursor || loading}
+          >
+            {loading ? "Loading..." : PAGE_SIZE_LABEL}
+          </button>
+          {nextCursor ? null : (
+            <span className="text-xs text-gray-500">End of results</span>
+          )}
+        </div>
+      ) : null}
     </div>
   );
 }
