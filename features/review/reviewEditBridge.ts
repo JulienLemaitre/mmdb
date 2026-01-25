@@ -375,22 +375,32 @@ export function rebuildWorkingCopyFromFeedForm(
     ...prevGraph.source, // Preserve non-editable fields like id, permalink, enteredBy
     ...feedFormState.mMSourceDescription,
     references: [
-      ...(feedFormState.mMSourceDescription?.references || []).map(forceId),
+      ...(feedFormState.mMSourceDescription?.references || [])
+        .map(forceId)
+        .map(cleanIsNew),
     ],
   };
-  const contributions = (feedFormState.mMSourceContributions ?? []).map(
-    forceId,
-  );
-  const organizations = (feedFormState.organizations ?? []).map(forceId);
-  const persons = (feedFormState.persons ?? []).map(forceId);
+  const contributions = (feedFormState.mMSourceContributions ?? [])
+    .map(forceId)
+    .map(cleanIsNew);
+  const organizations = (feedFormState.organizations ?? [])
+    .map(forceId)
+    .map(cleanIsNew);
+  const persons = (feedFormState.persons ?? []).map(forceId).map(cleanIsNew);
   const collections = (
     feedFormState.collections?.filter((c) =>
       feedFormState.pieces?.some((p) => p.collectionId === c.id),
     ) ?? []
-  ).map(forceId);
-  const pieces = (feedFormState.pieces ?? []).map(forceId);
-  const pieceVersions = (feedFormState.pieceVersions ?? []).map(forceId);
-  const metronomeMarks = (feedFormState.metronomeMarks ?? []).map(forceId);
+  )
+    .map(forceId)
+    .map(cleanIsNew);
+  const pieces = (feedFormState.pieces ?? []).map(forceId).map(cleanIsNew);
+  const pieceVersions = (feedFormState.pieceVersions ?? [])
+    .map(forceId)
+    .map(cleanIsNew);
+  const metronomeMarks = (feedFormState.metronomeMarks ?? [])
+    .map(forceId)
+    .map(cleanIsNew);
 
   // Rebuild derived data: `tempoIndications` are collected from within the piece structure.
   const tempoIndicationMap = new Map<string, { id: string; text: string }>();
@@ -399,6 +409,7 @@ export function rebuildWorkingCopyFromFeedForm(
       for (const s of (m as any).sections ?? []) {
         const ti = s.tempoIndication;
         if (ti?.id) {
+          s.tempoIndicationId = ti.id;
           tempoIndicationMap.set(ti.id, { id: ti.id, text: ti.text ?? "" });
         } else {
           console.warn(`No tempoIndication id for section ${s.id}`, ti);
@@ -456,6 +467,11 @@ function forceId(entity: any) {
     ...entity,
     id: entity.id || getNewUuid(),
   };
+}
+function cleanIsNew(entity: any) {
+  if (!entity) return entity;
+  if ("isNew" in entity) delete entity.isNew;
+  return entity;
 }
 
 // Utilities to write/read the boot payload used to start the feed form in review edit mode

@@ -3,13 +3,15 @@ import { ReviewWorkingCopy } from "@/features/review/reviewEditBridge";
 
 import { ChecklistGraph } from "@/types/reviewTypes";
 
-type Ctx = {
+type ReviewWorkingCopyCtx = {
   getWorkingCopy(): ReviewWorkingCopy | null;
   saveWorkingCopy(nextGraph: any): void;
   clearWorkingCopy(): void;
 };
 
-const ReviewWorkingCopyContext = createContext<Ctx | null>(null);
+const ReviewWorkingCopyContext = createContext<ReviewWorkingCopyCtx | null>(
+  null,
+);
 
 export function ReviewWorkingCopyProvider({
   reviewId,
@@ -54,7 +56,7 @@ export function ReviewWorkingCopyProvider({
     localStorage.removeItem(key);
   }, [key]);
 
-  const value = useMemo<Ctx>(
+  const value = useMemo<ReviewWorkingCopyCtx>(
     () => ({
       getWorkingCopy: get,
       saveWorkingCopy: save,
