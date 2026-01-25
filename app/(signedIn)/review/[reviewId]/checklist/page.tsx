@@ -305,12 +305,11 @@ export default function ChecklistPage() {
           return;
         }
         const reviewData = (await res.json()) as ApiOverview;
-        // debug.log("reviewData", JSON.stringify(reviewData));
         if (!mounted) return;
-        debug.info("SET reviewData");
         setReviewData((prev) => {
-          // Only update if the reviewId has actually changed or we have no data
+          // Only update if the reviewId has actually changed or if we have no previous data
           if (prev?.reviewId === reviewData.reviewId) return prev;
+          debug.info("SET reviewData", reviewData);
           return reviewData;
         });
         const raw = localStorage.getItem(storageKey(reviewData.reviewId));
@@ -325,17 +324,11 @@ export default function ChecklistPage() {
         const wcGraph = getWorkingCopy()?.graph;
         if (wcGraph) {
           setWorkingGraph(wcGraph);
-          debug.info(
-            "NEW WORKING GRAPH from stored workingCopy: ",
-            JSON.stringify(wcGraph),
-          );
+          debug.info("NEW WORKING GRAPH from stored workingCopy: ", wcGraph);
         } else {
           saveWorkingCopy(reviewData.graph);
           setWorkingGraph(reviewData.graph);
-          debug.info(
-            "NEW WORKING GRAPH from reviewData: ",
-            JSON.stringify(reviewData.graph),
-          );
+          debug.info("NEW WORKING GRAPH from reviewData: ", reviewData.graph);
         }
       } catch (e: any) {
         if (mounted) setError(e?.message || String(e));
