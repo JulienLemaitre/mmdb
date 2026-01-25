@@ -282,7 +282,7 @@ export default function ChecklistPage() {
     } catch {
       // ignore
     }
-    router.push(URL_FEED + "?debug=true");
+    router.push(URL_FEED);
   }
 
   // --- Effects ---
