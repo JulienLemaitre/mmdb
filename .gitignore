@@ -15,9 +15,6 @@
 # production
 /build
 
-# AI processing output
-/aifeed
-
 # misc
 .DS_Store
 *.pem
