@@ -4,6 +4,10 @@ apply: always
 
 # General Code Review Guidelines
 
+## ES module project
+- this project has `"type": "module` in its `package.json`
+- Use ES module syntaxe if you create scripts
+
 ## Naming
 - Use clear, descriptive names for variables, functions, and classes
 - Avoid single-letter names except for loop indices
@@ -33,4 +37,4 @@ apply: always
 
 ## AI Collaboration Rules
 
-- **Minimal Edits**: When suggesting code modifications, you MUST provide snippets of the changed code within the existing file context. You MUST NOT rewrite entire files unless specifically asked to do so. If you believe a full rewrite is necessary, you MUST ask for permission first.
+- **Minimal Edits**: When suggesting code modifications, you MUST provide snippets of the changed code within the existing file context, and indicate the targeted line numbers. You MUST NOT rewrite entire files unless specifically asked to do so. If you believe a full rewrite is necessary, you MUST ask for permission first.
