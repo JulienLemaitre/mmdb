@@ -152,10 +152,10 @@ function main() {
 
   if (args.json) {
     const output = {
-      ok: errors.length === 0,
-      manifestPath,
-      errors,
       entries: entriesSummary,
+      errors,
+      manifestPath,
+      ok: errors.length === 0,
     };
     process.stdout.write(`${JSON.stringify(output, null, 2)}\n`);
   } else {
