@@ -1,0 +1,33 @@
+[
+  {
+    "batchId": "beethoven-symphony3-op55-001",
+    "composer": "Beethoven, Ludwig van",
+    "workTitle": "Symphony No. 3, Op. 55",
+    "imslpLink": "https://imslp.org/wiki/Symphony_No.3%2C_Op.55_(Beethoven%2C_Ludwig_van)",
+    "imslpTxtPath": "/home/julien/Documents/MMDB/sources/beethoven-symphony3-op55-001/imslp.txt",
+    "pdfLink": "https://imslp.org/wiki/Special:ImagefromIndex/46066/sevqs",
+    "pagesDir": "/home/julien/Documents/MMDB/sources/beethoven-symphony3-op55-001/pages",
+    "status": "ready"
+  },
+  {
+    "batchId": "schumann-kinderszenen-op15-no4-001",
+    "composer": "Schumann, Robert",
+    "workTitle": "Kinderszenen, Op. 15 No. 4",
+    "imslpLink": "https://imslp.org/wiki/Kinderszenen,_Op.15_(Schumann,_Robert)",
+    "imslpTxtPath": "/home/julien/Documents/MMDB/sources/schumann-kinderszenen-op15-no4-001/imslp.txt",
+    "pdfLink": "https://imslp.org/wiki/Special:ImagefromIndex/03060/sevqs",
+    "pagesDir": "/home/julien/Documents/MMDB/sources/schumann-kinderszenen-op15-no4-001/pages",
+    "status": "ready"
+  },
+  {
+    "batchId": "czerny-op299-no5-001",
+    "composer": "Czerny, Carl",
+    "workTitle": "The School of Velocity, Op. 299",
+    "imslpLink": "https://imslp.org/wiki/Die_Schule_der_Gel%C3%A4ufigkeit%2C_Op.299_(Czerny%2C_Carl)",
+    "imslpTxtPath": "/home/julien/Documents/MMDB/sources/czerny-op299-no5-001/imslp.txt",
+    "pdfLink": "https://imslp.org/wiki/Special:ImagefromIndex/593590/sevqs",
+    "pagesDir": "/home/julien/Documents/MMDB/sources/czerny-op299-no5-001/pages",
+    "status": "ready",
+    "notes": ""
+  }
+]
