@@ -1,0 +1,1711 @@
+{
+  "formInfo": {},
+  "mMSourceDescription": {
+    "id": "10000000-0000-4000-8000-000000000001",
+    "title": "Die Schule der Geläufigkeit / The School of Velocity, Op. 299",
+    "type": "EDITION",
+    "link": "https://imslp.org/wiki/Special:ImagefromIndex/593590/sevqs",
+    "year": 1840,
+    "isYearEstimated": true,
+    "comment": "New Edition (Neue Ausgabe) by Diabelli. Contains all 4 books (40 Etudes).",
+    "references": [
+      {
+        "id": "20000000-0000-4000-8000-000000000001",
+        "type": "PLATE_NUMBER",
+        "reference": "4538"
+      },
+      {
+        "id": "20000000-0000-4000-8000-000000000002",
+        "type": "PLATE_NUMBER",
+        "reference": "4539"
+      },
+      {
+        "id": "20000000-0000-4000-8000-000000000003",
+        "type": "PLATE_NUMBER",
+        "reference": "4540"
+      },
+      {
+        "id": "20000000-0000-4000-8000-000000000004",
+        "type": "PLATE_NUMBER",
+        "reference": "6725"
+      }
+    ],
+    "isNew": true
+  },
+  "mMSourceContributions": [
+    {
+      "id": "8fed554d-b769-48e7-bba6-0e2872d0336f",
+      "role": "PUBLISHER",
+      "organization": {
+        "id": "77a28e99-8ab5-4e43-a7d3-2bc3964bcc81",
+        "name": "A. Diabelli et Comp.",
+        "isNew": true
+      }
+    },
+    {
+      "id": "a861453c-0c99-4044-9b9e-27b7247374b9",
+      "role": "COMPOSER",
+      "person": {
+        "id": "10000000-0000-4000-8000-000000000003",
+        "firstName": "Carl",
+        "lastName": "Czerny",
+        "birthYear": 1791,
+        "deathYear": 1857,
+        "isNew": true
+      }
+    }
+  ],
+  "mMSourceOnPieceVersions": [
+    {
+      "rank": 1,
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "isNew": true
+    }
+  ],
+  "organizations": [],
+  "collections": [
+    {
+      "id": "10000000-0000-4000-8000-000000000004",
+      "composerId": "10000000-0000-4000-8000-000000000003",
+      "title": "The School of Velocity, Op. 299",
+      "pieceCount": 40,
+      "isNew": true
+    }
+  ],
+  "persons": [
+    {
+      "id": "10000000-0000-4000-8000-000000000003",
+      "firstName": "Carl",
+      "lastName": "Czerny",
+      "birthYear": 1791,
+      "deathYear": 1857,
+      "isNew": true
+    }
+  ],
+  "pieces": [
+    {
+      "id": "10000000-0000-4000-8000-000000000005",
+      "title": "The School of Velocity",
+      "nickname": "Die Schule der Geläufigkeit",
+      "yearOfComposition": 1833,
+      "composerId": "10000000-0000-4000-8000-000000000003",
+      "collectionId": "10000000-0000-4000-8000-000000000004",
+      "collectionRank": 1,
+      "isNew": true
+    }
+  ],
+  "pieceVersions": [
+    {
+      "id": "10000000-0000-4000-8000-000000000006",
+      "category": "KEYBOARD",
+      "pieceId": "10000000-0000-4000-8000-000000000005",
+      "movements": [
+        {
+          "id": "4d4c8b38-5b4f-4186-82ba-240424726bf8",
+          "rank": 1,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "6b87918c-602a-4eee-85c7-9d41aeae0892",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "96c9bf4b-1b8a-44dc-a8de-6756da831923",
+                "text": "Presto"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.6 m.1. MM HALF=108. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "ece257ba-b769-4da1-8a24-0eb41ff38c92",
+          "rank": 2,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "32d16c45-b670-42c2-b3f0-1b4ee764272c",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "142543ea-c989-4360-a9be-878ac55f19b6",
+                "text": "Allegro molto"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.7 m.1. MM HALF=104. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "041edf72-e76a-424b-8a0c-cf89429698f6",
+          "rank": 3,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "9147ea37-dd24-49be-a03a-8ab593c7c643",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "f64a2058-c05f-499c-84c1-c493570aa6a3",
+                "text": "Presto"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.8 m.1. MM HALF=108. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "e4080797-76fe-4fe8-bae1-b5ec0ad9ee8e",
+          "rank": 4,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "a0d942c3-dbb7-4ee8-aed9-86bd323378da",
+              "rank": 1,
+              "metreNumerator": 6,
+              "metreDenominator": 8,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "a056f192-a8a4-4869-a4db-4ed09668c0aa",
+                "text": "Presto"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes (12 per bar)",
+              "commentForReview": "p.9 m.1. MM DOTTED_HALF=80. Time 6/8."
+            }
+          ]
+        },
+        {
+          "id": "11013ac7-c0ad-4cd1-a19a-34fe6501d940",
+          "rank": 5,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "1d46d1ae-686a-4283-95d9-cd1cc25b16ba",
+              "rank": 1,
+              "metreNumerator": 3,
+              "metreDenominator": 4,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "bdd95b7d-bd32-4724-b805-665b1056ff40",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes (12 per bar)",
+              "commentForReview": "p.10 m.1. MM DOTTED_HALF=108. Time 3/4."
+            }
+          ]
+        },
+        {
+          "id": "fa85d66f-207f-48ff-9fdd-9131c5b0ed73",
+          "rank": 6,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "c2081112-f0e1-430d-a789-3d8c62bfc07b",
+              "rank": 1,
+              "metreNumerator": 4,
+              "metreDenominator": 4,
+              "isCommonTime": true,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "72dc2778-6803-4cf9-83aa-a69ceddce987",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.12 m.1. MM HALF=92. Time C."
+            }
+          ]
+        },
+        {
+          "id": "e1fb6690-75bb-438d-b5bf-2230ff998ae8",
+          "rank": 7,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "16ca5e12-d314-4963-907a-92dd5764713d",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "14341f0d-38d1-4595-9aa8-8bde83bd31ed",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.14 m.1. MM HALF=104. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "e486515a-73af-4628-8e89-2503980166d1",
+          "rank": 8,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "1459ba78-35ac-4a4c-97fa-5eda9a049196",
+              "rank": 1,
+              "metreNumerator": 3,
+              "metreDenominator": 4,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "7c73e57d-88a2-42fc-bd0f-1830d72be9c8",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.16 m.1. MM DOTTED_HALF=84. Time 3/4."
+            }
+          ]
+        },
+        {
+          "id": "ab9ec90f-bf19-4fce-8f35-d3aab3f66624",
+          "rank": 9,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "ac42c66a-e4e1-4c5c-a28d-3277d050ed93",
+              "rank": 1,
+              "metreNumerator": 3,
+              "metreDenominator": 4,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "732c7e98-edef-4194-b580-d5e0eb0c9875",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.18 m.1. MM DOTTED_HALF=88. Time 3/4."
+            }
+          ]
+        },
+        {
+          "id": "8822e192-f4ac-4641-a9d9-5e8f676ff80b",
+          "rank": 10,
+          "key": "F_MAJOR",
+          "sections": [
+            {
+              "id": "64017a29-280c-4e84-bc2f-60f8e84c1529",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "afedd081-ab69-468c-b0cc-1b9e7983b9e6",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.22 m.1. MM HALF=104. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "2289186c-9d8b-4b65-abd5-e412430de4ba",
+          "rank": 11,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "44ef2d7b-e1ea-421c-b86b-693321d67374",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "52291385-bdbe-49e3-9242-75f0d222de0b",
+                "text": "Presto"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.24 m.1. MM HALF=100. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "5420ca96-3e31-4bb3-a2fb-d3ccba03a333",
+          "rank": 12,
+          "key": "F_MAJOR",
+          "sections": [
+            {
+              "id": "d452cde3-1bd6-41e0-bdab-7427f4ccc453",
+              "rank": 1,
+              "metreNumerator": 6,
+              "metreDenominator": 8,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "eec26a0e-e1df-4822-a5c2-db602a1b119b",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.25 m.1. MM DOTTED_QUARTER=104. Time 6/8."
+            }
+          ]
+        },
+        {
+          "id": "5eb7a7e8-ce1e-4fa9-b56d-bab0a8b6e72a",
+          "rank": 13,
+          "key": "B_FLAT_MAJOR",
+          "sections": [
+            {
+              "id": "b3e1bd1c-9c66-467e-aa95-c4db7ca09f40",
+              "rank": 1,
+              "metreNumerator": 6,
+              "metreDenominator": 8,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "0a555124-f3b0-4c79-bd0b-84584ff77543",
+                "text": "Presto"
+              },
+              "fastestStructuralNotesPerBar": 24,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "32nd notes",
+              "commentForReview": "p.27 m.1. MM DOTTED_QUARTER=88. Time 6/8."
+            }
+          ]
+        },
+        {
+          "id": "6224cc9e-f32c-46ce-ac5a-0eb28d7e7db9",
+          "rank": 14,
+          "key": "F_MAJOR",
+          "sections": [
+            {
+              "id": "fdf04191-6ad0-4314-8f46-a9c155832de4",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "8a6b132b-320a-42b2-8a4c-d237c4c2007b",
+                "text": "Molto vivo e velocissimo"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "8th note triplets (12 per bar)",
+              "commentForReview": "p.30 m.1. MM HALF=108. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "51843d18-0497-470f-be28-1cfdb6991e85",
+          "rank": 15,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "7a5c3787-48f9-41ce-9bfe-28a5e672e38e",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "f31319cd-bfb3-40f7-977b-9a12a7620295",
+                "text": "Presto"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.31 m.1. MM HALF=108. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "6a316452-0ab7-49a9-a64a-b94b16f7c659",
+          "rank": 16,
+          "key": "G_MAJOR",
+          "sections": [
+            {
+              "id": "6d298047-a831-4d9d-be57-ca9e971d512a",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "7e0db773-af53-40a5-8538-39e45088d845",
+                "text": "Presto"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.32 m.1. MM HALF=100. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "1794f0d0-9a34-44da-95b0-6f0a830157f0",
+          "rank": 17,
+          "key": "F_MAJOR",
+          "sections": [
+            {
+              "id": "a5e8176a-bf85-40c0-8d99-58addefa6b64",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "6acadee4-8e43-4e80-8d17-c45f5f79fb3f",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.36 m.1. MM HALF=104. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "61c8171c-b3f9-4622-83c1-6b1d123cb455",
+          "rank": 18,
+          "key": "G_MAJOR",
+          "sections": [
+            {
+              "id": "72eb8c69-4a59-4b76-928d-0d3894cee526",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "507ec6fa-7d77-470b-8b4d-b792d664aaef",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.36 m.1. MM HALF=104. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "9d2100ce-dc38-4769-858d-94ee159d3407",
+          "rank": 19,
+          "key": "F_MAJOR",
+          "sections": [
+            {
+              "id": "682a396a-f960-4576-b23c-e4927d27156c",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "60291cd8-9735-4563-ac4f-9b5d01ef9f4f",
+                "text": "Presto"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.38 m.1. MM HALF=108. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "48d6d7e0-a286-48d2-916f-3b78bc13df9f",
+          "rank": 20,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "bb107b0c-13b2-4250-8af5-804d0b436b1c",
+              "rank": 1,
+              "metreNumerator": 3,
+              "metreDenominator": 4,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "c20ba576-dd6a-47b8-8fe4-c5d52ed532fc",
+                "text": "Molto vivace"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.39 m.1. MM DOTTED_HALF=88. Time 3/4."
+            }
+          ]
+        },
+        {
+          "id": "33d6db0e-27fa-47ec-ad77-552ca4924163",
+          "rank": 21,
+          "key": "C_MINOR",
+          "sections": [
+            {
+              "id": "edfae5b9-e2da-47e2-8dfc-114bfcec4c52",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "cc22cc2f-a122-4835-bf62-01bc5ab6d959",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.42 m.1. MM HALF=104. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "925e5146-8d20-4588-926d-c5521b5bf80c",
+          "rank": 22,
+          "key": "G_MAJOR",
+          "sections": [
+            {
+              "id": "5d884a80-cf69-4465-beb1-deaf206f179f",
+              "rank": 1,
+              "metreNumerator": 6,
+              "metreDenominator": 8,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "61d0c3fc-0e97-4de4-977d-1ab522e7f977",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.44 m.1. MM DOTTED_QUARTER=104. Time 6/8."
+            }
+          ]
+        },
+        {
+          "id": "3547c150-e203-44e3-ab2c-851773b97754",
+          "rank": 23,
+          "key": "A_MAJOR",
+          "sections": [
+            {
+              "id": "469a282b-c897-4618-8a77-24a092c1684b",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "f6d32d09-bf75-4732-b533-65f59890fb61",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.45 m.1. MM HALF=104. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "d9f1b069-28b2-4065-b0a2-35bb614aff7f",
+          "rank": 24,
+          "key": "D_MAJOR",
+          "sections": [
+            {
+              "id": "c0fe0698-f8ef-4455-a37e-727c3d9756ab",
+              "rank": 1,
+              "metreNumerator": 3,
+              "metreDenominator": 4,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "d7455758-0724-40c7-a4ba-92fd90b2c0f5",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.48 m.1. MM DOTTED_HALF=80. Time 3/4."
+            }
+          ]
+        },
+        {
+          "id": "720d3c2d-ddd6-4faf-8ee1-c5e3446e4270",
+          "rank": 25,
+          "key": "E_FLAT_MAJOR",
+          "sections": [
+            {
+              "id": "fecde46f-81e5-4742-a85e-9a18c17b453f",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "cb3a9fb1-d02e-41a7-a4ce-7e19a5f53a36",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.50 m.1. MM HALF=100. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "f0b88929-9191-4139-a444-c1513685412f",
+          "rank": 26,
+          "key": "A_MAJOR",
+          "sections": [
+            {
+              "id": "1b27dfac-e3ba-4d4f-9bdd-533ff94b1f68",
+              "rank": 1,
+              "metreNumerator": 6,
+              "metreDenominator": 8,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "beeae938-0be4-4096-ac6f-3d0ac91be312",
+                "text": "Allegro"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.53 m.1. MM DOTTED_QUARTER=104. Time 6/8."
+            }
+          ]
+        },
+        {
+          "id": "e8970192-7c21-4898-9354-d0a61f81c2bb",
+          "rank": 27,
+          "key": "B_FLAT_MAJOR",
+          "sections": [
+            {
+              "id": "8b5b2ba8-d4ec-42e9-9487-4cf80abff824",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "3339b7ce-ce5d-4c9c-bb39-af913ae4caa2",
+                "text": "Presto"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.55 m.1. MM HALF=108. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "0a0cebcc-75f9-43a9-9092-955d7fcdb86e",
+          "rank": 28,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "1b034080-78e4-419d-9750-8a555d60be77",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "8ea9f185-5cff-48e3-9865-7c758d9b526e",
+                "text": "Presto"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.56 m.1. MM HALF=100. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "1d368bae-430f-48b1-8fd7-f52fb7148ee5",
+          "rank": 29,
+          "key": "E_MAJOR",
+          "sections": [
+            {
+              "id": "74fe3fdb-8c55-4dde-9208-a1c73dc3d06c",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "7d625a98-7303-4bdd-a418-dcf353fc67ab",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.57 m.1. MM HALF=104. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "4106cbcf-befd-4698-9e4f-40d8b5508501",
+          "rank": 30,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "54feb923-e14b-4c20-99e7-ce764ba8b4ef",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "5bbcafa8-df12-482c-9fee-0c9651939c28",
+                "text": "Presto volante"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "8th note triplets",
+              "commentForReview": "p.58 m.1. MM HALF=100. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "a10fb880-a5ff-4706-9fa2-629a8d35aca4",
+          "rank": 31,
+          "key": "B_FLAT_MAJOR",
+          "sections": [
+            {
+              "id": "0d268ae4-c225-4864-b89e-64e7fd0a9b48",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "ded039e0-17ba-4344-8aa7-7bb43e246d04",
+                "text": "Molto Allegro"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.60 m.1. MM HALF=104. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "7943d2df-d72f-4441-8d31-fcacdfc4c7ba",
+          "rank": 32,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "1dc0908d-8e6a-4c19-a77b-ed8cabbc92f6",
+              "rank": 1,
+              "metreNumerator": 6,
+              "metreDenominator": 8,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "fb36a801-4d10-4235-bec1-d2b843301855",
+                "text": "Presto volante"
+              },
+              "fastestStructuralNotesPerBar": 24,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "32nd notes",
+              "commentForReview": "p.64 m.1. MM DOTTED_QUARTER=92. Time 6/8."
+            }
+          ]
+        },
+        {
+          "id": "7b525fe3-f7ab-4fbc-9c72-5e69a409dee7",
+          "rank": 33,
+          "key": "E_MAJOR",
+          "sections": [
+            {
+              "id": "9897e8d4-cf78-4116-aacd-144c06c77c67",
+              "rank": 1,
+              "metreNumerator": 6,
+              "metreDenominator": 8,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "9d4b1fd8-53f2-45a2-9cb2-3407000a2c63",
+                "text": "Molto Allegro e veloce"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.66 m.1. MM DOTTED_QUARTER=88. Time 6/8."
+            }
+          ]
+        },
+        {
+          "id": "9f720273-883b-4c3f-839c-441322d4c954",
+          "rank": 34,
+          "key": "A_MINOR",
+          "sections": [
+            {
+              "id": "e0f8eb52-c45b-4aae-9bde-f2a3b391ca8e",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "fae6e77e-79d2-43d1-8c5b-74572afa4859",
+                "text": "Allegro molto vivo ed energico"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "8th note triplets",
+              "commentForReview": "p.68 m.1. MM HALF=104. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "bdcc65cc-2430-47f4-a88c-14437a7cf162",
+          "rank": 35,
+          "key": "A_MAJOR",
+          "sections": [
+            {
+              "id": "5b22e26a-b27a-471b-a564-061c27b7cfb6",
+              "rank": 1,
+              "metreNumerator": 4,
+              "metreDenominator": 4,
+              "isCommonTime": true,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "8f882e5f-ff78-4815-a8f4-314347f72995",
+                "text": "Allegro vivacissimo"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.71 m.1. MM HALF=92. Time C."
+            }
+          ]
+        },
+        {
+          "id": "1e2c0f2d-db8f-4b03-9378-07ec4cb01c62",
+          "rank": 36,
+          "key": "C_MAJOR",
+          "sections": [
+            {
+              "id": "2037f9c7-7b6d-44e7-bf09-16fc08336fb3",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "e0dd004f-4ed0-4492-94c1-676bbe3281d4",
+                "text": "Presto"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.74 m.1. MM HALF=104. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "e52cae59-687b-484a-94b4-7a74b55eece8",
+          "rank": 37,
+          "key": "A_FLAT_MAJOR",
+          "sections": [
+            {
+              "id": "e158587a-0a89-46b3-be7c-b8928f3597e1",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "5f4df623-9154-4049-9434-ce2285334406",
+                "text": "Molto Allegro e giocoso"
+              },
+              "fastestStructuralNotesPerBar": 16,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.76 m.1. MM HALF=100. Time C|."
+            }
+          ]
+        },
+        {
+          "id": "811d17da-c4f5-4829-8d47-e66a11864506",
+          "rank": 38,
+          "key": "G_MAJOR",
+          "sections": [
+            {
+              "id": "4f1a437f-5d78-4008-be3a-b37ae66c5c26",
+              "rank": 1,
+              "metreNumerator": 6,
+              "metreDenominator": 8,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "1063d77a-2c8b-4f9a-a045-2d3bae9b859f",
+                "text": "Molto Allegro, quasi Presto"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.79 m.1. MM DOTTED_QUARTER=104. Time 6/8."
+            }
+          ]
+        },
+        {
+          "id": "c64fb9ae-de17-47f2-8481-4e2cea7bc2aa",
+          "rank": 39,
+          "key": "D_FLAT_MAJOR",
+          "sections": [
+            {
+              "id": "f5bb6775-2980-4b8d-a099-efd782e3ded9",
+              "rank": 1,
+              "metreNumerator": 6,
+              "metreDenominator": 8,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "tempoIndication": {
+                "id": "a7ead11d-397d-4b19-96c4-8e8b2941abec",
+                "text": "Presto (à la Galopade)"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "16th notes",
+              "commentForReview": "p.82 m.1. MM DOTTED_QUARTER=100. Time 6/8."
+            }
+          ]
+        },
+        {
+          "id": "838c7ce3-24e0-4072-924d-ebc3d879a7ef",
+          "rank": 40,
+          "key": "F_MAJOR",
+          "sections": [
+            {
+              "id": "51dbaf26-2d70-4b1a-a618-e05aebfa9d47",
+              "rank": 1,
+              "metreNumerator": 2,
+              "metreDenominator": 2,
+              "isCommonTime": false,
+              "isCutTime": true,
+              "tempoIndication": {
+                "id": "5e248a06-87c6-4c27-a7c6-012cfafdd046",
+                "text": "Allegrissimo, quasi Presto"
+              },
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": null,
+              "fastestRepeatedNotesPerBar": null,
+              "fastestOrnamentalNotesPerBar": null,
+              "isFastestStructuralNoteBelCanto": false,
+              "comment": "8th note triplets",
+              "commentForReview": "p.85 m.1. MM HALF=100. Time C|."
+            }
+          ]
+        }
+      ],
+      "isNew": true
+    }
+  ],
+  "tempoIndications": [
+    {
+      "id": "96c9bf4b-1b8a-44dc-a8de-6756da831923",
+      "text": "Presto",
+      "isNew": true
+    },
+    {
+      "id": "142543ea-c989-4360-a9be-878ac55f19b6",
+      "text": "Allegro molto",
+      "isNew": true
+    },
+    {
+      "id": "f64a2058-c05f-499c-84c1-c493570aa6a3",
+      "text": "Presto",
+      "isNew": true
+    },
+    {
+      "id": "a056f192-a8a4-4869-a4db-4ed09668c0aa",
+      "text": "Presto",
+      "isNew": true
+    },
+    {
+      "id": "bdd95b7d-bd32-4724-b805-665b1056ff40",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "72dc2778-6803-4cf9-83aa-a69ceddce987",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "14341f0d-38d1-4595-9aa8-8bde83bd31ed",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "7c73e57d-88a2-42fc-bd0f-1830d72be9c8",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "732c7e98-edef-4194-b580-d5e0eb0c9875",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "afedd081-ab69-468c-b0cc-1b9e7983b9e6",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "52291385-bdbe-49e3-9242-75f0d222de0b",
+      "text": "Presto",
+      "isNew": true
+    },
+    {
+      "id": "eec26a0e-e1df-4822-a5c2-db602a1b119b",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "0a555124-f3b0-4c79-bd0b-84584ff77543",
+      "text": "Presto",
+      "isNew": true
+    },
+    {
+      "id": "8a6b132b-320a-42b2-8a4c-d237c4c2007b",
+      "text": "Molto vivo e velocissimo",
+      "isNew": true
+    },
+    {
+      "id": "f31319cd-bfb3-40f7-977b-9a12a7620295",
+      "text": "Presto",
+      "isNew": true
+    },
+    {
+      "id": "7e0db773-af53-40a5-8538-39e45088d845",
+      "text": "Presto",
+      "isNew": true
+    },
+    {
+      "id": "6acadee4-8e43-4e80-8d17-c45f5f79fb3f",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "507ec6fa-7d77-470b-8b4d-b792d664aaef",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "60291cd8-9735-4563-ac4f-9b5d01ef9f4f",
+      "text": "Presto",
+      "isNew": true
+    },
+    {
+      "id": "c20ba576-dd6a-47b8-8fe4-c5d52ed532fc",
+      "text": "Molto vivace",
+      "isNew": true
+    },
+    {
+      "id": "cc22cc2f-a122-4835-bf62-01bc5ab6d959",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "61d0c3fc-0e97-4de4-977d-1ab522e7f977",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "f6d32d09-bf75-4732-b533-65f59890fb61",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "d7455758-0724-40c7-a4ba-92fd90b2c0f5",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "cb3a9fb1-d02e-41a7-a4ce-7e19a5f53a36",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "beeae938-0be4-4096-ac6f-3d0ac91be312",
+      "text": "Allegro",
+      "isNew": true
+    },
+    {
+      "id": "3339b7ce-ce5d-4c9c-bb39-af913ae4caa2",
+      "text": "Presto",
+      "isNew": true
+    },
+    {
+      "id": "8ea9f185-5cff-48e3-9865-7c758d9b526e",
+      "text": "Presto",
+      "isNew": true
+    },
+    {
+      "id": "7d625a98-7303-4bdd-a418-dcf353fc67ab",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "5bbcafa8-df12-482c-9fee-0c9651939c28",
+      "text": "Presto volante",
+      "isNew": true
+    },
+    {
+      "id": "ded039e0-17ba-4344-8aa7-7bb43e246d04",
+      "text": "Molto Allegro",
+      "isNew": true
+    },
+    {
+      "id": "fb36a801-4d10-4235-bec1-d2b843301855",
+      "text": "Presto volante",
+      "isNew": true
+    },
+    {
+      "id": "9d4b1fd8-53f2-45a2-9cb2-3407000a2c63",
+      "text": "Molto Allegro e veloce",
+      "isNew": true
+    },
+    {
+      "id": "fae6e77e-79d2-43d1-8c5b-74572afa4859",
+      "text": "Allegro molto vivo ed energico",
+      "isNew": true
+    },
+    {
+      "id": "8f882e5f-ff78-4815-a8f4-314347f72995",
+      "text": "Allegro vivacissimo",
+      "isNew": true
+    },
+    {
+      "id": "e0dd004f-4ed0-4492-94c1-676bbe3281d4",
+      "text": "Presto",
+      "isNew": true
+    },
+    {
+      "id": "5f4df623-9154-4049-9434-ce2285334406",
+      "text": "Molto Allegro e giocoso",
+      "isNew": true
+    },
+    {
+      "id": "1063d77a-2c8b-4f9a-a045-2d3bae9b859f",
+      "text": "Molto Allegro, quasi Presto",
+      "isNew": true
+    },
+    {
+      "id": "a7ead11d-397d-4b19-96c4-8e8b2941abec",
+      "text": "Presto (à la Galopade)",
+      "isNew": true
+    },
+    {
+      "id": "5e248a06-87c6-4c27-a7c6-012cfafdd046",
+      "text": "Allegrissimo, quasi Presto",
+      "isNew": true
+    }
+  ],
+  "metronomeMarks": [
+    {
+      "id": "c44667af-1730-40c8-9ed9-f49d559f830e",
+      "sectionId": "6b87918c-602a-4eee-85c7-9d41aeae0892",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 108,
+      "comment": "Seen on p.6"
+    },
+    {
+      "id": "03852459-97b1-4571-8575-88b6ca9b5dc6",
+      "sectionId": "32d16c45-b670-42c2-b3f0-1b4ee764272c",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 104,
+      "comment": "Seen on p.7"
+    },
+    {
+      "id": "e246f2cf-8ddd-4e2b-93e8-ab93caa6db00",
+      "sectionId": "9147ea37-dd24-49be-a03a-8ab593c7c643",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 108,
+      "comment": "Seen on p.8"
+    },
+    {
+      "id": "dd208733-e737-489f-9118-6d7e51519b3a",
+      "sectionId": "a0d942c3-dbb7-4ee8-aed9-86bd323378da",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "DOTTED_HALF",
+      "bpm": 80,
+      "comment": "Seen on p.9"
+    },
+    {
+      "id": "e4f077ab-7672-46fa-9e8a-022e030e4343",
+      "sectionId": "1d46d1ae-686a-4283-95d9-cd1cc25b16ba",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "DOTTED_HALF",
+      "bpm": 108,
+      "comment": "Seen on p.10"
+    },
+    {
+      "id": "8939634e-09dc-464a-93be-ef9ce6f064c4",
+      "sectionId": "c2081112-f0e1-430d-a789-3d8c62bfc07b",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 92,
+      "comment": "Seen on p.12"
+    },
+    {
+      "id": "3e9c704c-7707-4e76-8f24-2c3f87372337",
+      "sectionId": "16ca5e12-d314-4963-907a-92dd5764713d",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 104,
+      "comment": "Seen on p.14"
+    },
+    {
+      "id": "f892040b-74ee-4422-9694-de4336c2e39c",
+      "sectionId": "1459ba78-35ac-4a4c-97fa-5eda9a049196",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "DOTTED_HALF",
+      "bpm": 84,
+      "comment": "Seen on p.16"
+    },
+    {
+      "id": "db499f89-c439-44ef-ad70-ebf9aa029f43",
+      "sectionId": "ac42c66a-e4e1-4c5c-a28d-3277d050ed93",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "DOTTED_HALF",
+      "bpm": 88,
+      "comment": "Seen on p.18"
+    },
+    {
+      "id": "0639e446-24e6-4279-b84e-bdc9f8634e9e",
+      "sectionId": "64017a29-280c-4e84-bc2f-60f8e84c1529",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 104,
+      "comment": "Seen on p.22"
+    },
+    {
+      "id": "97e6e226-77e7-49e0-843e-797746404100",
+      "sectionId": "44ef2d7b-e1ea-421c-b86b-693321d67374",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 100,
+      "comment": "Seen on p.24"
+    },
+    {
+      "id": "423233fc-c266-419b-ab07-4e92eb0e2270",
+      "sectionId": "d452cde3-1bd6-41e0-bdab-7427f4ccc453",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "DOTTED_QUARTER",
+      "bpm": 104,
+      "comment": "Seen on p.25"
+    },
+    {
+      "id": "7dc40277-2e37-4340-9e09-0d29ceca6262",
+      "sectionId": "b3e1bd1c-9c66-467e-aa95-c4db7ca09f40",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "DOTTED_QUARTER",
+      "bpm": 88,
+      "comment": "Seen on p.27"
+    },
+    {
+      "id": "29fc3fdf-f939-4467-93fb-9430db7f909e",
+      "sectionId": "fdf04191-6ad0-4314-8f46-a9c155832de4",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 108,
+      "comment": "Seen on p.30"
+    },
+    {
+      "id": "9006e00b-df79-443e-a744-9344400e9649",
+      "sectionId": "7a5c3787-48f9-41ce-9bfe-28a5e672e38e",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 108,
+      "comment": "Seen on p.31"
+    },
+    {
+      "id": "2d603126-4277-449e-b873-6379ac7c23bc",
+      "sectionId": "6d298047-a831-4d9d-be57-ca9e971d512a",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 100,
+      "comment": "Seen on p.32"
+    },
+    {
+      "id": "e6740662-7933-4f96-b09b-64e323063f9b",
+      "sectionId": "a5e8176a-bf85-40c0-8d99-58addefa6b64",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 104,
+      "comment": "Seen on p.36"
+    },
+    {
+      "id": "89ec2646-633b-46e3-8224-d2e7e4369e06",
+      "sectionId": "72eb8c69-4a59-4b76-928d-0d3894cee526",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 104,
+      "comment": "Seen on p.36"
+    },
+    {
+      "id": "06af3906-f897-4227-ab37-024097479706",
+      "sectionId": "682a396a-f960-4576-b23c-e4927d27156c",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 108,
+      "comment": "Seen on p.38"
+    },
+    {
+      "id": "0172e276-2e92-4c2f-b44c-212d26f743ce",
+      "sectionId": "bb107b0c-13b2-4250-8af5-804d0b436b1c",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "DOTTED_HALF",
+      "bpm": 88,
+      "comment": "Seen on p.39"
+    },
+    {
+      "id": "86b1337e-cbfa-4976-917b-a2153fea6e39",
+      "sectionId": "edfae5b9-e2da-47e2-8dfc-114bfcec4c52",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 104,
+      "comment": "Seen on p.42"
+    },
+    {
+      "id": "7c9fa407-46bb-4565-880c-88857aa85523",
+      "sectionId": "5d884a80-cf69-4465-beb1-deaf206f179f",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "DOTTED_QUARTER",
+      "bpm": 104,
+      "comment": "Seen on p.44"
+    },
+    {
+      "id": "be6209cb-fad4-4ccc-bc99-25bb95e5e969",
+      "sectionId": "469a282b-c897-4618-8a77-24a092c1684b",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 104,
+      "comment": "Seen on p.45"
+    },
+    {
+      "id": "3285e1ea-3ff5-4acb-8031-651fa99b39be",
+      "sectionId": "c0fe0698-f8ef-4455-a37e-727c3d9756ab",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "DOTTED_HALF",
+      "bpm": 80,
+      "comment": "Seen on p.48"
+    },
+    {
+      "id": "d1f2f849-6c17-46e9-bdc3-52e50077292c",
+      "sectionId": "fecde46f-81e5-4742-a85e-9a18c17b453f",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 100,
+      "comment": "Seen on p.50"
+    },
+    {
+      "id": "6d2776a6-7eb1-4f43-bf14-4adad5e8ad6a",
+      "sectionId": "1b27dfac-e3ba-4d4f-9bdd-533ff94b1f68",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "DOTTED_QUARTER",
+      "bpm": 104,
+      "comment": "Seen on p.53"
+    },
+    {
+      "id": "3941b40d-d958-4216-9201-4298861a239e",
+      "sectionId": "8b5b2ba8-d4ec-42e9-9487-4cf80abff824",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 108,
+      "comment": "Seen on p.55"
+    },
+    {
+      "id": "bbf74ab5-5aa7-41e7-8ded-ea82646ccf08",
+      "sectionId": "1b034080-78e4-419d-9750-8a555d60be77",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 100,
+      "comment": "Seen on p.56"
+    },
+    {
+      "id": "11dcdb22-e6d3-4d63-ac2f-4ef7f67b916a",
+      "sectionId": "74fe3fdb-8c55-4dde-9208-a1c73dc3d06c",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 104,
+      "comment": "Seen on p.57"
+    },
+    {
+      "id": "53011756-5c23-4378-a0a4-63894a7a774d",
+      "sectionId": "54feb923-e14b-4c20-99e7-ce764ba8b4ef",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 100,
+      "comment": "Seen on p.58"
+    },
+    {
+      "id": "42c5fdc3-26f8-41d1-a5ec-6c618d7a69bb",
+      "sectionId": "0d268ae4-c225-4864-b89e-64e7fd0a9b48",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 104,
+      "comment": "Seen on p.60"
+    },
+    {
+      "id": "ee1cb893-18d6-473f-88b4-0b9abd9bb0da",
+      "sectionId": "1dc0908d-8e6a-4c19-a77b-ed8cabbc92f6",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "DOTTED_QUARTER",
+      "bpm": 92,
+      "comment": "Seen on p.64"
+    },
+    {
+      "id": "c42ecfaf-3dd4-4a2d-ba81-c133272e8543",
+      "sectionId": "9897e8d4-cf78-4116-aacd-144c06c77c67",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "DOTTED_QUARTER",
+      "bpm": 88,
+      "comment": "Seen on p.66"
+    },
+    {
+      "id": "b8ddeadb-43b8-485b-915f-1b94ce783917",
+      "sectionId": "e0f8eb52-c45b-4aae-9bde-f2a3b391ca8e",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 104,
+      "comment": "Seen on p.68"
+    },
+    {
+      "id": "0f923174-6c6c-4c24-a7b2-3e5913eb916c",
+      "sectionId": "5b22e26a-b27a-471b-a564-061c27b7cfb6",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 92,
+      "comment": "Seen on p.71"
+    },
+    {
+      "id": "1ad8d39a-c601-4fed-9b1f-192ff7f84048",
+      "sectionId": "2037f9c7-7b6d-44e7-bf09-16fc08336fb3",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 104,
+      "comment": "Seen on p.74"
+    },
+    {
+      "id": "ba18f476-bc4c-4a19-8eca-8852133b7262",
+      "sectionId": "e158587a-0a89-46b3-be7c-b8928f3597e1",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 100,
+      "comment": "Seen on p.76"
+    },
+    {
+      "id": "7974963f-f4e8-4fce-8f3c-d93eb9dc1a50",
+      "sectionId": "4f1a437f-5d78-4008-be3a-b37ae66c5c26",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "DOTTED_QUARTER",
+      "bpm": 104,
+      "comment": "Seen on p.79"
+    },
+    {
+      "id": "8da79041-e03a-444f-8e19-a72c2de9807a",
+      "sectionId": "f5bb6775-2980-4b8d-a099-efd782e3ded9",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "DOTTED_QUARTER",
+      "bpm": 100,
+      "comment": "Seen on p.82"
+    },
+    {
+      "id": "d3cb450f-a7ab-4286-bdb7-59d49b450215",
+      "sectionId": "51dbaf26-2d70-4b1a-a618-e05aebfa9d47",
+      "pieceVersionId": "10000000-0000-4000-8000-000000000006",
+      "noMM": false,
+      "beatUnit": "HALF",
+      "bpm": 100,
+      "comment": "Seen on p.85"
+    }
+  ]
+}
