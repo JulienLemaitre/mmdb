@@ -22,7 +22,13 @@ export default function AdminReviewsTable({ onViewAuditLogAction }: Props) {
   const [state, setState] = useState("");
 
   const fetchReviews = useCallback(
-    async ({ cursor, append }: { cursor?: string | null; append?: boolean }) => {
+    async ({
+      cursor,
+      append,
+    }: {
+      cursor?: string | null;
+      append?: boolean;
+    }) => {
       setLoading(true);
       setError(null);
       try {
@@ -34,9 +40,10 @@ export default function AdminReviewsTable({ onViewAuditLogAction }: Props) {
         if (state) params.set("state", state);
 
         const res = await fetch(`/api/admin/reviews?${params.toString()}`);
-        const data = (await res.json()) as AdminListResponse<AdminReviewItem> & {
-          error?: string;
-        };
+        const data =
+          (await res.json()) as AdminListResponse<AdminReviewItem> & {
+            error?: string;
+          };
 
         if (!res.ok) {
           throw new Error(data.error || "Failed to load reviews");
@@ -104,7 +111,11 @@ export default function AdminReviewsTable({ onViewAuditLogAction }: Props) {
             ))}
           </select>
         </label>
-        <button type="button" className="btn btn-sm" onClick={handleClearFilters}>
+        <button
+          type="button"
+          className="btn btn-sm"
+          onClick={handleClearFilters}
+        >
           Clear
         </button>
       </div>
@@ -136,18 +147,18 @@ export default function AdminReviewsTable({ onViewAuditLogAction }: Props) {
             {items.map((review) => (
               <tr key={review.id}>
                 <td>{formatDate(review.startedAt)}</td>
-                <td>{review.reviewer?.name || review.reviewer?.email || "-"}</td>
-                <td>{review.source?.title || "-"}</td>
                 <td>
-                  {formatPieceTitles(review.source?.pieceTitles ?? [])}
+                  {review.reviewer?.name || review.reviewer?.email || "-"}
                 </td>
+                <td>{review.source?.title || "-"}</td>
+                <td>{formatPieceTitles(review.source?.pieceTitles ?? [])}</td>
                 <td>{review.source?.sectionCount ?? "-"}</td>
                 <td>{review.state || "-"}</td>
                 <td>{review.auditLogCount}</td>
                 <td>
                   <button
                     type="button"
-                    className="btn btn-xs"
+                    className="btn btn-xs w-max"
                     onClick={() => onViewAuditLogAction?.(review.id)}
                   >
                     View audit log
