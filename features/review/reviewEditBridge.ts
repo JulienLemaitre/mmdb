@@ -71,6 +71,19 @@ export function resolveStepFromReviewItem(
   return STEP_FOR_ENTITY[entityType] ?? 0;
 }
 
+export function getCurrentSinglePieceStepRank(clickedItem): number {
+  if (clickedItem.entityType === "PIECE") {
+    if (clickedItem.field.path.includes("composer")) {
+      return 0;
+    }
+    return 1;
+  }
+  if (["PIECE_VERSION", "SECTION"].includes(clickedItem.entityType)) {
+    return 2;
+  }
+  return 3;
+}
+
 // Build a FeedFormState from a review working copy and the clicked checklist item
 export function buildFeedFormBootStateFromWorkingCopy(
   workingCopy: ReviewWorkingCopy,
@@ -213,19 +226,6 @@ export function buildFeedFormBootStateFromWorkingCopy(
       pieceVersion.id,
       "pieceVersionId",
     );
-
-    function getCurrentSinglePieceStepRank(clickedItem): number {
-      if (clickedItem.entityType === "PIECE") {
-        if (clickedItem.field.path.includes("composer")) {
-          return 0;
-        }
-        return 1;
-      }
-      if (["PIECE_VERSION", "SECTION"].includes(clickedItem.entityType)) {
-        return 2;
-      }
-      return 3;
-    }
 
     singlePieceVersionFormState = {
       formInfo: {

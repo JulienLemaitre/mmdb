@@ -20,12 +20,74 @@ jest.mock("../utils/server/getReviewOverview", () => ({
   },
 }));
 
+const getServerSessionMock = jest.fn();
+jest.mock("next-auth", () => ({
+  getServerSession: (...args: any[]) => getServerSessionMock(...args),
+}));
+
+const reviewFindUnique = jest.fn();
+const dbMock: any = {
+  review: { findUnique: reviewFindUnique, update: jest.fn() },
+  $transaction: async (cb: any) => cb(dbMock),
+  auditLog: { createMany: jest.fn() },
+  reviewedEntity: {
+    upsert: jest.fn(),
+    createMany: jest.fn(),
+    deleteMany: jest.fn(),
+  },
+  mMSource: { update: jest.fn() },
+  collection: { upsert: jest.fn(), update: jest.fn() },
+  piece: { upsert: jest.fn(), update: jest.fn() },
+  pieceVersion: { upsert: jest.fn(), update: jest.fn() },
+  movement: {
+    upsert: jest.fn(),
+    update: jest.fn(),
+    createMany: jest.fn(),
+    deleteMany: jest.fn(),
+  },
+  section: {
+    upsert: jest.fn(),
+    update: jest.fn(),
+    createMany: jest.fn(),
+    deleteMany: jest.fn(),
+  },
+  person: { upsert: jest.fn() },
+  organization: { upsert: jest.fn() },
+  tempoIndication: { upsert: jest.fn() },
+  reference: { upsert: jest.fn(), deleteMany: jest.fn() },
+  contribution: { upsert: jest.fn(), deleteMany: jest.fn() },
+  metronomeMark: { upsert: jest.fn(), deleteMany: jest.fn() },
+  mMSourcesOnPieceVersions: { createMany: jest.fn(), deleteMany: jest.fn() },
+};
+jest.mock("../utils/server/db", () => ({ db: dbMock }));
+
+jest.mock("../utils/server/sendEmail", () => ({
+  __esModule: true,
+  default: jest.fn().mockResolvedValue({}),
+}));
+
 const {
   POST: postSubmit,
 } = require("../app/api/review/[reviewId]/submit/route");
 import { buildMockOverview } from "@/features/review/reviewMock";
+import { REVIEW_STATE } from "@/prisma/client";
 
 describe("POST /api/review/[reviewId]/submit", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    getServerSessionMock.mockResolvedValue({
+      user: { id: "u-1", role: "REVIEWER" },
+    });
+    reviewFindUnique.mockImplementation(({ where }) =>
+      Promise.resolve({
+        id: where.id,
+        state: REVIEW_STATE.IN_REVIEW,
+        creatorId: "u-1",
+        mMSourceId: "src-1",
+      }),
+    );
+  });
+
   it("rejects when checklist is incomplete", async () => {
     const reviewId = "r-1";
     const { graph } = buildMockOverview(reviewId);
