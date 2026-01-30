@@ -7,6 +7,7 @@ import {
   rebuildWorkingCopyFromFeedForm,
   type ReviewWorkingCopy,
   type FeedBootType,
+  getCurrentSinglePieceStepRank,
 } from "@/features/review/reviewEditBridge";
 import { FEED_FORM_BOOT_KEY } from "@/utils/constants";
 import { FeedFormState } from "@/types/feedFormTypes";
@@ -196,10 +197,12 @@ describe("reviewEditBridge utilities", () => {
           movementId: "mov-1",
         },
       };
-      const computedStep = resolveStepFromReviewItem(
+      const computedFeedFormStep = resolveStepFromReviewItem(
         clickedItem,
         mockWorkingCopy,
       );
+      const computedSinglePieceFormStep =
+        getCurrentSinglePieceStepRank(clickedItem);
 
       const opts = { reviewId: "rev-xyz" };
       const bootState = buildFeedFormBootStateFromWorkingCopy(
@@ -221,7 +224,9 @@ describe("reviewEditBridge utilities", () => {
       } = bootState;
 
       // Check feedFormState formInfo and context
-      expect(feedFormState.formInfo?.currentStepRank).toBe(3); // SECTION is step 3
+      expect(feedFormState.formInfo?.currentStepRank).toBe(
+        computedFeedFormStep,
+      ); // SECTION is step 3
       expect(feedFormState.formInfo?.reviewContext?.reviewId).toBe("rev-xyz");
       expect(feedFormState.formInfo?.reviewContext?.anchors?.pvId).toBe("pv-1");
       expect(feedFormState.formInfo?.reviewContext?.anchors?.movId).toBe(
@@ -266,7 +271,7 @@ describe("reviewEditBridge utilities", () => {
       // Check singlePieceVersionFormState
       expect(singlePieceVersionFormState).not.toBeNull();
       expect(singlePieceVersionFormState?.formInfo.currentStepRank).toBe(
-        computedStep,
+        computedSinglePieceFormStep,
       );
       expect(singlePieceVersionFormState?.piece?.id).toBe("piece-1");
       expect(singlePieceVersionFormState?.composer?.id).toBe("person-1");
