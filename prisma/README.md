@@ -69,12 +69,6 @@ As explained in the Reference model part of the Prisma schema, a constraint Refe
 This allows having multiple occurrences of the same PLATE_NUMBER references.
 _This cannot be expressed in the Prisma schema_
 
-## Triggers for the review process - hypothesis
-
-One hypothesis to implement the data review process is to use triggers as follows:
-Triggers are set on multiple tables to ensure that, being in an active Review process, all changes made to the data of a mMSource and its parts are stored in an AuditLog table with the before and after JSON and the actor (User).
-These triggers are described in the related migration.
-
 ## webstorm db extension connexion string for project's Neon databases
 
 ### production
