@@ -5,11 +5,11 @@ import Link from "next/link";
 
 export default function NavBar({
   title,
-  isFeedForm,
+  hasHelpSection,
   isHome,
 }: {
   title?: string;
-  isFeedForm?: boolean;
+  hasHelpSection?: boolean;
   isHome?: boolean;
 }) {
   return (
@@ -25,7 +25,7 @@ export default function NavBar({
         )}
       </div>
 
-      {isFeedForm ? (
+      {hasHelpSection ? (
         <div className="flex-none">
           <label htmlFor="my-drawer-4" className="drawer-button btn btn-link">
             <QuestionMarkCircleIcon className="w-7 h-7" />

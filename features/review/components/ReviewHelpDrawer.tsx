@@ -1,28 +1,9 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React from "react";
 import XMarkIcon from "@/ui/svg/XMarkIcon";
-import { useFeedForm } from "@/context/feedFormContext";
-import { stepHelpContent } from "@/features/feed/multiStepMMSourceForm/stepHelpContent";
 
 const FeedFormHelpDrawer = () => {
-  const { currentStepRank } = useFeedForm();
-  const [activeHelpTabInternal, setActiveHelpTabInternal] = useState<
-    "contextual" | "glossary"
-  >("contextual");
-
-  const SectionHelp = stepHelpContent[currentStepRank];
-
-  const toggleSectionHelp = useCallback(() => {
-    setActiveHelpTabInternal(
-      !!SectionHelp && activeHelpTabInternal === "glossary"
-        ? "contextual"
-        : "glossary",
-    );
-  }, [SectionHelp, activeHelpTabInternal, setActiveHelpTabInternal]);
-
-  const activeHelpTab = SectionHelp ? activeHelpTabInternal : "glossary";
-
   return (
     <div className="drawer-side z-50" tabIndex={-1}>
       <label
@@ -62,22 +43,6 @@ const FeedFormHelpDrawer = () => {
         </div>
 
         <div role="tablist" className="tabs tabs-bordered">
-          {/* Contextual section help tab */}
-          <input
-            type="radio"
-            name="help-aside-tab"
-            role="tab"
-            className="tab"
-            aria-label="Section help"
-            checked={activeHelpTab === "contextual"}
-            onChange={toggleSectionHelp}
-            disabled={!SectionHelp}
-            tabIndex={-1}
-          />
-          <div role="tabpanel" className="tab-content py-6">
-            <div className="prose w-full">{SectionHelp}</div>
-          </div>
-
           {/* General glossary help */}
           <input
             type="radio"
@@ -85,8 +50,10 @@ const FeedFormHelpDrawer = () => {
             role="tab"
             className="tab"
             aria-label="Glossary"
-            checked={activeHelpTab === "glossary"}
-            onChange={toggleSectionHelp}
+            checked={true}
+            onChange={() => {
+              console.log("glossary help clicked");
+            }}
             tabIndex={-1}
           />
           <div role="tabpanel" className="tab-content py-6">
