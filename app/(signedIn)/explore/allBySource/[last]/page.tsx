@@ -1,8 +1,9 @@
 import { db } from "@/utils/server/db";
-// import MMSourcesDetails from "@/features/explore/MMSourcesDetails";
 import React from "react";
 import getChartDataFromMMSources from "@/utils/getChartDataFromMMSources";
 import AllBySourceList from "@/features/explore/AllBySourceList";
+
+const MAX_LAST_NB_DAYS = 90;
 
 // TODO remove these lines if it updates properly when a new piece is registered, without them.
 // const dynamic = "force-dynamic";
@@ -21,7 +22,7 @@ const getData = async ({ last }) => {
   const lastDate = new Date(
     today.getFullYear(),
     today.getMonth(),
-    today.getDate() - lastNumber,
+    today.getDate() - Math.min(MAX_LAST_NB_DAYS, lastNumber),
   );
 
   const mMSources = await db.mMSource.findMany({

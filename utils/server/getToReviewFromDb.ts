@@ -34,7 +34,7 @@ export async function getToReviewFromDb(): Promise<{
         reviewState: { in: [REVIEW_STATE.PENDING, REVIEW_STATE.ABORTED] },
         reviews: { none: { state: REVIEW_STATE.IN_REVIEW } },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: "asc" },
       select: {
         id: true,
         title: true,

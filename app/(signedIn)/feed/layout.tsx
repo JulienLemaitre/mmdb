@@ -16,7 +16,7 @@ export default function FeedLayout({ children }) {
         <div className="drawer-content min-h-full">
           {/* Page content here */}
           <div className="min-h-full flex flex-col">
-            <NavBar title="Feeding the database" isFeedForm />
+            <NavBar title="Feeding the database" hasHelpSection />
             <div className="bg-zinc-50 dark:bg-zinc-800 flex-1 flex items-stretch">
               <aside className="bg-base-100 w-1/2 max-w-sm p-10 overflow-auto border-r-base-200 border-r-4">
                 <Steps />
