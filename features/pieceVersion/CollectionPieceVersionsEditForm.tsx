@@ -20,6 +20,7 @@ import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes
 import CheckIcon from "@/ui/svg/CheckIcon";
 import ArrowDownIcon from "@/ui/svg/ArrowDownIcon";
 import ArrowUpIcon from "@/ui/svg/ArrowUpIcon";
+import { SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 
 type CollectionPieceVersionsEditFormProps = {
   isUpdateMode: boolean;
@@ -98,6 +99,7 @@ function CollectionPieceVersionsEditForm({
         isSinglePieceVersionFormOpen: false,
       },
     });
+    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
   };
 
   const onEditCollectionPieceVersion = (
