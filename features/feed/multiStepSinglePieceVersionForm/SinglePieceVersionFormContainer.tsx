@@ -312,6 +312,8 @@ const SinglePieceVersionFormContainer = ({
         deleteIdArray: [selectedPieceVersionId],
       });
     }
+
+    updateSinglePieceVersionForm(dispatch, "goToPrevStep", {});
   };
 
   const onPieceVersionSelect = (pieceVersion: PieceVersionInput) => {
