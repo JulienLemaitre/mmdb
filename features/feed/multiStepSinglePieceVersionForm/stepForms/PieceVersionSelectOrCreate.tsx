@@ -130,7 +130,7 @@ function PieceVersionSelectOrCreate({
   };
 
   const onCancelPieceVersionEdition = () => {
-    if (hasPieceVersionJustBeenCreated) {
+    if (isDataFetchDisabled) {
       onCancelPieceVersionCreation();
     }
     // Force a re-fetch (refresh) by resetting the tracking ID.
