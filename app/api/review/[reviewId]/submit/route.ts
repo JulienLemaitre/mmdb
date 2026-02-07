@@ -23,7 +23,7 @@ export async function POST(
   req: Request,
   { params }: { params: Promise<{ reviewId: string }> },
 ) {
-  // Check for a REVIEWER or ADMIN session
+  // Enforce authenticated reviewer/admin access for submissions.
   const session = await getServerSession(authOptions);
   if (!session || !session.user) {
     return NextResponse.json(
@@ -41,7 +41,7 @@ export async function POST(
     );
   }
 
-  // Check received params and body
+  // Parse request and validate required payload fields.
   const { reviewId } = await params;
 
   let body: any;
@@ -73,7 +73,7 @@ export async function POST(
     );
   }
 
-  // 1. Verify Review state and ownership
+  // 1. Verify review exists, state is valid, and caller owns it.
   const review = await db.review.findUnique({
     where: { id: reviewId },
     select: { id: true, state: true, creatorId: true, mMSourceId: true },
@@ -95,7 +95,7 @@ export async function POST(
     );
   }
 
-  // 2. Load the baseline graph
+  // 2. Load baseline graph used for diffing/persistence decisions.
   let baselineGraph: ChecklistGraph;
   let globallyReviewed: any;
   try {
@@ -110,7 +110,7 @@ export async function POST(
     );
   }
 
-  // 3. Validate Completeness (Server Authoritative)
+  // 3. Validate checklist completeness against working copy (server authoritative).
   // We validate against the workingCopy because the reviewer might have deleted items (which removes the requirement to check them)
   // or added new items (which creates new requirements). The baseline is only used for diffing/persistence.
   const requiredItems = expandRequiredChecklistItems(workingCopy, {
@@ -148,7 +148,7 @@ export async function POST(
     );
   }
 
-  // 4. Compute Audit Entries & Change Detection
+  // 4. Compute audit entries and changed field paths for persistence decisions.
   // (Note: We recalculate diffs for audit, but for DB updates we traverse the working copy)
   const auditEntries = composeAuditEntries(
     reviewId,
@@ -168,6 +168,80 @@ export async function POST(
     return acc;
   }, {});
 
+  // Helpers for detecting new/changed entities vs baseline.
+  const buildIdSet = (items?: Array<{ id?: string | null }>) =>
+    new Set((items ?? []).map((item) => item?.id).filter(Boolean) as string[]);
+
+  // Precompute nested IDs so movement/section diffs can be resolved quickly.
+  const baselineMovementIds = new Set<string>();
+  const baselineSectionIds = new Set<string>();
+  for (const pv of baselineGraph.pieceVersions ?? []) {
+    const movements = (pv as any).movements || [];
+    for (const movement of movements) {
+      if (movement?.id) baselineMovementIds.add(movement.id);
+      const sections = (movement as any).sections || [];
+      for (const section of sections) {
+        if (section?.id) baselineSectionIds.add(section.id);
+      }
+    }
+  }
+
+  const baselineIdsByType: Record<string, Set<string>> = {
+    PERSON: buildIdSet(baselineGraph.persons),
+    ORGANIZATION: buildIdSet(baselineGraph.organizations),
+    COLLECTION: buildIdSet(baselineGraph.collections),
+    PIECE: buildIdSet(baselineGraph.pieces),
+    PIECE_VERSION: buildIdSet(baselineGraph.pieceVersions),
+    MOVEMENT: baselineMovementIds,
+    SECTION: baselineSectionIds,
+    TEMPO_INDICATION: buildIdSet(baselineGraph.tempoIndications),
+    METRONOME_MARK: buildIdSet(baselineGraph.metronomeMarks),
+    REFERENCE: buildIdSet(baselineGraph.source?.references),
+    CONTRIBUTION: buildIdSet(baselineGraph.contributions),
+  };
+
+  // Contributions use polymorphic person/organization, so compare explicitly.
+  const baselineContributionById = new Map<
+    string,
+    { role: string; personId: string | null; organizationId: string | null }
+  >();
+  for (const c of baselineGraph.contributions ?? []) {
+    if (!c?.id) continue;
+    baselineContributionById.set(c.id, {
+      role: c.role,
+      personId: "person" in c ? (c.person?.id ?? null) : null,
+      organizationId: "organization" in c ? (c.organization?.id ?? null) : null,
+    });
+  }
+
+  const hasChangedEntity = (type: string, id: string | undefined | null) =>
+    !!id && !!changedUniqueByEntityType[type]?.has(id);
+  const isNewEntity = (type: string, id: string | undefined | null) =>
+    !!id && !baselineIdsByType[type]?.has(id);
+  const shouldUpsertEntity = (type: string, id: string | undefined | null) =>
+    !!id && (isNewEntity(type, id) || hasChangedEntity(type, id));
+  const shouldUpsertContribution = (c: any) => {
+    if (!c?.id) return true;
+    if (isNewEntity("CONTRIBUTION", c.id)) return true;
+    if (hasChangedEntity("CONTRIBUTION", c.id)) return true;
+    const baseline = baselineContributionById.get(c.id);
+    if (!baseline) return true;
+    const personId = "person" in c ? (c.person?.id ?? null) : null;
+    const organizationId =
+      "organization" in c ? (c.organization?.id ?? null) : null;
+    return (
+      baseline.role !== c.role ||
+      baseline.personId !== personId ||
+      baseline.organizationId !== organizationId
+    );
+  };
+  // Ignore sourceOnPieceVersions rank-only changes for MM_SOURCE update.
+  const hasMMSourceFieldChanges = changedFieldPaths.some(
+    (c) =>
+      c.entityType === "MM_SOURCE" &&
+      !c.fieldPath.startsWith("source.pieceVersions["),
+  );
+
   const logSummary = {
     reviewId,
     workingCopy,
@@ -181,13 +255,17 @@ export async function POST(
     requiredItems,
     auditEntries,
     changedFieldPaths,
+    changedUniqueByEntityType,
+    baselineIdsByType,
+    baselineContributionById,
+    hasMMSourceFieldChanges,
     changedCount: changedFieldPaths.length,
     entitiesTouched: Object.fromEntries(
       Object.entries(changedUniqueByEntityType).map(([k, v]) => [k, v.size]),
     ),
   };
 
-  // 5. Send log email before database persistence
+  // 5. Send log email before database persistence.
   await sendEmail({
     type: "Review submit data",
     content: logSummary,
@@ -213,7 +291,7 @@ export async function POST(
       ),
     );
 
-  // 6. Persist to Database (Transactional)
+  // 6. Persist to database transactionally.
   const txDebug: any = {};
   try {
     await db.$transaction(
@@ -334,6 +412,7 @@ export async function POST(
 
         // Persons
         for (const p of workingCopy.persons || []) {
+          if (!shouldUpsertEntity("PERSON", p.id)) continue;
           if (!txDebug.upsertedPersons) txDebug.upsertedPersons = [];
           txDebug.upsertedPersons.push(
             await tx.person.upsert({
@@ -358,6 +437,7 @@ export async function POST(
 
         // Organizations
         for (const o of workingCopy.organizations || []) {
+          if (!shouldUpsertEntity("ORGANIZATION", o.id)) continue;
           if (!txDebug.upsertedOrganizations)
             txDebug.upsertedOrganizations = [];
           txDebug.upsertedOrganizations.push(
@@ -371,6 +451,7 @@ export async function POST(
 
         // TempoIndications
         for (const ti of workingCopy.tempoIndications || []) {
+          if (!shouldUpsertEntity("TEMPO_INDICATION", ti.id)) continue;
           if (!txDebug.upsertedTempoIndications)
             txDebug.upsertedTempoIndications = [];
           txDebug.upsertedTempoIndications.push(
@@ -386,6 +467,7 @@ export async function POST(
 
         // Collections
         for (const c of workingCopy.collections || []) {
+          if (!shouldUpsertEntity("COLLECTION", c.id)) continue;
           if (!txDebug.upsertedCollections) txDebug.upsertedCollections = [];
           txDebug.upsertedCollections.push(
             await tx.collection.upsert({
@@ -406,6 +488,7 @@ export async function POST(
 
         // Pieces
         for (const p of workingCopy.pieces || []) {
+          if (!shouldUpsertEntity("PIECE", p.id)) continue;
           if (!txDebug.upsertedPieces) txDebug.upsertedPieces = [];
           txDebug.upsertedPieces.push(
             await tx.piece.upsert({
@@ -434,89 +517,95 @@ export async function POST(
 
         // PieceVersions & Structure
         for (const pv of workingCopy.pieceVersions || []) {
-          if (!txDebug.upsertedPieceVersions)
-            txDebug.upsertedPieceVersions = [];
-          txDebug.upsertedPieceVersions.push(
-            await tx.pieceVersion.upsert({
-              where: { id: pv.id },
-              update: {
-                category: pv.category,
-                pieceId: pv.pieceId,
-              },
-              create: {
-                id: pv.id,
-                category: pv.category,
-                pieceId: pv.pieceId,
-                creatorId: review.creatorId,
-              },
-            }),
-          );
-
-          const movements = (pv as any).movements || [];
-          for (const m of movements) {
-            if (!txDebug.upsertedMovements) txDebug.upsertedMovements = [];
-            txDebug.upsertedMovements.push(
-              await tx.movement.upsert({
-                where: { id: m.id },
+          if (shouldUpsertEntity("PIECE_VERSION", pv.id)) {
+            if (!txDebug.upsertedPieceVersions)
+              txDebug.upsertedPieceVersions = [];
+            txDebug.upsertedPieceVersions.push(
+              await tx.pieceVersion.upsert({
+                where: { id: pv.id },
                 update: {
-                  rank: m.rank,
-                  key: m.key,
+                  category: pv.category,
+                  pieceId: pv.pieceId,
                 },
                 create: {
-                  id: m.id,
-                  pieceVersionId: pv.id,
-                  rank: m.rank,
-                  key: m.key,
+                  id: pv.id,
+                  category: pv.category,
+                  pieceId: pv.pieceId,
+                  creatorId: review.creatorId,
                 },
               }),
             );
+          }
 
-            const sections = (m as any).sections || [];
-            for (const s of sections) {
-              if (!txDebug.upsertedSections) txDebug.upsertedSections = [];
-              txDebug.upsertedSections.push(
-                await tx.section.upsert({
-                  where: { id: s.id },
+          const movements = (pv as any).movements || [];
+          for (const m of movements) {
+            if (shouldUpsertEntity("MOVEMENT", m.id)) {
+              if (!txDebug.upsertedMovements) txDebug.upsertedMovements = [];
+              txDebug.upsertedMovements.push(
+                await tx.movement.upsert({
+                  where: { id: m.id },
                   update: {
-                    rank: s.rank,
-                    metreNumerator: s.metreNumerator,
-                    metreDenominator: s.metreDenominator,
-                    isCommonTime: s.isCommonTime,
-                    isCutTime: s.isCutTime,
-                    fastestStructuralNotesPerBar:
-                      s.fastestStructuralNotesPerBar,
-                    fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar,
-                    fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar,
-                    fastestOrnamentalNotesPerBar:
-                      s.fastestOrnamentalNotesPerBar,
-                    isFastestStructuralNoteBelCanto:
-                      s.isFastestStructuralNoteBelCanto,
-                    tempoIndicationId: s.tempoIndication.id, // Validated by previous TI upsert
-                    comment: s.comment,
-                    commentForReview: s.commentForReview,
+                    rank: m.rank,
+                    key: m.key,
                   },
                   create: {
-                    id: s.id,
-                    movementId: m.id,
-                    rank: s.rank,
-                    metreNumerator: s.metreNumerator,
-                    metreDenominator: s.metreDenominator,
-                    isCommonTime: s.isCommonTime,
-                    isCutTime: s.isCutTime,
-                    fastestStructuralNotesPerBar:
-                      s.fastestStructuralNotesPerBar,
-                    fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar,
-                    fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar,
-                    fastestOrnamentalNotesPerBar:
-                      s.fastestOrnamentalNotesPerBar,
-                    isFastestStructuralNoteBelCanto:
-                      s.isFastestStructuralNoteBelCanto,
-                    tempoIndicationId: s.tempoIndication.id,
-                    comment: s.comment,
-                    commentForReview: s.commentForReview,
+                    id: m.id,
+                    pieceVersionId: pv.id,
+                    rank: m.rank,
+                    key: m.key,
                   },
                 }),
               );
+            }
+
+            const sections = (m as any).sections || [];
+            for (const s of sections) {
+              if (shouldUpsertEntity("SECTION", s.id)) {
+                if (!txDebug.upsertedSections) txDebug.upsertedSections = [];
+                txDebug.upsertedSections.push(
+                  await tx.section.upsert({
+                    where: { id: s.id },
+                    update: {
+                      rank: s.rank,
+                      metreNumerator: s.metreNumerator,
+                      metreDenominator: s.metreDenominator,
+                      isCommonTime: s.isCommonTime,
+                      isCutTime: s.isCutTime,
+                      fastestStructuralNotesPerBar:
+                        s.fastestStructuralNotesPerBar,
+                      fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar,
+                      fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar,
+                      fastestOrnamentalNotesPerBar:
+                        s.fastestOrnamentalNotesPerBar,
+                      isFastestStructuralNoteBelCanto:
+                        s.isFastestStructuralNoteBelCanto,
+                      tempoIndicationId: s.tempoIndication.id, // Validated by previous TI upsert
+                      comment: s.comment,
+                      commentForReview: s.commentForReview,
+                    },
+                    create: {
+                      id: s.id,
+                      movementId: m.id,
+                      rank: s.rank,
+                      metreNumerator: s.metreNumerator,
+                      metreDenominator: s.metreDenominator,
+                      isCommonTime: s.isCommonTime,
+                      isCutTime: s.isCutTime,
+                      fastestStructuralNotesPerBar:
+                        s.fastestStructuralNotesPerBar,
+                      fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar,
+                      fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar,
+                      fastestOrnamentalNotesPerBar:
+                        s.fastestOrnamentalNotesPerBar,
+                      isFastestStructuralNoteBelCanto:
+                        s.isFastestStructuralNoteBelCanto,
+                      tempoIndicationId: s.tempoIndication.id,
+                      comment: s.comment,
+                      commentForReview: s.commentForReview,
+                    },
+                  }),
+                );
+              }
             }
           }
         }
@@ -524,22 +613,25 @@ export async function POST(
         // --- D. Source & Direct Children ---
 
         // Update MM Source
-        txDebug.mMSource = await tx.mMSource.update({
-          where: { id: review.mMSourceId },
-          data: {
-            title: workingCopy.source.title,
-            type: workingCopy.source.type,
-            link: workingCopy.source.link,
-            permalink: workingCopy.source.permalink,
-            year: workingCopy.source.year,
-            isYearEstimated: workingCopy.source.isYearEstimated,
-            comment: workingCopy.source.comment,
-          },
-        });
+        if (hasMMSourceFieldChanges) {
+          txDebug.mMSource = await tx.mMSource.update({
+            where: { id: review.mMSourceId },
+            data: {
+              title: workingCopy.source.title,
+              type: workingCopy.source.type,
+              link: workingCopy.source.link,
+              permalink: workingCopy.source.permalink,
+              year: workingCopy.source.year,
+              isYearEstimated: workingCopy.source.isYearEstimated,
+              comment: workingCopy.source.comment,
+            },
+          });
+        }
 
         // Upsert References
         for (const r of workingCopy.source.references || []) {
           if (!r.id) continue; // Should have ID
+          if (!shouldUpsertEntity("REFERENCE", r.id)) continue;
           if (!txDebug.upsertedReferences) txDebug.upsertedReferences = [];
           txDebug.upsertedReferences.push(
             await tx.reference.upsert({
@@ -557,6 +649,7 @@ export async function POST(
 
         // Upsert Contributions
         for (const c of workingCopy.contributions || []) {
+          if (!shouldUpsertContribution(c)) continue;
           if (!txDebug.upsertedContributions)
             txDebug.upsertedContributions = [];
           txDebug.upsertedContributions.push(
@@ -591,6 +684,7 @@ export async function POST(
         // Upsert Metronome Marks
         for (const mm of workingCopy.metronomeMarks || []) {
           if (!mm.noMM) {
+            if (!shouldUpsertEntity("METRONOME_MARK", mm.id)) continue;
             if (!txDebug.upsertedMetronomeMarks)
               txDebug.upsertedMetronomeMarks = [];
             txDebug.upsertedMetronomeMarks.push(
@@ -616,23 +710,90 @@ export async function POST(
         }
 
         // --- E. Associations (MMSourcesOnPieceVersions) ---
-        // Full replacement strategy to ensure ranks are correct
-        txDebug.deletedMMSourcesOnPieceVersions =
-          await tx.mMSourcesOnPieceVersions.deleteMany({
-            where: { mMSourceId: review.mMSourceId },
-          });
+        // Use minimal diff to preserve timestamps and avoid unnecessary writes.
+        const baselineSOPV = baselineGraph.sourceOnPieceVersions ?? [];
+        const workingSOPV = workingCopy.sourceOnPieceVersions ?? [];
 
-        if (
-          workingCopy.sourceOnPieceVersions &&
-          workingCopy.sourceOnPieceVersions.length > 0
-        ) {
+        const baselineSOPVByPieceVersionId = new Map(
+          baselineSOPV
+            .filter((item) => item?.pieceVersionId)
+            .map((item) => [item.pieceVersionId, item]),
+        );
+        const workingSOPVByPieceVersionId = new Map(
+          workingSOPV
+            .filter((item) => item?.pieceVersionId)
+            .map((item) => [item.pieceVersionId, item]),
+        );
+
+        const removedJoinIds: string[] = [];
+        for (const [pieceVersionId, base] of baselineSOPVByPieceVersionId) {
+          if (!workingSOPVByPieceVersionId.has(pieceVersionId)) {
+            removedJoinIds.push(base.joinId);
+          }
+        }
+
+        if (removedJoinIds.length > 0) {
+          txDebug.deletedMMSourcesOnPieceVersions =
+            await tx.mMSourcesOnPieceVersions.deleteMany({
+              where: { id: { in: removedJoinIds } },
+            });
+        }
+
+        const rankUpdates: Array<{ id: string; rank: number }> = [];
+        for (const [pieceVersionId, work] of workingSOPVByPieceVersionId) {
+          const base = baselineSOPVByPieceVersionId.get(pieceVersionId);
+          if (!base) continue;
+          if (base.rank !== work.rank) {
+            rankUpdates.push({ id: base.joinId, rank: work.rank });
+          }
+        }
+
+        if (rankUpdates.length > 0) {
+          // Update ranks in two steps to avoid unique constraint collisions.
+          const ranks = [
+            ...baselineSOPV.map((item) => item.rank),
+            ...workingSOPV.map((item) => item.rank),
+          ].filter((rank) => Number.isFinite(rank)) as number[];
+          const tempRankBase =
+            (ranks.length > 0 ? Math.max(...ranks) : 0) + 1000;
+
+          let offset = 0;
+          for (const item of rankUpdates) {
+            const tempRank = tempRankBase + offset;
+            offset += 1;
+            await tx.mMSourcesOnPieceVersions.update({
+              where: { id: item.id },
+              data: { rank: tempRank },
+            });
+          }
+
+          for (const item of rankUpdates) {
+            if (!txDebug.updatedMMSourcesOnPieceVersions)
+              txDebug.updatedMMSourcesOnPieceVersions = [];
+            txDebug.updatedMMSourcesOnPieceVersions.push(
+              await tx.mMSourcesOnPieceVersions.update({
+                where: { id: item.id },
+                data: { rank: item.rank },
+              }),
+            );
+          }
+        }
+
+        const additions: Prisma.MMSourcesOnPieceVersionsCreateManyInput[] = [];
+        for (const [pieceVersionId, work] of workingSOPVByPieceVersionId) {
+          if (!baselineSOPVByPieceVersionId.has(pieceVersionId)) {
+            additions.push({
+              mMSourceId: review.mMSourceId,
+              pieceVersionId: work.pieceVersionId,
+              rank: work.rank,
+            });
+          }
+        }
+
+        if (additions.length > 0) {
           txDebug.createdMMSourcesOnPieceVersions =
             await tx.mMSourcesOnPieceVersions.createMany({
-              data: workingCopy.sourceOnPieceVersions.map((sopv) => ({
-                mMSourceId: review.mMSourceId,
-                pieceVersionId: sopv.pieceVersionId,
-                rank: sopv.rank,
-              })),
+              data: additions,
             });
         }
 
