@@ -1,6 +1,7 @@
 import { ReviewView } from "@/app/(signedIn)/review/[reviewId]/checklist/page";
 import { ChecklistItemRow } from "../components/ChecklistItemRow";
 import { ChecklistGraph, RequiredChecklistItem } from "@/types/reviewTypes";
+import { areAllItemsChecked } from "@/features/review/utils/areAllItemsChecked";
 
 type Props = {
   graph: ChecklistGraph;
@@ -44,12 +45,15 @@ export function PieceSlice({
       </button>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold">Piece: {piece.title}</h2>
-        <button
-          className="btn btn-sm btn-outline"
-          onClick={() => onToggleAll(pieceItems)}
-        >
-          Check all
-        </button>
+
+        {pieceItems.length > 0 ? (
+          <button
+            className="btn btn-sm btn-outline"
+            onClick={() => onToggleAll(pieceItems)}
+          >
+            {`${areAllItemsChecked(pieceItems, rest.checkedKeys) ? "Uncheck" : "Check"} all`}
+          </button>
+        ) : null}
       </div>
 
       {/* Piece and Piece Version items */}
@@ -78,12 +82,14 @@ export function PieceSlice({
           <div key={mov.id} className="mb-6">
             <div className="flex items-center justify-between mb-2">
               <h3 className="font-semibold text-lg">Movement {mov.rank}</h3>
-              <button
-                className="btn btn-sm btn-outline"
-                onClick={() => onToggleAll(movementItems)}
-              >
-                Check all
-              </button>
+              {movementItems.length > 0 ? (
+                <button
+                  className="btn btn-sm btn-outline"
+                  onClick={() => onToggleAll(movementItems)}
+                >
+                  {`${areAllItemsChecked(movementItems, rest.checkedKeys) ? "Uncheck" : "Check"} all`}
+                </button>
+              ) : null}
             </div>
             <table className="table table-md mb-4">
               <tbody>
@@ -119,7 +125,7 @@ export function PieceSlice({
                       className="btn btn-xs btn-outline"
                       onClick={() => onToggleAll(allSectionItems)}
                     >
-                      Check all
+                      {`${areAllItemsChecked(allSectionItems, rest.checkedKeys) ? "Uncheck" : "Check"} all`}
                     </button>
                   </div>
                   <table className="table table-md">
