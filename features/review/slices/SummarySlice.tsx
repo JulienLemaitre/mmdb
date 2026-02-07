@@ -2,6 +2,7 @@ import { ReviewView } from "@/app/(signedIn)/review/[reviewId]/checklist/page";
 import { ChecklistItemRow } from "../components/ChecklistItemRow";
 import { processSourceOnPieceVersionsForDisplay } from "@/features/review/utils/processSourceOnPieceVersionsForDisplay";
 import { ChecklistGraph, RequiredChecklistItem } from "@/types/reviewTypes";
+import { areAllItemsChecked } from "@/features/review/utils/areAllItemsChecked";
 
 type Props = {
   graph: ChecklistGraph;
@@ -48,7 +49,7 @@ export function SummarySlice({
           className="btn btn-sm btn-outline"
           onClick={() => onToggleAll(sourceItems)}
         >
-          Check all
+          {`${areAllItemsChecked(sourceItems, checkedKeys) ? "Uncheck" : "Check"} all`}
         </button>
       </div>
       <table className="table table-md">
@@ -74,7 +75,7 @@ export function SummarySlice({
               className="btn btn-sm btn-outline"
               onClick={() => onToggleAll(referenceItems)}
             >
-              Check all
+              {`${areAllItemsChecked(referenceItems, checkedKeys) ? "Uncheck" : "Check"} all`}
             </button>
           </div>
           <table className="table table-md">
@@ -100,7 +101,7 @@ export function SummarySlice({
           className="btn btn-sm btn-outline"
           onClick={() => onToggleAll(contributionItems)}
         >
-          Check all
+          {`${areAllItemsChecked(contributionItems, checkedKeys) ? "Uncheck" : "Check"} all`}
         </button>
       </div>
       <table className="table table-md">
@@ -124,7 +125,7 @@ export function SummarySlice({
           className="btn btn-sm btn-outline"
           onClick={() => onToggleAll(sourceOnPieceVersionItems)}
         >
-          Check all
+          {`${areAllItemsChecked(sourceOnPieceVersionItems, checkedKeys) ? "Uncheck" : "Check"} all`}
         </button>
       </div>
       <table className="table table-md">
@@ -150,7 +151,7 @@ export function SummarySlice({
               className="btn btn-sm btn-outline"
               onClick={() => onToggleAll(personItems)}
             >
-              Check all
+              {`${areAllItemsChecked(personItems, checkedKeys) ? "Uncheck" : "Check"} all`}
             </button>
           </div>
           <table className="table table-md">
@@ -178,7 +179,7 @@ export function SummarySlice({
               className="btn btn-sm btn-outline"
               onClick={() => onToggleAll(organizationItems)}
             >
-              Check all
+              {`${areAllItemsChecked(organizationItems, checkedKeys) ? "Uncheck" : "Check"} all`}
             </button>
           </div>
           <table className="table table-md">

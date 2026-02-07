@@ -2,6 +2,7 @@ import { ReviewView } from "@/app/(signedIn)/review/[reviewId]/checklist/page";
 import { ChecklistItemRow } from "../components/ChecklistItemRow";
 import { useMemo } from "react";
 import { ChecklistGraph, RequiredChecklistItem } from "@/types/reviewTypes";
+import { areAllItemsChecked } from "@/features/review/utils/areAllItemsChecked";
 
 type Props = {
   graph: ChecklistGraph;
@@ -61,7 +62,7 @@ export function CollectionSlice({
           className="btn btn-sm btn-outline"
           onClick={() => onToggleAll(collectionItems)}
         >
-          Check all
+          {`${areAllItemsChecked(collectionItems, rest.checkedKeys) ? "Uncheck" : "Check"} all`}
         </button>
       </div>
 

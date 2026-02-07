@@ -1,6 +1,7 @@
 import { ReviewView } from "@/app/(signedIn)/review/[reviewId]/checklist/page";
 import { ChecklistItemRow } from "../components/ChecklistItemRow";
 import { ChecklistGraph, RequiredChecklistItem } from "@/types/reviewTypes";
+import { areAllItemsChecked } from "@/features/review/utils/areAllItemsChecked";
 
 type Props = {
   graph: ChecklistGraph;
@@ -48,7 +49,7 @@ export function PieceSlice({
           className="btn btn-sm btn-outline"
           onClick={() => onToggleAll(pieceItems)}
         >
-          Check all
+          {`${areAllItemsChecked(pieceItems, rest.checkedKeys) ? "Uncheck" : "Check"} all`}
         </button>
       </div>
 
@@ -82,7 +83,7 @@ export function PieceSlice({
                 className="btn btn-sm btn-outline"
                 onClick={() => onToggleAll(movementItems)}
               >
-                Check all
+                {`${areAllItemsChecked(movementItems, rest.checkedKeys) ? "Uncheck" : "Check"} all`}
               </button>
             </div>
             <table className="table table-md mb-4">
@@ -119,7 +120,7 @@ export function PieceSlice({
                       className="btn btn-xs btn-outline"
                       onClick={() => onToggleAll(allSectionItems)}
                     >
-                      Check all
+                      {`${areAllItemsChecked(allSectionItems, rest.checkedKeys) ? "Uncheck" : "Check"} all`}
                     </button>
                   </div>
                   <table className="table table-md">
