@@ -5,6 +5,11 @@ import NavBar from "@/ui/NavBar";
 import AdminLink from "@/ui/AdminLink";
 // import Metronome from "@/ui/Metronome";
 import SnowballMetronome from "@/ui/SnowballMetronome";
+import { db } from "@/utils/server/db";
+import { REVIEW_STATE } from "@/prisma/client/enums";
+
+// keep counts reasonably fresh without forcing full dynamic SSR
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "The Metronome Mark Database",
@@ -19,12 +24,38 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const [totalMetronomeMarksCount, reviewedMetronomeMarksCount] =
+    await Promise.all([
+      db.metronomeMark.count(),
+      db.metronomeMark.count({
+        where: { mMSource: { reviewState: REVIEW_STATE.APPROVED } },
+      }),
+    ]);
+
   return (
     <>
       <NavBar isHome />
       <div className="flex flex-col items-center justify-center py-2 flex-1">
-        <h1 className="mb-8 text-4xl font-bold">The Metronome Mark Database</h1>
+        <h1 className="mt-4 mb-4 text-4xl font-bold">
+          The Metronome Mark Database
+        </h1>
+
+        <div className="mb-4 w-full max-w-xs rounded border border-base-300 bg-base-100 p-3 text-sm">
+          <div className="flex items-center justify-between">
+            <span className="text-base-content/70">
+              Metronome marks (total)
+            </span>
+            <span className="font-semibold">{totalMetronomeMarksCount}</span>
+          </div>
+          <div className="mt-1 flex items-center justify-between">
+            <span className="text-base-content/70">
+              Metronome marks (reviewed)
+            </span>
+            <span className="font-semibold">{reviewedMetronomeMarksCount}</span>
+          </div>
+        </div>
+
         <div className="flex flex-col items-stretch gap-6 w-full max-w-xs">
           <div className="flex justify-center">
             <SnowballMetronome />
