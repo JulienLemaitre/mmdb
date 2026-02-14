@@ -7,6 +7,8 @@ import AdminLink from "@/ui/AdminLink";
 import SnowballMetronome from "@/ui/SnowballMetronome";
 import { db } from "@/utils/server/db";
 import { REVIEW_STATE } from "@/prisma/client/enums";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth/options";
 
 // keep counts reasonably fresh without forcing full dynamic SSR
 export const revalidate = 60;
@@ -25,13 +27,17 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const [totalMetronomeMarksCount, reviewedMetronomeMarksCount] =
-    await Promise.all([
-      db.metronomeMark.count(),
-      db.metronomeMark.count({
-        where: { mMSource: { reviewState: REVIEW_STATE.APPROVED } },
-      }),
-    ]);
+  const session = await getServerSession(authOptions);
+  const isConnected = Boolean(session?.user);
+
+  const [totalMetronomeMarksCount, reviewedMetronomeMarksCount] = isConnected
+    ? await Promise.all([
+        db.metronomeMark.count(),
+        db.metronomeMark.count({
+          where: { mMSource: { reviewState: REVIEW_STATE.APPROVED } },
+        }),
+      ])
+    : [null, null];
 
   return (
     <>
@@ -41,20 +47,28 @@ export default async function Home() {
           The Metronome Mark Database
         </h1>
 
-        <div className="mb-4 w-full max-w-xs rounded border border-base-300 bg-base-100 p-3 text-sm">
-          <div className="flex items-center justify-between">
-            <span className="text-base-content/70">
-              Metronome marks (total)
-            </span>
-            <span className="font-semibold">{totalMetronomeMarksCount}</span>
-          </div>
-          <div className="mt-1 flex items-center justify-between">
-            <span className="text-base-content/70">
-              Metronome marks (reviewed)
-            </span>
-            <span className="font-semibold">{reviewedMetronomeMarksCount}</span>
-          </div>
-        </div>
+        {isConnected &&
+          totalMetronomeMarksCount !== null &&
+          reviewedMetronomeMarksCount !== null && (
+            <div className="mb-6 w-full max-w-xs rounded border border-base-300 bg-base-100 p-3 text-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-base-content/70">
+                  Metronome marks (total)
+                </span>
+                <span className="font-semibold">
+                  {totalMetronomeMarksCount}
+                </span>
+              </div>
+              <div className="mt-1 flex items-center justify-between">
+                <span className="text-base-content/70">
+                  Metronome marks (reviewed)
+                </span>
+                <span className="font-semibold">
+                  {reviewedMetronomeMarksCount}
+                </span>
+              </div>
+            </div>
+          )}
 
         <div className="flex flex-col items-stretch gap-6 w-full max-w-xs">
           <div className="flex justify-center">
