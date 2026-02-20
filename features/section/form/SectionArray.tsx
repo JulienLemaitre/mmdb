@@ -256,7 +256,6 @@ export default function SectionArray({
                   `movements[${nestIndex}].sections[${index}].comment` as const
                 }
                 label={`Comment`}
-                defaultValue={``}
                 {...{ register, control, errors }}
               />
               <FormInput
@@ -264,7 +263,6 @@ export default function SectionArray({
                   `movements[${nestIndex}].sections[${index}].commentForReview` as const
                 }
                 label={`Comment for review`}
-                defaultValue={``}
                 {...{ register, control, errors }}
               />
               <section className="my-4 flex gap-2 w-full justify-between">

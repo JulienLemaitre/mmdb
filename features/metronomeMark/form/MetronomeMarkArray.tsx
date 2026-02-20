@@ -186,7 +186,6 @@ export default function MetronomeMarkArray({
               name={`metronomeMarks.${formIndex}.comment` as const}
               label={`Comment`}
               controlClassName="max-w-none mt-0"
-              defaultValue={``}
               {...{ register, control, errors }}
             />
             <button

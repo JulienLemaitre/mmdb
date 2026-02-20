@@ -39,9 +39,6 @@ export default function PieceEditForm({
     }),
   });
 
-  console.log(`[PieceEditForm] piece :`, piece);
-  console.log(`[PieceEditForm] errors :`, errors);
-
   return (
     <div className="mt-4">
       <h3 className="mb-4 text-2xl font-bold">New piece</h3>

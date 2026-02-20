@@ -274,7 +274,6 @@ export default function SourceDescriptionEditForm(
         <FormInput
           name="comment"
           label={`Comment`}
-          defaultValue={``}
           {...{ register, errors, control }}
         />
         <MMSourceFormStepNavigation
