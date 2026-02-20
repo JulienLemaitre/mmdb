@@ -12,17 +12,14 @@ import {
   PieceInput,
   PieceVersionInput,
 } from "@/types/formTypes";
-import {
-  getNewEntities,
-  updateFeedForm,
-  useFeedForm,
-} from "@/context/feedFormContext";
+import { updateFeedForm, useFeedForm } from "@/context/feedFormContext";
 import getPieceStateFromInput from "@/utils/getPieceStateFromInput";
 import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput";
 import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
 import SinglePieceVersionFormSummary from "@/features/feed/multiStepSinglePieceVersionForm/SinglePieceVersionFormSummary";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 import { SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
+import { debug, prodLog } from "@/utils/debugLogger";
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
@@ -86,7 +83,7 @@ const SinglePieceVersionFormContainer = ({
       composerId &&
       currentStepRank === 0
     ) {
-      console.log(
+      debug.info(
         `[SinglePieceVersionFormContainer in Collection] auto-complete the "composer" step and go to the next step = piece`,
       );
       updateSinglePieceVersionForm(dispatch, "composer", {
@@ -99,7 +96,7 @@ const SinglePieceVersionFormContainer = ({
 
     // For edit and update of a pre-existing collection, we just go to step 2 = "pieceVersion"
     if (isPreexistingCollectionEdit && currentStepRank < 2) {
-      console.log(
+      debug.info(
         `[goToStep 2] isPreexistingCollectionEdit && currentStepRank < 2`,
       );
       updateSinglePieceVersionForm(dispatch, "goToStep", {
@@ -175,31 +172,31 @@ const SinglePieceVersionFormContainer = ({
 
   const onPieceCreated = async (data: PieceInput) => {
     // Front input values validation is successful at this point.
-    console.log("[onPieceCreated] data", data);
+    debug.info("[onPieceCreated] data", data);
 
     const pieceData = data;
-    // Remove null values from pieceData
-    Object.keys(pieceData).forEach(
-      // '== null' is true for undefined AND null values
-      (key) => pieceData[key] == null && delete pieceData[key],
-    );
 
     const composerId = pieceData.composerId || selectedComposerId;
     if (!composerId) {
-      console.warn(
+      prodLog.error(
         "OUPS: No composerId in pieceData or form state to link to the piece",
       );
       // TODO: trigger a toast
       return;
     }
 
-    const pieceState = getPieceStateFromInput({
-      ...(selectedPieceId
-        ? feedFormState.pieces?.find((piece) => piece.id === selectedPieceId)
-        : {}),
-      ...pieceData,
-      composerId,
-    });
+    const previousValue = selectedPieceId
+      ? feedFormState.pieces?.find((piece) => piece.id === selectedPieceId)
+      : {};
+    const finalValue = { ...previousValue, ...pieceData, composerId };
+
+    // Remove null values from finalValue
+    Object.keys(finalValue).forEach(
+      // '== null' is true for undefined AND null values
+      (key) => finalValue[key] == null && delete finalValue[key],
+    );
+
+    const pieceState = getPieceStateFromInput(finalValue);
     pieceState.isNew = true;
 
     let piecesArray = [pieceState];
@@ -212,7 +209,7 @@ const SinglePieceVersionFormContainer = ({
           ((collectionFormState.mMSourceOnPieceVersions || []).length || 0) + 1,
       }));
     }
-    console.log(`[with potential collection value] piecesArray :`, piecesArray);
+    debug.info(`[with potential collection value] piecesArray :`, piecesArray);
 
     updateFeedForm(feedFormDispatch, "pieces", {
       array: piecesArray,
@@ -251,12 +248,6 @@ const SinglePieceVersionFormContainer = ({
   /////////////////// PIECE VERSION ////////////////////
 
   const selectedPieceVersionId = singlePieceVersionFormState?.pieceVersion?.id;
-  const newPieceVersions = getNewEntities(feedFormState, "pieceVersions");
-  console.log(`[] newPieceVersions :`, newPieceVersions);
-  // TODO: should we include new pieceVersions used only in the collection form state ?
-  // const isSelectedPieceVersionNew = newPieceVersions?.some(
-  //   (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
-  // );
 
   const onInitPieceVersionCreation = () => {
     updateSinglePieceVersionForm(dispatch, "pieceVersion", {
@@ -266,10 +257,10 @@ const SinglePieceVersionFormContainer = ({
 
   const onPieceVersionCreated = (data: PieceVersionInput) => {
     // Front input values validation is successful at this point.
-    console.log("[onPieceVersionCreated] data", data);
+    debug.info("[onPieceVersionCreated] data", data);
 
     if (!selectedPieceId) {
-      console.warn(
+      prodLog.warn(
         `[onPieceVersionCreated] No selectedPieceId found - cannot create pieceVersion`,
       );
       return;
@@ -288,7 +279,7 @@ const SinglePieceVersionFormContainer = ({
       pieceId: selectedPieceId,
     });
     pieceVersionState.isNew = true;
-    console.log("New pieceVersion to be stored in state", pieceVersionState);
+    debug.info("New pieceVersion to be stored in state", pieceVersionState);
     updateFeedForm(feedFormDispatch, "pieceVersions", {
       array: [pieceVersionState],
     });
@@ -332,7 +323,7 @@ const SinglePieceVersionFormContainer = ({
 
   const onSubmitSourceOnPieceVersions = () => {
     if (!singlePieceVersionFormState.pieceVersion?.id) {
-      console.log(
+      debug.info(
         `[onAddPieceVersionOnSource] ERROR: state.pieceVersion?.id SHOULD BE DEFINED`,
       );
       return;
@@ -357,14 +348,14 @@ const SinglePieceVersionFormContainer = ({
     };
     // This is useful for submitting a pieceVersion to a collection form instead of the general feedForm
     if (typeof onSubmit === "function") {
-      console.log(`[SUBMIT] with provided onSubmit function`);
+      debug.info(`[SUBMIT] with provided onSubmit function`);
       onSubmit(payload, { isUpdateMode });
     } else {
       updateFeedForm(feedFormDispatch, "mMSourceOnPieceVersions", payload);
     }
 
     // Reset localStorage
-    console.log(
+    debug.info(
       `[localStorage REMOVE] ${SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY}`,
     );
     localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);

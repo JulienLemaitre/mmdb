@@ -53,7 +53,7 @@ function getControllerProps({
       onInputChange();
     }
   };
-  controllerProps.value = field.value || "";
+  controllerProps.value = field.value ?? "";
 
   if (inputMode === "numeric") {
     controllerProps.onChange = (
@@ -65,7 +65,7 @@ function getControllerProps({
             field.name.toLowerCase().includes("year") ? "year" : "numeric"
           ](rawValue)
         : undefined;
-      field.onChange(endValue || "");
+      field.onChange(endValue || null);
     };
 
     if (typeof onInputChange === "function") {
@@ -99,7 +99,6 @@ export function getLabel(name: string) {
 type FormInputProps = {
   control: any;
   controlClassName?: string;
-  defaultValue?: any;
   disabled?: boolean;
   errors: any;
   inputClassName?: string;
@@ -118,7 +117,6 @@ type FormInputProps = {
 export function FormInput({
   control,
   controlClassName = "",
-  defaultValue,
   disabled = false,
   errors,
   inputClassName = "", // showPassword = false,
@@ -169,7 +167,6 @@ export function FormInput({
                   : `input input-sm input-bordered ${inputClassName} flex-1`
               }
               inputMode={inputMode}
-              {...(defaultValue ? { defaultValue } : {})}
               {...(getControllerProps({
                 field,
                 inputMode,
