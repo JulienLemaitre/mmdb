@@ -369,6 +369,8 @@ export function rebuildWorkingCopyFromFeedForm(
     return previousWorkingCopy;
   }
 
+  const prevRefs = prevGraph.source?.references ?? [];
+
   // The incoming feedFormState is the source of truth.
   // Default to empty arrays for any missing top-level properties.
   const source = {
@@ -376,6 +378,14 @@ export function rebuildWorkingCopyFromFeedForm(
     ...feedFormState.mMSourceDescription,
     references: [
       ...(feedFormState.mMSourceDescription?.references || [])
+        .map((r: any) => {
+          if (r?.id) return r;
+          // Preserve old ids when type and reference are equal
+          const match = prevRefs.find(
+            (p: any) => p.type === r?.type && p.reference === r?.reference,
+          );
+          return { ...r, id: match?.id };
+        })
         .map(forceId)
         .map(cleanIsNew),
     ],

@@ -281,6 +281,7 @@ export type PieceVersionInput = {
   movements: MovementInput[];
 };
 export type ReferenceInput = {
+  id?: string;
   type: OptionInputTyped<REFERENCE_TYPE>;
   reference: string;
 };
