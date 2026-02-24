@@ -30,6 +30,7 @@ import AuditLogHeader from "@/features/audit/AuditLogHeader";
 import AuditLogContent from "@/features/audit/AuditLogContent";
 import { composeAuditEntries } from "@/features/review/utils/auditCompose";
 import { AuditLogItem } from "@/types/auditTypes";
+import Loader from "@/ui/Loader";
 
 // State definition for the view controller
 export type ReviewView =
@@ -443,7 +444,12 @@ export default function ChecklistPage() {
     allRequiredItems,
   ]);
 
-  if (loading || !workingGraph) return <div className="p-6">Loading…</div>;
+  if (loading || !workingGraph)
+    return (
+      <div className="p-6">
+        <Loader />
+      </div>
+    );
   if (error)
     return (
       <div className="p-6">

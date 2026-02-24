@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { AdminListResponse, AdminUserItem } from "@/types/adminTypes";
 import { formatDate } from "@/features/admin/formatters";
 import { userRoleOrderedList } from "@/utils/constants";
+import Loader from "@/ui/Loader";
 
 const PAGE_SIZE = 25;
 
@@ -18,7 +19,13 @@ export default function AdminUsersTable() {
   const [role, setRole] = useState("");
 
   const fetchUsers = useCallback(
-    async ({ cursor, append }: { cursor?: string | null; append?: boolean }) => {
+    async ({
+      cursor,
+      append,
+    }: {
+      cursor?: string | null;
+      append?: boolean;
+    }) => {
       setLoading(true);
       setError(null);
       try {
@@ -100,7 +107,11 @@ export default function AdminUsersTable() {
             ))}
           </select>
         </label>
-        <button type="button" className="btn btn-sm" onClick={handleClearFilters}>
+        <button
+          type="button"
+          className="btn btn-sm"
+          onClick={handleClearFilters}
+        >
           Clear
         </button>
       </div>
@@ -152,7 +163,7 @@ export default function AdminUsersTable() {
           onClick={handleLoadMore}
           disabled={!nextCursor || loading}
         >
-          {loading ? "Loading..." : "Load more"}
+          {loading ? <Loader /> : "Load more"}
         </button>
         {nextCursor ? null : (
           <span className="text-xs text-gray-500">End of results</span>

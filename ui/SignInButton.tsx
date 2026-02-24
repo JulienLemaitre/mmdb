@@ -2,6 +2,7 @@
 
 import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Loader from "@/ui/Loader";
 
 const SignInButton = () => {
   const { data: session, status } = useSession();
@@ -30,7 +31,7 @@ const SignInButton = () => {
     <div className="flex gap-4 ml-auto">
       <div className="flex items-center">
         {status === "loading" ? (
-          <div className="text-sm font-medium text-gray-500">Loading...</div>
+          <Loader />
         ) : (
           <button
             type="button"

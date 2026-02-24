@@ -29,6 +29,7 @@ const SIZE_MAP: Record<string, number> = {
 
 export default function Loader({ size = "md", className, color }: LoaderProps) {
   const scale = typeof size === "number" ? size : (SIZE_MAP[size] ?? 0.2);
+  const sizeKey = typeof size === "number" ? undefined : size;
 
   // We calculate the wrapper dimensions based on the scale to ensure the loader
   // takes up the correct amount of space in the layout.
@@ -43,7 +44,10 @@ export default function Loader({ size = "md", className, color }: LoaderProps) {
       aria-label="Loading"
     >
       <div
-        className="metronome-container"
+        className={clsx(
+          "metronome-container",
+          sizeKey && `metronome-${sizeKey}`,
+        )}
         style={{
           // Scale the original metronome down to the desired size
           transform: `scale(${scale})`,
