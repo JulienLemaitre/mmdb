@@ -9,9 +9,17 @@ import {
   type FeedBootType,
   getCurrentSinglePieceStepRank,
 } from "@/features/review/reviewEditBridge";
-import { FEED_FORM_BOOT_KEY } from "@/utils/constants";
+import {
+  FEED_FORM_BOOT_KEY,
+  feedFormFromWorkingCopyError,
+} from "@/utils/constants";
 import { FeedFormState } from "@/types/feedFormTypes";
 import { ChecklistGraph, RequiredChecklistItem } from "@/types/reviewTypes";
+
+// Deep clone utility to ensure tests have isolated data
+function clone<T>(v: T): T {
+  return JSON.parse(JSON.stringify(v));
+}
 
 // Mock data that reflects the new nested ChecklistGraph structure.
 const mockWorkingCopy: ReviewWorkingCopy = {
@@ -180,210 +188,333 @@ describe("reviewEditBridge utilities", () => {
       "r1",
     );
   });
+});
 
-  describe("buildFeedFormBootStateFromWorkingCopy", () => {
-    it("should correctly build a full boot state for a collection piece item", () => {
-      const clickedItem: RequiredChecklistItem = {
-        entityType: "SECTION",
-        entityId: "sec-1",
-        fieldPath: "section[sec-1].metreNumerator",
-        field: { path: "metreNumerator", label: "Metre numerator" },
-        value: 4,
-        label: "Metre",
-        lineage: {
-          collectionId: "coll-1",
-          pieceId: "piece-1",
-          pieceVersionId: "pv-1",
-          movementId: "mov-1",
-        },
-      };
-      const computedFeedFormStep = resolveStepFromReviewItem(
-        clickedItem,
-        mockWorkingCopy,
-      );
-      const computedSinglePieceFormStep =
-        getCurrentSinglePieceStepRank(clickedItem);
+describe("buildFeedFormBootStateFromWorkingCopy", () => {
+  it("should correctly build a full boot state for a collection piece item", () => {
+    const clickedItem: RequiredChecklistItem = {
+      entityType: "SECTION",
+      entityId: "sec-1",
+      fieldPath: "section[sec-1].metreNumerator",
+      field: { path: "metreNumerator", label: "Metre numerator" },
+      value: 4,
+      label: "Metre",
+      lineage: {
+        collectionId: "coll-1",
+        pieceId: "piece-1",
+        pieceVersionId: "pv-1",
+        movementId: "mov-1",
+      },
+    };
+    const computedFeedFormStep = resolveStepFromReviewItem(
+      clickedItem,
+      mockWorkingCopy,
+    );
+    const computedSinglePieceFormStep =
+      getCurrentSinglePieceStepRank(clickedItem);
 
-      const opts = { reviewId: "rev-xyz" };
-      const bootState = buildFeedFormBootStateFromWorkingCopy(
-        mockWorkingCopy,
-        {
-          personIds: [],
-          organizationIds: [],
-          collectionIds: [],
-          pieceIds: [],
-          pieceVersionIds: [],
-        },
-        clickedItem,
-        opts,
-      );
-      const {
-        feedFormState,
-        collectionPieceVersionsFormState,
-        singlePieceVersionFormState,
-      } = bootState;
+    const opts = { reviewId: "rev-xyz" };
+    const result = buildFeedFormBootStateFromWorkingCopy(
+      mockWorkingCopy,
+      {
+        personIds: [],
+        organizationIds: [],
+        collectionIds: [],
+        pieceIds: [],
+        pieceVersionIds: [],
+      },
+      clickedItem,
+      opts,
+    );
 
-      // Check feedFormState formInfo and context
-      expect(feedFormState.formInfo?.currentStepRank).toBe(
-        computedFeedFormStep,
-      ); // SECTION is step 3
-      expect(feedFormState.formInfo?.reviewContext?.reviewId).toBe("rev-xyz");
-      expect(feedFormState.formInfo?.reviewContext?.anchors?.pvId).toBe("pv-1");
-      expect(feedFormState.formInfo?.reviewContext?.anchors?.movId).toBe(
-        "mov-1",
-      );
-      expect(feedFormState.formInfo?.reviewContext?.anchors?.secId).toBe(
-        "sec-1",
-      );
-      expect(feedFormState.formInfo?.isSourceOnPieceVersionformOpen).toBe(true);
-      expect(feedFormState.formInfo?.formType).toBe("collection");
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
 
-      // Check that graph data is copied to feedFormState
-      expect(feedFormState.pieces).toEqual(
-        mockWorkingCopy.graph.pieces.map((p: any) => ({ ...p, isNew: true })),
-      );
-      expect(feedFormState.pieceVersions).toEqual(
-        mockWorkingCopy.graph.pieceVersions.map((pv: any) => ({
-          ...pv,
-          isNew: true,
-        })),
-      );
-      expect(feedFormState.mMSourceDescription?.title).toBe("Test Source");
-      expect(feedFormState.mMSourceOnPieceVersions).toEqual(
-        mockWorkingCopy.graph.sourceOnPieceVersions,
-      );
-      // Ensure it's a copy, not a reference
-      expect(feedFormState.pieces).not.toBe(mockWorkingCopy.graph.pieces);
+    const bootState = result.value;
+    const {
+      feedFormState,
+      collectionPieceVersionsFormState,
+      singlePieceVersionFormState,
+    } = bootState;
 
-      // Check collectionPieceVersionsFormState
-      expect(collectionPieceVersionsFormState).not.toBeNull();
-      expect(
-        collectionPieceVersionsFormState?.formInfo.isSinglePieceVersionFormOpen,
-      ).toBe(true);
-      expect(collectionPieceVersionsFormState?.collection?.title).toBe(
-        "Test Collection",
-      );
-      expect(
-        collectionPieceVersionsFormState?.mMSourceOnPieceVersions?.[0]
-          .pieceVersionId,
-      ).toBe("pv-1");
+    // Check feedFormState formInfo and context
+    expect(feedFormState.formInfo?.currentStepRank).toBe(computedFeedFormStep); // SECTION is step 3
+    expect(feedFormState.formInfo?.reviewContext?.reviewId).toBe("rev-xyz");
+    expect(feedFormState.formInfo?.reviewContext?.anchors?.pvId).toBe("pv-1");
+    expect(feedFormState.formInfo?.reviewContext?.anchors?.movId).toBe("mov-1");
+    expect(feedFormState.formInfo?.reviewContext?.anchors?.secId).toBe("sec-1");
+    expect(feedFormState.formInfo?.isSourceOnPieceVersionformOpen).toBe(true);
+    expect(feedFormState.formInfo?.formType).toBe("collection");
 
-      // Check singlePieceVersionFormState
-      expect(singlePieceVersionFormState).not.toBeNull();
-      expect(singlePieceVersionFormState?.formInfo.currentStepRank).toBe(
-        computedSinglePieceFormStep,
-      );
-      expect(singlePieceVersionFormState?.piece?.id).toBe("piece-1");
-      expect(singlePieceVersionFormState?.composer?.id).toBe("person-1");
-    });
+    // Check that graph data is copied to feedFormState
+    expect(feedFormState.pieces).toEqual(
+      mockWorkingCopy.graph.pieces.map((p: any) => ({ ...p, isNew: true })),
+    );
+    expect(feedFormState.pieceVersions).toEqual(
+      mockWorkingCopy.graph.pieceVersions.map((pv: any) => ({
+        ...pv,
+        isNew: true,
+      })),
+    );
+    expect(feedFormState.mMSourceDescription?.title).toBe("Test Source");
+    expect(feedFormState.mMSourceOnPieceVersions).toEqual(
+      mockWorkingCopy.graph.sourceOnPieceVersions,
+    );
+    // Ensure it's a copy, not a reference
+    expect(feedFormState.pieces).not.toBe(mockWorkingCopy.graph.pieces);
+
+    // Check collectionPieceVersionsFormState
+    expect(collectionPieceVersionsFormState).not.toBeNull();
+    expect(
+      collectionPieceVersionsFormState?.formInfo.isSinglePieceVersionFormOpen,
+    ).toBe(true);
+    expect(collectionPieceVersionsFormState?.collection?.title).toBe(
+      "Test Collection",
+    );
+    expect(
+      collectionPieceVersionsFormState?.mMSourceOnPieceVersions?.[0]
+        .pieceVersionId,
+    ).toBe("pv-1");
+
+    // Check singlePieceVersionFormState
+    expect(singlePieceVersionFormState).not.toBeNull();
+    expect(singlePieceVersionFormState?.formInfo.currentStepRank).toBe(
+      computedSinglePieceFormStep,
+    );
+    expect(singlePieceVersionFormState?.piece?.id).toBe("piece-1");
+    expect(singlePieceVersionFormState?.composer?.id).toBe("person-1");
   });
 
-  describe("rebuildWorkingCopyFromFeedForm", () => {
-    const previousWc: ReviewWorkingCopy = {
-      updatedAt: "2024-01-01T00:00:00.000Z",
-      graph: {
-        source: {
-          id: "source-1",
-          title: "Old Title",
-          permalink: "preserved-link",
-          references: [],
-        },
-        pieces: [{ id: "piece-to-be-deleted", title: "Old Piece" }],
-      } as any,
+  it("fails when collection context is required but first piece rank is missing in sourceOnPieceVersions", () => {
+    const wc = clone(mockWorkingCopy);
+    // Remove the join for the (only) piece in collection => missing first-piece source rank
+    wc.graph.sourceOnPieceVersions = [];
+
+    const clickedItem: RequiredChecklistItem = {
+      entityType: "SECTION",
+      entityId: "sec-1",
+      fieldPath: "section[sec-1].metreNumerator",
+      field: { path: "metreNumerator", label: "Metre numerator" },
+      value: 4,
+      label: "Metre",
+      lineage: {
+        collectionId: "coll-1",
+        pieceId: "piece-1",
+        pieceVersionId: "pv-1",
+        movementId: "mov-1",
+      },
     };
 
-    it("should treat feedFormState as the source of truth, replacing data", () => {
-      const formState: FeedFormState = {
-        formInfo: {
-          currentStepRank: 1,
-          reviewContext: {
-            reviewId: "rev-abc",
-            reviewEdit: true,
-            updatedAt: new Date().toISOString(),
-          },
-        },
-        mMSourceDescription: {
-          title: "New Title",
-          type: "EDITION",
-          link: "https://testmock.test",
-          year: 1980,
-          isYearEstimated: false,
-          references: [],
-        },
-        pieces: [
-          {
-            id: "piece-new",
-            title: "New Piece",
-            composerId: "person-1",
-            collectionId: "coll-1",
-          },
-        ],
-        pieceVersions: [], // This empty array should overwrite the original
-      };
+    const result = buildFeedFormBootStateFromWorkingCopy(
+      wc,
+      {
+        personIds: [],
+        organizationIds: [],
+        collectionIds: [],
+        pieceIds: [],
+        pieceVersionIds: [],
+      },
+      clickedItem,
+      { reviewId: "rev-xyz" },
+    );
 
-      const result = rebuildWorkingCopyFromFeedForm(formState, previousWc);
+    expect(result.ok).toBe(false);
+    if (result.ok) return;
+    expect(result.error.code).toBe(
+      "COLLECTION_FIRST_PIECE_SOURCE_RANK_NOT_FOUND",
+    );
+    expect(result.error.collectionId).toBe("coll-1");
+  });
 
-      expect(result.graph.pieces?.length).toBe(1);
-      expect(result.graph.pieces?.[0].id).toBe("piece-new");
-      expect(result.graph.source.title).toBe("New Title");
-      expect(new Date(result.updatedAt).getTime()).toBeGreaterThan(
-        new Date(previousWc.updatedAt).getTime(),
-      );
-    });
+  it("fails when clicked piece rank is missing in sourceOnPieceVersions", () => {
+    const wc: ReviewWorkingCopy = clone(mockWorkingCopy);
 
-    it("should correctly handle deleted slices by using empty arrays", () => {
-      const formState: FeedFormState = {
-        formInfo: {
-          currentStepRank: 1,
-          reviewContext: {
-            reviewId: "rev-abc",
-            reviewEdit: true,
-            updatedAt: new Date().toISOString(),
-          },
+    // Turn this into a 2-piece collection fully included, but omit SOPV for clicked piece.
+    wc.graph.collections = [
+      {
+        id: "coll-1",
+        title: "Test Collection",
+        pieceCount: 2,
+        composerId: "person-1",
+      } as any,
+    ];
+    wc.graph.pieces = [
+      {
+        id: "piece-1",
+        title: "My Piece A",
+        collectionId: "coll-1",
+        composerId: "person-1",
+        collectionRank: 1,
+      } as any,
+      {
+        id: "piece-2",
+        title: "My Piece B",
+        collectionId: "coll-1",
+        composerId: "person-1",
+        collectionRank: 2,
+      } as any,
+    ];
+    wc.graph.pieceVersions = [
+      ...wc.graph.pieceVersions,
+      {
+        id: "pv-2",
+        pieceId: "piece-2",
+        category: "KEYBOARD",
+        movements: [],
+      } as any,
+    ];
+
+    // Keep SOPV only for piece-1 (first piece), not for clicked piece-2
+    wc.graph.sourceOnPieceVersions = [
+      {
+        joinId: "join-1",
+        mMSourceId: "source-1",
+        pieceVersionId: "pv-1",
+        rank: 1,
+        pieceId: "piece-1",
+      } as any,
+    ];
+
+    const clickedItem: RequiredChecklistItem = {
+      entityType: "PIECE_VERSION",
+      entityId: "pv-2",
+      fieldPath: "pieceVersion[pv-2].category",
+      field: { path: "category", label: "Category" },
+      value: "KEYBOARD" as any,
+      label: "Category",
+      lineage: {
+        collectionId: "coll-1",
+        pieceId: "piece-2",
+        pieceVersionId: "pv-2",
+      },
+    };
+
+    const result = buildFeedFormBootStateFromWorkingCopy(
+      wc,
+      {
+        personIds: [],
+        organizationIds: [],
+        collectionIds: [],
+        pieceIds: [],
+        pieceVersionIds: [],
+      },
+      clickedItem,
+      { reviewId: "rev-xyz" },
+    );
+
+    expect(result.ok).toBe(false);
+    if (result.ok) return;
+    expect(result.error.code).toBe(
+      feedFormFromWorkingCopyError.CLICKED_PIECE_SOURCE_RANK_NOT_FOUND,
+    );
+  });
+});
+
+describe("rebuildWorkingCopyFromFeedForm", () => {
+  const previousWc: ReviewWorkingCopy = {
+    updatedAt: "2024-01-01T00:00:00.000Z",
+    graph: {
+      source: {
+        id: "source-1",
+        title: "Old Title",
+        permalink: "preserved-link",
+        references: [],
+      },
+      pieces: [{ id: "piece-to-be-deleted", title: "Old Piece" }],
+    } as any,
+  };
+
+  it("should treat feedFormState as the source of truth, replacing data", () => {
+    const formState: FeedFormState = {
+      formInfo: {
+        currentStepRank: 1,
+        reviewContext: {
+          reviewId: "rev-abc",
+          reviewEdit: true,
+          updatedAt: new Date().toISOString(),
         },
-        pieces: [], // User explicitly deleted all pieces
-      };
-      const result = rebuildWorkingCopyFromFeedForm(formState, previousWc);
-      expect(result.graph.pieces).toEqual([]);
-    });
-
-    it("should preserve non-editable fields like source.id and source.permalink", () => {
-      const formState: FeedFormState = {
-        formInfo: {
-          currentStepRank: 1,
-          reviewContext: {
-            reviewId: "rev-abc",
-            reviewEdit: true,
-            updatedAt: new Date().toISOString(),
-          },
+      },
+      mMSourceDescription: {
+        title: "New Title",
+        type: "EDITION",
+        link: "https://testmock.test",
+        year: 1980,
+        isYearEstimated: false,
+        references: [],
+      },
+      pieces: [
+        {
+          id: "piece-new",
+          title: "New Piece",
+          composerId: "person-1",
+          collectionId: "coll-1",
         },
-        mMSourceDescription: {
-          title: "A Brand New Title",
-          type: "EDITION",
-          link: "https://testmock.test",
-          year: 1980,
-          isYearEstimated: false,
-          references: [],
-        },
-      };
-      const result = rebuildWorkingCopyFromFeedForm(formState, previousWc);
-      expect(result.graph.source.id).toBe("source-1");
-      expect(result.graph.source.permalink).toBe("preserved-link");
-    });
+      ],
+      pieceVersions: [], // This empty array should overwrite the original
+    };
 
-    it("should return previous working copy if reviewContext is missing", () => {
-      const formState: FeedFormState = {
-        formInfo: { currentStepRank: 1 }, // No reviewContext
-        pieces: [
-          {
-            id: "some-other-piece",
-            title: "Should Be Ignored",
-            composerId: "person-1",
-          },
-        ],
-      };
-      const result = rebuildWorkingCopyFromFeedForm(formState, previousWc);
-      expect(result).toBe(previousWc); // Should be the same object reference
-    });
+    const result = rebuildWorkingCopyFromFeedForm(formState, previousWc);
+
+    expect(result.graph.pieces?.length).toBe(1);
+    expect(result.graph.pieces?.[0].id).toBe("piece-new");
+    expect(result.graph.source.title).toBe("New Title");
+    expect(new Date(result.updatedAt).getTime()).toBeGreaterThan(
+      new Date(previousWc.updatedAt).getTime(),
+    );
+  });
+
+  it("should correctly handle deleted slices by using empty arrays", () => {
+    const formState: FeedFormState = {
+      formInfo: {
+        currentStepRank: 1,
+        reviewContext: {
+          reviewId: "rev-abc",
+          reviewEdit: true,
+          updatedAt: new Date().toISOString(),
+        },
+      },
+      pieces: [], // User explicitly deleted all pieces
+    };
+    const result = rebuildWorkingCopyFromFeedForm(formState, previousWc);
+    expect(result.graph.pieces).toEqual([]);
+  });
+
+  it("should preserve non-editable fields like source.id and source.permalink", () => {
+    const formState: FeedFormState = {
+      formInfo: {
+        currentStepRank: 1,
+        reviewContext: {
+          reviewId: "rev-abc",
+          reviewEdit: true,
+          updatedAt: new Date().toISOString(),
+        },
+      },
+      mMSourceDescription: {
+        title: "A Brand New Title",
+        type: "EDITION",
+        link: "https://testmock.test",
+        year: 1980,
+        isYearEstimated: false,
+        references: [],
+      },
+    };
+    const result = rebuildWorkingCopyFromFeedForm(formState, previousWc);
+    expect(result.graph.source.id).toBe("source-1");
+    expect(result.graph.source.permalink).toBe("preserved-link");
+  });
+
+  it("should return previous working copy if reviewContext is missing", () => {
+    const formState: FeedFormState = {
+      formInfo: { currentStepRank: 1 }, // No reviewContext
+      pieces: [
+        {
+          id: "some-other-piece",
+          title: "Should Be Ignored",
+          composerId: "person-1",
+        },
+      ],
+    };
+    const result = rebuildWorkingCopyFromFeedForm(formState, previousWc);
+    expect(result).toBe(previousWc); // Should be the same object reference
   });
 });
