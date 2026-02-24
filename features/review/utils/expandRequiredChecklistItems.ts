@@ -73,7 +73,7 @@ export function expandRequiredChecklistItems(
         if (!isRequiredField(field, ctx)) continue;
 
         // Get item value
-        let value;
+        let value: unknown;
         switch (entityType) {
           case "CONTRIBUTION": {
             const contribution = graph.contributions.find((c) => c.id === n.id);
@@ -207,11 +207,19 @@ export function expandRequiredChecklistItems(
           }
         }
 
-        value = getItemValueDisplay({
-          entityType,
-          fieldPath: field.path,
-          value,
-        });
+        if (typeof value === "undefined") {
+          debug.warn(`undefined value for field ${field.path} :`, {
+            entityType,
+            lineage,
+            n,
+          });
+        } else {
+          value = getItemValueDisplay({
+            entityType,
+            fieldPath: field.path,
+            value,
+          });
+        }
 
         try {
           items.push({
