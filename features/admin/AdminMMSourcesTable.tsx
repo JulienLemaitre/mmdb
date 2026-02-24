@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { AdminListResponse, AdminMMSourceItem } from "@/types/adminTypes";
 import { formatDate, formatPieceTitles } from "@/features/admin/formatters";
+import Loader from "@/ui/Loader";
 
 const PAGE_SIZE = 25;
 const REVIEW_STATES = ["PENDING", "IN_REVIEW", "APPROVED", "ABORTED"] as const;
@@ -18,7 +19,13 @@ export default function AdminMMSourcesTable() {
   const [reviewState, setReviewState] = useState("");
 
   const fetchSources = useCallback(
-    async ({ cursor, append }: { cursor?: string | null; append?: boolean }) => {
+    async ({
+      cursor,
+      append,
+    }: {
+      cursor?: string | null;
+      append?: boolean;
+    }) => {
       setLoading(true);
       setError(null);
       try {
@@ -30,9 +37,10 @@ export default function AdminMMSourcesTable() {
         if (reviewState) params.set("reviewState", reviewState);
 
         const res = await fetch(`/api/admin/mm-sources?${params.toString()}`);
-        const data = (await res.json()) as AdminListResponse<AdminMMSourceItem> & {
-          error?: string;
-        };
+        const data =
+          (await res.json()) as AdminListResponse<AdminMMSourceItem> & {
+            error?: string;
+          };
 
         if (!res.ok) {
           throw new Error(data.error || "Failed to load MM Sources");
@@ -100,7 +108,11 @@ export default function AdminMMSourcesTable() {
             ))}
           </select>
         </label>
-        <button type="button" className="btn btn-sm" onClick={handleClearFilters}>
+        <button
+          type="button"
+          className="btn btn-sm"
+          onClick={handleClearFilters}
+        >
           Clear
         </button>
       </div>
@@ -148,7 +160,7 @@ export default function AdminMMSourcesTable() {
           onClick={handleLoadMore}
           disabled={!nextCursor || loading}
         >
-          {loading ? "Loading..." : "Load more"}
+          {loading ? <Loader /> : "Load more"}
         </button>
         {nextCursor ? null : (
           <span className="text-xs text-gray-500">End of results</span>

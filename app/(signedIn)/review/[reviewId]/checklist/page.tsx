@@ -30,6 +30,7 @@ import AuditLogHeader from "@/features/audit/AuditLogHeader";
 import AuditLogContent from "@/features/audit/AuditLogContent";
 import { composeAuditEntries } from "@/features/review/utils/auditCompose";
 import { AuditLogItem } from "@/types/auditTypes";
+import Loader from "@/ui/Loader";
 
 // State definition for the view controller
 export type ReviewView =
@@ -256,7 +257,7 @@ export default function ChecklistPage() {
   function openEditForItem(item: RequiredChecklistItem) {
     if (!reviewData || !workingGraph) return;
 
-    const bootState = buildFeedFormBootStateFromWorkingCopy(
+    const result = buildFeedFormBootStateFromWorkingCopy(
       {
         graph: workingGraph,
         updatedAt: new Date().toISOString(),
@@ -265,12 +266,26 @@ export default function ChecklistPage() {
       item,
       { reviewId: reviewData.reviewId },
     );
+
+    if (!result.ok) {
+      console.error(
+        "[ChecklistPage] buildFeedFormBootStateFromWorkingCopy failed:",
+        result.error,
+      );
+      window.alert(
+        `Cannot open edit form (bridge error: ${result.error.code}). Please refresh and try again.`,
+      );
+      return;
+    }
+
+    const bootState = result.value;
     if (!bootState?.feedFormState?.formInfo?.reviewContext) {
       console.error(
         "ERROR: Something went wrong in buildFeedFormBootStateFromWorkingCopy",
       );
       return;
     }
+
     writeBootStateForFeedForm(bootState);
 
     // Store return route payload, now with the view state
@@ -336,7 +351,7 @@ export default function ChecklistPage() {
         if (mounted) setLoading(false);
       }
     }
-    if (reviewId) load();
+    if (reviewId) load().then();
     return () => {
       mounted = false;
     };
@@ -429,7 +444,12 @@ export default function ChecklistPage() {
     allRequiredItems,
   ]);
 
-  if (loading || !workingGraph) return <div className="p-6">Loading…</div>;
+  if (loading || !workingGraph)
+    return (
+      <div className="p-6">
+        <Loader />
+      </div>
+    );
   if (error)
     return (
       <div className="p-6">

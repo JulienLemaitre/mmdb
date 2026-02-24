@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { AdminListResponse, AdminReviewItem } from "@/types/adminTypes";
 import { formatDate, formatPieceTitles } from "@/features/admin/formatters";
+import Loader from "@/ui/Loader";
 
 const PAGE_SIZE = 25;
 const REVIEW_STATES = ["PENDING", "IN_REVIEW", "APPROVED", "ABORTED"] as const;
@@ -177,7 +178,7 @@ export default function AdminReviewsTable({ onViewAuditLogAction }: Props) {
           onClick={handleLoadMore}
           disabled={!nextCursor || loading}
         >
-          {loading ? "Loading..." : "Load more"}
+          {loading ? <Loader /> : "Load more"}
         </button>
         {nextCursor ? null : (
           <span className="text-xs text-gray-500">End of results</span>

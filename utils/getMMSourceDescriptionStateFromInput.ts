@@ -9,7 +9,7 @@ export default function getMMSourceDescriptionStateFromInput(
   const { id, title, year, isYearEstimated, type, link, comment, references } =
     sourceDescriptionInput;
 
-  const sourceDescriptionState: MMSourceDescriptionState = {
+  return {
     id,
     title: title ?? null,
     year,
@@ -18,11 +18,10 @@ export default function getMMSourceDescriptionStateFromInput(
     link,
     comment: comment ?? null,
     references: (references ?? []).map((reference) => ({
+      id: reference.id,
       type: reference.type
         .value as MMSourceDescriptionState["references"][0]["type"],
       reference: reference.reference,
     })),
   };
-
-  return sourceDescriptionState;
 }

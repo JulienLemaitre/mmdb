@@ -16,7 +16,7 @@ export default function getMMSourceDescriptionInputFromState(
     sourceDescription;
 
   // Convert the 'type' and 'references' properties to match the SourceDescriptionInput type
-  const sourceDescriptionInput: SourceDescriptionInput = {
+  return {
     id,
     ...(title ? { title } : {}),
     year,
@@ -27,6 +27,7 @@ export default function getMMSourceDescriptionInputFromState(
     ...(references.length > 0
       ? {
           references: references.map((reference) => ({
+            id: reference.id,
             type: {
               value: reference.type,
               label: getReferenceTypeLabel(reference.type),
@@ -38,6 +39,4 @@ export default function getMMSourceDescriptionInputFromState(
           references: [],
         }),
   };
-
-  return sourceDescriptionInput;
 }

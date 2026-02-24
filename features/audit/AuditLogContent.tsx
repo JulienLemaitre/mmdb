@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { AuditLogItem } from "@/types/auditTypes";
+import Loader from "@/ui/Loader";
 
 const PAGE_SIZE_LABEL = "Load more";
 
@@ -215,7 +216,11 @@ export default function AuditLogContent({
         <button type="button" className="btn btn-sm" onClick={handleExpandAll}>
           Expand all
         </button>
-        <button type="button" className="btn btn-sm" onClick={handleCollapseAll}>
+        <button
+          type="button"
+          className="btn btn-sm"
+          onClick={handleCollapseAll}
+        >
           Collapse all
         </button>
       </div>
@@ -245,7 +250,10 @@ export default function AuditLogContent({
               return (
                 <tr key={item.id}>
                   <td>
-                    <span className="text-xs" title={item.entityId || undefined}>
+                    <span
+                      className="text-xs"
+                      title={item.entityId || undefined}
+                    >
                       {formatEntityType(item.entityType)}
                     </span>
                   </td>
@@ -263,7 +271,9 @@ export default function AuditLogContent({
                       </summary>
                       <div className="mt-2 grid gap-3 md:grid-cols-2">
                         <div>
-                          <div className="text-xs font-semibold mb-1">Before</div>
+                          <div className="text-xs font-semibold mb-1">
+                            Before
+                          </div>
                           <div className="space-y-1 font-mono text-xs">
                             {visibleEntries.length === 0 ? (
                               <div className="text-gray-400">No changes</div>
@@ -290,7 +300,9 @@ export default function AuditLogContent({
                           </div>
                         </div>
                         <div>
-                          <div className="text-xs font-semibold mb-1">After</div>
+                          <div className="text-xs font-semibold mb-1">
+                            After
+                          </div>
                           <div className="space-y-1 font-mono text-xs">
                             {visibleEntries.length === 0 ? (
                               <div className="text-gray-400">No changes</div>
@@ -334,7 +346,7 @@ export default function AuditLogContent({
             onClick={onLoadMoreAction}
             disabled={!nextCursor || loading}
           >
-            {loading ? "Loading..." : PAGE_SIZE_LABEL}
+            {loading ? <Loader /> : PAGE_SIZE_LABEL}
           </button>
           {nextCursor ? null : (
             <span className="text-xs text-gray-500">End of results</span>

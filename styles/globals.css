@@ -336,7 +336,10 @@ body {
   --width: 14px;
   --minus-width: -14px;
   --color: oklch(0.746477 0.0216 264.436);
-
+  --swing-duration: 2s;
+}
+.metronome-container.metronome-md {
+  --swing-duration: 1s;
 }
 .metronome-container .stick-container {
   width: 250px;
@@ -356,7 +359,7 @@ body {
   background: var(--color);
   position: relative;
   transform-origin: 7px bottom;
-  animation: moveIt 2s ease-in-out infinite;
+  animation: moveIt var(--swing-duration) ease-in-out infinite;
 }
 .metronome-container .hole {
   width: 42px;
