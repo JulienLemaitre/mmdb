@@ -2,7 +2,7 @@ import React from "react";
 import { useFeedForm } from "@/context/feedFormContext";
 import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
 import { useSinglePieceVersionForm } from "@/context/singlePieceVersionFormContext";
-import { getStepByRank } from "@/features/feed/multiStepSinglePieceVersionForm/stepsUtils";
+import { getSinglePieceFormStepByRank } from "@/features/feed/multiStepSinglePieceVersionForm/stepsUtils";
 
 type SinglePieceVersionFormSummaryProps = {
   isCollectionMode?: boolean;
@@ -20,7 +20,7 @@ function SinglePieceVersionFormSummary({
   const piece =
     state.piece?.id &&
     getEntityByIdOrKey(feedFormState, "pieces", state.piece.id);
-  const currentStep = getStepByRank({ state, rank: currentStepRank });
+  const currentStep = getSinglePieceFormStepByRank(currentStepRank);
   const displayComposerInfo =
     !isCollectionMode && ["piece", "pieceVersion"].includes(currentStep.id);
   const displayPieceInfo = ["pieceVersion"].includes(currentStep.id);

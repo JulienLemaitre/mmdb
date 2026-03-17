@@ -35,7 +35,7 @@ export const singlePieceFormSteps: SinglePieceVersionFormStep[] = [
     id: "summary",
     title: "Summary",
     rank: 3,
-    isComplete: (state: SinglePieceVersionFormState) => false,
+    isComplete: (_state: SinglePieceVersionFormState) => false,
     Component: Summary,
     actionTypes: ["reset", "formInfo"],
   },
@@ -53,13 +53,9 @@ export function getAllStepStatus(state: any) {
   return singlePieceFormSteps.map((step) => step.isComplete(state));
 }
 
-export function getStepByRank({
-  state,
-  rank,
-}: {
-  state: SinglePieceVersionFormState;
-  rank: number;
-}): SinglePieceVersionFormStep {
+export function getSinglePieceFormStepByRank(
+  rank: number,
+): SinglePieceVersionFormStep {
   return (
     singlePieceFormSteps.find((step) => step.rank === rank) ||
     singlePieceFormSteps[0]

@@ -5,11 +5,12 @@ import {
   ReactNode,
   useContext,
   useEffect,
+  useMemo,
   useReducer,
 } from "react";
 import {
   getLastCompletedStep,
-  singlePieceFormSteps,
+  getSinglePieceFormStepByRank,
 } from "@/features/feed/multiStepSinglePieceVersionForm/stepsUtils";
 import {
   SinglePieceVersionFormAction,
@@ -59,7 +60,8 @@ export function SinglePieceVersionFormProvider({
     }
   }, [initialState]);
 
-  const value = { state, dispatch };
+  const value = useMemo(() => ({ state, dispatch }), [state]);
+
   return (
     <SinglePieceVersionFormContext.Provider value={value}>
       {children}
@@ -75,9 +77,9 @@ export function useSinglePieceVersionForm() {
     );
   }
   const lastCompletedStep = getLastCompletedStep(context.state);
-  // console.log(`[useFeedForm] lastCompletedStep :`, lastCompletedStep);
-  const nextStep =
-    singlePieceFormSteps[lastCompletedStep ? lastCompletedStep?.rank + 1 : 0];
+  const nextStep = getSinglePieceFormStepByRank(
+    lastCompletedStep ? lastCompletedStep?.rank + 1 : 0,
+  );
   return {
     ...context,
     lastCompletedStepId: lastCompletedStep?.id,

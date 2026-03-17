@@ -1,5 +1,11 @@
 "use client";
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+} from "react";
 import {
   CollectionState,
   FeedFormStep,
@@ -79,7 +85,8 @@ export function FeedFormProvider({
     }
   }, []);
 
-  const value = { state, dispatch };
+  const value = useMemo(() => ({ state, dispatch }), [state]);
+
   return (
     <FeedFormContext.Provider value={value}>
       {children}

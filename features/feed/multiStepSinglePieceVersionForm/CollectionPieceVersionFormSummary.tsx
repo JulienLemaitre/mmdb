@@ -1,7 +1,7 @@
 import React from "react";
 import { useFeedForm } from "@/context/feedFormContext";
 import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
-import { getStepByRank } from "@/features/feed/multiStepSinglePieceVersionForm/stepsUtils";
+import { getSinglePieceFormStepByRank } from "@/features/feed/multiStepSinglePieceVersionForm/stepsUtils";
 import { useCollectionPieceVersionsForm } from "@/context/collectionPieceVersionsFormContext";
 import { getPersonDates } from "@/utils/getPersonDates";
 
@@ -14,7 +14,7 @@ function CollectionPieceVersionFormSummary() {
   const composerName = composer?.firstName + " " + composer?.lastName;
   const composerDates = composer ? getPersonDates(composer) : "";
   const collectionTitle = state.collection?.title;
-  const currentStep = getStepByRank({ state, rank: currentStepRank });
+  const currentStep = getSinglePieceFormStepByRank(currentStepRank);
   const displayComposerInfo = ["piece", "pieceVersion"].includes(
     currentStep.id,
   );
