@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { AdminListResponse, AdminUserItem } from "@/types/adminTypes";
 import { formatDate } from "@/features/admin/formatters";
 import { userRoleOrderedList } from "@/utils/constants";
-import Loader from "@/ui/Loader";
+import { LoaderCentered } from "@/ui/LoaderCentered";
 
 const PAGE_SIZE = 25;
 
@@ -163,7 +163,7 @@ export default function AdminUsersTable() {
           onClick={handleLoadMore}
           disabled={!nextCursor || loading}
         >
-          {loading ? <Loader /> : "Load more"}
+          {loading ? <LoaderCentered /> : "Load more"}
         </button>
         {nextCursor ? null : (
           <span className="text-xs text-gray-500">End of results</span>

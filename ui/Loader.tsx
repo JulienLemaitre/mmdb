@@ -27,7 +27,11 @@ const SIZE_MAP: Record<string, number> = {
   xl: 0.5, // ~125px
 };
 
-export default function Loader({ size = "md", className, color }: LoaderProps) {
+export default function Loader({
+  size = "md",
+  className,
+  color,
+}: Readonly<LoaderProps>) {
   const scale = typeof size === "number" ? size : (SIZE_MAP[size] ?? 0.2);
   const sizeKey = typeof size === "number" ? undefined : size;
 
@@ -37,10 +41,9 @@ export default function Loader({ size = "md", className, color }: LoaderProps) {
   const height = ORIGIN_HEIGHT * scale;
 
   return (
-    <div
+    <output
       className={clsx("relative inline-block", className)}
       style={{ width, height }}
-      role="status"
       aria-label="Loading"
     >
       <div
@@ -74,12 +77,6 @@ export default function Loader({ size = "md", className, color }: LoaderProps) {
           </div>
         </div>
       </div>
-    </div>
+    </output>
   );
 }
-
-// export default function Loader({ size = "md" }) {
-//   return (
-//     <span className={clsx("loading loading-spinner", `loading-${size}`)}></span>
-//   );
-// }

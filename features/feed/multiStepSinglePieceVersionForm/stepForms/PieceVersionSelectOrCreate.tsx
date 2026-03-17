@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { PieceVersionInput, PieceVersionState } from "@/types/formTypes";
 import { getNewEntities } from "@/context/feedFormContext";
-import Loader from "@/ui/Loader";
 import PieceVersionEditForm from "@/features/pieceVersion/PieceVersionEditForm";
 import PieceVersionSelectForm from "@/features/pieceVersion/PieceVersionSelectForm";
 import { URL_API_GETALL_PIECE_PIECE_VERSIONS } from "@/utils/routes";
 import { FeedFormState } from "@/types/feedFormTypes";
+import { LoaderCentered } from "@/ui/LoaderCentered";
 
 type PieceVersionSelectOrCreateProps = {
   feedFormState: FeedFormState;
@@ -33,7 +33,7 @@ function PieceVersionSelectOrCreate({
   isUpdateMode,
   hasPieceJustBeenCreated,
   hasPieceVersionJustBeenCreated,
-}: PieceVersionSelectOrCreateProps) {
+}: Readonly<PieceVersionSelectOrCreateProps>) {
   const isDataFetchDisabled =
     hasPieceJustBeenCreated || hasPieceVersionJustBeenCreated;
   const [existingPieceVersions, setExistingPieceVersions] = useState<
@@ -139,7 +139,7 @@ function PieceVersionSelectOrCreate({
     setIsEditMode(false);
   };
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <LoaderCentered />;
 
   if (isEditMode)
     return (

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Loader from "@/ui/Loader";
 import CollectionSelectForm from "@/features/collection/CollectionSelectForm";
 import CollectionEditForm from "@/features/collection/CollectionEditForm";
 import { CollectionState, CollectionTitleInput } from "@/types/formTypes";
 import { getNewEntities } from "@/context/feedFormContext";
 import { FeedFormState } from "@/types/feedFormTypes";
 import { URL_API_GETALL_COMPOSER_COLLECTION } from "@/utils/routes";
+import { LoaderCentered } from "@/ui/LoaderCentered";
 
 type CollectionSelectOrCreateProps = {
   feedFormState: FeedFormState;
@@ -95,7 +95,7 @@ const CollectionSelectOrCreate = ({
     setIsCreation(false);
   };
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <LoaderCentered />;
 
   if (!selectedComposerId) {
     return <p>{`Please select a composer first...`}</p>;

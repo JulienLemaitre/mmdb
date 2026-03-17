@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import MetronomeMarksForm from "@/features/metronomeMark/form/MetronomeMarksForm";
 import { useFeedForm } from "@/context/feedFormContext";
 import { URL_API_GETMANY_PIECEVERSIONS } from "@/utils/routes";
-import Loader from "@/ui/Loader";
 import { PieceVersionState } from "@/types/formTypes";
 import { getSectionList } from "@/utils/getSectionList";
+import { LoaderCentered } from "@/ui/LoaderCentered";
 
 function MetronomeMarks() {
   const { state } = useFeedForm();
@@ -13,6 +13,7 @@ function MetronomeMarks() {
   useEffect(() => {
     const statePieceVersionIds: string[] = [];
     const dbPieceVersionIds: string[] = [];
+
     state.mMSourceOnPieceVersions!.forEach((SoPV) => {
       if (state.pieceVersions!.some((pv) => pv.id === SoPV.pieceVersionId)) {
         statePieceVersionIds.push(SoPV.pieceVersionId);
@@ -48,7 +49,10 @@ function MetronomeMarks() {
           setPieceVersions([...pieceVersionsFromState, ...pieceVersions]);
         });
     } else {
-      setPieceVersions(pieceVersionsFromState);
+      // Utiliser requestAnimationFrame pour différer la mise à jour de l'état
+      requestAnimationFrame(() => {
+        setPieceVersions(pieceVersionsFromState);
+      });
     }
   }, [state.mMSourceOnPieceVersions, state.pieceVersions]);
 
@@ -58,7 +62,7 @@ function MetronomeMarks() {
   }, [pieceVersions, state]);
 
   if (!pieceVersions || pieceVersions.length === 0) {
-    return <Loader />;
+    return <LoaderCentered />;
   }
 
   return (

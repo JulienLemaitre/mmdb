@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Loader from "@/ui/Loader";
 import {
   getNewEntities,
   updateFeedForm,
@@ -9,6 +8,7 @@ import { getStepByRank } from "@/features/feed/multiStepMMSourceForm/stepsUtils"
 import { ContributionStateWithoutId } from "@/types/formTypes";
 import SourceContributionSelectForm from "@/features/sourceContribution/SourceContributionSelectForm";
 import { URL_API_GETALL_PERSONS_AND_ORGANIZATIONS } from "@/utils/routes";
+import { LoaderCentered } from "@/ui/LoaderCentered";
 
 export default function MMSourceContributions() {
   const [data, setData] = useState(null);
@@ -37,7 +37,7 @@ export default function MMSourceContributions() {
       });
   }, []);
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <LoaderCentered />;
   if (!data)
     return <p>{`Oups, No data could be fetched. Can't continue...`}</p>;
   const { persons, organizations } = data;

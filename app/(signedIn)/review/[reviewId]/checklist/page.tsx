@@ -30,7 +30,7 @@ import AuditLogHeader from "@/features/audit/AuditLogHeader";
 import AuditLogContent from "@/features/audit/AuditLogContent";
 import { composeAuditEntries } from "@/features/review/utils/auditCompose";
 import { AuditLogItem } from "@/types/auditTypes";
-import Loader from "@/ui/Loader";
+import { LoaderCentered } from "@/ui/LoaderCentered";
 
 // State definition for the view controller
 export type ReviewView =
@@ -120,12 +120,10 @@ export default function ChecklistPage() {
         pieceVersionIds: new Set(gr.pieceVersionIds ?? []),
       },
     });
-    // debug.log("newAllRequiredItems", newAllRequiredItems);
 
     const uncheckedKeys = newAllRequiredItems.filter(
       (item) => !checkedKeys.has(item.fieldPath),
     );
-    // debug.log("uncheckedKeys", uncheckedKeys);
 
     return { allRequiredItems: newAllRequiredItems, uncheckedKeys };
   }, [workingGraph, checkedKeys, reviewData?.globallyReviewed]);
@@ -272,7 +270,7 @@ export default function ChecklistPage() {
         "[ChecklistPage] buildFeedFormBootStateFromWorkingCopy failed:",
         result.error,
       );
-      window.alert(
+      globalThis.alert(
         `Cannot open edit form (bridge error: ${result.error.code}). Please refresh and try again.`,
       );
       return;
@@ -378,7 +376,7 @@ export default function ChecklistPage() {
       if (!raw) return;
       const feedState = JSON.parse(raw) as FeedFormState;
       const rc = feedState?.formInfo?.reviewContext;
-      if (!rc || !rc.reviewEdit || rc.reviewId !== reviewData.reviewId) return;
+      if (!rc?.reviewEdit || rc.reviewId !== reviewData.reviewId) return;
 
       const prevWc = {
         graph: workingGraph,
@@ -444,12 +442,8 @@ export default function ChecklistPage() {
     allRequiredItems,
   ]);
 
-  if (loading || !workingGraph)
-    return (
-      <div className="p-6">
-        <Loader />
-      </div>
-    );
+  if (loading || !workingGraph) return <LoaderCentered />;
+
   if (error)
     return (
       <div className="p-6">
@@ -567,7 +561,6 @@ export default function ChecklistPage() {
           <div className="flex items-center gap-3">
             <button
               type="button"
-              role="button"
               className="btn btn-primary"
               disabled={submitDisabled}
               onClick={async () => {
@@ -591,12 +584,8 @@ export default function ChecklistPage() {
                       }),
                     },
                   );
-                  // if (!res.ok)
-                  //   throw new Error(
-                  //     `Submit failed ${res.type} ${res.status} ${res.statusText} ${await res.text()}`,
-                  //   );
 
-                  const result = (await res.json()) as any;
+                  const result = await res.json();
                   debug.log("submit result", result);
 
                   if (result?.error) {
@@ -621,7 +610,7 @@ export default function ChecklistPage() {
               disabled={aborting}
               onClick={async () => {
                 if (!reviewData) return;
-                if (!window.confirm("Abort this review?")) return;
+                if (!globalThis.confirm("Abort this review?")) return;
                 try {
                   setAborting(true);
                   await fetch(`/api/review/${reviewData.reviewId}/abort`, {
@@ -648,27 +637,25 @@ export default function ChecklistPage() {
         type={submitSuccess ? "success" : "error"}
         content={
           submitSuccess ? (
-            <>
-              <ReviewAuditLogPanel
-                reviewId={reviewData?.reviewId ?? reviewId}
-                enabled={!!submitSuccess}
-              >
-                <div className="font-semibold">
-                  Review submitted successfully!
-                </div>
-                <div className="text-md mt-6">{`Summary`}</div>
-                <div className="text-sm">
-                  {Object.entries(submitSuccess.summary).map(([k, v]) => (
-                    <div key={k}>
-                      <span className="font-semibold">{k}:</span>{" "}
-                      {typeof v === "string" || typeof v === "number"
-                        ? v
-                        : JSON.stringify(v)}
-                    </div>
-                  ))}
-                </div>
-              </ReviewAuditLogPanel>
-            </>
+            <ReviewAuditLogPanel
+              reviewId={reviewData?.reviewId ?? reviewId}
+              enabled={!!submitSuccess}
+            >
+              <div className="font-semibold">
+                Review submitted successfully!
+              </div>
+              <div className="text-md mt-6">{`Summary`}</div>
+              <div className="text-sm">
+                {Object.entries(submitSuccess.summary).map(([k, v]) => (
+                  <div key={k}>
+                    <span className="font-semibold">{k}:</span>{" "}
+                    {typeof v === "string" || typeof v === "number"
+                      ? v
+                      : JSON.stringify(v)}
+                  </div>
+                ))}
+              </div>
+            </ReviewAuditLogPanel>
           ) : submitError ? (
             <>
               <div className="font-semibold text-error">
@@ -717,9 +704,8 @@ export default function ChecklistPage() {
       />
 
       {showDiff ? (
-        <div
+        <dialog
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
-          role="dialog"
           aria-modal="true"
         >
           <div className="w-full max-w-5xl rounded bg-base-100 p-4 shadow-lg max-h-[85vh] overflow-y-auto">
@@ -743,7 +729,7 @@ export default function ChecklistPage() {
               emptyLabel="No changes detected."
             />
           </div>
-        </div>
+        </dialog>
       ) : null}
     </>
   );
