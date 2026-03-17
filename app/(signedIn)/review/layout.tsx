@@ -10,10 +10,12 @@ export default function FeedLayout({ children }) {
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content min-h-full">
         {/* Page content here */}
-        <div className="min-h-full flex flex-col">
+        <div className="min-h-screen flex flex-col">
           <NavBar title="MM Source Review" hasHelpSection />
           <div className="bg-zinc-50 dark:bg-zinc-800 flex-1 flex items-stretch">
-            <main className="flex-1 bg-base-100 p-10">{children}</main>
+            <main className="flex-1 min-h-full bg-base-100 p-10">
+              {children}
+            </main>
           </div>
         </div>
       </div>

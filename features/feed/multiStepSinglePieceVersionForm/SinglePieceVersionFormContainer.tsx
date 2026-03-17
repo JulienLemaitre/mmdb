@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import SinglePieceVersionSteps from "@/features/feed/multiStepSinglePieceVersionForm/SinglePieceVersionSteps";
-import { getStepByRank } from "@/features/feed/multiStepSinglePieceVersionForm/stepsUtils";
+import { getSinglePieceFormStepByRank } from "@/features/feed/multiStepSinglePieceVersionForm/stepsUtils";
 import DebugBox from "@/ui/DebugBox";
 import {
   updateSinglePieceVersionForm,
@@ -62,10 +62,7 @@ const SinglePieceVersionFormContainer = ({
     singlePieceVersionFormState.formInfo.mMSourceOnPieceVersionRank;
   const isUpdateMode = typeof mMSourceOnPieceVersionRank === "number";
 
-  const currentStep = getStepByRank({
-    state: singlePieceVersionFormState,
-    rank: currentStepRank,
-  });
+  const currentStep = getSinglePieceFormStepByRank(currentStepRank);
   const StepFormComponent = currentStep.Component;
 
   const hasCollectionJustBeenCreated = !!(

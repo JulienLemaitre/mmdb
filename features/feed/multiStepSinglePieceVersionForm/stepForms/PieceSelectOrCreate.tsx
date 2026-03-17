@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { PieceInput, PieceState } from "@/types/formTypes";
 import { Piece } from "@/prisma/client";
 import { getNewEntities } from "@/context/feedFormContext";
-import Loader from "@/ui/Loader";
 import PieceEditForm from "@/features/piece/form/PieceEditForm";
 import PieceSelectForm from "@/features/piece/form/PieceSelectForm";
 import { URL_API_GETALL_COMPOSER_PIECES } from "@/utils/routes";
 import { FeedFormState } from "@/types/feedFormTypes";
+import { LoaderCentered } from "@/ui/LoaderCentered";
 
 type PieceSelectOrCreateProps = {
   feedFormState: FeedFormState;
@@ -36,7 +36,7 @@ function PieceSelectOrCreate({
   isUpdateMode,
   hasComposerJustBeenCreated,
   hasPieceJustBeenCreated,
-}: PieceSelectOrCreateProps) {
+}: Readonly<PieceSelectOrCreateProps>) {
   const isCollectionCreation = !!isCollectionMode && !isUpdateMode;
 
   const [pieces, setPieces] = useState<Piece[] | null>(null);
@@ -85,14 +85,14 @@ function PieceSelectOrCreate({
         .then((res) => res.json())
         .then((data) => {
           const pieces: Piece[] = data?.pieces;
-          if (!pieces?.length) {
+          if (pieces?.length) {
+            setPieces(data?.pieces);
+            setIsLoading(false);
+          } else {
             // TODO: give this information to the user with a toast
             console.log(
               `[PieceSelectOrCreate useEffect] No composition pieces found for composer ${selectedComposerId}`,
             );
-            setIsLoading(false);
-          } else {
-            setPieces(data?.pieces);
             setIsLoading(false);
           }
         })
@@ -119,7 +119,7 @@ function PieceSelectOrCreate({
     setIsEditModeInternal(false);
   };
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <LoaderCentered />;
 
   const selectedPiece: PieceState | undefined = pieceFullList?.find(
     (piece) => piece.id === selectedPieceId,

@@ -14,7 +14,7 @@ import {
   PieceState,
   PieceVersionState,
 } from "@/types/formTypes";
-import { getStepByRank } from "@/features/feed/multiStepCollectionPieceVersionsForm/stepsUtils";
+import { getCollectionFormStepByRank } from "@/features/feed/multiStepCollectionPieceVersionsForm/stepsUtils";
 import DebugBox from "@/ui/DebugBox";
 import { v4 as uuidv4 } from "uuid";
 import CollectionPieceVersionsSteps from "@/features/feed/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsSteps";
@@ -38,10 +38,7 @@ function CollectionPieceVersionsFormContainer({
     state: collectionPieceVersionFormState,
     currentStepRank,
   } = useCollectionPieceVersionsForm();
-  const currentStep = getStepByRank({
-    state: collectionPieceVersionFormState,
-    rank: currentStepRank,
-  });
+  const currentStep = getCollectionFormStepByRank(currentStepRank);
   const StepFormComponent = currentStep.Component;
   const isUpdateMode =
     !!collectionPieceVersionFormState.formInfo

@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { AuditLogItem } from "@/types/auditTypes";
-import Loader from "@/ui/Loader";
+import { LoaderCentered } from "@/ui/LoaderCentered";
 
 const PAGE_SIZE_LABEL = "Load more";
 
@@ -346,7 +346,7 @@ export default function AuditLogContent({
             onClick={onLoadMoreAction}
             disabled={!nextCursor || loading}
           >
-            {loading ? <Loader /> : PAGE_SIZE_LABEL}
+            {loading ? <LoaderCentered /> : PAGE_SIZE_LABEL}
           </button>
           {nextCursor ? null : (
             <span className="text-xs text-gray-500">End of results</span>

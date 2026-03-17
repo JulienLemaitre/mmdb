@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Loader from "@/ui/Loader";
 import ComposerSelectContainer from "@/features/composer/form/ComposerSelectContainer";
 import ComposerEditForm from "@/features/composer/form/ComposerEditForm";
 import { PersonInput, PersonState } from "@/types/formTypes";
 import { getNewEntities } from "@/context/feedFormContext";
 import { FeedFormState } from "@/types/feedFormTypes";
 import getAllComposers from "@/utils/getAllComposers";
+import { LoaderCentered } from "@/ui/LoaderCentered";
 
 type ComposerSelectOrCreateProps = {
   feedFormState: FeedFormState;
@@ -85,7 +85,7 @@ const ComposerSelectOrCreate = ({
     setIsCreation(false);
   };
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <LoaderCentered />;
   if (!composerFullList)
     return <p>{`Oups, No data could be fetched. Can't continue...`}</p>;
 

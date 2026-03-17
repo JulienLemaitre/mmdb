@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useReducer } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useReducer,
+} from "react";
 import {
   TOAST_NOTIFICATION_INITIAL_STATE,
   toastNotificationReducer,
@@ -51,24 +57,19 @@ export function ToastNotificationProvider({ children }) {
     [state.notifications],
   );
 
-  const value = {
-    state,
-    dispatch,
-  };
+  const value = useMemo(() => ({ state, dispatch }), [state]);
 
   const hasNotifications = state.notifications.length > 0;
 
   return (
-    <>
-      <ToastNotificationContext.Provider value={value}>
-        <div
-          className={`w-full h-fit fixed left-0 top-0${hasNotifications ? ` pt-10` : ""} flex flex-col justify-center items-center gap-3 z-50`}
-        >
-          {showNotifications()}
-        </div>
-        {children}
-      </ToastNotificationContext.Provider>
-    </>
+    <ToastNotificationContext.Provider value={value}>
+      <div
+        className={`w-full h-fit fixed left-0 top-0${hasNotifications ? ` pt-10` : ""} flex flex-col justify-center items-center gap-3 z-50`}
+      >
+        {showNotifications()}
+      </div>
+      {children}
+    </ToastNotificationContext.Provider>
   );
 }
 

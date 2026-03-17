@@ -56,15 +56,22 @@ export function getAllStepStatus(state: any) {
   return collectionFormSteps.map((step) => step.isComplete(state));
 }
 
-// export function getStepById(stepId: string): SourceOnPieceVersionsFormStep {
-//   return steps.find((step) => step.id === stepId) || steps[0];
-// }
-export function getStepByRank({
-  rank,
-}: {
-  state: CollectionPieceVersionsFormState;
-  rank: number;
-}): CollectionPieceVersionsFormStep {
+export function getLastCompletedStep(
+  state: CollectionPieceVersionsFormState,
+): CollectionPieceVersionsFormStep | undefined {
+  // traversing the steps array, we return the step before the first incomplete one id
+  for (let i = 0; i < collectionFormSteps.length; i++) {
+    if (!collectionFormSteps[i].isComplete(state)) {
+      return collectionFormSteps[i - 1];
+    }
+  }
+  // If none incomplete step found, we return the last step id
+  return collectionFormSteps[collectionFormSteps.length - 1];
+}
+
+export function getCollectionFormStepByRank(
+  rank: number,
+): CollectionPieceVersionsFormStep {
   return (
     collectionFormSteps.find((step) => step.rank === rank) ||
     collectionFormSteps[0]

@@ -221,10 +221,11 @@ export function buildFeedFormBootStateFromWorkingCopy(
               "SECTION",
               "TEMPO_INDICATION",
             ].includes(clickedItem.entityType),
-            allSourceOnPieceVersionsDone: true,
+            // allSourceOnPieceVersionsDone: true,
             collectionFirstMMSourceOnPieceVersionRank,
           },
           collection: {
+            id: collectionId,
             composerId: pieceCollection.composerId,
             isComposerNew: !globallyReviewed?.personIds?.includes(
               pieceCollection.composerId,
@@ -478,7 +479,7 @@ export function rebuildWorkingCopyFromFeedForm(
   const tempoIndicationMap = new Map<string, { id: string; text: string }>();
   for (const pv of pieceVersions) {
     for (const m of (pv as any).movements ?? []) {
-      for (const s of (m as any).sections ?? []) {
+      for (const s of m.sections ?? []) {
         const ti = s.tempoIndication;
         if (ti?.id) {
           s.tempoIndicationId = ti.id;
@@ -541,8 +542,7 @@ function forceId(entity: any) {
   };
 }
 function cleanIsNew(entity: any) {
-  if (!entity) return entity;
-  if ("isNew" in entity) delete entity.isNew;
+  if (entity && "isNew" in entity) delete entity.isNew;
   return entity;
 }
 
