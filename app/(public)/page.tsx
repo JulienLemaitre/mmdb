@@ -3,12 +3,19 @@ import Link from "next/link";
 import { URL_EXPLORE, URL_FEED, URL_REVIEW_LIST } from "@/utils/routes";
 import NavBar from "@/ui/NavBar";
 import AdminLink from "@/ui/AdminLink";
-// import Metronome from "@/ui/Metronome";
+import Metronome from "@/ui/Metronome";
 import SnowballMetronome from "@/ui/SnowballMetronome";
 import { db } from "@/utils/server/db";
 import { REVIEW_STATE } from "@/prisma/client/enums";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/options";
+
+// Helper function to check if current date is in winter period (Dec, Jan, Feb)
+function isWinterPeriod() {
+  const now = new Date();
+  const month = now.getMonth(); // 0 = January, 11 = December
+  return [11, 0, 1].includes(month);
+}
 
 // keep counts reasonably fresh without forcing full dynamic SSR
 export const revalidate = 60;
@@ -71,8 +78,8 @@ export default async function Home() {
           )}
 
         <div className="flex flex-col items-stretch gap-6 w-full max-w-xs">
-          <div className="flex justify-center">
-            <SnowballMetronome />
+          <div className="flex justify-center my-8">
+            {isWinterPeriod() ? <SnowballMetronome /> : <Metronome />}
           </div>
           <Link href={URL_EXPLORE} className="btn btn-primary">
             Explore data
