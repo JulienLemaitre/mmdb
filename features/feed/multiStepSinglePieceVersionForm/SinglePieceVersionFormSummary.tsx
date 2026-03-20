@@ -34,8 +34,8 @@ function SinglePieceVersionFormSummary({
       )}
       {displayPieceInfo && (
         <>
-          <div className="text-sm">{`Title: ${piece.title}`}</div>
-          <div className="text-sm">{`Year of composition: ${piece.yearOfComposition || "no date"}`}</div>
+          <div className="text-sm">{`Title: ${piece?.title}`}</div>
+          <div className="text-sm">{`Year of composition: ${piece?.yearOfComposition || "no date"}`}</div>
         </>
       )}
     </div>
