@@ -5,7 +5,7 @@ This document captures project-specific knowledge that will speed up development
 1. Build and Configuration
 
 - Stack overview
-  - Next.js 15 (app router) with React 19.
+  - Next.js 16 (app router) with React 19.
   - TypeScript with strict mode; moduleResolution: bundler.
   - Prisma 6 for PostgreSQL; dbml generator enabled.
   - Auth via next-auth; email/JWT secrets required.
