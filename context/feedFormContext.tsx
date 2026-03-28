@@ -123,7 +123,7 @@ export function initFeedForm(dispatch, initialState = FEED_FORM_INITIAL_STATE) {
 }
 
 function getLastCompletedStep(state: FeedFormState): FeedFormStep | undefined {
-  // traversing the steps array, we return the step before the first incomplete one id
+  // traversing the steps' array, we return the step before the first incomplete one id
   // console.group(`getLastCompletedStep`);
   for (let i = 0; i < steps.length; i++) {
     // console.log(`steps[${i}] isComplete :`, steps[i].isComplete(state));

@@ -20,7 +20,10 @@ import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes
 import CheckIcon from "@/ui/svg/CheckIcon";
 import ArrowDownIcon from "@/ui/svg/ArrowDownIcon";
 import ArrowUpIcon from "@/ui/svg/ArrowUpIcon";
-import { SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
+import {
+  NEED_CONFIRMATION_MODAL_ID,
+  SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+} from "@/utils/constants";
 
 type CollectionPieceVersionsEditFormProps = {
   isUpdateMode: boolean;
@@ -30,7 +33,6 @@ type CollectionPieceVersionsEditFormProps = {
   ) => void;
 };
 
-const needConfirmationModalId = "need-confirmation-modal";
 const NeedConfirmationModal = dynamic(
   () => import("@/ui/modal/NeedConfirmationModal"),
   { ssr: false },
@@ -440,7 +442,7 @@ function CollectionPieceVersionsEditForm({
         </>
       )}
       <NeedConfirmationModal
-        modalId={needConfirmationModalId}
+        modalId={NEED_CONFIRMATION_MODAL_ID}
         onConfirm={() => onDeletePieceVersion(pieceVersionToDiscardId)}
         onCancel={() => setPieceVersionToDiscardId(null)}
         description={`Delete a piece version from the collection`}

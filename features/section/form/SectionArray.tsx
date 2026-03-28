@@ -1,4 +1,6 @@
+import React, { useState } from "react";
 import { useFieldArray } from "react-hook-form";
+import dynamic from "next/dynamic";
 import { FormInput } from "@/ui/form/FormInput";
 import PlusIcon from "@/ui/svg/PlusIcon";
 import TrashIcon from "@/ui/svg/TrashIcon";
@@ -7,9 +9,14 @@ import ArrowDownIcon from "@/ui/svg/ArrowDownIcon";
 import ControlledCreatableSelect from "@/ui/form/ControlledCreatableSelect";
 import { TempoIndicationState } from "@/types/formTypes";
 import CommonTimeIcon from "@/ui/svg/CommonTimeIcon";
-import React from "react";
 import CutTimeIcon from "@/ui/svg/CutTimeIcon";
 import { getSectionDefaultValues } from "@/features/section/utils/getSectionDefaultValues";
+import { NEED_CONFIRMATION_MODAL_ID } from "@/utils/constants";
+
+const NeedConfirmationModal = dynamic(
+  () => import("@/ui/modal/NeedConfirmationModal"),
+  { ssr: false },
+);
 
 export default function SectionArray({
   control,
@@ -26,6 +33,10 @@ export default function SectionArray({
     control,
     name: `movements[${nestIndex}].sections`,
   });
+
+  const [sectionIndexToRemove, setSectionIndexToRemove] = useState<
+    number | null
+  >(null);
 
   return (
     <div className="my-4">
@@ -49,7 +60,7 @@ export default function SectionArray({
                   <button
                     type="button"
                     className="btn btn-sm btn-ghost hover:bg-error hover:text-neutral"
-                    onClick={() => remove(index)}
+                    onClick={() => setSectionIndexToRemove(index)}
                   >
                     <TrashIcon className="w-4 h-4" />
                   </button>
@@ -300,6 +311,18 @@ export default function SectionArray({
             </div>
           </section>
         )}
+        <NeedConfirmationModal
+          modalId={`${NEED_CONFIRMATION_MODAL_ID}-section-${nestIndex}`}
+          onConfirm={() => {
+            if (sectionIndexToRemove !== null) {
+              remove(sectionIndexToRemove);
+              setSectionIndexToRemove(null);
+            }
+          }}
+          onCancel={() => setSectionIndexToRemove(null)}
+          description={`Delete this section`}
+          isOpened={sectionIndexToRemove !== null}
+        />
       </ul>
     </div>
   );
