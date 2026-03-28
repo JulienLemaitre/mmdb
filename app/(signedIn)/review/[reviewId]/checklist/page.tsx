@@ -17,7 +17,11 @@ import {
   writeBootStateForFeedForm,
   rebuildWorkingCopyFromFeedForm,
 } from "@/features/review/reviewEditBridge";
-import { FEED_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
+import {
+  COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+  FEED_FORM_LOCAL_STORAGE_KEY,
+  SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+} from "@/utils/constants";
 import { SummarySlice } from "@/features/review/slices/SummarySlice";
 import { CollectionSlice } from "@/features/review/slices/CollectionSlice";
 import { PieceSlice } from "@/features/review/slices/PieceSlice";
@@ -613,12 +617,26 @@ export default function ChecklistPage() {
                 if (!globalThis.confirm("Abort this review?")) return;
                 try {
                   setAborting(true);
+
+                  // Unlock the source for review in db
                   await fetch(`/api/review/${reviewData.reviewId}/abort`, {
                     method: "POST",
                   });
+
+                  // Clear review localStorage
                   clearWorkingCopy();
                   localStorage.removeItem(storageKey(reviewData.reviewId));
                   localStorage.removeItem(returnRouteKey(reviewData.reviewId));
+
+                  // Clear FeedForm localStorage
+                  localStorage.removeItem(
+                    SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+                  );
+                  localStorage.removeItem(
+                    COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+                  );
+                  localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
+
                   router.push(URL_REVIEW_LIST);
                 } catch (e: any) {
                   setAbortError(e.message);
