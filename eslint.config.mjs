@@ -62,6 +62,7 @@ export default [
     rules: {
       // Disable the base rule for TS files
       "no-unused-vars": "off",
+      "no-redeclare": "off",
       // TS-aware unused vars rule with underscore support
       "@typescript-eslint/no-unused-vars": [
         "warn",
@@ -71,6 +72,7 @@ export default [
           caughtErrorsIgnorePattern: "^_",
         },
       ],
+      "@typescript-eslint/no-redeclare": "error",
     },
   },
 
