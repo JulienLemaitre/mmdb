@@ -1,3 +1,5 @@
+import { PersonState, PieceState, PieceVersionState } from "@/types/formTypes";
+
 export type SinglePieceVersionFormInfo = {
   currentStepRank: number;
   allSourceOnPieceVersionsDone?: boolean;
@@ -6,30 +8,27 @@ export type SinglePieceVersionFormInfo = {
 
 export type SinglePieceVersionFormState = {
   formInfo: SinglePieceVersionFormInfo;
-  composer?: { id?: string; isNew?: boolean };
-  piece?: { id?: string; isNew?: boolean };
-  pieceVersion?: { id?: string; isNew?: boolean };
+  composer?: PersonState;
+  piece?: PieceState;
+  pieceVersion?: PieceVersionState;
 };
 
 export type SinglePieceVersionFormAction =
   | {
       type: "init";
-      payload?: {
-        value: SinglePieceVersionFormState;
-        next?: boolean;
-      };
+      payload?: SinglePieceVersionFormState;
     }
   | { type: "goToPrevStep" }
   | { type: "goToStep"; payload: { stepRank: number } }
   | {
       type: "composer";
-      payload: { value: { id: string; isNew?: boolean }; next?: boolean };
+      payload: { value: PersonState | undefined; next?: boolean };
     }
   | {
       type: "piece";
-      payload: { value: { id: string; isNew?: boolean }; next?: boolean };
+      payload: { value: PieceState | undefined; next?: boolean };
     }
   | {
       type: "pieceVersion";
-      payload: { value: { id: string; isNew?: boolean }; next?: boolean };
+      payload: { value: PieceVersionState | undefined; next?: boolean };
     };
