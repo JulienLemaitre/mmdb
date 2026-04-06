@@ -7,9 +7,11 @@ import PieceSelectForm from "@/features/piece/form/PieceSelectForm";
 import { URL_API_GETALL_COMPOSER_PIECES } from "@/utils/routes";
 import { FeedFormState } from "@/types/feedFormTypes";
 import { LoaderCentered } from "@/ui/LoaderCentered";
+import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 
 type PieceSelectOrCreateProps = {
   feedFormState: FeedFormState;
+  singlePieceVersionFormState: SinglePieceVersionFormState;
   onPieceCreated: (piece: PieceInput) => void;
   onPieceSelect: (piece: PieceState) => void;
   onInitPieceCreation: () => void;
@@ -25,6 +27,7 @@ type PieceSelectOrCreateProps = {
 
 function PieceSelectOrCreate({
   feedFormState,
+  singlePieceVersionFormState,
   onPieceCreated,
   onPieceSelect,
   onInitPieceCreation: onInitPieceCreationFn,
@@ -42,9 +45,14 @@ function PieceSelectOrCreate({
   const [pieces, setPieces] = useState<Piece[] | null>(null);
   const [isLoading, setIsLoading] = useState(!hasPieceJustBeenCreated);
 
-  const newPieces = getNewEntities(feedFormState, "pieces", {
+  const newPieces: PieceState[] = getNewEntities(feedFormState, "pieces", {
     includeUnusedInFeedForm: true,
   }).filter((piece) => piece.composerId === selectedComposerId);
+
+  if (singlePieceVersionFormState.piece?.isNew) {
+    newPieces.push(singlePieceVersionFormState.piece);
+  }
+
   const newSelectedPiece = newPieces?.find(
     (piece) => piece.id === selectedPieceId,
   );

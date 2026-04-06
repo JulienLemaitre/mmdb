@@ -6,9 +6,11 @@ import { getNewEntities } from "@/context/feedFormContext";
 import { FeedFormState } from "@/types/feedFormTypes";
 import getAllComposers from "@/utils/getAllComposers";
 import { LoaderCentered } from "@/ui/LoaderCentered";
+import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 
 type ComposerSelectOrCreateProps = {
   feedFormState: FeedFormState;
+  singlePieceVersionFormState: SinglePieceVersionFormState;
   onComposerCreated: (composer: PersonInput) => void;
   onComposerSelect: (composer: PersonInput) => void;
   selectedComposerId: string | null;
@@ -20,6 +22,7 @@ type ComposerSelectOrCreateProps = {
 
 const ComposerSelectOrCreate = ({
   feedFormState,
+  singlePieceVersionFormState,
   onComposerCreated,
   onComposerSelect,
   selectedComposerId,
@@ -31,9 +34,12 @@ const ComposerSelectOrCreate = ({
   const [composers, setComposers] = useState<PersonState[] | null>(null);
   const [isLoading, setIsLoading] = useState(!hasComposerJustBeenCreated);
 
-  const newPersons = getNewEntities(feedFormState, "persons", {
+  const newPersons: PersonState[] = getNewEntities(feedFormState, "persons", {
     includeUnusedInFeedForm: true,
   });
+  if (singlePieceVersionFormState.composer?.isNew) {
+    newPersons.push(singlePieceVersionFormState.composer);
+  }
   const newSelectedComposer = newPersons?.find(
     (person) => person.id === selectedComposerId,
   );

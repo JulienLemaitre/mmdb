@@ -1,38 +1,24 @@
 import React from "react";
-import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
-import { FeedFormState } from "@/types/feedFormTypes";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import getKeyLabel from "@/utils/getKeyLabel";
 import { SectionDetail } from "@/features/section/ui/SectionDetail";
+import { PieceVersionState } from "@/types/formTypes";
+import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 
 type SummaryProps = {
-  feedFormState: FeedFormState;
+  singlePieceVersionFormState: SinglePieceVersionFormState;
   onSubmitSourceOnPieceVersions: () => void;
-  selectedComposerId: string;
-  selectedPieceId: string;
-  selectedPieceVersionId: string;
   isUpdateMode?: boolean;
 };
 
 function Summary({
-  feedFormState,
+  singlePieceVersionFormState,
   onSubmitSourceOnPieceVersions,
-  // selectedComposerId,
-  selectedPieceId,
-  selectedPieceVersionId,
   isUpdateMode,
 }: SummaryProps) {
-  // const composer = getEntityByIdOrKey(
-  //   feedFormState,
-  //   "persons",
-  //   selectedComposerId,
-  // );
-  const piece = getEntityByIdOrKey(feedFormState, "pieces", selectedPieceId);
-  const pieceVersion = getEntityByIdOrKey(
-    feedFormState,
-    "pieceVersions",
-    selectedPieceVersionId,
-  );
+  const piece = singlePieceVersionFormState.piece;
+  const pieceVersion =
+    singlePieceVersionFormState.pieceVersion as PieceVersionState;
   const movementCount = pieceVersion.movements?.length || 0;
   const isMonoMovementPiece = movementCount === 1;
 
@@ -61,43 +47,41 @@ function Summary({
         {/* Content */}
         {/* Movements and Sections */}
         <div className="py-2">
-          {pieceVersion.movements &&
-            pieceVersion.movements.map((movement: any, mvtIndex: number) => (
-              <div
-                key={`mvt-${mvtIndex}`}
-                className={
-                  isMonoMovementPiece
-                    ? ""
-                    : `ml-2 rounded-tl-lg border-l-2 border-l-primary/10 hover:border-l-primary transition-all duration-150`
-                }
-              >
-                {!isMonoMovementPiece && (
-                  <div
-                    className={`px-4 py-2 ${mvtIndex > 0 ? "mt-3" : ""} bg-primary/5`}
-                  >
-                    <h5 className="text-sm font-semibold text-primary">
-                      Movement {movement.rank} in {getKeyLabel(movement.key)}
-                    </h5>
-                  </div>
-                )}
-
+          {pieceVersion?.movements.map((movement: any, mvtIndex: number) => (
+            <div
+              key={`mvt-${mvtIndex}`}
+              className={
+                isMonoMovementPiece
+                  ? ""
+                  : `ml-2 rounded-tl-lg border-l-2 border-l-primary/10 hover:border-l-primary transition-all duration-150`
+              }
+            >
+              {!isMonoMovementPiece && (
                 <div
-                  className={`ml-2 ${isMonoMovementPiece ? "" : "pt-2"} grid-cols-1 space-y-1`}
+                  className={`px-4 py-2 ${mvtIndex > 0 ? "mt-3" : ""} bg-primary/5`}
                 >
-                  {movement.sections &&
-                    movement.sections.map((section: any) => (
-                      <SectionDetail key={section.id} section={section} />
-                    ))}
+                  <h5 className="text-sm font-semibold text-primary">
+                    Movement {movement.rank} in {getKeyLabel(movement.key)}
+                  </h5>
                 </div>
+              )}
+
+              <div
+                className={`ml-2 ${isMonoMovementPiece ? "" : "pt-2"} grid-cols-1 space-y-1`}
+              >
+                {movement?.sections.map((section: any) => (
+                  <SectionDetail key={section.id} section={section} />
+                ))}
               </div>
-            ))}
+            </div>
+          ))}
         </div>
       </div>
       <button
         onClick={onSubmitSourceOnPieceVersions}
         className="btn btn-primary mt-6 w-full"
       >
-        {`Confirm ${isUpdateMode ? `your changes` : `adding this piece`}`}
+        {`Confirm ${isUpdateMode ? "your changes" : "adding this piece"}`}
       </button>
     </>
   );

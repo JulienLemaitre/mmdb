@@ -6,9 +6,11 @@ import PieceVersionSelectForm from "@/features/pieceVersion/PieceVersionSelectFo
 import { URL_API_GETALL_PIECE_PIECE_VERSIONS } from "@/utils/routes";
 import { FeedFormState } from "@/types/feedFormTypes";
 import { LoaderCentered } from "@/ui/LoaderCentered";
+import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 
 type PieceVersionSelectOrCreateProps = {
   feedFormState: FeedFormState;
+  singlePieceVersionFormState: SinglePieceVersionFormState;
   selectedPieceId?: string;
   selectedPieceVersionId?: string;
   onPieceVersionCreated: (pieceVersion: PieceVersionInput) => void;
@@ -22,6 +24,7 @@ type PieceVersionSelectOrCreateProps = {
 };
 
 function PieceVersionSelectOrCreate({
+  singlePieceVersionFormState,
   selectedPieceId,
   selectedPieceVersionId,
   feedFormState,
@@ -55,6 +58,11 @@ function PieceVersionSelectOrCreate({
     "pieceVersions",
     { includeUnusedInFeedForm: true },
   ).filter((pieceVersion) => pieceVersion.pieceId === selectedPieceId);
+
+  if (singlePieceVersionFormState.pieceVersion?.isNew) {
+    newPieceVersions.push(singlePieceVersionFormState.pieceVersion);
+  }
+
   const newSelectedPieceVersion = newPieceVersions?.find(
     (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
   );
