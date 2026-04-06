@@ -181,14 +181,12 @@ function CollectionPieceVersionsEditForm({
         console.log(`[onMovePiece] Piece is already at the top`);
         return;
       }
-    } else {
-      if (
-        mMSourceOnPieceVersion.rank >=
-        (state.mMSourceOnPieceVersions || []).length
-      ) {
-        console.log(`[onMovePiece] Piece is already at the bottom`);
-        return;
-      }
+    } else if (
+      mMSourceOnPieceVersion.rank >=
+      (state.mMSourceOnPieceVersions || []).length
+    ) {
+      console.log(`[onMovePiece] Piece is already at the bottom`);
+      return;
     }
 
     // Move the piece
@@ -206,9 +204,33 @@ function CollectionPieceVersionsEditForm({
     onSinglePieceVersionFormClose();
   };
   const onSinglePieceSubmit = (
-    payload: any,
+    singlePieceVersionFormState: SinglePieceVersionFormState,
     options?: { isUpdateMode?: boolean },
   ) => {
+    // TODO update collection state with complete entities from singlePieceVersionFormState
+
+    // In case of update, we need to keep the existing rank of the mMSourceOnPieceVersion
+    const mMSourceOnPieceVersionRank =
+      singlePieceVersionFormState.formInfo.mMSourceOnPieceVersionRank;
+
+    let finalRank: number;
+    if (isUpdateMode && typeof mMSourceOnPieceVersionRank === "number") {
+      finalRank = mMSourceOnPieceVersionRank;
+    } else if (state) {
+      finalRank = (state.mMSourceOnPieceVersions || []).length + 1; // Rank if added in a collection
+    } else {
+      finalRank = (feedFormState.mMSourceOnPieceVersions || []).length + 1; // Rank if added as singlePiece in feedForm
+    }
+
+    const payload: any = {
+      idKey: "rank", // items with the same idKey value will be replaced by the payload corresponding items.
+      array: [
+        {
+          pieceVersionId: singlePieceVersionFormState.pieceVersion?.id,
+          rank: finalRank,
+        },
+      ],
+    };
     console.log(`[onSinglePieceSubmit] payload :`, payload);
 
     // idKey = "rank" is used to replace value in place when updating
@@ -257,7 +279,7 @@ function CollectionPieceVersionsEditForm({
             <>
               <ul className="my-4 space-y-4">
                 {piecesNeedingVersion
-                  .sort((a, b) =>
+                  .toSorted((a, b) =>
                     a.collectionRank > b.collectionRank ? 1 : -1,
                   )
                   .map((piece, index) => {
@@ -307,7 +329,7 @@ function CollectionPieceVersionsEditForm({
                   onClick={onSubmit}
                   disabled={!areAllNeededPieceVersionSet}
                 >
-                  {`Submit (${areAllNeededPieceVersionSet ? `all pieces set` : `some pieces not set`})`}
+                  {`Submit (${areAllNeededPieceVersionSet ? "all pieces set" : "some pieces not set"})`}
                 </button>
               </div>
             </>

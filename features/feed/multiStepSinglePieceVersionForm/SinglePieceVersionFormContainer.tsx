@@ -14,7 +14,7 @@ import {
   PieceVersionInput,
   PieceVersionState,
 } from "@/types/formTypes";
-import { updateFeedForm, useFeedForm } from "@/context/feedFormContext";
+import { useFeedForm } from "@/context/feedFormContext";
 import getPieceStateFromInput from "@/utils/getPieceStateFromInput";
 import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput";
 import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
@@ -23,6 +23,7 @@ import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersion
 import { SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 import { debug, prodLog } from "@/utils/debugLogger";
 import { localStorageRemoveItem } from "@/utils/localStorage";
+import { commitSinglePieceVersionFormToFeedForm } from "@/utils/commitSinglePieceVersionFormToFeedForm";
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
@@ -288,34 +289,24 @@ const SinglePieceVersionFormContainer = ({
   const onSubmitSourceOnPieceVersions = () => {
     if (!singlePieceVersionFormState.pieceVersion?.id) {
       debug.info(
-        `[onAddPieceVersionOnSource] ERROR: state.pieceVersion?.id SHOULD BE DEFINED`,
+        `[onSubmitSourceOnPieceVersions] ERROR: state.pieceVersion?.id SHOULD BE DEFINED`,
       );
       return;
     }
 
-    // In case of update, we need to keep the existing rank of the mMSourceOnPieceVersion
-    const mMSourceOnPieceVersionRank =
-      singlePieceVersionFormState.formInfo.mMSourceOnPieceVersionRank;
-
-    const payload = {
-      idKey: "rank", // items with the same idKey value will be replaced by the payload corresponding items.
-      array: [
-        {
-          pieceVersionId: singlePieceVersionFormState.pieceVersion?.id,
-          rank: isUpdateMode
-            ? mMSourceOnPieceVersionRank
-            : isCollectionMode && collectionFormState
-              ? (collectionFormState.mMSourceOnPieceVersions || []).length + 1 // Rank if added in a collection
-              : (feedFormState.mMSourceOnPieceVersions || []).length + 1, // Rank if added as singlePiece in feedForm
-        },
-      ],
-    };
     // This is useful for submitting a pieceVersion to a collection form instead of the general feedForm
     if (typeof onSubmit === "function") {
       debug.info(`[SUBMIT] with provided onSubmit function`);
-      onSubmit(payload, { isUpdateMode });
+      onSubmit(singlePieceVersionFormState, { isUpdateMode });
     } else {
-      updateFeedForm(feedFormDispatch, "mMSourceOnPieceVersions", payload);
+      commitSinglePieceVersionFormToFeedForm({
+        singlePieceVersionFormState,
+        feedFormState,
+        feedFormDispatch,
+        isUpdateMode,
+        isCollectionMode,
+        collectionFormState,
+      });
     }
 
     // Reset localStorage
@@ -331,7 +322,7 @@ const SinglePieceVersionFormContainer = ({
     <div className="w-full max-w-3xl">
       <div className="flex gap-3">
         <div className="flex-1">
-          <h2 className="mb-3 text-3xl font-bold">{`${isUpdateMode ? `Update` : `Add`} a ${isCollectionMode ? `piece ${isUpdateMode ? `of` : `to`} the collection` : `single piece`}`}</h2>
+          <h2 className="mb-3 text-3xl font-bold">{`${isUpdateMode ? "Update" : "Add"} a ${isCollectionMode ? `piece ${isUpdateMode ? "of" : "to"} the collection` : "single piece"}`}</h2>
           <SinglePieceVersionSteps
             isCollectionMode={isCollectionMode}
             isPreexistingCollectionEdit={isPreexistingCollectionEdit}
