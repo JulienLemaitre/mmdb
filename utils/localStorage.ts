@@ -2,13 +2,13 @@ const USE_LOCAL_STORAGE = true;
 
 export function localStorageSetItem(key: string, value: any) {
   if (typeof window !== "undefined" && USE_LOCAL_STORAGE) {
-    // Perform localStorage action
+    // Perform localStorage SET action
     return localStorage.setItem(key, JSON.stringify(value));
   }
 }
 export function localStorageGetItem(key: string) {
   if (typeof window !== "undefined" && USE_LOCAL_STORAGE) {
-    // Perform localStorage action
+    // Perform localStorage GET action
     const retrievedValue = localStorage.getItem(key);
     let finalValue: any;
     try {
@@ -21,5 +21,11 @@ export function localStorageGetItem(key: string) {
       finalValue = retrievedValue;
     }
     return finalValue;
+  }
+}
+export function localStorageRemoveItem(key: string) {
+  if (typeof window !== "undefined" && USE_LOCAL_STORAGE) {
+    // Perform localStorage REMOVE action
+    return localStorage.removeItem(key);
   }
 }

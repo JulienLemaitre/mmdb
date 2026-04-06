@@ -25,6 +25,7 @@ import ArrowDownIcon from "@/ui/svg/ArrowDownIcon";
 import PieceVersionDisplay from "@/features/pieceVersion/PieceVersionDisplay";
 import InformationCircleIcon from "@/ui/svg/InformationCircleIcon";
 import { processMMSourceOnPieceVersionsForDisplay } from "@/features/feed/multiStepMMSourceForm/utils/ProcessMMSourceOnPieceVersionsForDisplay";
+import { localStorageRemoveItem } from "@/utils/localStorage";
 
 type SourceOnPieceVersionSelectFormProps = {
   mMSourceOnPieceVersions?: MMSourceOnPieceVersionsState[];
@@ -84,8 +85,8 @@ const SourceOnPieceVersionFormContainer = ({
     // reset sourceOnPieceVersionForm and singlePieceVersionUpdateInitState
     setSinglePieceVersionUpdateInitState(null);
     setCollectionPieceVersionUpdateInitState(null);
-    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
-    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
 
     // Close sourceOnPieceVersions form
     updateFeedForm(feedFormDispatch, "formInfo", {
@@ -120,15 +121,9 @@ const SourceOnPieceVersionFormContainer = ({
         currentStepRank: 0,
         mMSourceOnPieceVersionRank: rank,
       },
-      composer: {
-        id: composer.id,
-      },
-      piece: {
-        id: piece.id,
-      },
-      pieceVersion: {
-        id: pieceVersion.id,
-      },
+      composer,
+      piece,
+      pieceVersion,
     };
     setSinglePieceVersionUpdateInitState(singlePieceVersionFormEditState);
     onFormOpen("single");

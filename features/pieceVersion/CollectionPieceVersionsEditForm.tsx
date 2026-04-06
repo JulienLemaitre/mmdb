@@ -24,6 +24,7 @@ import {
   NEED_CONFIRMATION_MODAL_ID,
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
+import { localStorageRemoveItem } from "@/utils/localStorage";
 
 type CollectionPieceVersionsEditFormProps = {
   isUpdateMode: boolean;
@@ -101,7 +102,7 @@ function CollectionPieceVersionsEditForm({
         isSinglePieceVersionFormOpen: false,
       },
     });
-    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
   };
 
   const onEditCollectionPieceVersion = (
@@ -143,19 +144,9 @@ function CollectionPieceVersionsEditForm({
         currentStepRank: 0,
         mMSourceOnPieceVersionRank: rank,
       },
-      composer: {
-        id: composer.id,
-      },
-      piece: {
-        id: piece.id,
-      },
-      ...(pieceVersion
-        ? {
-            pieceVersion: {
-              id: pieceVersion.id,
-            },
-          }
-        : {}),
+      composer,
+      piece,
+      pieceVersion,
     };
     setUpdateInitState(singlePieceVersionFormEditState);
     onSinglePieceVersionFormOpen();

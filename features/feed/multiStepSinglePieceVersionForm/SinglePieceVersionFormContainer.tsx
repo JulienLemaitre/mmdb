@@ -20,6 +20,7 @@ import SinglePieceVersionFormSummary from "@/features/feed/multiStepSinglePieceV
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 import { SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 import { debug, prodLog } from "@/utils/debugLogger";
+import { localStorageRemoveItem } from "@/utils/localStorage";
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
@@ -355,7 +356,7 @@ const SinglePieceVersionFormContainer = ({
     debug.info(
       `[localStorage REMOVE] ${SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY}`,
     );
-    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
 
     onFormClose();
   };
