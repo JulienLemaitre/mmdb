@@ -263,6 +263,11 @@ export function buildFeedFormBootStateFromWorkingCopy(
     isSinglePieceFormOpen = true;
 
     const piece = getEntityByIdOrKey(workingCopy.graph, "pieces", pieceId);
+    const composer = getEntityByIdOrKey(
+      workingCopy.graph,
+      "persons",
+      piece?.composerId,
+    );
     const pieceVersion = getEntityByIdOrKey(
       workingCopy.graph,
       "pieceVersions",
@@ -296,16 +301,16 @@ export function buildFeedFormBootStateFromWorkingCopy(
         mMSourceOnPieceVersionRank: sourceOnPieceVersion.rank,
       },
       composer: {
-        id: piece.composerId,
+        ...composer,
         isNew: !globallyReviewed?.personIds?.includes(piece.composerId),
       },
       piece: {
-        id: piece.id,
+        ...piece,
         isNew: !globallyReviewed?.pieceIds?.includes(piece.id),
       },
       pieceVersion: pieceVersion
         ? {
-            id: pieceVersion.id,
+            ...pieceVersion,
             isNew: !globallyReviewed?.pieceVersionIds?.includes(
               pieceVersion.id,
             ),
