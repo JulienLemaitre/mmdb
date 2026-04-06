@@ -12,7 +12,21 @@ import {
 } from "@/utils/constants";
 import { withLocalStorage } from "@/context/utils/localStorageReducerWrapper";
 
-function singlePieceVersionFormReducerCore(
+/**
+ * Core reducer for the SinglePieceVersionForm.
+ * Handles entity updates (composer, piece, pieceVersion) with cascading invalidation,
+ * and manages multi-step navigation.
+ *
+ * Business rules:
+ * - When composer changes or is cleared, piece and pieceVersion are cleared.
+ * - When piece changes or is cleared, pieceVersion is cleared.
+ * - Navigation forward only happens if the current step is completed.
+ *
+ * @param state Current form state
+ * @param action Action to apply
+ * @returns New form state
+ */
+export function singlePieceVersionFormReducerCore(
   state: SinglePieceVersionFormState,
   action: SinglePieceVersionFormAction,
 ): SinglePieceVersionFormState {
