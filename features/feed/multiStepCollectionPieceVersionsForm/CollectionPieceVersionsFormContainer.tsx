@@ -24,6 +24,7 @@ import CollectionPieceVersionFormSummary from "@/features/feed/multiStepSinglePi
 import { COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 import { URL_API_GETALL_COLLECTION_PIECES } from "@/utils/routes";
 import { MakeOptional } from "@/types/typescriptUtils";
+import { commitCollectionPieceVersionsFormToFeedForm } from "@/utils/commitCollectionPieceVersionsFormToFeedForm";
 
 type CollectionPieceVersionFormProps = {
   onFormClose: () => void;
@@ -284,92 +285,16 @@ function CollectionPieceVersionsFormContainer({
   const onSubmitSourceOnPieceVersions = (
     sourceOnPieceVersions: MMSourceOnPieceVersionsState[],
   ) => {
-    // Check if all the pieceVersions are in feedFormState
-    if (
-      !sourceOnPieceVersions.every((sopv) =>
-        feedFormState.pieceVersions?.some(
-          (pv) => pv.id === sopv.pieceVersionId,
-        ),
-      )
-    ) {
-      console.error(
-        "[ERROR] At least one pieceVersion in piecePieceVersions does not exist in feedFormState.",
-      );
+    const didCommit = commitCollectionPieceVersionsFormToFeedForm({
+      collectionPieceVersionFormState,
+      sourceOnPieceVersions,
+      feedFormState,
+      feedFormDispatch,
+    });
+
+    if (!didCommit) {
       return;
     }
-
-    const isCollectionUpdate =
-      typeof collectionPieceVersionFormState.formInfo
-        .collectionFirstMMSourceOnPieceVersionRank === "number";
-    const lastRankBefore =
-      (typeof collectionPieceVersionFormState.formInfo
-        .collectionFirstMMSourceOnPieceVersionRank === "number"
-        ? collectionPieceVersionFormState.formInfo
-            .collectionFirstMMSourceOnPieceVersionRank // First sourceOnPieceVersion.rank in case of update
-        : (feedFormState.mMSourceOnPieceVersions || []).length) - 1;
-    const payloadArray = sourceOnPieceVersions
-      .toSorted((a, b) => (a.rank > b.rank ? 1 : -1))
-      .map((sopv) => ({
-        pieceVersionId: sopv.pieceVersionId,
-        rank: lastRankBefore + sopv.rank,
-      }));
-
-    console.log(`[onSubmitSourceOnPieceVersions] payloadArray :`, payloadArray);
-
-    updateFeedForm(feedFormDispatch, "mMSourceOnPieceVersions", {
-      array: payloadArray,
-      isCollectionUpdate,
-    });
-    // update pieceCount in feedFormState.collections
-    if (collectionPieceVersionFormState?.collection) {
-      updateFeedForm(feedFormDispatch, "collections", {
-        array: [
-          {
-            ...collectionPieceVersionFormState?.collection,
-            pieceCount: payloadArray.length,
-          },
-        ],
-      });
-    }
-
-    // Change the corresponding piece.collectionRank if it has changed
-    const piecePayloadArray = (feedFormState.pieces || []).reduce<PieceState[]>(
-      (array: PieceState[], p: PieceState) => {
-        const correspondingSourceOnPieceVersion = sourceOnPieceVersions.find(
-          (sourceOnPieceVersion) =>
-            (feedFormState.pieceVersions || []).some(
-              (pv) =>
-                sourceOnPieceVersion.pieceVersionId === pv.id &&
-                pv.pieceId === p.id,
-            ),
-        );
-        if (
-          correspondingSourceOnPieceVersion &&
-          p.collectionRank !== correspondingSourceOnPieceVersion.rank
-        ) {
-          console.log(
-            `[] Change piece ${p.title} collectionRank from ${p.collectionRank} to ${correspondingSourceOnPieceVersion.rank}`,
-          );
-          return [
-            ...array,
-            {
-              ...p,
-              collectionRank: correspondingSourceOnPieceVersion.rank,
-            },
-          ];
-        }
-
-        return array;
-      },
-      [],
-    );
-    console.log(
-      `[onSubmitSourceOnPieceVersions] piecePayloadArray :`,
-      piecePayloadArray,
-    );
-    updateFeedForm(feedFormDispatch, "pieces", {
-      array: piecePayloadArray,
-    });
 
     // Reset localStorage
     console.log(
