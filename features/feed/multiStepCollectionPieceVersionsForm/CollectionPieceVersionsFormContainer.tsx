@@ -85,14 +85,19 @@ function CollectionPieceVersionsFormContainer({
   };
 
   const onComposerCreated = (composer: PersonInput) => {
+    const previousComposer = selectedComposerId
+      ? collectionPieceVersionFormState.persons?.find(
+          (p) => p.id === selectedComposerId,
+        ) || feedFormState.persons?.find((p) => p.id === selectedComposerId)
+      : undefined;
     const newComposer: PersonState = getPersonStateFromPersonInput({
-      ...(selectedComposerId
-        ? feedFormState.persons?.find((p) => p.id === selectedComposerId)
-        : {}),
+      ...previousComposer,
       ...composer,
     });
     newComposer.isNew = true;
-    updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
+    updateCollectionPieceVersionsForm(dispatch, "persons", {
+      array: [newComposer],
+    });
     updateCollectionPieceVersionsForm(dispatch, "collection", {
       value: { composerId: newComposer.id, isComposerNew: true },
       reset: true,
@@ -100,22 +105,17 @@ function CollectionPieceVersionsFormContainer({
     });
   };
   const onComposerSelect = (composer: PersonInput) => {
-    // If a composer was being created, we delete it from the feedForm state
-    if (collectionPieceVersionFormState.collection?.isComposerNew) {
-      updateFeedForm(feedFormDispatch, "persons", {
-        deleteIdArray: [collectionPieceVersionFormState.collection.composerId],
-      });
-    }
-    // Same if a collection was being created
-    if (collectionPieceVersionFormState.collection?.isNew) {
-      updateFeedForm(feedFormDispatch, "collections", {
-        deleteIdArray: [collectionPieceVersionFormState.collection?.id],
-      });
-    }
-
-    updateFeedForm(feedFormDispatch, "persons", { array: [composer] });
+    const selectedComposer = getPersonStateFromPersonInput({
+      ...(collectionPieceVersionFormState.persons?.find(
+        (p) => p.id === composer.id,
+      ) || feedFormState.persons?.find((p) => p.id === composer.id)),
+      ...composer,
+    });
+    updateCollectionPieceVersionsForm(dispatch, "persons", {
+      array: [selectedComposer],
+    });
     updateCollectionPieceVersionsForm(dispatch, "collection", {
-      value: { composerId: composer.id },
+      value: { composerId: selectedComposer.id },
       reset: true,
       next: true,
     });
@@ -124,15 +124,11 @@ function CollectionPieceVersionsFormContainer({
   const onCancelComposerCreation = () => {
     if (collectionPieceVersionFormState.collection?.isComposerNew) {
       // Case: coming back after having first submitted the new composer and cancel it. All in the same collectionPieceVersionsForm.
-      // => The composer's data is in the feedFormState; we delete it there too.
       updateCollectionPieceVersionsForm(dispatch, "collection", {
         value: {
           composerId: null,
         },
         reset: true,
-      });
-      updateFeedForm(feedFormDispatch, "persons", {
-        deleteIdArray: [selectedComposerId],
       });
     }
   };
@@ -152,7 +148,6 @@ function CollectionPieceVersionsFormContainer({
   const onCancelCollectionCreation = () => {
     if (collectionPieceVersionFormState.collection?.isNew) {
       // Case: coming back after having first submitted the new collection and cancel it. All in the same collectionPieceVersionsForm.
-      // => The collection's data is in the feedFormState; we delete it there too.
       updateCollectionPieceVersionsForm(dispatch, "collection", {
         value: {
           composerId: selectedComposerId,
@@ -160,9 +155,6 @@ function CollectionPieceVersionsFormContainer({
           id: null,
         },
         reset: true,
-      });
-      updateFeedForm(feedFormDispatch, "collections", {
-        deleteIdArray: [selectedCollectionId],
       });
     }
   };
@@ -177,7 +169,6 @@ function CollectionPieceVersionsFormContainer({
       id: collection.id || uuidv4(),
       isNew: true,
     };
-    updateFeedForm(feedFormDispatch, "collections", { array: [newCollection] });
     updateCollectionPieceVersionsForm(dispatch, "collection", {
       value: {
         id: newCollection.id,
@@ -191,28 +182,23 @@ function CollectionPieceVersionsFormContainer({
     });
   };
   const onCollectionSelect = async (collection: CollectionInput) => {
-    // If a new collection was being created, remove it from feedFormState
-    if (collectionPieceVersionFormState.collection?.isNew) {
-      updateFeedForm(feedFormDispatch, "collections", {
-        deleteIdArray: [collectionPieceVersionFormState.collection?.id],
-      });
-    }
+    const pieces: PieceState[] =
+      (await fetch(
+        `${URL_API_GETALL_COLLECTION_PIECES}?collectionId=${collection.id}`,
+      )
+        .then((res) => res.json())
+        .then((data) => data.pieces)
+        .catch((err) => {
+          console.error(
+            `[fetch(/api/getAll/collectionPieces?collectionId=${selectedCollectionId})] err :`,
+            err.message,
+          );
+        })) || [];
 
-    const pieces: PieceState[] = await fetch(
-      `${URL_API_GETALL_COLLECTION_PIECES}?collectionId=${collection.id}`,
-    )
-      .then((res) => res.json())
-      .then((data) => data.pieces)
-      .catch((err) => {
-        console.error(
-          `[fetch(/api/getAll/collectionPieces?collectionId=${selectedCollectionId})] err :`,
-          err.message,
-        );
-      });
-    updateFeedForm(feedFormDispatch, "pieces", {
+    updateCollectionPieceVersionsForm(dispatch, "pieces", {
       array: pieces,
+      reset: true,
     });
-    updateFeedForm(feedFormDispatch, "collections", { array: [collection] });
     updateCollectionPieceVersionsForm(dispatch, "collection", {
       value: {
         id: collection.id,
@@ -232,18 +218,18 @@ function CollectionPieceVersionsFormContainer({
 
   const onAddPieces = useCallback(
     (pieces: PieceState[]) => {
-      updateFeedForm(feedFormDispatch, "pieces", {
+      updateCollectionPieceVersionsForm(dispatch, "pieces", {
         array: pieces,
       });
     },
-    [feedFormDispatch],
+    [dispatch],
   );
 
   /////////////////// PIECE VERSION //////////////////////////////
 
   const onAddPieceVersion = (pieceVersion: PieceVersionState) => {
     const payload = { array: [pieceVersion] };
-    updateFeedForm(feedFormDispatch, "pieceVersions", payload);
+    updateCollectionPieceVersionsForm(dispatch, "pieceVersions", payload);
   };
 
   ////////////////// SUBMIT ////////////////////
