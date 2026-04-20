@@ -45,9 +45,10 @@ function PieceSelectOrCreate({
   const [pieces, setPieces] = useState<Piece[] | null>(null);
   const [isLoading, setIsLoading] = useState(!hasPieceJustBeenCreated);
 
-  const newPieces: PieceState[] = getNewEntities(feedFormState, "pieces", {
-    includeUnusedInFeedForm: true,
-  }).filter((piece) => piece.composerId === selectedComposerId);
+  const newPieces: PieceState[] = getNewEntities(
+    feedFormState,
+    "pieces",
+  ).filter((piece) => piece.composerId === selectedComposerId);
 
   if (singlePieceVersionFormState.piece?.isNew) {
     newPieces.push(singlePieceVersionFormState.piece);

@@ -34,9 +34,7 @@ const ComposerSelectOrCreate = ({
   const [composers, setComposers] = useState<PersonState[] | null>(null);
   const [isLoading, setIsLoading] = useState(!hasComposerJustBeenCreated);
 
-  const newPersons: PersonState[] = getNewEntities(feedFormState, "persons", {
-    includeUnusedInFeedForm: true,
-  });
+  const newPersons: PersonState[] = getNewEntities(feedFormState, "persons");
   if (singlePieceVersionFormState.composer?.isNew) {
     newPersons.push(singlePieceVersionFormState.composer);
   }

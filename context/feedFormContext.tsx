@@ -140,22 +140,18 @@ function getLastCompletedStep(state: FeedFormState): FeedFormStep | undefined {
 export function getNewEntities(
   state: FeedFormState,
   entityName: "pieces",
-  options?: { includeUnusedInFeedForm?: boolean },
 ): (PieceState & IsNewTrue)[];
 export function getNewEntities(
   state: FeedFormState,
   entityName: "pieceVersions",
-  options?: { includeUnusedInFeedForm?: boolean },
 ): (PieceVersionState & IsNewTrue)[];
 export function getNewEntities(
   state: FeedFormState,
   entityName: "collections",
-  options?: { includeUnusedInFeedForm?: boolean },
 ): (CollectionState & IsNewTrue)[];
 export function getNewEntities(
   state: FeedFormState,
   entityName: "persons",
-  options?: { includeUnusedInFeedForm?: boolean },
 ): (PersonState & IsNewTrue)[];
 export function getNewEntities(
   state: FeedFormState,
@@ -169,7 +165,6 @@ export function getNewEntities(
     | "collections"
     | "persons"
     | "organizations",
-  options?: { includeUnusedInFeedForm?: boolean },
 ) {
   if (!state) {
     console.error(`[getNewEntities] NO state provided to find ${entityName}`);
@@ -179,9 +174,8 @@ export function getNewEntities(
     return state[entityName].filter(
       (entity) =>
         entity.isNew &&
-        (options?.includeUnusedInFeedForm ||
-          // @ts-ignore
-          isEntityUsed(entity, entityName, state)),
+        // @ts-ignore
+        isEntityUsed(entity, entityName, state),
     );
   }
   return [];

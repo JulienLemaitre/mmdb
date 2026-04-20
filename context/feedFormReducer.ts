@@ -648,29 +648,9 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
       };
     }
 
-    // Cleaning the state from unused entities, except while adding a piece or collection form is opened
-    const isSourceOnPieceVersionFormOpen =
-      state?.formInfo?.isSourceOnPieceVersionformOpen;
-    const closeSourceOnPieceVersionFormAction =
-      action.type === "formInfo" &&
-      action.payload?.value?.isSourceOnPieceVersionformOpen === false;
-    const otherFormInfoAction =
-      action.type === "formInfo" &&
-      action.payload?.value?.isSourceOnPieceVersionformOpen === undefined;
-    if (
-      !otherFormInfoAction &&
-      // We don't clean state during single or collection piece version form, except at its closing.
-      (!isSourceOnPieceVersionFormOpen || closeSourceOnPieceVersionFormAction)
-    ) {
-      newState = cleanFeedFormState(newState);
-    } else {
-      // console.log(`NOT Cleaning state`, {
-      //   condition1: !otherFormInfoAction,
-      //   condition2:
-      //     !isSourceOnPieceVersionFormOpen ||
-      //     closeSourceOnPieceVersionFormAction,
-      // });
-    }
+    // Keep feedForm canonicalized by removing entities no longer linked from sourceOnPieceVersions.
+    // With isolated single/collection workflows, this no longer needs form-open compensatory guards.
+    newState = cleanFeedFormState(newState);
 
     // Make sure mMSourceOnPieceVersions ranks are continuous and begin at 1
     newState.mMSourceOnPieceVersions = (

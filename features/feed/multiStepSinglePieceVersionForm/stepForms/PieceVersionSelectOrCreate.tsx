@@ -56,7 +56,6 @@ function PieceVersionSelectOrCreate({
   const newPieceVersions: PieceVersionState[] = getNewEntities(
     feedFormState,
     "pieceVersions",
-    { includeUnusedInFeedForm: true },
   ).filter((pieceVersion) => pieceVersion.pieceId === selectedPieceId);
 
   if (singlePieceVersionFormState.pieceVersion?.isNew) {
