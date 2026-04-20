@@ -399,7 +399,9 @@ function CollectionPieceVersionsFormContainer({
         <StepFormComponent
           onFormClose={onFormClose}
           feedFormState={feedFormState}
+          singlePieceVersionFormState={collectionPieceVersionFormState}
           collectionPieceVersionFormState={collectionPieceVersionFormState}
+          collection={collectionPieceVersionFormState.collection}
           isUpdateMode={isUpdateMode}
           // Composer
           selectedComposerId={selectedComposerId}

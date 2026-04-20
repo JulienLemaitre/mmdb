@@ -1,16 +1,16 @@
 import React from "react";
-import { useFeedForm } from "@/context/feedFormContext";
-import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
 import { getSinglePieceFormStepByRank } from "@/features/feed/multiStepSinglePieceVersionForm/stepsUtils";
 import { useCollectionPieceVersionsForm } from "@/context/collectionPieceVersionsFormContext";
 import { getPersonDates } from "@/utils/getPersonDates";
 
 function CollectionPieceVersionFormSummary() {
-  const { state: feedFormState } = useFeedForm();
   const { state, currentStepRank } = useCollectionPieceVersionsForm();
   const composer =
     state.collection?.composerId &&
-    getEntityByIdOrKey(feedFormState, "persons", state.collection?.composerId);
+    state.persons?.find((person) => person.id === state.collection?.composerId);
+
+  if (!composer) return null;
+
   const composerName = composer?.firstName + " " + composer?.lastName;
   const composerDates = composer ? getPersonDates(composer) : "";
   const collectionTitle = state.collection?.title;

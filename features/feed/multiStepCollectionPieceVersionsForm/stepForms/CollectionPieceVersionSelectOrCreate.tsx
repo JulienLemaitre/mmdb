@@ -1,12 +1,9 @@
 import React from "react";
 import { MMSourceOnPieceVersionsState } from "@/types/formTypes";
-import { getNewEntities } from "@/context/feedFormContext";
 import CollectionPieceVersionsEditForm from "@/features/pieceVersion/CollectionPieceVersionsEditForm";
-import { FeedFormState } from "@/types/feedFormTypes";
+import { useCollectionPieceVersionsForm } from "@/context/collectionPieceVersionsFormContext";
 
 type CollectionPieceVersionSelectOrCreateProps = {
-  feedFormState: FeedFormState;
-  selectedCollectionId: string;
   onSubmitSourceOnPieceVersions: (
     piecePieceVersions: MMSourceOnPieceVersionsState[],
   ) => void;
@@ -14,16 +11,11 @@ type CollectionPieceVersionSelectOrCreateProps = {
 };
 
 export default function CollectionPieceVersionSelectOrCreate({
-  feedFormState,
   onSubmitSourceOnPieceVersions,
-  selectedCollectionId,
   isUpdateMode,
 }: CollectionPieceVersionSelectOrCreateProps) {
-  const isCollectionNew = (
-    getNewEntities(feedFormState, "collections", {
-      includeUnusedInFeedForm: true,
-    }) || []
-  ).some((c) => c.id === selectedCollectionId);
+  const { state } = useCollectionPieceVersionsForm();
+  const isCollectionNew = !!state.collection?.isNew;
 
   return (
     <CollectionPieceVersionsEditForm

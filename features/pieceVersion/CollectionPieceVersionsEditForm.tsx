@@ -3,7 +3,6 @@ import {
   updateCollectionPieceVersionsForm,
   useCollectionPieceVersionsForm,
 } from "@/context/collectionPieceVersionsFormContext";
-import { useFeedForm } from "@/context/feedFormContext";
 import { SinglePieceVersionFormProvider } from "@/context/singlePieceVersionFormContext";
 import SinglePieceVersionFormContainer from "@/features/feed/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer";
 import TrashIcon from "@/ui/svg/TrashIcon";
@@ -45,7 +44,6 @@ function CollectionPieceVersionsEditForm({
   isUpdateMode,
   isPreexistingCollectionUpdate,
 }: CollectionPieceVersionsEditFormProps) {
-  const { state: feedFormState } = useFeedForm();
   const { state, dispatch } = useCollectionPieceVersionsForm();
   const isSinglePieceVersionFormOpen =
     !!state.formInfo?.isSinglePieceVersionFormOpen;
@@ -58,16 +56,13 @@ function CollectionPieceVersionsEditForm({
   const composerId = state?.collection?.composerId;
 
   const getPieceVersionById = (pieceVersionId: string) =>
-    state.pieceVersions?.find((pv) => pv.id === pieceVersionId) ||
-    feedFormState.pieceVersions?.find((pv) => pv.id === pieceVersionId);
+    state.pieceVersions?.find((pv) => pv.id === pieceVersionId);
 
   const getPieceById = (pieceId: string) =>
-    state.pieces?.find((p) => p.id === pieceId) ||
-    feedFormState.pieces?.find((p) => p.id === pieceId);
+    state.pieces?.find((p) => p.id === pieceId);
 
   const getComposerById = (personId: string) =>
-    state.persons?.find((person) => person.id === personId) ||
-    feedFormState.persons?.find((person) => person.id === personId);
+    state.persons?.find((person) => person.id === personId);
 
   const { pieceIdsNeedingVersions } = state.formInfo;
   const piecesNeedingVersion = pieceIdsNeedingVersions?.reduce<PieceState[]>(
@@ -345,11 +340,8 @@ function CollectionPieceVersionsEditForm({
                   .map((piece, index) => {
                     const isPieceVersionSet = collectionPieceVersions.some(
                       (cpv) =>
-                        feedFormState.pieceVersions?.some(
-                          (pv) =>
-                            pv.id === cpv.pieceVersionId &&
-                            pv.pieceId === piece.id,
-                        ),
+                        getPieceVersionById(cpv.pieceVersionId)?.pieceId ===
+                        piece.id,
                     );
                     return (
                       <li key={`${index}-${piece.id}-${piece.collectionRank}`}>
