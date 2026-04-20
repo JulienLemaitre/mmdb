@@ -4,7 +4,6 @@ import {
   useCollectionPieceVersionsForm,
 } from "@/context/collectionPieceVersionsFormContext";
 import { useFeedForm } from "@/context/feedFormContext";
-import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
 import { SinglePieceVersionFormProvider } from "@/context/singlePieceVersionFormContext";
 import SinglePieceVersionFormContainer from "@/features/feed/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer";
 import TrashIcon from "@/ui/svg/TrashIcon";
@@ -13,6 +12,8 @@ import {
   MMSourceOnPieceVersionsState,
   PieceState,
   PieceStateWithCollectionRank,
+  PieceVersionState,
+  TempoIndicationState,
 } from "@/types/formTypes";
 import EditIcon from "@/ui/svg/EditIcon";
 import dynamic from "next/dynamic";
@@ -55,18 +56,29 @@ function CollectionPieceVersionsEditForm({
   const collectionPieceVersions = state.mMSourceOnPieceVersions || [];
   const newPieceDefaultTitle = `${state?.collection?.title} No.${(state.mMSourceOnPieceVersions || []).length + 1}`;
   const composerId = state?.collection?.composerId;
+
+  const getPieceVersionById = (pieceVersionId: string) =>
+    state.pieceVersions?.find((pv) => pv.id === pieceVersionId) ||
+    feedFormState.pieceVersions?.find((pv) => pv.id === pieceVersionId);
+
+  const getPieceById = (pieceId: string) =>
+    state.pieces?.find((p) => p.id === pieceId) ||
+    feedFormState.pieces?.find((p) => p.id === pieceId);
+
+  const getComposerById = (personId: string) =>
+    state.persons?.find((person) => person.id === personId) ||
+    feedFormState.persons?.find((person) => person.id === personId);
+
   const { pieceIdsNeedingVersions } = state.formInfo;
   const piecesNeedingVersion = pieceIdsNeedingVersions?.reduce<PieceState[]>(
     (list, pieceId) => {
-      const piece = feedFormState.pieces?.find(
-        (p) => p.id === pieceId && p.collectionRank,
-      );
+      const piece = getPieceById(pieceId);
       if (!piece) {
         console.warn(
           `[CollectionPieceVersionsEditForm] piece not found for pieceIdNeedingVersion: ${pieceId}`,
         );
       }
-      return piece ? [...list, piece] : list;
+      return piece?.collectionRank ? [...list, piece] : list;
     },
     [],
   ) as PieceStateWithCollectionRank[] | undefined;
@@ -75,10 +87,8 @@ function CollectionPieceVersionsEditForm({
   const areAllNeededPieceVersionSet =
     isExistingCollectionAddingProcess &&
     piecesNeedingVersion?.every((piece) =>
-      collectionPieceVersions.some((cpv) =>
-        feedFormState.pieceVersions?.some(
-          (pv) => pv.id === cpv.pieceVersionId && pv.pieceId === piece.id,
-        ),
+      collectionPieceVersions.some(
+        (cpv) => getPieceVersionById(cpv.pieceVersionId)?.pieceId === piece.id,
       ),
     );
 
@@ -115,12 +125,8 @@ function CollectionPieceVersionsEditForm({
     if ("pieceVersionId" in collectionPieceVersion) {
       // MMSourceOnPieceVersionsState
       const { pieceVersionId, rank: cpvRank } = collectionPieceVersion;
-      pieceVersion = getEntityByIdOrKey(
-        feedFormState,
-        "pieceVersions",
-        pieceVersionId,
-      );
-      piece = getEntityByIdOrKey(feedFormState, "pieces", pieceVersion.pieceId);
+      pieceVersion = getPieceVersionById(pieceVersionId);
+      piece = pieceVersion ? getPieceById(pieceVersion.pieceId) : undefined;
       rank = cpvRank;
     }
 
@@ -132,12 +138,15 @@ function CollectionPieceVersionsEditForm({
       pieceVersion = undefined;
     }
 
+    if (!piece) {
+      console.warn(
+        `[CollectionPieceVersionsEditForm] onEditCollectionPieceVersion - piece not found`,
+      );
+      return;
+    }
+
     // Build singlePieceVersionFormState
-    const composer = getEntityByIdOrKey(
-      feedFormState,
-      "persons",
-      piece.composerId,
-    );
+    const composer = getComposerById(piece.composerId);
 
     const singlePieceVersionFormEditState: SinglePieceVersionFormState = {
       formInfo: {
@@ -207,26 +216,77 @@ function CollectionPieceVersionsEditForm({
     singlePieceVersionFormState: SinglePieceVersionFormState,
     options?: { isUpdateMode?: boolean },
   ) => {
-    // TODO update collection state with complete entities from singlePieceVersionFormState
+    const { composer, piece, pieceVersion } = singlePieceVersionFormState;
+
+    if (!piece || !pieceVersion) {
+      console.error(
+        `[CollectionPieceVersionsEditForm] onSinglePieceSubmit - missing piece or pieceVersion`,
+        { piece, pieceVersion },
+      );
+      return;
+    }
 
     // In case of update, we need to keep the existing rank of the mMSourceOnPieceVersion
     const mMSourceOnPieceVersionRank =
       singlePieceVersionFormState.formInfo.mMSourceOnPieceVersionRank;
 
     let finalRank: number;
-    if (isUpdateMode && typeof mMSourceOnPieceVersionRank === "number") {
+    if (
+      options?.isUpdateMode &&
+      typeof mMSourceOnPieceVersionRank === "number"
+    ) {
       finalRank = mMSourceOnPieceVersionRank;
-    } else if (state) {
-      finalRank = (state.mMSourceOnPieceVersions || []).length + 1; // Rank if added in a collection
     } else {
-      finalRank = (feedFormState.mMSourceOnPieceVersions || []).length + 1; // Rank if added as singlePiece in feedForm
+      finalRank = (state.mMSourceOnPieceVersions || []).length + 1; // Rank if added in a collection
+    }
+
+    if (composer) {
+      updateCollectionPieceVersionsForm(dispatch, "persons", {
+        array: [composer],
+      });
+    }
+
+    const collectionAwarePiece: PieceState = {
+      ...piece,
+      ...(state.collection?.id ? { collectionId: state.collection.id } : {}),
+      collectionRank: finalRank,
+    };
+
+    const collectionAwarePieceVersion: PieceVersionState = {
+      ...pieceVersion,
+      pieceId: collectionAwarePiece.id,
+    };
+
+    updateCollectionPieceVersionsForm(dispatch, "pieces", {
+      array: [collectionAwarePiece],
+    });
+
+    updateCollectionPieceVersionsForm(dispatch, "pieceVersions", {
+      array: [collectionAwarePieceVersion],
+    });
+
+    const tempoIndicationMap = new Map<string, TempoIndicationState>();
+    collectionAwarePieceVersion.movements.forEach((movement) => {
+      movement.sections.forEach((section) => {
+        const tempoIndication = section.tempoIndication;
+        if (tempoIndication?.id) {
+          tempoIndicationMap.set(tempoIndication.id, tempoIndication);
+        }
+      });
+    });
+
+    const tempoIndications = Array.from(tempoIndicationMap.values());
+    if (tempoIndications.length > 0) {
+      updateCollectionPieceVersionsForm(dispatch, "tempoIndications", {
+        array: tempoIndications,
+      });
     }
 
     const payload: any = {
       idKey: "rank", // items with the same idKey value will be replaced by the payload corresponding items.
       array: [
         {
-          pieceVersionId: singlePieceVersionFormState.pieceVersion?.id,
+          pieceVersionId: collectionAwarePieceVersion.id,
           rank: finalRank,
         },
       ],
@@ -339,16 +399,19 @@ function CollectionPieceVersionsEditForm({
               <ul className="my-4 space-y-4">
                 {collectionPieceVersions.map(
                   (collectionPieceVersion, index) => {
-                    const pieceVersion = getEntityByIdOrKey(
-                      feedFormState,
-                      "pieceVersions",
+                    const pieceVersion = getPieceVersionById(
                       collectionPieceVersion.pieceVersionId,
                     );
-                    const piece = getEntityByIdOrKey(
-                      feedFormState,
-                      "pieces",
-                      pieceVersion.pieceId,
-                    );
+                    const piece = pieceVersion
+                      ? getPieceById(pieceVersion.pieceId)
+                      : undefined;
+
+                    if (!pieceVersion || !piece) {
+                      console.warn(
+                        `[CollectionPieceVersionsEditForm] Cannot render piece row: missing pieceVersion or piece for pieceVersionId ${collectionPieceVersion.pieceVersionId}`,
+                      );
+                      return null;
+                    }
 
                     return (
                       <li
