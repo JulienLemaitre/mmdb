@@ -231,7 +231,7 @@ export type PieceGroupByOutputType = {
   _max: PieceMaxAggregateOutputType | null
 }
 
-type GetPieceGroupByPayload<T extends PieceGroupByArgs> = Prisma.PrismaPromise<
+export type GetPieceGroupByPayload<T extends PieceGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<PieceGroupByOutputType, T['by']> &
       {
@@ -1812,6 +1812,11 @@ export type PieceFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Skip the first `n` Pieces.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Pieces.
+   */
   distinct?: Prisma.PieceScalarFieldEnum | Prisma.PieceScalarFieldEnum[]
 }
 

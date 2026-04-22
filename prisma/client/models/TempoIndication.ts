@@ -158,7 +158,7 @@ export type TempoIndicationGroupByOutputType = {
   _max: TempoIndicationMaxAggregateOutputType | null
 }
 
-type GetTempoIndicationGroupByPayload<T extends TempoIndicationGroupByArgs> = Prisma.PrismaPromise<
+export type GetTempoIndicationGroupByPayload<T extends TempoIndicationGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<TempoIndicationGroupByOutputType, T['by']> &
       {
@@ -1235,6 +1235,11 @@ export type TempoIndicationFindManyArgs<ExtArgs extends runtime.Types.Extensions
    * Skip the first `n` TempoIndications.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of TempoIndications.
+   */
   distinct?: Prisma.TempoIndicationScalarFieldEnum | Prisma.TempoIndicationScalarFieldEnum[]
 }
 

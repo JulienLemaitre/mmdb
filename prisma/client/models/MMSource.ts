@@ -252,7 +252,7 @@ export type MMSourceGroupByOutputType = {
   _max: MMSourceMaxAggregateOutputType | null
 }
 
-type GetMMSourceGroupByPayload<T extends MMSourceGroupByArgs> = Prisma.PrismaPromise<
+export type GetMMSourceGroupByPayload<T extends MMSourceGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MMSourceGroupByOutputType, T['by']> &
       {
@@ -2157,6 +2157,11 @@ export type MMSourceFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Skip the first `n` MMSources.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MMSources.
+   */
   distinct?: Prisma.MMSourceScalarFieldEnum | Prisma.MMSourceScalarFieldEnum[]
 }
 
