@@ -5,7 +5,6 @@ import {
   FEED_FORM_INITIAL_STATE,
   FEED_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
-import { cleanFeedFormState } from "@/context/utils/cleanFeedFormState";
 import { withLocalStorage } from "@/context/utils/localStorageReducerWrapper";
 
 const allowedActions = new Set();
@@ -647,10 +646,6 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
         },
       };
     }
-
-    // Keep feedForm canonicalized by removing entities no longer linked from sourceOnPieceVersions.
-    // With isolated single/collection workflows, this no longer needs form-open compensatory guards.
-    newState = cleanFeedFormState(newState);
 
     // Make sure mMSourceOnPieceVersions ranks are continuous and begin at 1
     newState.mMSourceOnPieceVersions = (
