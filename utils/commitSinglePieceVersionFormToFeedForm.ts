@@ -63,7 +63,7 @@ export function commitSinglePieceVersionFormToFeedForm({
   feedFormDispatch({
     type: "persons",
     payload: {
-      array: [composer],
+      array: [structuredClone(composer)],
     },
   });
 
@@ -71,7 +71,7 @@ export function commitSinglePieceVersionFormToFeedForm({
   feedFormDispatch({
     type: "pieces",
     payload: {
-      array: [piece],
+      array: [structuredClone(piece)],
     },
   });
 
@@ -79,7 +79,7 @@ export function commitSinglePieceVersionFormToFeedForm({
   feedFormDispatch({
     type: "pieceVersions",
     payload: {
-      array: [pieceVersion],
+      array: [structuredClone(pieceVersion)],
     },
   });
 
@@ -88,7 +88,7 @@ export function commitSinglePieceVersionFormToFeedForm({
     feedFormDispatch({
       type: "tempoIndications",
       payload: {
-        array: tempoIndications,
+        array: structuredClone(tempoIndications),
       },
     });
   }

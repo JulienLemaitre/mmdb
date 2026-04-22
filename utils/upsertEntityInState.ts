@@ -1,43 +1,41 @@
+import { prodLog } from "@/utils/debugLogger";
+
 export default function upsertEntityInState({
   state,
   entityName,
   entity,
   idKey = "id",
-  // replace = false,
 }) {
-  // console.log("[upsertEntityInState]", { state, entityName, entity, idKey });
   let newState = state;
 
   if (!newState[entityName]) {
-    console.warn(
+    prodLog.warn(
       `[upsertEntityInState] state[${entityName}] does not exist. return state:`,
       state,
     );
     return state;
   }
 
+  const entityClone = structuredClone(entity);
+
   // If we find an entity in state with the same id, we REPLACE it
   // TODO: a shelf change is ready to implement proper replace, but we need to be sure it will not break anything
-  const isEntityInState = newState[entityName]?.find(
-    (stateEntity) => entity[idKey] && stateEntity[idKey] === entity[idKey],
+  const isEntityInState = newState[entityName]?.some(
+    (stateEntity) =>
+      entityClone[idKey] && stateEntity[idKey] === entityClone[idKey],
   );
+
   if (isEntityInState) {
-    // console.log(
-    //   `[] UPDATE entity in array with idKey [${idKey}] new value :`,
-    //   entity,
-    // );
     newState = {
       ...newState,
       [entityName]: newState[entityName].map((stateEntity) =>
-        stateEntity[idKey] === entity[idKey] ? entity : stateEntity,
+        stateEntity[idKey] === entityClone[idKey] ? entityClone : stateEntity,
       ),
     };
   } else {
-    // otherwise, we push the entity to the array
-    // console.log(`[] ADD new entity '${entityName}' in array :`, entity);
     newState = {
       ...newState,
-      [entityName]: [...newState[entityName], entity],
+      [entityName]: [...newState[entityName], entityClone],
     };
   }
   return newState;

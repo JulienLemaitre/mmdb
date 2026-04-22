@@ -11,7 +11,7 @@ const FeedFormHelpDrawer = () => {
     "contextual" | "glossary"
   >("contextual");
 
-  const SectionHelp = stepHelpContent[currentStepRank];
+  const SectionHelp = stepHelpContent[currentStepRank] || true;
 
   const toggleSectionHelp = useCallback(() => {
     setActiveHelpTabInternal(

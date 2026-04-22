@@ -1,9 +1,6 @@
 import { PrismaClient } from "@/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
-declare global {
-  var cachedPrisma: PrismaClient;
-}
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
 });
@@ -16,14 +13,15 @@ const prismaOptions = {
   },
 };
 
-let prisma: PrismaClient;
-if (process.env.NODE_ENV === "production") {
-  prisma = new PrismaClient(prismaOptions);
-} else {
-  if (!global.cachedPrisma) {
-    global.cachedPrisma = new PrismaClient(prismaOptions);
-  }
-  prisma = global.cachedPrisma;
+declare global {
+  // eslint-disable-next-line no-var
+  var cachedPrisma: PrismaClient | undefined;
 }
+
+const prisma =
+  process.env.NODE_ENV === "production"
+    ? new PrismaClient(prismaOptions)
+    : (globalThis.cachedPrisma ??
+      (globalThis.cachedPrisma = new PrismaClient(prismaOptions)));
 
 export const db = prisma;
