@@ -112,6 +112,7 @@ function CollectionPieceVersionsEditForm({
     localStorageRemoveItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
   };
 
+  // When an existing collection has been selected, and a piece is selected in order to select or create its pieceVersion
   const onEditCollectionPieceVersion = (
     collectionPieceVersion:
       | MMSourceOnPieceVersionsState
@@ -154,6 +155,10 @@ function CollectionPieceVersionsEditForm({
       piece,
       pieceVersion,
     };
+    console.log(
+      `[onEditCollectionPieceVersion] singlePieceVersionFormEditState :`,
+      singlePieceVersionFormEditState,
+    );
     setUpdateInitState(singlePieceVersionFormEditState);
     onSinglePieceVersionFormOpen();
   };

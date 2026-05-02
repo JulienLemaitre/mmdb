@@ -195,10 +195,6 @@ function CollectionPieceVersionsFormContainer({
           );
         })) || [];
 
-    upsertCollectionPieces(dispatch, {
-      array: pieces,
-      reset: true,
-    });
     updateCollection(dispatch, {
       value: {
         id: collection.id,
@@ -208,6 +204,10 @@ function CollectionPieceVersionsFormContainer({
       },
       reset: true,
       next: true,
+    });
+    upsertCollectionPieces(dispatch, {
+      array: pieces,
+      reset: true,
     });
     updateCollectionFormInfo(dispatch, {
       pieceIdsNeedingVersions: pieces.map((p) => p.id),
