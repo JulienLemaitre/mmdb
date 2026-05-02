@@ -5,6 +5,6 @@ export function getSectionDefaultValues() {
     id: getNewUuid(),
     metreNumerator: 0,
     metreDenominator: 0,
-    fastestStructuralNotesPerBar: 0,
+    fastestStructuralNotesPerBar: undefined,
   };
 }

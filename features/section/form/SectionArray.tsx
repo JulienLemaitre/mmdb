@@ -236,7 +236,7 @@ export default function SectionArray({
                   type="checkbox"
                   className="mr-2"
                 />
-                Is bel canto
+                {`Is bel canto`}
               </label>
               <FormInput
                 name={

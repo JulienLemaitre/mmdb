@@ -35,9 +35,16 @@ export function getZodOptionFromEnum<T extends Record<string, string>>(
   });
 }
 
-export const zodPositiveNumber = z.coerce.number<string>().positive();
+export const zodPositiveNumber = z.coerce
+  .number<string>({ error: "Please enter a number" })
+  .positive({ error: "Please enter a positive number" });
 export const zodPositiveNumberOrEmpty = z
-  .union([z.literal(""), z.coerce.number().positive()])
+  .union([
+    z.literal(""),
+    z.coerce
+      .number({ error: "Please enter a number" })
+      .positive({ error: "Please enter a positive number" }),
+  ])
   .transform((val) => (val === "" ? null : val)); // Convert empty string to null
 
 const MetronomeMarkSchema = z.discriminatedUnion("noMM", [
