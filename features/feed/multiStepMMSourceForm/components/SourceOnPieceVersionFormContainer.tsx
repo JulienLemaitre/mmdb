@@ -8,7 +8,7 @@ import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
 import TrashIcon from "@/ui/svg/TrashIcon";
 import QuestionMarkCircleIcon from "@/ui/svg/QuestionMarkCircleIcon";
 import { SinglePieceVersionFormProvider } from "@/context/singlePieceVersionFormContext";
-import { CollectionPieceVersionsFormProvider } from "@/context/collectionPieceVersionsFormContext";
+import { CollectionPieceVersionsFormProvider } from "@/context/collectionPieceVersionForm/collectionPieceVersionsFormContext";
 import getPersonName from "@/utils/getPersonName";
 import CollectionPieceVersionsFormContainer from "@/features/feed/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsFormContainer";
 import EditIcon from "@/ui/svg/EditIcon";

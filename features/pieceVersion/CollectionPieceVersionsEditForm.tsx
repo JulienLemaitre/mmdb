@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import {
-  updateCollectionPieceVersionsForm,
+  updateCollectionFormInfo,
+  upsertCollectionMMSourceOnPieceVersions,
+  upsertCollectionPersons,
+  upsertCollectionPieces,
+  upsertCollectionPieceVersions,
+  upsertCollectionTempoIndications,
   useCollectionPieceVersionsForm,
-} from "@/context/collectionPieceVersionsFormContext";
+} from "@/context/collectionPieceVersionForm/collectionPieceVersionsFormContext";
 import { SinglePieceVersionFormProvider } from "@/context/singlePieceVersionFormContext";
 import SinglePieceVersionFormContainer from "@/features/feed/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer";
 import TrashIcon from "@/ui/svg/TrashIcon";
@@ -94,18 +99,14 @@ function CollectionPieceVersionsEditForm({
   const isConfirmationModalOpened = !!pieceVersionToDiscardId;
 
   const onSinglePieceVersionFormOpen = () => {
-    updateCollectionPieceVersionsForm(dispatch, "formInfo", {
-      value: {
-        isSinglePieceVersionFormOpen: true,
-      },
+    updateCollectionFormInfo(dispatch, {
+      isSinglePieceVersionFormOpen: true,
     });
   };
   const onSinglePieceVersionFormClose = () => {
     setUpdateInitState(null);
-    updateCollectionPieceVersionsForm(dispatch, "formInfo", {
-      value: {
-        isSinglePieceVersionFormOpen: false,
-      },
+    updateCollectionFormInfo(dispatch, {
+      isSinglePieceVersionFormOpen: false,
     });
     localStorageRemoveItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
   };
@@ -161,9 +162,8 @@ function CollectionPieceVersionsEditForm({
   };
 
   const onDeletePieceVersion = (pieceVersionId) => {
-    updateCollectionPieceVersionsForm(dispatch, "mMSourceOnPieceVersions", {
+    upsertCollectionMMSourceOnPieceVersions(dispatch, {
       deleteIdArray: [pieceVersionId],
-      idKey: "pieceVersionId",
     });
     setPieceVersionToDiscardId(null);
   };
@@ -194,7 +194,7 @@ function CollectionPieceVersionsEditForm({
     }
 
     // Move the piece
-    updateCollectionPieceVersionsForm(dispatch, "mMSourceOnPieceVersions", {
+    upsertCollectionMMSourceOnPieceVersions(dispatch, {
       movePiece: {
         pieceVersionId,
         direction,
@@ -236,9 +236,7 @@ function CollectionPieceVersionsEditForm({
     }
 
     if (composer) {
-      updateCollectionPieceVersionsForm(dispatch, "persons", {
-        array: [composer],
-      });
+      upsertCollectionPersons(dispatch, { array: [composer] });
     }
 
     const collectionAwarePiece: PieceState = {
@@ -252,11 +250,11 @@ function CollectionPieceVersionsEditForm({
       pieceId: collectionAwarePiece.id,
     };
 
-    updateCollectionPieceVersionsForm(dispatch, "pieces", {
+    upsertCollectionPieces(dispatch, {
       array: [collectionAwarePiece],
     });
 
-    updateCollectionPieceVersionsForm(dispatch, "pieceVersions", {
+    upsertCollectionPieceVersions(dispatch, {
       array: [collectionAwarePieceVersion],
     });
 
@@ -272,13 +270,12 @@ function CollectionPieceVersionsEditForm({
 
     const tempoIndications = Array.from(tempoIndicationMap.values());
     if (tempoIndications.length > 0) {
-      updateCollectionPieceVersionsForm(dispatch, "tempoIndications", {
+      upsertCollectionTempoIndications(dispatch, {
         array: tempoIndications,
       });
     }
 
-    const payload: any = {
-      idKey: "rank", // items with the same idKey value will be replaced by the payload corresponding items.
+    const payload: { array: MMSourceOnPieceVersionsState[]; idKey?: string } = {
       array: [
         {
           pieceVersionId: collectionAwarePieceVersion.id,
@@ -286,19 +283,13 @@ function CollectionPieceVersionsEditForm({
         },
       ],
     };
-    console.log(`[onSinglePieceSubmit] payload :`, payload);
 
-    // idKey = "rank" is used to replace value in place when updating
-    // For normal piece addition, we delete the idKey provided to avoid replacing the first piece forever
-    if (!options?.isUpdateMode) {
-      delete payload.idKey;
+    // idKey = "rank" is used to replace value with same idKey in state
+    if (options?.isUpdateMode) {
+      payload.idKey = "rank";
     }
 
-    updateCollectionPieceVersionsForm(
-      dispatch,
-      "mMSourceOnPieceVersions",
-      payload,
-    );
+    upsertCollectionMMSourceOnPieceVersions(dispatch, payload);
   };
 
   return (

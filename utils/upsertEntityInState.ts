@@ -18,14 +18,13 @@ export default function upsertEntityInState({
 
   const entityClone = structuredClone(entity);
 
-  // If we find an entity in state with the same id, we REPLACE it
-  // TODO: a shelf change is ready to implement proper replace, but we need to be sure it will not break anything
   const isEntityInState = newState[entityName]?.some(
     (stateEntity) =>
       entityClone[idKey] && stateEntity[idKey] === entityClone[idKey],
   );
 
   if (isEntityInState) {
+    // If we find an entity in state with the same id, we REPLACE it
     newState = {
       ...newState,
       [entityName]: newState[entityName].map((stateEntity) =>
@@ -33,6 +32,7 @@ export default function upsertEntityInState({
       ),
     };
   } else {
+    // If not, we append the payload entity to the state array
     newState = {
       ...newState,
       [entityName]: [...newState[entityName], entityClone],

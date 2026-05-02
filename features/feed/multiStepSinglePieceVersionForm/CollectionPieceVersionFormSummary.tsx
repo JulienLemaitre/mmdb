@@ -1,6 +1,6 @@
 import React from "react";
 import { getSinglePieceFormStepByRank } from "@/features/feed/multiStepSinglePieceVersionForm/stepsUtils";
-import { useCollectionPieceVersionsForm } from "@/context/collectionPieceVersionsFormContext";
+import { useCollectionPieceVersionsForm } from "@/context/collectionPieceVersionForm/collectionPieceVersionsFormContext";
 import { getPersonDates } from "@/utils/getPersonDates";
 
 function CollectionPieceVersionFormSummary() {

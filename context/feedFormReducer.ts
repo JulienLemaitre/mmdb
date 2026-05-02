@@ -6,6 +6,8 @@ import {
   FEED_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
 import { withLocalStorage } from "@/context/utils/localStorageReducerWrapper";
+import { cleanFeedFormState } from "@/context/utils/cleanFeedFormState";
+import { debug } from "@/utils/debugLogger";
 
 const allowedActions = new Set();
 steps.forEach((step) =>
@@ -654,6 +656,14 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
       ...mMSourceOnPieceVersion,
       rank: index + 1,
     }));
+
+    // CleanState only for "mMSourceOnPieceVersions" type operation => happening after all others
+    if (action.type === "mMSourceOnPieceVersions") {
+      debug.info(
+        `mMSourceOnPieceVersions action type => Cleaning FeedFormState`,
+      );
+      newState = cleanFeedFormState(newState);
+    }
 
     return newState;
   } else {

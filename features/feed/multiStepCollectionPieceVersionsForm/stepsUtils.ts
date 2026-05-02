@@ -12,7 +12,6 @@ export const collectionFormSteps: CollectionPieceVersionsFormStep[] = [
     isComplete: (state: CollectionPieceVersionsFormState) =>
       !!state.collection?.composerId,
     Component: ComposerSelectOrCreate,
-    actionTypes: ["composer"],
   },
   {
     id: "collection",
@@ -21,7 +20,6 @@ export const collectionFormSteps: CollectionPieceVersionsFormStep[] = [
     isComplete: (state: CollectionPieceVersionsFormState) =>
       !!state.collection?.title,
     Component: CollectionSelectOrCreate,
-    actionTypes: ["collection"],
   },
   {
     id: "collectionPieceVersions",
@@ -31,26 +29,8 @@ export const collectionFormSteps: CollectionPieceVersionsFormStep[] = [
       (state?.mMSourceOnPieceVersions?.length || 0) > 0 &&
       !!state?.formInfo?.allSourceOnPieceVersionsDone,
     Component: CollectionPieceVersionSelectOrCreate,
-    actionTypes: [
-      "mMSourceOnPieceVersions",
-      "formInfo",
-      "editedSourceOnPieceVersions",
-      "organizations",
-      "persons",
-      "pieces",
-      "pieceVersions",
-      "tempoIndications",
-    ],
   },
 ];
-
-export function getAllowedActions(state) {
-  const allowedActions = new Set();
-  collectionFormSteps.forEach((step) =>
-    step.actionTypes.forEach((actionType) => allowedActions.add(actionType)),
-  );
-  return allowedActions;
-}
 
 export function getAllStepStatus(state: any) {
   return collectionFormSteps.map((step) => step.isComplete(state));
@@ -66,7 +46,7 @@ export function getLastCompletedStep(
     }
   }
   // If none incomplete step found, we return the last step id
-  return collectionFormSteps[collectionFormSteps.length - 1];
+  return collectionFormSteps.at(-1);
 }
 
 export function getCollectionFormStepByRank(

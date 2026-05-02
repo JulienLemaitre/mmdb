@@ -1,9 +1,9 @@
 import React from "react";
 import { collectionFormSteps } from "@/features/feed/multiStepCollectionPieceVersionsForm/stepsUtils";
 import {
-  updateCollectionPieceVersionsForm,
+  goToCollectionFormStep,
   useCollectionPieceVersionsForm,
-} from "@/context/collectionPieceVersionsFormContext";
+} from "@/context/collectionPieceVersionForm/collectionPieceVersionsFormContext";
 
 type CollectionPieceVersionsStepsProps = {
   hasCollectionJustBeenCreated: boolean;
@@ -22,7 +22,7 @@ const CollectionPieceVersionsSteps = ({
       typeof lastCompletedStepRank === "number" &&
       stepRank <= lastCompletedStepRank + 1
     ) {
-      updateCollectionPieceVersionsForm(dispatch, "goToStep", { stepRank });
+      goToCollectionFormStep(dispatch, stepRank);
     }
   };
 

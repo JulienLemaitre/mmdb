@@ -73,7 +73,6 @@ export type CollectionPieceVersionsFormStep = {
   rank: number;
   isComplete: (state: CollectionPieceVersionsFormState) => boolean;
   Component?: FC<any>; // TODO precise type
-  actionTypes: string[];
 };
 export type IsNewProp = {
   isNew?: boolean;

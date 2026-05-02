@@ -1,8 +1,13 @@
 import { updateFeedForm, useFeedForm } from "@/context/feedFormContext";
 import {
-  updateCollectionPieceVersionsForm,
+  goToCollectionFormStep,
+  updateCollection,
+  updateCollectionFormInfo,
+  upsertCollectionPersons,
+  upsertCollectionPieces,
+  upsertCollectionPieceVersions,
   useCollectionPieceVersionsForm,
-} from "@/context/collectionPieceVersionsFormContext";
+} from "@/context/collectionPieceVersionForm/collectionPieceVersionsFormContext";
 import {
   CollectionInput,
   CollectionState,
@@ -64,9 +69,7 @@ function CollectionPieceVersionsFormContainer({
       console.log(
         `[goToStep 2] updating a collection that has not just been created`,
       );
-      updateCollectionPieceVersionsForm(dispatch, "goToStep", {
-        stepRank: 2,
-      });
+      goToCollectionFormStep(dispatch, 2);
     }
   }, [
     selectedComposerId,
@@ -79,8 +82,8 @@ function CollectionPieceVersionsFormContainer({
   ////////////////// COMPOSER ////////////////////
 
   const onInitComposerCreation = () => {
-    updateCollectionPieceVersionsForm(dispatch, "collection", {
-      value: { composerId: null },
+    updateCollection(dispatch, {
+      value: { composerId: undefined }, // TODO test: null before
       reset: true,
     });
   };
@@ -96,10 +99,8 @@ function CollectionPieceVersionsFormContainer({
       ...composer,
     });
     newComposer.isNew = true;
-    updateCollectionPieceVersionsForm(dispatch, "persons", {
-      array: [newComposer],
-    });
-    updateCollectionPieceVersionsForm(dispatch, "collection", {
+    upsertCollectionPersons(dispatch, { array: [newComposer] });
+    updateCollection(dispatch, {
       value: { composerId: newComposer.id, isComposerNew: true },
       reset: true,
       next: true,
@@ -112,10 +113,8 @@ function CollectionPieceVersionsFormContainer({
       ) || feedFormState.persons?.find((p) => p.id === composer.id)),
       ...composer,
     });
-    updateCollectionPieceVersionsForm(dispatch, "persons", {
-      array: [selectedComposer],
-    });
-    updateCollectionPieceVersionsForm(dispatch, "collection", {
+    upsertCollectionPersons(dispatch, { array: [selectedComposer] });
+    updateCollection(dispatch, {
       value: { composerId: selectedComposer.id },
       reset: true,
       next: true,
@@ -125,9 +124,9 @@ function CollectionPieceVersionsFormContainer({
   const onCancelComposerCreation = () => {
     if (collectionPieceVersionFormState.collection?.isComposerNew) {
       // Case: coming back after having first submitted the new composer and cancel it. All in the same collectionPieceVersionsForm.
-      updateCollectionPieceVersionsForm(dispatch, "collection", {
+      updateCollection(dispatch, {
         value: {
-          composerId: null,
+          composerId: undefined, // TODO test: null before
         },
         reset: true,
       });
@@ -137,11 +136,11 @@ function CollectionPieceVersionsFormContainer({
   ////////////////// COLLECTION ////////////////////
 
   const onInitCollectionCreation = () => {
-    updateCollectionPieceVersionsForm(dispatch, "collection", {
+    updateCollection(dispatch, {
       value: {
         composerId: selectedComposerId,
         ...(hasComposerJustBeenCreated ? { isComposerNew: true } : {}),
-        id: null,
+        id: undefined, // TODO test: null before
       },
       reset: true,
     });
@@ -149,11 +148,11 @@ function CollectionPieceVersionsFormContainer({
   const onCancelCollectionCreation = () => {
     if (collectionPieceVersionFormState.collection?.isNew) {
       // Case: coming back after having first submitted the new collection and cancel it. All in the same collectionPieceVersionsForm.
-      updateCollectionPieceVersionsForm(dispatch, "collection", {
+      updateCollection(dispatch, {
         value: {
           composerId: selectedComposerId,
           ...(hasComposerJustBeenCreated ? { isComposerNew: true } : {}),
-          id: null,
+          id: undefined, // TODO test: null before
         },
         reset: true,
       });
@@ -170,7 +169,7 @@ function CollectionPieceVersionsFormContainer({
       id: collection.id || uuidv4(),
       isNew: true,
     };
-    updateCollectionPieceVersionsForm(dispatch, "collection", {
+    updateCollection(dispatch, {
       value: {
         id: newCollection.id,
         composerId: newCollection.composerId,
@@ -196,11 +195,11 @@ function CollectionPieceVersionsFormContainer({
           );
         })) || [];
 
-    updateCollectionPieceVersionsForm(dispatch, "pieces", {
+    upsertCollectionPieces(dispatch, {
       array: pieces,
       reset: true,
     });
-    updateCollectionPieceVersionsForm(dispatch, "collection", {
+    updateCollection(dispatch, {
       value: {
         id: collection.id,
         composerId: collection.composerId,
@@ -210,8 +209,8 @@ function CollectionPieceVersionsFormContainer({
       reset: true,
       next: true,
     });
-    updateCollectionPieceVersionsForm(dispatch, "formInfo", {
-      value: { pieceIdsNeedingVersions: pieces.map((p) => p.id) },
+    updateCollectionFormInfo(dispatch, {
+      pieceIdsNeedingVersions: pieces.map((p) => p.id),
     });
   };
 
@@ -219,7 +218,7 @@ function CollectionPieceVersionsFormContainer({
 
   const onAddPieces = useCallback(
     (pieces: PieceState[]) => {
-      updateCollectionPieceVersionsForm(dispatch, "pieces", {
+      upsertCollectionPieces(dispatch, {
         array: pieces,
       });
     },
@@ -230,7 +229,7 @@ function CollectionPieceVersionsFormContainer({
 
   const onAddPieceVersion = (pieceVersion: PieceVersionState) => {
     const payload = { array: [pieceVersion] };
-    updateCollectionPieceVersionsForm(dispatch, "pieceVersions", payload);
+    upsertCollectionPieceVersions(dispatch, payload);
   };
 
   ////////////////// SUBMIT ////////////////////
