@@ -31,7 +31,7 @@ export function singlePieceVersionFormReducerCore(
   action: SinglePieceVersionFormAction,
 ): SinglePieceVersionFormState {
   console.group(`[SinglePieceVersionFormReducer]`);
-  console.log(`action.type :`, action.type);
+  console.log(`action :`, action);
 
   // Navigation back
   if (action.type === "goToPrevStep") {
@@ -45,8 +45,6 @@ export function singlePieceVersionFormReducerCore(
       },
     };
   }
-
-  console.log(`action.payload :`, action.payload);
 
   // Reset
   if (action.type === "init") {

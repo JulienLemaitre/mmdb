@@ -30,7 +30,7 @@ type SinglePieceVersionFormProps = {
   onSubmit?: (payload: any, options?: { isUpdateMode?: boolean }) => void;
   isCollectionMode?: boolean;
   isCollectionUpdateMode?: boolean;
-  composerId?: string;
+  composer?: PersonState;
   newPieceDefaultTitle?: string;
   collectionId?: string;
   collectionFormState?: CollectionPieceVersionsFormState;
@@ -48,7 +48,7 @@ const SinglePieceVersionFormContainer = ({
   onSubmit,
   isCollectionMode,
   isCollectionUpdateMode,
-  composerId,
+  composer,
   newPieceDefaultTitle,
   collectionId,
   collectionFormState,
@@ -80,16 +80,15 @@ const SinglePieceVersionFormContainer = ({
     if (
       isCollectionMode &&
       !isPreexistingCollectionEdit &&
-      composerId &&
+      composer &&
       currentStepRank === 0
     ) {
       debug.info(
         `[SinglePieceVersionFormContainer in Collection] auto-complete the "composer" step and go to the next step = piece`,
+        composer,
       );
       updateSinglePieceVersionForm(dispatch, "composer", {
-        value: {
-          id: composerId,
-        },
+        value: composer,
         next: true,
       });
     }
@@ -104,7 +103,7 @@ const SinglePieceVersionFormContainer = ({
       });
     }
   }, [
-    composerId,
+    composer,
     currentStepRank,
     dispatch,
     isCollectionMode,

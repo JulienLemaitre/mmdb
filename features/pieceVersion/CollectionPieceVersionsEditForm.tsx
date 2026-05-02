@@ -59,6 +59,7 @@ function CollectionPieceVersionsEditForm({
   const collectionPieceVersions = state.mMSourceOnPieceVersions || [];
   const newPieceDefaultTitle = `${state?.collection?.title} No.${(state.mMSourceOnPieceVersions || []).length + 1}`;
   const composerId = state?.collection?.composerId;
+  const composer = state.persons?.find((person) => person.id === composerId);
 
   const getPieceVersionById = (pieceVersionId: string) =>
     state.pieceVersions?.find((pv) => pv.id === pieceVersionId);
@@ -305,7 +306,7 @@ function CollectionPieceVersionsEditForm({
               collectionId={state.collection?.id}
               collectionFormState={state}
               newPieceDefaultTitle={newPieceDefaultTitle}
-              composerId={composerId}
+              composer={composer}
             />
           </SinglePieceVersionFormProvider>
           <div className="grid grid-cols-2 gap-4 items-center mt-6 w-full max-w-2xl">

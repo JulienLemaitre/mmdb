@@ -15,7 +15,7 @@ steps.forEach((step) =>
 );
 
 function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
-  console.log(`[feedFormReducer] action.type :`, action.type);
+  console.log(`[feedFormReducer] action :`, action);
 
   // Navigation back
   if (action.type === "goToPrevStep") {
@@ -28,8 +28,6 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
       },
     };
   }
-
-  console.log(`[feedFormReducer] action.payload`, action.payload);
 
   // Reset
   if (action.type === "init") {
