@@ -172,7 +172,7 @@ export default function SourceContributionSelectForm({
       <h1 className="mb-4 text-4xl font-bold">
         {title ?? (
           <>
-            Metronome Mark Source
+            {`Metronome Mark Source`}
             <span className="block text-xl font-normal">Contributions</span>
           </>
         )}
