@@ -42,13 +42,7 @@ const mockWorkingCopy: ReviewWorkingCopy = {
       {
         id: "contrib-1",
         role: "EDITOR",
-        person: {
-          id: "person-1",
-          firstName: "John",
-          lastName: "Doe",
-          birthYear: 1900,
-          deathYear: null,
-        },
+        personId: "person-1",
       },
     ],
     persons: [

@@ -27,7 +27,7 @@ describe("computeChangedChecklistFieldPaths - edge cases", () => {
   it("detects creation of a top-level entity and emits all schema fields", () => {
     const base: Partial<ChecklistGraph> = { contributions: [] };
     const work: Partial<ChecklistGraph> = {
-      contributions: [{ id: "c1", role: "COMPOSER" }] as any,
+      contributions: [{ id: "c1", role: "COMPOSER", personId: "p1" }] as any,
     };
 
     const changes = computeChangedChecklistFieldPaths(base as any, work as any);
