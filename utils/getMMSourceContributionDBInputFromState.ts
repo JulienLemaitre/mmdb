@@ -9,25 +9,29 @@ export default function getMMSourceContributionDBInputFromState(
 ): Prisma.ContributionCreateWithoutMMSourceInput {
   assertsContributionHasPersonOrOrganization(contribution);
   const { id, role } = contribution;
-  if ("person" in contribution) {
+  if ("personId" in contribution && contribution.personId) {
     return {
       id,
       role,
       person: {
         connect: {
-          id: contribution.person.id,
+          id: contribution.personId,
         },
       },
     };
   }
 
-  return {
-    id,
-    role,
-    organization: {
-      connect: {
-        id: contribution.organization.id,
+  if ("organizationId" in contribution && contribution.organizationId) {
+    return {
+      id,
+      role,
+      organization: {
+        connect: {
+          id: contribution.organizationId,
+        },
       },
-    },
-  };
+    };
+  }
+
+  throw new Error(`Invalid contribution: ${JSON.stringify(contribution)}`);
 }

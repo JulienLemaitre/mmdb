@@ -18,8 +18,7 @@ export default function getPersonCreateInput(
 
     const piece = state.pieces.find((p) => p.composerId === person.id);
     const contribution = state.mMSourceContributions.find(
-      // @ts-ignore
-      (c) => c?.person?.id === person.id,
+      (c) => "personId" in c && c.personId === person.id,
     );
     if (!(piece || contribution)) {
       console.log(
