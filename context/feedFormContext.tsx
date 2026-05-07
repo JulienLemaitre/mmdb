@@ -265,19 +265,19 @@ export function isEntityUsed(
       ) ||
       // Is the person a contributor?
       (state.mMSourceContributions || []).some((mMSourceContribution) => {
-        if ("person" in mMSourceContribution) {
-          return mMSourceContribution.person?.id === entity.id;
-        }
-        return false;
+        return (
+          "personId" in mMSourceContribution &&
+          mMSourceContribution.personId === entity.id
+        );
       })
     );
   }
   if (entityName === "organizations") {
     return (state.mMSourceContributions || []).some((mMSourceContribution) => {
-      if ("organization" in mMSourceContribution) {
-        return mMSourceContribution.organization?.id === entity.id;
-      }
-      return false;
+      return (
+        "organizationId" in mMSourceContribution &&
+        mMSourceContribution.organizationId === entity.id
+      );
     });
   }
   if (entityName === "metronomeMarks") {
