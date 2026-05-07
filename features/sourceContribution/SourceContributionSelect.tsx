@@ -1,11 +1,8 @@
 import Select from "@/ui/form/reactSelect/Select";
 import {
-  ContributionState,
   OptionInput,
-  OrganizationState,
-  PersonState,
 } from "@/types/formTypes";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CONTRIBUTION_ROLE } from "@/prisma/client/enums";
 import NewSourceContributionForm from "@/features/sourceContribution/NewSourceContributionForm";
 import Label from "@/ui/Label";
@@ -14,28 +11,14 @@ import { reactSelectStyles } from "@/ui/form/reactSelect/reactSelectStyles";
 
 type SourceContributionSelectProps = {
   sourceContributionOptions: OptionInput[];
-  onAddPersonContribution: (
-    personContribution:
-      | {
-          personId: string;
-          role: CONTRIBUTION_ROLE;
-        }
-      | {
-          person: PersonState;
-          role: CONTRIBUTION_ROLE;
-        },
-  ) => void;
-  onAddOrganizationContribution: (
-    organizationContribution:
-      | {
-          organizationId: string;
-          role: CONTRIBUTION_ROLE;
-        }
-      | {
-          organization: OrganizationState;
-          role: CONTRIBUTION_ROLE;
-        },
-  ) => void;
+  onAddPersonContribution: (personContribution: {
+    personId: string;
+    role: CONTRIBUTION_ROLE;
+  }) => void;
+  onAddOrganizationContribution: (organizationContribution: {
+    organizationId: string;
+    role: CONTRIBUTION_ROLE;
+  }) => void;
   onCancel: () => void;
 };
 export default function SourceContributionSelect({
@@ -55,19 +38,11 @@ export default function SourceContributionSelect({
     useState<string>();
   const [role, setRole] = useState<CONTRIBUTION_ROLE>();
   const [isContributionCreation, setIsContributionCreation] = useState(false);
-  const [newPerson, setNewPerson] = useState<PersonState>();
-  const [newOrganization, setNewOrganization] = useState<OrganizationState>();
 
-  const onAddContribution = useCallback(() => {
+  const onAddContribution = () => {
     if (selectedPersonId && role) {
       onAddPersonContribution({
         personId: selectedPersonId,
-        role,
-      });
-    }
-    if (newPerson && role) {
-      onAddPersonContribution({
-        person: newPerson,
         role,
       });
     }
@@ -77,43 +52,26 @@ export default function SourceContributionSelect({
         role,
       });
     }
-    if (newOrganization && role) {
-      onAddOrganizationContribution({
-        organization: newOrganization,
-        role,
-      });
-    }
-  }, [
-    selectedPersonId,
-    role,
-    newPerson,
-    selectedOrganizationId,
-    newOrganization,
-    onAddPersonContribution,
-    onAddOrganizationContribution,
-  ]);
-
-  const onContributionCreated = (contribution: ContributionState) => {
-    setRole(contribution.role);
-    if ("person" in contribution) {
-      setNewPerson(contribution.person);
-    }
-    if ("organization" in contribution) {
-      setNewOrganization(contribution.organization);
-    }
   };
 
-  useEffect(() => {
-    // Call onAddContribution when the required data is in state
-    if (role && (newPerson || newOrganization)) {
-      console.log("useEffect Call onAddContribution:", {
-        role,
-        newPerson,
-        newOrganization,
+  const onContributionCreated = (contribution: {
+    role: CONTRIBUTION_ROLE;
+    personId?: string;
+    organizationId?: string;
+  }) => {
+    if (contribution.personId) {
+      onAddPersonContribution({
+        role: contribution.role,
+        personId: contribution.personId,
       });
-      onAddContribution();
     }
-  }, [role, newOrganization, newPerson, onAddContribution]);
+    if (contribution.organizationId) {
+      onAddOrganizationContribution({
+        role: contribution.role,
+        organizationId: contribution.organizationId,
+      });
+    }
+  };
 
   const noOptionsMessage = () => (
     <div className="text-left">

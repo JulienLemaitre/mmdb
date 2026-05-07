@@ -78,7 +78,7 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
 
       onContributionCreated({
         role: data.role.value,
-        person: newPerson,
+        personId: newPerson.id,
       });
     }
     if ("organization" in data) {
@@ -94,7 +94,7 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
 
       onContributionCreated({
         role: data.role.value,
-        organization: newOrganization,
+        organizationId: newOrganization.id,
       });
     }
   };

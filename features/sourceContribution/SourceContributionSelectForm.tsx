@@ -38,90 +38,27 @@ export default function SourceContributionSelectForm({
   >(contributions || []);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [createdPersons, setCreatedPersons] = useState<PersonState[]>([]);
-  const [createdOrganizations, setCreatedOrganizations] = useState<
-    OrganizationState[]
-  >([]);
 
-  const onAddPersonContribution = (
-    personContribution:
-      | {
-          personId: string;
-          role: CONTRIBUTION_ROLE;
-        }
-      | {
-          person: PersonState;
-          role: CONTRIBUTION_ROLE;
-        },
-  ) => {
-    const { role } = personContribution;
-    let person: PersonState;
-
-    // Case of selection of existing person
-    if ("personId" in personContribution) {
-      const foundPerson = [...persons, ...createdPersons].find(
-        (person) => person.id === personContribution.personId,
-      );
-      if (foundPerson) {
-        person = foundPerson;
-      } else {
-        console.warn(
-          `[SourceContributionSelectForm] onAddPersonContribution person NOT FOUND`,
-        );
-        return;
-      }
-    }
-
-    // Case of creation of a new person
-    if ("person" in personContribution) {
-      person = personContribution.person;
-      setCreatedPersons((prevList) => [...prevList, person]);
-    }
-    setSelectedContributions((prevList) => [...prevList, { person, role }]);
-    setIsFormOpen(false);
-  };
-  const onAddOrganizationContribution = (
-    organizationContribution:
-      | {
-          organizationId: string;
-          role: CONTRIBUTION_ROLE;
-        }
-      | {
-          organization: OrganizationState;
-          role: CONTRIBUTION_ROLE;
-        },
-  ) => {
-    const { role } = organizationContribution;
-    let organization: OrganizationState;
-
-    // Case of selection of existing organization
-    if ("organizationId" in organizationContribution) {
-      const foundOrganization = [
-        ...organizations,
-        ...createdOrganizations,
-      ].find(
-        (organization) =>
-          organization.id === organizationContribution.organizationId,
-      );
-      if (foundOrganization) {
-        organization = foundOrganization;
-      } else {
-        console.warn(
-          `[SourceContributionSelectForm] onAddPersonContribution organization NOT FOUND`,
-        );
-        return;
-      }
-    }
-
-    // Case of creation of a new organization
-    if ("organization" in organizationContribution) {
-      organization = organizationContribution.organization;
-      setCreatedOrganizations((prevList) => [...prevList, organization]);
-    }
-
+  const onAddPersonContribution = (personContribution: {
+    personId: string;
+    role: CONTRIBUTION_ROLE;
+  }) => {
     setSelectedContributions((prevList) => [
       ...prevList,
-      { organization, role },
+      { personId: personContribution.personId, role: personContribution.role },
+    ]);
+    setIsFormOpen(false);
+  };
+  const onAddOrganizationContribution = (organizationContribution: {
+    organizationId: string;
+    role: CONTRIBUTION_ROLE;
+  }) => {
+    setSelectedContributions((prevList) => [
+      ...prevList,
+      {
+        organizationId: organizationContribution.organizationId,
+        role: organizationContribution.role,
+      },
     ]);
     setIsFormOpen(false);
   };
@@ -132,31 +69,16 @@ export default function SourceContributionSelectForm({
     );
   };
 
-  const personOptions: OptionInput[] = [...persons, ...createdPersons]
-    .reduce((list: PersonState[], currentPerson: PersonState) => {
-      if (list.some((person) => person.id === currentPerson.id)) {
-        return list;
-      }
-      return [...list, currentPerson];
-    }, [])
-    .map((person: PersonState) => ({
-      value: person.id,
-      label: `${person.firstName} ${person.lastName} [person]`,
-    }));
-  const organizationOptions: OptionInput[] = [
-    ...organizations,
-    ...createdOrganizations,
-  ]
-    .reduce((list: OrganizationState[], currentOrg: OrganizationState) => {
-      if (list.some((org) => org.id === currentOrg.id)) {
-        return list;
-      }
-      return [...list, currentOrg];
-    }, [])
-    .map((organization: OrganizationState) => ({
+  const personOptions: OptionInput[] = persons.map((person: PersonState) => ({
+    value: person.id,
+    label: `${person.firstName} ${person.lastName} [person]`,
+  }));
+  const organizationOptions: OptionInput[] = organizations.map(
+    (organization: OrganizationState) => ({
       value: organization.id,
       label: `${organization.name} [organization]`,
-    }));
+    }),
+  );
   const sourceContributionOptions = [
     ...personOptions,
     ...organizationOptions,
@@ -182,15 +104,19 @@ export default function SourceContributionSelectForm({
           let key: string;
           let displayName: string;
           let contributionType: "person" | "organization";
-          if ("organization" in contribution) {
-            // TypeScript now knows that contribution is OrganizationState in this block
-            key = `${index}-${contribution.role}-${contribution.organization.id}`;
-            displayName = contribution.organization.name;
+          if ("organizationId" in contribution) {
+            const org = organizations.find(
+              (o) => o.id === contribution.organizationId,
+            );
+            key = `${index}-${contribution.role}-${contribution.organizationId}`;
+            displayName = org ? org.name : "Unknown Organization";
             contributionType = "organization";
           } else {
-            // TypeScript now knows that contribution is PersonState in this block
-            key = `${index}-${contribution.role}-${contribution.person.id}`;
-            displayName = `${contribution.person.firstName} ${contribution.person.lastName}`;
+            const person = persons.find((p) => p.id === contribution.personId);
+            key = `${index}-${contribution.role}-${contribution.personId}`;
+            displayName = person
+              ? `${person.firstName} ${person.lastName}`
+              : "Unknown Person";
             contributionType = "person";
           }
 
