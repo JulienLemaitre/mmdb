@@ -91,7 +91,7 @@ export function resolveStepFromReviewItem(
   if (
     entityType === "PERSON" &&
     !workingCopy.graph.contributions.some(
-      (c) => "person" in c && c.person?.id === item.entityId,
+      (c) => "personId" in c && c.personId === item.entityId,
     )
   ) {
     return 3;

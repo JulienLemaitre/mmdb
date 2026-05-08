@@ -1,11 +1,10 @@
 import Select from "@/ui/form/reactSelect/Select";
 import {
-  ContributionState,
   OptionInput,
   OrganizationState,
   PersonState,
 } from "@/types/formTypes";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CONTRIBUTION_ROLE } from "@/prisma/client/enums";
 import NewSourceContributionForm from "@/features/sourceContribution/NewSourceContributionForm";
 import Label from "@/ui/Label";
@@ -14,34 +13,24 @@ import { reactSelectStyles } from "@/ui/form/reactSelect/reactSelectStyles";
 
 type SourceContributionSelectProps = {
   sourceContributionOptions: OptionInput[];
-  onAddPersonContribution: (
-    personContribution:
-      | {
-          personId: string;
-          role: CONTRIBUTION_ROLE;
-        }
-      | {
-          person: PersonState;
-          role: CONTRIBUTION_ROLE;
-        },
-  ) => void;
-  onAddOrganizationContribution: (
-    organizationContribution:
-      | {
-          organizationId: string;
-          role: CONTRIBUTION_ROLE;
-        }
-      | {
-          organization: OrganizationState;
-          role: CONTRIBUTION_ROLE;
-        },
-  ) => void;
+  onAddPersonContribution: (personContribution: {
+    personId: string;
+    role: CONTRIBUTION_ROLE;
+  }) => void;
+  onAddOrganizationContribution: (organizationContribution: {
+    organizationId: string;
+    role: CONTRIBUTION_ROLE;
+  }) => void;
+  onCreateDraftPerson: (person: PersonState) => void;
+  onCreateDraftOrganization: (organization: OrganizationState) => void;
   onCancel: () => void;
 };
 export default function SourceContributionSelect({
   sourceContributionOptions,
   onAddOrganizationContribution,
   onAddPersonContribution,
+  onCreateDraftOrganization,
+  onCreateDraftPerson,
   onCancel,
 }: Readonly<SourceContributionSelectProps>) {
   const contributionRoleOptions = Object.values(CONTRIBUTION_ROLE).map(
@@ -55,19 +44,11 @@ export default function SourceContributionSelect({
     useState<string>();
   const [role, setRole] = useState<CONTRIBUTION_ROLE>();
   const [isContributionCreation, setIsContributionCreation] = useState(false);
-  const [newPerson, setNewPerson] = useState<PersonState>();
-  const [newOrganization, setNewOrganization] = useState<OrganizationState>();
 
-  const onAddContribution = useCallback(() => {
+  const onAddContribution = () => {
     if (selectedPersonId && role) {
       onAddPersonContribution({
         personId: selectedPersonId,
-        role,
-      });
-    }
-    if (newPerson && role) {
-      onAddPersonContribution({
-        person: newPerson,
         role,
       });
     }
@@ -77,43 +58,32 @@ export default function SourceContributionSelect({
         role,
       });
     }
-    if (newOrganization && role) {
-      onAddOrganizationContribution({
-        organization: newOrganization,
-        role,
-      });
-    }
-  }, [
-    selectedPersonId,
-    role,
-    newPerson,
-    selectedOrganizationId,
-    newOrganization,
-    onAddPersonContribution,
-    onAddOrganizationContribution,
-  ]);
-
-  const onContributionCreated = (contribution: ContributionState) => {
-    setRole(contribution.role);
-    if ("person" in contribution) {
-      setNewPerson(contribution.person);
-    }
-    if ("organization" in contribution) {
-      setNewOrganization(contribution.organization);
-    }
   };
 
-  useEffect(() => {
-    // Call onAddContribution when the required data is in state
-    if (role && (newPerson || newOrganization)) {
-      console.log("useEffect Call onAddContribution:", {
-        role,
-        newPerson,
-        newOrganization,
+  const onContributionCreated = (
+    result:
+      | { kind: "person"; person: PersonState; role: CONTRIBUTION_ROLE }
+      | {
+          kind: "organization";
+          organization: OrganizationState;
+          role: CONTRIBUTION_ROLE;
+        },
+  ) => {
+    if (result.kind === "person") {
+      onCreateDraftPerson(result.person);
+      onAddPersonContribution({
+        role: result.role,
+        personId: result.person.id,
       });
-      onAddContribution();
     }
-  }, [role, newOrganization, newPerson, onAddContribution]);
+    if (result.kind === "organization") {
+      onCreateDraftOrganization(result.organization);
+      onAddOrganizationContribution({
+        role: result.role,
+        organizationId: result.organization.id,
+      });
+    }
+  };
 
   const noOptionsMessage = () => (
     <div className="text-left">

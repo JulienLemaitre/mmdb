@@ -342,33 +342,17 @@ export async function getReviewOverview(reviewId: string): Promise<{
   const contributions: ContributionState[] = mmSource.contributions
     .map((c): ContributionState | null => {
       if (c.personId) {
-        if (!c.person) {
-          // If personId exists but person is not hydrated, skip or handle as needed
-          return null;
-        }
         return {
           id: c.id,
           role: c.role,
-          person: {
-            id: c.person.id,
-            firstName: c.person.firstName ?? null,
-            lastName: c.person.lastName ?? null,
-            birthYear: c.person.birthYear ?? null,
-            deathYear: c.person.deathYear ?? null,
-          },
+          personId: c.personId,
         };
       }
       if (c.organizationId) {
-        if (!c.organization) {
-          return null;
-        }
         return {
           id: c.id,
           role: c.role,
-          organization: {
-            id: c.organization.id,
-            name: c.organization.name ?? null,
-          },
+          organizationId: c.organizationId,
         };
       }
       return null;

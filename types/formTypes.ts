@@ -98,23 +98,23 @@ export type ContributionState =
   | ({
       id?: string;
       role: CONTRIBUTION_ROLE;
-      person: PersonState;
+      personId: string;
     } & IsNewProp)
   | ({
       id?: string;
       role: CONTRIBUTION_ROLE;
-      organization: OrganizationState;
+      organizationId: string;
     } & IsNewProp);
 
 export type MMSourceContributionsState = ContributionState[];
 
 export type ContributionStateWithoutId =
   | {
-      person: PersonState;
+      personId: string;
       role: CONTRIBUTION_ROLE;
     }
   | {
-      organization: OrganizationState;
+      organizationId: string;
       role: CONTRIBUTION_ROLE;
     };
 
@@ -406,9 +406,10 @@ type PersistableContribution = Pick<
   "role"
 > & {
   id?: string;
-  personId: string;
-  organizationId: null;
-};
+} & (
+    | { personId: string; organizationId: null }
+    | { personId: null; organizationId: string }
+  );
 export function assertsContributionHasPersonOrOrganization(
   valueToTest: any,
 ): asserts valueToTest is PersistableContribution {
@@ -418,19 +419,19 @@ export function assertsContributionHasPersonOrOrganization(
         typeof valueToTest === "object" &&
         "role" in valueToTest &&
         typeof valueToTest["role"] === "string" &&
-        "person" in valueToTest &&
-        typeof valueToTest["person"] === "object" &&
-        (("organization" in valueToTest &&
-          valueToTest["organization"] == null) ||
-          !("organization" in valueToTest))) ||
+        "personId" in valueToTest &&
+        typeof valueToTest["personId"] === "string" &&
+        (("organizationId" in valueToTest &&
+          valueToTest["organizationId"] == null) ||
+          !("organizationId" in valueToTest))) ||
       (valueToTest &&
         typeof valueToTest === "object" &&
         "role" in valueToTest &&
         typeof valueToTest["role"] === "string" &&
-        (("person" in valueToTest && valueToTest["person"] == null) ||
-          !("person" in valueToTest)) &&
-        "organization" in valueToTest &&
-        typeof valueToTest["organization"] === "object")
+        (("personId" in valueToTest && valueToTest["personId"] == null) ||
+          !("personId" in valueToTest)) &&
+        "organizationId" in valueToTest &&
+        typeof valueToTest["organizationId"] === "string")
     )
   ) {
     throw new Error(
