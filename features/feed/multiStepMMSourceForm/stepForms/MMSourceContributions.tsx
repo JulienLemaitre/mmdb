@@ -44,12 +44,17 @@ export default function MMSourceContributions() {
     });
   };
 
-  const onCreateDraftPerson = (person: PersonState) => {
+  const onAddDraftPerson = (person: PersonState) => {
     setDraftPersons((prev) => [...prev, person]);
   };
 
-  const onCreateDraftOrganization = (organization: OrganizationState) => {
+  const onAddDraftOrganization = (organization: OrganizationState) => {
     setDraftOrganizations((prev) => [...prev, organization]);
+  };
+
+  const onResetDraftEntities = () => {
+    setDraftPersons([]);
+    setDraftOrganizations([]);
   };
 
   useEffect(() => {
@@ -70,10 +75,11 @@ export default function MMSourceContributions() {
     <>
       <SourceContributionSelectForm
         contributions={state.mMSourceContributions}
-        persons={[...persons, ...draftPersons]}
+        persons={[...persons, ...(state.persons || []), ...draftPersons]}
         organizations={[...organizations, ...draftOrganizations]}
-        onCreateDraftPerson={onCreateDraftPerson}
-        onCreateDraftOrganization={onCreateDraftOrganization}
+        onAddDraftPerson={onAddDraftPerson}
+        onAddDraftOrganization={onAddDraftOrganization}
+        onResetDraftEntities={onResetDraftEntities}
         onSubmit={onSubmit}
         title={step.title}
         submitTitle={step.title}

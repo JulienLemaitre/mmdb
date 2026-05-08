@@ -85,23 +85,23 @@ export function expandRequiredChecklistItems(
               });
               continue;
             }
-            if ("person" in contribution) {
-              if (field.path !== "personId") {
-                value = contribution[field.path];
-              } else {
-                const personId = contribution.person.id;
+            if ("personId" in contribution) {
+              if (field.path === "personId") {
+                const personId = contribution.personId;
                 const person = graph.persons?.find((p) => p.id === personId);
                 value = person && getPersonName(person);
-              }
-            } else if ("organization" in contribution) {
-              if (field.path !== "organizationId") {
-                value = contribution[field.path];
               } else {
-                const organizationId = contribution.organization.id;
+                value = contribution[field.path];
+              }
+            } else if ("organizationId" in contribution) {
+              if (field.path === "organizationId") {
+                const organizationId = contribution.organizationId;
                 const organization = graph.organizations?.find(
                   (o) => o.id === organizationId,
                 );
                 value = organization?.name;
+              } else {
+                value = contribution[field.path];
               }
             } else {
               debug.warn(`Unexpected contribution type :`, {
@@ -142,15 +142,15 @@ export function expandRequiredChecklistItems(
           case "PIECE": {
             if (field.path === "composerId") {
               const person = graph.persons?.find((p) => p.id === n[field.path]);
-              if (!person) {
+              if (person) {
+                value = getPersonName(person);
+              } else {
                 debug.warn(`Person not found :`, {
                   entityType,
                   lineage,
                   n,
                 });
                 continue;
-              } else {
-                value = getPersonName(person);
               }
             } else if (
               ["collectionId", "collectionRank"].includes(field.path)
@@ -158,18 +158,18 @@ export function expandRequiredChecklistItems(
               const collection = graph.collections?.find(
                 (c) => c.id === n.collectionId,
               );
-              if (!collection) {
+              if (collection) {
+                value =
+                  field.path === "collectionId"
+                    ? collection.title
+                    : n[field.path];
+              } else {
                 debug.warn(`Collection not found :`, {
                   entityType,
                   lineage,
                   n,
                 });
                 continue;
-              } else {
-                value =
-                  field.path === "collectionId"
-                    ? collection.title
-                    : n[field.path];
               }
             } else {
               value = n[field.path];
@@ -179,15 +179,15 @@ export function expandRequiredChecklistItems(
           case "COLLECTION": {
             if (field.path === "composerId") {
               const person = graph.persons?.find((p) => p.id === n[field.path]);
-              if (!person) {
+              if (person) {
+                value = getPersonName(person);
+              } else {
                 debug.warn(`Person not found :`, {
                   entityType,
                   lineage,
                   n,
                 });
                 continue;
-              } else {
-                value = getPersonName(person);
               }
             } else {
               value = n[field.path];
@@ -195,7 +195,7 @@ export function expandRequiredChecklistItems(
             break;
           }
           default: {
-            if (typeof n[field.path] === "undefined") {
+            if (n[field.path] === undefined) {
               debug.warn(`undefined n[${field.path}] :`, {
                 entityType,
                 lineage,
@@ -207,7 +207,7 @@ export function expandRequiredChecklistItems(
           }
         }
 
-        if (typeof value === "undefined") {
+        if (value === undefined) {
           debug.warn(`undefined value for field ${field.path} :`, {
             entityType,
             lineage,

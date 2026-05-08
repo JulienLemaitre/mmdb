@@ -60,16 +60,16 @@ export default function NewSourceContributionForm({
   ) => {
     const isOrganization = event.target.value === "on";
     setIsPerson((v) => !v);
-    if (!isOrganization) {
-      // @ts-ignore
-      setValue("person", undefined);
-      // @ts-ignore
-      setValue("organization", {});
-    } else {
+    if (isOrganization) {
       // @ts-ignore
       setValue("organization", undefined);
       // @ts-ignore
       setValue("person", {});
+    } else {
+      // @ts-ignore
+      setValue("person", undefined);
+      // @ts-ignore
+      setValue("organization", {});
     }
   };
 
@@ -80,9 +80,10 @@ export default function NewSourceContributionForm({
       const newPerson: PersonState = {
         id: uuidv4(),
         birthYear: data.person.birthYear,
-        ...(!Number.isNaN(data.person?.deathYear)
-          ? { deathYear: data.person.deathYear }
-          : {}),
+        deathYear:
+          data.person.deathYear && !Number.isNaN(data.person?.deathYear)
+            ? data.person.deathYear
+            : null,
         firstName: data.person.firstName,
         lastName: data.person.lastName,
         isNew: true,

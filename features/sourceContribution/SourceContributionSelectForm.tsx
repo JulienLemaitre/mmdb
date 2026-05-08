@@ -22,8 +22,9 @@ type SourceContributionSelectFormProps = {
     contributions: ContributionStateWithoutId[],
     option: { goToNextStep: boolean },
   ) => void;
-  onCreateDraftPerson: (person: PersonState) => void;
-  onCreateDraftOrganization: (organization: OrganizationState) => void;
+  onAddDraftPerson: (person: PersonState) => void;
+  onAddDraftOrganization: (organization: OrganizationState) => void;
+  onResetDraftEntities: () => void;
   submitTitle?: string;
   title?: string;
 };
@@ -33,8 +34,9 @@ export default function SourceContributionSelectForm({
   persons,
   organizations,
   onSubmit,
-  onCreateDraftOrganization,
-  onCreateDraftPerson,
+  onAddDraftOrganization,
+  onAddDraftPerson,
+  onResetDraftEntities,
   submitTitle,
   title,
 }: SourceContributionSelectFormProps) {
@@ -52,6 +54,10 @@ export default function SourceContributionSelectForm({
       ...prevList,
       { personId: personContribution.personId, role: personContribution.role },
     ]);
+    const person = persons.find((p) => p.id === personContribution.personId);
+    if (person) {
+      onAddDraftPerson(person);
+    }
     setIsFormOpen(false);
   };
   const onAddOrganizationContribution = (organizationContribution: {
@@ -65,6 +71,12 @@ export default function SourceContributionSelectForm({
         role: organizationContribution.role,
       },
     ]);
+    const organization = organizations.find(
+      (o) => o.id === organizationContribution.organizationId,
+    );
+    if (organization) {
+      onAddDraftOrganization(organization);
+    }
     setIsFormOpen(false);
   };
 
@@ -72,6 +84,12 @@ export default function SourceContributionSelectForm({
     setSelectedContributions((prevList) =>
       prevList.filter((contribution, idx) => idx !== index),
     );
+  };
+
+  const onResetForm = () => {
+    setSelectedContributions(contributions || []);
+    setIsFormOpen(false);
+    onResetDraftEntities();
   };
 
   const personOptions: OptionInput[] = persons.map((person: PersonState) => ({
@@ -162,8 +180,8 @@ export default function SourceContributionSelectForm({
           onCancel={() => setIsFormOpen(false)}
           onAddPersonContribution={onAddPersonContribution}
           onAddOrganizationContribution={onAddOrganizationContribution}
-          onCreateDraftPerson={onCreateDraftPerson}
-          onCreateDraftOrganization={onCreateDraftOrganization}
+          onCreateDraftPerson={onAddDraftPerson}
+          onCreateDraftOrganization={onAddDraftOrganization}
         />
       ) : (
         <div>
@@ -183,7 +201,7 @@ export default function SourceContributionSelectForm({
         onSaveAndGoToNextStep={() =>
           onSubmit(selectedContributions, { goToNextStep: true })
         }
-        onResetForm={() => setSelectedContributions(contributions || [])}
+        onResetForm={onResetForm}
         isPresentFormDirty={isPresentFormDirty}
         isNextDisabled={!(selectedContributions.length > 0 && !isFormOpen)}
         submitTitle={submitTitle}

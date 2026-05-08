@@ -158,13 +158,7 @@ export function buildMockOverview(reviewId: string): MockOverview {
       {
         id: contribId,
         role: "MM_PROVIDER",
-        person: {
-          id: personId,
-          firstName: "Ludwig",
-          lastName: "Beethoven",
-          birthYear: 1770,
-          deathYear: 1827,
-        },
+        personId,
       },
     ],
     persons: [
