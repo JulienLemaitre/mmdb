@@ -165,7 +165,7 @@ export type PieceVersionGroupByOutputType = {
   _max: PieceVersionMaxAggregateOutputType | null
 }
 
-type GetPieceVersionGroupByPayload<T extends PieceVersionGroupByArgs> = Prisma.PrismaPromise<
+export type GetPieceVersionGroupByPayload<T extends PieceVersionGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<PieceVersionGroupByOutputType, T['by']> &
       {
@@ -1510,6 +1510,11 @@ export type PieceVersionFindManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Skip the first `n` PieceVersions.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of PieceVersions.
+   */
   distinct?: Prisma.PieceVersionScalarFieldEnum | Prisma.PieceVersionScalarFieldEnum[]
 }
 

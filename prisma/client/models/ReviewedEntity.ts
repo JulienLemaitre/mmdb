@@ -165,7 +165,7 @@ export type ReviewedEntityGroupByOutputType = {
   _max: ReviewedEntityMaxAggregateOutputType | null
 }
 
-type GetReviewedEntityGroupByPayload<T extends ReviewedEntityGroupByArgs> = Prisma.PrismaPromise<
+export type GetReviewedEntityGroupByPayload<T extends ReviewedEntityGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<ReviewedEntityGroupByOutputType, T['by']> &
       {
@@ -1293,6 +1293,11 @@ export type ReviewedEntityFindManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Skip the first `n` ReviewedEntities.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of ReviewedEntities.
+   */
   distinct?: Prisma.ReviewedEntityScalarFieldEnum | Prisma.ReviewedEntityScalarFieldEnum[]
 }
 

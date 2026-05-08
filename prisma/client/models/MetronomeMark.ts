@@ -219,7 +219,7 @@ export type MetronomeMarkGroupByOutputType = {
   _max: MetronomeMarkMaxAggregateOutputType | null
 }
 
-type GetMetronomeMarkGroupByPayload<T extends MetronomeMarkGroupByArgs> = Prisma.PrismaPromise<
+export type GetMetronomeMarkGroupByPayload<T extends MetronomeMarkGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MetronomeMarkGroupByOutputType, T['by']> &
       {
@@ -1489,6 +1489,11 @@ export type MetronomeMarkFindManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Skip the first `n` MetronomeMarks.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MetronomeMarks.
+   */
   distinct?: Prisma.MetronomeMarkScalarFieldEnum | Prisma.MetronomeMarkScalarFieldEnum[]
 }
 
