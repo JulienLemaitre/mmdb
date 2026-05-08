@@ -73,21 +73,6 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
           entity,
           idKey: id,
         });
-
-        if (entity.person) {
-          newState = upsertEntityInState({
-            state: newState,
-            entityName: "persons",
-            entity: entity.person,
-          });
-        }
-        if (entity.organization) {
-          newState = upsertEntityInState({
-            state: newState,
-            entityName: "organizations",
-            entity: entity.organization,
-          });
-        }
       });
     }
 
@@ -97,27 +82,6 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
         ...newState,
         [action.type]: array,
       };
-      // For each entity in the array
-      if (action.type !== "mMSourceContributions") {
-        array.forEach((entity) => {
-          if (entity.person) {
-            console.log(`[ADD IN CONTEXT] person:`, entity.person);
-            newState = upsertEntityInState({
-              state: newState,
-              entityName: "persons",
-              entity: entity.person,
-            });
-          }
-          if (entity.organization) {
-            console.log(`[ADD IN CONTEXT] organization:`, entity.organization);
-            newState = upsertEntityInState({
-              state: newState,
-              entityName: "organizations",
-              entity: entity.organization,
-            });
-          }
-        });
-      }
     }
 
     // In case of a collection update, we receive:

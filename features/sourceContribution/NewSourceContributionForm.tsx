@@ -1,6 +1,10 @@
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
-import { ContributionInput } from "@/types/formTypes";
+import {
+  ContributionInput,
+  OrganizationState,
+  PersonState,
+} from "@/types/formTypes";
 import { CONTRIBUTION_ROLE } from "@/prisma/client/enums";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -8,7 +12,6 @@ import { getZodOptionFromEnum, zodPerson } from "@/types/zodTypes";
 import ControlledSelect from "@/ui/form/ControlledSelect";
 import { FormInput, getLabel } from "@/ui/form/FormInput";
 import { ChangeEvent, useState } from "react";
-import { updateFeedForm, useFeedForm } from "@/context/feedFormContext";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 import getRoleLabel from "@/utils/getRoleLabel";
 
@@ -25,7 +28,21 @@ const SourceContributionsSchema = z.union([
   }),
 ]);
 
-export default function NewSourceContributionForm({ onContributionCreated }) {
+type NewSourceContributionFormProps = {
+  onContributionCreated: (
+    result:
+      | { kind: "person"; person: PersonState; role: CONTRIBUTION_ROLE }
+      | {
+          kind: "organization";
+          organization: OrganizationState;
+          role: CONTRIBUTION_ROLE;
+        },
+  ) => void;
+};
+
+export default function NewSourceContributionForm({
+  onContributionCreated,
+}: Readonly<NewSourceContributionFormProps>) {
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
@@ -36,7 +53,6 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
     // defaultValues: {},
     resolver: zodResolver(SourceContributionsSchema),
   });
-  const { dispatch: feedFormDispatch } = useFeedForm();
   const [isPerson, setIsPerson] = useState<boolean>(true);
 
   const onIsOrganizationToggleChange = (
@@ -61,7 +77,7 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
     console.log(`[] data :`, data);
     if ("person" in data) {
       // Persist the new person in state
-      const newPerson = {
+      const newPerson: PersonState = {
         id: uuidv4(),
         birthYear: data.person.birthYear,
         ...(!Number.isNaN(data.person?.deathYear)
@@ -72,29 +88,24 @@ export default function NewSourceContributionForm({ onContributionCreated }) {
         isNew: true,
       };
 
-      updateFeedForm(feedFormDispatch, "persons", {
-        array: [newPerson],
-      });
-
       onContributionCreated({
+        kind: "person",
+        person: newPerson,
         role: data.role.value,
-        personId: newPerson.id,
       });
     }
     if ("organization" in data) {
       // Persist the new organization in state
-      const newOrganization = {
+      const newOrganization: OrganizationState = {
         id: uuidv4(),
         name: data.organization.name,
         isNew: true,
       };
-      updateFeedForm(feedFormDispatch, "organizations", {
-        array: [newOrganization],
-      });
 
       onContributionCreated({
+        kind: "organization",
+        organization: newOrganization,
         role: data.role.value,
-        organizationId: newOrganization.id,
       });
     }
   };

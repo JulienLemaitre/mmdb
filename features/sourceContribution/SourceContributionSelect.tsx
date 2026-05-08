@@ -1,6 +1,8 @@
 import Select from "@/ui/form/reactSelect/Select";
 import {
   OptionInput,
+  OrganizationState,
+  PersonState,
 } from "@/types/formTypes";
 import React, { useState } from "react";
 import { CONTRIBUTION_ROLE } from "@/prisma/client/enums";
@@ -19,12 +21,16 @@ type SourceContributionSelectProps = {
     organizationId: string;
     role: CONTRIBUTION_ROLE;
   }) => void;
+  onCreateDraftPerson: (person: PersonState) => void;
+  onCreateDraftOrganization: (organization: OrganizationState) => void;
   onCancel: () => void;
 };
 export default function SourceContributionSelect({
   sourceContributionOptions,
   onAddOrganizationContribution,
   onAddPersonContribution,
+  onCreateDraftOrganization,
+  onCreateDraftPerson,
   onCancel,
 }: Readonly<SourceContributionSelectProps>) {
   const contributionRoleOptions = Object.values(CONTRIBUTION_ROLE).map(
@@ -54,21 +60,27 @@ export default function SourceContributionSelect({
     }
   };
 
-  const onContributionCreated = (contribution: {
-    role: CONTRIBUTION_ROLE;
-    personId?: string;
-    organizationId?: string;
-  }) => {
-    if (contribution.personId) {
+  const onContributionCreated = (
+    result:
+      | { kind: "person"; person: PersonState; role: CONTRIBUTION_ROLE }
+      | {
+          kind: "organization";
+          organization: OrganizationState;
+          role: CONTRIBUTION_ROLE;
+        },
+  ) => {
+    if (result.kind === "person") {
+      onCreateDraftPerson(result.person);
       onAddPersonContribution({
-        role: contribution.role,
-        personId: contribution.personId,
+        role: result.role,
+        personId: result.person.id,
       });
     }
-    if (contribution.organizationId) {
+    if (result.kind === "organization") {
+      onCreateDraftOrganization(result.organization);
       onAddOrganizationContribution({
-        role: contribution.role,
-        organizationId: contribution.organizationId,
+        role: result.role,
+        organizationId: result.organization.id,
       });
     }
   };

@@ -4,7 +4,7 @@ import {
   OrganizationState,
   PersonState,
 } from "@/types/formTypes";
-import { useState } from "react";
+import React, { useState } from "react";
 import PlusIcon from "@/ui/svg/PlusIcon";
 import SourceContributionSelect from "@/features/sourceContribution/SourceContributionSelect";
 import { CONTRIBUTION_ROLE } from "@/prisma/client/enums";
@@ -12,6 +12,7 @@ import MMSourceFormStepNavigation from "@/features/feed/multiStepMMSourceForm/MM
 import TrashIcon from "@/ui/svg/TrashIcon";
 import getRoleLabel from "@/utils/getRoleLabel";
 import _isEqual from "lodash/isEqual";
+import DebugBox from "@/ui/DebugBox";
 
 type SourceContributionSelectFormProps = {
   contributions?: ContributionStateWithoutId[];
@@ -21,6 +22,8 @@ type SourceContributionSelectFormProps = {
     contributions: ContributionStateWithoutId[],
     option: { goToNextStep: boolean },
   ) => void;
+  onCreateDraftPerson: (person: PersonState) => void;
+  onCreateDraftOrganization: (organization: OrganizationState) => void;
   submitTitle?: string;
   title?: string;
 };
@@ -30,6 +33,8 @@ export default function SourceContributionSelectForm({
   persons,
   organizations,
   onSubmit,
+  onCreateDraftOrganization,
+  onCreateDraftPerson,
   submitTitle,
   title,
 }: SourceContributionSelectFormProps) {
@@ -157,6 +162,8 @@ export default function SourceContributionSelectForm({
           onCancel={() => setIsFormOpen(false)}
           onAddPersonContribution={onAddPersonContribution}
           onAddOrganizationContribution={onAddOrganizationContribution}
+          onCreateDraftPerson={onCreateDraftPerson}
+          onCreateDraftOrganization={onCreateDraftOrganization}
         />
       ) : (
         <div>
@@ -180,6 +187,12 @@ export default function SourceContributionSelectForm({
         isPresentFormDirty={isPresentFormDirty}
         isNextDisabled={!(selectedContributions.length > 0 && !isFormOpen)}
         submitTitle={submitTitle}
+      />
+      <DebugBox
+        stateObject={selectedContributions}
+        title="Contribution selection state"
+        // shouldExpandNode={(level) => level < 3}
+        expandAllNodes
       />
     </>
   );
