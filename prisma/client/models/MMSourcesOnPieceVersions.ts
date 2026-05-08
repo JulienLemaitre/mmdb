@@ -185,7 +185,7 @@ export type MMSourcesOnPieceVersionsGroupByOutputType = {
   _max: MMSourcesOnPieceVersionsMaxAggregateOutputType | null
 }
 
-type GetMMSourcesOnPieceVersionsGroupByPayload<T extends MMSourcesOnPieceVersionsGroupByArgs> = Prisma.PrismaPromise<
+export type GetMMSourcesOnPieceVersionsGroupByPayload<T extends MMSourcesOnPieceVersionsGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MMSourcesOnPieceVersionsGroupByOutputType, T['by']> &
       {
@@ -1257,6 +1257,11 @@ export type MMSourcesOnPieceVersionsFindManyArgs<ExtArgs extends runtime.Types.E
    * Skip the first `n` MMSourcesOnPieceVersions.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MMSourcesOnPieceVersions.
+   */
   distinct?: Prisma.MMSourcesOnPieceVersionsScalarFieldEnum | Prisma.MMSourcesOnPieceVersionsScalarFieldEnum[]
 }
 

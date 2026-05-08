@@ -172,7 +172,7 @@ export type ContributionGroupByOutputType = {
   _max: ContributionMaxAggregateOutputType | null
 }
 
-type GetContributionGroupByPayload<T extends ContributionGroupByArgs> = Prisma.PrismaPromise<
+export type GetContributionGroupByPayload<T extends ContributionGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<ContributionGroupByOutputType, T['by']> &
       {
@@ -1460,6 +1460,11 @@ export type ContributionFindManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Skip the first `n` Contributions.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Contributions.
+   */
   distinct?: Prisma.ContributionScalarFieldEnum | Prisma.ContributionScalarFieldEnum[]
 }
 
