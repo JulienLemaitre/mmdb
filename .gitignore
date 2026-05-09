@@ -40,3 +40,6 @@ next-env.d.ts
 .idea
 /temp
 .junie
+
+# httpRequest private env files
+*.private.env.json
