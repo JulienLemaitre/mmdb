@@ -1,20 +1,8 @@
 # Metronome Mark Database - Prisma and PostgreSQL database related docs
 
-## Building the prisma schema and seeding the database
+## Building the prisma schema
 
-### Extracting the data from Arjun's Excel files
-
-In `prisma/ArjunData/20230319_MM_folders` we find the Excel Files from Arjun's Drive folder.
-
-The file `prisma/seedFromXlsx.ts` do the following :
-- it extracts the data from the Excel files and parses it as a dataSheetList array.
-- it parses this dataSheetList object to a well-structured pieceList Array of piece objects containing movements, sections and metronomeMarkList. It also determines note values from the fastest note values and outputs a list of pieces with not found notes.
-- The output of the precedent steps is stored in the file `prisma/output/parsedDataOutput.js`. If this file is found at the start of the `seedFromXlsx.ts` execution, the first two steps are skipped and the precedent output is used instead.
-- it finally uses all this data to seed the database.
-
-### Useful Prisma commands
-
-#### Apply a change in the Prisma schema
+### Apply a change in the Prisma schema
 
 When a change has been made to the Schema, the following command creates a migration file and applies it to the database.
 
@@ -26,7 +14,9 @@ This also generates:
 - the typed prisma client
 - a dbml file in `prisma/dbml/schema.dbml` thanks to the prisma-dbml-generator package.
 
-#### Work on a migration before its application to the database
+**All migration files are stored in the `prisma/migrations` folder, and must be committed to the repository.**
+
+### Work on a migration before its application to the database
 
 If we want to only create the migration file without applying it to the database, use:
 
@@ -41,7 +31,33 @@ Finally, to apply the migration, execute:
 npx prisma migrate dev
 ```
 
-#### Seed the database
+## Generate the Prisma client files
+
+Make sure to generate the Prisma client files after any change to the schema.
+**The client files are generated in the `prisma/generated` folder, and must be committed to the repository.**
+
+```bash
+npx prisma generate
+```
+
+## Deploy to staging / production
+
+During the build on Vercel, the command `npx prisma migrate deploy` is executed.
+So any new migration file will be automatically applied to the database targeted by the Vercel project deployed.
+
+## Seeding the database
+
+### Extracting the data from Arjun's Excel files
+
+In `prisma/ArjunData/20230319_MM_folders` we find the Excel Files from Arjun's Drive folder.
+
+The file `prisma/seedFromXlsx.ts` do the following :
+- it extracts the data from the Excel files and parses it as a dataSheetList array.
+- it parses this dataSheetList object to a well-structured pieceList Array of piece objects containing movements, sections and metronomeMarkList. It also determines note values from the fastest note values and outputs a list of pieces with not found notes.
+- The output of the precedent steps is stored in the file `prisma/output/parsedDataOutput.js`. If this file is found at the start of the `seedFromXlsx.ts` execution, the first two steps are skipped and the precedent output is used instead.
+- it finally uses all this data to seed the database.
+
+### seeding command
 
 The command for the seed script is in the package.json file at `prisma.seed`.
 It can be launched with:
@@ -50,7 +66,7 @@ It can be launched with:
 npx prisma db seed
 ```
 
-#### Reset the database (delete all tables and data + seed)
+### Reset the database (delete all tables and data + seed)
 
 This command will:
 - DROP ALL data and structures from the database.
@@ -61,13 +77,6 @@ This command will:
 npx prisma migrate reset
 ```
 
-## Specific constraint in the database
-
-### Reference constraint
-
-As explained in the Reference model part of the Prisma schema, a constraint Reference_type_reference_isbn_ismn_key is created directly in DB by a migration and makes a unique index (type, reference) for type = ISBN | ISMN.
-This allows having multiple occurrences of the same PLATE_NUMBER references.
-_This cannot be expressed in the Prisma schema_
 
 ## webstorm db extension connexion string for project's Neon databases
 

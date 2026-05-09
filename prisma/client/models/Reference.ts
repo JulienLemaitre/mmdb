@@ -205,6 +205,7 @@ export type ReferenceOrderByWithRelationInput = {
 
 export type ReferenceWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  type_reference?: Prisma.ReferenceTypeReferenceCompoundUniqueInput
   AND?: Prisma.ReferenceWhereInput | Prisma.ReferenceWhereInput[]
   OR?: Prisma.ReferenceWhereInput[]
   NOT?: Prisma.ReferenceWhereInput | Prisma.ReferenceWhereInput[]
@@ -214,7 +215,7 @@ export type ReferenceWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Reference"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reference"> | Date | string
   mMSource?: Prisma.XOR<Prisma.MMSourceScalarRelationFilter, Prisma.MMSourceWhereInput>
-}, "id">
+}, "id" | "type_reference">
 
 export type ReferenceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -310,6 +311,11 @@ export type ReferenceListRelationFilter = {
 
 export type ReferenceOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type ReferenceTypeReferenceCompoundUniqueInput = {
+  type: $Enums.REFERENCE_TYPE
+  reference: string
 }
 
 export type ReferenceCountOrderByAggregateInput = {

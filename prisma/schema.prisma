@@ -4,7 +4,7 @@
 generator client {
   provider        = "prisma-client"
   output          = "./client"
-  previewFeatures = ["postgresqlExtensions"]
+  previewFeatures = ["postgresqlExtensions", "partialIndexes"]
 }
 
 generator dbml {
@@ -43,7 +43,8 @@ model Piece {
   updatedAt         DateTime       @updatedAt
   pieceVersions     PieceVersion[] // A piece can have many versions
 
-  @@unique([composerId, title, collectionId])
+  @@unique([composerId, title, collectionId], where: raw("\"collectionId\" IS NOT NULL"))
+  @@unique([composerId, title], where: raw("\"collectionId\" IS NULL"))
   @@unique([collectionId, collectionRank])
 }
 
@@ -172,8 +173,7 @@ model Reference {
   createdAt  DateTime       @default(now())
   updatedAt  DateTime       @updatedAt
 
-  // A constraint Reference_type_reference_isbn_ismn_key directly in DB makes a unique index (type, reference) for type = ISBN | ISMN.
-  // We can have multiple PLATE_NUMBER references.
+  @@unique([type, reference], where: raw("type IN ('ISBN', 'ISMN')"))
 }
 
 model Contribution {
