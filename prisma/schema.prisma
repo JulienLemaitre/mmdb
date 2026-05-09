@@ -44,7 +44,7 @@ model Piece {
   updatedAt         DateTime       @updatedAt
   pieceVersions     PieceVersion[] // A piece can have many versions
 
-  @@unique([composerId, title])
+  @@unique([composerId, title, collectionId])
   @@unique([collectionId, collectionRank])
 }
 

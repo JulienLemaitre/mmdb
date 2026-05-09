@@ -285,7 +285,7 @@ export type PieceOrderByWithRelationInput = {
 
 export type PieceWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  composerId_title?: Prisma.PieceComposerIdTitleCompoundUniqueInput
+  composerId_title_collectionId?: Prisma.PieceComposerIdTitleCollectionIdCompoundUniqueInput
   collectionId_collectionRank?: Prisma.PieceCollectionIdCollectionRankCompoundUniqueInput
   AND?: Prisma.PieceWhereInput | Prisma.PieceWhereInput[]
   OR?: Prisma.PieceWhereInput[]
@@ -303,7 +303,7 @@ export type PieceWhereUniqueInput = Prisma.AtLeast<{
   composer?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
   creator?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   pieceVersions?: Prisma.PieceVersionListRelationFilter
-}, "id" | "composerId_title" | "collectionId_collectionRank">
+}, "id" | "composerId_title_collectionId" | "collectionId_collectionRank">
 
 export type PieceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -441,9 +441,10 @@ export type PieceOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type PieceComposerIdTitleCompoundUniqueInput = {
+export type PieceComposerIdTitleCollectionIdCompoundUniqueInput = {
   composerId: string
   title: string
+  collectionId: string
 }
 
 export type PieceCollectionIdCollectionRankCompoundUniqueInput = {
