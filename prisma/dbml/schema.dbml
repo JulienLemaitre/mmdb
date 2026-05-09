@@ -33,7 +33,6 @@ Table Piece {
   pieceVersions PieceVersion [not null]
 
   indexes {
-    (composerId, title, collectionId) [unique]
     (collectionId, collectionRank) [unique]
   }
 }
