@@ -46,7 +46,18 @@ const ComposerSelectOrCreate = ({
     hasComposerJustBeenCreated || isNewComposerUpdate,
   );
 
-  let composerFullList = [...(composers || []), ...(newPersons || [])];
+  const composerFullListToDeduplicate = [
+    ...(composers || []),
+    ...(newPersons || []),
+  ];
+  const composerIdSet = new Set();
+  let composerFullList: PersonState[] = [];
+  composerFullListToDeduplicate.forEach((composer) => {
+    if (!composerIdSet.has(composer.id)) {
+      composerIdSet.add(composer.id);
+      composerFullList.push(composer);
+    }
+  });
 
   // If we have new composers, we need to sort the composerFullList
   if (newPersons?.length) {
