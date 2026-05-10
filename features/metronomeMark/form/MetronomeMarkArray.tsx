@@ -106,6 +106,7 @@ export default function MetronomeMarkArray({
   watch,
   sectionList,
   setValue,
+  resetField,
   getValues,
 }) {
   useFieldArray({
@@ -134,9 +135,7 @@ export default function MetronomeMarkArray({
   const resetValue = (idx: number, valueName: string) => {
     const path = `metronomeMarks.${idx}.${valueName}` as const;
 
-    if (getValues(path)) {
-      setValue(path, undefined);
-    }
+    resetField(path);
   };
 
   const organizedData = processSectionsForDisplay(sectionList, state);

@@ -51,6 +51,7 @@ export default function MetronomeMarksForm({
     register,
     handleSubmit,
     setValue,
+    resetField,
     getValues,
     watch,
     trigger,
@@ -128,6 +129,7 @@ export default function MetronomeMarksForm({
         {...{ control, register, errors, watch, getValues }}
         sectionList={sectionList}
         setValue={setValue}
+        resetField={resetField}
       />
       {isOneMMRequiredError && (
         <div role="alert" className="alert alert-error mt-6">
