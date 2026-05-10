@@ -12,7 +12,7 @@ type ComposerSelectOrCreateProps = {
   feedFormState: FeedFormState;
   singlePieceVersionFormState: SinglePieceVersionFormState;
   onComposerCreated: (composer: PersonInput) => void;
-  onComposerSelect: (composer: PersonInput) => void;
+  onComposerSelect: (composer: PersonState) => void;
   selectedComposerId: string | null;
   onInitComposerCreation: () => void;
   onCancelComposerCreation: () => void;

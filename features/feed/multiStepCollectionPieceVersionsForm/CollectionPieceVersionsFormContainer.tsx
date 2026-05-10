@@ -25,7 +25,7 @@ import { v4 as uuidv4 } from "uuid";
 import CollectionPieceVersionsSteps from "@/features/feed/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsSteps";
 import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
 import React, { useCallback, useEffect } from "react";
-import CollectionPieceVersionFormSummary from "@/features/feed/multiStepSinglePieceVersionForm/CollectionPieceVersionFormSummary";
+import CollectionPieceVersionFormSummary from "./CollectionPieceVersionFormSummary";
 import { COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 import { URL_API_GETALL_COLLECTION_PIECES } from "@/utils/routes";
 import { MakeOptional } from "@/types/typescriptUtils";
@@ -106,16 +106,10 @@ function CollectionPieceVersionsFormContainer({
       next: true,
     });
   };
-  const onComposerSelect = (composer: PersonInput) => {
-    const selectedComposer = getPersonStateFromPersonInput({
-      ...(collectionPieceVersionFormState.persons?.find(
-        (p) => p.id === composer.id,
-      ) || feedFormState.persons?.find((p) => p.id === composer.id)),
-      ...composer,
-    });
-    upsertCollectionPersons(dispatch, { array: [selectedComposer] });
+  const onComposerSelect = (composer: PersonState) => {
+    upsertCollectionPersons(dispatch, { array: [composer] });
     updateCollection(dispatch, {
-      value: { composerId: selectedComposer.id },
+      value: { composerId: composer.id },
       reset: true,
       next: true,
     });
