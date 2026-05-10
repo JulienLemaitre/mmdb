@@ -1,4 +1,20 @@
+import { getNewUuid } from "@/utils/getNewUuid";
+
 export default function getFeedFormTestState() {
+  const personId1 = getNewUuid();
+  const pieceVersionId1 = getNewUuid();
+  const pieceId1 = getNewUuid();
+  const mvt1 = getNewUuid();
+  const section1 = getNewUuid();
+  const randomFirstName = getNewUuid()
+    .replace(/-/g, "")
+    .replace(/_/g, "")
+    .replace(/\d/g, "");
+  const randomLastName = getNewUuid()
+    .replace(/-/g, "")
+    .replace(/_/g, "")
+    .replace(/\d/g, "");
+
   return {
     formInfo: {
       currentStepRank: 3,
@@ -16,31 +32,27 @@ export default function getFeedFormTestState() {
       references: [],
       isNew: true,
     },
-    mMSourceContributions: [
-      { personId: "638c9ce0-1a82-4ee7-a851-e48c1d2ea770", role: "EDITOR" },
-    ],
-    mMSourceOnPieceVersions: [
-      { pieceVersionId: "fdceb470-341b-4e00-a283-206c711ba89d", rank: 1 },
-    ],
+    mMSourceContributions: [{ personId: personId1, role: "EDITOR" }],
+    mMSourceOnPieceVersions: [{ pieceVersionId: pieceVersionId1, rank: 1 }],
     collections: [],
     metronomeMarks: [],
     organizations: [],
     persons: [
       {
-        id: "638c9ce0-1a82-4ee7-a851-e48c1d2ea770",
+        id: personId1,
         birthYear: 1980,
         deathYear: null,
-        firstName: "Moi",
-        lastName: "Même",
+        firstName: randomFirstName,
+        lastName: randomLastName,
         isNew: true,
       },
     ],
     pieces: [
       {
         title: "First piece",
-        composerId: "638c9ce0-1a82-4ee7-a851-e48c1d2ea770",
+        composerId: personId1,
         yearOfComposition: null,
-        id: "70249777-764e-44b9-82ea-0ebeac01c6b7",
+        id: pieceId1,
         isNew: true,
       },
     ],
@@ -49,12 +61,12 @@ export default function getFeedFormTestState() {
         category: "VOCAL",
         movements: [
           {
-            id: "22a115a2-f664-4271-b5f4-13a84c82e47d",
+            id: mvt1,
             rank: 1,
             key: "F_FLAT_MINOR",
             sections: [
               {
-                id: "59417608-9629-4b71-a19f-8f6d759c9eab",
+                id: section1,
                 metreNumerator: 4,
                 metreDenominator: 4,
                 isCommonTime: true,
@@ -70,8 +82,8 @@ export default function getFeedFormTestState() {
             ],
           },
         ],
-        pieceId: "70249777-764e-44b9-82ea-0ebeac01c6b7",
-        id: "fdceb470-341b-4e00-a283-206c711ba89d",
+        pieceId: pieceId1,
+        id: pieceVersionId1,
         isNew: true,
       },
     ],
