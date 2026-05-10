@@ -1,7 +1,7 @@
 import { useFieldArray } from "react-hook-form";
 import ControlledSelect from "@/ui/form/ControlledSelect";
 import TrashIcon from "@/ui/svg/TrashIcon";
-import { FormInput } from "@/ui/form/FormInput";
+import { FormInput, FormTextarea } from "@/ui/form/FormInput";
 import { NOTE_VALUE } from "@/prisma/client/enums";
 import React, { useEffect, useState } from "react";
 import { useFeedForm } from "@/context/feedFormContext";
@@ -181,7 +181,7 @@ export default function MetronomeMarkArray({
         </div>
         {commentToShow.includes(formIndex) && (
           <div className="flex items-end gap-3 mb-2">
-            <FormInput
+            <FormTextarea
               name={`metronomeMarks.${formIndex}.comment` as const}
               label={`Comment`}
               controlClassName="max-w-none mt-0"
@@ -216,7 +216,6 @@ export default function MetronomeMarkArray({
                 if (checked) {
                   resetValue(formIndex, "beatUnit");
                   resetValue(formIndex, "bpm");
-                  resetValue(formIndex, "comment");
                 }
               }}
               type="checkbox"
