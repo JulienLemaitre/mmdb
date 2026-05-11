@@ -30,6 +30,9 @@ import {
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
 import { localStorageRemoveItem } from "@/utils/localStorage";
+import XMarkIcon from "@/ui/svg/XMarkIcon";
+import PieceVersionDisplay from "@/features/pieceVersion/PieceVersionDisplay";
+import InformationCircleIcon from "@/ui/svg/InformationCircleIcon";
 
 type CollectionPieceVersionsEditFormProps = {
   isUpdateMode: boolean;
@@ -63,6 +66,9 @@ function CollectionPieceVersionsEditForm({
 
   const getPieceVersionById = (pieceVersionId: string) =>
     state.pieceVersions?.find((pv) => pv.id === pieceVersionId);
+
+  const getPieceVersionByPieceId = (pieceId: string) =>
+    state.pieceVersions?.find((pv) => pv.pieceId === pieceId);
 
   const getPieceById = (pieceId: string) =>
     state.pieces?.find((p) => p.id === pieceId);
@@ -133,7 +139,7 @@ function CollectionPieceVersionsEditForm({
       const { collectionRank } = collectionPieceVersion;
       piece = collectionPieceVersion;
       rank = collectionRank;
-      pieceVersion = undefined;
+      pieceVersion = getPieceVersionByPieceId(piece.id);
     }
 
     if (!piece) {
@@ -335,24 +341,42 @@ function CollectionPieceVersionsEditForm({
                     a.collectionRank > b.collectionRank ? 1 : -1,
                   )
                   .map((piece, index) => {
-                    const isPieceVersionSet = collectionPieceVersions.some(
-                      (cpv) =>
-                        getPieceVersionById(cpv.pieceVersionId)?.pieceId ===
-                        piece.id,
-                    );
+                    const pieceVersion = getPieceVersionByPieceId(piece.id);
+                    const isPieceVersionSet = !!pieceVersion;
                     return (
                       <li key={`${index}-${piece.id}-${piece.collectionRank}`}>
                         <div className="px-4 py-3 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-xs hover:bg-primary/5 transition-all duration-150">
                           <div className="flex gap-4 items-center justify-between">
                             <div className="grow flex gap-2 items-center justify-between">
-                              <h4 className="text-base font-bold text-secondary">
-                                {`${index + 1} - ${piece.title}`}
-                              </h4>
+                              <div className="grow">
+                                <div className="flex items-center gap-2">
+                                  <h4 className="text-base font-bold text-secondary">
+                                    {`${index + 1} - ${piece.title}`}
+                                  </h4>
+                                  {pieceVersion && (
+                                    <div
+                                      className="tooltip tooltip-right"
+                                      data-tip=""
+                                    >
+                                      <div className="tooltip-content">
+                                        <PieceVersionDisplay
+                                          pieceVersion={pieceVersion}
+                                        />
+                                      </div>
+                                      <InformationCircleIcon className="w-5 h-5 text-info/50 hover:text-info tooltip-icon" />
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
                               {isPieceVersionSet ? (
                                 <span className="text-success">
                                   <CheckIcon className="w-7 h-7" />
                                 </span>
-                              ) : null}
+                              ) : (
+                                <span className="text-neutral">
+                                  <XMarkIcon className="w-7 h-7" />
+                                </span>
+                              )}
                             </div>
                             <div className="flex gap-2 shrink-0">
                               <button
