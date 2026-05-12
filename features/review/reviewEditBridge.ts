@@ -112,7 +112,9 @@ export function getCurrentSinglePieceStepRank(
     }
     return 1;
   }
-  if (["PIECE_VERSION", "SECTION"].includes(clickedItem.entityType)) {
+  if (
+    ["PIECE_VERSION", "MOVEMENT", "SECTION"].includes(clickedItem.entityType)
+  ) {
     return 2;
   }
   return 3;
