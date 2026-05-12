@@ -129,7 +129,7 @@ export default function PieceVersionEditForm({
         onSubmit={handleSubmit(onSubmit)}
         onKeyDown={preventEnterKeySubmission}
       >
-        <fieldset className="fieldset border border-base-300 rounded-lg hover:border-base-400 hover:shadow-xs hover:bg-primary/5 transition-all duration-150 px-4 pb-4">
+        <fieldset className="fieldset text-base border border-base-300 rounded-lg hover:border-base-400 hover:shadow-xs hover:bg-primary/5 transition-all duration-150 px-4 pb-4">
           <legend className="fieldset-legend">Piece</legend>
           <ControlledSelect
             name="category"

@@ -240,7 +240,7 @@ export function FormTextarea({
 
   return (
     <div
-      className={`form-control w-full ${controlClassName}${disabled ? ` opacity-50` : ""}`}
+      className={`form-control w-full ${controlClassName}${disabled ? ` opacity-50` : ""} ${!controlClassName.includes("mt-") && "mt-2"}`}
     >
       {(label || getLabel(name)) && (
         <label className="label">
@@ -256,8 +256,9 @@ export function FormTextarea({
         rules={isRequired ? { required: "Info obligatoire" } : {}}
         render={({ field }) => (
           <textarea
-            className={`textarea h-24 w-full textarea-bordered ${inputClassName}`}
+            className={`textarea w-full textarea-bordered ${inputClassName}`}
             {...field}
+            value={field.value ?? ""}
             disabled={disabled}
             onBlur={() => {
               field.onBlur();

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFieldArray } from "react-hook-form";
 import dynamic from "next/dynamic";
-import { FormInput } from "@/ui/form/FormInput";
+import { FormInput, FormTextarea } from "@/ui/form/FormInput";
 import PlusIcon from "@/ui/svg/PlusIcon";
 import TrashIcon from "@/ui/svg/TrashIcon";
 import ArrowUpIcon from "@/ui/svg/ArrowUpIcon";
@@ -262,14 +262,14 @@ export default function SectionArray({
                 inputMode="numeric"
                 {...{ register, control, errors }}
               />
-              <FormInput
+              <FormTextarea
                 name={
                   `movements[${nestIndex}].sections[${index}].comment` as const
                 }
                 label={`Comment`}
                 {...{ register, control, errors }}
               />
-              <FormInput
+              <FormTextarea
                 name={
                   `movements[${nestIndex}].sections[${index}].commentForReview` as const
                 }
