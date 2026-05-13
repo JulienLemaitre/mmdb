@@ -27,6 +27,7 @@ import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput
 import React, { useCallback, useEffect } from "react";
 import CollectionPieceVersionFormSummary from "./CollectionPieceVersionFormSummary";
 import { COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
+import { localStorageRemoveItem } from "@/utils/localStorage";
 import { URL_API_GETALL_COLLECTION_PIECES } from "@/utils/routes";
 import { MakeOptional } from "@/types/typescriptUtils";
 import { commitCollectionPieceVersionsFormToFeedForm } from "@/utils/commitCollectionPieceVersionsFormToFeedForm";
@@ -270,7 +271,7 @@ function CollectionPieceVersionsFormContainer({
     console.log(
       `[localStorage REMOVE] ${COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY}`,
     );
-    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
 
     onFormClose();
   };
@@ -293,7 +294,7 @@ function CollectionPieceVersionsFormContainer({
     console.log(
       `[localStorage REMOVE] ${COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY}`,
     );
-    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
 
     onFormClose();
   };

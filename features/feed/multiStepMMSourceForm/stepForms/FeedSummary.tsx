@@ -9,6 +9,7 @@ import {
   FEED_FORM_LOCAL_STORAGE_KEY,
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
+import { localStorageRemoveItems } from "@/utils/localStorage";
 import dynamic from "next/dynamic";
 import getKeyLabel from "@/utils/getKeyLabel";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
@@ -122,9 +123,11 @@ function FeedSummary() {
   }, [isSaveSuccess]);
 
   const onReset = () => {
-    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
-    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
-    localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItems([
+      SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+      COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+      FEED_FORM_LOCAL_STORAGE_KEY,
+    ]);
     initFeedForm(dispatch);
   };
 
