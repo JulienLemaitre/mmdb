@@ -84,7 +84,7 @@ function CollectionPieceVersionsFormContainer({
 
   const onInitComposerCreation = () => {
     updateCollection(dispatch, {
-      value: { composerId: undefined }, // TODO test: null before
+      value: { composerId: undefined },
       reset: true,
     });
   };
@@ -121,7 +121,7 @@ function CollectionPieceVersionsFormContainer({
       // Case: coming back after having first submitted the new composer and cancel it. All in the same collectionPieceVersionsForm.
       updateCollection(dispatch, {
         value: {
-          composerId: undefined, // TODO test: null before
+          composerId: undefined,
         },
         reset: true,
       });
@@ -135,7 +135,7 @@ function CollectionPieceVersionsFormContainer({
       value: {
         composerId: selectedComposerId,
         ...(hasComposerJustBeenCreated ? { isComposerNew: true } : {}),
-        id: undefined, // TODO test: null before
+        id: undefined,
       },
       reset: true,
     });
@@ -147,7 +147,7 @@ function CollectionPieceVersionsFormContainer({
         value: {
           composerId: selectedComposerId,
           ...(hasComposerJustBeenCreated ? { isComposerNew: true } : {}),
-          id: undefined, // TODO test: null before
+          id: undefined,
         },
         reset: true,
       });
