@@ -14,7 +14,7 @@ export function withLocalStorage<T, U>(
 
     // On first call, merge with localStorage if available
     if (!isInitialized) {
-      const savedState = localStorageGetItem(storageKey);
+      const savedState = localStorageGetItem<T>(storageKey);
 
       if (savedState) {
         try {
