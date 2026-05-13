@@ -9,3 +9,7 @@ export type MakeOptional<Type, Key extends keyof Type> = Omit<Type, Key> &
   Partial<Pick<Type, Key>>;
 
 export type WithRequiredId<T extends { id?: string }> = MakeRequired<T, "id">;
+
+export function assertNever(value: never): never {
+  throw new Error(`Unhandled action: ${JSON.stringify(value)}`);
+}

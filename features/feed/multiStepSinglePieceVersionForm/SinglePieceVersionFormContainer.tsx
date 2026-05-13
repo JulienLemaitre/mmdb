@@ -10,9 +10,11 @@ import {
   PersonInput,
   PersonState,
   PieceInput,
+  PieceState,
   PieceVersionInput,
+  PieceVersionState,
 } from "@/types/formTypes";
-import { updateFeedForm, useFeedForm } from "@/context/feedFormContext";
+import { useFeedForm } from "@/context/feedFormContext";
 import getPieceStateFromInput from "@/utils/getPieceStateFromInput";
 import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput";
 import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
@@ -20,14 +22,15 @@ import SinglePieceVersionFormSummary from "@/features/feed/multiStepSinglePieceV
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 import { SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 import { debug, prodLog } from "@/utils/debugLogger";
+import { localStorageRemoveItem } from "@/utils/localStorage";
+import { commitSinglePieceVersionFormToFeedForm } from "@/utils/commitSinglePieceVersionFormToFeedForm";
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
   onSubmit?: (payload: any, options?: { isUpdateMode?: boolean }) => void;
-  initPayload?: any;
   isCollectionMode?: boolean;
   isCollectionUpdateMode?: boolean;
-  composerId?: string;
+  composer?: PersonState;
   newPieceDefaultTitle?: string;
   collectionId?: string;
   collectionFormState?: CollectionPieceVersionsFormState;
@@ -45,7 +48,7 @@ const SinglePieceVersionFormContainer = ({
   onSubmit,
   isCollectionMode,
   isCollectionUpdateMode,
-  composerId,
+  composer,
   newPieceDefaultTitle,
   collectionId,
   collectionFormState,
@@ -77,16 +80,15 @@ const SinglePieceVersionFormContainer = ({
     if (
       isCollectionMode &&
       !isPreexistingCollectionEdit &&
-      composerId &&
+      composer &&
       currentStepRank === 0
     ) {
       debug.info(
         `[SinglePieceVersionFormContainer in Collection] auto-complete the "composer" step and go to the next step = piece`,
+        composer,
       );
       updateSinglePieceVersionForm(dispatch, "composer", {
-        value: {
-          id: composerId,
-        },
+        value: composer,
         next: true,
       });
     }
@@ -101,7 +103,7 @@ const SinglePieceVersionFormContainer = ({
       });
     }
   }, [
-    composerId,
+    composer,
     currentStepRank,
     dispatch,
     isCollectionMode,
@@ -116,7 +118,7 @@ const SinglePieceVersionFormContainer = ({
 
   const onInitComposerCreation = () => {
     updateSinglePieceVersionForm(dispatch, "composer", {
-      value: { id: null },
+      value: undefined,
     });
   };
   const onComposerCreated = (composer: PersonInput) => {
@@ -127,32 +129,24 @@ const SinglePieceVersionFormContainer = ({
       ...composer,
     });
     newComposer.isNew = true;
-    updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
     updateSinglePieceVersionForm(dispatch, "composer", {
-      value: { id: newComposer.id, isNew: true },
+      value: newComposer,
       next: true,
     });
   };
 
-  const onComposerSelect = (composer: PersonInput) => {
-    updateFeedForm(feedFormDispatch, "persons", { array: [composer] });
+  const onComposerSelect = (composer: PersonState) => {
     updateSinglePieceVersionForm(dispatch, "composer", {
-      value: { id: composer.id },
+      value: composer,
       next: true,
     });
   };
 
   const onCancelComposerCreation = () => {
     if (singlePieceVersionFormState.composer?.isNew) {
-      // Case: coming back after having first submitted the new composer and cancel it. All in the same singlePieceVersionForm.
-      // => The composer's data is in the feedFormState; we delete it there too.
+      // Case: coming back after having first submitted the new composer and now canceling it. All in the same singlePieceVersionForm.
       updateSinglePieceVersionForm(dispatch, "composer", {
-        value: {
-          id: null,
-        },
-      });
-      updateFeedForm(feedFormDispatch, "persons", {
-        deleteIdArray: [selectedComposerId],
+        value: undefined,
       });
     }
   };
@@ -163,7 +157,7 @@ const SinglePieceVersionFormContainer = ({
 
   const onInitPieceCreation = () => {
     updateSinglePieceVersionForm(dispatch, "piece", {
-      value: { id: null },
+      value: undefined,
     });
   };
 
@@ -176,9 +170,8 @@ const SinglePieceVersionFormContainer = ({
     const composerId = pieceData.composerId || selectedComposerId;
     if (!composerId) {
       prodLog.error(
-        "OUPS: No composerId in pieceData or form state to link to the piece",
+        "[onPieceCreated] OUPS: No composerId in pieceData or form state to link to the piece",
       );
-      // TODO: trigger a toast
       return;
     }
 
@@ -193,53 +186,42 @@ const SinglePieceVersionFormContainer = ({
       (key) => finalValue[key] == null && delete finalValue[key],
     );
 
-    const pieceState = getPieceStateFromInput(finalValue);
+    let pieceState = getPieceStateFromInput(finalValue);
     pieceState.isNew = true;
 
-    let piecesArray = [pieceState];
-
     if (isCollectionMode && collectionId && collectionFormState) {
-      piecesArray = piecesArray.map((piece) => ({
-        ...piece,
+      pieceState = {
+        ...pieceState,
         collectionId,
         collectionRank:
           ((collectionFormState.mMSourceOnPieceVersions || []).length || 0) + 1,
-      }));
+      };
     }
-    debug.info(`[with potential collection value] piecesArray :`, piecesArray);
+    debug.info(
+      `[onPieceCreated] pieceState (with potential collection value):`,
+      pieceState,
+    );
 
-    updateFeedForm(feedFormDispatch, "pieces", {
-      array: piecesArray,
-    });
     updateSinglePieceVersionForm(dispatch, "piece", {
-      value: { id: pieceState.id, isNew: true },
+      value: pieceState,
+      next: true,
+    });
+  };
+
+  const onPieceSelect = (piece: PieceState) => {
+    updateSinglePieceVersionForm(dispatch, "piece", {
+      value: piece,
       next: true,
     });
   };
 
   const onCancelPieceCreation = () => {
     if (singlePieceVersionFormState.piece?.isNew) {
-      // Case: coming back after having first submitted the new piece and cancel it. All in the same singlePieceVersionForm.
-      // => The piece's data is in the feedFormState; we delete it there too.
+      // Case: coming back after having first submitted the new piece and now canceling it. All in the same singlePieceVersionForm.
       updateSinglePieceVersionForm(dispatch, "piece", {
-        value: {
-          id: null,
-        },
-      });
-      updateFeedForm(feedFormDispatch, "pieces", {
-        deleteIdArray: [selectedPieceId],
+        value: undefined,
       });
     }
-  };
-
-  const onPieceSelect = (piece: PieceInput) => {
-    updateFeedForm(feedFormDispatch, "pieces", { array: [piece] });
-    updateSinglePieceVersionForm(dispatch, "piece", {
-      value: {
-        id: piece.id,
-      },
-      next: true,
-    });
   };
 
   /////////////////// PIECE VERSION ////////////////////
@@ -248,7 +230,7 @@ const SinglePieceVersionFormContainer = ({
 
   const onInitPieceVersionCreation = () => {
     updateSinglePieceVersionForm(dispatch, "pieceVersion", {
-      value: { id: null },
+      value: undefined,
     });
   };
 
@@ -277,43 +259,28 @@ const SinglePieceVersionFormContainer = ({
     });
     pieceVersionState.isNew = true;
     debug.info("New pieceVersion to be stored in state", pieceVersionState);
-    updateFeedForm(feedFormDispatch, "pieceVersions", {
-      array: [pieceVersionState],
-    });
     updateSinglePieceVersionForm(dispatch, "pieceVersion", {
-      value: { id: pieceVersionState.id, isNew: true },
-      // value: pieceVersionState,
+      value: pieceVersionState,
+      next: true,
+    });
+  };
+
+  const onPieceVersionSelect = (pieceVersion: PieceVersionState) => {
+    updateSinglePieceVersionForm(dispatch, "pieceVersion", {
+      value: pieceVersion,
       next: true,
     });
   };
 
   const onCancelPieceVersionCreation = () => {
     if (singlePieceVersionFormState.pieceVersion?.isNew) {
-      // Case: coming back after having first submitted the new pieceVersion and cancel it. All in the same singlePieceVersionForm.
-      // => The pieceVersion's data is in the feedFormState; we delete it there too.
+      // Case: coming back after having first submitted the new pieceVersion and now canceling it. All in the same singlePieceVersionForm.
       updateSinglePieceVersionForm(dispatch, "pieceVersion", {
-        value: {
-          id: null,
-        },
-      });
-      updateFeedForm(feedFormDispatch, "pieceVersions", {
-        deleteIdArray: [selectedPieceVersionId],
+        value: undefined,
       });
     }
 
     updateSinglePieceVersionForm(dispatch, "goToPrevStep", {});
-  };
-
-  const onPieceVersionSelect = (pieceVersion: PieceVersionInput) => {
-    updateFeedForm(feedFormDispatch, "pieceVersions", {
-      array: [pieceVersion],
-    });
-    updateSinglePieceVersionForm(dispatch, "pieceVersion", {
-      value: {
-        id: pieceVersion.id,
-      },
-      next: true,
-    });
   };
 
   /////////////////// SUMMARY ////////////////////
@@ -321,41 +288,31 @@ const SinglePieceVersionFormContainer = ({
   const onSubmitSourceOnPieceVersions = () => {
     if (!singlePieceVersionFormState.pieceVersion?.id) {
       debug.info(
-        `[onAddPieceVersionOnSource] ERROR: state.pieceVersion?.id SHOULD BE DEFINED`,
+        `[onSubmitSourceOnPieceVersions] ERROR: state.pieceVersion?.id SHOULD BE DEFINED`,
       );
       return;
     }
 
-    // In case of update, we need to keep the existing rank of the mMSourceOnPieceVersion
-    const mMSourceOnPieceVersionRank =
-      singlePieceVersionFormState.formInfo.mMSourceOnPieceVersionRank;
-
-    const payload = {
-      idKey: "rank", // items with the same idKey value will be replaced by the payload corresponding items.
-      array: [
-        {
-          pieceVersionId: singlePieceVersionFormState.pieceVersion?.id,
-          rank: isUpdateMode
-            ? mMSourceOnPieceVersionRank
-            : isCollectionMode && collectionFormState
-              ? (collectionFormState.mMSourceOnPieceVersions || []).length + 1 // Rank if added in a collection
-              : (feedFormState.mMSourceOnPieceVersions || []).length + 1, // Rank if added as singlePiece in feedForm
-        },
-      ],
-    };
     // This is useful for submitting a pieceVersion to a collection form instead of the general feedForm
     if (typeof onSubmit === "function") {
       debug.info(`[SUBMIT] with provided onSubmit function`);
-      onSubmit(payload, { isUpdateMode });
+      onSubmit(singlePieceVersionFormState, { isUpdateMode });
     } else {
-      updateFeedForm(feedFormDispatch, "mMSourceOnPieceVersions", payload);
+      commitSinglePieceVersionFormToFeedForm({
+        singlePieceVersionFormState,
+        feedFormState,
+        feedFormDispatch,
+        isUpdateMode,
+        isCollectionMode,
+        collectionFormState,
+      });
     }
 
     // Reset localStorage
     debug.info(
       `[localStorage REMOVE] ${SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY}`,
     );
-    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
 
     onFormClose();
   };
@@ -364,7 +321,7 @@ const SinglePieceVersionFormContainer = ({
     <div className="w-full max-w-3xl">
       <div className="flex gap-3">
         <div className="flex-1">
-          <h2 className="mb-3 text-3xl font-bold">{`${isUpdateMode ? `Update` : `Add`} a ${isCollectionMode ? `piece ${isUpdateMode ? `of` : `to`} the collection` : `single piece`}`}</h2>
+          <h2 className="mb-3 text-3xl font-bold">{`${isUpdateMode ? "Update" : "Add"} a ${isCollectionMode ? `piece ${isUpdateMode ? "of" : "to"} the collection` : "single piece"}`}</h2>
           <SinglePieceVersionSteps
             isCollectionMode={isCollectionMode}
             isPreexistingCollectionEdit={isPreexistingCollectionEdit}

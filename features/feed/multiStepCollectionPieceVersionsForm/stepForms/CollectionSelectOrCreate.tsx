@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import CollectionSelectForm from "@/features/collection/CollectionSelectForm";
 import CollectionEditForm from "@/features/collection/CollectionEditForm";
 import { CollectionState, CollectionTitleInput } from "@/types/formTypes";
-import { getNewEntities } from "@/context/feedFormContext";
-import { FeedFormState } from "@/types/feedFormTypes";
 import { URL_API_GETALL_COMPOSER_COLLECTION } from "@/utils/routes";
 import { LoaderCentered } from "@/ui/LoaderCentered";
 
 type CollectionSelectOrCreateProps = {
-  feedFormState: FeedFormState;
   selectedCollectionId?: string;
   selectedComposerId?: string;
+  collection?: Partial<CollectionState>;
   onCollectionCreated: (collection: CollectionTitleInput) => void;
   onCollectionSelect: (collection: CollectionState) => void;
   onInitCollectionCreation: () => void;
@@ -21,9 +19,9 @@ type CollectionSelectOrCreateProps = {
 };
 
 const CollectionSelectOrCreate = ({
-  feedFormState,
   selectedCollectionId,
   selectedComposerId,
+  collection,
   onCollectionCreated,
   onCollectionSelect,
   hasComposerJustBeenCreated,
@@ -36,20 +34,29 @@ const CollectionSelectOrCreate = ({
     null,
   );
   const [isLoading, setIsLoading] = useState(!hasComposerJustBeenCreated);
-  const newCollections = getNewEntities(feedFormState, "collections", {
-    includeUnusedInFeedForm: true,
-  }).filter((collection) => collection.composerId === selectedComposerId);
+  const isCollectionNewInWorkflow = !!collection?.isNew;
+  const localCollection =
+    collection?.id && collection?.composerId === selectedComposerId
+      ? (collection as CollectionState)
+      : undefined;
   const isNewCollectionUpdate =
-    isUpdateMode && newCollections.some((c) => c.id === selectedCollectionId);
+    isUpdateMode && isCollectionNewInWorkflow && !!selectedCollectionId;
   const [isCreation, setIsCreation] = useState(
     hasComposerJustBeenCreated ||
       hasCollectionJustBeenCreated ||
       isNewCollectionUpdate,
   );
-  let collectionFullList = [...(collections || []), ...(newCollections || [])];
+  let collectionFullList = [...(collections || [])];
 
-  // If we have new collections, we need to sort the collectionFullList
-  if (newCollections?.length) {
+  if (
+    localCollection &&
+    !collectionFullList.some((existing) => existing.id === localCollection.id)
+  ) {
+    collectionFullList = [...collectionFullList, localCollection];
+  }
+
+  // If we have local workflow collection, we need to sort the collectionFullList
+  if (localCollection) {
     collectionFullList = collectionFullList.sort((a, b) => {
       if (a.title < b.title) return -1;
       if (a.title > b.title) return 1;

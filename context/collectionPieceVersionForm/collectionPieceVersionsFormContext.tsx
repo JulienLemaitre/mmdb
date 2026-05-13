@@ -10,8 +10,9 @@ import {
   getCollectionFormStepByRank,
   getLastCompletedStep,
 } from "@/features/feed/multiStepCollectionPieceVersionsForm/stepsUtils";
-import { collectionPieceVersionsFormReducer } from "@/context/collectionPieceVersionFormReducer";
+import { collectionPieceVersionsFormReducer } from "@/context/collectionPieceVersionForm/collectionPieceVersionFormReducer";
 import {
+  CollectionPieceVersionsFormInfo,
   CollectionPieceVersionsFormProviderProps,
   CollectionPieceVersionsFormState,
   Dispatch,
@@ -21,6 +22,14 @@ import {
   COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
 import { localStorageGetItem } from "@/utils/localStorage";
+import {
+  CollectionState,
+  MMSourceOnPieceVersionsState,
+  PersonState,
+  PieceState,
+  PieceVersionState,
+  TempoIndicationState,
+} from "@/types/formTypes";
 
 const CollectionPieceVersionsFormContext = createContext<
   | {
@@ -40,7 +49,7 @@ export function CollectionPieceVersionsFormProvider({
   );
 
   useEffect(() => {
-    const localStorageValue = localStorageGetItem(
+    const localStorageValue: any = localStorageGetItem(
       COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
     );
     if (localStorageValue) {
@@ -82,13 +91,83 @@ export function useCollectionPieceVersionsForm() {
   };
 }
 
-export function updateCollectionPieceVersionsForm(dispatch, type, value) {
-  dispatch({ type, payload: value });
+export function goToCollectionFormStep(dispatch: Dispatch, stepRank: number) {
+  if (stepRank < 0) {
+    throw new Error("Step rank cannot be negative");
+  }
+  dispatch({ type: "goToStep", payload: { stepRank } });
 }
 
 export function initCollectionPieceVersionsForm(
-  dispatch,
-  initialState = COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
+  dispatch: Dispatch,
+  initialState: CollectionPieceVersionsFormState = COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
 ) {
   dispatch({ type: "init", payload: initialState });
+}
+
+// Action creator typés
+
+export function updateCollectionFormInfo(
+  dispatch: Dispatch,
+  payload: Partial<CollectionPieceVersionsFormInfo>,
+) {
+  dispatch({ type: "formInfo", payload });
+}
+
+export function updateCollection(
+  dispatch: Dispatch,
+  payload: {
+    value: Partial<CollectionState & { isComposerNew?: boolean }> | undefined;
+    reset?: boolean;
+    next?: boolean;
+  },
+) {
+  dispatch({ type: "collection", payload });
+}
+
+export function upsertCollectionPersons(
+  dispatch: Dispatch,
+  payload: {
+    array: PersonState[];
+  },
+) {
+  dispatch({ type: "persons", payload });
+}
+
+export function upsertCollectionPieces(
+  dispatch: Dispatch,
+  payload: {
+    array: PieceState[];
+    reset?: boolean;
+  },
+) {
+  dispatch({ type: "pieces", payload });
+}
+
+export function upsertCollectionPieceVersions(
+  dispatch: Dispatch,
+  payload: {
+    array: PieceVersionState[];
+  },
+) {
+  dispatch({ type: "pieceVersions", payload });
+}
+
+export function upsertCollectionTempoIndications(
+  dispatch: Dispatch,
+  payload: {
+    array: TempoIndicationState[];
+  },
+) {
+  dispatch({ type: "tempoIndications", payload });
+}
+
+export function upsertCollectionMMSourceOnPieceVersions(
+  dispatch: Dispatch,
+  payload:
+    | { array: MMSourceOnPieceVersionsState[]; idKey?: string }
+    | { deleteIdArray: string[] }
+    | { movePiece: { pieceVersionId: string; direction: "up" | "down" } },
+) {
+  dispatch({ type: "mMSourceOnPieceVersions", payload });
 }

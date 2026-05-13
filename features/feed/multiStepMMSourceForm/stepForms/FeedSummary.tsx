@@ -9,6 +9,7 @@ import {
   FEED_FORM_LOCAL_STORAGE_KEY,
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
+import { localStorageRemoveItems } from "@/utils/localStorage";
 import dynamic from "next/dynamic";
 import getKeyLabel from "@/utils/getKeyLabel";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
@@ -122,63 +123,13 @@ function FeedSummary() {
   }, [isSaveSuccess]);
 
   const onReset = () => {
-    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
-    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
-    localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItems([
+      SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+      COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+      FEED_FORM_LOCAL_STORAGE_KEY,
+    ]);
     initFeedForm(dispatch);
   };
-
-  // Utility function to organize piece versions into groups by collection
-  function processPieceVersionsForDisplay(pieceVersions: any[]) {
-    const processedGroups: Array<{
-      type: "collection" | "single";
-      collection?: any;
-      pieces: Array<{
-        pieceVersion: any;
-        piece: any;
-        composer: any;
-      }>;
-    }> = [];
-
-    let currentGroup: (typeof processedGroups)[0] | null = null;
-
-    pieceVersions.forEach((pvs: any) => {
-      const pieceVersion = pvs.pieceVersion;
-      const piece = pieceVersion?.piece;
-      const collection = piece?.collection;
-      const composer = piece?.composer;
-
-      if (!pieceVersion) return;
-
-      // Determine if we need a new group
-      const needNewGroup =
-        !currentGroup ||
-        (collection &&
-          (currentGroup.type !== "collection" ||
-            currentGroup.collection?.id !== collection.id)) ||
-        (!collection &&
-          (currentGroup.type !== "single" ||
-            currentGroup.pieces.some((p) => p.piece.id !== piece.id)));
-
-      if (needNewGroup) {
-        currentGroup = {
-          type: collection ? "collection" : "single",
-          collection,
-          pieces: [],
-        };
-        processedGroups.push(currentGroup);
-      }
-
-      // Add piece to current group
-      currentGroup?.pieces.push({
-        pieceVersion,
-        piece,
-        composer,
-      });
-    });
-
-    return processedGroups;
-  }
 
   // Main render function for the source details
   const renderStylizedSourceDetails = () => {
@@ -269,16 +220,32 @@ function FeedSummary() {
                     </h4>
                     <ul className="list-disc pl-5">
                       {mMSourceToPersist.contributions.map(
-                        (contribution: any, idx: number) => (
-                          <li key={idx}>
-                            <span className="font-medium">
-                              {getRoleLabel(contribution.role)}:{" "}
-                            </span>
-                            {contribution.person
-                              ? `${contribution.person.firstName} ${contribution.person.lastName}`
-                              : contribution.organization?.name}
-                          </li>
-                        ),
+                        (contribution: any, idx: number) => {
+                          const contributionPerson =
+                            "personId" in contribution
+                              ? state.persons?.find(
+                                  (p) => p.id === contribution.personId,
+                                )
+                              : null;
+                          const contributionOrganization =
+                            "organizationId" in contribution
+                              ? state.organizations?.find(
+                                  (o) => o.id === contribution.organizationId,
+                                )
+                              : null;
+                          return (
+                            <li key={idx}>
+                              <span className="font-medium">
+                                {getRoleLabel(contribution.role)}:{" "}
+                              </span>
+                              {contributionPerson
+                                ? getPersonName(contributionPerson)
+                                : contributionOrganization
+                                  ? contributionOrganization.name
+                                  : ""}
+                            </li>
+                          );
+                        },
                       )}
                     </ul>
                   </div>
@@ -349,44 +316,40 @@ function FeedSummary() {
 
                           {/* Movements and Sections */}
                           <div className="py-2">
-                            {pieceVersion.movements &&
-                              pieceVersion.movements.map(
-                                (movement: any, mvtIndex: number) => (
-                                  <div
-                                    key={`mvt-${mvtIndex}`}
-                                    className={
-                                      isMonoMovementPiece
-                                        ? ""
-                                        : `ml-2 rounded-tl-lg border-l-2 border-l-primary/10 hover:border-l-primary transition-all duration-150`
-                                    }
-                                  >
-                                    {!isMonoMovementPiece && (
-                                      <div
-                                        className={`px-4 py-2 ${mvtIndex > 0 ? "mt-3" : ""} bg-primary/5`}
-                                      >
-                                        <h5 className="text-sm font-bold text-primary">
-                                          Movement {movement.rank} in{" "}
-                                          {getKeyLabel(movement.key)}
-                                        </h5>
-                                      </div>
-                                    )}
-
+                            {pieceVersion.movements?.map(
+                              (movement: any, mvtIndex: number) => (
+                                <div
+                                  key={`mvt-${mvtIndex}`}
+                                  className={
+                                    isMonoMovementPiece
+                                      ? ""
+                                      : `ml-2 rounded-tl-lg border-l-2 border-l-primary/10 hover:border-l-primary transition-all duration-150`
+                                  }
+                                >
+                                  {!isMonoMovementPiece && (
                                     <div
-                                      className={`ml-2 ${isMonoMovementPiece ? "" : "pt-2"} grid-cols-1 space-y-1`}
+                                      className={`px-4 py-2 ${mvtIndex > 0 ? "mt-3" : ""} bg-primary/5`}
                                     >
-                                      {movement.sections &&
-                                        movement.sections.map(
-                                          (section: any) => (
-                                            <SectionDetail
-                                              key={section.id}
-                                              section={section}
-                                            />
-                                          ),
-                                        )}
+                                      <h5 className="text-sm font-bold text-primary">
+                                        Movement {movement.rank} in{" "}
+                                        {getKeyLabel(movement.key)}
+                                      </h5>
                                     </div>
+                                  )}
+
+                                  <div
+                                    className={`ml-2 ${isMonoMovementPiece ? "" : "pt-2"} grid-cols-1 space-y-1`}
+                                  >
+                                    {movement.sections?.map((section: any) => (
+                                      <SectionDetail
+                                        key={section.id}
+                                        section={section}
+                                      />
+                                    ))}
                                   </div>
-                                ),
-                              )}
+                                </div>
+                              ),
+                            )}
                           </div>
                         </div>
                       );
@@ -438,42 +401,40 @@ function FeedSummary() {
 
                   {/* Movements and Sections */}
                   <div className="py-2">
-                    {pieceVersion.movements &&
-                      pieceVersion.movements.map(
-                        (movement: any, mvtIndex: number) => (
-                          <div
-                            key={`mvt-${mvtIndex}`}
-                            className={
-                              isMonoMovementPiece
-                                ? ""
-                                : `ml-2 rounded-tl-lg border-l-2 border-l-primary/10 hover:border-l-primary transition-all duration-150`
-                            }
-                          >
-                            {!isMonoMovementPiece && (
-                              <div
-                                className={`px-4 py-2 ${mvtIndex > 0 ? "mt-3" : ""} bg-primary/5`}
-                              >
-                                <h5 className="text-sm font-bold text-primary">
-                                  Movement {movement.rank} in{" "}
-                                  {getKeyLabel(movement.key)}
-                                </h5>
-                              </div>
-                            )}
-
+                    {pieceVersion.movements?.map(
+                      (movement: any, mvtIndex: number) => (
+                        <div
+                          key={`mvt-${mvtIndex}`}
+                          className={
+                            isMonoMovementPiece
+                              ? ""
+                              : `ml-2 rounded-tl-lg border-l-2 border-l-primary/10 hover:border-l-primary transition-all duration-150`
+                          }
+                        >
+                          {!isMonoMovementPiece && (
                             <div
-                              className={`ml-2 ${isMonoMovementPiece ? "" : "pt-2"} grid-cols-1 space-y-1`}
+                              className={`px-4 py-2 ${mvtIndex > 0 ? "mt-3" : ""} bg-primary/5`}
                             >
-                              {movement.sections &&
-                                movement.sections.map((section: any) => (
-                                  <SectionDetail
-                                    key={section.id}
-                                    section={section}
-                                  />
-                                ))}
+                              <h5 className="text-sm font-bold text-primary">
+                                Movement {movement.rank} in{" "}
+                                {getKeyLabel(movement.key)}
+                              </h5>
                             </div>
+                          )}
+
+                          <div
+                            className={`ml-2 ${isMonoMovementPiece ? "" : "pt-2"} grid-cols-1 space-y-1`}
+                          >
+                            {movement.sections?.map((section: any) => (
+                              <SectionDetail
+                                key={section.id}
+                                section={section}
+                              />
+                            ))}
                           </div>
-                        ),
-                      )}
+                        </div>
+                      ),
+                    )}
                   </div>
                 </div>
               </li>
@@ -499,7 +460,7 @@ function FeedSummary() {
           {isSubmitting ? (
             <>
               <span className="loading loading-spinner loading-xs mr-2"></span>
-              Saving...
+              {`Saving...`}
             </>
           ) : (
             "Save the complete Metronome Mark Source"
@@ -522,3 +483,55 @@ function FeedSummary() {
 }
 
 export default FeedSummary;
+
+// Utility function to organize piece versions into groups by collection
+function processPieceVersionsForDisplay(pieceVersions: any[]) {
+  const processedGroups: Array<{
+    type: "collection" | "single";
+    collection?: any;
+    pieces: Array<{
+      pieceVersion: any;
+      piece: any;
+      composer: any;
+    }>;
+  }> = [];
+
+  let currentGroup: (typeof processedGroups)[0] | null = null;
+
+  pieceVersions.forEach((pvs: any) => {
+    const pieceVersion = pvs.pieceVersion;
+    const piece = pieceVersion?.piece;
+    const collection = piece?.collection;
+    const composer = piece?.composer;
+
+    if (!pieceVersion) return;
+
+    // Determine if we need a new group
+    const needNewGroup =
+      !currentGroup ||
+      (collection &&
+        (currentGroup.type !== "collection" ||
+          currentGroup.collection?.id !== collection.id)) ||
+      (!collection &&
+        (currentGroup.type !== "single" ||
+          currentGroup.pieces.some((p) => p.piece.id !== piece.id)));
+
+    if (needNewGroup) {
+      currentGroup = {
+        type: collection ? "collection" : "single",
+        collection,
+        pieces: [],
+      };
+      processedGroups.push(currentGroup);
+    }
+
+    // Add piece to current group
+    currentGroup?.pieces.push({
+      pieceVersion,
+      piece,
+      composer,
+    });
+  });
+
+  return processedGroups;
+}

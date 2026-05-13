@@ -5,6 +5,11 @@ import {
   FEED_FORM_BOOT_KEY,
   feedFormFromWorkingCopyError,
 } from "@/utils/constants";
+import {
+  localStorageGetItem,
+  localStorageSetItem,
+  localStorageRemoveItem,
+} from "@/utils/localStorage";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
@@ -91,7 +96,7 @@ export function resolveStepFromReviewItem(
   if (
     entityType === "PERSON" &&
     !workingCopy.graph.contributions.some(
-      (c) => "person" in c && c.person?.id === item.entityId,
+      (c) => "personId" in c && c.personId === item.entityId,
     )
   ) {
     return 3;
@@ -112,7 +117,9 @@ export function getCurrentSinglePieceStepRank(
     }
     return 1;
   }
-  if (["PIECE_VERSION", "SECTION"].includes(clickedItem.entityType)) {
+  if (
+    ["PIECE_VERSION", "MOVEMENT", "SECTION"].includes(clickedItem.entityType)
+  ) {
     return 2;
   }
   return 3;
@@ -263,6 +270,11 @@ export function buildFeedFormBootStateFromWorkingCopy(
     isSinglePieceFormOpen = true;
 
     const piece = getEntityByIdOrKey(workingCopy.graph, "pieces", pieceId);
+    const composer = getEntityByIdOrKey(
+      workingCopy.graph,
+      "persons",
+      piece?.composerId,
+    );
     const pieceVersion = getEntityByIdOrKey(
       workingCopy.graph,
       "pieceVersions",
@@ -296,16 +308,16 @@ export function buildFeedFormBootStateFromWorkingCopy(
         mMSourceOnPieceVersionRank: sourceOnPieceVersion.rank,
       },
       composer: {
-        id: piece.composerId,
+        ...composer,
         isNew: !globallyReviewed?.personIds?.includes(piece.composerId),
       },
       piece: {
-        id: piece.id,
+        ...piece,
         isNew: !globallyReviewed?.pieceIds?.includes(piece.id),
       },
       pieceVersion: pieceVersion
         ? {
-            id: pieceVersion.id,
+            ...pieceVersion,
             isNew: !globallyReviewed?.pieceVersionIds?.includes(
               pieceVersion.id,
             ),
@@ -553,14 +565,11 @@ export function writeBootStateForFeedForm({
   collectionPieceVersionsFormState,
 }: FeedBootType) {
   try {
-    localStorage.setItem(
-      FEED_FORM_BOOT_KEY,
-      JSON.stringify({
-        feedFormState,
-        singlePieceVersionFormState,
-        collectionPieceVersionsFormState,
-      }),
-    );
+    localStorageSetItem(FEED_FORM_BOOT_KEY, {
+      feedFormState,
+      singlePieceVersionFormState,
+      collectionPieceVersionsFormState,
+    });
   } catch {
     // ignore
   }
@@ -568,10 +577,10 @@ export function writeBootStateForFeedForm({
 
 export function consumeBootStateForFeedForm(): FeedBootType | null {
   try {
-    const raw = localStorage.getItem(FEED_FORM_BOOT_KEY);
-    if (!raw) return null;
-    localStorage.removeItem(FEED_FORM_BOOT_KEY);
-    return JSON.parse(raw) as FeedBootType;
+    const data = localStorageGetItem<FeedBootType>(FEED_FORM_BOOT_KEY);
+    if (!data) return null;
+    localStorageRemoveItem(FEED_FORM_BOOT_KEY);
+    return data;
   } catch {
     return null;
   }

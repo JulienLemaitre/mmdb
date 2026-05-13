@@ -23,7 +23,7 @@ import {
   FeedFormProviderProps,
   FeedFormState,
 } from "@/types/feedFormTypes";
-import { localStorageGetItem } from "@/utils/localStorage";
+import { localStorageGetItem, localStorageSetItem } from "@/utils/localStorage";
 import { feedFormReducer } from "@/context/feedFormReducer";
 import {
   FEED_FORM_INITIAL_STATE,
@@ -57,21 +57,18 @@ export function FeedFormProvider({
     try {
       const bootRaw: FeedBootType | null = consumeBootStateForFeedForm();
       if (bootRaw) {
-        localStorage.setItem(
-          FEED_FORM_LOCAL_STORAGE_KEY,
-          JSON.stringify(bootRaw.feedFormState),
-        );
+        localStorageSetItem(FEED_FORM_LOCAL_STORAGE_KEY, bootRaw.feedFormState);
 
         if (bootRaw.collectionPieceVersionsFormState) {
-          localStorage.setItem(
+          localStorageSetItem(
             COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-            JSON.stringify(bootRaw.collectionPieceVersionsFormState),
+            bootRaw.collectionPieceVersionsFormState,
           );
         }
         if (bootRaw.singlePieceVersionFormState) {
-          localStorage.setItem(
+          localStorageSetItem(
             SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-            JSON.stringify(bootRaw.singlePieceVersionFormState),
+            bootRaw.singlePieceVersionFormState,
           );
         }
       }
@@ -114,7 +111,7 @@ export function useFeedForm() {
 export function updateFeedForm(dispatch, type, value?: any) {
   dispatch({
     type,
-    ...(typeof value !== "undefined" ? { payload: value } : ({} as any)),
+    ...(value === undefined ? ({} as any) : { payload: value }),
   });
 }
 
@@ -123,16 +120,12 @@ export function initFeedForm(dispatch, initialState = FEED_FORM_INITIAL_STATE) {
 }
 
 function getLastCompletedStep(state: FeedFormState): FeedFormStep | undefined {
-  // traversing the steps array, we return the step before the first incomplete one id
-  // console.group(`getLastCompletedStep`);
+  // traversing the steps' array, we return the step before the first incomplete one id
   for (let i = 0; i < steps.length; i++) {
-    // console.log(`steps[${i}] isComplete :`, steps[i].isComplete(state));
     if (!steps[i].isComplete(state)) {
-      // console.groupEnd();
       return steps[i - 1];
     }
   }
-  // console.groupEnd();
   // If none incomplete step found, we return the last step id
   return steps[steps.length - 1];
 }
@@ -140,22 +133,18 @@ function getLastCompletedStep(state: FeedFormState): FeedFormStep | undefined {
 export function getNewEntities(
   state: FeedFormState,
   entityName: "pieces",
-  options?: { includeUnusedInFeedForm?: boolean },
 ): (PieceState & IsNewTrue)[];
 export function getNewEntities(
   state: FeedFormState,
   entityName: "pieceVersions",
-  options?: { includeUnusedInFeedForm?: boolean },
 ): (PieceVersionState & IsNewTrue)[];
 export function getNewEntities(
   state: FeedFormState,
   entityName: "collections",
-  options?: { includeUnusedInFeedForm?: boolean },
 ): (CollectionState & IsNewTrue)[];
 export function getNewEntities(
   state: FeedFormState,
   entityName: "persons",
-  options?: { includeUnusedInFeedForm?: boolean },
 ): (PersonState & IsNewTrue)[];
 export function getNewEntities(
   state: FeedFormState,
@@ -169,7 +158,6 @@ export function getNewEntities(
     | "collections"
     | "persons"
     | "organizations",
-  options?: { includeUnusedInFeedForm?: boolean },
 ) {
   if (!state) {
     console.error(`[getNewEntities] NO state provided to find ${entityName}`);
@@ -179,9 +167,8 @@ export function getNewEntities(
     return state[entityName].filter(
       (entity) =>
         entity.isNew &&
-        (options?.includeUnusedInFeedForm ||
-          // @ts-ignore
-          isEntityUsed(entity, entityName, state)),
+        // @ts-ignore
+        isEntityUsed(entity, entityName, state),
     );
   }
   return [];
@@ -271,19 +258,19 @@ export function isEntityUsed(
       ) ||
       // Is the person a contributor?
       (state.mMSourceContributions || []).some((mMSourceContribution) => {
-        if ("person" in mMSourceContribution) {
-          return mMSourceContribution.person?.id === entity.id;
-        }
-        return false;
+        return (
+          "personId" in mMSourceContribution &&
+          mMSourceContribution.personId === entity.id
+        );
       })
     );
   }
   if (entityName === "organizations") {
     return (state.mMSourceContributions || []).some((mMSourceContribution) => {
-      if ("organization" in mMSourceContribution) {
-        return mMSourceContribution.organization?.id === entity.id;
-      }
-      return false;
+      return (
+        "organizationId" in mMSourceContribution &&
+        mMSourceContribution.organizationId === entity.id
+      );
     });
   }
   if (entityName === "metronomeMarks") {

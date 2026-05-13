@@ -60,7 +60,7 @@ export async function POST(
 
   if (!workingCopy || !Array.isArray(checklistState)) {
     debug.error(
-      `Missing : ${!workingCopy ? "workingCopy" : ""} ${!Array.isArray(checklistState) ? "checklistState" : ""}`,
+      `Missing : ${workingCopy ? "" : "workingCopy"} ${Array.isArray(checklistState) ? "" : "checklistState"}`,
     );
     debug.error(`[error] workingCopy`, JSON.stringify(workingCopy, null, 2));
     debug.error(
@@ -209,8 +209,8 @@ export async function POST(
     if (!c?.id) continue;
     baselineContributionById.set(c.id, {
       role: c.role,
-      personId: "person" in c ? (c.person?.id ?? null) : null,
-      organizationId: "organization" in c ? (c.organization?.id ?? null) : null,
+      personId: "personId" in c ? (c.personId ?? null) : null,
+      organizationId: "organizationId" in c ? (c.organizationId ?? null) : null,
     });
   }
 
@@ -657,24 +657,24 @@ export async function POST(
               where: { id: c.id },
               update: {
                 role: c.role,
-                ...("person" in c
+                ...("personId" in c
                   ? {
-                      personId: c.person.id,
+                      personId: c.personId,
                     }
                   : {
-                      organizationId: c.organization.id,
+                      organizationId: c.organizationId,
                     }),
               },
               create: {
                 id: c.id,
                 mMSourceId: review.mMSourceId,
                 role: c.role,
-                ...("person" in c
+                ...("personId" in c
                   ? {
-                      personId: c.person.id,
+                      personId: c.personId,
                     }
                   : {
-                      organizationId: c.organization.id,
+                      organizationId: c.organizationId,
                     }),
               },
             }),

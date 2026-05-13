@@ -1,9 +1,8 @@
 // "use client";
 import Select from "@/ui/form/reactSelect/Select";
 import { PersonState } from "@/types/formTypes";
-import { useRouter } from "next/navigation";
 import getNoOptionsMessage from "@/ui/form/reactSelect/getNoOptionsMessage";
-import getPersonName from "@/utils/getPersonName";
+import PersonStyled from "@/ui/PersonStyled";
 
 type ComposerSelectProps = {
   composers: PersonState[];
@@ -20,7 +19,6 @@ export default function ComposerSelect({
   const composerOptions = composers.map((composer) =>
     getComposerOption(composer),
   );
-  const router = useRouter();
   const defaultOption = selectedComposer
     ? getComposerOption(selectedComposer)
     : null;
@@ -51,6 +49,6 @@ export default function ComposerSelect({
 function getComposerOption(composer: PersonState) {
   return {
     value: composer.id,
-    label: getPersonName(composer),
+    label: PersonStyled({ person: composer }),
   };
 }

@@ -11,20 +11,32 @@ import { ReactNode } from "react";
 export type CollectionPieceVersionsFormAction =
   | {
       type: "init";
-      payload: any;
-      // payload: { value: CollectionState; next?: boolean };
+      payload?: CollectionPieceVersionsFormState;
     }
+  | { type: "formInfo"; payload: Partial<CollectionPieceVersionsFormInfo> }
   | { type: "goToPrevStep" }
-  | { type: "goToStep"; payload: any }
+  | { type: "goToStep"; payload: { stepRank: number } }
   | {
       type: "collection";
-      payload: any;
+      payload: {
+        value:
+          | Partial<CollectionState & { isComposerNew?: boolean }>
+          | undefined;
+        reset?: boolean;
+        next?: boolean;
+      };
     }
-  | { type: "persons"; payload: any }
-  | { type: "pieces"; payload: any }
-  | { type: "pieceVersions"; payload: any }
-  | { type: "tempoIndications"; payload: any }
-  | { type: "mMSourceOnPieceVersions"; payload: any };
+  | { type: "persons"; payload: { array: PersonState[] } }
+  | { type: "pieces"; payload: { array: PieceState[]; reset?: boolean } }
+  | { type: "pieceVersions"; payload: { array: PieceVersionState[] } }
+  | { type: "tempoIndications"; payload: { array: TempoIndicationState[] } }
+  | {
+      type: "mMSourceOnPieceVersions";
+      payload:
+        | { array: MMSourceOnPieceVersionsState[]; idKey?: string }
+        | { deleteIdArray: string[] }
+        | { movePiece: { pieceVersionId: string; direction: "up" | "down" } };
+    };
 export type Dispatch = (action: CollectionPieceVersionsFormAction) => void;
 export type CollectionPieceVersionsFormInfo = {
   currentStepRank: number;
@@ -43,8 +55,6 @@ export type CollectionPieceVersionsFormState = {
   pieceVersions?: PieceVersionState[];
   tempoIndications?: TempoIndicationState[];
 };
-export type PersistableCollectionPieceVersionsFormState =
-  Required<CollectionPieceVersionsFormState>;
 export type CollectionPieceVersionsFormProviderProps = {
   children: ReactNode;
   initialState?: CollectionPieceVersionsFormState | null;

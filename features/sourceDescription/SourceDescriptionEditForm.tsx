@@ -6,7 +6,7 @@ import {
   SourceDescriptionInput,
 } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormInput } from "@/ui/form/FormInput";
+import { FormInput, FormTextarea } from "@/ui/form/FormInput";
 import { getZodOptionFromEnum, zodYear } from "@/types/zodTypes";
 import { REFERENCE_TYPE, SOURCE_TYPE } from "@/prisma/client/enums";
 import ControlledSelect from "@/ui/form/ControlledSelect";
@@ -271,7 +271,7 @@ export default function SourceDescriptionEditForm(
           onReferenceFormOpen={() => setIsReferenceFormOpen(true)}
           onReferenceFormClose={() => setIsReferenceFormOpen(false)}
         />
-        <FormInput
+        <FormTextarea
           name="comment"
           label={`Comment`}
           {...{ register, errors, control }}

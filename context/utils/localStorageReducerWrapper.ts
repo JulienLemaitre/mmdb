@@ -1,20 +1,20 @@
 import { localStorageSetItem, localStorageGetItem } from "@/utils/localStorage";
 import { isEqual, merge } from "lodash";
 
-export function withLocalStorage<T>(
-  reducer: (state: T, action: any) => T,
+export function withLocalStorage<T, U>(
+  reducer: (state: T, action: U) => T,
   storageKey: string,
   initialState: T,
 ) {
   let isInitialized = false;
   let lastSavedState: T;
 
-  return (state: T, action: any): T => {
+  return (state: T, action: U): T => {
     let currentState = state;
 
     // On first call, merge with localStorage if available
     if (!isInitialized) {
-      const savedState = localStorageGetItem(storageKey);
+      const savedState = localStorageGetItem<T>(storageKey);
 
       if (savedState) {
         try {

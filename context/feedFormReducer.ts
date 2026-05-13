@@ -5,8 +5,9 @@ import {
   FEED_FORM_INITIAL_STATE,
   FEED_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
-import { cleanFeedFormState } from "@/context/utils/cleanFeedFormState";
 import { withLocalStorage } from "@/context/utils/localStorageReducerWrapper";
+import { cleanFeedFormState } from "@/context/utils/cleanFeedFormState";
+import { debug } from "@/utils/debugLogger";
 
 const allowedActions = new Set();
 steps.forEach((step) =>
@@ -14,7 +15,7 @@ steps.forEach((step) =>
 );
 
 function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
-  console.log(`[feedFormReducer] action.type :`, action.type);
+  console.log(`[feedFormReducer] action :`, action);
 
   // Navigation back
   if (action.type === "goToPrevStep") {
@@ -27,8 +28,6 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
       },
     };
   }
-
-  console.log(`[feedFormReducer] action.payload`, action.payload);
 
   // Reset
   if (action.type === "init") {
@@ -74,21 +73,6 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
           entity,
           idKey: id,
         });
-
-        if (entity.person) {
-          newState = upsertEntityInState({
-            state: newState,
-            entityName: "persons",
-            entity: entity.person,
-          });
-        }
-        if (entity.organization) {
-          newState = upsertEntityInState({
-            state: newState,
-            entityName: "organizations",
-            entity: entity.organization,
-          });
-        }
       });
     }
 
@@ -98,25 +82,6 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
         ...newState,
         [action.type]: array,
       };
-      // For each entity in the array
-      array.forEach((entity) => {
-        if (entity.person) {
-          console.log(`[ADD IN CONTEXT] person:`, entity.person);
-          newState = upsertEntityInState({
-            state: newState,
-            entityName: "persons",
-            entity: entity.person,
-          });
-        }
-        if (entity.organization) {
-          console.log(`[ADD IN CONTEXT] organization:`, entity.organization);
-          newState = upsertEntityInState({
-            state: newState,
-            entityName: "organizations",
-            entity: entity.organization,
-          });
-        }
-      });
     }
 
     // In case of a collection update, we receive:
@@ -633,7 +598,7 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
     if (value) {
       newState = {
         ...state,
-        [action.type]: { ...(state[action.type] || {}), ...value },
+        [action.type]: { ...state[action.type], ...value },
       };
     }
 
@@ -648,30 +613,6 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
       };
     }
 
-    // Cleaning the state from unused entities, except while adding a piece or collection form is opened
-    const isSourceOnPieceVersionFormOpen =
-      state?.formInfo?.isSourceOnPieceVersionformOpen;
-    const closeSourceOnPieceVersionFormAction =
-      action.type === "formInfo" &&
-      action.payload?.value?.isSourceOnPieceVersionformOpen === false;
-    const otherFormInfoAction =
-      action.type === "formInfo" &&
-      action.payload?.value?.isSourceOnPieceVersionformOpen === undefined;
-    if (
-      !otherFormInfoAction &&
-      // We don't clean state during single or collection piece version form, except at its closing.
-      (!isSourceOnPieceVersionFormOpen || closeSourceOnPieceVersionFormAction)
-    ) {
-      newState = cleanFeedFormState(newState);
-    } else {
-      // console.log(`NOT Cleaning state`, {
-      //   condition1: !otherFormInfoAction,
-      //   condition2:
-      //     !isSourceOnPieceVersionFormOpen ||
-      //     closeSourceOnPieceVersionFormAction,
-      // });
-    }
-
     // Make sure mMSourceOnPieceVersions ranks are continuous and begin at 1
     newState.mMSourceOnPieceVersions = (
       newState.mMSourceOnPieceVersions || []
@@ -679,6 +620,14 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
       ...mMSourceOnPieceVersion,
       rank: index + 1,
     }));
+
+    // CleanState only for "mMSourceOnPieceVersions" type operation => happening after all others
+    if (action.type === "mMSourceOnPieceVersions") {
+      debug.info(
+        `mMSourceOnPieceVersions action type => Cleaning FeedFormState`,
+      );
+      newState = cleanFeedFormState(newState);
+    }
 
     return newState;
   } else {

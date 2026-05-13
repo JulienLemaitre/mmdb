@@ -1,11 +1,11 @@
 import ComposerSelect from "@/features/composer/form/ComposerSelect";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { PersonState } from "@/types/formTypes";
 
 type ComposerSelectFormProps = {
   composers: PersonState[];
   value?: PersonState;
-  onComposerSelect: (event: any) => void;
+  onComposerSelect: (composer: PersonState) => void;
   onInitComposerCreation: () => void;
 };
 export default function ComposerSelectContainer({
@@ -27,14 +27,6 @@ export default function ComposerSelectContainer({
     [composers],
   );
 
-  // Reset the form context when the component is mounted
-  useEffect(() => {
-    // Init the form with context value if exists
-    if (value?.id) {
-      onSelect(value.id);
-    }
-  }, [onSelect, value?.id]);
-
   // If we have a default value to set, we prevent an initial render of react-select that would prevent its use
   if (value && !selectedComposer) {
     return null;
@@ -50,7 +42,9 @@ export default function ComposerSelectContainer({
       />
       <button
         className="btn btn-primary mt-4"
-        onClick={() => onComposerSelect(selectedComposer)}
+        onClick={() => {
+          if (selectedComposer) onComposerSelect(selectedComposer);
+        }}
         {...(selectedComposer ? { disabled: false } : { disabled: true })}
       >
         Choose Composer

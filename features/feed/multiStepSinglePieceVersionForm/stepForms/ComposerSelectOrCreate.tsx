@@ -6,11 +6,13 @@ import { getNewEntities } from "@/context/feedFormContext";
 import { FeedFormState } from "@/types/feedFormTypes";
 import getAllComposers from "@/utils/getAllComposers";
 import { LoaderCentered } from "@/ui/LoaderCentered";
+import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 
 type ComposerSelectOrCreateProps = {
   feedFormState: FeedFormState;
+  singlePieceVersionFormState: SinglePieceVersionFormState;
   onComposerCreated: (composer: PersonInput) => void;
-  onComposerSelect: (composer: PersonInput) => void;
+  onComposerSelect: (composer: PersonState) => void;
   selectedComposerId: string | null;
   onInitComposerCreation: () => void;
   onCancelComposerCreation: () => void;
@@ -20,6 +22,7 @@ type ComposerSelectOrCreateProps = {
 
 const ComposerSelectOrCreate = ({
   feedFormState,
+  singlePieceVersionFormState,
   onComposerCreated,
   onComposerSelect,
   selectedComposerId,
@@ -31,9 +34,10 @@ const ComposerSelectOrCreate = ({
   const [composers, setComposers] = useState<PersonState[] | null>(null);
   const [isLoading, setIsLoading] = useState(!hasComposerJustBeenCreated);
 
-  const newPersons = getNewEntities(feedFormState, "persons", {
-    includeUnusedInFeedForm: true,
-  });
+  const newPersons: PersonState[] = getNewEntities(feedFormState, "persons");
+  if (singlePieceVersionFormState.composer?.isNew) {
+    newPersons.push(singlePieceVersionFormState.composer);
+  }
   const newSelectedComposer = newPersons?.find(
     (person) => person.id === selectedComposerId,
   );
@@ -42,7 +46,18 @@ const ComposerSelectOrCreate = ({
     hasComposerJustBeenCreated || isNewComposerUpdate,
   );
 
-  let composerFullList = [...(composers || []), ...(newPersons || [])];
+  const composerFullListToDeduplicate = [
+    ...(composers || []),
+    ...(newPersons || []),
+  ];
+  const composerIdSet = new Set();
+  let composerFullList: PersonState[] = [];
+  composerFullListToDeduplicate.forEach((composer) => {
+    if (!composerIdSet.has(composer.id)) {
+      composerIdSet.add(composer.id);
+      composerFullList.push(composer);
+    }
+  });
 
   // If we have new composers, we need to sort the composerFullList
   if (newPersons?.length) {

@@ -1,8 +1,13 @@
 import { updateFeedForm, useFeedForm } from "@/context/feedFormContext";
 import {
-  updateCollectionPieceVersionsForm,
+  goToCollectionFormStep,
+  updateCollection,
+  updateCollectionFormInfo,
+  upsertCollectionPersons,
+  upsertCollectionPieces,
+  upsertCollectionPieceVersions,
   useCollectionPieceVersionsForm,
-} from "@/context/collectionPieceVersionsFormContext";
+} from "@/context/collectionPieceVersionForm/collectionPieceVersionsFormContext";
 import {
   CollectionInput,
   CollectionState,
@@ -20,10 +25,12 @@ import { v4 as uuidv4 } from "uuid";
 import CollectionPieceVersionsSteps from "@/features/feed/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsSteps";
 import getPersonStateFromPersonInput from "@/utils/getPersonStateFromPersonInput";
 import React, { useCallback, useEffect } from "react";
-import CollectionPieceVersionFormSummary from "@/features/feed/multiStepSinglePieceVersionForm/CollectionPieceVersionFormSummary";
+import CollectionPieceVersionFormSummary from "./CollectionPieceVersionFormSummary";
 import { COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
+import { localStorageRemoveItem } from "@/utils/localStorage";
 import { URL_API_GETALL_COLLECTION_PIECES } from "@/utils/routes";
 import { MakeOptional } from "@/types/typescriptUtils";
+import { commitCollectionPieceVersionsFormToFeedForm } from "@/utils/commitCollectionPieceVersionsFormToFeedForm";
 
 type CollectionPieceVersionFormProps = {
   onFormClose: () => void;
@@ -63,9 +70,7 @@ function CollectionPieceVersionsFormContainer({
       console.log(
         `[goToStep 2] updating a collection that has not just been created`,
       );
-      updateCollectionPieceVersionsForm(dispatch, "goToStep", {
-        stepRank: 2,
-      });
+      goToCollectionFormStep(dispatch, 2);
     }
   }, [
     selectedComposerId,
@@ -78,43 +83,33 @@ function CollectionPieceVersionsFormContainer({
   ////////////////// COMPOSER ////////////////////
 
   const onInitComposerCreation = () => {
-    updateCollectionPieceVersionsForm(dispatch, "collection", {
-      value: { composerId: null },
+    updateCollection(dispatch, {
+      value: { composerId: undefined },
       reset: true,
     });
   };
 
   const onComposerCreated = (composer: PersonInput) => {
+    const previousComposer = selectedComposerId
+      ? collectionPieceVersionFormState.persons?.find(
+          (p) => p.id === selectedComposerId,
+        ) || feedFormState.persons?.find((p) => p.id === selectedComposerId)
+      : undefined;
     const newComposer: PersonState = getPersonStateFromPersonInput({
-      ...(selectedComposerId
-        ? feedFormState.persons?.find((p) => p.id === selectedComposerId)
-        : {}),
+      ...previousComposer,
       ...composer,
     });
     newComposer.isNew = true;
-    updateFeedForm(feedFormDispatch, "persons", { array: [newComposer] });
-    updateCollectionPieceVersionsForm(dispatch, "collection", {
+    upsertCollectionPersons(dispatch, { array: [newComposer] });
+    updateCollection(dispatch, {
       value: { composerId: newComposer.id, isComposerNew: true },
       reset: true,
       next: true,
     });
   };
-  const onComposerSelect = (composer: PersonInput) => {
-    // If a composer was being created, we delete it from the feedForm state
-    if (collectionPieceVersionFormState.collection?.isComposerNew) {
-      updateFeedForm(feedFormDispatch, "persons", {
-        deleteIdArray: [collectionPieceVersionFormState.collection.composerId],
-      });
-    }
-    // Same if a collection was being created
-    if (collectionPieceVersionFormState.collection?.isNew) {
-      updateFeedForm(feedFormDispatch, "collections", {
-        deleteIdArray: [collectionPieceVersionFormState.collection?.id],
-      });
-    }
-
-    updateFeedForm(feedFormDispatch, "persons", { array: [composer] });
-    updateCollectionPieceVersionsForm(dispatch, "collection", {
+  const onComposerSelect = (composer: PersonState) => {
+    upsertCollectionPersons(dispatch, { array: [composer] });
+    updateCollection(dispatch, {
       value: { composerId: composer.id },
       reset: true,
       next: true,
@@ -124,15 +119,11 @@ function CollectionPieceVersionsFormContainer({
   const onCancelComposerCreation = () => {
     if (collectionPieceVersionFormState.collection?.isComposerNew) {
       // Case: coming back after having first submitted the new composer and cancel it. All in the same collectionPieceVersionsForm.
-      // => The composer's data is in the feedFormState; we delete it there too.
-      updateCollectionPieceVersionsForm(dispatch, "collection", {
+      updateCollection(dispatch, {
         value: {
-          composerId: null,
+          composerId: undefined,
         },
         reset: true,
-      });
-      updateFeedForm(feedFormDispatch, "persons", {
-        deleteIdArray: [selectedComposerId],
       });
     }
   };
@@ -140,11 +131,11 @@ function CollectionPieceVersionsFormContainer({
   ////////////////// COLLECTION ////////////////////
 
   const onInitCollectionCreation = () => {
-    updateCollectionPieceVersionsForm(dispatch, "collection", {
+    updateCollection(dispatch, {
       value: {
         composerId: selectedComposerId,
         ...(hasComposerJustBeenCreated ? { isComposerNew: true } : {}),
-        id: null,
+        id: undefined,
       },
       reset: true,
     });
@@ -152,17 +143,13 @@ function CollectionPieceVersionsFormContainer({
   const onCancelCollectionCreation = () => {
     if (collectionPieceVersionFormState.collection?.isNew) {
       // Case: coming back after having first submitted the new collection and cancel it. All in the same collectionPieceVersionsForm.
-      // => The collection's data is in the feedFormState; we delete it there too.
-      updateCollectionPieceVersionsForm(dispatch, "collection", {
+      updateCollection(dispatch, {
         value: {
           composerId: selectedComposerId,
           ...(hasComposerJustBeenCreated ? { isComposerNew: true } : {}),
-          id: null,
+          id: undefined,
         },
         reset: true,
-      });
-      updateFeedForm(feedFormDispatch, "collections", {
-        deleteIdArray: [selectedCollectionId],
       });
     }
   };
@@ -177,8 +164,7 @@ function CollectionPieceVersionsFormContainer({
       id: collection.id || uuidv4(),
       isNew: true,
     };
-    updateFeedForm(feedFormDispatch, "collections", { array: [newCollection] });
-    updateCollectionPieceVersionsForm(dispatch, "collection", {
+    updateCollection(dispatch, {
       value: {
         id: newCollection.id,
         composerId: newCollection.composerId,
@@ -191,29 +177,20 @@ function CollectionPieceVersionsFormContainer({
     });
   };
   const onCollectionSelect = async (collection: CollectionInput) => {
-    // If a new collection was being created, remove it from feedFormState
-    if (collectionPieceVersionFormState.collection?.isNew) {
-      updateFeedForm(feedFormDispatch, "collections", {
-        deleteIdArray: [collectionPieceVersionFormState.collection?.id],
-      });
-    }
+    const pieces: PieceState[] =
+      (await fetch(
+        `${URL_API_GETALL_COLLECTION_PIECES}?collectionId=${collection.id}`,
+      )
+        .then((res) => res.json())
+        .then((data) => data.pieces)
+        .catch((err) => {
+          console.error(
+            `[fetch(/api/getAll/collectionPieces?collectionId=${selectedCollectionId})] err :`,
+            err.message,
+          );
+        })) || [];
 
-    const pieces: PieceState[] = await fetch(
-      `${URL_API_GETALL_COLLECTION_PIECES}?collectionId=${collection.id}`,
-    )
-      .then((res) => res.json())
-      .then((data) => data.pieces)
-      .catch((err) => {
-        console.error(
-          `[fetch(/api/getAll/collectionPieces?collectionId=${selectedCollectionId})] err :`,
-          err.message,
-        );
-      });
-    updateFeedForm(feedFormDispatch, "pieces", {
-      array: pieces,
-    });
-    updateFeedForm(feedFormDispatch, "collections", { array: [collection] });
-    updateCollectionPieceVersionsForm(dispatch, "collection", {
+    updateCollection(dispatch, {
       value: {
         id: collection.id,
         composerId: collection.composerId,
@@ -223,8 +200,12 @@ function CollectionPieceVersionsFormContainer({
       reset: true,
       next: true,
     });
-    updateCollectionPieceVersionsForm(dispatch, "formInfo", {
-      value: { pieceIdsNeedingVersions: pieces.map((p) => p.id) },
+    upsertCollectionPieces(dispatch, {
+      array: pieces,
+      reset: true,
+    });
+    updateCollectionFormInfo(dispatch, {
+      pieceIdsNeedingVersions: pieces.map((p) => p.id),
     });
   };
 
@@ -232,18 +213,18 @@ function CollectionPieceVersionsFormContainer({
 
   const onAddPieces = useCallback(
     (pieces: PieceState[]) => {
-      updateFeedForm(feedFormDispatch, "pieces", {
+      upsertCollectionPieces(dispatch, {
         array: pieces,
       });
     },
-    [feedFormDispatch],
+    [dispatch],
   );
 
   /////////////////// PIECE VERSION //////////////////////////////
 
   const onAddPieceVersion = (pieceVersion: PieceVersionState) => {
     const payload = { array: [pieceVersion] };
-    updateFeedForm(feedFormDispatch, "pieceVersions", payload);
+    upsertCollectionPieceVersions(dispatch, payload);
   };
 
   ////////////////// SUBMIT ////////////////////
@@ -290,7 +271,7 @@ function CollectionPieceVersionsFormContainer({
     console.log(
       `[localStorage REMOVE] ${COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY}`,
     );
-    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
 
     onFormClose();
   };
@@ -298,98 +279,22 @@ function CollectionPieceVersionsFormContainer({
   const onSubmitSourceOnPieceVersions = (
     sourceOnPieceVersions: MMSourceOnPieceVersionsState[],
   ) => {
-    // Check if all the pieceVersions are in feedFormState
-    if (
-      !sourceOnPieceVersions.every((sopv) =>
-        feedFormState.pieceVersions?.some(
-          (pv) => pv.id === sopv.pieceVersionId,
-        ),
-      )
-    ) {
-      console.error(
-        "[ERROR] At least one pieceVersion in piecePieceVersions does not exist in feedFormState.",
-      );
+    const didCommit = commitCollectionPieceVersionsFormToFeedForm({
+      collectionPieceVersionFormState,
+      sourceOnPieceVersions,
+      feedFormState,
+      feedFormDispatch,
+    });
+
+    if (!didCommit) {
       return;
     }
-
-    const isCollectionUpdate =
-      typeof collectionPieceVersionFormState.formInfo
-        .collectionFirstMMSourceOnPieceVersionRank === "number";
-    const lastRankBefore =
-      (typeof collectionPieceVersionFormState.formInfo
-        .collectionFirstMMSourceOnPieceVersionRank === "number"
-        ? collectionPieceVersionFormState.formInfo
-            .collectionFirstMMSourceOnPieceVersionRank // First sourceOnPieceVersion.rank in case of update
-        : (feedFormState.mMSourceOnPieceVersions || []).length) - 1;
-    const payloadArray = sourceOnPieceVersions
-      .toSorted((a, b) => (a.rank > b.rank ? 1 : -1))
-      .map((sopv) => ({
-        pieceVersionId: sopv.pieceVersionId,
-        rank: lastRankBefore + sopv.rank,
-      }));
-
-    console.log(`[onSubmitSourceOnPieceVersions] payloadArray :`, payloadArray);
-
-    updateFeedForm(feedFormDispatch, "mMSourceOnPieceVersions", {
-      array: payloadArray,
-      isCollectionUpdate,
-    });
-    // update pieceCount in feedFormState.collections
-    if (collectionPieceVersionFormState?.collection) {
-      updateFeedForm(feedFormDispatch, "collections", {
-        array: [
-          {
-            ...collectionPieceVersionFormState?.collection,
-            pieceCount: payloadArray.length,
-          },
-        ],
-      });
-    }
-
-    // Change the corresponding piece.collectionRank if it has changed
-    const piecePayloadArray = (feedFormState.pieces || []).reduce<PieceState[]>(
-      (array: PieceState[], p: PieceState) => {
-        const correspondingSourceOnPieceVersion = sourceOnPieceVersions.find(
-          (sourceOnPieceVersion) =>
-            (feedFormState.pieceVersions || []).some(
-              (pv) =>
-                sourceOnPieceVersion.pieceVersionId === pv.id &&
-                pv.pieceId === p.id,
-            ),
-        );
-        if (
-          correspondingSourceOnPieceVersion &&
-          p.collectionRank !== correspondingSourceOnPieceVersion.rank
-        ) {
-          console.log(
-            `[] Change piece ${p.title} collectionRank from ${p.collectionRank} to ${correspondingSourceOnPieceVersion.rank}`,
-          );
-          return [
-            ...array,
-            {
-              ...p,
-              collectionRank: correspondingSourceOnPieceVersion.rank,
-            },
-          ];
-        }
-
-        return array;
-      },
-      [],
-    );
-    console.log(
-      `[onSubmitSourceOnPieceVersions] piecePayloadArray :`,
-      piecePayloadArray,
-    );
-    updateFeedForm(feedFormDispatch, "pieces", {
-      array: piecePayloadArray,
-    });
 
     // Reset localStorage
     console.log(
       `[localStorage REMOVE] ${COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY}`,
     );
-    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
 
     onFormClose();
   };
@@ -413,7 +318,9 @@ function CollectionPieceVersionsFormContainer({
         <StepFormComponent
           onFormClose={onFormClose}
           feedFormState={feedFormState}
+          singlePieceVersionFormState={collectionPieceVersionFormState}
           collectionPieceVersionFormState={collectionPieceVersionFormState}
+          collection={collectionPieceVersionFormState.collection}
           isUpdateMode={isUpdateMode}
           // Composer
           selectedComposerId={selectedComposerId}

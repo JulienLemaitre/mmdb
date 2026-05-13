@@ -5,6 +5,9 @@ import ChecklistPage from "@/app/(signedIn)/review/[reviewId]/checklist/page";
 import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
 import { buildMockOverview } from "@/features/review/reviewMock";
 import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
+import {
+  localStorageSetItem,
+} from "@/utils/localStorage";
 
 // Mock Next.js navigation hooks with stable object identity
 const pushMock = jest.fn();
@@ -114,22 +117,20 @@ describe("ChecklistPage progress UI", () => {
     const prechecked = required
       .slice(0, Math.min(3, total))
       .map((it) => it.fieldPath);
-    localStorage.setItem("review:r-1:checklist", JSON.stringify(prechecked));
+    localStorageSetItem("review:r-1:checklist", prechecked);
 
     // Simulate return from edit with a sliceKey targeting one of the prechecked items
     const sliceKey = required[0]?.fieldPath || "MM_SOURCE.title";
-    localStorage.setItem(
-      "feedForm",
-      JSON.stringify({
-        formInfo: {
-          reviewContext: { reviewEdit: true, reviewId: "r-1", sliceKey },
-        },
-      }),
-    );
-    localStorage.setItem(
-      "review:r-1:returnRoute",
-      JSON.stringify({ reviewId: "r-1", sliceKey, scrollY: 0 }),
-    );
+    localStorageSetItem("feedForm", {
+      formInfo: {
+        reviewContext: { reviewEdit: true, reviewId: "r-1", sliceKey },
+      },
+    });
+    localStorageSetItem("review:r-1:returnRoute", {
+      reviewId: "r-1",
+      sliceKey,
+      scrollY: 0,
+    });
 
     render(
       <ReviewWorkingCopyProvider reviewId="r-1" initialGraph={overview.graph}>

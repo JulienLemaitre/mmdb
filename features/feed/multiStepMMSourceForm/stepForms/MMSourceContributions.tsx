@@ -1,18 +1,23 @@
-import { useEffect, useState } from "react";
-import {
-  getNewEntities,
-  updateFeedForm,
-  useFeedForm,
-} from "@/context/feedFormContext";
+import React, { useEffect, useState } from "react";
+import { updateFeedForm, useFeedForm } from "@/context/feedFormContext";
 import { getStepByRank } from "@/features/feed/multiStepMMSourceForm/stepsUtils";
-import { ContributionStateWithoutId } from "@/types/formTypes";
+import {
+  ContributionStateWithoutId,
+  OrganizationState,
+  PersonState,
+} from "@/types/formTypes";
 import SourceContributionSelectForm from "@/features/sourceContribution/SourceContributionSelectForm";
 import { URL_API_GETALL_PERSONS_AND_ORGANIZATIONS } from "@/utils/routes";
 import { LoaderCentered } from "@/ui/LoaderCentered";
+import DebugBox from "@/ui/DebugBox";
 
 export default function MMSourceContributions() {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [draftPersons, setDraftPersons] = useState<PersonState[]>([]);
+  const [draftOrganizations, setDraftOrganizations] = useState<
+    OrganizationState[]
+  >([]);
 
   const { dispatch, currentStepRank, state } = useFeedForm();
   const step = getStepByRank(currentStepRank);
@@ -21,11 +26,35 @@ export default function MMSourceContributions() {
     selectedContributions: ContributionStateWithoutId[],
     option: { goToNextStep: boolean },
   ) => {
+    if (draftPersons.length > 0) {
+      updateFeedForm(dispatch, "persons", {
+        array: draftPersons,
+      });
+    }
+    if (draftOrganizations.length > 0) {
+      updateFeedForm(dispatch, "organizations", {
+        array: draftOrganizations,
+      });
+    }
+
     updateFeedForm(dispatch, "mMSourceContributions", {
       array: selectedContributions,
       next: !!option?.goToNextStep,
       reset: true,
     });
+  };
+
+  const onAddDraftPerson = (person: PersonState) => {
+    setDraftPersons((prev) => [...prev, person]);
+  };
+
+  const onAddDraftOrganization = (organization: OrganizationState) => {
+    setDraftOrganizations((prev) => [...prev, organization]);
+  };
+
+  const onResetDraftEntities = () => {
+    setDraftPersons([]);
+    setDraftOrganizations([]);
   };
 
   useEffect(() => {
@@ -41,17 +70,26 @@ export default function MMSourceContributions() {
   if (!data)
     return <p>{`Oups, No data could be fetched. Can't continue...`}</p>;
   const { persons, organizations } = data;
-  const newPersonsInState = getNewEntities(state, "persons");
-  const newOrganizationsInState = getNewEntities(state, "organizations");
 
   return (
-    <SourceContributionSelectForm
-      contributions={state.mMSourceContributions}
-      persons={[...persons, ...newPersonsInState]}
-      organizations={[...organizations, ...newOrganizationsInState]}
-      onSubmit={onSubmit}
-      title={step.title}
-      submitTitle={step.title}
-    />
+    <>
+      <SourceContributionSelectForm
+        contributions={state.mMSourceContributions}
+        persons={[...persons, ...(state.persons || []), ...draftPersons]}
+        organizations={[...organizations, ...draftOrganizations]}
+        onAddDraftPerson={onAddDraftPerson}
+        onAddDraftOrganization={onAddDraftOrganization}
+        onResetDraftEntities={onResetDraftEntities}
+        onSubmit={onSubmit}
+        title={step.title}
+        submitTitle={step.title}
+      />
+      <DebugBox
+        stateObject={{ draftPersons, draftOrganizations }}
+        title="Contribution entities state"
+        // shouldExpandNode={(level) => level < 3}
+        expandAllNodes
+      />
+    </>
   );
 }

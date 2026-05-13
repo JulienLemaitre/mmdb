@@ -2,10 +2,11 @@ import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ChecklistPage from "@/app/(signedIn)/review/[reviewId]/checklist/page";
-import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
+import { localStorageGetItem, localStorageSetItem } from "@/utils/localStorage";
 import { buildMockOverview } from "@/features/review/reviewMock";
 import { URL_REVIEW_LIST } from "@/utils/routes";
 import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
+import { ReviewWorkingCopyProvider } from "@/context/reviewWorkingCopyContext";
 
 // Mock navigation hooks
 const pushMock = jest.fn();
@@ -102,7 +103,7 @@ describe("Review lifecycle UI integration: submit flow", () => {
     const allKeys = required.map((it) => it.fieldPath);
 
     // Pre-populate checked keys so submit button is enabled without clicking all checkboxes
-    localStorage.setItem("review:r-1:checklist", JSON.stringify(allKeys));
+    localStorageSetItem("review:r-1:checklist", allKeys);
 
     render(
       <ReviewWorkingCopyProvider reviewId="r-1" initialGraph={overview.graph}>
@@ -133,8 +134,12 @@ describe("Review lifecycle UI integration: submit flow", () => {
     });
 
     // Checklist checked storage removed
-    const checklistStorage = localStorage.getItem("review:r-1:checklist");
-    expect(checklistStorage === null || checklistStorage === "[]").toBe(true);
+    const checklistStorage = localStorageGetItem<string[]>(
+      "review:r-1:checklist",
+    );
+    expect(checklistStorage === null || checklistStorage.length === 0).toBe(
+      true,
+    );
     // Working copy is expected to be cleared by provider.clear(); we do not assert here due to Provider nesting in this test context.
   });
 });

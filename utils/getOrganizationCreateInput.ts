@@ -16,8 +16,7 @@ export default function getOrganizationCreateInput(
     }
 
     const contribution = state.mMSourceContributions.find(
-      // @ts-ignore
-      (c) => c?.organization?.id === organization.id,
+      (c) => "organizationId" in c && c.organizationId === organization.id,
     );
     if (!contribution) {
       console.log(

@@ -8,7 +8,7 @@ import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
 import TrashIcon from "@/ui/svg/TrashIcon";
 import QuestionMarkCircleIcon from "@/ui/svg/QuestionMarkCircleIcon";
 import { SinglePieceVersionFormProvider } from "@/context/singlePieceVersionFormContext";
-import { CollectionPieceVersionsFormProvider } from "@/context/collectionPieceVersionsFormContext";
+import { CollectionPieceVersionsFormProvider } from "@/context/collectionPieceVersionForm/collectionPieceVersionsFormContext";
 import getPersonName from "@/utils/getPersonName";
 import CollectionPieceVersionsFormContainer from "@/features/feed/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsFormContainer";
 import EditIcon from "@/ui/svg/EditIcon";
@@ -25,6 +25,8 @@ import ArrowDownIcon from "@/ui/svg/ArrowDownIcon";
 import PieceVersionDisplay from "@/features/pieceVersion/PieceVersionDisplay";
 import InformationCircleIcon from "@/ui/svg/InformationCircleIcon";
 import { processMMSourceOnPieceVersionsForDisplay } from "@/features/feed/multiStepMMSourceForm/utils/ProcessMMSourceOnPieceVersionsForDisplay";
+import { buildCollectionPieceVersionsFormEditState } from "@/features/feed/multiStepMMSourceForm/utils/buildCollectionPieceVersionsFormEditState";
+import { localStorageRemoveItem } from "@/utils/localStorage";
 
 type SourceOnPieceVersionSelectFormProps = {
   mMSourceOnPieceVersions?: MMSourceOnPieceVersionsState[];
@@ -84,8 +86,8 @@ const SourceOnPieceVersionFormContainer = ({
     // reset sourceOnPieceVersionForm and singlePieceVersionUpdateInitState
     setSinglePieceVersionUpdateInitState(null);
     setCollectionPieceVersionUpdateInitState(null);
-    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
-    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
 
     // Close sourceOnPieceVersions form
     updateFeedForm(feedFormDispatch, "formInfo", {
@@ -120,15 +122,9 @@ const SourceOnPieceVersionFormContainer = ({
         currentStepRank: 0,
         mMSourceOnPieceVersionRank: rank,
       },
-      composer: {
-        id: composer.id,
-      },
-      piece: {
-        id: piece.id,
-      },
-      pieceVersion: {
-        id: pieceVersion.id,
-      },
+      composer,
+      piece,
+      pieceVersion,
     };
     setSinglePieceVersionUpdateInitState(singlePieceVersionFormEditState);
     onFormOpen("single");
@@ -145,51 +141,19 @@ const SourceOnPieceVersionFormContainer = ({
   };
 
   const onEditCollection = (collectionId: string) => {
-    const collectionPieceVersionList = feedFormState.pieceVersions?.filter(
-      (pv) =>
-        feedFormState.pieces?.some(
-          (p) => p.id === pv.pieceId && p.collectionId === collectionId,
-        ),
-    );
-    const collectionMMSourceOnPieceVersionList =
-      feedFormState.mMSourceOnPieceVersions?.filter((mMSourceOnPieceVersions) =>
-        collectionPieceVersionList?.some(
-          (pv) => pv.id === mMSourceOnPieceVersions.pieceVersionId,
-        ),
-      );
-    const collectionFirstMMSourceOnPieceVersionRank =
-      collectionMMSourceOnPieceVersionList?.[0]?.rank;
-    if (!collectionFirstMMSourceOnPieceVersionRank) {
+    const collectionPieceVersionFormEditState =
+      buildCollectionPieceVersionsFormEditState({
+        feedFormState,
+        collectionId,
+      });
+
+    if (!collectionPieceVersionFormEditState) {
       console.log(
-        `[onEditCollection] No piece version rank found for collection ${collectionId}`,
+        `[onEditCollection] Collection not found or no piece version rank found for collection ${collectionId}`,
       );
       return;
     }
 
-    const collection = feedFormState.collections?.find(
-      ({ id }) => id === collectionId,
-    );
-    if (!collection) {
-      console.log(`[onEditCollection] Collection not found`);
-      return;
-    }
-
-    const collectionPieceVersionFormEditState: CollectionPieceVersionsFormState =
-      {
-        formInfo: {
-          currentStepRank: 0,
-          collectionFirstMMSourceOnPieceVersionRank,
-        },
-        collection: {
-          id: collectionId,
-          composerId: collection.composerId,
-          ...(collection.title && { title: collection.title }),
-          ...(collection.isNew && { isNew: collection.isNew }),
-        },
-        mMSourceOnPieceVersions: collectionMMSourceOnPieceVersionList.map(
-          (spv, index) => ({ ...spv, rank: index + 1 }),
-        ),
-      };
     setCollectionPieceVersionUpdateInitState(
       collectionPieceVersionFormEditState,
     );

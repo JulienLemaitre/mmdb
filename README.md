@@ -1,6 +1,6 @@
 # The Metronome Mark Database
 
-The Metronome Mark Database is a project to create a database of metronome marks and time signatures for classical music compositions. It aims at being a useful tool for musical research.
+The Metronome Mark Database is the project of constituting a database of metronome marks and time signatures for classical music compositions. It aims at being a useful tool for musical research.
 
 The data for a piece are the following :
 - **Piece** : basic information about the piece (composer, title, date of composition, etc.)
@@ -17,8 +17,8 @@ The data for a piece are the following :
 
 ## Getting Started
 
-First, run the development server:
+Rn the development server:
 
 ```bash
-npm run dev --turbo
+npm run dev
 ```

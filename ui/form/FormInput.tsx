@@ -1,7 +1,6 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import get from "just-safe-get";
 import { GetErrorMessage } from "@/utils/GetErrorMessage";
-import { useState } from "react";
 import EyeSlashIcon from "@/ui/svg/EyeSlashIcon";
 import EyeIcon from "@/ui/svg/EyeIcon";
 import LoadingSpinIcon from "@/ui/svg/LoadingSpinIcon";
@@ -188,7 +187,7 @@ export function FormInput({
         ) : null}
         {typeProp === "password" && (
           <button
-            className="btn btn-xs btn-ghost ml-2 absolute right-0 top-[4px]"
+            className="btn btn-xs btn-ghost ml-2 absolute right-0 top-1"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? (
@@ -208,29 +207,75 @@ export function FormInput({
   );
 }
 
-// export function FormTextarea({
-//   register,
-//   name,
-//   label = "",
-//   isRequired = false,
-//   errors,
-//   noValidation = false,
-// }) {
-//   return (
-//     <div className="form-control w-full max-w-xs">
-//       <label className="label">
-//         <span className="label-text">{label || getLabel(name)}</span>
-//       </label>
-//       <textarea
-//         className="textarea h-24 textarea-bordered"
-//         {...register(name, {
-//           ...(isRequired ? { required: "Info obligatoire" } : {}),
-//           ...((!noValidation && getRegisterProps({ name })) || {}),
-//         })}
-//       />
-//       <span className="label-text-alt text-red-500">
-//         {errors[name] && errors[name].message}
-//       </span>
-//     </div>
-//   );
-// }
+type FormTextAreaProps = {
+  control: any;
+  controlClassName?: string;
+  disabled?: boolean;
+  errors: any;
+  inputClassName?: string;
+  isLoading?: boolean;
+  isRequired?: boolean;
+  label?: string;
+  name: string;
+  onBlur?: () => void;
+  onInputChange?: () => void;
+  // register and registerProps are no longer needed if using Controller
+};
+
+export function FormTextarea({
+  control,
+  controlClassName = "",
+  disabled = false,
+  errors,
+  inputClassName = "",
+  isRequired = false,
+  label = "",
+  name,
+  onBlur = () => {},
+  onInputChange,
+}: FormTextAreaProps) {
+  const nameWithDotIndex = name.replace(/\[(\d+)]\./g, ".$1.");
+  const error = get(errors, nameWithDotIndex);
+  const errorMessage = error?.message;
+
+  return (
+    <div
+      className={`form-control w-full ${controlClassName}${disabled ? ` opacity-50` : ""} ${!controlClassName.includes("mt-") && "mt-2"}`}
+    >
+      {(label || getLabel(name)) && (
+        <label className="label">
+          <span className="label-text">
+            {label || getLabel(name)}
+            {isRequired ? <span className="text-red-500 ml-1">*</span> : null}
+          </span>
+        </label>
+      )}
+      <Controller
+        control={control}
+        name={name}
+        rules={isRequired ? { required: "Info obligatoire" } : {}}
+        render={({ field }) => (
+          <textarea
+            className={`textarea w-full textarea-bordered ${inputClassName}`}
+            {...field}
+            value={field.value ?? ""}
+            disabled={disabled}
+            onBlur={() => {
+              field.onBlur();
+              onBlur();
+            }}
+            onChange={(e) => {
+              field.onChange(e);
+              if (onInputChange) onInputChange();
+            }}
+          />
+        )}
+      />
+      {GetErrorMessage(errorMessage) && (
+        <div className="label-text-alt text-red-500 mt-1">
+          {GetErrorMessage(errorMessage)}
+        </div>
+      )}
+    </div>
+  );
+}
