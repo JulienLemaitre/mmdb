@@ -22,6 +22,12 @@ import {
   FEED_FORM_LOCAL_STORAGE_KEY,
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
+import {
+  localStorageGetItem,
+  localStorageSetItem,
+  localStorageRemoveItem,
+  localStorageRemoveItems,
+} from "@/utils/localStorage";
 import { SummarySlice } from "@/features/review/slices/SummarySlice";
 import { CollectionSlice } from "@/features/review/slices/CollectionSlice";
 import { PieceSlice } from "@/features/review/slices/PieceSlice";
@@ -73,7 +79,6 @@ export default function ChecklistPage() {
     useState<ReviewSubmitSuccess | null>(null);
   const [aborting, setAborting] = useState(false);
   const [abortError, setAbortError] = useState<string | null>(null);
-  const [storageWarning, setStorageWarning] = useState<string | null>(null);
   const [workingGraph, setWorkingGraph] = useState<ChecklistGraph | null>(null);
   const [currentView, setCurrentView] = useState<ReviewView>({
     view: "SUMMARY",
@@ -94,8 +99,10 @@ export default function ChecklistPage() {
     document?.getElementById(modalId)?.close();
     if (submitSuccess && reviewData) {
       clearWorkingCopy();
-      localStorage.removeItem(storageKey(reviewData.reviewId));
-      localStorage.removeItem(returnRouteKey(reviewData.reviewId));
+      localStorageRemoveItems([
+        storageKey(reviewData.reviewId),
+        returnRouteKey(reviewData.reviewId),
+      ]);
       router.push(URL_REVIEW_LIST);
     }
     setSubmitSuccess(null);
@@ -217,7 +224,7 @@ export default function ChecklistPage() {
     } catch {
       return new Set<string>();
     }
-  }, [reviewData?.graph, workingGraph]);
+  }, [reviewData, workingGraph]);
 
   const totals = useMemo(() => {
     const totalRequired = allRequiredItems.length;
@@ -292,10 +299,10 @@ export default function ChecklistPage() {
 
     // Store return route payload, now with the view state
     try {
-      localStorage.setItem(
-        returnRouteKey(reviewData.reviewId),
-        JSON.stringify({ currentView, fieldPath: item.fieldPath }),
-      );
+      localStorageSetItem(returnRouteKey(reviewData.reviewId), {
+        currentView,
+        fieldPath: item.fieldPath,
+      });
     } catch {
       // ignore
     }
@@ -329,14 +336,11 @@ export default function ChecklistPage() {
           debug.info("SET reviewData", reviewData);
           return reviewData;
         });
-        const raw = localStorage.getItem(storageKey(reviewData.reviewId));
-        if (raw) {
-          try {
-            setCheckedKeys(new Set(JSON.parse(raw) as string[]));
-          } catch {
-            setStorageWarning("Local progress was corrupt and has been reset.");
-            localStorage.removeItem(storageKey(reviewData.reviewId));
-          }
+        const keys = localStorageGetItem<string[]>(
+          storageKey(reviewData.reviewId),
+        );
+        if (keys) {
+          setCheckedKeys(new Set(keys));
         }
         const wcGraph = getWorkingCopy()?.graph;
         if (wcGraph) {
@@ -363,9 +367,9 @@ export default function ChecklistPage() {
   // Persist checked keys to localStorage
   useEffect(() => {
     if (reviewData?.reviewId) {
-      localStorage.setItem(
+      localStorageSetItem(
         storageKey(reviewData.reviewId),
-        JSON.stringify(Array.from(checkedKeys)),
+        Array.from(checkedKeys),
       );
     }
   }, [checkedKeys, reviewData?.reviewId]);
@@ -376,9 +380,10 @@ export default function ChecklistPage() {
       return;
     }
     try {
-      const raw = localStorage.getItem(FEED_FORM_LOCAL_STORAGE_KEY);
-      if (!raw) return;
-      const feedState = JSON.parse(raw) as FeedFormState;
+      const feedState = localStorageGetItem<FeedFormState>(
+        FEED_FORM_LOCAL_STORAGE_KEY,
+      );
+      if (!feedState) return;
       const rc = feedState?.formInfo?.reviewContext;
       if (!rc?.reviewEdit || rc.reviewId !== reviewData.reviewId) return;
 
@@ -412,15 +417,14 @@ export default function ChecklistPage() {
         return ns;
       });
 
-      localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
+      localStorageRemoveItem(FEED_FORM_LOCAL_STORAGE_KEY);
 
       const retKey = returnRouteKey(reviewData.reviewId);
-      const retRaw = localStorage.getItem(retKey);
-      if (retRaw) {
-        const ret = JSON.parse(retRaw) as {
-          currentView: ReviewView;
-          fieldPath?: string;
-        };
+      const ret = localStorageGetItem<{
+        currentView: ReviewView;
+        fieldPath?: string;
+      }>(retKey);
+      if (ret) {
         if (ret.currentView) {
           setCurrentView(ret.currentView);
         }
@@ -433,7 +437,7 @@ export default function ChecklistPage() {
             el?.scrollIntoView({ block: "center", behavior: "smooth" });
           }
         }, 100);
-        localStorage.removeItem(retKey);
+        localStorageRemoveItem(retKey);
       }
     } catch (e) {
       prodLog.error("[return from edit] Error:", e);
@@ -534,12 +538,6 @@ export default function ChecklistPage() {
 
         <div className="text-md text-secondary">Checklist items</div>
 
-        {storageWarning && (
-          <div className="alert alert-warning">
-            <span>{storageWarning}</span>
-          </div>
-        )}
-
         <div className="card bg-base-100 border p-4">
           {currentView.view === "SUMMARY" && (
             <SummarySlice items={summaryItemList} {...commonSliceProps} />
@@ -625,17 +623,17 @@ export default function ChecklistPage() {
 
                   // Clear review localStorage
                   clearWorkingCopy();
-                  localStorage.removeItem(storageKey(reviewData.reviewId));
-                  localStorage.removeItem(returnRouteKey(reviewData.reviewId));
+                  localStorageRemoveItems([
+                    storageKey(reviewData.reviewId),
+                    returnRouteKey(reviewData.reviewId),
+                  ]);
 
                   // Clear FeedForm localStorage
-                  localStorage.removeItem(
+                  localStorageRemoveItems([
                     SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-                  );
-                  localStorage.removeItem(
                     COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-                  );
-                  localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
+                    FEED_FORM_LOCAL_STORAGE_KEY,
+                  ]);
 
                   router.push(URL_REVIEW_LIST);
                 } catch (e: any) {

@@ -1,5 +1,8 @@
 import { describe, it, expect, beforeEach } from "@jest/globals";
 import {
+  localStorageGetItem,
+} from "@/utils/localStorage";
+import {
   resolveStepFromReviewItem,
   writeBootStateForFeedForm,
   consumeBootStateForFeedForm,
@@ -176,7 +179,7 @@ describe("reviewEditBridge utilities", () => {
     };
     writeBootStateForFeedForm(payload);
     const consumed = consumeBootStateForFeedForm();
-    expect(localStorage.getItem(FEED_FORM_BOOT_KEY)).toBeNull();
+    expect(localStorageGetItem(FEED_FORM_BOOT_KEY)).toBeNull();
     expect(consumed?.feedFormState.formInfo?.currentStepRank).toBe(2);
     expect(consumed?.feedFormState.formInfo?.reviewContext?.reviewId).toBe(
       "r1",

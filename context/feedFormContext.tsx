@@ -23,7 +23,7 @@ import {
   FeedFormProviderProps,
   FeedFormState,
 } from "@/types/feedFormTypes";
-import { localStorageGetItem } from "@/utils/localStorage";
+import { localStorageGetItem, localStorageSetItem } from "@/utils/localStorage";
 import { feedFormReducer } from "@/context/feedFormReducer";
 import {
   FEED_FORM_INITIAL_STATE,
@@ -57,21 +57,18 @@ export function FeedFormProvider({
     try {
       const bootRaw: FeedBootType | null = consumeBootStateForFeedForm();
       if (bootRaw) {
-        localStorage.setItem(
-          FEED_FORM_LOCAL_STORAGE_KEY,
-          JSON.stringify(bootRaw.feedFormState),
-        );
+        localStorageSetItem(FEED_FORM_LOCAL_STORAGE_KEY, bootRaw.feedFormState);
 
         if (bootRaw.collectionPieceVersionsFormState) {
-          localStorage.setItem(
+          localStorageSetItem(
             COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-            JSON.stringify(bootRaw.collectionPieceVersionsFormState),
+            bootRaw.collectionPieceVersionsFormState,
           );
         }
         if (bootRaw.singlePieceVersionFormState) {
-          localStorage.setItem(
+          localStorageSetItem(
             SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-            JSON.stringify(bootRaw.singlePieceVersionFormState),
+            bootRaw.singlePieceVersionFormState,
           );
         }
       }
@@ -114,7 +111,7 @@ export function useFeedForm() {
 export function updateFeedForm(dispatch, type, value?: any) {
   dispatch({
     type,
-    ...(typeof value !== "undefined" ? { payload: value } : ({} as any)),
+    ...(value === undefined ? ({} as any) : { payload: value }),
   });
 }
 
@@ -124,15 +121,11 @@ export function initFeedForm(dispatch, initialState = FEED_FORM_INITIAL_STATE) {
 
 function getLastCompletedStep(state: FeedFormState): FeedFormStep | undefined {
   // traversing the steps' array, we return the step before the first incomplete one id
-  // console.group(`getLastCompletedStep`);
   for (let i = 0; i < steps.length; i++) {
-    // console.log(`steps[${i}] isComplete :`, steps[i].isComplete(state));
     if (!steps[i].isComplete(state)) {
-      // console.groupEnd();
       return steps[i - 1];
     }
   }
-  // console.groupEnd();
   // If none incomplete step found, we return the last step id
   return steps[steps.length - 1];
 }

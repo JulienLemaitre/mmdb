@@ -7,6 +7,7 @@ import {
   FEED_FORM_TEST_STATE,
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
+import { localStorageRemoveItem } from "@/utils/localStorage";
 import { initFeedForm, useFeedForm } from "@/context/feedFormContext";
 import dynamic from "next/dynamic";
 import React, { useCallback, useState } from "react";
@@ -24,17 +25,17 @@ export default function ResetAllForms() {
     useState(false);
 
   const resetAllFormsData = useCallback(() => {
-    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
-    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
-    localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(FEED_FORM_LOCAL_STORAGE_KEY);
     setIsConfirmationModalOpened(false);
     initFeedForm(dispatch);
   }, [dispatch]);
 
   const resetTestData = useCallback(() => {
-    localStorage.removeItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
-    localStorage.removeItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
-    localStorage.removeItem(FEED_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY);
+    localStorageRemoveItem(FEED_FORM_LOCAL_STORAGE_KEY);
     setIsConfirmationModalOpened(false);
     initFeedForm(dispatch, FEED_FORM_TEST_STATE);
   }, [dispatch]);

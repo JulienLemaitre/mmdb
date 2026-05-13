@@ -49,7 +49,7 @@ export function CollectionPieceVersionsFormProvider({
   );
 
   useEffect(() => {
-    const localStorageValue = localStorageGetItem(
+    const localStorageValue: any = localStorageGetItem(
       COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
     );
     if (localStorageValue) {

@@ -1,7 +1,11 @@
 import React, { createContext, useCallback, useContext, useMemo } from "react";
 import { ReviewWorkingCopy } from "@/features/review/reviewEditBridge";
-
 import { ChecklistGraph } from "@/types/reviewTypes";
+import {
+  localStorageGetItem,
+  localStorageSetItem,
+  localStorageRemoveItem,
+} from "@/utils/localStorage";
 
 type ReviewWorkingCopyCtx = {
   getWorkingCopy(): ReviewWorkingCopy | null;
@@ -25,21 +29,8 @@ export function ReviewWorkingCopyProvider({
   const key = useMemo(() => `review:${reviewId}:workingCopy`, [reviewId]);
 
   const get = useCallback((): ReviewWorkingCopy | null => {
-    const raw =
-      typeof window !== "undefined" ? localStorage.getItem(key) : null;
-    if (!raw) return null;
-    try {
-      return JSON.parse(raw) as ReviewWorkingCopy;
-    } catch {
-      // Reset on corruption
-      const fallback: ReviewWorkingCopy = {
-        graph: initialGraph,
-        updatedAt: new Date().toISOString(),
-      };
-      localStorage.setItem(key, JSON.stringify(fallback));
-      return fallback;
-    }
-  }, [key, initialGraph]);
+    return localStorageGetItem<ReviewWorkingCopy>(key);
+  }, [key]);
 
   const save = useCallback(
     (nextGraph: any) => {
@@ -47,13 +38,13 @@ export function ReviewWorkingCopyProvider({
         graph: nextGraph,
         updatedAt: new Date().toISOString(),
       };
-      localStorage.setItem(key, JSON.stringify(payload));
+      localStorageSetItem(key, payload);
     },
     [key],
   );
 
   const clear = useCallback(() => {
-    localStorage.removeItem(key);
+    localStorageRemoveItem(key);
   }, [key]);
 
   const value = useMemo<ReviewWorkingCopyCtx>(
@@ -68,12 +59,12 @@ export function ReviewWorkingCopyProvider({
   // Initialize once if empty
   React.useEffect(() => {
     if (typeof window === "undefined") return;
-    if (!localStorage.getItem(key)) {
+    if (!localStorageGetItem<ReviewWorkingCopy>(key)) {
       const init: ReviewWorkingCopy = {
         graph: initialGraph,
         updatedAt: new Date().toISOString(),
       };
-      localStorage.setItem(key, JSON.stringify(init));
+      localStorageSetItem(key, init);
     }
   }, [key, initialGraph]);
 

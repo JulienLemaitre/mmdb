@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ReviewEditBanner from "@/features/review/components/ReviewEditBanner";
 import { FEED_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
+import { localStorageGetItem } from "@/utils/localStorage";
 
 // Allow per-test control of mocked state and router
 let mockedState: any = { formInfo: { currentStepRank: 0 } };
@@ -59,8 +60,8 @@ describe("ReviewEditBanner", () => {
     fireEvent.click(btn);
 
     // State was persisted
-    const raw = localStorage.getItem(FEED_FORM_LOCAL_STORAGE_KEY);
-    expect(raw).toBeTruthy();
+    const saved = localStorageGetItem(FEED_FORM_LOCAL_STORAGE_KEY);
+    expect(saved).toBeTruthy();
 
     // Navigation executed
     expect(pushMock).toHaveBeenCalledWith("/review/rev-123/checklist");

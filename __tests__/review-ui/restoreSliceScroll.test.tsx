@@ -2,6 +2,9 @@ import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { buildMockOverview } from "@/features/review/reviewMock";
 import ChecklistPage from "@/app/(signedIn)/review/[reviewId]/checklist/page";
+import {
+  localStorageSetItem,
+} from "@/utils/localStorage";
 import { FEED_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 
 // Mock Next.js navigation hooks
@@ -63,23 +66,17 @@ describe("Back-to-review restoration (slice + scroll)", () => {
     const sliceKey = target.fieldPath;
 
     // Prepare feed form state indicating we are returning from edit
-    localStorage.setItem(
-      FEED_FORM_LOCAL_STORAGE_KEY,
-      JSON.stringify({
-        formInfo: {
-          reviewContext: { reviewEdit: true, reviewId: "r-1", sliceKey },
-        },
-      }),
-    );
+    localStorageSetItem(FEED_FORM_LOCAL_STORAGE_KEY, {
+      formInfo: {
+        reviewContext: { reviewEdit: true, reviewId: "r-1", sliceKey },
+      },
+    });
 
     // Also set a return-route payload with both sliceKey and scrollY
-    localStorage.setItem(
-      "review:r-1:returnRoute",
-      JSON.stringify({
-        currentView: { view: "SUMMARY" }, // Provide the actual view object
-        fieldPath: sliceKey, // page.tsx expects 'fieldPath', not 'sliceKey'
-      }),
-    );
+    localStorageSetItem("review:r-1:returnRoute", {
+      currentView: { view: "SUMMARY" }, // Provide the actual view object
+      fieldPath: sliceKey, // page.tsx expects 'fieldPath', not 'sliceKey'
+    });
 
     // Spy on scrollIntoView to verify anchor scrolling is used (jsdom lacks it by default)
     (HTMLElement.prototype as any).scrollIntoView = jest.fn();

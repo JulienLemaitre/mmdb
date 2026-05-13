@@ -5,6 +5,11 @@ import {
   FEED_FORM_BOOT_KEY,
   feedFormFromWorkingCopyError,
 } from "@/utils/constants";
+import {
+  localStorageGetItem,
+  localStorageSetItem,
+  localStorageRemoveItem,
+} from "@/utils/localStorage";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 import { getEntityByIdOrKey } from "@/utils/getEntityByIdOrKey";
@@ -560,14 +565,11 @@ export function writeBootStateForFeedForm({
   collectionPieceVersionsFormState,
 }: FeedBootType) {
   try {
-    localStorage.setItem(
-      FEED_FORM_BOOT_KEY,
-      JSON.stringify({
-        feedFormState,
-        singlePieceVersionFormState,
-        collectionPieceVersionsFormState,
-      }),
-    );
+    localStorageSetItem(FEED_FORM_BOOT_KEY, {
+      feedFormState,
+      singlePieceVersionFormState,
+      collectionPieceVersionsFormState,
+    });
   } catch {
     // ignore
   }
@@ -575,10 +577,10 @@ export function writeBootStateForFeedForm({
 
 export function consumeBootStateForFeedForm(): FeedBootType | null {
   try {
-    const raw = localStorage.getItem(FEED_FORM_BOOT_KEY);
-    if (!raw) return null;
-    localStorage.removeItem(FEED_FORM_BOOT_KEY);
-    return JSON.parse(raw) as FeedBootType;
+    const data = localStorageGetItem<FeedBootType>(FEED_FORM_BOOT_KEY);
+    if (!data) return null;
+    localStorageRemoveItem(FEED_FORM_BOOT_KEY);
+    return data;
   } catch {
     return null;
   }
