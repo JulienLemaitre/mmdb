@@ -48,7 +48,7 @@ export function SinglePieceVersionFormProvider({
   );
 
   useEffect(() => {
-    const localStorageValue = localStorageGetItem(
+    const localStorageValue: any = localStorageGetItem(
       SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
     );
     if (localStorageValue) {
