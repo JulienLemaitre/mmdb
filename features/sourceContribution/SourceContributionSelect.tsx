@@ -1,15 +1,12 @@
 import Select from "@/ui/form/reactSelect/Select";
-import {
-  OptionInput,
-  OrganizationState,
-  PersonState,
-} from "@/types/formTypes";
+import { OptionInput, OrganizationState, PersonState } from "@/types/formTypes";
 import React, { useState } from "react";
 import { CONTRIBUTION_ROLE } from "@/prisma/client/enums";
 import NewSourceContributionForm from "@/features/sourceContribution/NewSourceContributionForm";
 import Label from "@/ui/Label";
 import getRoleLabel from "@/utils/getRoleLabel";
 import { reactSelectStyles } from "@/ui/form/reactSelect/reactSelectStyles";
+import { formatSourceContributionOption } from "@/features/sourceContribution/utils";
 
 type SourceContributionSelectProps = {
   sourceContributionOptions: OptionInput[];
@@ -102,7 +99,7 @@ export default function SourceContributionSelect({
   );
 
   return (
-    <div className="border-accent border-1 rounded-md px-6 pt-4 pb-6">
+    <div className="border-accent border rounded-md px-6 pt-4 pb-6">
       <h6 className="mb-4 text-lg font-normal text-accent">
         {`Add a source contribution`}
       </h6>
@@ -121,6 +118,7 @@ export default function SourceContributionSelect({
             isSearchable={true}
             name="sourceContribution"
             options={sourceContributionOptions}
+            formatOptionLabel={formatSourceContributionOption}
             autoFocus
             onChange={(sourceContributionOption: OptionInput | null) => {
               if (!sourceContributionOption) return;

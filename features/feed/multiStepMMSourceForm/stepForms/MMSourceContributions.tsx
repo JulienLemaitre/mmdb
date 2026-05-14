@@ -12,7 +12,10 @@ import { LoaderCentered } from "@/ui/LoaderCentered";
 import DebugBox from "@/ui/DebugBox";
 
 export default function MMSourceContributions() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<{
+    persons: PersonState[];
+    organizations: OrganizationState[];
+  } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [draftPersons, setDraftPersons] = useState<PersonState[]>([]);
   const [draftOrganizations, setDraftOrganizations] = useState<

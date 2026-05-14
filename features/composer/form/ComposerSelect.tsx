@@ -2,7 +2,7 @@
 import Select from "@/ui/form/reactSelect/Select";
 import { PersonState } from "@/types/formTypes";
 import getNoOptionsMessage from "@/ui/form/reactSelect/getNoOptionsMessage";
-import PersonStyled from "@/ui/PersonStyled";
+import { formatPersonOption, getPersonOption } from "@/features/composer/utils";
 
 type ComposerSelectProps = {
   composers: PersonState[];
@@ -17,10 +17,10 @@ export default function ComposerSelect({
   onInitComposerCreation,
 }: Readonly<ComposerSelectProps>) {
   const composerOptions = composers.map((composer) =>
-    getComposerOption(composer),
+    getPersonOption(composer),
   );
   const defaultOption = selectedComposer
-    ? getComposerOption(selectedComposer)
+    ? getPersonOption(selectedComposer)
     : null;
 
   return (
@@ -32,6 +32,7 @@ export default function ComposerSelect({
       isSearchable={true}
       name="composer"
       options={composerOptions}
+      formatOptionLabel={formatPersonOption}
       defaultValue={defaultOption}
       autoFocus
       onChange={(composerOption) => {
@@ -44,11 +45,4 @@ export default function ComposerSelect({
       })}
     />
   );
-}
-
-function getComposerOption(composer: PersonState) {
-  return {
-    value: composer.id,
-    label: PersonStyled({ person: composer }),
-  };
 }

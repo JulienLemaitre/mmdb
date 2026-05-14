@@ -1,6 +1,7 @@
 import {
   ContributionStateWithoutId,
-  OptionInput,
+  OptionOrganizationInput,
+  OptionPersonInput,
   OrganizationState,
   PersonState,
 } from "@/types/formTypes";
@@ -92,20 +93,28 @@ export default function SourceContributionSelectForm({
     onResetDraftEntities();
   };
 
-  const personOptions: OptionInput[] = persons.map((person: PersonState) => ({
-    value: person.id,
-    label: `${person.firstName} ${person.lastName} [person]`,
-  }));
-  const organizationOptions: OptionInput[] = organizations.map(
+  const personOptions: OptionPersonInput[] = persons.map(
+    (person: PersonState) => ({
+      value: person.id,
+      label: `${person.firstName} ${person.lastName} [person]`,
+      person,
+    }),
+  );
+  const organizationOptions: OptionOrganizationInput[] = organizations.map(
     (organization: OrganizationState) => ({
       value: organization.id,
       label: `${organization.name} [organization]`,
+      organization,
     }),
   );
   const sourceContributionOptions = [
     ...personOptions,
     ...organizationOptions,
-  ].sort((a, b) => (a.label > b.label ? 1 : -1));
+  ].sort((a, b) => {
+    const aKey = "person" in a ? a.person.lastName : a.organization.name;
+    const bKey = "person" in b ? b.person.lastName : b.organization.name;
+    return aKey.localeCompare(bKey);
+  });
 
   const isPresentFormDirty = !_isEqual(
     selectedContributions,

@@ -1,5 +1,4 @@
 import Select from "@/ui/form/reactSelect/Select";
-import labelOnlyFilterOption from "@/utils/labelOnlyFilterOption";
 import { reactSelectStyles } from "@/ui/form/reactSelect/reactSelectStyles";
 import { OptionInput } from "@/types/formTypes";
 
@@ -51,7 +50,6 @@ const SimpleSelect = ({
             ? { value: "", label: "" }
             : value || defaultValue
         }
-        filterOption={labelOnlyFilterOption}
         styles={reactSelectStyles}
         options={options}
         {...selectProps}

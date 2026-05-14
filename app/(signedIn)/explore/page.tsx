@@ -13,7 +13,6 @@ import {
 import getTempoIndicationSelectList from "@/utils/getTempoIndicationSelectList";
 import ControlledSelect from "@/ui/form/ControlledSelect";
 import getAllComposers from "@/utils/getAllComposers";
-import getPersonName from "@/utils/getPersonName";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { zodOption, zodYear } from "@/types/zodTypes";
@@ -26,6 +25,7 @@ import {
   toastNotificationAction,
   useToastNotification,
 } from "@/context/toastNotification";
+import { formatPersonOption, getPersonOption } from "@/features/composer/utils";
 
 // TODO: What do we want in addition to what is already there:
 //  1. Show all mms that result in speeds of more / less than X notes per second with a selection of note type (strutural, repeated etc.) e.g. show me all Sources that have MMs that result in more than 15 nps (structural)
@@ -182,10 +182,8 @@ function SearchPage() {
             label={`Composer`}
             id={`composer` as const}
             control={control}
-            options={composers.map((composer) => ({
-              value: composer.id,
-              label: getPersonName(composer),
-            }))}
+            options={composers.map((composer) => getPersonOption(composer))}
+            formatOptionLabel={formatPersonOption}
             isRequired={false}
             fieldError={errors?.composer}
           />

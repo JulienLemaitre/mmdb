@@ -1,7 +1,7 @@
 import Select from "@/ui/form/reactSelect/Select";
-import labelOnlyFilterOption from "@/utils/labelOnlyFilterOption";
 import { useController } from "react-hook-form";
 import { reactSelectStyles } from "@/ui/form/reactSelect/reactSelectStyles";
+import { JSX } from "react";
 
 type ControlledSelectProps = {
   name: string;
@@ -14,10 +14,17 @@ type ControlledSelectProps = {
   isDisabled?: boolean;
   isLoading?: boolean;
   fieldError?: any;
-  options: {
-    value: string;
-    label: string;
-  }[];
+  options: (
+    | {
+        value: string;
+        label: string;
+      }
+    | {
+        value: string;
+        label: JSX.Element;
+      }
+  )[];
+  formatOptionLabel?: (option: any) => JSX.Element | string;
   control: any;
   classNames?: string;
 };
@@ -32,6 +39,7 @@ const ControlledSelect = ({
   isDisabled = false,
   fieldError,
   options,
+  formatOptionLabel,
   defaultValue,
   classNames,
 }: ControlledSelectProps) => {
@@ -43,7 +51,7 @@ const ControlledSelect = ({
     control,
     rules,
   });
-  const selectProps = { options, isRequired, isDisabled };
+  const selectProps = { options, isRequired, isDisabled, formatOptionLabel };
   if (JSON.stringify(error) !== JSON.stringify(fieldError)) {
     console.warn(
       `[${name}] error and fieldError are different`,
@@ -77,7 +85,6 @@ const ControlledSelect = ({
             ? null
             : value || defaultValue
         }
-        filterOption={labelOnlyFilterOption}
         styles={reactSelectStyles}
         {...selectProps}
       />

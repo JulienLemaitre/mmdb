@@ -7,6 +7,7 @@ import { FeedFormState } from "@/types/feedFormTypes";
 import getAllComposers from "@/utils/getAllComposers";
 import { LoaderCentered } from "@/ui/LoaderCentered";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
+import { comparePersons } from "@/features/composer/utils";
 
 type ComposerSelectOrCreateProps = {
   feedFormState: FeedFormState;
@@ -61,13 +62,7 @@ const ComposerSelectOrCreate = ({
 
   // If we have new composers, we need to sort the composerFullList
   if (newPersons?.length) {
-    composerFullList = composerFullList.sort((a, b) => {
-      if (a.lastName < b.lastName) return -1;
-      if (a.lastName > b.lastName) return 1;
-      if (a.firstName < b.firstName) return -1;
-      if (a.firstName > b.firstName) return 1;
-      return 0;
-    });
+    composerFullList = composerFullList.sort(comparePersons);
   }
 
   const selectedComposer: PersonState | undefined = composerFullList.find(

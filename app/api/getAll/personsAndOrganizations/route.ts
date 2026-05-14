@@ -1,6 +1,8 @@
 import { db } from "@/utils/server/db";
+import { comparePersons } from "@/features/composer/utils";
+import { compareOrganizations } from "@/features/organization/utils";
 
-export async function GET(request: Request) {
+export async function GET() {
   // Fetch all persons
   const personsFetch = db.person.findMany({
     select: {
@@ -25,5 +27,8 @@ export async function GET(request: Request) {
     organizationsFetch,
   ]);
 
-  return Response.json({ persons, organizations });
+  return Response.json({
+    persons: persons.sort(comparePersons),
+    organizations: organizations.sort(compareOrganizations),
+  });
 }
