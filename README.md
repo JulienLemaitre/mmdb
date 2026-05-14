@@ -22,3 +22,34 @@ Rn the development server:
 ```bash
 npm run dev
 ```
+
+## How can I make a dump of the production database and download it
+
+You can create a backup of your Neon database using the `pg_dump` utility.[(1)](https://neon.com/docs/manage/backup-pg-dump)
+
+First, install `pg_dump` if you don't have it. You can verify by running `pg_dump -V`.[(1)](https://neon.com/docs/manage/backup-pg-dump) It's recommended to use the latest versions and ensure the client version matches your Neon project's Postgres version.[(1)](https://neon.com/docs/manage/backup-pg-dump)
+
+Next, get your connection string from your Neon Project Dashboard by clicking the **Connect** button.[(1)](https://neon.com/docs/manage/backup-pg-dump) Make sure to deselect the **Connection pooling** option - you need a direct connection string, not a pooled one.[(1)](https://neon.com/docs/manage/backup-pg-dump)
+
+Your connection string should look like this:[(1)](https://neon.com/docs/manage/backup-pg-dump)
+
+```
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+```
+[(1)](https://neon.com/docs/manage/backup-pg-dump)
+
+Then run this command to create your backup:[(1)](https://neon.com/docs/manage/backup-pg-dump)
+
+```
+pg_dump -Fc -v -d "<neon_database_connection_string>" -f <dump_file_name>
+```
+[(1)](https://neon.com/docs/manage/backup-pg-dump)
+
+The flags mean:[(2)](https://neon.com/postgresql/postgresql-administration/postgresql-backup-database#introduction-to-postgresql-backup)
+
+- `-Fc`: Creates a custom format archive suitable for input into pg_restore
+- `-v`: Runs in verbose mode
+- `-d`: Specifies the database connection string
+- `-f`: Specifies the output file name
+
+This will create a backup file locally where you're running the command.[(1)](https://neon.com/docs/manage/backup-pg-dump)
