@@ -32,7 +32,7 @@ export default function ComposerSelect({
       isSearchable={true}
       name="composer"
       options={composerOptions}
-      formatOptionLabel={(option) => formatPersonOption(option)}
+      formatOptionLabel={formatPersonOption}
       defaultValue={defaultOption}
       autoFocus
       onChange={(composerOption) => {

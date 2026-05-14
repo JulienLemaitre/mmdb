@@ -24,7 +24,7 @@ type ControlledSelectProps = {
         label: JSX.Element;
       }
   )[];
-  formatOptionLabel: (option: any) => JSX.Element | string;
+  formatOptionLabel?: (option: any) => JSX.Element | string;
   control: any;
   classNames?: string;
 };

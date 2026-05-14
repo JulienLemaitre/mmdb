@@ -7,7 +7,7 @@ import { FeedFormState } from "@/types/feedFormTypes";
 import getAllComposers from "@/utils/getAllComposers";
 import { LoaderCentered } from "@/ui/LoaderCentered";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
-import { comparePersons } from "@/utils/sort/comparePersons";
+import { comparePersons } from "@/features/composer/utils";
 
 type ComposerSelectOrCreateProps = {
   feedFormState: FeedFormState;

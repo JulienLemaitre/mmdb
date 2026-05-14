@@ -183,7 +183,7 @@ function SearchPage() {
             id={`composer` as const}
             control={control}
             options={composers.map((composer) => getPersonOption(composer))}
-            formatOptionLabel={(option) => formatPersonOption(option)}
+            formatOptionLabel={formatPersonOption}
             isRequired={false}
             fieldError={errors?.composer}
           />

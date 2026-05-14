@@ -1,5 +1,5 @@
 import { db } from "@/utils/server/db";
-import { comparePersons } from "@/utils/sort/comparePersons";
+import { comparePersons } from "@/features/composer/utils";
 
 export async function GET() {
   // Fetch all composers

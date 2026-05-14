@@ -232,6 +232,10 @@ export type OptionInput = {
   value: string;
   label: string;
 };
+export type OptionPersonInput = OptionInput & { person: PersonState };
+export type OptionOrganizationInput = OptionInput & {
+  organization: OrganizationState;
+};
 export type OptionInputTyped<T> = {
   value: T;
   label: string;
