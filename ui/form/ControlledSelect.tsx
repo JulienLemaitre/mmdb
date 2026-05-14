@@ -1,5 +1,4 @@
 import Select from "@/ui/form/reactSelect/Select";
-import labelOnlyFilterOption from "@/utils/labelOnlyFilterOption";
 import { useController } from "react-hook-form";
 import { reactSelectStyles } from "@/ui/form/reactSelect/reactSelectStyles";
 
@@ -77,7 +76,6 @@ const ControlledSelect = ({
             ? null
             : value || defaultValue
         }
-        filterOption={labelOnlyFilterOption}
         styles={reactSelectStyles}
         {...selectProps}
       />
