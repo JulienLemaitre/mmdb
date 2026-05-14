@@ -1,6 +1,7 @@
 import Select from "@/ui/form/reactSelect/Select";
 import { useController } from "react-hook-form";
 import { reactSelectStyles } from "@/ui/form/reactSelect/reactSelectStyles";
+import { JSX } from "react";
 
 type ControlledSelectProps = {
   name: string;
@@ -13,10 +14,16 @@ type ControlledSelectProps = {
   isDisabled?: boolean;
   isLoading?: boolean;
   fieldError?: any;
-  options: {
-    value: string;
-    label: string;
-  }[];
+  options: (
+    | {
+        value: string;
+        label: string;
+      }
+    | {
+        value: string;
+        label: JSX.Element;
+      }
+  )[];
   control: any;
   classNames?: string;
 };

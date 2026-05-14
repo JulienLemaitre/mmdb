@@ -1,6 +1,7 @@
 import { db } from "@/utils/server/db";
+import { comparePersons } from "@/utils/sort/comparePersons";
 
-export async function GET(request: Request) {
+export async function GET() {
   // Fetch all composers
   const composers = await db.person.findMany({
     select: {
@@ -12,5 +13,5 @@ export async function GET(request: Request) {
     },
   });
 
-  return Response.json({ composers });
+  return Response.json({ composers: composers.sort(comparePersons) });
 }
