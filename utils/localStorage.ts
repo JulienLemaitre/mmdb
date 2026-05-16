@@ -1,6 +1,6 @@
 const USE_LOCAL_STORAGE = true;
 
-export const LOCAL_STORAGE_SCHEMA_VERSION = 2;
+export const LOCAL_STORAGE_SCHEMA_VERSION = 3;
 
 export type LocalStorageEnvelope<T> = {
   version: number;
@@ -34,7 +34,10 @@ export function localStorageSetItem<T>(key: string, value: T): void {
   try {
     localStorage.setItem(key, JSON.stringify(envelope));
   } catch (e) {
-    console.error(`[localStorageSetItem] Error while setting localStorage ${key}:`, e);
+    console.error(
+      `[localStorageSetItem] Error while setting localStorage ${key}:`,
+      e,
+    );
   }
 }
 
@@ -48,13 +51,18 @@ export function localStorageGetItem<T>(key: string): T | null {
   try {
     parsed = JSON.parse(raw);
   } catch (e) {
-    console.warn(`[localStorageGetItem] Corrupted JSON for key "${key}". Removing.`, e);
+    console.warn(
+      `[localStorageGetItem] Corrupted JSON for key "${key}". Removing.`,
+      e,
+    );
     localStorage.removeItem(key);
     return null;
   }
 
   if (!isVersionedLocalStorageEnvelope(parsed)) {
-    console.warn(`[localStorageGetItem] Invalid envelope for key "${key}". Removing.`);
+    console.warn(
+      `[localStorageGetItem] Invalid envelope for key "${key}". Removing.`,
+    );
     localStorage.removeItem(key);
     return null;
   }
