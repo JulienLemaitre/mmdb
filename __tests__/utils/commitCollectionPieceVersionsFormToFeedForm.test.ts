@@ -51,7 +51,7 @@ describe("commitCollectionPieceVersionsFormToFeedForm", () => {
     fastestRepeatedNotesPerBar: 0,
     fastestOrnamentalNotesPerBar: 0,
     isFastestStructuralNoteBelCanto: false,
-    tempoIndication,
+    tempoIndicationId: tempoIndication.id,
   });
 
   const piece1: PieceState = {

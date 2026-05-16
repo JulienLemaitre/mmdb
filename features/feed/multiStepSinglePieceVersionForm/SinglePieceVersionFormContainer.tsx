@@ -13,6 +13,7 @@ import {
   PieceState,
   PieceVersionInput,
   PieceVersionState,
+  TempoIndicationState,
 } from "@/types/formTypes";
 import { useFeedForm } from "@/context/feedFormContext";
 import getPieceStateFromInput from "@/utils/getPieceStateFromInput";
@@ -283,6 +284,20 @@ const SinglePieceVersionFormContainer = ({
     updateSinglePieceVersionForm(dispatch, "goToPrevStep", {});
   };
 
+  const onTempoIndicationCreated = (tempoIndication: TempoIndicationState) => {
+    const newTempoIndication = { ...tempoIndication };
+    newTempoIndication.isNew = true;
+    updateSinglePieceVersionForm(dispatch, "tempoIndications", {
+      array: [newTempoIndication],
+    });
+  };
+
+  const onAddTempoIndication = (tempoIndication: TempoIndicationState) => {
+    updateSinglePieceVersionForm(dispatch, "tempoIndications", {
+      array: [tempoIndication],
+    });
+  };
+
   /////////////////// SUMMARY ////////////////////
 
   const onSubmitSourceOnPieceVersions = () => {
@@ -363,6 +378,8 @@ const SinglePieceVersionFormContainer = ({
           }
           onInitPieceVersionCreation={onInitPieceVersionCreation}
           onCancelPieceVersionCreation={onCancelPieceVersionCreation}
+          onAddTempoIndication={onAddTempoIndication}
+          onTempoIndicationCreated={onTempoIndicationCreated}
           onPieceVersionCreated={onPieceVersionCreated}
           onPieceVersionSelect={onPieceVersionSelect}
           // Summary

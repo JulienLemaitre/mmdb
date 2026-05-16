@@ -156,16 +156,14 @@ export type SectionState = WithRequiredId<
     | "fastestRepeatedNotesPerBar"
     | "fastestOrnamentalNotesPerBar"
     | "isFastestStructuralNoteBelCanto"
+    | "tempoIndicationId"
   >
-> & {
-  tempoIndication: WithRequiredId<
-    Pick<Prisma.TempoIndicationUncheckedCreateInput, "id" | "text">
-  >;
-};
+>;
 export type SectionStateExtendedForMMForm = SectionState & {
   movement: Omit<MovementState, "sections">;
   mMSourceOnPieceVersion: { rank: number; pieceVersionId: string };
   pieceId: string;
+  tempoIndication: TempoIndicationState | undefined;
 };
 
 export type MovementState = WithRequiredId<
@@ -376,7 +374,7 @@ export function assertsIsPersistableFeedFormState(
     )
   ) {
     throw new Error(
-      `Value does not appear to be a PersistableFeedFormState: ${valueToTest}`,
+      `Value does not appear to be a PersistableFeedFormState: ${JSON.stringify(valueToTest)}`,
     );
   }
 }
@@ -400,7 +398,7 @@ export function assertsIsMetronomeMarkWithValue(
     )
   ) {
     throw new Error(
-      `Value does not appear to be a MetronomeMarkState with noMM === false: ${valueToTest}`,
+      `Value does not appear to be a MetronomeMarkState with noMM === false: ${JSON.stringify(valueToTest)}`,
     );
   }
 }
@@ -439,7 +437,7 @@ export function assertsContributionHasPersonOrOrganization(
     )
   ) {
     throw new Error(
-      `Value does not appear to be a PersistableContribution: ${valueToTest}`,
+      `Value does not appear to be a PersistableContribution: ${JSON.stringify(valueToTest)}`,
     );
   }
 }

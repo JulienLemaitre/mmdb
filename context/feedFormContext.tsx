@@ -286,7 +286,7 @@ export function isEntityUsed(
     return (state.pieceVersions || []).some(
       (pv) =>
         pv.movements.some((m) =>
-          m.sections.some((s) => s.tempoIndication.id === tempoIndication.id),
+          m.sections.some((s) => s.tempoIndicationId === tempoIndication.id),
         ) && isEntityUsed(pv, "pieceVersions", state),
     );
   }

@@ -1,7 +1,6 @@
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 import { FeedFormState } from "@/types/feedFormTypes";
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
-import { TempoIndicationState } from "@/types/formTypes";
 
 type CommitParams = {
   singlePieceVersionFormState: SinglePieceVersionFormState;
@@ -25,7 +24,7 @@ export function commitSinglePieceVersionFormToFeedForm({
   isCollectionMode,
   collectionFormState,
 }: CommitParams) {
-  const { composer, piece, pieceVersion, formInfo } =
+  const { composer, piece, pieceVersion, tempoIndications, formInfo } =
     singlePieceVersionFormState;
 
   if (!composer || !piece || !pieceVersion) {
@@ -40,24 +39,7 @@ export function commitSinglePieceVersionFormToFeedForm({
     return;
   }
 
-  // 1. Extraction des tempoIndications de la pieceVersion
-  const tempoIndications: TempoIndicationState[] = [];
-  const tempoIndicationMap = new Map<string, TempoIndicationState>();
-
-  pieceVersion.movements.forEach((movement) => {
-    movement.sections.forEach((section) => {
-      if (section.tempoIndication) {
-        const ti = section.tempoIndication as TempoIndicationState;
-        if (!tempoIndicationMap.has(ti.id)) {
-          tempoIndicationMap.set(ti.id, ti);
-          tempoIndications.push(ti);
-        }
-      }
-    });
-  });
-
-  // 2. Upsert des entités dans le global state (via dispatch)
-  // On utilise FeedFormDispatch pour chaque type d'entité.
+  // 1. Upsert entities in feedForm state
 
   // Upsert Persons
   feedFormDispatch({
@@ -84,7 +66,7 @@ export function commitSinglePieceVersionFormToFeedForm({
   });
 
   // Upsert TempoIndications
-  if (tempoIndications.length > 0) {
+  if (tempoIndications && tempoIndications.length > 0) {
     feedFormDispatch({
       type: "tempoIndications",
       payload: {
@@ -93,7 +75,7 @@ export function commitSinglePieceVersionFormToFeedForm({
     });
   }
 
-  // 3. Mise à jour de mMSourceOnPieceVersions
+  // 2. Mise à jour de mMSourceOnPieceVersions
   const mMSourceOnPieceVersionRank = formInfo.mMSourceOnPieceVersionRank;
 
   let finalRank: number;

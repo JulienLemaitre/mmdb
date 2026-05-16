@@ -35,15 +35,21 @@ export function getSectionList(
         ...pieceVersion.movements.reduce<SectionStateExtendedForMMForm[]>(
           (acc, movement) => [
             ...acc,
-            ...movement.sections.map((section) => ({
-              ...section,
-              movement: {
-                ...movement,
-                sections: undefined,
-              },
-              mMSourceOnPieceVersion,
-              pieceId: pieceVersion.pieceId,
-            })),
+            ...movement.sections.map((section) => {
+              const tempoIndication = state.tempoIndications?.find(
+                (ti) => ti.id === section.tempoIndicationId,
+              );
+              return {
+                ...section,
+                tempoIndication,
+                movement: {
+                  ...movement,
+                  sections: undefined,
+                },
+                mMSourceOnPieceVersion,
+                pieceId: pieceVersion.pieceId,
+              };
+            }),
           ],
           [],
         ),

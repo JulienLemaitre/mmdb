@@ -60,7 +60,7 @@ export default function getMMSourcesOnPieceVersionsDBInputFromState(
                             section.isFastestStructuralNoteBelCanto,
                           tempoIndication:
                             getTempoIndicationNestedDBInputFromState(
-                              section.tempoIndication.id,
+                              section.tempoIndicationId,
                               state,
                               creatorId,
                             ),

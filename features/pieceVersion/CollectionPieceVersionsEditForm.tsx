@@ -17,7 +17,6 @@ import {
   PieceState,
   PieceStateWithCollectionRank,
   PieceVersionState,
-  TempoIndicationState,
 } from "@/types/formTypes";
 import EditIcon from "@/ui/svg/EditIcon";
 import dynamic from "next/dynamic";
@@ -33,6 +32,7 @@ import { localStorageRemoveItem } from "@/utils/localStorage";
 import XMarkIcon from "@/ui/svg/XMarkIcon";
 import PieceVersionDisplay from "@/features/pieceVersion/PieceVersionDisplay";
 import InformationCircleIcon from "@/ui/svg/InformationCircleIcon";
+import { useFeedForm } from "@/context/feedFormContext";
 
 type CollectionPieceVersionsEditFormProps = {
   isUpdateMode: boolean;
@@ -53,6 +53,11 @@ function CollectionPieceVersionsEditForm({
   isPreexistingCollectionUpdate,
 }: CollectionPieceVersionsEditFormProps) {
   const { state, dispatch } = useCollectionPieceVersionsForm();
+  const { state: feedFormState } = useFeedForm();
+  const tempoIndicationList = [
+    ...(state.tempoIndications || []),
+    ...(feedFormState.tempoIndications || []),
+  ];
   const isSinglePieceVersionFormOpen =
     !!state.formInfo?.isSinglePieceVersionFormOpen;
   const [updateInitState, setUpdateInitState] =
@@ -223,7 +228,8 @@ function CollectionPieceVersionsEditForm({
     singlePieceVersionFormState: SinglePieceVersionFormState,
     options?: { isUpdateMode?: boolean },
   ) => {
-    const { composer, piece, pieceVersion } = singlePieceVersionFormState;
+    const { composer, piece, pieceVersion, tempoIndications } =
+      singlePieceVersionFormState;
 
     if (!piece || !pieceVersion) {
       console.error(
@@ -270,18 +276,7 @@ function CollectionPieceVersionsEditForm({
       array: [collectionAwarePieceVersion],
     });
 
-    const tempoIndicationMap = new Map<string, TempoIndicationState>();
-    collectionAwarePieceVersion.movements.forEach((movement) => {
-      movement.sections.forEach((section) => {
-        const tempoIndication = section.tempoIndication;
-        if (tempoIndication?.id) {
-          tempoIndicationMap.set(tempoIndication.id, tempoIndication);
-        }
-      });
-    });
-
-    const tempoIndications = Array.from(tempoIndicationMap.values());
-    if (tempoIndications.length > 0) {
+    if (tempoIndications && tempoIndications.length > 0) {
       upsertCollectionTempoIndications(dispatch, {
         array: tempoIndications,
       });
@@ -361,6 +356,9 @@ function CollectionPieceVersionsEditForm({
                                       <div className="tooltip-content">
                                         <PieceVersionDisplay
                                           pieceVersion={pieceVersion}
+                                          tempoIndicationList={
+                                            tempoIndicationList
+                                          }
                                         />
                                       </div>
                                       <InformationCircleIcon className="w-5 h-5 text-info/50 hover:text-info tooltip-icon" />

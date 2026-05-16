@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { PieceVersionInput, PieceVersionState } from "@/types/formTypes";
+import {
+  PieceVersionInput,
+  PieceVersionState,
+  TempoIndicationState,
+} from "@/types/formTypes";
 import { getNewEntities } from "@/context/feedFormContext";
 import PieceVersionEditForm from "@/features/pieceVersion/PieceVersionEditForm";
 import PieceVersionSelectForm from "@/features/pieceVersion/PieceVersionSelectForm";
@@ -17,6 +21,8 @@ type PieceVersionSelectOrCreateProps = {
   onPieceVersionSelect: (pieceVersion: PieceVersionState) => void;
   onInitPieceVersionCreation: () => void;
   onCancelPieceVersionCreation: () => void;
+  onAddTempoIndication: (tempoIndication: TempoIndicationState) => void;
+  onTempoIndicationCreated: (tempoIndication: TempoIndicationState) => void;
   isCollectionMode?: boolean;
   isUpdateMode?: boolean;
   hasPieceJustBeenCreated: boolean;
@@ -32,6 +38,8 @@ function PieceVersionSelectOrCreate({
   onPieceVersionSelect,
   onInitPieceVersionCreation: onInitPieceVersionCreationFn,
   onCancelPieceVersionCreation,
+  onAddTempoIndication,
+  onTempoIndicationCreated,
   isCollectionMode,
   isUpdateMode,
   hasPieceJustBeenCreated,
@@ -82,6 +90,11 @@ function PieceVersionSelectOrCreate({
     pieceVersionFullList?.find(
       (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
     );
+
+  const stateTempoIndications = [
+    ...(feedFormState.tempoIndications || []),
+    ...(singlePieceVersionFormState.tempoIndications || []),
+  ];
 
   // Fetch all pieceVersions for selectedPieceId
   // Consolidated Effect: Only fetches data. Does not manage "start loading" state.
@@ -152,6 +165,9 @@ function PieceVersionSelectOrCreate({
     return (
       <PieceVersionEditForm
         pieceVersion={newSelectedPieceVersion}
+        stateTempoIndications={stateTempoIndications}
+        onAddTempoIndication={onAddTempoIndication}
+        onTempoIndicationCreated={onTempoIndicationCreated}
         onSubmit={onPieceVersionCreated}
         onCancel={onCancelPieceVersionEdition}
       />

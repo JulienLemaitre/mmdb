@@ -57,7 +57,7 @@ describe("commitSinglePieceVersionFormToFeedForm", () => {
             fastestRepeatedNotesPerBar: 0,
             fastestOrnamentalNotesPerBar: 0,
             isFastestStructuralNoteBelCanto: false,
-            tempoIndication: mockTempoIndication,
+            tempoIndicationId: mockTempoIndication.id,
           },
         ],
       },
@@ -69,6 +69,7 @@ describe("commitSinglePieceVersionFormToFeedForm", () => {
     composer: mockComposer,
     piece: mockPiece,
     pieceVersion: mockPieceVersion,
+    tempoIndications: [mockTempoIndication],
   };
 
   const mockFeedFormState: FeedFormState = {
@@ -107,31 +108,31 @@ describe("commitSinglePieceVersionFormToFeedForm", () => {
     });
 
     // 1. persons
-    expect(feedFormDispatch).toHaveBeenCalledWith({
+    expect(feedFormDispatch).toHaveBeenNthCalledWith(1, {
       type: "persons",
       payload: { array: [mockComposer] },
     });
 
     // 2. pieces
-    expect(feedFormDispatch).toHaveBeenCalledWith({
+    expect(feedFormDispatch).toHaveBeenNthCalledWith(2, {
       type: "pieces",
       payload: { array: [mockPiece] },
     });
 
     // 3. pieceVersions
-    expect(feedFormDispatch).toHaveBeenCalledWith({
+    expect(feedFormDispatch).toHaveBeenNthCalledWith(3, {
       type: "pieceVersions",
       payload: { array: [mockPieceVersion] },
     });
 
     // 4. tempoIndications
-    expect(feedFormDispatch).toHaveBeenCalledWith({
+    expect(feedFormDispatch).toHaveBeenNthCalledWith(4, {
       type: "tempoIndications",
       payload: { array: [mockTempoIndication] },
     });
 
     // 5. mMSourceOnPieceVersions (Rank 1 because feedFormState is empty)
-    expect(feedFormDispatch).toHaveBeenCalledWith({
+    expect(feedFormDispatch).toHaveBeenNthCalledWith(5, {
       type: "mMSourceOnPieceVersions",
       payload: {
         idKey: "rank",
@@ -189,7 +190,7 @@ describe("commitSinglePieceVersionFormToFeedForm", () => {
     });
   });
 
-  it("should correctly extract unique tempo indications from movements and sections", () => {
+  it("should correctly transfer tempoIndications from singlePieceForm state", () => {
     const ti1: TempoIndicationState = { id: "ti-1", text: "Allegro" };
     const ti2: TempoIndicationState = { id: "ti-2", text: "Andante" };
 
@@ -215,7 +216,7 @@ describe("commitSinglePieceVersionFormToFeedForm", () => {
               fastestRepeatedNotesPerBar: 0,
               fastestOrnamentalNotesPerBar: 0,
               isFastestStructuralNoteBelCanto: false,
-              tempoIndication: ti1,
+              tempoIndicationId: ti1.id,
             },
             {
               id: "s2",
@@ -231,7 +232,7 @@ describe("commitSinglePieceVersionFormToFeedForm", () => {
               fastestRepeatedNotesPerBar: 0,
               fastestOrnamentalNotesPerBar: 0,
               isFastestStructuralNoteBelCanto: false,
-              tempoIndication: ti2,
+              tempoIndicationId: ti2.id,
             },
           ],
         },
@@ -254,7 +255,7 @@ describe("commitSinglePieceVersionFormToFeedForm", () => {
               fastestRepeatedNotesPerBar: 0,
               fastestOrnamentalNotesPerBar: 0,
               isFastestStructuralNoteBelCanto: false,
-              tempoIndication: ti1,
+              tempoIndicationId: ti1.id,
             }, // Duplicate TI
           ],
         },
@@ -265,6 +266,7 @@ describe("commitSinglePieceVersionFormToFeedForm", () => {
       singlePieceVersionFormState: {
         ...mockSinglePieceVersionFormState,
         pieceVersion: complexPieceVersion,
+        tempoIndications: [ti1, ti2],
       },
       feedFormState: mockFeedFormState,
       feedFormDispatch,

@@ -29,7 +29,7 @@ export const singlePieceFormSteps: SinglePieceVersionFormStep[] = [
     isComplete: (state: SinglePieceVersionFormState) =>
       !!state.pieceVersion?.id,
     Component: PieceVersionSelectOrCreate,
-    actionTypes: ["pieceVersion"],
+    actionTypes: ["pieceVersion", "tempoIndications"],
   },
   {
     id: "summary",

@@ -9,9 +9,6 @@ export default function getSectionStateFromInput(
     ...sectionInput,
     rank: index + 1,
     id: sectionInput.id || uuidv4(),
-    tempoIndication: {
-      id: sectionInput.tempoIndication.value,
-      text: sectionInput.tempoIndication.label,
-    },
+    tempoIndicationId: sectionInput.tempoIndication.value,
   };
 }

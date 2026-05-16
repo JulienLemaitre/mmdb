@@ -26,6 +26,7 @@ export default function SectionArray({
   errors,
   nestIndex,
   tempoIndicationList,
+  onTempoIndicationSelected,
   onTempoIndicationCreated,
   watch,
 }) {
@@ -210,6 +211,7 @@ export default function SectionArray({
                     label: ti.text,
                   }),
                 )}
+                onOptionSelected={onTempoIndicationSelected}
                 onOptionCreated={onTempoIndicationCreated}
                 fieldError={
                   errors?.movements?.[nestIndex]?.sections?.[index]

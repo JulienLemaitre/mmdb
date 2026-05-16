@@ -10,6 +10,7 @@ const ControlledCreatableSelect = ({
   label,
   rules = {},
   isRequired = false,
+  onOptionSelected,
   onOptionCreated,
   fieldError,
   ...props
@@ -31,6 +32,14 @@ const ControlledCreatableSelect = ({
     );
   }
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleSelectedOption = (option: any) => {
+    console.log(`[handleSelectedOption] option :`, option);
+    if (typeof onOptionSelected === "function") {
+      onOptionSelected(option);
+    }
+    onChange(option);
+  };
 
   const handleCreateOption = async (inputValue: string) => {
     setIsLoading(true);
@@ -61,7 +70,7 @@ const ControlledCreatableSelect = ({
         placeholder="Type here or select existing"
         isDisabled={isLoading}
         isLoading={isLoading}
-        onChange={onChange}
+        onChange={handleSelectedOption}
         onCreateOption={handleCreateOption}
         onBlur={onBlur}
         value={value || defaultValue || null}

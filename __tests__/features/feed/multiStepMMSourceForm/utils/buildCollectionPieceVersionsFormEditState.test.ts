@@ -57,7 +57,7 @@ describe("buildCollectionPieceVersionsFormEditState", () => {
     fastestRepeatedNotesPerBar: 0,
     fastestOrnamentalNotesPerBar: 0,
     isFastestStructuralNoteBelCanto: false,
-    tempoIndication,
+    tempoIndicationId: tempoIndication.id,
   });
 
   const collectionPiece1: PieceState = {
@@ -138,6 +138,7 @@ describe("buildCollectionPieceVersionsFormEditState", () => {
         { pieceVersionId: pieceVersion2.id, rank: 4 },
         { pieceVersionId: pieceVersion1.id, rank: 3 },
       ],
+      tempoIndications: [tempo1, tempo2],
     };
 
     const result = buildCollectionPieceVersionsFormEditState({
