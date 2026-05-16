@@ -129,7 +129,7 @@ export function expandRequiredChecklistItems(
           }
           case "SECTION": {
             if (field.path === "tempoIndicationId") {
-              const tempoIndicationId = (n as SectionState).tempoIndication?.id;
+              const tempoIndicationId = (n as SectionState).tempoIndicationId;
               const tempoIndication = graph.tempoIndications?.find(
                 (ti) => ti.id === tempoIndicationId,
               );

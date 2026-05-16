@@ -89,7 +89,7 @@ function attributeItemToPieceId(
     for (const pv of graph.pieceVersions ?? []) {
       for (const mv of pv.movements ?? []) {
         for (const sec of mv.sections ?? []) {
-          if (sec.tempoIndication?.id === item.entityId) {
+          if (sec.tempoIndicationId === item.entityId) {
             const mvId = idx.sectionToMovement[sec.id];
             const pvId = mvId ? idx.movementToPieceVersion[mvId] : undefined;
             pieceId = pvId ? idx.pieceVersionToPiece[pvId] : undefined;

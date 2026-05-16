@@ -47,6 +47,7 @@ const SourceOnPieceVersionFormContainer = ({
   title,
 }: SourceOnPieceVersionSelectFormProps) => {
   const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
+  const tempoIndicationList = feedFormState.tempoIndications || [];
   const [
     singlePieceVersionUpdateInitState,
     setSinglePieceVersionUpdateInitState,
@@ -116,6 +117,15 @@ const SourceOnPieceVersionFormContainer = ({
       "persons",
       piece.composerId,
     );
+    const tempoIndications = tempoIndicationList.filter((ti) =>
+      pieceVersion.movements.some((mvt) =>
+        mvt.sections.some((sec) => sec.tempoIndicationId === ti.id),
+      ),
+    );
+    console.log(
+      `[onEditMMSourceOnPieceVersion] tempoIndications :`,
+      tempoIndications,
+    );
 
     const singlePieceVersionFormEditState: SinglePieceVersionFormState = {
       formInfo: {
@@ -125,6 +135,7 @@ const SourceOnPieceVersionFormContainer = ({
       composer,
       piece,
       pieceVersion,
+      tempoIndications,
     };
     setSinglePieceVersionUpdateInitState(singlePieceVersionFormEditState);
     onFormOpen("single");
@@ -453,6 +464,9 @@ const SourceOnPieceVersionFormContainer = ({
                                     <div className="tooltip-content">
                                       <PieceVersionDisplay
                                         pieceVersion={item.pieceVersion}
+                                        tempoIndicationList={
+                                          tempoIndicationList
+                                        }
                                       />
                                     </div>
                                     <InformationCircleIcon className="w-5 h-5 text-info/50 hover:text-info tooltip-icon" />
@@ -488,6 +502,7 @@ const SourceOnPieceVersionFormContainer = ({
                               <div className="tooltip-content">
                                 <PieceVersionDisplay
                                   pieceVersion={item.pieceVersion}
+                                  tempoIndicationList={tempoIndicationList}
                                 />
                               </div>
                               <InformationCircleIcon className="w-5 h-5 text-info/50 hover:text-info tooltip-icon" />

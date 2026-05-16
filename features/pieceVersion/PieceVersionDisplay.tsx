@@ -1,4 +1,4 @@
-import { PieceVersionState } from "@/types/formTypes";
+import { PieceVersionState, TempoIndicationState } from "@/types/formTypes";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import getKeyLabel from "@/utils/getKeyLabel";
 import React from "react";
@@ -6,10 +6,12 @@ import SectionMeter from "@/features/section/ui/SectionMeter";
 
 type PieceVersionDisplayProps = {
   pieceVersion: PieceVersionState;
+  tempoIndicationList: TempoIndicationState[];
 };
 
 export default function PieceVersionDisplay({
   pieceVersion,
+  tempoIndicationList,
 }: PieceVersionDisplayProps) {
   const movementCount = pieceVersion.movements.length;
   const isMonoMovementPiece = movementCount === 1;
@@ -38,6 +40,9 @@ export default function PieceVersionDisplay({
             {/* Sections */}
             <div className={`ml-2 pt-1 grid-cols-1 space-y-1`}>
               {movement.sections.map((section) => {
+                const tempoIndication = tempoIndicationList.find(
+                  (ti) => ti.id === section.tempoIndicationId,
+                );
                 return (
                   <div
                     key={section.id}
@@ -47,8 +52,8 @@ export default function PieceVersionDisplay({
                       {`Section ${section.rank}\u2002-\u2002`}
                       <SectionMeter section={section} />
                       <span className="italic">
-                        {section?.tempoIndication?.text &&
-                          `\u2002-\u2002${section.tempoIndication.text}`}
+                        {tempoIndication &&
+                          `\u2002-\u2002${tempoIndication.text}`}
                       </span>
                       <span className="font-normal italic text-neutral-content">
                         {section.comment && `\u2002-\u2002${section.comment}`}

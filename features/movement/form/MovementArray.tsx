@@ -24,6 +24,7 @@ export default function MovementArray({
   getValues,
   errors,
   tempoIndicationList,
+  onTempoIndicationSelected,
   onTempoIndicationCreated,
   watch,
 }) {
@@ -101,6 +102,7 @@ export default function MovementArray({
               nestIndex={index}
               {...{ control, register, getValues, setValue, errors, watch }}
               tempoIndicationList={tempoIndicationList}
+              onTempoIndicationSelected={onTempoIndicationSelected}
               onTempoIndicationCreated={onTempoIndicationCreated}
             />
             <section className="my-4 flex gap-2 w-full justify-between">

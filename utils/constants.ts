@@ -47,6 +47,7 @@ export const SINGLE_PIECE_VERSION_FORM_INITIAL_STATE: SinglePieceVersionFormStat
     formInfo: {
       currentStepRank: 0,
     },
+    tempoIndications: [],
   };
 
 // Collection form

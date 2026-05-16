@@ -1,6 +1,5 @@
 import { CollectionPieceVersionsFormState } from "@/types/collectionPieceVersionFormTypes";
 import { FeedFormState } from "@/types/feedFormTypes";
-import { TempoIndicationState } from "@/types/formTypes";
 
 type BuildCollectionPieceVersionsFormEditStateParams = {
   feedFormState: FeedFormState;
@@ -29,6 +28,18 @@ export function buildCollectionPieceVersionsFormEditState({
   const pieceVersionIdSet = new Set(
     pieceVersions.map((pieceVersion) => pieceVersion.id),
   );
+  const tempoIndicationIds = new Set(
+    pieceVersions.flatMap((pv) =>
+      pv.movements.flatMap((mvt) =>
+        mvt.sections
+          .map((section) => section.tempoIndicationId)
+          .filter((id): id is string => !!id),
+      ),
+    ),
+  );
+  const tempoIndicationList = feedFormState.tempoIndications?.filter((ti) =>
+    tempoIndicationIds.has(ti.id),
+  );
 
   const collectionMMSourceOnPieceVersionList = (
     feedFormState.mMSourceOnPieceVersions || []
@@ -53,20 +64,6 @@ export function buildCollectionPieceVersionsFormEditState({
     composerIds.has(person.id),
   );
 
-  const tempoIndicationMap = new Map<string, TempoIndicationState>();
-  pieceVersions.forEach((pieceVersion) => {
-    pieceVersion.movements.forEach((movement) => {
-      movement.sections.forEach((section) => {
-        if (section.tempoIndication) {
-          tempoIndicationMap.set(
-            section.tempoIndication.id,
-            section.tempoIndication as TempoIndicationState,
-          );
-        }
-      });
-    });
-  });
-
   return {
     formInfo: {
       currentStepRank: 0,
@@ -90,6 +87,6 @@ export function buildCollectionPieceVersionsFormEditState({
     persons,
     pieces,
     pieceVersions,
-    tempoIndications: Array.from(tempoIndicationMap.values()),
+    tempoIndications: tempoIndicationList || [],
   };
 }

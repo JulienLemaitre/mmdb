@@ -1,6 +1,7 @@
 // "use client";
 import { PieceVersionState } from "@/types/formTypes";
 import PieceVersionDisplay from "@/features/pieceVersion/PieceVersionDisplay";
+import { useSinglePieceVersionForm } from "@/context/singlePieceVersionFormContext";
 
 type PieceVersionSelectProps = {
   pieceVersions: PieceVersionState[];
@@ -12,6 +13,9 @@ export default function PieceVersionSelect({
   onSelect,
   selectedPieceVersion,
 }: PieceVersionSelectProps) {
+  const { state } = useSinglePieceVersionForm();
+  const tempoIndicationList = state.tempoIndications || [];
+
   return (
     <div className="grid-cols-1 space-y-2">
       {pieceVersions.map((pieceVersion) => {
@@ -32,7 +36,10 @@ export default function PieceVersionSelect({
               className="mr-4"
             />
             <label htmlFor={pieceVersion.id} className="flex-1">
-              <PieceVersionDisplay pieceVersion={pieceVersion} />
+              <PieceVersionDisplay
+                pieceVersion={pieceVersion}
+                tempoIndicationList={tempoIndicationList}
+              />
             </label>
           </div>
         );

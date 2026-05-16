@@ -39,7 +39,7 @@ describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
     const mm = graph.metronomeMarks!.find((m) => m.sectionId === sectionId)!;
     const mmId = mm.id;
     const ti = graph.tempoIndications!.find(
-      (t) => t.id === section.tempoIndication.id,
+      (t) => t.id === section.tempoIndicationId,
     )!;
 
     // Craft a feed form state reflecting the baseline graph, with edits

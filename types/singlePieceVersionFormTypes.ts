@@ -1,4 +1,9 @@
-import { PersonState, PieceState, PieceVersionState } from "@/types/formTypes";
+import {
+  PersonState,
+  PieceState,
+  PieceVersionState,
+  TempoIndicationState,
+} from "@/types/formTypes";
 
 export type SinglePieceVersionFormInfo = {
   currentStepRank: number;
@@ -11,6 +16,7 @@ export type SinglePieceVersionFormState = {
   composer?: PersonState;
   piece?: PieceState;
   pieceVersion?: PieceVersionState;
+  tempoIndications?: TempoIndicationState[];
 };
 
 export type SinglePieceVersionFormAction =
@@ -31,4 +37,8 @@ export type SinglePieceVersionFormAction =
   | {
       type: "pieceVersion";
       payload: { value: PieceVersionState | undefined; next?: boolean };
+    }
+  | {
+      type: "tempoIndications";
+      payload: { array: TempoIndicationState[] };
     };

@@ -31,7 +31,7 @@ const buildSection = (
   fastestRepeatedNotesPerBar: 0,
   fastestOrnamentalNotesPerBar: 0,
   isFastestStructuralNoteBelCanto: false,
-  tempoIndication,
+  tempoIndicationId: tempoIndication.id,
 });
 
 describe("feed form cleanup utilities", () => {

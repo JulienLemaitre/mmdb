@@ -11,6 +11,7 @@ import {
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
 import { withLocalStorage } from "@/context/utils/localStorageReducerWrapper";
+import upsertEntityInState from "@/utils/upsertEntityInState";
 
 /**
  * Core reducer for the SinglePieceVersionForm.
@@ -72,126 +73,146 @@ export function singlePieceVersionFormReducerCore(
 
   // Entries created
   if (isActionAllowed) {
-    const { next, value } = action.payload || {};
+    if ("value" in action.payload) {
+      const { next, value } = action.payload || {};
 
-    // We define the new state by assigning the value of the payload to the property [action.type].
-    // - No update here.
-    // - 'undefined' delete the entity from state.
-    let newState = {
-      ...state,
-      [action.type]: value,
-    };
-
-    const prevComposerId = state.composer?.id;
-    const nextComposerId = newState.composer?.id;
-    const prevPieceId = state.piece?.id;
-    const nextPieceId = newState.piece?.id;
-
-    const clearPieceAndPieceVersion = () => {
-      newState = {
-        ...newState,
-        piece: undefined,
-        pieceVersion: undefined,
+      // We define the new state by assigning the value of the payload to the property [action.type].
+      // - No update here.
+      // - 'undefined' delete the entity from state.
+      let newState = {
+        ...state,
+        [action.type]: value,
       };
-    };
 
-    const clearPieceVersion = () => {
-      newState = {
-        ...newState,
-        pieceVersion: undefined,
+      const prevComposerId = state.composer?.id;
+      const nextComposerId = newState.composer?.id;
+      const prevPieceId = state.piece?.id;
+      const nextPieceId = newState.piece?.id;
+
+      const clearPieceAndPieceVersion = () => {
+        newState = {
+          ...newState,
+          piece: undefined,
+          pieceVersion: undefined,
+        };
       };
-    };
 
-    // Explicit reset of dependent entities when the current entity is cleared.
-    if (action.type === "composer" && value === undefined) {
-      clearPieceAndPieceVersion();
-    }
-
-    if (action.type === "piece" && value === undefined) {
-      clearPieceVersion();
-    }
-
-    // If the composer changes, the piece and the pieceVersion become invalid.
-    if (
-      action.type === "composer" &&
-      prevComposerId &&
-      nextComposerId &&
-      prevComposerId !== nextComposerId
-    ) {
-      console.warn(
-        "[SinglePieceVersionFormReducer] Composer changed: resetting piece and pieceVersion because they depend on the composer.",
-      );
-      clearPieceAndPieceVersion();
-    }
-
-    // If the piece changes, the pieceVersion becomes invalid.
-    if (
-      action.type === "piece" &&
-      prevPieceId &&
-      nextPieceId &&
-      prevPieceId !== nextPieceId
-    ) {
-      console.warn(
-        "[SinglePieceVersionFormReducer] Piece changed: resetting pieceVersion because it depends on the piece.",
-      );
-      clearPieceVersion();
-    }
-
-    // Defensive coherence checks
-    if (
-      action.type === "piece" &&
-      newState.piece &&
-      newState.composer?.id &&
-      newState.piece.composerId !== newState.composer.id
-    ) {
-      console.warn(
-        "[SinglePieceVersionFormReducer] Incoherent piece.composerId detected. The container should normally align piece.composerId with the selected composer.id.",
-        {
-          pieceComposerId: newState.piece.composerId,
-          composerId: newState.composer.id,
-        },
-      );
-    }
-
-    if (
-      action.type === "pieceVersion" &&
-      newState.pieceVersion &&
-      newState.piece?.id &&
-      newState.pieceVersion.pieceId !== newState.piece.id
-    ) {
-      console.warn(
-        "[SinglePieceVersionFormReducer] Incoherent pieceVersion.pieceId detected. The container should normally align pieceVersion.pieceId with the selected piece.id.",
-        {
-          pieceVersionPieceId: newState.pieceVersion.pieceId,
-          pieceId: newState.piece.id,
-        },
-      );
-    }
-
-    // We increment currentStepRank if we are told to with the property 'next' in any payload, AND if the present step is completed
-    const lastCompletedStep = getLastCompletedStep(newState);
-
-    if (
-      next === true &&
-      typeof state?.formInfo?.currentStepRank === "number" &&
-      lastCompletedStep &&
-      state?.formInfo?.currentStepRank <= lastCompletedStep?.rank
-    ) {
-      console.log(
-        `[SOPVFContext] NEXT - go to step:`,
-        state.formInfo.currentStepRank + 1,
-      );
-      newState = {
-        ...newState,
-        formInfo: {
-          ...newState.formInfo,
-          currentStepRank: state.formInfo.currentStepRank + 1,
-        },
+      const clearPieceVersion = () => {
+        newState = {
+          ...newState,
+          pieceVersion: undefined,
+        };
       };
+
+      // Explicit reset of dependent entities when the current entity is cleared.
+      if (action.type === "composer" && value === undefined) {
+        clearPieceAndPieceVersion();
+      }
+
+      if (action.type === "piece" && value === undefined) {
+        clearPieceVersion();
+      }
+
+      // If the composer changes, the piece and the pieceVersion become invalid.
+      if (
+        action.type === "composer" &&
+        prevComposerId &&
+        nextComposerId &&
+        prevComposerId !== nextComposerId
+      ) {
+        console.warn(
+          "[SinglePieceVersionFormReducer] Composer changed: resetting piece and pieceVersion because they depend on the composer.",
+        );
+        clearPieceAndPieceVersion();
+      }
+
+      // If the piece changes, the pieceVersion becomes invalid.
+      if (
+        action.type === "piece" &&
+        prevPieceId &&
+        nextPieceId &&
+        prevPieceId !== nextPieceId
+      ) {
+        console.warn(
+          "[SinglePieceVersionFormReducer] Piece changed: resetting pieceVersion because it depends on the piece.",
+        );
+        clearPieceVersion();
+      }
+
+      // Defensive coherence checks
+      if (
+        action.type === "piece" &&
+        newState.piece &&
+        newState.composer?.id &&
+        newState.piece.composerId !== newState.composer.id
+      ) {
+        console.warn(
+          "[SinglePieceVersionFormReducer] Incoherent piece.composerId detected. The container should normally align piece.composerId with the selected composer.id.",
+          {
+            pieceComposerId: newState.piece.composerId,
+            composerId: newState.composer.id,
+          },
+        );
+      }
+
+      if (
+        action.type === "pieceVersion" &&
+        newState.pieceVersion &&
+        newState.piece?.id &&
+        newState.pieceVersion.pieceId !== newState.piece.id
+      ) {
+        console.warn(
+          "[SinglePieceVersionFormReducer] Incoherent pieceVersion.pieceId detected. The container should normally align pieceVersion.pieceId with the selected piece.id.",
+          {
+            pieceVersionPieceId: newState.pieceVersion.pieceId,
+            pieceId: newState.piece.id,
+          },
+        );
+      }
+
+      // We increment currentStepRank if we are told to with the property 'next' in any payload, AND if the present step is completed
+      const lastCompletedStep = getLastCompletedStep(newState);
+
+      if (
+        next === true &&
+        typeof state?.formInfo?.currentStepRank === "number" &&
+        lastCompletedStep &&
+        state?.formInfo?.currentStepRank <= lastCompletedStep?.rank
+      ) {
+        console.log(
+          `[SOPVFContext] NEXT - go to step:`,
+          state.formInfo.currentStepRank + 1,
+        );
+        newState = {
+          ...newState,
+          formInfo: {
+            ...newState.formInfo,
+            currentStepRank: state.formInfo.currentStepRank + 1,
+          },
+        };
+      }
+
+      console.groupEnd();
+      return newState;
     }
 
-    console.groupEnd();
-    return newState;
+    // TempoIndications
+    if ("array" in action.payload) {
+      const { array } = action.payload;
+      let newState = { ...state };
+      array.forEach((entity) => {
+        const id = "id";
+
+        newState = upsertEntityInState({
+          state: newState,
+          entityName: action.type,
+          entity,
+          idKey: id,
+        });
+      });
+      console.groupEnd();
+      return newState;
+    }
   }
 
   throw new Error(`Unhandled action type: ${action.type}`);

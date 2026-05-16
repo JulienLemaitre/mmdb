@@ -19,7 +19,6 @@ import {
   zodPositiveNumber,
   zodPositiveNumberOrEmpty,
 } from "@/types/zodTypes";
-import { updateFeedForm, useFeedForm } from "@/context/feedFormContext";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import getTempoIndicationSelectList from "@/utils/getTempoIndicationSelectList";
@@ -64,12 +63,18 @@ const PieceVersionSchema = z.object({
 });
 
 export default function PieceVersionEditForm({
+  stateTempoIndications,
   pieceVersion,
+  onAddTempoIndication,
+  onTempoIndicationCreated: onTempoIndicationCreatedFn,
   onSubmit,
   onCancel,
 }: Readonly<{
+  stateTempoIndications: TempoIndicationState[];
   pieceVersion?: PieceVersionState;
   onCancel: () => void;
+  onAddTempoIndication: (tempoIndication: TempoIndicationState) => void;
+  onTempoIndicationCreated: (tempoIndication: TempoIndicationState) => void;
   onSubmit: (pieceVersion: PieceVersionInput) => void;
 }>) {
   const {
@@ -82,7 +87,10 @@ export default function PieceVersionEditForm({
     watch,
   } = useForm<PieceVersionInput>({
     defaultValues: pieceVersion
-      ? getPieceVersionInputFromPieceVersionState(pieceVersion)
+      ? getPieceVersionInputFromPieceVersionState(
+          pieceVersion,
+          stateTempoIndications,
+        )
       : {
           movements: [getMovementDefaultValues()],
         },
@@ -92,32 +100,55 @@ export default function PieceVersionEditForm({
   const [tempoIndicationList, setTempoIndicationList] = useState<
     TempoIndicationState[]
   >([]);
-  const { state: feedFormState, dispatch: feedFormDispatch } = useFeedForm();
 
   // Fetch tempoIndicationSelectList from API
   useEffect(() => {
-    getTempoIndicationSelectList().then((data) => setTempoIndicationList(data));
+    getTempoIndicationSelectList()
+      .then((data) => data.map((ti) => ({ id: ti.id, text: ti.text })))
+      .then((data) => setTempoIndicationList(data));
   }, []);
 
-  const onTempoIndicationCreated = async (
-    inputValue: string,
-  ): Promise<OptionInput | void> => {
+  const onTempoIndicationSelected = (option: OptionInput) => {
+    const selectedTempoIndication = tempoIndicationList.find(
+      (tempoIndication) => tempoIndication.id === option.value,
+    );
+    if (selectedTempoIndication) {
+      onAddTempoIndication(selectedTempoIndication);
+    }
+
+    return option;
+  };
+  const onTempoIndicationCreated = (
+    tempoIndicationText: string,
+  ): OptionInput => {
     // persist the new tempoIndication in main form context
     const newTempoIndication = {
       id: uuidv4(),
-      text: inputValue,
+      text: tempoIndicationText,
       isNew: true,
     };
-    updateFeedForm(feedFormDispatch, "tempoIndications", {
-      array: [newTempoIndication],
-    });
-    return { value: newTempoIndication.id, label: newTempoIndication.text };
+    onTempoIndicationCreatedFn(newTempoIndication);
+
+    // This return value is used for the selector onChange
+    return { value: newTempoIndication.id, label: tempoIndicationText };
   };
 
   const fullTempoIndicationList = [
     ...tempoIndicationList,
-    ...(feedFormState.tempoIndications || []),
-  ];
+    ...stateTempoIndications,
+  ]
+    .reduce<TempoIndicationState[]>(
+      (acc: TempoIndicationState[], curr: TempoIndicationState) => {
+        const existing = acc.find((item) => item.id === curr.id);
+        if (existing) {
+          return acc;
+        } else {
+          return [...acc, curr];
+        }
+      },
+      [] as TempoIndicationState[],
+    )
+    .sort((a, b) => a.text.localeCompare(b.text));
 
   // @ts-ignore
   return (
@@ -149,6 +180,7 @@ export default function PieceVersionEditForm({
         <MovementArray
           {...{ control, register, getValues, setValue, errors, watch }}
           tempoIndicationList={fullTempoIndicationList}
+          onTempoIndicationSelected={onTempoIndicationSelected}
           onTempoIndicationCreated={onTempoIndicationCreated}
         />
 
