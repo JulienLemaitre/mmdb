@@ -664,7 +664,7 @@ Content-Type: application/json
     {
       "id": "63833d92-8c49-4ef6-ae87-f8c3d3e2f6a2",
       "firstName": "Hans",
-      "lastName": "von Bülow",
+      "lastName": "von B\u00fclow",
       "birthYear": 1830,
       "deathYear": 1894
     },
@@ -1048,11 +1048,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestRepeatedNotesPerBar": 16,
               "comment": "Repeated: 16th note in final system on p.2 (PDF p.14)",
-              "tempoIndication": {
-                "id": "2fadca09-f577-430a-840e-25f9b5ce16e4",
-                "text": "Allegro"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
             }
           ]
         }
@@ -1078,11 +1075,8 @@ Content-Type: application/json
               "fastestStructuralNotesPerBar": 12,
               "isFastestStructuralNoteBelCanto": false,
               "fastestRepeatedNotesPerBar": 12,
-              "tempoIndication": {
-                "id": "2fadca09-f577-430a-840e-25f9b5ce16e4",
-                "text": "Allegro"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
             }
           ]
         }
@@ -1109,11 +1103,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestRepeatedNotesPerBar": 16,
               "comment": "Repeated: 32nd note in final system on p.6 (PDF p.18)",
-              "tempoIndication": {
-                "id": "2f8b3ff3-2d91-4580-bdf8-0b700f9d9154",
-                "text": "Moderato espressivo"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2f8b3ff3-2d91-4580-bdf8-0b700f9d9154"
             }
           ]
         }
@@ -1141,11 +1132,8 @@ Content-Type: application/json
               "fastestRepeatedNotesPerBar": 16,
               "fastestOrnamentalNotesPerBar": 32,
               "comment": "Ornamental: Arpeggio penultimate bar requires hand shift",
-              "tempoIndication": {
-                "id": "59a80b85-ffd5-438e-9678-fc753b1a8f59",
-                "text": "Allegro con spirito"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "59a80b85-ffd5-438e-9678-fc753b1a8f59"
             }
           ]
         }
@@ -1172,11 +1160,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestStaccatoNotesPerBar": 4,
               "fastestRepeatedNotesPerBar": 4,
-              "tempoIndication": {
-                "id": "4a399d19-b0f4-45cf-ac01-5c55afbe76a9",
-                "text": "Allegro moderato"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "4a399d19-b0f4-45cf-ac01-5c55afbe76a9"
             }
           ]
         }
@@ -1201,11 +1186,8 @@ Content-Type: application/json
               "isCutTime": false,
               "fastestStructuralNotesPerBar": 16,
               "isFastestStructuralNoteBelCanto": false,
-              "tempoIndication": {
-                "id": "2f0a179e-bc46-4b8f-a4e6-be3f64e7935b",
-                "text": "Moderato"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2f0a179e-bc46-4b8f-a4e6-be3f64e7935b"
             }
           ]
         }
@@ -1233,11 +1215,8 @@ Content-Type: application/json
               "fastestRepeatedNotesPerBar": 4,
               "fastestOrnamentalNotesPerBar": 48,
               "comment": "Ornamental: Remark 3 on execution of turn",
-              "tempoIndication": {
-                "id": "b746457f-8ce2-4291-807b-705a316fbff3",
-                "text": "Moderato con espressione"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "b746457f-8ce2-4291-807b-705a316fbff3"
             }
           ]
         }
@@ -1264,11 +1243,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestStaccatoNotesPerBar": 16,
               "fastestRepeatedNotesPerBar": 16,
-              "tempoIndication": {
-                "id": "3d9f7a22-b600-40e1-8d99-d68edb065f00",
-                "text": "Allegro brillante"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "3d9f7a22-b600-40e1-8d99-d68edb065f00"
             }
           ]
         }
@@ -1294,11 +1270,8 @@ Content-Type: application/json
               "fastestStructuralNotesPerBar": 6,
               "isFastestStructuralNoteBelCanto": false,
               "comment": "Remark 1 indicates alternative (for advanced players) with 12 structural notes per bar",
-              "tempoIndication": {
-                "id": "2f0a179e-bc46-4b8f-a4e6-be3f64e7935b",
-                "text": "Moderato"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2f0a179e-bc46-4b8f-a4e6-be3f64e7935b"
             }
           ]
         }
@@ -1324,11 +1297,8 @@ Content-Type: application/json
               "fastestStructuralNotesPerBar": 24,
               "isFastestStructuralNoteBelCanto": false,
               "fastestRepeatedNotesPerBar": 3,
-              "tempoIndication": {
-                "id": "2f3e6f15-0d38-42bd-9aab-32025ba267e2",
-                "text": "Allegro non troppo"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2f3e6f15-0d38-42bd-9aab-32025ba267e2"
             }
           ]
         }
@@ -1355,11 +1325,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestStaccatoNotesPerBar": 4,
               "fastestRepeatedNotesPerBar": 4,
-              "tempoIndication": {
-                "id": "bbe31fd3-4468-414a-ad50-cfa7767852fd",
-                "text": "Andante"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "bbe31fd3-4468-414a-ad50-cfa7767852fd"
             }
           ]
         }
@@ -1386,11 +1353,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestStaccatoNotesPerBar": 4,
               "fastestRepeatedNotesPerBar": 8,
-              "tempoIndication": {
-                "id": "9b4691ea-431a-4bd8-9388-3717b389049c",
-                "text": "Lento"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "9b4691ea-431a-4bd8-9388-3717b389049c"
             }
           ]
         }
@@ -1416,11 +1380,8 @@ Content-Type: application/json
               "fastestStructuralNotesPerBar": 18,
               "isFastestStructuralNoteBelCanto": false,
               "fastestRepeatedNotesPerBar": 18,
-              "tempoIndication": {
-                "id": "61dc44d6-1b3b-4e5d-9440-9d59e45516ce",
-                "text": "Vivace"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "61dc44d6-1b3b-4e5d-9440-9d59e45516ce"
             }
           ]
         }
@@ -1446,11 +1407,8 @@ Content-Type: application/json
               "fastestStructuralNotesPerBar": 12,
               "isFastestStructuralNoteBelCanto": false,
               "fastestStaccatoNotesPerBar": 4,
-              "tempoIndication": {
-                "id": "2fadca09-f577-430a-840e-25f9b5ce16e4",
-                "text": "Allegro"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
             }
           ]
         }
@@ -1478,11 +1436,8 @@ Content-Type: application/json
               "fastestStaccatoNotesPerBar": 2,
               "fastestOrnamentalNotesPerBar": 64,
               "comment": "Ornamental: Remark 1 on execution of arpeggi",
-              "tempoIndication": {
-                "id": "2fadca09-f577-430a-840e-25f9b5ce16e4",
-                "text": "Allegro"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
             }
           ]
         }
@@ -1509,11 +1464,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestStaccatoNotesPerBar": 2,
               "fastestRepeatedNotesPerBar": 4,
-              "tempoIndication": {
-                "id": "2fadca09-f577-430a-840e-25f9b5ce16e4",
-                "text": "Allegro"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
             }
           ]
         }
@@ -1541,11 +1493,8 @@ Content-Type: application/json
               "fastestStaccatoNotesPerBar": 6,
               "fastestRepeatedNotesPerBar": 6,
               "comment": "Remark 1 indicates alternative (for advanced players) with 48 structural notes per bar",
-              "tempoIndication": {
-                "id": "6991e7c5-d51a-4fb7-bbc5-7bcf3e9eac6e",
-                "text": "Allegro agitato"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "6991e7c5-d51a-4fb7-bbc5-7bcf3e9eac6e"
             }
           ]
         }
@@ -1573,11 +1522,8 @@ Content-Type: application/json
               "fastestRepeatedNotesPerBar": 4,
               "fastestOrnamentalNotesPerBar": 32,
               "comment": "Ornamental: Remark 3 on execution of trills",
-              "tempoIndication": {
-                "id": "4a399d19-b0f4-45cf-ac01-5c55afbe76a9",
-                "text": "Allegro moderato"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "4a399d19-b0f4-45cf-ac01-5c55afbe76a9"
             }
           ]
         }
@@ -1605,11 +1551,8 @@ Content-Type: application/json
               "fastestRepeatedNotesPerBar": 18,
               "fastestOrnamentalNotesPerBar": 36,
               "comment": "Repeated: In next to last system; Ornamental: Acciaccatura",
-              "tempoIndication": {
-                "id": "3ecc1cb7-5000-405d-ac02-37071647ff0e",
-                "text": "Presto"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "3ecc1cb7-5000-405d-ac02-37071647ff0e"
             }
           ]
         }
@@ -1637,11 +1580,8 @@ Content-Type: application/json
               "fastestStaccatoNotesPerBar": 12,
               "fastestRepeatedNotesPerBar": 24,
               "comment": "Repeated: in 3rd to last system",
-              "tempoIndication": {
-                "id": "2f0a179e-bc46-4b8f-a4e6-be3f64e7935b",
-                "text": "Moderato"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2f0a179e-bc46-4b8f-a4e6-be3f64e7935b"
             }
           ]
         }
@@ -1669,11 +1609,8 @@ Content-Type: application/json
               "fastestStaccatoNotesPerBar": 4,
               "fastestRepeatedNotesPerBar": 8,
               "fastestOrnamentalNotesPerBar": 16,
-              "tempoIndication": {
-                "id": "68b97adb-f73f-40ab-8aac-6eb184e3adfc",
-                "text": "Allegretto"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "68b97adb-f73f-40ab-8aac-6eb184e3adfc"
             }
           ]
         }
@@ -1699,11 +1636,8 @@ Content-Type: application/json
               "fastestStructuralNotesPerBar": 8,
               "isFastestStructuralNoteBelCanto": false,
               "fastestRepeatedNotesPerBar": 8,
-              "tempoIndication": {
-                "id": "2fadca09-f577-430a-840e-25f9b5ce16e4",
-                "text": "Allegro"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
             }
           ]
         }
@@ -1730,11 +1664,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestRepeatedNotesPerBar": 2,
               "comment": "Repeated: Technically 2.67",
-              "tempoIndication": {
-                "id": "c674ebc7-54de-425e-9df3-b584d2654427",
-                "text": "Allegro non tanto"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "c674ebc7-54de-425e-9df3-b584d2654427"
             }
           ]
         }
@@ -1763,11 +1694,8 @@ Content-Type: application/json
               "fastestRepeatedNotesPerBar": 4,
               "fastestOrnamentalNotesPerBar": 24,
               "comment": "Ornamental: Remark 3 on execution of acciaccatura",
-              "tempoIndication": {
-                "id": "5465034c-b59d-4553-93bc-eebd40500ddf",
-                "text": "Allegro vivace"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "5465034c-b59d-4553-93bc-eebd40500ddf"
             }
           ]
         }
@@ -1796,11 +1724,8 @@ Content-Type: application/json
               "fastestRepeatedNotesPerBar": 16,
               "fastestOrnamentalNotesPerBar": 32,
               "comment": "12/8 sections converted to common time",
-              "tempoIndication": {
-                "id": "8c6676e4-d0b9-433f-b111-97b6f030c65b",
-                "text": "Maestoso energico"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "8c6676e4-d0b9-433f-b111-97b6f030c65b"
             }
           ]
         }
@@ -1828,11 +1753,8 @@ Content-Type: application/json
               "fastestStaccatoNotesPerBar": 8,
               "fastestRepeatedNotesPerBar": 16,
               "fastestOrnamentalNotesPerBar": 48,
-              "tempoIndication": {
-                "id": "581e9953-9703-44e7-a3fc-ddeb83374620",
-                "text": "Allegro con brio"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "581e9953-9703-44e7-a3fc-ddeb83374620"
             }
           ]
         }
@@ -1857,11 +1779,8 @@ Content-Type: application/json
               "isCutTime": false,
               "fastestStructuralNotesPerBar": 12,
               "isFastestStructuralNoteBelCanto": false,
-              "tempoIndication": {
-                "id": "411b3f81-a83a-4c7f-aec2-386e1f2408fe",
-                "text": "Allegro assai"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "411b3f81-a83a-4c7f-aec2-386e1f2408fe"
             }
           ]
         }
@@ -1887,11 +1806,8 @@ Content-Type: application/json
               "fastestStructuralNotesPerBar": 16,
               "isFastestStructuralNoteBelCanto": false,
               "fastestRepeatedNotesPerBar": 16,
-              "tempoIndication": {
-                "id": "2f8c16fc-f22a-4c67-be52-bdfd65b6793e",
-                "text": "Moderato assai"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2f8c16fc-f22a-4c67-be52-bdfd65b6793e"
             }
           ]
         }
@@ -1917,11 +1833,8 @@ Content-Type: application/json
               "fastestStructuralNotesPerBar": 16,
               "isFastestStructuralNoteBelCanto": false,
               "fastestRepeatedNotesPerBar": 16,
-              "tempoIndication": {
-                "id": "581e9953-9703-44e7-a3fc-ddeb83374620",
-                "text": "Allegro con brio"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "581e9953-9703-44e7-a3fc-ddeb83374620"
             }
           ]
         }
@@ -1948,11 +1861,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestStaccatoNotesPerBar": 4,
               "fastestOrnamentalNotesPerBar": 24,
-              "tempoIndication": {
-                "id": "59a80b85-ffd5-438e-9678-fc753b1a8f59",
-                "text": "Allegro con spirito"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "59a80b85-ffd5-438e-9678-fc753b1a8f59"
             }
           ]
         }
@@ -1979,11 +1889,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestRepeatedNotesPerBar": 3,
               "fastestOrnamentalNotesPerBar": 12,
-              "tempoIndication": {
-                "id": "3ecc1cb7-5000-405d-ac02-37071647ff0e",
-                "text": "Presto"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "3ecc1cb7-5000-405d-ac02-37071647ff0e"
             }
           ]
         }
@@ -2011,11 +1918,8 @@ Content-Type: application/json
               "fastestStaccatoNotesPerBar": 8,
               "fastestRepeatedNotesPerBar": 8,
               "fastestOrnamentalNotesPerBar": 48,
-              "tempoIndication": {
-                "id": "40e99953-ea31-4f2c-a742-0fc7428d8c76",
-                "text": "Allegro con fuoco"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "40e99953-ea31-4f2c-a742-0fc7428d8c76"
             }
           ]
         }
@@ -2040,11 +1944,8 @@ Content-Type: application/json
               "isCutTime": false,
               "fastestStructuralNotesPerBar": 16,
               "isFastestStructuralNoteBelCanto": false,
-              "tempoIndication": {
-                "id": "b60f45e1-0fe6-45f1-8d4f-2582e596f465",
-                "text": "Prestissimo"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "b60f45e1-0fe6-45f1-8d4f-2582e596f465"
             }
           ]
         }
@@ -2071,11 +1972,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestStaccatoNotesPerBar": 4,
               "fastestRepeatedNotesPerBar": 4,
-              "tempoIndication": {
-                "id": "8c8920a6-3775-4110-afd1-8536ad0f9a30",
-                "text": "Molto agitato"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "8c8920a6-3775-4110-afd1-8536ad0f9a30"
             }
           ]
         }
@@ -2102,11 +2000,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestStaccatoNotesPerBar": 4,
               "fastestRepeatedNotesPerBar": 12,
-              "tempoIndication": {
-                "id": "3d10365e-3185-4a64-80a7-16304dd7e344",
-                "text": "Allegro molto agitato"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "3d10365e-3185-4a64-80a7-16304dd7e344"
             }
           ]
         }
@@ -2135,11 +2030,8 @@ Content-Type: application/json
               "fastestRepeatedNotesPerBar": 16,
               "fastestOrnamentalNotesPerBar": 48,
               "comment": "Ornamental: minimum number of notes required to play trills on 16th notes",
-              "tempoIndication": {
-                "id": "e6e8cd25-2a25-4c16-bb2d-9772da93e311",
-                "text": "Allegro strepitoso"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "e6e8cd25-2a25-4c16-bb2d-9772da93e311"
             }
           ]
         }
@@ -2166,11 +2058,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestStaccatoNotesPerBar": 9,
               "fastestRepeatedNotesPerBar": 9,
-              "tempoIndication": {
-                "id": "2fadca09-f577-430a-840e-25f9b5ce16e4",
-                "text": "Allegro"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
             }
           ]
         }
@@ -2198,11 +2087,8 @@ Content-Type: application/json
               "fastestStaccatoNotesPerBar": 8,
               "fastestRepeatedNotesPerBar": 16,
               "fastestOrnamentalNotesPerBar": 48,
-              "tempoIndication": {
-                "id": "c7e22ce5-abd4-4d27-b53a-91bc452f0f77",
-                "text": "Allegro moderato ma energico"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "c7e22ce5-abd4-4d27-b53a-91bc452f0f77"
             }
           ]
         }
@@ -2228,11 +2114,8 @@ Content-Type: application/json
               "fastestStructuralNotesPerBar": 16,
               "isFastestStructuralNoteBelCanto": false,
               "fastestRepeatedNotesPerBar": 8,
-              "tempoIndication": {
-                "id": "2fadca09-f577-430a-840e-25f9b5ce16e4",
-                "text": "Allegro"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
             }
           ]
         }
@@ -2259,11 +2142,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestStaccatoNotesPerBar": 4,
               "fastestRepeatedNotesPerBar": 12,
-              "tempoIndication": {
-                "id": "5729fcb9-75d3-49a6-a2d7-6a6ca7241750",
-                "text": "Con moto"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "5729fcb9-75d3-49a6-a2d7-6a6ca7241750"
             }
           ]
         }
@@ -2291,11 +2171,8 @@ Content-Type: application/json
               "fastestStaccatoNotesPerBar": 8,
               "fastestRepeatedNotesPerBar": 8,
               "comment": "Second staff should have common time as meter to match number of notes to bar",
-              "tempoIndication": {
-                "id": "2fadca09-f577-430a-840e-25f9b5ce16e4",
-                "text": "Allegro"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
             }
           ]
         }
@@ -2322,11 +2199,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestStaccatoNotesPerBar": 8,
               "fastestRepeatedNotesPerBar": 8,
-              "tempoIndication": {
-                "id": "c0ba0c6e-83b4-4d8d-89c9-6060e1b3f86a",
-                "text": "Scherzando"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "c0ba0c6e-83b4-4d8d-89c9-6060e1b3f86a"
             }
           ]
         }
@@ -2354,11 +2228,8 @@ Content-Type: application/json
               "fastestRepeatedNotesPerBar": 32,
               "fastestOrnamentalNotesPerBar": 128,
               "comment": "Ornamental: minimum number of notes required to play turn on 32nd note in 3rd staff p.95 (PDF  p.107)",
-              "tempoIndication": {
-                "id": "03447412-c616-40b7-93f0-423ce4454033",
-                "text": "Andante maestoso ed espressivo"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "03447412-c616-40b7-93f0-423ce4454033"
             }
           ]
         }
@@ -2386,11 +2257,8 @@ Content-Type: application/json
               "fastestStaccatoNotesPerBar": 8,
               "fastestRepeatedNotesPerBar": 16,
               "fastestOrnamentalNotesPerBar": 32,
-              "tempoIndication": {
-                "id": "59a80b85-ffd5-438e-9678-fc753b1a8f59",
-                "text": "Allegro con spirito"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "59a80b85-ffd5-438e-9678-fc753b1a8f59"
             }
           ]
         }
@@ -2418,11 +2286,8 @@ Content-Type: application/json
               "fastestStaccatoNotesPerBar": 4,
               "fastestRepeatedNotesPerBar": 4,
               "comment": "Staccato: penultimate staff on p.103 (PDF p.115)",
-              "tempoIndication": {
-                "id": "2f8b3ff3-2d91-4580-bdf8-0b700f9d9154",
-                "text": "Moderato espressivo"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2f8b3ff3-2d91-4580-bdf8-0b700f9d9154"
             }
           ]
         }
@@ -2448,11 +2313,8 @@ Content-Type: application/json
               "fastestStructuralNotesPerBar": 12,
               "isFastestStructuralNoteBelCanto": false,
               "fastestRepeatedNotesPerBar": 6,
-              "tempoIndication": {
-                "id": "fa063370-e09c-41e5-acde-e1a72b1b2578",
-                "text": "Arioso moderato"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "fa063370-e09c-41e5-acde-e1a72b1b2578"
             }
           ]
         }
@@ -2479,11 +2341,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestStaccatoNotesPerBar": 3,
               "fastestRepeatedNotesPerBar": 3,
-              "tempoIndication": {
-                "id": "8c8920a6-3775-4110-afd1-8536ad0f9a30",
-                "text": "Molto agitato"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "8c8920a6-3775-4110-afd1-8536ad0f9a30"
             }
           ]
         }
@@ -2511,11 +2370,8 @@ Content-Type: application/json
               "fastestStaccatoNotesPerBar": 4,
               "fastestRepeatedNotesPerBar": 4,
               "fastestOrnamentalNotesPerBar": 32,
-              "tempoIndication": {
-                "id": "4a399d19-b0f4-45cf-ac01-5c55afbe76a9",
-                "text": "Allegro moderato"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "4a399d19-b0f4-45cf-ac01-5c55afbe76a9"
             }
           ]
         }
@@ -2541,11 +2397,8 @@ Content-Type: application/json
               "fastestStructuralNotesPerBar": 6,
               "isFastestStructuralNoteBelCanto": false,
               "fastestRepeatedNotesPerBar": 6,
-              "tempoIndication": {
-                "id": "2fadca09-f577-430a-840e-25f9b5ce16e4",
-                "text": "Allegro"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
             }
           ]
         }
@@ -2572,11 +2425,8 @@ Content-Type: application/json
               "isFastestStructuralNoteBelCanto": false,
               "fastestStaccatoNotesPerBar": 8,
               "fastestRepeatedNotesPerBar": 8,
-              "tempoIndication": {
-                "id": "2f8c16fc-f22a-4c67-be52-bdfd65b6793e",
-                "text": "Moderato assai"
-              },
-              "rank": 1
+              "rank": 1,
+              "tempoIndicationId": "2f8c16fc-f22a-4c67-be52-bdfd65b6793e"
             }
           ]
         }
@@ -2593,7 +2443,8 @@ Content-Type: application/json
     },
     {
       "id": "2f8b3ff3-2d91-4580-bdf8-0b700f9d9154",
-      "text": "Moderato espressivo"
+      "text": "Moderato espressivo",
+      "isNew": true
     },
     {
       "id": "59a80b85-ffd5-438e-9678-fc753b1a8f59",
@@ -2645,7 +2496,8 @@ Content-Type: application/json
     },
     {
       "id": "c674ebc7-54de-425e-9df3-b584d2654427",
-      "text": "Allegro non tanto"
+      "text": "Allegro non tanto",
+      "isNew": true
     },
     {
       "id": "5465034c-b59d-4553-93bc-eebd40500ddf",
@@ -2653,7 +2505,8 @@ Content-Type: application/json
     },
     {
       "id": "8c6676e4-d0b9-433f-b111-97b6f030c65b",
-      "text": "Maestoso energico"
+      "text": "Maestoso energico",
+      "isNew": true
     },
     {
       "id": "581e9953-9703-44e7-a3fc-ddeb83374620",
@@ -2685,11 +2538,13 @@ Content-Type: application/json
     },
     {
       "id": "e6e8cd25-2a25-4c16-bb2d-9772da93e311",
-      "text": "Allegro strepitoso"
+      "text": "Allegro strepitoso",
+      "isNew": true
     },
     {
       "id": "c7e22ce5-abd4-4d27-b53a-91bc452f0f77",
-      "text": "Allegro moderato ma energico"
+      "text": "Allegro moderato ma energico",
+      "isNew": true
     },
     {
       "id": "5729fcb9-75d3-49a6-a2d7-6a6ca7241750",
@@ -2701,11 +2556,13 @@ Content-Type: application/json
     },
     {
       "id": "03447412-c616-40b7-93f0-423ce4454033",
-      "text": "Andante maestoso ed espressivo"
+      "text": "Andante maestoso ed espressivo",
+      "isNew": true
     },
     {
       "id": "fa063370-e09c-41e5-acde-e1a72b1b2578",
-      "text": "Arioso moderato"
+      "text": "Arioso moderato",
+      "isNew": true
     }
   ]
 }
