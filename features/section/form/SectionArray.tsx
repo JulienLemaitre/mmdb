@@ -12,6 +12,7 @@ import CommonTimeIcon from "@/ui/svg/CommonTimeIcon";
 import CutTimeIcon from "@/ui/svg/CutTimeIcon";
 import { getSectionDefaultValues } from "@/features/section/utils/getSectionDefaultValues";
 import { NEED_CONFIRMATION_MODAL_ID } from "@/utils/constants";
+import ChevronDownIcon from "@/ui/svg/ChevronDownIcon";
 
 const NeedConfirmationModal = dynamic(
   () => import("@/ui/modal/NeedConfirmationModal"),
@@ -38,6 +39,58 @@ export default function SectionArray({
   const [sectionIndexToRemove, setSectionIndexToRemove] = useState<
     number | null
   >(null);
+  const [closedSections, setClosedSections] = useState<boolean[]>(
+    new Array(fields.length).fill(false),
+  );
+
+  const onSectionOpen = (index: number) => {
+    const newClosedSections = [...closedSections];
+    newClosedSections[index] =
+      typeof newClosedSections[index] === "boolean"
+        ? !newClosedSections[index]
+        : false;
+    setClosedSections(newClosedSections);
+  };
+
+  const onAppendSection = () => {
+    setClosedSections((prev) => [...prev, false]);
+    append(getSectionDefaultValues());
+  };
+
+  const onInsertSection = (index: number) => {
+    setClosedSections((prev) => {
+      let newClosedSections = [...prev];
+      const arrayBefore = newClosedSections.slice(0, index + 1);
+      newClosedSections = [
+        ...arrayBefore,
+        false,
+        ...newClosedSections.slice(index + 1),
+      ];
+      return newClosedSections;
+    });
+    insert(index + 1, getSectionDefaultValues());
+  };
+
+  const onSwapSections = (index1: number, index2: number) => {
+    setClosedSections((prev) => {
+      const newClosedSections = [...prev];
+      const temp = newClosedSections[index1];
+      newClosedSections[index1] = newClosedSections[index2];
+      newClosedSections[index2] = temp;
+      return newClosedSections;
+    });
+    swap(index1, index2);
+  };
+
+  const onRemoveSection = () => {
+    if (sectionIndexToRemove !== null) {
+      setClosedSections((prev) =>
+        prev.filter((_, i) => i !== sectionIndexToRemove),
+      );
+      remove(sectionIndexToRemove);
+      setSectionIndexToRemove(null);
+    }
+  };
 
   return (
     <div className="my-4">
@@ -47,16 +100,32 @@ export default function SectionArray({
           const isMetreFieldDisabled =
             watch(`movements[${nestIndex}].sections[${index}].isCommonTime`) ||
             watch(`movements[${nestIndex}].sections[${index}].isCutTime`);
+          const isSectionOpen = !closedSections[index];
 
           return (
             <li
               key={item.id}
-              className="my-3 px-4 pt-3 border border-base-300 rounded-lg hover:border-accent/25 hover:shadow-xs hover:bg-accent/5 transition-all duration-150"
+              className={`my-3 px-4 pt-3 border border-base-300 rounded-lg hover:border-accent/25 hover:shadow-xs hover:bg-accent/5 transition-all duration-150`}
             >
-              <div className="flex justify-between">
-                <h6 className="text-lg font-normal text-accent">{`Section ${
-                  index + 1
-                }`}</h6>
+              <div className="flex justify-between w-full pl-0">
+                <div className="flex items-center gap-2">
+                  <button
+                    className={`btn btn-circle btn-ghost hover:bg-accent/80 transition-all duration-150 ${isSectionOpen ? "" : "-rotate-90"}`}
+                    onClick={() => onSectionOpen(index)}
+                    onKeyDown={(
+                      event: React.KeyboardEvent<HTMLButtonElement>,
+                    ) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        onSectionOpen(index);
+                      }
+                    }}
+                  >
+                    <ChevronDownIcon className="w-4 h-4" />
+                  </button>
+                  <h6 className="text-lg font-normal text-accent">{`Section ${
+                    index + 1
+                  }`}</h6>
+                </div>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
@@ -69,7 +138,7 @@ export default function SectionArray({
                     type="button"
                     className="btn btn-sm btn-ghost disabled:bg-transparent"
                     onClick={() => {
-                      swap(index, index - 1);
+                      onSwapSections(index, index - 1);
                     }}
                     disabled={index === 0}
                   >
@@ -79,7 +148,7 @@ export default function SectionArray({
                     type="button"
                     className="btn btn-sm btn-ghost disabled:bg-transparent"
                     onClick={() => {
-                      swap(index, index + 1);
+                      onSwapSections(index, index + 1);
                     }}
                     disabled={index === sectionArray.length - 1}
                   >
@@ -93,200 +162,201 @@ export default function SectionArray({
                 )}
                 hidden
               />
-              <div className="flex gap-2 items-center">
-                <div>
-                  Time Signature :<span className="text-red-500 ml-1">*</span>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <FormInput
-                    name={
-                      `movements[${nestIndex}].sections[${index}].metreNumerator` as const
-                    }
-                    // label="Metre numerator"
-                    inputMode="numeric"
-                    inputClassName="w-20"
-                    disabled={isMetreFieldDisabled}
-                    // defaultValue={``}
-                    {...{ register, control, errors }}
-                  />
-                  <div className="divider border-black my-0" />
-                  <div className="-mt-2">
+              <div
+                className={`${isSectionOpen ? "" : "hidden transition-all duration-150"}`}
+              >
+                <div className="flex gap-2 items-center">
+                  <div>
+                    Time Signature :<span className="text-red-500 ml-1">*</span>
+                  </div>
+                  <div className="flex flex-col gap-1">
                     <FormInput
                       name={
-                        `movements[${nestIndex}].sections[${index}].metreDenominator` as const
+                        `movements[${nestIndex}].sections[${index}].metreNumerator` as const
                       }
+                      // label="Metre numerator"
                       inputMode="numeric"
                       inputClassName="w-20"
                       disabled={isMetreFieldDisabled}
+                      // defaultValue={``}
                       {...{ register, control, errors }}
                     />
+                    <div className="divider border-black my-0" />
+                    <div className="-mt-2">
+                      <FormInput
+                        name={
+                          `movements[${nestIndex}].sections[${index}].metreDenominator` as const
+                        }
+                        inputMode="numeric"
+                        inputClassName="w-20"
+                        disabled={isMetreFieldDisabled}
+                        {...{ register, control, errors }}
+                      />
+                    </div>
                   </div>
+                  <label className="text-5xl flex items-center">
+                    <input
+                      {...register(
+                        `movements[${nestIndex}].sections[${index}].isCommonTime` as const,
+                        { required: "This is required" },
+                      )}
+                      name={
+                        `movements[${nestIndex}].sections[${index}].isCommonTime` as const
+                      }
+                      onClick={(e) => {
+                        // @ts-ignore
+                        const isChecked = e?.target?.checked;
+
+                        if (
+                          isChecked &&
+                          getValues(
+                            `movements[${nestIndex}].sections[${index}]`,
+                          )
+                        ) {
+                          setValue(
+                            `movements[${nestIndex}].sections[${index}].isCutTime`,
+                            false,
+                          );
+                          setValue(
+                            `movements[${nestIndex}].sections[${index}].metreNumerator`,
+                            4,
+                          );
+                          setValue(
+                            `movements[${nestIndex}].sections[${index}].metreDenominator`,
+                            4,
+                          );
+                        }
+                      }}
+                      type="checkbox"
+                      className="mr-2"
+                    />
+                    <CommonTimeIcon className="h-6" />
+                  </label>
+                  <label className="text-5xl flex items-center">
+                    <input
+                      {...register(
+                        `movements[${nestIndex}].sections[${index}].isCutTime` as const,
+                        { required: "This is required" },
+                      )}
+                      name={
+                        `movements[${nestIndex}].sections[${index}].isCutTime` as const
+                      }
+                      onClick={(e) => {
+                        // @ts-ignore
+                        const isChecked = e?.target?.checked;
+
+                        if (
+                          isChecked &&
+                          getValues(
+                            `movements[${nestIndex}].sections[${index}]`,
+                          )
+                        ) {
+                          setValue(
+                            `movements[${nestIndex}].sections[${index}].isCommonTime`,
+                            false,
+                          );
+                          setValue(
+                            `movements[${nestIndex}].sections[${index}].metreNumerator`,
+                            2,
+                          );
+                          setValue(
+                            `movements[${nestIndex}].sections[${index}].metreDenominator`,
+                            2,
+                          );
+                        }
+                      }}
+                      type="checkbox"
+                      className="mr-2 ml-4"
+                    />
+                    <CutTimeIcon className="h-8" />
+                  </label>
                 </div>
-                <label className="text-5xl flex items-center">
-                  <input
-                    {...register(
-                      `movements[${nestIndex}].sections[${index}].isCommonTime` as const,
-                      { required: "This is required" },
-                    )}
-                    name={
-                      `movements[${nestIndex}].sections[${index}].isCommonTime` as const
-                    }
-                    onClick={(e) => {
-                      // @ts-ignore
-                      const isChecked = e?.target?.checked;
-
-                      if (
-                        isChecked &&
-                        getValues(`movements[${nestIndex}].sections[${index}]`)
-                      ) {
-                        setValue(
-                          `movements[${nestIndex}].sections[${index}].isCutTime`,
-                          false,
-                        );
-                        setValue(
-                          `movements[${nestIndex}].sections[${index}].metreNumerator`,
-                          4,
-                        );
-                        setValue(
-                          `movements[${nestIndex}].sections[${index}].metreDenominator`,
-                          4,
-                        );
-                      }
-                    }}
-                    type="checkbox"
-                    className="mr-2"
-                  />
-                  <CommonTimeIcon className="h-6" />
-                </label>
-                <label className="text-5xl flex items-center">
-                  <input
-                    {...register(
-                      `movements[${nestIndex}].sections[${index}].isCutTime` as const,
-                      { required: "This is required" },
-                    )}
-                    name={
-                      `movements[${nestIndex}].sections[${index}].isCutTime` as const
-                    }
-                    onClick={(e) => {
-                      // @ts-ignore
-                      const isChecked = e?.target?.checked;
-
-                      if (
-                        isChecked &&
-                        getValues(`movements[${nestIndex}].sections[${index}]`)
-                      ) {
-                        setValue(
-                          `movements[${nestIndex}].sections[${index}].isCommonTime`,
-                          false,
-                        );
-                        setValue(
-                          `movements[${nestIndex}].sections[${index}].metreNumerator`,
-                          2,
-                        );
-                        setValue(
-                          `movements[${nestIndex}].sections[${index}].metreDenominator`,
-                          2,
-                        );
-                      }
-                    }}
-                    type="checkbox"
-                    className="mr-2 ml-4"
-                  />
-                  <CutTimeIcon className="h-8" />
-                </label>
-              </div>
-              <ControlledCreatableSelect
-                name={
-                  `movements[${nestIndex}].sections[${index}].tempoIndication` as const
-                }
-                label={`Tempo indication`}
-                isRequired
-                id={
-                  `movements[${nestIndex}].sections[${index}].tempoIndication` as const
-                }
-                control={control}
-                options={tempoIndicationList.map(
-                  (ti: TempoIndicationState) => ({
-                    value: ti.id,
-                    label: ti.text,
-                  }),
-                )}
-                onOptionSelected={onTempoIndicationSelected}
-                onOptionCreated={onTempoIndicationCreated}
-                fieldError={
-                  errors?.movements?.[nestIndex]?.sections?.[index]
-                    ?.tempoIndication
-                }
-              />
-              <FormInput
-                isRequired={true}
-                name={
-                  `movements[${nestIndex}].sections[${index}].fastestStructuralNotesPerBar` as const
-                }
-                label={`Fastest structural notes per bar`}
-                inputMode="numeric"
-                {...{ register, control, errors }}
-              />
-              <label>
-                <input
-                  {...register(
-                    `movements[${nestIndex}].sections[${index}].isFastestStructuralNoteBelCanto` as const,
-                  )}
+                <ControlledCreatableSelect
                   name={
-                    `movements[${nestIndex}].sections[${index}].isFastestStructuralNoteBelCanto` as const
+                    `movements[${nestIndex}].sections[${index}].tempoIndication` as const
                   }
-                  type="checkbox"
-                  className="mr-2"
+                  label={`Tempo indication`}
+                  isRequired
+                  id={
+                    `movements[${nestIndex}].sections[${index}].tempoIndication` as const
+                  }
+                  control={control}
+                  options={tempoIndicationList.map(
+                    (ti: TempoIndicationState) => ({
+                      value: ti.id,
+                      label: ti.text,
+                    }),
+                  )}
+                  onOptionSelected={onTempoIndicationSelected}
+                  onOptionCreated={onTempoIndicationCreated}
+                  fieldError={
+                    errors?.movements?.[nestIndex]?.sections?.[index]
+                      ?.tempoIndication
+                  }
                 />
-                {`Is bel canto`}
-              </label>
-              <FormInput
-                name={
-                  `movements[${nestIndex}].sections[${index}].fastestStaccatoNotesPerBar` as const
-                }
-                label={`Fastest staccato notes per bar`}
-                inputMode="numeric"
-                {...{ register, control, errors }}
-              />
-              <FormInput
-                name={
-                  `movements[${nestIndex}].sections[${index}].fastestRepeatedNotesPerBar` as const
-                }
-                label={`Fastest repeated notes per bar`}
-                inputMode="numeric"
-                {...{ register, control, errors }}
-              />
-              <FormInput
-                name={
-                  `movements[${nestIndex}].sections[${index}].fastestOrnamentalNotesPerBar` as const
-                }
-                label={`Fastest ornamental notes per bar`}
-                inputMode="numeric"
-                {...{ register, control, errors }}
-              />
-              <FormTextarea
-                name={
-                  `movements[${nestIndex}].sections[${index}].comment` as const
-                }
-                label={`Comment`}
-                {...{ register, control, errors }}
-              />
-              <FormTextarea
-                name={
-                  `movements[${nestIndex}].sections[${index}].commentForReview` as const
-                }
-                label={`Comment for review`}
-                {...{ register, control, errors }}
-              />
+                <FormInput
+                  isRequired={true}
+                  name={
+                    `movements[${nestIndex}].sections[${index}].fastestStructuralNotesPerBar` as const
+                  }
+                  label={`Fastest structural notes per bar`}
+                  inputMode="numeric"
+                  {...{ register, control, errors }}
+                />
+                <FormInput
+                  name={
+                    `movements[${nestIndex}].sections[${index}].fastestBelCantoNotesPerBar` as const
+                  }
+                  label={`Fastest bel canto notes per bar`}
+                  inputMode="numeric"
+                  {...{ register, control, errors }}
+                />
+                <FormInput
+                  name={
+                    `movements[${nestIndex}].sections[${index}].fastestStaccatoNotesPerBar` as const
+                  }
+                  label={`Fastest staccato notes per bar`}
+                  inputMode="numeric"
+                  {...{ register, control, errors }}
+                />
+                <FormInput
+                  name={
+                    `movements[${nestIndex}].sections[${index}].fastestRepeatedNotesPerBar` as const
+                  }
+                  label={`Fastest repeated notes per bar`}
+                  inputMode="numeric"
+                  {...{ register, control, errors }}
+                />
+                <FormInput
+                  name={
+                    `movements[${nestIndex}].sections[${index}].fastestOrnamentalNotesPerBar` as const
+                  }
+                  label={`Fastest ornamental notes per bar`}
+                  inputMode="numeric"
+                  {...{ register, control, errors }}
+                />
+                <FormTextarea
+                  name={
+                    `movements[${nestIndex}].sections[${index}].comment` as const
+                  }
+                  label={`Comment`}
+                  {...{ register, control, errors }}
+                />
+                <FormTextarea
+                  name={
+                    `movements[${nestIndex}].sections[${index}].commentForReview` as const
+                  }
+                  label={`Comment for review`}
+                  {...{ register, control, errors }}
+                />
+              </div>
               <section className="my-4 flex gap-2 w-full justify-between">
                 <div className="flex gap-2">
                   <button
                     type="button"
                     className="btn btn-accent btn-sm"
                     onClick={() =>
-                      isLastItem
-                        ? append(getSectionDefaultValues())
-                        : insert(index + 1, getSectionDefaultValues())
+                      isLastItem ? onAppendSection() : onInsertSection(index)
                     }
                   >
                     <PlusIcon className="w-4 h-4" />
@@ -304,7 +374,7 @@ export default function SectionArray({
                 type="button"
                 className="btn btn-accent btn-sm"
                 onClick={() => {
-                  append(getSectionDefaultValues());
+                  onAppendSection();
                 }}
               >
                 <PlusIcon className="w-4 h-4" />
@@ -315,12 +385,7 @@ export default function SectionArray({
         )}
         <NeedConfirmationModal
           modalId={`${NEED_CONFIRMATION_MODAL_ID}-section-${nestIndex}`}
-          onConfirm={() => {
-            if (sectionIndexToRemove !== null) {
-              remove(sectionIndexToRemove);
-              setSectionIndexToRemove(null);
-            }
-          }}
+          onConfirm={onRemoveSection}
           onCancel={() => setSectionIndexToRemove(null)}
           description={`Delete this section`}
           isOpened={sectionIndexToRemove !== null}

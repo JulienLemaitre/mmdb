@@ -11,6 +11,7 @@ import ArrowDownIcon from "@/ui/svg/ArrowDownIcon";
 import ArrowUpIcon from "@/ui/svg/ArrowUpIcon";
 import getKeyLabel from "@/utils/getKeyLabel";
 import { NEED_CONFIRMATION_MODAL_ID } from "@/utils/constants";
+import ChevronDownIcon from "@/ui/svg/ChevronDownIcon";
 
 const NeedConfirmationModal = dynamic(
   () => import("@/ui/modal/NeedConfirmationModal"),
@@ -36,24 +37,93 @@ export default function MovementArray({
   const [movementIndexToRemove, setMovementIndexToRemove] = useState<
     number | null
   >(null);
+  const [closedMovements, setClosedMovements] = useState<boolean[]>(
+    new Array(fields.length).fill(false),
+  );
+
+  const onMovementOpen = (index: number) => {
+    const newClosedMovements = [...closedMovements];
+    newClosedMovements[index] =
+      typeof newClosedMovements[index] === "boolean"
+        ? !newClosedMovements[index]
+        : false;
+    setClosedMovements(newClosedMovements);
+  };
+
+  const onAppendMovement = () => {
+    setClosedMovements((prev) => [...prev, false]);
+    append(getMovementDefaultValues());
+  };
+
+  const onInsertMovement = (index: number) => {
+    setClosedMovements((prev) => {
+      let newClosedMovements = [...prev];
+      const arrayBefore = newClosedMovements.slice(0, index + 1);
+      newClosedMovements = [
+        ...arrayBefore,
+        false,
+        ...newClosedMovements.slice(index + 1),
+      ];
+      return newClosedMovements;
+    });
+    insert(index + 1, getMovementDefaultValues());
+  };
+
+  const onSwapMovements = (index1: number, index2: number) => {
+    setClosedMovements((prev) => {
+      const newClosedMovements = [...prev];
+      const temp = newClosedMovements[index1];
+      newClosedMovements[index1] = newClosedMovements[index2];
+      newClosedMovements[index2] = temp;
+      return newClosedMovements;
+    });
+    swap(index1, index2);
+  };
+
+  const onRemoveMovement = () => {
+    if (movementIndexToRemove !== null) {
+      setClosedMovements((prev) =>
+        prev.filter((_, i) => i !== movementIndexToRemove),
+      );
+      remove(movementIndexToRemove);
+      setMovementIndexToRemove(null);
+    }
+  };
 
   return (
     <ul>
       {fields.map((item, index, mvtArray) => {
         const isLastItem = index === mvtArray.length - 1;
+        const isMovementOpen = !closedMovements[index];
+
         return (
           <li
             key={item.id}
             className="mt-6 px-4 pt-3 border border-base-300 rounded-lg hover:border-secondary/25 hover:shadow-xs hover:bg-primary/5 transition-all duration-150"
           >
-            <div className="flex justify-between">
-              <h5 className="text-xl font-normal text-secondary">{`Movement ${
-                index + 1
-              }${
-                mvtArray.length === 1
-                  ? ` (or whole piece if not divided in movements)`
-                  : ""
-              }`}</h5>
+            <div className="flex justify-between w-full pl-0">
+              <div className="flex items-center gap-2">
+                <button
+                  className={`btn btn-circle btn-ghost hover:bg-secondary/80 transition-all duration-150 ${isMovementOpen ? "" : "-rotate-90"}`}
+                  onClick={() => onMovementOpen(index)}
+                  onKeyDown={(
+                    event: React.KeyboardEvent<HTMLButtonElement>,
+                  ) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      onMovementOpen(index);
+                    }
+                  }}
+                >
+                  <ChevronDownIcon className="w-4 h-4" />
+                </button>
+                <h5 className="text-xl font-normal text-secondary">{`Movement ${
+                  index + 1
+                }${
+                  mvtArray.length === 1
+                    ? ` (or whole piece if not divided in movements)`
+                    : ""
+                }`}</h5>
+              </div>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
@@ -66,7 +136,7 @@ export default function MovementArray({
                   type="button"
                   className="btn btn-sm btn-ghost disabled:bg-transparent"
                   onClick={() => {
-                    swap(index, index - 1);
+                    onSwapMovements(index, index - 1);
                   }}
                   disabled={index === 0}
                 >
@@ -76,7 +146,7 @@ export default function MovementArray({
                   type="button"
                   className="btn btn-sm btn-ghost disabled:bg-transparent"
                   onClick={() => {
-                    swap(index, index + 1);
+                    onSwapMovements(index, index + 1);
                   }}
                   disabled={index === mvtArray.length - 1}
                 >
@@ -84,35 +154,37 @@ export default function MovementArray({
                 </button>
               </div>
             </div>
-            <input {...register(`movements[${index}].id` as const)} hidden />
-            <ControlledSelect
-              name={`movements[${index}].key` as const}
-              label={`Key`}
-              id={`movements[${index}].key` as const}
-              control={control}
-              options={Object.values(KEY).map((key) => ({
-                value: key,
-                label: getKeyLabel(key),
-              }))}
-              isRequired={true}
-              fieldError={errors?.movements?.[index]?.key}
-            />
+            <div
+              className={`${isMovementOpen ? "" : "hidden transition-all duration-150"}`}
+            >
+              <input {...register(`movements[${index}].id` as const)} hidden />
+              <ControlledSelect
+                name={`movements[${index}].key` as const}
+                label={`Key`}
+                id={`movements[${index}].key` as const}
+                control={control}
+                options={Object.values(KEY).map((key) => ({
+                  value: key,
+                  label: getKeyLabel(key),
+                }))}
+                isRequired={true}
+                fieldError={errors?.movements?.[index]?.key}
+              />
 
-            <SectionArray
-              nestIndex={index}
-              {...{ control, register, getValues, setValue, errors, watch }}
-              tempoIndicationList={tempoIndicationList}
-              onTempoIndicationSelected={onTempoIndicationSelected}
-              onTempoIndicationCreated={onTempoIndicationCreated}
-            />
+              <SectionArray
+                nestIndex={index}
+                {...{ control, register, getValues, setValue, errors, watch }}
+                tempoIndicationList={tempoIndicationList}
+                onTempoIndicationSelected={onTempoIndicationSelected}
+                onTempoIndicationCreated={onTempoIndicationCreated}
+              />
+            </div>
             <section className="my-4 flex gap-2 w-full justify-between">
               <button
                 type="button"
                 className="btn btn-secondary btn-sm"
                 onClick={() =>
-                  isLastItem
-                    ? append(getMovementDefaultValues())
-                    : insert(index + 1, getMovementDefaultValues())
+                  isLastItem ? onAppendMovement() : onInsertMovement(index)
                 }
               >
                 <PlusIcon className="w-4 h-4" />
@@ -128,9 +200,7 @@ export default function MovementArray({
             <button
               type="button"
               className="btn btn-secondary btn-sm"
-              onClick={() => {
-                append(getMovementDefaultValues());
-              }}
+              onClick={onAppendMovement}
             >
               <PlusIcon className="w-4 h-4" />
               Add Movement
@@ -140,12 +210,7 @@ export default function MovementArray({
       )}
       <NeedConfirmationModal
         modalId={`${NEED_CONFIRMATION_MODAL_ID}-movement`}
-        onConfirm={() => {
-          if (movementIndexToRemove !== null) {
-            remove(movementIndexToRemove);
-            setMovementIndexToRemove(null);
-          }
-        }}
+        onConfirm={onRemoveMovement}
         onCancel={() => setMovementIndexToRemove(null)}
         description={`Delete this movement and all its sections`}
         isOpened={movementIndexToRemove !== null}
