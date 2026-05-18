@@ -152,10 +152,10 @@ export type SectionState = WithRequiredId<
     | "comment"
     | "commentForReview"
     | "fastestStructuralNotesPerBar"
+    | "fastestBelCantoNotesPerBar"
     | "fastestStaccatoNotesPerBar"
     | "fastestRepeatedNotesPerBar"
     | "fastestOrnamentalNotesPerBar"
-    | "isFastestStructuralNoteBelCanto"
     | "tempoIndicationId"
   >
 >;
@@ -349,7 +349,7 @@ export function assertsIsPersistableFeedFormState(
       typeof valueToTest === "object" &&
       "formInfo" in valueToTest &&
       typeof valueToTest["formInfo"] === "object" &&
-      typeof valueToTest["formInfo"]["reviewContext"] === "undefined" && // Not persistable if used in a review
+      valueToTest["formInfo"]["reviewContext"] === undefined && // Not persistable if used in a review
       "mMSourceDescription" in valueToTest &&
       typeof valueToTest["mMSourceDescription"] === "object" &&
       "mMSourceContributions" in valueToTest &&

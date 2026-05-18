@@ -41,7 +41,7 @@ const PieceVersionSchema = z.object({
               isCommonTime: z.boolean().optional(),
               isCutTime: z.boolean().optional(),
               fastestStructuralNotesPerBar: zodPositiveNumber,
-              isFastestStructuralNoteBelCanto: z.boolean().optional(),
+              fastestBelCantoNotesPerBar: zodPositiveNumber,
               fastestStaccatoNotesPerBar: zodPositiveNumberOrEmpty
                 .optional()
                 .nullable(),

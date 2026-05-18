@@ -3,8 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/server/db";
 import isReqAuthorized from "@/utils/server/isReqAuthorized";
 import getDecodedTokenFromReq from "@/utils/server/getDecodedTokenFromReq";
-import { Movement, PieceVersion, Section } from "@/prisma/client";
-import { Prisma } from "@/prisma/client";
+import { Prisma, Movement, PieceVersion, Section } from "@/prisma/client";
 
 export async function POST(req: NextRequest) {
   if (!isReqAuthorized(req)) {
@@ -112,11 +111,10 @@ export async function POST(req: NextRequest) {
         isCommonTime: section.isCommonTime,
         isCutTime: section.isCutTime,
         fastestStructuralNotesPerBar: section.fastestStructuralNotesPerBar,
+        fastestBelCantoNotesPerBar: section.fastestBelCantoNotesPerBar,
         fastestStaccatoNotesPerBar: section.fastestStaccatoNotesPerBar,
         fastestRepeatedNotesPerBar: section.fastestRepeatedNotesPerBar,
         fastestOrnamentalNotesPerBar: section.fastestOrnamentalNotesPerBar,
-        isFastestStructuralNoteBelCanto:
-          section.isFastestStructuralNoteBelCanto,
         tempoIndication: {
           connect: {
             id: section.tempoIndication.value,
@@ -172,10 +170,10 @@ export async function POST(req: NextRequest) {
                 isCommonTime: true,
                 isCutTime: true,
                 fastestStructuralNotesPerBar: true,
+                fastestBelCantoNotesPerBar: true,
                 fastestStaccatoNotesPerBar: true,
                 fastestRepeatedNotesPerBar: true,
                 fastestOrnamentalNotesPerBar: true,
-                isFastestStructuralNoteBelCanto: true,
                 comment: true,
                 commentForReview: true,
                 tempoIndication: {

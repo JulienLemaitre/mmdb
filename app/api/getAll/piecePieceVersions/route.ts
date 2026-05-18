@@ -67,11 +67,11 @@ export async function GET(request: Request) {
                 },
               },
               comment: true,
-              fastestStaccatoNotesPerBar: true,
+              fastestBelCantoNotesPerBar: true,
               fastestStructuralNotesPerBar: true,
+              fastestStaccatoNotesPerBar: true,
               fastestRepeatedNotesPerBar: true,
               fastestOrnamentalNotesPerBar: true,
-              isFastestStructuralNoteBelCanto: true,
             },
             orderBy: {
               rank: "asc",
