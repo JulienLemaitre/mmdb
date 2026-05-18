@@ -79,7 +79,6 @@ Table Section {
   fastestStaccatoNotesPerBar Float
   fastestRepeatedNotesPerBar Float
   fastestOrnamentalNotesPerBar Float
-  isFastestStructuralNoteBelCanto Boolean [not null, default: false]
   tempoIndication TempoIndication [not null]
   tempoIndicationId String [not null]
   metronomeMarks MetronomeMark [not null]

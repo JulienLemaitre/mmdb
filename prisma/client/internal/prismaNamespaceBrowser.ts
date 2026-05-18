@@ -152,7 +152,6 @@ export const SectionScalarFieldEnum = {
   fastestStaccatoNotesPerBar: 'fastestStaccatoNotesPerBar',
   fastestRepeatedNotesPerBar: 'fastestRepeatedNotesPerBar',
   fastestOrnamentalNotesPerBar: 'fastestOrnamentalNotesPerBar',
-  isFastestStructuralNoteBelCanto: 'isFastestStructuralNoteBelCanto',
   tempoIndicationId: 'tempoIndicationId',
   comment: 'comment',
   commentForReview: 'commentForReview',
