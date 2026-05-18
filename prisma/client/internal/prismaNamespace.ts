@@ -2001,6 +2001,7 @@ export const SectionScalarFieldEnum = {
   isCommonTime: 'isCommonTime',
   isCutTime: 'isCutTime',
   fastestStructuralNotesPerBar: 'fastestStructuralNotesPerBar',
+  fastestBelCantoNotesPerBar: 'fastestBelCantoNotesPerBar',
   fastestStaccatoNotesPerBar: 'fastestStaccatoNotesPerBar',
   fastestRepeatedNotesPerBar: 'fastestRepeatedNotesPerBar',
   fastestOrnamentalNotesPerBar: 'fastestOrnamentalNotesPerBar',
