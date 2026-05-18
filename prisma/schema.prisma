@@ -85,6 +85,7 @@ model Section {
   isCommonTime                    Boolean         @default(false)
   isCutTime                       Boolean         @default(false)
   fastestStructuralNotesPerBar    Float
+  fastestBelCantoNotesPerBar      Float?
   fastestStaccatoNotesPerBar      Float?
   fastestRepeatedNotesPerBar      Float?
   fastestOrnamentalNotesPerBar    Float?
@@ -174,7 +175,7 @@ model Reference {
   createdAt  DateTime       @default(now())
   updatedAt  DateTime       @updatedAt
 
-  @@unique([type, reference], where: raw("type IN ('ISBN', 'ISMN')"))
+  @@unique([type, reference], where: raw("type = ANY (ARRAY['ISBN'::\"REFERENCE_TYPE\", 'ISMN'::\"REFERENCE_TYPE\"])"))
 }
 
 model Contribution {
