@@ -105,10 +105,14 @@ export default function MovementArray({
               <div className="flex items-center gap-2">
                 <button
                   className={`btn btn-circle btn-ghost hover:bg-secondary/80 transition-all duration-150 ${isMovementOpen ? "" : "-rotate-90"}`}
-                  onClick={() => onMovementOpen(index)}
+                  onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                    event.preventDefault();
+                    onMovementOpen(index);
+                  }}
                   onKeyDown={(
                     event: React.KeyboardEvent<HTMLButtonElement>,
                   ) => {
+                    event.preventDefault();
                     if (event.key === "Enter" || event.key === " ") {
                       onMovementOpen(index);
                     }

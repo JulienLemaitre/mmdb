@@ -7,12 +7,13 @@ import TrashIcon from "@/ui/svg/TrashIcon";
 import ArrowUpIcon from "@/ui/svg/ArrowUpIcon";
 import ArrowDownIcon from "@/ui/svg/ArrowDownIcon";
 import ControlledCreatableSelect from "@/ui/form/ControlledCreatableSelect";
-import { TempoIndicationState } from "@/types/formTypes";
+import { SectionInput, TempoIndicationState } from "@/types/formTypes";
 import CommonTimeIcon from "@/ui/svg/CommonTimeIcon";
 import CutTimeIcon from "@/ui/svg/CutTimeIcon";
 import { getSectionDefaultValues } from "@/features/section/utils/getSectionDefaultValues";
 import { NEED_CONFIRMATION_MODAL_ID } from "@/utils/constants";
 import ChevronDownIcon from "@/ui/svg/ChevronDownIcon";
+import SectionOverview from "@/features/section/ui/SectionOverview";
 
 const NeedConfirmationModal = dynamic(
   () => import("@/ui/modal/NeedConfirmationModal"),
@@ -33,7 +34,7 @@ export default function SectionArray({
 }) {
   const { fields, append, remove, swap, insert } = useFieldArray({
     control,
-    name: `movements[${nestIndex}].sections`,
+    name: `movements[${nestIndex}].sections` as "movements.0.sections",
   });
 
   const [sectionIndexToRemove, setSectionIndexToRemove] = useState<
@@ -101,6 +102,9 @@ export default function SectionArray({
             watch(`movements[${nestIndex}].sections[${index}].isCommonTime`) ||
             watch(`movements[${nestIndex}].sections[${index}].isCutTime`);
           const isSectionOpen = !closedSections[index];
+          const sectionInfos = watch(
+            `movements[${nestIndex}].sections[${index}]`,
+          ) as SectionInput;
 
           return (
             <li
@@ -111,10 +115,14 @@ export default function SectionArray({
                 <div className="flex items-center gap-2">
                   <button
                     className={`btn btn-circle btn-ghost hover:bg-accent/80 transition-all duration-150 ${isSectionOpen ? "" : "-rotate-90"}`}
-                    onClick={() => onSectionOpen(index)}
+                    onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                      event.preventDefault();
+                      onSectionOpen(index);
+                    }}
                     onKeyDown={(
                       event: React.KeyboardEvent<HTMLButtonElement>,
                     ) => {
+                      event.preventDefault();
                       if (event.key === "Enter" || event.key === " ") {
                         onSectionOpen(index);
                       }
@@ -162,6 +170,11 @@ export default function SectionArray({
                 )}
                 hidden
               />
+              <div
+                className={`${isSectionOpen ? "hidden" : ""} transition-all duration-150`}
+              >
+                <SectionOverview section={sectionInfos} />
+              </div>
               <div
                 className={`${isSectionOpen ? "" : "hidden transition-all duration-150"}`}
               >
