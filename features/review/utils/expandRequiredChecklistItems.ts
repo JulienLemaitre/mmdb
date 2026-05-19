@@ -72,6 +72,12 @@ export function expandRequiredChecklistItems(
         };
         if (!isRequiredField(field, ctx)) continue;
 
+        const isTempoIndicationIdField =
+          entityType === "SECTION" && field.path === "tempoIndicationId";
+        if (isTempoIndicationIdField) {
+          console.log({ entityType, field, n, lineage });
+        }
+
         // Get item value
         let value: unknown;
         switch (entityType) {
@@ -164,11 +170,9 @@ export function expandRequiredChecklistItems(
                     ? collection.title
                     : n[field.path];
               } else {
-                debug.warn(`Collection not found :`, {
-                  entityType,
-                  lineage,
-                  n,
-                });
+                debug.info(
+                  `Piece "${n.title}" from not completely included collection ${n.collectionId}`,
+                );
                 continue;
               }
             } else {
@@ -208,11 +212,24 @@ export function expandRequiredChecklistItems(
         }
 
         if (value === undefined) {
-          debug.warn(`undefined value for field ${field.path} :`, {
-            entityType,
-            lineage,
-            n,
-          });
+          const isOrganizationContribution =
+            field.path === "personId" &&
+            entityType === "CONTRIBUTION" &&
+            "organizationId" in n;
+          const isPersonContribution =
+            field.path === "organizationId" &&
+            entityType === "CONTRIBUTION" &&
+            "personId" in n;
+          // We log for other not expected undefined values
+          if (isOrganizationContribution || isPersonContribution) {
+            continue;
+          } else {
+            debug.warn(`undefined value for field ${field.path} :`, {
+              entityType,
+              lineage,
+              n,
+            });
+          }
         } else {
           value = getItemValueDisplay({
             entityType,

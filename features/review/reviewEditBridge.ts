@@ -287,6 +287,12 @@ export function buildFeedFormBootStateFromWorkingCopy(
       pieceVersion.id,
       "pieceVersionId",
     );
+    const tempoIndicationList = workingCopy.graph.tempoIndications || [];
+    const tempoIndications = tempoIndicationList.filter((ti) =>
+      pieceVersion.movements.some((mvt) =>
+        mvt.sections.some((sec) => sec.tempoIndicationId === ti.id),
+      ),
+    );
 
     if (!sourceOnPieceVersion) {
       console.warn(
@@ -323,6 +329,7 @@ export function buildFeedFormBootStateFromWorkingCopy(
             ),
           }
         : undefined,
+      tempoIndications,
     };
   }
 
@@ -486,22 +493,34 @@ export function rebuildWorkingCopyFromFeedForm(
   const metronomeMarks = (feedFormState.metronomeMarks ?? [])
     .map(forceId)
     .map(cleanIsNew);
+  const tempoIndicationList = (feedFormState.tempoIndications ?? [])
+    .map(forceId)
+    .map(cleanIsNew);
 
-  // Rebuild derived data: `tempoIndications` are collected from within the piece structure.
+  // Rebuild derived data: tempoIndicationId from section and tempoIndication text from tempoIndicationList
   const tempoIndicationMap = new Map<string, { id: string; text: string }>();
   for (const pv of pieceVersions) {
     for (const m of (pv as any).movements ?? []) {
       for (const s of m.sections ?? []) {
-        const ti = s.tempoIndication;
-        if (ti?.id) {
-          s.tempoIndicationId = ti.id;
-          tempoIndicationMap.set(ti.id, { id: ti.id, text: ti.text ?? "" });
+        const tempoIndicationId = s.tempoIndicationId;
+        if (tempoIndicationId) {
+          const ti = tempoIndicationList.find(
+            (ti) => ti.id === tempoIndicationId,
+          );
+          tempoIndicationMap.set(tempoIndicationId, {
+            id: tempoIndicationId,
+            text: ti.text ?? "",
+          });
         } else {
-          console.warn(`No tempoIndication id for section ${s.id}`, ti);
+          console.warn(
+            `No tempoIndication id for section ${s.id}`,
+            tempoIndicationId,
+          );
         }
       }
     }
   }
+
   const tempoIndications = Array.from(tempoIndicationMap.values());
 
   // Rebuild derived data: `sourceOnPieceVersions` needs to be enriched with data

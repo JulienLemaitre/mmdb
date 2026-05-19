@@ -58,7 +58,7 @@ export function ReviewWorkingCopyProvider({
 
   // Initialize once if empty
   React.useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (globalThis.window === undefined) return;
     if (!localStorageGetItem<ReviewWorkingCopy>(key)) {
       const init: ReviewWorkingCopy = {
         graph: initialGraph,
