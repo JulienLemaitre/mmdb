@@ -1,9 +1,10 @@
 import React from "react";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import getKeyLabel from "@/utils/getKeyLabel";
-import { SectionDetail } from "@/features/section/ui/SectionDetail";
 import { PieceVersionState } from "@/types/formTypes";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
+import SectionOverview from "@/features/section/ui/SectionOverview";
+import SectionMeter from "@/features/section/ui/SectionMeter";
 
 type SummaryProps = {
   singlePieceVersionFormState: SinglePieceVersionFormState;
@@ -70,7 +71,17 @@ function Summary({
                 className={`ml-2 ${isMonoMovementPiece ? "" : "pt-2"} grid-cols-1 space-y-1`}
               >
                 {movement?.sections.map((section: any) => (
-                  <SectionDetail key={section.id} section={section} />
+                  <div key={section.id}>
+                    <h6 className="text-sm font-semibold text-secondary">
+                      {`Section ${section.rank}\u2002-\u2002`}
+                      <SectionMeter section={section} />
+                      <span className="italic">
+                        {section?.tempoIndication?.text &&
+                          `\u2002-\u2002${section.tempoIndication.text}`}
+                      </span>
+                    </h6>
+                    <SectionOverview section={section} isSummaryView />
+                  </div>
                 ))}
               </div>
             </div>

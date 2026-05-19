@@ -185,7 +185,7 @@ export default function MovementArray({
 
               <SectionArray
                 nestIndex={index}
-                {...{ control, register, getValues, setValue, errors, watch }}
+                {...{ control, register, getValues, setValue, errors }}
                 tempoIndicationList={tempoIndicationList}
                 onTempoIndicationSelected={onTempoIndicationSelected}
                 onTempoIndicationCreated={onTempoIndicationCreated}

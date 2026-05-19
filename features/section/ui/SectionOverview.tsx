@@ -4,16 +4,20 @@ import React from "react";
 
 export default function SectionOverview({
   section,
+  isSummaryView,
 }: {
   section: SectionInput;
+  isSummaryView: boolean;
 }) {
   return (
-    <div className="text-xs italic font-normal pl-12">
-      <SectionMeter section={section} />
-      <span>
-        {section?.tempoIndication?.label &&
-          `\u2002-\u2002${section.tempoIndication.label}`}
-      </span>
+    <div className={`text-xs italic font-normal pl-12`}>
+      <div className={isSummaryView ? "hidden" : ""}>
+        <SectionMeter section={section} />
+        <span>
+          {section?.tempoIndication?.label &&
+            `\u2002-\u2002${section.tempoIndication.label}`}
+        </span>
+      </div>
       {section.comment && (
         <div>
           <b>Comment</b>: {section.comment}
