@@ -7,8 +7,6 @@ export default function SectionOverview({
 }: {
   section: SectionInput;
 }) {
-  console.log(`[SectionOverview] section :`, section);
-
   return (
     <div className="text-xs italic font-normal pl-12">
       <SectionMeter section={section} />

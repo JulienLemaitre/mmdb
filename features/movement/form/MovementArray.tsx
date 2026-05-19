@@ -12,6 +12,8 @@ import ArrowUpIcon from "@/ui/svg/ArrowUpIcon";
 import getKeyLabel from "@/utils/getKeyLabel";
 import { NEED_CONFIRMATION_MODAL_ID } from "@/utils/constants";
 import ChevronDownIcon from "@/ui/svg/ChevronDownIcon";
+import MovementOverview from "@/features/movement/ui/MovementOverview";
+import { MovementInput } from "@/types/formTypes";
 
 const NeedConfirmationModal = dynamic(
   () => import("@/ui/modal/NeedConfirmationModal"),
@@ -95,6 +97,7 @@ export default function MovementArray({
       {fields.map((item, index, mvtArray) => {
         const isLastItem = index === mvtArray.length - 1;
         const isMovementOpen = !closedMovements[index];
+        const movementInfo = getValues(`movements[${index}]`) as MovementInput;
 
         return (
           <li
@@ -159,7 +162,12 @@ export default function MovementArray({
               </div>
             </div>
             <div
-              className={`${isMovementOpen ? "" : "hidden transition-all duration-150"}`}
+              className={`${isMovementOpen ? "hidden" : ""} transition-all duration-150`}
+            >
+              <MovementOverview movement={movementInfo} />
+            </div>
+            <div
+              className={`${isMovementOpen ? "" : "hidden"} transition-all duration-150`}
             >
               <input {...register(`movements[${index}].id` as const)} hidden />
               <ControlledSelect

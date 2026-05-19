@@ -30,7 +30,6 @@ export default function SectionArray({
   tempoIndicationList,
   onTempoIndicationSelected,
   onTempoIndicationCreated,
-  watch,
 }) {
   const { fields, append, remove, swap, insert } = useFieldArray({
     control,
@@ -99,10 +98,12 @@ export default function SectionArray({
         {fields.map((item, index, sectionArray) => {
           const isLastItem = index === sectionArray.length - 1;
           const isMetreFieldDisabled =
-            watch(`movements[${nestIndex}].sections[${index}].isCommonTime`) ||
-            watch(`movements[${nestIndex}].sections[${index}].isCutTime`);
+            getValues(
+              `movements[${nestIndex}].sections[${index}].isCommonTime`,
+            ) ||
+            getValues(`movements[${nestIndex}].sections[${index}].isCutTime`);
           const isSectionOpen = !closedSections[index];
-          const sectionInfos = watch(
+          const sectionInfos = getValues(
             `movements[${nestIndex}].sections[${index}]`,
           ) as SectionInput;
 
