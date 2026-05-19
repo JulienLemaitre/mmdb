@@ -166,7 +166,7 @@ export default function MetronomeMarkArray({
             {`Section ${section.rank}\u2002-\u2002`}
             <SectionMeter section={section} />
             <span className="italic">
-              {tempoIndication && `\u2002-\u2002${tempoIndication}`}
+              {tempoIndication && `\u2002-\u2002${tempoIndication.text}`}
             </span>
             <span className="font-normal italic text-neutral-content">
               {comment && `\u2002-\u2002${comment}`}
