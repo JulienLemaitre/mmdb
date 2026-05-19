@@ -397,7 +397,9 @@ export default function ChecklistPage() {
       };
       const nextWc = rebuildWorkingCopyFromFeedForm(feedState, prevWc as any);
       saveWorkingCopy(nextWc.graph);
-      setWorkingGraph(nextWc.graph);
+      requestAnimationFrame(() => {
+        setWorkingGraph(nextWc.graph);
+      });
       debug.info(
         "NEW WORKING GRAPH from rebuilt workingCopy: ",
         JSON.stringify(nextWc.graph),
@@ -412,13 +414,15 @@ export default function ChecklistPage() {
         allRequiredItems.map((it) => it.fieldPath),
       );
 
-      setCheckedKeys((prevSet) => {
-        const ns = new Set(prevSet);
-        for (const k of Array.from(ns)) {
-          if (!nextRequiredKeySet.has(k)) ns.delete(k);
-        }
-        impactedKeys.forEach((k) => ns.delete(k));
-        return ns;
+      requestAnimationFrame(() => {
+        setCheckedKeys((prevSet) => {
+          const ns = new Set(prevSet);
+          for (const k of Array.from(ns)) {
+            if (!nextRequiredKeySet.has(k)) ns.delete(k);
+          }
+          impactedKeys.forEach((k) => ns.delete(k));
+          return ns;
+        });
       });
 
       localStorageRemoveItem(FEED_FORM_LOCAL_STORAGE_KEY);
@@ -430,7 +434,9 @@ export default function ChecklistPage() {
       }>(retKey);
       if (ret) {
         if (ret.currentView) {
-          setCurrentView(ret.currentView);
+          requestAnimationFrame(() => {
+            setCurrentView(ret.currentView);
+          });
         }
         // Simplified scroll restoration
         setTimeout(() => {
