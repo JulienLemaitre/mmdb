@@ -1,6 +1,6 @@
 const USE_LOCAL_STORAGE = true;
 
-export const LOCAL_STORAGE_SCHEMA_VERSION = 3;
+export const LOCAL_STORAGE_SCHEMA_VERSION = 4;
 
 export type LocalStorageEnvelope<T> = {
   version: number;
@@ -8,7 +8,7 @@ export type LocalStorageEnvelope<T> = {
 };
 
 export function isLocalStorageAvailable() {
-  return typeof window !== "undefined" && USE_LOCAL_STORAGE;
+  return globalThis.window !== undefined && USE_LOCAL_STORAGE;
 }
 
 export function isVersionedLocalStorageEnvelope(
