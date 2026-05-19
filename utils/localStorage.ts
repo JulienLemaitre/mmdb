@@ -8,7 +8,7 @@ export type LocalStorageEnvelope<T> = {
 };
 
 export function isLocalStorageAvailable() {
-  return globalThis.window === undefined && USE_LOCAL_STORAGE;
+  return globalThis.window !== undefined && USE_LOCAL_STORAGE;
 }
 
 export function isVersionedLocalStorageEnvelope(
