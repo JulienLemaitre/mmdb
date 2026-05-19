@@ -4,13 +4,15 @@ import React from "react";
 
 export default function SectionOverview({
   section,
-  isSummaryView,
+  isSummaryView = false,
 }: {
   section: SectionInput;
-  isSummaryView: boolean;
+  isSummaryView?: boolean;
 }) {
   return (
-    <div className={`text-xs italic font-normal pl-12`}>
+    <div
+      className={`text-xs italic font-normal ${isSummaryView ? "" : "pl-12"}`}
+    >
       <div className={isSummaryView ? "hidden" : ""}>
         <SectionMeter section={section} />
         <span>

@@ -5,6 +5,7 @@ import { PieceVersionState } from "@/types/formTypes";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
 import SectionOverview from "@/features/section/ui/SectionOverview";
 import SectionMeter from "@/features/section/ui/SectionMeter";
+import getPersonName from "@/utils/getPersonName";
 
 type SummaryProps = {
   singlePieceVersionFormState: SinglePieceVersionFormState;
@@ -20,6 +21,7 @@ function Summary({
   const piece = singlePieceVersionFormState.piece;
   const pieceVersion =
     singlePieceVersionFormState.pieceVersion as PieceVersionState;
+  const composer = singlePieceVersionFormState.composer;
   const movementCount = pieceVersion.movements?.length || 0;
   const isMonoMovementPiece = movementCount === 1;
 
@@ -33,6 +35,9 @@ function Summary({
             {isMonoMovementPiece &&
               pieceVersion.movements?.[0] &&
               ` in ${getKeyLabel(pieceVersion.movements[0].key)}`}
+            <span className="text-base font-normal">
+              {composer && ` - ${getPersonName(composer)}`}
+            </span>
           </h4>
           <div className="text-sm text-accent/70 font-medium">
             {piece?.yearOfComposition ? (
@@ -50,7 +55,7 @@ function Summary({
         <div className="py-2">
           {pieceVersion?.movements.map((movement: any, mvtIndex: number) => (
             <div
-              key={`mvt-${mvtIndex}`}
+              key={`mvt-${movement.id}`}
               className={
                 isMonoMovementPiece
                   ? ""
@@ -71,7 +76,7 @@ function Summary({
                 className={`ml-2 ${isMonoMovementPiece ? "" : "pt-2"} grid-cols-1 space-y-1`}
               >
                 {movement?.sections.map((section: any) => (
-                  <div key={section.id}>
+                  <div key={section.id} className="my-3">
                     <h6 className="text-sm font-semibold text-secondary">
                       {`Section ${section.rank}\u2002-\u2002`}
                       <SectionMeter section={section} />

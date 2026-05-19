@@ -19,15 +19,17 @@ export function SectionDetail({ section }) {
         </span>
       </h6>
       {section.comment && (
-        <div className="text-xs italic">Comment: {section.comment}</div>
+        <div className="text-xs italic">
+          <b>Comment</b>: {section.comment}
+        </div>
       )}
       {section.commentForReview && (
-        <div className="text-xs italic px-2 pt-1 bg-warning/10 rounded mt-2">
-          Review note: {section.commentForReview}
+        <div className="text-xs italic">
+          <b>Review note</b>: {section.commentForReview}
         </div>
       )}
 
-      <div className="text-xs space-y-3">
+      <div className="text-xs my-3">
         {section?.metronomeMarks?.map((mm: any, idx: number) => {
           if (mm.noMM) {
             return (
@@ -79,6 +81,13 @@ export function SectionDetail({ section }) {
                         notesPerBar: section.fastestStructuralNotesPerBar,
                         notesPerSecond:
                           notesPerSecondCollection.fastestStructuralNotesPerSecond,
+                      },
+                      {
+                        key: "fastestBelCantoNotes",
+                        label: "BelCanto",
+                        notesPerBar: section.fastestBelCantoNotesPerBar,
+                        notesPerSecond:
+                          notesPerSecondCollection.fastestBelCantoNotesPerSecond,
                       },
                       {
                         key: "fastestRepeatedNotes",
