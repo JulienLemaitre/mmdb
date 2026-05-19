@@ -28,10 +28,25 @@ export default function MMSourceSummary({
     .map((pvs: any) => pvs.pieceVersion?.piece?.collection)
     .filter((c: any) => c !== null);
 
-  const uniqueCollectionIds = new Set(allCollections.map((c: any) => c.id));
+  // list the collections that are included with all their pieces in the Source
+  const completedCollectionIds = allCollections
+    .filter((collection) => {
+      const collectionPiecesCount = collection?._count.pieces;
+      const sourceCollectionPiecesCount = mMSource.pieceVersions.filter(
+        (pvs: any) => pvs.pieceVersion?.piece?.collectionId === collection.id,
+      ).length;
+      return collectionPiecesCount === sourceCollectionPiecesCount;
+    })
+    .map((c: any) => c.id)
+    .reduce((acc: any, id: any) => {
+      if (acc.includes(id)) return acc;
+      return [...acc, id];
+    }, []);
+
+  // We will consider only the first collection found
+  const targetCollection = allCollections[0];
   const isCompleteCollection =
-    uniqueCollectionIds.size === 1 &&
-    allCollections.length === mMSource.pieceVersions.length;
+    !!targetCollection && completedCollectionIds.includes(targetCollection?.id);
 
   const collectionName = isCompleteCollection ? allCollections[0].title : null;
   const pieceTitles = !isCompleteCollection
@@ -67,6 +82,7 @@ export default function MMSourceSummary({
               });
             [
               "fastestStructuralNotesPerSecond",
+              "fastestBelCantoNotesPerSecond",
               "fastestStaccatoNotesPerSecond",
               "fastestOrnamentalNotesPerSecond",
               "fastestRepeatedNotesPerSecond",
@@ -75,7 +91,7 @@ export default function MMSourceSummary({
                 speeds.push(npsCollection[key]);
               }
             });
-          } catch (e) {
+          } catch (_e) {
             // Ignore sections without notes per bar data
           }
         });
@@ -96,12 +112,27 @@ export default function MMSourceSummary({
   };
 
   return (
-    <div className="my-4 border border-base-300 rounded-lg overflow-hidden shadow-sm transition-all duration-200">
+    <div className="my-4 border-l-2 border-l-info/10 hover:border-l-info rounded-lg overflow-hidden shadow-sm transition-all duration-150">
+      {/* Speed indicator line */}
+      <div className="flex h-1.5 w-full">
+        {displaySpeeds.length > 0 ? (
+          displaySpeeds.map((speed, i) => (
+            <div
+              key={`speed-${i}`}
+              className={`flex-1 h-full ${getSpeedColor(speed)} border-r border-gray-100/20 last:border-0`}
+              title={`${Math.round(speed * 100) / 100} notes/s`}
+            />
+          ))
+        ) : (
+          <div className="w-full h-full bg-base-200" />
+        )}
+      </div>
+
       <div
         className="cursor-pointer hover:bg-base-200 transition-colors bg-base-100"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="p-4 border-l-2 border-l-info/10 hover:border-l-info transition-all duration-150">
+        <div className="p-4">
           <div className="flex justify-between items-start">
             <div className="flex-1">
               <div className="mb-1">
@@ -155,7 +186,7 @@ export default function MMSourceSummary({
                   </span>
                   <div className="flex flex-wrap gap-x-2">
                     {mMSource.references.map((ref: any, idx: number) => (
-                      <span key={idx}>
+                      <span key={ref.reference}>
                         <span className="font-medium">
                           {getReferenceTypeLabel(ref.type)}:{" "}
                         </span>
@@ -177,7 +208,7 @@ export default function MMSourceSummary({
                   <div className="flex flex-wrap gap-x-2">
                     {mMSource.contributions.map(
                       (contribution: any, idx: number) => (
-                        <span key={idx}>
+                        <span key={contribution.id}>
                           <span className="font-medium">
                             {getRoleLabel(contribution.role)}:{" "}
                           </span>
@@ -219,27 +250,13 @@ export default function MMSourceSummary({
         </div>
       </div>
 
-      {/* Speed indicator line */}
-      <div className="flex h-1.5 w-full">
-        {displaySpeeds.length > 0 ? (
-          displaySpeeds.map((speed, i) => (
-            <div
-              key={i}
-              className={`flex-1 h-full ${getSpeedColor(speed)} border-r border-gray-100/20 last:border-0`}
-              title={`${Math.round(speed * 100) / 100} notes/s`}
-            />
-          ))
-        ) : (
-          <div className="w-full h-full bg-base-200" />
-        )}
-      </div>
-
       {/* Expandable details */}
       {isOpen && (
         <div className="p-2 sm:p-4 border-t border-base-300 bg-base-100">
           <MMSourceDetailsCompact
             mMSource={mMSource}
             tempoIndicationIds={tempoIndicationIds}
+            completedCollectionIds={completedCollectionIds}
           />
         </div>
       )}

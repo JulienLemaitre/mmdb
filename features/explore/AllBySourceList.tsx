@@ -17,7 +17,7 @@ export default function AllBySourceList({
   message?: string;
   tempoIndicationIds?: string[];
 }) {
-  const [sortBySpeed, setSortBySpeed] = useState(false);
+  const [sortBySpeed, setSortBySpeed] = useState(true);
 
   return (
     <main className="p-8">
@@ -38,16 +38,16 @@ export default function AllBySourceList({
         <span className="text-sm font-medium">Order segments by:</span>
         <div className="join">
           <button
-            className={`btn btn-sm join-item ${!sortBySpeed ? "btn-primary" : "btn-outline"}`}
-            onClick={() => setSortBySpeed(false)}
-          >
-            Source Order
-          </button>
-          <button
             className={`btn btn-sm join-item ${sortBySpeed ? "btn-primary" : "btn-outline"}`}
             onClick={() => setSortBySpeed(true)}
           >
             Speed (Distribution)
+          </button>
+          <button
+            className={`btn btn-sm join-item ${sortBySpeed ? "btn-outline" : "btn-primary"}`}
+            onClick={() => setSortBySpeed(false)}
+          >
+            Source Order
           </button>
         </div>
       </div>
