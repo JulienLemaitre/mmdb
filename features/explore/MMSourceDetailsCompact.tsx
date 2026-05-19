@@ -8,9 +8,11 @@ import { SectionDetail } from "@/features/section/ui/SectionDetail";
 export default function MMSourceDetailsCompact({
   mMSource,
   tempoIndicationIds = [],
+  completedCollectionIds = [],
 }: {
   mMSource: any;
   tempoIndicationIds?: string[];
+  completedCollectionIds?: string[];
 }) {
   // Utility function to organize piece versions into groups by collection
   // Adapted from FeedSummary.tsx
@@ -47,7 +49,9 @@ export default function MMSourceDetailsCompact({
       }
 
       const piece = pieceVersion?.piece;
-      const collection = piece?.collection;
+      const collection =
+        completedCollectionIds.includes(piece?.collection?.id) &&
+        piece?.collection;
       const composer = piece?.composer;
 
       // Determine if we need a new group
@@ -155,9 +159,9 @@ export default function MMSourceDetailsCompact({
                                   ),
                                 );
                               })
-                              .map((movement: any, mvtIndex: number) => (
+                              .map((movement: any) => (
                                 <div
-                                  key={`mvt-${mvtIndex}`}
+                                  key={`mvt-${movement.id}`}
                                   className={
                                     isMonoMovementPiece
                                       ? ""
@@ -245,9 +249,9 @@ export default function MMSourceDetailsCompact({
                           ),
                         );
                       })
-                      .map((movement: any, mvtIndex: number) => (
+                      .map((movement: any) => (
                         <div
-                          key={`mvt-${mvtIndex}`}
+                          key={`mvt-${movement.id}`}
                           className={
                             isMonoMovementPiece
                               ? ""

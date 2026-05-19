@@ -64,14 +64,14 @@ export async function POST(req: NextRequest) {
                   isCutTime: section.isCutTime,
                   fastestStructuralNotesPerBar:
                     section.fastestStructuralNotesPerBar,
+                  fastestBelCantoNotesPerBar:
+                    section.fastestBelCantoNotesPerBar,
                   fastestStaccatoNotesPerBar:
                     section.fastestStaccatoNotesPerBar,
                   fastestRepeatedNotesPerBar:
                     section.fastestRepeatedNotesPerBar,
                   fastestOrnamentalNotesPerBar:
                     section.fastestOrnamentalNotesPerBar,
-                  isFastestStructuralNoteBelCanto:
-                    section.isFastestStructuralNoteBelCanto,
                   ...(section.tempoIndication?.value
                     ? {
                         tempoIndication: {
@@ -113,10 +113,10 @@ export async function POST(req: NextRequest) {
               isCommonTime: true,
               isCutTime: true,
               fastestStructuralNotesPerBar: true,
+              fastestBelCantoNotesPerBar: true,
               fastestStaccatoNotesPerBar: true,
               fastestRepeatedNotesPerBar: true,
               fastestOrnamentalNotesPerBar: true,
-              isFastestStructuralNoteBelCanto: true,
               comment: true,
               commentForReview: true,
               tempoIndication: {

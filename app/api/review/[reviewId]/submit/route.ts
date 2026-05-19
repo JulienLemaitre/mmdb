@@ -573,12 +573,11 @@ export async function POST(
                       isCutTime: s.isCutTime,
                       fastestStructuralNotesPerBar:
                         s.fastestStructuralNotesPerBar,
+                      fastestBelCantoNotesPerBar: s.fastestBelCantoNotesPerBar,
                       fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar,
                       fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar,
                       fastestOrnamentalNotesPerBar:
                         s.fastestOrnamentalNotesPerBar,
-                      isFastestStructuralNoteBelCanto:
-                        s.isFastestStructuralNoteBelCanto,
                       tempoIndicationId: s.tempoIndication.id, // Validated by previous TI upsert
                       comment: s.comment,
                       commentForReview: s.commentForReview,
@@ -593,12 +592,11 @@ export async function POST(
                       isCutTime: s.isCutTime,
                       fastestStructuralNotesPerBar:
                         s.fastestStructuralNotesPerBar,
+                      fastestBelCantoNotesPerBar: s.fastestBelCantoNotesPerBar,
                       fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar,
                       fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar,
                       fastestOrnamentalNotesPerBar:
                         s.fastestOrnamentalNotesPerBar,
-                      isFastestStructuralNoteBelCanto:
-                        s.isFastestStructuralNoteBelCanto,
                       tempoIndicationId: s.tempoIndication.id,
                       comment: s.comment,
                       commentForReview: s.commentForReview,

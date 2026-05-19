@@ -72,7 +72,7 @@ export default function getFeedFormTestState() {
                 isCommonTime: true,
                 isCutTime: false,
                 fastestStructuralNotesPerBar: 12,
-                isFastestStructuralNoteBelCanto: false,
+                fastestBelCantoNotesPerBar: false,
                 tempoIndication: {
                   id: "0e62caff-00af-499c-9746-00df5387c317",
                   text: "Adagio assai",

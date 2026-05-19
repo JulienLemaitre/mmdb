@@ -35,17 +35,21 @@ export const noteDurationValueKeys = Object.keys(
 
 export type NoteValues = {
   fastestStructuralNoteValue?: NOTE_VALUE;
+  fastestBelCantoNotesValue?: NOTE_VALUE;
   fastestStaccatoNoteValue?: NOTE_VALUE;
   fastestOrnamentalNoteValue?: NOTE_VALUE;
+  fastestRepeatedNotesPerBar?: NOTE_VALUE;
 };
 export type NotesPerBarCollection = {
   fastestStructuralNotesPerBar?: number;
+  fastestBelCantoNotesPerBar?: number;
   fastestStaccatoNotesPerBar?: number;
   fastestOrnamentalNotesPerBar?: number;
   fastestRepeatedNotesPerBar?: number;
 };
 export type NotesPerSecondCollection = {
   fastestStructuralNotesPerSecond?: number;
+  fastestBelCantoNotesPerSecond?: number;
   fastestStaccatoNotesPerSecond?: number;
   fastestOrnamentalNotesPerSecond?: number;
   fastestRepeatedNotesPerSecond?: number;

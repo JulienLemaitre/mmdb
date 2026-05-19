@@ -12,6 +12,7 @@ export default function getNotesPerSecondCollectionFromNotesPerBarCollectionAndM
   section: Pick<
     Section,
     | "fastestStructuralNotesPerBar"
+    | "fastestBelCantoNotesPerBar"
     | "fastestRepeatedNotesPerBar"
     | "fastestOrnamentalNotesPerBar"
     | "fastestStaccatoNotesPerBar"
@@ -22,6 +23,7 @@ export default function getNotesPerSecondCollectionFromNotesPerBarCollectionAndM
 }): NotesPerSecondCollection {
   const {
     fastestStructuralNotesPerBar,
+    fastestBelCantoNotesPerBar,
     fastestRepeatedNotesPerBar,
     fastestStaccatoNotesPerBar,
     fastestOrnamentalNotesPerBar,
@@ -30,6 +32,7 @@ export default function getNotesPerSecondCollectionFromNotesPerBarCollectionAndM
 
   if (
     !fastestStructuralNotesPerBar &&
+    !fastestBelCantoNotesPerBar &&
     !fastestRepeatedNotesPerBar &&
     !fastestStaccatoNotesPerBar &&
     !fastestOrnamentalNotesPerBar
@@ -42,6 +45,7 @@ export default function getNotesPerSecondCollectionFromNotesPerBarCollectionAndM
   }
   const notesPerBarValues = {
     fastestStructuralNotesPerBar,
+    fastestBelCantoNotesPerBar,
     fastestRepeatedNotesPerBar,
     fastestStaccatoNotesPerBar,
     fastestOrnamentalNotesPerBar,

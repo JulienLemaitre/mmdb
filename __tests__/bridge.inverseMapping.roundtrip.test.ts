@@ -102,12 +102,11 @@ describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
             isCommonTime: s.isCommonTime,
             isCutTime: s.isCutTime,
             fastestStructuralNotesPerBar: s.fastestStructuralNotesPerBar,
+            fastestBelCantoNotesPerBar: s.fastestBelCantoNotesPerBar ?? null,
             fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar ?? null,
             fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar ?? null,
             fastestOrnamentalNotesPerBar:
               s.fastestOrnamentalNotesPerBar ?? null,
-            isFastestStructuralNoteBelCanto:
-              s.isFastestStructuralNoteBelCanto ?? false,
             tempoIndication: {
               id: ti.id,
               text: ti.text, // unchanged

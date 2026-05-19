@@ -75,10 +75,10 @@ Table Section {
   isCommonTime Boolean [not null, default: false]
   isCutTime Boolean [not null, default: false]
   fastestStructuralNotesPerBar Float [not null]
+  fastestBelCantoNotesPerBar Float
   fastestStaccatoNotesPerBar Float
   fastestRepeatedNotesPerBar Float
   fastestOrnamentalNotesPerBar Float
-  isFastestStructuralNoteBelCanto Boolean [not null, default: false]
   tempoIndication TempoIndication [not null]
   tempoIndicationId String [not null]
   metronomeMarks MetronomeMark [not null]

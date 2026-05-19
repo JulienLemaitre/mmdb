@@ -89,6 +89,10 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
         label: "Max structural notes per bar",
       },
       {
+        path: "fastestBelCantoNotesPerBar",
+        label: "Max bel canto notes per bar",
+      },
+      {
         path: "fastestStaccatoNotesPerBar",
         label: "Max staccato notes per bar",
       },
@@ -99,10 +103,6 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
       {
         path: "fastestOrnamentalNotesPerBar",
         label: "Max ornamental notes per bar",
-      },
-      {
-        path: "isFastestStructuralNoteBelCanto",
-        label: "Fastest structural note is bel canto",
       },
       { path: "tempoIndicationId", label: "Tempo indication" },
       { path: "comment", label: "Section comment" },

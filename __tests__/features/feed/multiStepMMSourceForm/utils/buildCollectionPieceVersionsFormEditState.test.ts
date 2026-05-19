@@ -53,10 +53,10 @@ describe("buildCollectionPieceVersionsFormEditState", () => {
     comment: "",
     commentForReview: "",
     fastestStructuralNotesPerBar: 0,
+    fastestBelCantoNotesPerBar: 0,
     fastestStaccatoNotesPerBar: 0,
     fastestRepeatedNotesPerBar: 0,
     fastestOrnamentalNotesPerBar: 0,
-    isFastestStructuralNoteBelCanto: false,
     tempoIndicationId: tempoIndication.id,
   });
 

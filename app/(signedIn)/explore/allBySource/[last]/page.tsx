@@ -44,7 +44,18 @@ const getData = async ({ last }) => {
             include: {
               piece: {
                 include: {
-                  collection: true,
+                  collection: {
+                    select: {
+                      id: true,
+                      title: true,
+                      composerId: true,
+                      _count: {
+                        select: {
+                          pieces: true,
+                        },
+                      },
+                    },
+                  },
                   composer: true,
                 },
               },

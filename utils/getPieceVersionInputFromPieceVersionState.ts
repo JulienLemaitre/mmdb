@@ -20,6 +20,7 @@ export default function getPieceVersionInputFromPieceVersionState(
       metreNumerator: sectionState.metreNumerator,
       metreDenominator: sectionState.metreDenominator,
       fastestStructuralNotesPerBar: sectionState.fastestStructuralNotesPerBar,
+      fastestBelCantoNotesPerBar: sectionState.fastestBelCantoNotesPerBar,
       fastestStaccatoNotesPerBar: sectionState.fastestStaccatoNotesPerBar,
       fastestRepeatedNotesPerBar: sectionState.fastestRepeatedNotesPerBar,
       fastestOrnamentalNotesPerBar: sectionState.fastestOrnamentalNotesPerBar,
@@ -32,8 +33,6 @@ export default function getPieceVersionInputFromPieceVersionState(
       },
       isCommonTime: sectionState.isCommonTime,
       isCutTime: sectionState.isCutTime,
-      isFastestStructuralNoteBelCanto:
-        sectionState.isFastestStructuralNoteBelCanto,
       comment: sectionState.comment,
       commentForReview: sectionState.commentForReview,
     };

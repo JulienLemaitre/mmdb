@@ -50,14 +50,14 @@ export default function getMMSourcesOnPieceVersionsDBInputFromState(
                           isCutTime: section.isCutTime,
                           fastestStructuralNotesPerBar:
                             section.fastestStructuralNotesPerBar,
+                          fastestBelCantoNotesPerBar:
+                            section.fastestBelCantoNotesPerBar,
                           fastestStaccatoNotesPerBar:
                             section.fastestStaccatoNotesPerBar,
                           fastestRepeatedNotesPerBar:
                             section.fastestRepeatedNotesPerBar,
                           fastestOrnamentalNotesPerBar:
                             section.fastestOrnamentalNotesPerBar,
-                          isFastestStructuralNoteBelCanto:
-                            section.isFastestStructuralNoteBelCanto,
                           tempoIndication:
                             getTempoIndicationNestedDBInputFromState(
                               section.tempoIndicationId,

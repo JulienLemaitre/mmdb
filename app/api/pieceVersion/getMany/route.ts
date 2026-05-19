@@ -55,11 +55,11 @@ export async function POST(request: Request) {
                 },
               },
               comment: true,
-              fastestStaccatoNotesPerBar: true,
               fastestStructuralNotesPerBar: true,
+              fastestBelCantoNotesPerBar: true,
+              fastestStaccatoNotesPerBar: true,
               fastestRepeatedNotesPerBar: true,
               fastestOrnamentalNotesPerBar: true,
-              isFastestStructuralNoteBelCanto: true,
             },
             orderBy: {
               rank: "asc",

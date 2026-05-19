@@ -31,6 +31,7 @@ export type SectionAvgAggregateOutputType = {
   metreNumerator: number | null
   metreDenominator: number | null
   fastestStructuralNotesPerBar: number | null
+  fastestBelCantoNotesPerBar: number | null
   fastestStaccatoNotesPerBar: number | null
   fastestRepeatedNotesPerBar: number | null
   fastestOrnamentalNotesPerBar: number | null
@@ -41,6 +42,7 @@ export type SectionSumAggregateOutputType = {
   metreNumerator: number | null
   metreDenominator: number | null
   fastestStructuralNotesPerBar: number | null
+  fastestBelCantoNotesPerBar: number | null
   fastestStaccatoNotesPerBar: number | null
   fastestRepeatedNotesPerBar: number | null
   fastestOrnamentalNotesPerBar: number | null
@@ -55,10 +57,10 @@ export type SectionMinAggregateOutputType = {
   isCommonTime: boolean | null
   isCutTime: boolean | null
   fastestStructuralNotesPerBar: number | null
+  fastestBelCantoNotesPerBar: number | null
   fastestStaccatoNotesPerBar: number | null
   fastestRepeatedNotesPerBar: number | null
   fastestOrnamentalNotesPerBar: number | null
-  isFastestStructuralNoteBelCanto: boolean | null
   tempoIndicationId: string | null
   comment: string | null
   commentForReview: string | null
@@ -75,10 +77,10 @@ export type SectionMaxAggregateOutputType = {
   isCommonTime: boolean | null
   isCutTime: boolean | null
   fastestStructuralNotesPerBar: number | null
+  fastestBelCantoNotesPerBar: number | null
   fastestStaccatoNotesPerBar: number | null
   fastestRepeatedNotesPerBar: number | null
   fastestOrnamentalNotesPerBar: number | null
-  isFastestStructuralNoteBelCanto: boolean | null
   tempoIndicationId: string | null
   comment: string | null
   commentForReview: string | null
@@ -95,10 +97,10 @@ export type SectionCountAggregateOutputType = {
   isCommonTime: number
   isCutTime: number
   fastestStructuralNotesPerBar: number
+  fastestBelCantoNotesPerBar: number
   fastestStaccatoNotesPerBar: number
   fastestRepeatedNotesPerBar: number
   fastestOrnamentalNotesPerBar: number
-  isFastestStructuralNoteBelCanto: number
   tempoIndicationId: number
   comment: number
   commentForReview: number
@@ -113,6 +115,7 @@ export type SectionAvgAggregateInputType = {
   metreNumerator?: true
   metreDenominator?: true
   fastestStructuralNotesPerBar?: true
+  fastestBelCantoNotesPerBar?: true
   fastestStaccatoNotesPerBar?: true
   fastestRepeatedNotesPerBar?: true
   fastestOrnamentalNotesPerBar?: true
@@ -123,6 +126,7 @@ export type SectionSumAggregateInputType = {
   metreNumerator?: true
   metreDenominator?: true
   fastestStructuralNotesPerBar?: true
+  fastestBelCantoNotesPerBar?: true
   fastestStaccatoNotesPerBar?: true
   fastestRepeatedNotesPerBar?: true
   fastestOrnamentalNotesPerBar?: true
@@ -137,10 +141,10 @@ export type SectionMinAggregateInputType = {
   isCommonTime?: true
   isCutTime?: true
   fastestStructuralNotesPerBar?: true
+  fastestBelCantoNotesPerBar?: true
   fastestStaccatoNotesPerBar?: true
   fastestRepeatedNotesPerBar?: true
   fastestOrnamentalNotesPerBar?: true
-  isFastestStructuralNoteBelCanto?: true
   tempoIndicationId?: true
   comment?: true
   commentForReview?: true
@@ -157,10 +161,10 @@ export type SectionMaxAggregateInputType = {
   isCommonTime?: true
   isCutTime?: true
   fastestStructuralNotesPerBar?: true
+  fastestBelCantoNotesPerBar?: true
   fastestStaccatoNotesPerBar?: true
   fastestRepeatedNotesPerBar?: true
   fastestOrnamentalNotesPerBar?: true
-  isFastestStructuralNoteBelCanto?: true
   tempoIndicationId?: true
   comment?: true
   commentForReview?: true
@@ -177,10 +181,10 @@ export type SectionCountAggregateInputType = {
   isCommonTime?: true
   isCutTime?: true
   fastestStructuralNotesPerBar?: true
+  fastestBelCantoNotesPerBar?: true
   fastestStaccatoNotesPerBar?: true
   fastestRepeatedNotesPerBar?: true
   fastestOrnamentalNotesPerBar?: true
-  isFastestStructuralNoteBelCanto?: true
   tempoIndicationId?: true
   comment?: true
   commentForReview?: true
@@ -284,10 +288,10 @@ export type SectionGroupByOutputType = {
   isCommonTime: boolean
   isCutTime: boolean
   fastestStructuralNotesPerBar: number
+  fastestBelCantoNotesPerBar: number | null
   fastestStaccatoNotesPerBar: number | null
   fastestRepeatedNotesPerBar: number | null
   fastestOrnamentalNotesPerBar: number | null
-  isFastestStructuralNoteBelCanto: boolean
   tempoIndicationId: string
   comment: string | null
   commentForReview: string | null
@@ -327,10 +331,10 @@ export type SectionWhereInput = {
   isCommonTime?: Prisma.BoolFilter<"Section"> | boolean
   isCutTime?: Prisma.BoolFilter<"Section"> | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFilter<"Section"> | number
+  fastestBelCantoNotesPerBar?: Prisma.FloatNullableFilter<"Section"> | number | null
   fastestStaccatoNotesPerBar?: Prisma.FloatNullableFilter<"Section"> | number | null
   fastestRepeatedNotesPerBar?: Prisma.FloatNullableFilter<"Section"> | number | null
   fastestOrnamentalNotesPerBar?: Prisma.FloatNullableFilter<"Section"> | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFilter<"Section"> | boolean
   tempoIndicationId?: Prisma.UuidFilter<"Section"> | string
   comment?: Prisma.StringNullableFilter<"Section"> | string | null
   commentForReview?: Prisma.StringNullableFilter<"Section"> | string | null
@@ -350,10 +354,10 @@ export type SectionOrderByWithRelationInput = {
   isCommonTime?: Prisma.SortOrder
   isCutTime?: Prisma.SortOrder
   fastestStructuralNotesPerBar?: Prisma.SortOrder
+  fastestBelCantoNotesPerBar?: Prisma.SortOrderInput | Prisma.SortOrder
   fastestStaccatoNotesPerBar?: Prisma.SortOrderInput | Prisma.SortOrder
   fastestRepeatedNotesPerBar?: Prisma.SortOrderInput | Prisma.SortOrder
   fastestOrnamentalNotesPerBar?: Prisma.SortOrderInput | Prisma.SortOrder
-  isFastestStructuralNoteBelCanto?: Prisma.SortOrder
   tempoIndicationId?: Prisma.SortOrder
   comment?: Prisma.SortOrderInput | Prisma.SortOrder
   commentForReview?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -377,10 +381,10 @@ export type SectionWhereUniqueInput = Prisma.AtLeast<{
   isCommonTime?: Prisma.BoolFilter<"Section"> | boolean
   isCutTime?: Prisma.BoolFilter<"Section"> | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFilter<"Section"> | number
+  fastestBelCantoNotesPerBar?: Prisma.FloatNullableFilter<"Section"> | number | null
   fastestStaccatoNotesPerBar?: Prisma.FloatNullableFilter<"Section"> | number | null
   fastestRepeatedNotesPerBar?: Prisma.FloatNullableFilter<"Section"> | number | null
   fastestOrnamentalNotesPerBar?: Prisma.FloatNullableFilter<"Section"> | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFilter<"Section"> | boolean
   tempoIndicationId?: Prisma.UuidFilter<"Section"> | string
   comment?: Prisma.StringNullableFilter<"Section"> | string | null
   commentForReview?: Prisma.StringNullableFilter<"Section"> | string | null
@@ -400,10 +404,10 @@ export type SectionOrderByWithAggregationInput = {
   isCommonTime?: Prisma.SortOrder
   isCutTime?: Prisma.SortOrder
   fastestStructuralNotesPerBar?: Prisma.SortOrder
+  fastestBelCantoNotesPerBar?: Prisma.SortOrderInput | Prisma.SortOrder
   fastestStaccatoNotesPerBar?: Prisma.SortOrderInput | Prisma.SortOrder
   fastestRepeatedNotesPerBar?: Prisma.SortOrderInput | Prisma.SortOrder
   fastestOrnamentalNotesPerBar?: Prisma.SortOrderInput | Prisma.SortOrder
-  isFastestStructuralNoteBelCanto?: Prisma.SortOrder
   tempoIndicationId?: Prisma.SortOrder
   comment?: Prisma.SortOrderInput | Prisma.SortOrder
   commentForReview?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -428,10 +432,10 @@ export type SectionScalarWhereWithAggregatesInput = {
   isCommonTime?: Prisma.BoolWithAggregatesFilter<"Section"> | boolean
   isCutTime?: Prisma.BoolWithAggregatesFilter<"Section"> | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatWithAggregatesFilter<"Section"> | number
+  fastestBelCantoNotesPerBar?: Prisma.FloatNullableWithAggregatesFilter<"Section"> | number | null
   fastestStaccatoNotesPerBar?: Prisma.FloatNullableWithAggregatesFilter<"Section"> | number | null
   fastestRepeatedNotesPerBar?: Prisma.FloatNullableWithAggregatesFilter<"Section"> | number | null
   fastestOrnamentalNotesPerBar?: Prisma.FloatNullableWithAggregatesFilter<"Section"> | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolWithAggregatesFilter<"Section"> | boolean
   tempoIndicationId?: Prisma.UuidWithAggregatesFilter<"Section"> | string
   comment?: Prisma.StringNullableWithAggregatesFilter<"Section"> | string | null
   commentForReview?: Prisma.StringNullableWithAggregatesFilter<"Section"> | string | null
@@ -447,10 +451,10 @@ export type SectionCreateInput = {
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar: number
+  fastestBelCantoNotesPerBar?: number | null
   fastestStaccatoNotesPerBar?: number | null
   fastestRepeatedNotesPerBar?: number | null
   fastestOrnamentalNotesPerBar?: number | null
-  isFastestStructuralNoteBelCanto?: boolean
   comment?: string | null
   commentForReview?: string | null
   createdAt?: Date | string
@@ -469,10 +473,10 @@ export type SectionUncheckedCreateInput = {
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar: number
+  fastestBelCantoNotesPerBar?: number | null
   fastestStaccatoNotesPerBar?: number | null
   fastestRepeatedNotesPerBar?: number | null
   fastestOrnamentalNotesPerBar?: number | null
-  isFastestStructuralNoteBelCanto?: boolean
   tempoIndicationId: string
   comment?: string | null
   commentForReview?: string | null
@@ -489,10 +493,10 @@ export type SectionUpdateInput = {
   isCommonTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCutTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFieldUpdateOperationsInput | number
+  fastestBelCantoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestStaccatoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestRepeatedNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestOrnamentalNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commentForReview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -511,10 +515,10 @@ export type SectionUncheckedUpdateInput = {
   isCommonTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCutTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFieldUpdateOperationsInput | number
+  fastestBelCantoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestStaccatoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestRepeatedNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestOrnamentalNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tempoIndicationId?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commentForReview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -532,10 +536,10 @@ export type SectionCreateManyInput = {
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar: number
+  fastestBelCantoNotesPerBar?: number | null
   fastestStaccatoNotesPerBar?: number | null
   fastestRepeatedNotesPerBar?: number | null
   fastestOrnamentalNotesPerBar?: number | null
-  isFastestStructuralNoteBelCanto?: boolean
   tempoIndicationId: string
   comment?: string | null
   commentForReview?: string | null
@@ -551,10 +555,10 @@ export type SectionUpdateManyMutationInput = {
   isCommonTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCutTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFieldUpdateOperationsInput | number
+  fastestBelCantoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestStaccatoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestRepeatedNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestOrnamentalNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commentForReview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -570,10 +574,10 @@ export type SectionUncheckedUpdateManyInput = {
   isCommonTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCutTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFieldUpdateOperationsInput | number
+  fastestBelCantoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestStaccatoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestRepeatedNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestOrnamentalNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tempoIndicationId?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commentForReview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -605,10 +609,10 @@ export type SectionCountOrderByAggregateInput = {
   isCommonTime?: Prisma.SortOrder
   isCutTime?: Prisma.SortOrder
   fastestStructuralNotesPerBar?: Prisma.SortOrder
+  fastestBelCantoNotesPerBar?: Prisma.SortOrder
   fastestStaccatoNotesPerBar?: Prisma.SortOrder
   fastestRepeatedNotesPerBar?: Prisma.SortOrder
   fastestOrnamentalNotesPerBar?: Prisma.SortOrder
-  isFastestStructuralNoteBelCanto?: Prisma.SortOrder
   tempoIndicationId?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   commentForReview?: Prisma.SortOrder
@@ -621,6 +625,7 @@ export type SectionAvgOrderByAggregateInput = {
   metreNumerator?: Prisma.SortOrder
   metreDenominator?: Prisma.SortOrder
   fastestStructuralNotesPerBar?: Prisma.SortOrder
+  fastestBelCantoNotesPerBar?: Prisma.SortOrder
   fastestStaccatoNotesPerBar?: Prisma.SortOrder
   fastestRepeatedNotesPerBar?: Prisma.SortOrder
   fastestOrnamentalNotesPerBar?: Prisma.SortOrder
@@ -635,10 +640,10 @@ export type SectionMaxOrderByAggregateInput = {
   isCommonTime?: Prisma.SortOrder
   isCutTime?: Prisma.SortOrder
   fastestStructuralNotesPerBar?: Prisma.SortOrder
+  fastestBelCantoNotesPerBar?: Prisma.SortOrder
   fastestStaccatoNotesPerBar?: Prisma.SortOrder
   fastestRepeatedNotesPerBar?: Prisma.SortOrder
   fastestOrnamentalNotesPerBar?: Prisma.SortOrder
-  isFastestStructuralNoteBelCanto?: Prisma.SortOrder
   tempoIndicationId?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   commentForReview?: Prisma.SortOrder
@@ -655,10 +660,10 @@ export type SectionMinOrderByAggregateInput = {
   isCommonTime?: Prisma.SortOrder
   isCutTime?: Prisma.SortOrder
   fastestStructuralNotesPerBar?: Prisma.SortOrder
+  fastestBelCantoNotesPerBar?: Prisma.SortOrder
   fastestStaccatoNotesPerBar?: Prisma.SortOrder
   fastestRepeatedNotesPerBar?: Prisma.SortOrder
   fastestOrnamentalNotesPerBar?: Prisma.SortOrder
-  isFastestStructuralNoteBelCanto?: Prisma.SortOrder
   tempoIndicationId?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   commentForReview?: Prisma.SortOrder
@@ -671,6 +676,7 @@ export type SectionSumOrderByAggregateInput = {
   metreNumerator?: Prisma.SortOrder
   metreDenominator?: Prisma.SortOrder
   fastestStructuralNotesPerBar?: Prisma.SortOrder
+  fastestBelCantoNotesPerBar?: Prisma.SortOrder
   fastestStaccatoNotesPerBar?: Prisma.SortOrder
   fastestRepeatedNotesPerBar?: Prisma.SortOrder
   fastestOrnamentalNotesPerBar?: Prisma.SortOrder
@@ -807,10 +813,10 @@ export type SectionCreateWithoutMovementInput = {
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar: number
+  fastestBelCantoNotesPerBar?: number | null
   fastestStaccatoNotesPerBar?: number | null
   fastestRepeatedNotesPerBar?: number | null
   fastestOrnamentalNotesPerBar?: number | null
-  isFastestStructuralNoteBelCanto?: boolean
   comment?: string | null
   commentForReview?: string | null
   createdAt?: Date | string
@@ -827,10 +833,10 @@ export type SectionUncheckedCreateWithoutMovementInput = {
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar: number
+  fastestBelCantoNotesPerBar?: number | null
   fastestStaccatoNotesPerBar?: number | null
   fastestRepeatedNotesPerBar?: number | null
   fastestOrnamentalNotesPerBar?: number | null
-  isFastestStructuralNoteBelCanto?: boolean
   tempoIndicationId: string
   comment?: string | null
   commentForReview?: string | null
@@ -877,10 +883,10 @@ export type SectionScalarWhereInput = {
   isCommonTime?: Prisma.BoolFilter<"Section"> | boolean
   isCutTime?: Prisma.BoolFilter<"Section"> | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFilter<"Section"> | number
+  fastestBelCantoNotesPerBar?: Prisma.FloatNullableFilter<"Section"> | number | null
   fastestStaccatoNotesPerBar?: Prisma.FloatNullableFilter<"Section"> | number | null
   fastestRepeatedNotesPerBar?: Prisma.FloatNullableFilter<"Section"> | number | null
   fastestOrnamentalNotesPerBar?: Prisma.FloatNullableFilter<"Section"> | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFilter<"Section"> | boolean
   tempoIndicationId?: Prisma.UuidFilter<"Section"> | string
   comment?: Prisma.StringNullableFilter<"Section"> | string | null
   commentForReview?: Prisma.StringNullableFilter<"Section"> | string | null
@@ -896,10 +902,10 @@ export type SectionCreateWithoutTempoIndicationInput = {
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar: number
+  fastestBelCantoNotesPerBar?: number | null
   fastestStaccatoNotesPerBar?: number | null
   fastestRepeatedNotesPerBar?: number | null
   fastestOrnamentalNotesPerBar?: number | null
-  isFastestStructuralNoteBelCanto?: boolean
   comment?: string | null
   commentForReview?: string | null
   createdAt?: Date | string
@@ -917,10 +923,10 @@ export type SectionUncheckedCreateWithoutTempoIndicationInput = {
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar: number
+  fastestBelCantoNotesPerBar?: number | null
   fastestStaccatoNotesPerBar?: number | null
   fastestRepeatedNotesPerBar?: number | null
   fastestOrnamentalNotesPerBar?: number | null
-  isFastestStructuralNoteBelCanto?: boolean
   comment?: string | null
   commentForReview?: string | null
   createdAt?: Date | string
@@ -962,10 +968,10 @@ export type SectionCreateWithoutMetronomeMarksInput = {
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar: number
+  fastestBelCantoNotesPerBar?: number | null
   fastestStaccatoNotesPerBar?: number | null
   fastestRepeatedNotesPerBar?: number | null
   fastestOrnamentalNotesPerBar?: number | null
-  isFastestStructuralNoteBelCanto?: boolean
   comment?: string | null
   commentForReview?: string | null
   createdAt?: Date | string
@@ -983,10 +989,10 @@ export type SectionUncheckedCreateWithoutMetronomeMarksInput = {
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar: number
+  fastestBelCantoNotesPerBar?: number | null
   fastestStaccatoNotesPerBar?: number | null
   fastestRepeatedNotesPerBar?: number | null
   fastestOrnamentalNotesPerBar?: number | null
-  isFastestStructuralNoteBelCanto?: boolean
   tempoIndicationId: string
   comment?: string | null
   commentForReview?: string | null
@@ -1018,10 +1024,10 @@ export type SectionUpdateWithoutMetronomeMarksInput = {
   isCommonTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCutTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFieldUpdateOperationsInput | number
+  fastestBelCantoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestStaccatoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestRepeatedNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestOrnamentalNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commentForReview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1039,10 +1045,10 @@ export type SectionUncheckedUpdateWithoutMetronomeMarksInput = {
   isCommonTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCutTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFieldUpdateOperationsInput | number
+  fastestBelCantoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestStaccatoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestRepeatedNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestOrnamentalNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tempoIndicationId?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commentForReview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1058,10 +1064,10 @@ export type SectionCreateManyMovementInput = {
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar: number
+  fastestBelCantoNotesPerBar?: number | null
   fastestStaccatoNotesPerBar?: number | null
   fastestRepeatedNotesPerBar?: number | null
   fastestOrnamentalNotesPerBar?: number | null
-  isFastestStructuralNoteBelCanto?: boolean
   tempoIndicationId: string
   comment?: string | null
   commentForReview?: string | null
@@ -1077,10 +1083,10 @@ export type SectionUpdateWithoutMovementInput = {
   isCommonTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCutTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFieldUpdateOperationsInput | number
+  fastestBelCantoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestStaccatoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestRepeatedNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestOrnamentalNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commentForReview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1097,10 +1103,10 @@ export type SectionUncheckedUpdateWithoutMovementInput = {
   isCommonTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCutTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFieldUpdateOperationsInput | number
+  fastestBelCantoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestStaccatoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestRepeatedNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestOrnamentalNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tempoIndicationId?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commentForReview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1117,10 +1123,10 @@ export type SectionUncheckedUpdateManyWithoutMovementInput = {
   isCommonTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCutTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFieldUpdateOperationsInput | number
+  fastestBelCantoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestStaccatoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestRepeatedNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestOrnamentalNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFieldUpdateOperationsInput | boolean
   tempoIndicationId?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commentForReview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1137,10 +1143,10 @@ export type SectionCreateManyTempoIndicationInput = {
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar: number
+  fastestBelCantoNotesPerBar?: number | null
   fastestStaccatoNotesPerBar?: number | null
   fastestRepeatedNotesPerBar?: number | null
   fastestOrnamentalNotesPerBar?: number | null
-  isFastestStructuralNoteBelCanto?: boolean
   comment?: string | null
   commentForReview?: string | null
   createdAt?: Date | string
@@ -1155,10 +1161,10 @@ export type SectionUpdateWithoutTempoIndicationInput = {
   isCommonTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCutTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFieldUpdateOperationsInput | number
+  fastestBelCantoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestStaccatoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestRepeatedNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestOrnamentalNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commentForReview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1176,10 +1182,10 @@ export type SectionUncheckedUpdateWithoutTempoIndicationInput = {
   isCommonTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCutTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFieldUpdateOperationsInput | number
+  fastestBelCantoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestStaccatoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestRepeatedNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestOrnamentalNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commentForReview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1196,10 +1202,10 @@ export type SectionUncheckedUpdateManyWithoutTempoIndicationInput = {
   isCommonTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCutTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fastestStructuralNotesPerBar?: Prisma.FloatFieldUpdateOperationsInput | number
+  fastestBelCantoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestStaccatoNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestRepeatedNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fastestOrnamentalNotesPerBar?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  isFastestStructuralNoteBelCanto?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commentForReview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1246,10 +1252,10 @@ export type SectionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar?: boolean
+  fastestBelCantoNotesPerBar?: boolean
   fastestStaccatoNotesPerBar?: boolean
   fastestRepeatedNotesPerBar?: boolean
   fastestOrnamentalNotesPerBar?: boolean
-  isFastestStructuralNoteBelCanto?: boolean
   tempoIndicationId?: boolean
   comment?: boolean
   commentForReview?: boolean
@@ -1270,10 +1276,10 @@ export type SectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar?: boolean
+  fastestBelCantoNotesPerBar?: boolean
   fastestStaccatoNotesPerBar?: boolean
   fastestRepeatedNotesPerBar?: boolean
   fastestOrnamentalNotesPerBar?: boolean
-  isFastestStructuralNoteBelCanto?: boolean
   tempoIndicationId?: boolean
   comment?: boolean
   commentForReview?: boolean
@@ -1292,10 +1298,10 @@ export type SectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar?: boolean
+  fastestBelCantoNotesPerBar?: boolean
   fastestStaccatoNotesPerBar?: boolean
   fastestRepeatedNotesPerBar?: boolean
   fastestOrnamentalNotesPerBar?: boolean
-  isFastestStructuralNoteBelCanto?: boolean
   tempoIndicationId?: boolean
   comment?: boolean
   commentForReview?: boolean
@@ -1314,10 +1320,10 @@ export type SectionSelectScalar = {
   isCommonTime?: boolean
   isCutTime?: boolean
   fastestStructuralNotesPerBar?: boolean
+  fastestBelCantoNotesPerBar?: boolean
   fastestStaccatoNotesPerBar?: boolean
   fastestRepeatedNotesPerBar?: boolean
   fastestOrnamentalNotesPerBar?: boolean
-  isFastestStructuralNoteBelCanto?: boolean
   tempoIndicationId?: boolean
   comment?: boolean
   commentForReview?: boolean
@@ -1325,7 +1331,7 @@ export type SectionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type SectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "movementId" | "rank" | "metreNumerator" | "metreDenominator" | "isCommonTime" | "isCutTime" | "fastestStructuralNotesPerBar" | "fastestStaccatoNotesPerBar" | "fastestRepeatedNotesPerBar" | "fastestOrnamentalNotesPerBar" | "isFastestStructuralNoteBelCanto" | "tempoIndicationId" | "comment" | "commentForReview" | "createdAt" | "updatedAt", ExtArgs["result"]["section"]>
+export type SectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "movementId" | "rank" | "metreNumerator" | "metreDenominator" | "isCommonTime" | "isCutTime" | "fastestStructuralNotesPerBar" | "fastestBelCantoNotesPerBar" | "fastestStaccatoNotesPerBar" | "fastestRepeatedNotesPerBar" | "fastestOrnamentalNotesPerBar" | "tempoIndicationId" | "comment" | "commentForReview" | "createdAt" | "updatedAt", ExtArgs["result"]["section"]>
 export type SectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   movement?: boolean | Prisma.MovementDefaultArgs<ExtArgs>
   tempoIndication?: boolean | Prisma.TempoIndicationDefaultArgs<ExtArgs>
@@ -1357,10 +1363,10 @@ export type $SectionPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     isCommonTime: boolean
     isCutTime: boolean
     fastestStructuralNotesPerBar: number
+    fastestBelCantoNotesPerBar: number | null
     fastestStaccatoNotesPerBar: number | null
     fastestRepeatedNotesPerBar: number | null
     fastestOrnamentalNotesPerBar: number | null
-    isFastestStructuralNoteBelCanto: boolean
     tempoIndicationId: string
     comment: string | null
     commentForReview: string | null
@@ -1800,10 +1806,10 @@ export interface SectionFieldRefs {
   readonly isCommonTime: Prisma.FieldRef<"Section", 'Boolean'>
   readonly isCutTime: Prisma.FieldRef<"Section", 'Boolean'>
   readonly fastestStructuralNotesPerBar: Prisma.FieldRef<"Section", 'Float'>
+  readonly fastestBelCantoNotesPerBar: Prisma.FieldRef<"Section", 'Float'>
   readonly fastestStaccatoNotesPerBar: Prisma.FieldRef<"Section", 'Float'>
   readonly fastestRepeatedNotesPerBar: Prisma.FieldRef<"Section", 'Float'>
   readonly fastestOrnamentalNotesPerBar: Prisma.FieldRef<"Section", 'Float'>
-  readonly isFastestStructuralNoteBelCanto: Prisma.FieldRef<"Section", 'Boolean'>
   readonly tempoIndicationId: Prisma.FieldRef<"Section", 'String'>
   readonly comment: Prisma.FieldRef<"Section", 'String'>
   readonly commentForReview: Prisma.FieldRef<"Section", 'String'>
