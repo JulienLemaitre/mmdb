@@ -3,7 +3,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
-import { URL_REVIEW_LIST, URL_FEED } from "@/utils/routes";
+import {
+  URL_REVIEW_LIST,
+  URL_FEED,
+  GET_URL_API_REVIEW_OVERVIEW,
+} from "@/utils/routes";
 import {
   ApiOverview,
   ChecklistGraph,
@@ -317,7 +321,7 @@ export default function ChecklistPage() {
     async function load() {
       try {
         setLoading(true);
-        const res = await fetch(`/api/review/${reviewId}/overview`, {
+        const res = await fetch(GET_URL_API_REVIEW_OVERVIEW(reviewId), {
           cache: "no-store",
         });
         if (!res.ok) {
