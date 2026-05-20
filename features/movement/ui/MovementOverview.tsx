@@ -1,31 +1,31 @@
 import { MovementInput } from "@/types/formTypes";
 import React from "react";
 import getKeyLabel from "@/utils/getKeyLabel";
-import SectionMeter from "@/features/section/ui/SectionMeter";
+import SectionOverview from "@/features/section/ui/SectionOverview";
 
 export default function MovementOverview({
   movement,
 }: {
   movement: MovementInput;
 }) {
+  const missingKey = !movement.key;
   return (
     <div className="text-xs italic font-normal pl-12">
       <div>
-        <b>Key</b>: {getKeyLabel(movement.key.value)}
+        <b>Key</b>:{" "}
+        {missingKey ? (
+          <span className="text-warning">Missing</span>
+        ) : (
+          getKeyLabel(movement.key.value)
+        )}
       </div>
       {movement.sections.length > 0 && (
         <div className={"mt-2"}>
           {movement.sections.map((section, index) => {
             return (
-              <div key={section.id}>
-                <b>{`Section ${index + 1}`}</b>:{" "}
-                <span className="ml-1">
-                  <SectionMeter section={section} />
-                  <span>
-                    {section?.tempoIndication?.label &&
-                      `\u2002-\u2002${section.tempoIndication.label}`}
-                  </span>
-                </span>
+              <div key={section.id} className="flex gap-2 my-2">
+                <b>{`Section ${index + 1} :`}</b>
+                <SectionOverview section={section} noPadding />
               </div>
             );
           })}

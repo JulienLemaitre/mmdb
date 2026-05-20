@@ -5,20 +5,34 @@ import React from "react";
 export default function SectionOverview({
   section,
   isSummaryView = false,
+  noPadding = false,
 }: {
   section: SectionInput;
   isSummaryView?: boolean;
+  noPadding?: boolean;
 }) {
+  const missingMeter = !section.metreNumerator || !section.metreDenominator;
+
   return (
     <div
-      className={`text-xs italic font-normal ${isSummaryView ? "" : "pl-12"}`}
+      className={`text-xs italic font-normal ${isSummaryView || noPadding ? "" : "pl-12"}`}
     >
       <div className={isSummaryView ? "hidden" : ""}>
-        <SectionMeter section={section} />
-        <span>
-          {section?.tempoIndication?.label &&
-            `\u2002-\u2002${section.tempoIndication.label}`}
-        </span>
+        {missingMeter ? (
+          <span className="text-warning">
+            <b>Time Signature</b> missing
+          </span>
+        ) : (
+          <SectionMeter section={section} />
+        )}
+        {section?.tempoIndication?.label ? (
+          <span>{`\u2002-\u2002${section.tempoIndication.label}`}</span>
+        ) : (
+          <span className="text-warning">
+            {`\u2002-\u2002`}
+            <b>Tempo indication</b> missing
+          </span>
+        )}
       </div>
       {section.comment && (
         <div>
@@ -31,8 +45,8 @@ export default function SectionOverview({
         </div>
       )}
       <div className="flex gap-2">
-        <b>Fastest Notes per Bar</b>
-        <div className="flex gap-2">
+        <b>Fastest</b>
+        <div className="flex">
           {[
             "fastestStructuralNotesPerBar",
             "fastestBelCantoNotesPerBar",
@@ -40,13 +54,27 @@ export default function SectionOverview({
             "fastestRepeatedNotesPerBar",
             "fastestOrnamentalNotesPerBar",
           ]
-            .filter((key) => section[key])
-            .map((key) => {
+            .filter(
+              (key) => key === "fastestStructuralNotesPerBar" || section[key],
+            )
+            .map((key, index) => {
               const keyName = key
                 .replace("fastest", "")
                 .replace("NotesPerBar", "");
+
+              if (key === "fastestStructuralNotesPerBar" && !section[key]) {
+                return (
+                  <div key={key} className="text-xs italic">
+                    <span className="text-warning">
+                      <b>{keyName}</b>: Missing
+                    </span>
+                  </div>
+                );
+              }
+
               return (
                 <div key={key} className="text-xs italic">
+                  {index > 0 ? `\u2002-\u2002` : ""}
                   <b>{keyName}</b>: {section[key]}
                 </div>
               );
