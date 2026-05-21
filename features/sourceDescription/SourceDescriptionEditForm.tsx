@@ -21,6 +21,7 @@ import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 import XMarkIcon from "@/ui/svg/XMarkIcon";
 import CheckIcon from "@/ui/svg/CheckIcon";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
+import { filterOptionByWordStart } from "@/utils/selectFilterOption";
 
 const SourceSchema = z
   .object({
@@ -198,6 +199,7 @@ export default function SourceDescriptionEditForm(
             value: category,
             label: formatToPhraseCase(category),
           }))}
+          filterOption={filterOptionByWordStart}
           isRequired={true}
           fieldError={errors.type}
         />

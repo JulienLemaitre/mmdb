@@ -14,6 +14,7 @@ import { FormInput, getLabel } from "@/ui/form/FormInput";
 import { ChangeEvent, useState } from "react";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 import getRoleLabel from "@/utils/getRoleLabel";
+import { filterOptionByWordStart } from "@/utils/selectFilterOption";
 
 const SourceContributionsSchema = z.union([
   z.object({
@@ -128,6 +129,7 @@ export default function NewSourceContributionForm({
             value: category,
             label: getRoleLabel(category),
           }))}
+          filterOption={filterOptionByWordStart}
           isRequired={true}
         />
 

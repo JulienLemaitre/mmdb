@@ -14,6 +14,7 @@ import { getSectionDefaultValues } from "@/features/section/utils/getSectionDefa
 import { NEED_CONFIRMATION_MODAL_ID } from "@/utils/constants";
 import ChevronDownIcon from "@/ui/svg/ChevronDownIcon";
 import SectionOverview from "@/features/section/ui/SectionOverview";
+import { filterOptionByWordStart } from "@/utils/selectFilterOption";
 
 const NeedConfirmationModal = dynamic(
   () => import("@/ui/modal/NeedConfirmationModal"),
@@ -123,8 +124,8 @@ export default function SectionArray({
                     onKeyDown={(
                       event: React.KeyboardEvent<HTMLButtonElement>,
                     ) => {
-                      event.preventDefault();
                       if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
                         onSectionOpen(index);
                       }
                     }}
@@ -301,6 +302,7 @@ export default function SectionArray({
                       label: ti.text,
                     }),
                   )}
+                  filterOption={filterOptionByWordStart}
                   onOptionSelected={onTempoIndicationSelected}
                   onOptionCreated={onTempoIndicationCreated}
                   fieldError={

@@ -8,6 +8,7 @@ import { useFeedForm } from "@/context/feedFormContext";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import { SectionStateExtendedForMMForm } from "@/types/formTypes";
 import SectionMeter from "@/features/section/ui/SectionMeter";
+import { filterOptionByWordStart } from "@/utils/selectFilterOption";
 
 // Utility function to organize sections into groups by collection, piece, movement
 function processSectionsForDisplay(
@@ -238,6 +239,7 @@ export default function MetronomeMarkArray({
               value: noteValue,
               label: formatToPhraseCase(noteValue),
             }))}
+            filterOption={filterOptionByWordStart}
             isRequired={!isNoMMChecked}
             isDisabled={isNoMMChecked}
             fieldError={errors?.metronomeMarks?.[formIndex]?.beatUnit}

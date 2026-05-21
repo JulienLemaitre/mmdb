@@ -24,6 +24,7 @@ import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import getTempoIndicationSelectList from "@/utils/getTempoIndicationSelectList";
 import ArrowLeftIcon from "@/ui/svg/ArrowLeftIcon";
 import getPieceVersionInputFromPieceVersionState from "@/utils/getPieceVersionInputFromPieceVersionState";
+import { filterOptionByWordStart } from "@/utils/selectFilterOption";
 
 const PieceVersionSchema = z.object({
   category: getZodOptionFromEnum(PIECE_CATEGORY),
@@ -174,6 +175,7 @@ export default function PieceVersionEditForm({
               value: category,
               label: formatToPhraseCase(category),
             }))}
+            filterOption={filterOptionByWordStart}
             isRequired={true}
             fieldError={errors?.category}
           />
