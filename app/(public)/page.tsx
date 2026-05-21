@@ -238,7 +238,7 @@ export default async function Home({ searchParams }: Props) {
                               item.email?.split("@")[0] ||
                               "Anonymous"}
                             {item.userId === session?.user?.id && (
-                              <span className="text-[10px] uppercase tracking-wider bg-primary/20 text-primary-content px-1.5 py-0.5 rounded font-extrabold">
+                              <span className="badge badge-xs badge-soft badge-secondary badge-outline">
                                 You
                               </span>
                             )}
