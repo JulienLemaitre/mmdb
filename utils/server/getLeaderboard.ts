@@ -1,7 +1,12 @@
 import { db } from "@/utils/server/db";
 import { REVIEW_STATE } from "@/prisma/client";
 
-export type LeaderboardPeriod = "week" | "month" | "all_time";
+export type LeaderboardPeriod =
+  | "this_week"
+  | "past_week"
+  | "this_month"
+  | "past_month"
+  | "all_time";
 
 export type LeaderboardItem = {
   userId: string;
@@ -17,6 +22,8 @@ export type LeaderboardItem = {
 export type LeaderboardResult = {
   period: LeaderboardPeriod;
   items: LeaderboardItem[];
+  startDate: string | null;
+  endDate: string | null;
   generatedAt: string;
 };
 
@@ -25,23 +32,52 @@ function getDateRangeForPeriod(period: LeaderboardPeriod): {
   end: Date;
 } {
   const now = new Date();
-  const end = new Date();
-
   let start: Date;
-  if (period === "week") {
-    start = new Date(now);
-    start.setDate(now.getDate() - now.getDay()); // Début de la semaine
-  } else if (period === "month") {
-    start = new Date(now.getFullYear(), now.getMonth(), 1);
-  } else {
-    start = new Date(0); // Début des temps
+  let end: Date = new Date();
+
+  switch (period) {
+    case "this_week": {
+      start = new Date(now);
+      const day = now.getDay();
+      const diff = now.getDate() - day + (day === 0 ? -6 : 1); // Monday
+      start.setHours(0, 0, 0, 0);
+      start.setDate(diff);
+      break;
+    }
+    case "past_week": {
+      start = new Date(now);
+      const day = now.getDay();
+      const diff = now.getDate() - day + (day === 0 ? -6 : 1) - 7; // Last Monday
+      start.setHours(0, 0, 0, 0);
+      start.setDate(diff);
+
+      end = new Date(start);
+      end.setDate(start.getDate() + 6);
+      end.setHours(23, 59, 59, 999);
+      break;
+    }
+    case "this_month": {
+      start = new Date(now.getFullYear(), now.getMonth(), 1);
+      break;
+    }
+    case "past_month": {
+      start = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+      end = new Date(now.getFullYear(), now.getMonth(), 0);
+      end.setHours(23, 59, 59, 999);
+      break;
+    }
+    case "all_time":
+    default: {
+      start = new Date(0); // Beginning of time
+      break;
+    }
   }
 
   return { start, end };
 }
 
 export async function getLeaderboard(
-  period: LeaderboardPeriod = "month",
+  period: LeaderboardPeriod = "this_week",
 ): Promise<LeaderboardResult> {
   const { start, end } = getDateRangeForPeriod(period);
 
@@ -155,6 +191,8 @@ export async function getLeaderboard(
   return {
     period,
     items,
+    startDate: period === "all_time" ? null : start.toISOString(),
+    endDate: period === "all_time" ? null : end.toISOString(),
     generatedAt: new Date().toISOString(),
   };
 }
