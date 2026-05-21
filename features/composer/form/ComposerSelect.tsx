@@ -3,6 +3,7 @@ import Select from "@/ui/form/reactSelect/Select";
 import { PersonState } from "@/types/formTypes";
 import getNoOptionsMessage from "@/ui/form/reactSelect/getNoOptionsMessage";
 import { formatPersonOption, getPersonOption } from "@/features/composer/utils";
+import { filterPersonOption } from "@/utils/selectFilterOption";
 
 type ComposerSelectProps = {
   composers: PersonState[];
@@ -33,6 +34,7 @@ export default function ComposerSelect({
       name="composer"
       options={composerOptions}
       formatOptionLabel={formatPersonOption}
+      filterOption={filterPersonOption}
       defaultValue={defaultOption}
       autoFocus
       onChange={(composerOption) => {

@@ -7,6 +7,10 @@ import Label from "@/ui/Label";
 import getRoleLabel from "@/utils/getRoleLabel";
 import { reactSelectStyles } from "@/ui/form/reactSelect/reactSelectStyles";
 import { formatSourceContributionOption } from "@/features/sourceContribution/utils";
+import {
+  filterContributionOption,
+  filterOptionByWordStart,
+} from "@/utils/selectFilterOption";
 
 type SourceContributionSelectProps = {
   sourceContributionOptions: OptionInput[];
@@ -119,6 +123,7 @@ export default function SourceContributionSelect({
             name="sourceContribution"
             options={sourceContributionOptions}
             formatOptionLabel={formatSourceContributionOption}
+            filterOption={filterContributionOption}
             autoFocus
             onChange={(sourceContributionOption: OptionInput | null) => {
               if (!sourceContributionOption) return;
@@ -149,6 +154,7 @@ export default function SourceContributionSelect({
               if (!contributionRoleOption) return;
               setRole(contributionRoleOption.value);
             }}
+            filterOption={filterOptionByWordStart}
             styles={reactSelectStyles}
           />
         </>

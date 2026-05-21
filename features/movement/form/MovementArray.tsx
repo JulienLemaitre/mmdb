@@ -14,6 +14,7 @@ import { NEED_CONFIRMATION_MODAL_ID } from "@/utils/constants";
 import ChevronDownIcon from "@/ui/svg/ChevronDownIcon";
 import MovementOverview from "@/features/movement/ui/MovementOverview";
 import { MovementInput } from "@/types/formTypes";
+import { filterOptionByWordStart } from "@/utils/selectFilterOption";
 
 const NeedConfirmationModal = dynamic(
   () => import("@/ui/modal/NeedConfirmationModal"),
@@ -29,7 +30,6 @@ export default function MovementArray({
   tempoIndicationList,
   onTempoIndicationSelected,
   onTempoIndicationCreated,
-  watch,
 }) {
   const { fields, append, remove, swap, insert } = useFieldArray({
     control,
@@ -115,8 +115,8 @@ export default function MovementArray({
                   onKeyDown={(
                     event: React.KeyboardEvent<HTMLButtonElement>,
                   ) => {
-                    event.preventDefault();
                     if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
                       onMovementOpen(index);
                     }
                   }}
@@ -179,6 +179,7 @@ export default function MovementArray({
                   value: key,
                   label: getKeyLabel(key),
                 }))}
+                filterOption={filterOptionByWordStart}
                 isRequired={true}
                 fieldError={errors?.movements?.[index]?.key}
               />

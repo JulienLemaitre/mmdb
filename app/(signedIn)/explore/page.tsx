@@ -26,6 +26,7 @@ import {
   useToastNotification,
 } from "@/context/toastNotification";
 import { formatPersonOption, getPersonOption } from "@/features/composer/utils";
+import { filterPersonOption } from "@/utils/selectFilterOption";
 
 // TODO: What do we want in addition to what is already there:
 //  1. Show all mms that result in speeds of more / less than X notes per second with a selection of note type (strutural, repeated etc.) e.g. show me all Sources that have MMs that result in more than 15 nps (structural)
@@ -184,6 +185,7 @@ function SearchPage() {
             control={control}
             options={composers.map((composer) => getPersonOption(composer))}
             formatOptionLabel={formatPersonOption}
+            filterOption={filterPersonOption}
             isRequired={false}
             fieldError={errors?.composer}
           />

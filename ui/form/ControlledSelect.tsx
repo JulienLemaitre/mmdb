@@ -24,6 +24,10 @@ type ControlledSelectProps = {
         label: JSX.Element;
       }
   )[];
+  filterOption?: (
+    option: { label: string; value: string; data: any },
+    inputValue: string,
+  ) => boolean;
   formatOptionLabel?: (option: any) => JSX.Element | string;
   control: any;
   classNames?: string;
@@ -39,6 +43,7 @@ const ControlledSelect = ({
   isDisabled = false,
   fieldError,
   options,
+  filterOption,
   formatOptionLabel,
   defaultValue,
   classNames,
@@ -51,7 +56,13 @@ const ControlledSelect = ({
     control,
     rules,
   });
-  const selectProps = { options, isRequired, isDisabled, formatOptionLabel };
+  const selectProps = {
+    options,
+    isRequired,
+    isDisabled,
+    formatOptionLabel,
+    filterOption,
+  };
   if (JSON.stringify(error) !== JSON.stringify(fieldError)) {
     console.warn(
       `[${name}] error and fieldError are different`,
