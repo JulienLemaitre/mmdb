@@ -6,7 +6,11 @@ export function filterOptionByWordStart(
   },
   inputValue: string,
 ): boolean {
-  return option.label.toLowerCase().startsWith(inputValue.toLowerCase());
+  const isCreateOption = option.label.startsWith("Create");
+  return (
+    isCreateOption ||
+    option.label.toLowerCase().startsWith(inputValue.toLowerCase())
+  );
 }
 
 export function filterPersonOption(
@@ -17,13 +21,14 @@ export function filterPersonOption(
   },
   inputValue: string,
 ): boolean {
+  const isCreateOption = option.label.startsWith("Create");
   const isFirstNameSelected = option.data?.person?.firstName
     ?.toLowerCase()
     .startsWith(inputValue.toLowerCase());
   const isLastNameSelected = option.data?.person?.lastName
     ?.toLowerCase()
     .startsWith(inputValue.toLowerCase());
-  return isFirstNameSelected || isLastNameSelected;
+  return isCreateOption || isFirstNameSelected || isLastNameSelected;
 }
 
 export function filterContributionOption(
@@ -34,6 +39,10 @@ export function filterContributionOption(
   },
   inputValue: string,
 ): boolean {
+  const isCreateOption = option.label.startsWith("Create");
+  if (isCreateOption) {
+    return true;
+  }
   // Person
   if (option.data?.person) {
     return filterPersonOption(option, inputValue);
