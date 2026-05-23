@@ -16,9 +16,18 @@ export type TeamStreakData = {
   hasTeamMetGoalThisWeek: boolean;
 };
 
+export type TeamMemberStatus = {
+  userId: string;
+  userName: string | null;
+  email: string | null;
+  hasContributedThisWeek: boolean;
+  lastContributionDate: Date;
+};
+
 export type StreaksResult = {
   user: UserStreakData | null;
   team: TeamStreakData;
+  teamMembers: TeamMemberStatus[];
   generatedAt: string;
 };
 
@@ -204,6 +213,42 @@ export async function getStreaks(
   const teamMembersToConsider =
     activeContributors.size > 0 ? activeContributors : historicContributors;
 
+  // Récupérer les informations d'utilisateur (noms et emails) pour les membres considérés
+  const dbUsers = await db.user.findMany({
+    where: {
+      id: { in: Array.from(teamMembersToConsider) },
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+    },
+  });
+
+  // Associer à chaque utilisateur sa date de dernière contribution
+  const lastContributionMap = new Map<string, Date>();
+  validContributions.forEach((c) => {
+    if (c.creatorId) {
+      const existing = lastContributionMap.get(c.creatorId);
+      if (!existing || c.createdAt > existing) {
+        lastContributionMap.set(c.creatorId, c.createdAt);
+      }
+    }
+  });
+
+  const teamMembers: TeamMemberStatus[] = dbUsers.map((u) => {
+    const memberWeeks = userContributionsMap.get(u.id);
+    return {
+      userId: u.id,
+      userName: u.name,
+      email: u.email,
+      hasContributedThisWeek: memberWeeks
+        ? memberWeeks.has(currentWeekKey)
+        : false,
+      lastContributionDate: lastContributionMap.get(u.id) ?? new Date(0),
+    };
+  });
+
   // Trouver la liste complète et chronologique de toutes les semaines de contributions de la base de données
   const allWeeksSet = new Set<string>();
   validContributions.forEach((c) => allWeeksSet.add(getWeekKey(c.createdAt)));
@@ -289,6 +334,7 @@ export async function getStreaks(
   return {
     user: userResult,
     team: teamResult,
+    teamMembers,
     generatedAt: now.toISOString(),
   };
 }

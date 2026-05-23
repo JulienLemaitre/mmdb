@@ -154,7 +154,7 @@ export default async function Home({ searchParams }: Props) {
             >
               {`Team Board`}
             </span>
-            <span className="text-xs rotate-90 mt-1">{`👥`}</span>
+            <span className="text-xs -rotate-90 mt-1 pb-1">{`👥`}</span>
           </label>
         )}
       </div>
@@ -202,6 +202,16 @@ export default async function Home({ searchParams }: Props) {
             {/* TAB 1: TEAM & STREAKS (Active by default) */}
             {activeTab === "team" && streaksData && (
               <div className="space-y-6 flex-1">
+                {/* Team Goal */}
+                <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 space-y-2">
+                  <h3 className="font-bold text-sm text-primary flex items-center gap-1.5 uppercase tracking-wide">
+                    <span>🎯</span> Team Goal
+                  </h3>
+                  <p className="text-sm font-semibold text-base-content/80 leading-relaxed">
+                    {`1 Metronome Mark per week per active member`}
+                  </p>
+                </div>
+
                 {/* Section Collective (L'équipe) */}
                 <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 space-y-4">
                   <h3 className="font-bold text-sm text-primary flex items-center gap-1.5 uppercase tracking-wide">
@@ -245,11 +255,51 @@ export default async function Home({ searchParams }: Props) {
                         🎉 The team goal has been met for this week! Keep going!
                       </span>
                     ) : (
-                      <span className="text-amber-600">
+                      <span className="text-amber-600 font-semibold">
                         💪 Still waiting for some contributions to secure this
                         week's streak!
                       </span>
                     )}
+                  </div>
+
+                  {/* Liste des contributeurs de l'équipe active */}
+                  <div className="border-t border-primary/10 pt-3">
+                    <div className="flex flex-col gap-1 mb-2.5">
+                      <span className="text-xs font-semibold text-base-content/80">
+                        Active Team Members (1+ contribution in the last 30
+                        days):
+                      </span>
+                    </div>
+                    <div className="max-h-48 overflow-y-auto pr-1">
+                      {streaksData.teamMembers.map((member) => (
+                        <div
+                          key={member.userId}
+                          className="flex items-center justify-between px-2 py-0.5 bg-base-100 border border-base-200 text-xs"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-base">
+                              {member.hasContributedThisWeek ? "✅" : "⏳"}
+                            </span>
+                            <div className="font-medium truncate max-w-[180px]">
+                              {member.userName ||
+                                member.email?.split("@")[0] ||
+                                "Anonymous"}
+                              {member.userId === session?.user?.id && (
+                                <span className="ml-1.5 badge badge-xs badge-soft badge-secondary">
+                                  You
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="text-[10px] text-base-content/50">
+                            Last:{" "}
+                            {formatDate(
+                              member.lastContributionDate.toISOString(),
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
@@ -305,8 +355,9 @@ export default async function Home({ searchParams }: Props) {
                         </span>
                       ) : (
                         <span className="text-error font-semibold">
-                          🚨 You haven't contributed this week yet. Keep your
-                          streak alive!
+                          🚨 You haven't contributed this week yet.
+                          <br />
+                          Keep your streak alive!
                         </span>
                       )}
                     </div>
