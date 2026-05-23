@@ -13,6 +13,7 @@ import {
   getLeaderboard,
   LeaderboardPeriod,
 } from "@/utils/server/getLeaderboard";
+import { getStreaks } from "@/utils/server/getStreaks";
 
 // Helper function to check if current date is in winter period (Dec, Jan, Feb)
 function isWinterPeriod() {
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
 };
 
 type Props = {
-  searchParams: Promise<{ period?: string }>;
+  searchParams: Promise<{ period?: string; tab?: string }>;
 };
 
 export default async function Home({ searchParams }: Props) {
@@ -50,11 +51,13 @@ export default async function Home({ searchParams }: Props) {
   const resolvedSearchParams = await searchParams;
   const currentPeriod =
     (resolvedSearchParams.period as LeaderboardPeriod) || "this_week";
+  const activeTab = resolvedSearchParams.tab || "team"; // 'team' visible par défaut
 
   const [
     totalMetronomeMarksCount,
     reviewedMetronomeMarksCount,
     leaderboardData,
+    streaksData,
   ] = isConnected
     ? await Promise.all([
         db.metronomeMark.count(),
@@ -62,8 +65,9 @@ export default async function Home({ searchParams }: Props) {
           where: { mMSource: { reviewState: REVIEW_STATE.APPROVED } },
         }),
         getLeaderboard(currentPeriod),
+        getStreaks(session?.user?.id),
       ])
-    : [null, null, null];
+    : [null, null, null, null];
 
   const periods: { value: LeaderboardPeriod; label: string }[] = [
     { value: "this_week", label: "This week" },
@@ -79,7 +83,9 @@ export default async function Home({ searchParams }: Props) {
         type="checkbox"
         id="leaderboard-toggle"
         className="drawer-toggle"
-        defaultChecked={Boolean(resolvedSearchParams.period)}
+        defaultChecked={Boolean(
+          resolvedSearchParams.period || resolvedSearchParams.tab,
+        )}
       />
 
       <div className="drawer-content flex flex-col min-h-screen">
@@ -146,14 +152,14 @@ export default async function Home({ searchParams }: Props) {
                 textOrientation: "mixed",
               }}
             >
-              {`Leaderboard`}
+              {`Team Board`}
             </span>
-            <span className="text-xs rotate-90 mt-1">{`⚡`}</span>
+            <span className="text-xs rotate-90 mt-1">{`👥`}</span>
           </label>
         )}
       </div>
 
-      {/* Drawer Sidebar: Interactive Leaderboard */}
+      {/* Drawer Sidebar: Interactive Team Board & Leaderboard */}
       {isConnected && leaderboardData && (
         <div className="drawer-side z-50">
           <label
@@ -163,9 +169,9 @@ export default async function Home({ searchParams }: Props) {
           />
 
           <div className="w-96 md:w-[450px] max-w-[calc(100vw-3rem)] min-h-full bg-base-100 border-l border-base-300 p-6 shadow-2xl flex flex-col overflow-y-auto">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold flex items-center gap-2">
-                ⚡ Leaderboard
+                👥 Team Board
               </h2>
               <label
                 htmlFor="leaderboard-toggle"
@@ -175,93 +181,232 @@ export default async function Home({ searchParams }: Props) {
               </label>
             </div>
 
-            {/* Date range display */}
-            <div className="text-xs text-base-content/50 mb-4 font-medium">
-              {leaderboardData.startDate && leaderboardData.endDate ? (
-                <span>
-                  Period: {formatDate(leaderboardData.startDate)} –{" "}
-                  {formatDate(leaderboardData.endDate)}
-                </span>
-              ) : (
-                <span>Period: All time records</span>
-              )}
+            {/* Tab Selector */}
+            <div role="tablist" className="tabs tabs-boxed mb-6">
+              <Link
+                href={`?tab=team&period=${currentPeriod}`}
+                role="tab"
+                className={`tab ${activeTab === "team" ? "tab-active" : ""}`}
+              >
+                👥 Team & Streaks
+              </Link>
+              <Link
+                href={`?tab=leaderboard&period=${currentPeriod}`}
+                role="tab"
+                className={`tab ${activeTab === "leaderboard" ? "tab-active" : ""}`}
+              >
+                ⚡ Leaderboard
+              </Link>
             </div>
 
-            {/* Period Selector Tabs */}
-            <div className="flex flex-wrap gap-1 mb-4">
-              {periods.map((p) => (
-                <Link
-                  key={p.value}
-                  href={`?period=${p.value}`}
-                  className={`btn btn-xs ${
-                    currentPeriod === p.value
-                      ? "btn-secondary"
-                      : "btn-outline btn-ghost"
-                  }`}
-                >
-                  {p.label}
-                </Link>
-              ))}
-            </div>
+            {/* TAB 1: TEAM & STREAKS (Active by default) */}
+            {activeTab === "team" && streaksData && (
+              <div className="space-y-6 flex-1">
+                {/* Section Collective (L'équipe) */}
+                <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 space-y-4">
+                  <h3 className="font-bold text-sm text-primary flex items-center gap-1.5 uppercase tracking-wide">
+                    <span>👥</span> Team Performance
+                  </h3>
 
-            {leaderboardData.items.length > 0 ? (
-              <div className="space-y-3 flex-1">
-                {leaderboardData.items.slice(0, 5).map((item) => {
-                  const isTop1 = item.rank === 1;
-                  const isTop2 = item.rank === 2;
-                  const isTop3 = item.rank === 3;
+                  <div className="grid grid-cols-2 gap-3 text-center">
+                    <div className="bg-base-100 rounded-lg p-3 border border-base-200">
+                      <div className="text-[11px] text-base-content/60 font-medium">
+                        Current Streak
+                      </div>
+                      <div className="text-2xl font-black text-primary mt-1 flex items-center justify-center gap-1">
+                        🔥 {streaksData.team.currentStreak}{" "}
+                        <span className="text-xs font-normal">wks</span>
+                      </div>
+                    </div>
 
-                  return (
-                    <div
-                      key={item.userId}
-                      className={`flex items-center justify-between p-3 rounded-lg border ${
-                        isTop1
-                          ? "bg-warning/10 border-warning/40"
-                          : "bg-base-200/50 border-base-300"
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        {/* Medals or Badge Rank */}
-                        <span className="w-6 text-center font-bold text-base">
-                          {isTop1
-                            ? "🥇"
-                            : isTop2
-                              ? "🥈"
-                              : isTop3
-                                ? "🥉"
-                                : `${item.rank}.`}
-                        </span>
+                    <div className="bg-base-100 rounded-lg p-3 border border-base-200">
+                      <div className="text-[11px] text-base-content/60 font-medium">
+                        Longest Streak
+                      </div>
+                      <div className="text-2xl font-black text-accent mt-1 flex items-center justify-center gap-1">
+                        🏆 {streaksData.team.longestStreak}{" "}
+                        <span className="text-xs font-normal">wks</span>
+                      </div>
+                    </div>
+                  </div>
 
-                        <div>
-                          <div className="font-semibold text-sm flex items-center gap-1.5">
-                            {item.userName ||
-                              item.email?.split("@")[0] ||
-                              "Anonymous"}
-                            {item.userId === session?.user?.id && (
-                              <span className="badge badge-xs badge-soft badge-secondary badge-outline">
-                                You
-                              </span>
-                            )}
-                          </div>
-                          <div className="text-[11px] text-base-content/60">
-                            {item.metronomeMarksEntered} entered •{" "}
-                            {item.metronomeMarksReviewed} reviewed
-                          </div>
+                  <div className="flex items-center justify-between text-xs border-t border-primary/10 pt-3">
+                    <span className="text-base-content/70">
+                      Total weeks with collective goal met :
+                    </span>
+                    <span className="font-bold">
+                      {streaksData.team.totalWeeksWithGoal} weeks
+                    </span>
+                  </div>
+
+                  <div className="text-center p-2 rounded-lg bg-base-100/50 text-xs font-medium border border-base-200/40">
+                    {streaksData.team.hasTeamMetGoalThisWeek ? (
+                      <span className="text-success">
+                        🎉 The team goal has been met for this week! Keep going!
+                      </span>
+                    ) : (
+                      <span className="text-amber-600">
+                        💪 Still waiting for some contributions to secure this
+                        week's streak!
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Section Individuelle (L'utilisateur connecté) */}
+                {streaksData.user && (
+                  <div className="rounded-xl border border-secondary/20 bg-secondary/5 p-4 space-y-4">
+                    <h3 className="font-bold text-sm text-secondary flex items-center gap-1.5 uppercase tracking-wide">
+                      <span>👤</span> Your Streak Status
+                    </h3>
+
+                    <div className="grid grid-cols-2 gap-3 text-center">
+                      <div className="bg-base-100 rounded-lg p-3 border border-base-200">
+                        <div className="text-[11px] text-base-content/60 font-medium">
+                          Your Streak
                         </div>
+                        <div className="text-2xl font-black text-secondary mt-1 flex items-center justify-center gap-1">
+                          ⚡ {streaksData.user.currentStreak}{" "}
+                          <span className="text-xs font-normal">wks</span>
+                        </div>
+                        {streaksData.user.isCurrentStreakRecord &&
+                          streaksData.user.currentStreak > 0 && (
+                            <span className="badge badge-xs badge-secondary mt-1">
+                              Record! 🎖️
+                            </span>
+                          )}
                       </div>
 
-                      <div className="text-right">
-                        <div className="font-bold text-sm text-secondary">
-                          {item.totalActivity} pts
+                      <div className="bg-base-100 rounded-lg p-3 border border-base-200">
+                        <div className="text-[11px] text-base-content/60 font-medium">
+                          Your Record
+                        </div>
+                        <div className="text-2xl font-black text-neutral-content/80 mt-1 flex items-center justify-center gap-1">
+                          🎖️ {streaksData.user.longestStreak}{" "}
+                          <span className="text-xs font-normal">wks</span>
                         </div>
                       </div>
                     </div>
-                  );
-                })}
+
+                    <div className="flex items-center justify-between text-xs border-t border-secondary/10 pt-3">
+                      <span className="text-base-content/70">
+                        Total weeks with your goal met :
+                      </span>
+                      <span className="font-bold">
+                        {streaksData.user.totalWeeksWithGoal} weeks
+                      </span>
+                    </div>
+
+                    <div className="text-center p-2 rounded-lg bg-base-100/50 text-xs font-medium border border-base-200/40">
+                      {streaksData.user.hasContributedThisWeek ? (
+                        <span className="text-success font-semibold">
+                          ✅ Weekly goal completed (1/1+ Metronome Mark)! Thank
+                          you!
+                        </span>
+                      ) : (
+                        <span className="text-error font-semibold">
+                          🚨 You haven't contributed this week yet. Keep your
+                          streak alive!
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
-            ) : (
-              <div className="text-center py-8 border border-dashed border-base-300 rounded-lg text-sm text-base-content/50 flex-1 flex items-center justify-center">
-                No activity recorded on this period yet.
+            )}
+
+            {/* TAB 2: LEADERBOARD */}
+            {activeTab === "leaderboard" && (
+              <div className="flex flex-col flex-1">
+                {/* Date range display */}
+                <div className="text-xs text-base-content/50 mb-4 font-medium">
+                  {leaderboardData.startDate && leaderboardData.endDate ? (
+                    <span>
+                      Period: {formatDate(leaderboardData.startDate)} –{" "}
+                      {formatDate(leaderboardData.endDate)}
+                    </span>
+                  ) : (
+                    <span>Period: All time records</span>
+                  )}
+                </div>
+
+                {/* Period Selector Tabs */}
+                <div className="flex flex-wrap gap-1 mb-4">
+                  {periods.map((p) => (
+                    <Link
+                      key={p.value}
+                      href={`?tab=leaderboard&period=${p.value}`}
+                      className={`btn btn-xs ${
+                        currentPeriod === p.value
+                          ? "btn-secondary"
+                          : "btn-outline btn-ghost"
+                      }`}
+                    >
+                      {p.label}
+                    </Link>
+                  ))}
+                </div>
+
+                {leaderboardData.items.length > 0 ? (
+                  <div className="space-y-3 flex-1">
+                    {leaderboardData.items.slice(0, 5).map((item) => {
+                      const isTop1 = item.rank === 1;
+                      const isTop2 = item.rank === 2;
+                      const isTop3 = item.rank === 3;
+
+                      return (
+                        <div
+                          key={item.userId}
+                          className={`flex items-center justify-between p-3 rounded-lg border ${
+                            isTop1
+                              ? "bg-warning/10 border-warning/40"
+                              : "bg-base-200/50 border-base-300"
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            {/* Medals or Badge Rank */}
+                            <span className="w-6 text-center font-bold text-base">
+                              {isTop1
+                                ? "🥇"
+                                : isTop2
+                                  ? "🥈"
+                                  : isTop3
+                                    ? "🥉"
+                                    : `${item.rank}.`}
+                            </span>
+
+                            <div>
+                              <div className="font-semibold text-sm flex items-center gap-1.5">
+                                {item.userName ||
+                                  item.email?.split("@")[0] ||
+                                  "Anonymous"}
+                                {item.userId === session?.user?.id && (
+                                  <span className="badge badge-xs badge-soft badge-secondary badge-outline">
+                                    You
+                                  </span>
+                                )}
+                              </div>
+                              <div className="text-[11px] text-base-content/60">
+                                {item.metronomeMarksEntered} entered •{" "}
+                                {item.metronomeMarksReviewed} reviewed
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="text-right">
+                            <div className="font-bold text-sm text-secondary">
+                              {item.totalActivity} pts
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="text-center py-8 border border-dashed border-base-300 rounded-lg text-sm text-base-content/50 flex-1 flex items-center justify-center">
+                    No activity recorded on this period yet.
+                  </div>
+                )}
               </div>
             )}
 
