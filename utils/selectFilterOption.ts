@@ -1,3 +1,5 @@
+import getPersonName from "@/utils/getPersonName";
+
 export function filterOptionByWordStart(
   option: {
     label: string;
@@ -28,7 +30,19 @@ export function filterPersonOption(
   const isLastNameSelected = option.data?.person?.lastName
     ?.toLowerCase()
     .startsWith(inputValue.toLowerCase());
-  return isCreateOption || isFirstNameSelected || isLastNameSelected;
+  const fullName = option.data?.person
+    ? getPersonName(option.data?.person)
+    : "";
+  const isFullNameSelected = fullName
+    .toLowerCase()
+    .startsWith(inputValue.toLowerCase());
+
+  return (
+    isCreateOption ||
+    isFirstNameSelected ||
+    isLastNameSelected ||
+    isFullNameSelected
+  );
 }
 
 export function filterContributionOption(

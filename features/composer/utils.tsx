@@ -11,6 +11,14 @@ export function getPersonOption(composer: PersonState) {
 }
 
 export function formatPersonOption(option) {
+  // For creatable select, a "Create..." option is added without option.person property
+  if (option.label?.startsWith("Create"))
+    return (
+      <div>
+        <strong>{option.label}</strong>
+      </div>
+    );
+
   return (
     <div>
       {option.person.firstName} <strong>{option.person.lastName}</strong>
