@@ -1,9 +1,8 @@
 // "use client";
-import Select from "@/ui/form/reactSelect/Select";
 import { PersonState } from "@/types/formTypes";
-import getNoOptionsMessage from "@/ui/form/reactSelect/getNoOptionsMessage";
 import { formatPersonOption, getPersonOption } from "@/features/composer/utils";
 import { filterPersonOption } from "@/utils/selectFilterOption";
+import CreatableSelect from "react-select/creatable";
 
 type ComposerSelectProps = {
   composers: PersonState[];
@@ -25,12 +24,11 @@ export default function ComposerSelect({
     : null;
 
   return (
-    <Select
+    <CreatableSelect
       className="react-select-container"
       classNamePrefix="react-select"
       instanceId="composer-select"
       placeholder="Enter composer name..."
-      isSearchable={true}
       name="composer"
       options={composerOptions}
       formatOptionLabel={formatPersonOption}
@@ -41,10 +39,7 @@ export default function ComposerSelect({
         if (!composerOption) return;
         onSelect(composerOption?.value);
       }}
-      noOptionsMessage={getNoOptionsMessage({
-        entityName: "composer",
-        onClick: onInitComposerCreation,
-      })}
+      onCreateOption={onInitComposerCreation}
     />
   );
 }
