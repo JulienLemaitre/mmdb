@@ -8,6 +8,7 @@ import {
   unauthorizedResponse,
 } from "@/utils/server/apiRouteResponse";
 import { prodLog } from "@/utils/debugLogger";
+import { mMSourceExploreInclude } from "@/types/dbTypes";
 
 export async function POST(req: NextRequest) {
   try {
@@ -62,40 +63,7 @@ export async function POST(req: NextRequest) {
         },
       }),
     },
-    include: {
-      contributions: {
-        include: {
-          person: true,
-          organization: true,
-        },
-      },
-      creator: true,
-      references: true,
-      pieceVersions: {
-        include: {
-          pieceVersion: {
-            include: {
-              piece: {
-                include: {
-                  collection: true,
-                  composer: true,
-                },
-              },
-              movements: {
-                include: {
-                  sections: {
-                    include: {
-                      tempoIndication: true,
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-      metronomeMarks: true,
-    },
+    include: mMSourceExploreInclude,
     orderBy: {
       createdAt: "desc",
     },

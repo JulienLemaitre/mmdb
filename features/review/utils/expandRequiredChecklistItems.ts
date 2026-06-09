@@ -18,7 +18,7 @@ import {
 import { debug } from "@/utils/debugLogger";
 
 /**
- * JSDoc: Expands the full list of required checklist items from a ChecklistGraph.
+ * Expands the full list of required checklist items from a ChecklistGraph.
  * This function traverses the nested graph structure and generates a flat list
  * of RequiredChecklistItem objects. Each item is enriched with a `lineage`
  * property, containing the IDs of its parent entities (e.g., pieceId, movementId),
