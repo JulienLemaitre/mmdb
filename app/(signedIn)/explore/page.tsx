@@ -27,6 +27,7 @@ import {
 } from "@/context/toastNotification";
 import { formatPersonOption, getPersonOption } from "@/features/composer/utils";
 import { filterPersonOption } from "@/utils/selectFilterOption";
+import { MMSourceSearchResult } from "@/types/dbTypes";
 
 // TODO: What do we want in addition to what is already there:
 //  1. Show all mms that result in speeds of more / less than X notes per second with a selection of note type (strutural, repeated etc.) e.g. show me all Sources that have MMs that result in more than 15 nps (structural)
@@ -60,7 +61,9 @@ function SearchPage() {
   >([]);
   const [lastSearch, setLastSearch] = useState<SearchFormInput>();
   const [composers, setComposers] = useState<PersonState[]>([]);
-  const [mMSourceResults, setMMSourceResults] = useState<any[]>([]);
+  const [mMSourceResults, setMMSourceResults] = useState<
+    MMSourceSearchResult[]
+  >([]);
   const [chartData, setChartData] = useState<ChartDatum[]>([]);
   const [selectedTempoIndications, setSelectedTempoIndications] = useState<
     { id: string; text: string }[]
@@ -76,7 +79,7 @@ function SearchPage() {
     );
   };
 
-  const handleDeselectAll = (e) => {
+  const handleDeselectAll = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setSelectedTempoIndications([]);
     setValue("tempoIndicationIds", []);
@@ -121,7 +124,7 @@ function SearchPage() {
     console.log(`[onSubmit api/search] searchVariables :`, searchVariables);
     await fetch("/api/search", searchVariables)
       .then((res) => res.json())
-      .then((res) => {
+      .then((res: MMSourceSearchResult[]) => {
         console.log(`[onSubmit api/search] res :`, res);
         setMMSourceResults(res);
         setChartData(

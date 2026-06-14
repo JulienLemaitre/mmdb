@@ -1,8 +1,9 @@
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import { ChartDatum } from "@/types/chartTypes";
+import { MMSourceSearchResult } from "@/types/dbTypes";
 
 type GetChartDataFromMMSourcesProps = {
-  mMSources?: any[];
+  mMSources?: MMSourceSearchResult[];
   sectionFilterFn?: (section: any) => boolean;
 };
 
@@ -20,7 +21,7 @@ export default function getChartDataFromMMSources({
   let maxNotesPerSecond: number = 0;
   const chartData: ChartDatum[] = [];
 
-  mMSources.forEach((mMSource, index) => {
+  mMSources.forEach((mMSource) => {
     const { year } = mMSource;
     mMSource.pieceVersions.forEach((pvs) => {
       const piece = pvs.pieceVersion.piece;

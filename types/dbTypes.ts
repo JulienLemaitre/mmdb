@@ -1,4 +1,4 @@
-import { Prisma } from "@/prisma/client";
+import { Prisma, MetronomeMark } from "@/prisma/client";
 
 // mMsource enriched for Explore interface
 export const mMSourceExploreInclude = {
@@ -51,3 +51,34 @@ export const mMSourceExploreInclude = {
 export type MMSourceWithDetailsForExplore = Prisma.MMSourceGetPayload<{
   include: typeof mMSourceExploreInclude;
 }>;
+
+// Type enrichi avec les metronomeMarks injectés dans chaque section
+export type MMSourceSearchResult = Omit<
+  MMSourceWithDetailsForExplore,
+  "pieceVersions"
+> & {
+  pieceVersions: Array<
+    Omit<
+      MMSourceWithDetailsForExplore["pieceVersions"][number],
+      "pieceVersion"
+    > & {
+      pieceVersion: Omit<
+        MMSourceWithDetailsForExplore["pieceVersions"][number]["pieceVersion"],
+        "movements"
+      > & {
+        movements: Array<
+          Omit<
+            MMSourceWithDetailsForExplore["pieceVersions"][number]["pieceVersion"]["movements"][number],
+            "sections"
+          > & {
+            sections: Array<
+              MMSourceWithDetailsForExplore["pieceVersions"][number]["pieceVersion"]["movements"][number]["sections"][number] & {
+                metronomeMarks: MetronomeMark[];
+              }
+            >;
+          }
+        >;
+      };
+    }
+  >;
+};
