@@ -67,6 +67,13 @@ function CollectionPieceVersionsFormContainer({
       selectedComposerId &&
       selectedCollectionId
     ) {
+      const pieceIds = (collectionPieceVersionFormState.pieces || []).map(
+        (p) => p.id,
+      );
+      console.log(`[Update pieceIdsNeedingVersions] pieceIds :`, pieceIds);
+      updateCollectionFormInfo(dispatch, {
+        pieceIdsNeedingVersions: pieceIds,
+      });
       console.log(
         `[goToStep 2] updating a collection that has not just been created`,
       );
@@ -78,6 +85,7 @@ function CollectionPieceVersionsFormContainer({
     dispatch,
     hasCollectionJustBeenCreated,
     isUpdateMode,
+    collectionPieceVersionFormState.pieces,
   ]);
 
   ////////////////// COMPOSER ////////////////////
@@ -185,7 +193,7 @@ function CollectionPieceVersionsFormContainer({
         .then((data) => data.pieces)
         .catch((err) => {
           console.error(
-            `[fetch(/api/getAll/collectionPieces?collectionId=${selectedCollectionId})] err :`,
+            `[fetch(${URL_API_GETALL_COLLECTION_PIECES}?collectionId=${collection.id})] err :`,
             err.message,
           );
         })) || [];

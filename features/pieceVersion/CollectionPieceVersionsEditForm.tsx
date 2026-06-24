@@ -17,6 +17,7 @@ import {
   PieceState,
   PieceStateWithCollectionRank,
   PieceVersionState,
+  TempoIndicationState,
 } from "@/types/formTypes";
 import EditIcon from "@/ui/svg/EditIcon";
 import dynamic from "next/dynamic";
@@ -129,7 +130,9 @@ function CollectionPieceVersionsEditForm({
       | MMSourceOnPieceVersionsState
       | PieceStateWithCollectionRank,
   ) => {
-    let pieceVersion, piece, rank;
+    let pieceVersion: PieceVersionState | undefined,
+      piece: PieceState | undefined,
+      rank: number | undefined;
 
     if ("pieceVersionId" in collectionPieceVersion) {
       // MMSourceOnPieceVersionsState
@@ -157,6 +160,13 @@ function CollectionPieceVersionsEditForm({
     // Build singlePieceVersionFormState
     const composer = getComposerById(piece.composerId);
 
+    const tempoIndications: TempoIndicationState[] = tempoIndicationList.filter(
+      (ti) =>
+        (pieceVersion?.movements || []).some((mvt) =>
+          mvt.sections.some((sec) => sec.tempoIndicationId === ti.id),
+        ),
+    );
+
     const singlePieceVersionFormEditState: SinglePieceVersionFormState = {
       formInfo: {
         currentStepRank: 0,
@@ -165,8 +175,9 @@ function CollectionPieceVersionsEditForm({
       composer,
       piece,
       pieceVersion,
+      tempoIndications,
     };
-    console.log(
+    console.info(
       `[onEditCollectionPieceVersion] singlePieceVersionFormEditState :`,
       singlePieceVersionFormEditState,
     );
@@ -297,10 +308,42 @@ function CollectionPieceVersionsEditForm({
     }
 
     upsertCollectionMMSourceOnPieceVersions(dispatch, payload);
+    onSinglePieceVersionFormClose();
   };
 
   return (
     <>
+      <style jsx>{`
+        .tooltip:hover .tooltip-content {
+          display: block;
+          position: absolute;
+          z-index: 1000;
+          background: white;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.5rem;
+          padding: 1rem;
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+          max-width: 600px;
+          right: 100%;
+          top: 50%;
+          transform: translateY(-50%);
+          margin-right: 0.5rem;
+          text-align: left;
+        }
+        .tooltip-content {
+          display: none;
+        }
+        .tooltip-icon {
+          cursor: help;
+        }
+        @media (prefers-color-scheme: dark) {
+          .tooltip:hover .tooltip-content {
+            background: #1f2937;
+            border-color: #374151;
+            color: white;
+          }
+        }
+      `}</style>
       {isSinglePieceVersionFormOpen ? (
         <>
           <SinglePieceVersionFormProvider initialState={updateInitState}>

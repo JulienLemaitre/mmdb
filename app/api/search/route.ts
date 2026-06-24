@@ -8,7 +8,7 @@ import {
   unauthorizedResponse,
 } from "@/utils/server/apiRouteResponse";
 import { prodLog } from "@/utils/debugLogger";
-import { mMSourceExploreInclude } from "@/types/dbTypes";
+import { mMSourceExploreInclude, MMSourceSearchResult } from "@/types/dbTypes";
 
 export async function POST(req: NextRequest) {
   try {
@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
         })),
       },
     })),
-  }));
+  })) satisfies MMSourceSearchResult[];
 
   return NextResponse.json(mMSourcesWithMMsMapped);
 }

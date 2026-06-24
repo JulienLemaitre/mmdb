@@ -3,6 +3,8 @@
 import ChartWithNoteTypeFilter from "@/features/explore/ChartWithNoteTypeFilter";
 import React, { useState } from "react";
 import MMSourceSummary from "@/features/explore/MMSourceSummary";
+import { MMSourceSearchResult } from "@/types/dbTypes";
+import { ChartDatum } from "@/types/chartTypes";
 
 export default function AllBySourceList({
   mMSources,
@@ -11,8 +13,8 @@ export default function AllBySourceList({
   message,
   tempoIndicationIds = [],
 }: {
-  mMSources: any[];
-  chartData: any[];
+  mMSources: MMSourceSearchResult[];
+  chartData: ChartDatum[];
   last?: string;
   message?: string;
   tempoIndicationIds?: string[];
