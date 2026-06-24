@@ -185,7 +185,7 @@ function CollectionPieceVersionsFormContainer({
         .then((data) => data.pieces)
         .catch((err) => {
           console.error(
-            `[fetch(/api/getAll/collectionPieces?collectionId=${selectedCollectionId})] err :`,
+            `[fetch(${URL_API_GETALL_COLLECTION_PIECES}?collectionId=${collection.id})] err :`,
             err.message,
           );
         })) || [];
