@@ -313,6 +313,37 @@ function CollectionPieceVersionsEditForm({
 
   return (
     <>
+      <style jsx>{`
+        .tooltip:hover .tooltip-content {
+          display: block;
+          position: absolute;
+          z-index: 1000;
+          background: white;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.5rem;
+          padding: 1rem;
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+          max-width: 600px;
+          right: 100%;
+          top: 50%;
+          transform: translateY(-50%);
+          margin-right: 0.5rem;
+          text-align: left;
+        }
+        .tooltip-content {
+          display: none;
+        }
+        .tooltip-icon {
+          cursor: help;
+        }
+        @media (prefers-color-scheme: dark) {
+          .tooltip:hover .tooltip-content {
+            background: #1f2937;
+            border-color: #374151;
+            color: white;
+          }
+        }
+      `}</style>
       {isSinglePieceVersionFormOpen ? (
         <>
           <SinglePieceVersionFormProvider initialState={updateInitState}>
