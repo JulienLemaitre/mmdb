@@ -17,6 +17,7 @@ import {
   PieceState,
   PieceStateWithCollectionRank,
   PieceVersionState,
+  TempoIndicationState,
 } from "@/types/formTypes";
 import EditIcon from "@/ui/svg/EditIcon";
 import dynamic from "next/dynamic";
@@ -129,7 +130,9 @@ function CollectionPieceVersionsEditForm({
       | MMSourceOnPieceVersionsState
       | PieceStateWithCollectionRank,
   ) => {
-    let pieceVersion, piece, rank;
+    let pieceVersion: PieceVersionState | undefined,
+      piece: PieceState | undefined,
+      rank: number | undefined;
 
     if ("pieceVersionId" in collectionPieceVersion) {
       // MMSourceOnPieceVersionsState
@@ -157,6 +160,13 @@ function CollectionPieceVersionsEditForm({
     // Build singlePieceVersionFormState
     const composer = getComposerById(piece.composerId);
 
+    const tempoIndications: TempoIndicationState[] = tempoIndicationList.filter(
+      (ti) =>
+        (pieceVersion?.movements || []).some((mvt) =>
+          mvt.sections.some((sec) => sec.tempoIndicationId === ti.id),
+        ),
+    );
+
     const singlePieceVersionFormEditState: SinglePieceVersionFormState = {
       formInfo: {
         currentStepRank: 0,
@@ -165,8 +175,9 @@ function CollectionPieceVersionsEditForm({
       composer,
       piece,
       pieceVersion,
+      tempoIndications,
     };
-    console.log(
+    console.info(
       `[onEditCollectionPieceVersion] singlePieceVersionFormEditState :`,
       singlePieceVersionFormEditState,
     );
@@ -297,6 +308,7 @@ function CollectionPieceVersionsEditForm({
     }
 
     upsertCollectionMMSourceOnPieceVersions(dispatch, payload);
+    onSinglePieceVersionFormClose();
   };
 
   return (

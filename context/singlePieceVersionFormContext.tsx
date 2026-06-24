@@ -48,12 +48,18 @@ export function SinglePieceVersionFormProvider({
   );
 
   useEffect(() => {
+    if (initialState) {
+      console.info(
+        `[useEffect] initialState is not null => don't use localStorage value`,
+      );
+      return;
+    }
     const localStorageValue: any = localStorageGetItem(
       SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
     );
     if (localStorageValue) {
-      console.log(
-        `[INIT] SinglePieceVersions from localStorage`,
+      console.info(
+        `[INIT] SinglePieceVersions from localStorage key: ${SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY}`,
         localStorageValue,
       );
       initSinglePieceVersionForm(dispatch, localStorageValue);

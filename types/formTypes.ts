@@ -172,10 +172,10 @@ export type MovementState = WithRequiredId<
   sections: SectionState[];
 };
 
-export type TempoIndicationState = WithRequiredId<
-  Pick<Prisma.TempoIndicationUncheckedCreateInput, "id" | "text">
-> &
-  IsNewProp;
+export type TempoIndicationState = {
+  id: string;
+  text: string;
+} & IsNewProp;
 
 export type PieceVersionState = Pick<
   Prisma.PieceVersionUncheckedCreateInput,

@@ -80,9 +80,12 @@ export function localStorageGetItem<T>(key: string): T | null {
 
 export function localStorageRemoveItem(key: string): void {
   if (!isLocalStorageAvailable()) return;
+  console.info(`[localStorageRemoveItem] Removing localStorage item ${key}`);
   localStorage.removeItem(key);
 }
 
 export function localStorageRemoveItems(keys: string[]): void {
+  if (!isLocalStorageAvailable()) return;
+  console.info(`[localStorageRemoveItems] Removing localStorage items ${keys}`);
   keys.forEach((key) => localStorageRemoveItem(key));
 }
