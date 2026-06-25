@@ -3,6 +3,8 @@ import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import getKeyLabel from "@/utils/getKeyLabel";
 import React from "react";
 import SectionMeter from "@/features/section/ui/SectionMeter";
+import SectionOverview from "@/features/section/ui/SectionOverview";
+import { prodLog } from "@/utils/debugLogger";
 
 type PieceVersionDisplayProps = {
   pieceVersion: PieceVersionState;
@@ -29,7 +31,7 @@ export default function PieceVersionDisplay({
             key={movement.id}
             className="rounded-tl-lg border-l-2 border-l-primary/10 hover:border-l-primary transition-all duration-150"
           >
-            <div className="px-2 py-1 bg-primary/5">
+            <div className="px-4 py-2 bg-primary/5">
               <h6 className="text-sm font-semibold text-primary">
                 {isMonoMovementPiece ? "Piece" : `Movement ${movement.rank}`}
                 {" in "}
@@ -43,28 +45,33 @@ export default function PieceVersionDisplay({
                 const tempoIndication = tempoIndicationList.find(
                   (ti) => ti.id === section.tempoIndicationId,
                 );
+                if (!tempoIndication) {
+                  prodLog.error(
+                    "Tempo indication not found for section",
+                    section,
+                  );
+                  return null;
+                }
+
                 return (
                   <div
                     key={section.id}
-                    className="px-3 py-1 border-l-2 border-l-secondary/10 hover:border-l-secondary bg-secondary/5 transition-all duration-150 rounded-r-lg"
+                    className="px-3 py-1 border-l-2 border-l-secondary/10 hover:border-l-secondary bg-secondary/5 transition-all duration-150"
                   >
                     <h6 className="text-sm font-semibold text-secondary">
                       {`Section ${section.rank}\u2002-\u2002`}
                       <SectionMeter section={section} />
-                      <span className="italic">
-                        {tempoIndication &&
-                          `\u2002-\u2002${tempoIndication.text}`}
-                      </span>
-                      <span className="font-normal italic text-neutral-content">
-                        {section.comment && `\u2002-\u2002${section.comment}`}
-                      </span>
+                      {tempoIndication && (
+                        <span className="italic">
+                          {`\u2002-\u2002${tempoIndication.text}`}
+                        </span>
+                      )}
                     </h6>
-
-                    {section.commentForReview && (
-                      <div className="text-xs italic px-2 py-1 bg-warning/10 rounded mt-1">
-                        Review note: {section.commentForReview}
-                      </div>
-                    )}
+                    <SectionOverview
+                      section={section}
+                      tempoIndication={tempoIndication}
+                      isSummaryView
+                    />
                   </div>
                 );
               })}

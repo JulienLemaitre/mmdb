@@ -6,6 +6,7 @@ import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes
 import SectionOverview from "@/features/section/ui/SectionOverview";
 import SectionMeter from "@/features/section/ui/SectionMeter";
 import getPersonName from "@/utils/getPersonName";
+import { prodLog } from "@/utils/debugLogger";
 
 type SummaryProps = {
   singlePieceVersionFormState: SinglePieceVersionFormState;
@@ -22,6 +23,8 @@ function Summary({
   const pieceVersion =
     singlePieceVersionFormState.pieceVersion as PieceVersionState;
   const composer = singlePieceVersionFormState.composer;
+  const tempoIndicationList =
+    singlePieceVersionFormState.tempoIndications || [];
   const movementCount = pieceVersion.movements?.length || 0;
   const isMonoMovementPiece = movementCount === 1;
 
@@ -50,8 +53,7 @@ function Summary({
           </div>
         </div>
 
-        {/* Content */}
-        {/* Movements and Sections */}
+        {/* Movements */}
         <div className="py-2">
           {pieceVersion?.movements.map((movement: any, mvtIndex: number) => (
             <div
@@ -59,35 +61,56 @@ function Summary({
               className={
                 isMonoMovementPiece
                   ? ""
-                  : `ml-2 rounded-tl-lg border-l-2 border-l-primary/10 hover:border-l-primary transition-all duration-150`
+                  : `ml-2 ${mvtIndex > 0 ? "mt-2" : ""} rounded-tl-lg border-l-2 border-l-primary/10 hover:border-l-primary transition-all duration-150`
               }
             >
               {!isMonoMovementPiece && (
-                <div
-                  className={`px-4 py-2 ${mvtIndex > 0 ? "mt-3" : ""} bg-primary/5`}
-                >
+                <div className={`px-4 py-2 bg-primary/5`}>
                   <h5 className="text-sm font-semibold text-primary">
                     Movement {movement.rank} in {getKeyLabel(movement.key)}
                   </h5>
                 </div>
               )}
 
+              {/* Sections */}
               <div
-                className={`ml-2 ${isMonoMovementPiece ? "" : "pt-2"} grid-cols-1 space-y-1`}
+                className={`ml-2 ${isMonoMovementPiece ? "" : "pt-1"} grid-cols-1 space-y-1`}
               >
-                {movement?.sections.map((section: any) => (
-                  <div key={section.id} className="my-3">
-                    <h6 className="text-sm font-semibold text-secondary">
-                      {`Section ${section.rank}\u2002-\u2002`}
-                      <SectionMeter section={section} />
-                      <span className="italic">
-                        {section?.tempoIndication?.text &&
-                          `\u2002-\u2002${section.tempoIndication.text}`}
-                      </span>
-                    </h6>
-                    <SectionOverview section={section} isSummaryView />
-                  </div>
-                ))}
+                {movement?.sections.map((section: any, sectionIndex) => {
+                  const tempoIndication = tempoIndicationList.find(
+                    ({ id }) => id === section.tempoIndicationId,
+                  );
+
+                  if (!tempoIndication) {
+                    prodLog.error(
+                      `Tempo indication not found for section`,
+                      section,
+                    );
+                    return null;
+                  }
+
+                  return (
+                    <div
+                      key={section.id}
+                      className={`px-3 py-1 ${sectionIndex > 0 ? "mt-2" : ""} border-l-2 border-l-secondary/10 hover:border-l-secondary bg-secondary/5 transition-all duration-150`}
+                    >
+                      <h6 className="text-sm font-semibold text-secondary">
+                        {`Section ${section.rank}\u2002-\u2002`}
+                        <SectionMeter section={section} />
+                        {tempoIndication?.text && (
+                          <span className="italic">
+                            {`\u2002-\u2002${tempoIndication.text}`}
+                          </span>
+                        )}
+                      </h6>
+                      <SectionOverview
+                        section={section}
+                        tempoIndication={tempoIndication}
+                        isSummaryView
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ))}

@@ -298,6 +298,14 @@ const SinglePieceVersionFormContainer = ({
     });
   };
 
+  const onAddTempoIndicationList = (
+    tempoIndicationList: TempoIndicationState[],
+  ) => {
+    updateSinglePieceVersionForm(dispatch, "tempoIndications", {
+      array: tempoIndicationList,
+    });
+  };
+
   /////////////////// SUMMARY ////////////////////
 
   const onSubmitSourceOnPieceVersions = () => {
@@ -379,6 +387,7 @@ const SinglePieceVersionFormContainer = ({
           onInitPieceVersionCreation={onInitPieceVersionCreation}
           onCancelPieceVersionCreation={onCancelPieceVersionCreation}
           onAddTempoIndication={onAddTempoIndication}
+          onAddTempoIndicationList={onAddTempoIndicationList}
           onTempoIndicationCreated={onTempoIndicationCreated}
           onPieceVersionCreated={onPieceVersionCreated}
           onPieceVersionSelect={onPieceVersionSelect}

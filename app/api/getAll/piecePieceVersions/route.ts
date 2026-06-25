@@ -1,5 +1,11 @@
 import { db } from "@/utils/server/db";
 import deleteNullPropertiesFromObject from "@/utils/deleteNullPropertiesFromObject";
+import {
+  pieceVersionSelect,
+  PieceVersion,
+  tempoIndicationSelect,
+} from "@/types/prismaSelections";
+import { getTempoIndicationIdListFromPieceVersionList } from "@/features/pieceVersion/utils/getTempoIndicationIdListFromPieceVersionList";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -13,53 +19,26 @@ export async function GET(request: Request) {
     where: {
       pieceId: pieceId,
     },
-    select: {
-      id: true,
-      category: true,
-      pieceId: true,
-      movements: {
-        select: {
-          id: true,
-          rank: true,
-          key: true,
-          sections: {
-            select: {
-              id: true,
-              rank: true,
-              metreNumerator: true,
-              metreDenominator: true,
-              isCommonTime: true,
-              isCutTime: true,
-              tempoIndication: {
-                select: {
-                  id: true,
-                  text: true,
-                },
-              },
-              comment: true,
-              fastestBelCantoNotesPerBar: true,
-              fastestStructuralNotesPerBar: true,
-              fastestStaccatoNotesPerBar: true,
-              fastestRepeatedNotesPerBar: true,
-              fastestOrnamentalNotesPerBar: true,
-            },
-            orderBy: {
-              rank: "asc",
-            },
-          },
-        },
-        orderBy: {
-          rank: "asc",
-        },
-      },
+    select: pieceVersionSelect,
+  });
+
+  const pieceVersions: PieceVersion[] = pieceVersionsResult.map(
+    (pieceVersion: any) => {
+      return pieceVersion
+        ? deleteNullPropertiesFromObject(pieceVersion) // We ensure properties will not be initiated with null values
+        : null;
     },
+  );
+
+  const tempoIndicationIdList =
+    getTempoIndicationIdListFromPieceVersionList(pieceVersions);
+
+  const tempoIndications = await db.tempoIndication.findMany({
+    where: {
+      id: { in: tempoIndicationIdList },
+    },
+    select: tempoIndicationSelect,
   });
 
-  const pieceVersions = pieceVersionsResult.map((pieceVersion: any) => {
-    return pieceVersion
-      ? deleteNullPropertiesFromObject(pieceVersion) // We ensure properties will not be initiated with null values
-      : null;
-  });
-
-  return Response.json({ pieceVersions });
+  return Response.json({ pieceVersions, tempoIndications });
 }

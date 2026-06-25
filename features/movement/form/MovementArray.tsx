@@ -164,7 +164,10 @@ export default function MovementArray({
             <div
               className={`${isMovementOpen ? "hidden" : ""} transition-all duration-150`}
             >
-              <MovementOverview movement={movementInfo} />
+              <MovementOverview
+                movement={movementInfo}
+                tempoIndicationList={tempoIndicationList}
+              />
             </div>
             <div
               className={`${isMovementOpen ? "" : "hidden"} transition-all duration-150`}
