@@ -1,13 +1,16 @@
-import { SectionInput } from "@/types/formTypes";
+import { SectionState, TempoIndicationState } from "@/types/formTypes";
 import SectionMeter from "@/features/section/ui/SectionMeter";
 import React from "react";
+import { MakeOptional } from "@/types/typescriptUtils";
 
 export default function SectionOverview({
   section,
+  tempoIndication,
   isSummaryView = false,
   noPadding = false,
 }: {
-  section: SectionInput;
+  section: MakeOptional<SectionState, "id" | "rank">;
+  tempoIndication: TempoIndicationState;
   isSummaryView?: boolean;
   noPadding?: boolean;
 }) {
@@ -25,8 +28,8 @@ export default function SectionOverview({
         ) : (
           <SectionMeter section={section} />
         )}
-        {section?.tempoIndication?.label ? (
-          <span>{`\u2002-\u2002${section.tempoIndication.label}`}</span>
+        {tempoIndication?.text ? (
+          <span>{`\u2002-\u2002${tempoIndication.text}`}</span>
         ) : (
           <span className="text-warning">
             {`\u2002-\u2002`}

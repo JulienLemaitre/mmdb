@@ -11,6 +11,7 @@ import { URL_API_GETALL_PIECE_PIECE_VERSIONS } from "@/utils/routes";
 import { FeedFormState } from "@/types/feedFormTypes";
 import { LoaderCentered } from "@/ui/LoaderCentered";
 import { SinglePieceVersionFormState } from "@/types/singlePieceVersionFormTypes";
+import { PieceVersion, TempoIndication } from "@/types/prismaSelections";
 
 type PieceVersionSelectOrCreateProps = {
   feedFormState: FeedFormState;
@@ -22,6 +23,9 @@ type PieceVersionSelectOrCreateProps = {
   onInitPieceVersionCreation: () => void;
   onCancelPieceVersionCreation: () => void;
   onAddTempoIndication: (tempoIndication: TempoIndicationState) => void;
+  onAddTempoIndicationList: (
+    tempoIndicationList: TempoIndicationState[],
+  ) => void;
   onTempoIndicationCreated: (tempoIndication: TempoIndicationState) => void;
   isCollectionMode?: boolean;
   isUpdateMode?: boolean;
@@ -39,6 +43,7 @@ function PieceVersionSelectOrCreate({
   onInitPieceVersionCreation: onInitPieceVersionCreationFn,
   onCancelPieceVersionCreation,
   onAddTempoIndication,
+  onAddTempoIndicationList,
   onTempoIndicationCreated,
   isCollectionMode,
   isUpdateMode,
@@ -113,20 +118,30 @@ function PieceVersionSelectOrCreate({
       cache: "no-store",
     })
       .then((res) => res.json())
-      .then((data) => {
-        if (isMounted) {
-          const pieceVersions: PieceVersionState[] = data?.pieceVersions;
-          setExistingPieceVersions(pieceVersions || []);
-          if ((pieceVersions || [])?.length === 0) {
-            console.log(
-              `[PieceVersionSelectOrCreate useEffect] No pieceVersions found for pieceId ${selectedPieceId} => SWITCH to edition mode.`,
-            );
-            setIsEditMode(true);
+      .then(
+        ({
+          pieceVersions,
+          tempoIndications,
+        }: {
+          pieceVersions: PieceVersion[];
+          tempoIndications: TempoIndication[];
+        }) => {
+          if (isMounted) {
+            // const pieceVersions: PieceVersionState[] = data?.pieceVersions;
+            setExistingPieceVersions(pieceVersions || []);
+
+            onAddTempoIndicationList(tempoIndications);
+            if ((pieceVersions || [])?.length === 0) {
+              console.log(
+                `[PieceVersionSelectOrCreate useEffect] No pieceVersions found for pieceId ${selectedPieceId} => SWITCH to edition mode.`,
+              );
+              setIsEditMode(true);
+            }
+            // Mark this ID as successfully fetched. This implicitly sets isLoading to false.
+            setFetchedPieceId(selectedPieceId);
           }
-          // Mark this ID as successfully fetched. This implicitly sets isLoading to false.
-          setFetchedPieceId(selectedPieceId);
-        }
-      })
+        },
+      )
       .catch((err) => {
         console.log(
           `[fetch("URL_API_GETALL_PIECE_PIECE_VERSIONS?pieceId=${selectedPieceId}")] err :`,
@@ -142,7 +157,7 @@ function PieceVersionSelectOrCreate({
     return () => {
       isMounted = false;
     };
-  }, [isLoading, selectedPieceId]);
+  }, [isLoading, onAddTempoIndicationList, selectedPieceId]);
 
   const onInitPieceVersionCreation = () => {
     onInitPieceVersionCreationFn();

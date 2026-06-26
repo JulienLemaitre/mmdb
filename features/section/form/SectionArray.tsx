@@ -7,7 +7,11 @@ import TrashIcon from "@/ui/svg/TrashIcon";
 import ArrowUpIcon from "@/ui/svg/ArrowUpIcon";
 import ArrowDownIcon from "@/ui/svg/ArrowDownIcon";
 import ControlledCreatableSelect from "@/ui/form/ControlledCreatableSelect";
-import { SectionInput, TempoIndicationState } from "@/types/formTypes";
+import {
+  SectionInput,
+  SectionState,
+  TempoIndicationState,
+} from "@/types/formTypes";
 import CommonTimeIcon from "@/ui/svg/CommonTimeIcon";
 import CutTimeIcon from "@/ui/svg/CutTimeIcon";
 import { getSectionDefaultValues } from "@/features/section/utils/getSectionDefaultValues";
@@ -15,6 +19,7 @@ import { NEED_CONFIRMATION_MODAL_ID } from "@/utils/constants";
 import ChevronDownIcon from "@/ui/svg/ChevronDownIcon";
 import SectionOverview from "@/features/section/ui/SectionOverview";
 import { filterOptionByWordStart } from "@/utils/selectFilterOption";
+import { MakeOptional } from "@/types/typescriptUtils";
 
 const NeedConfirmationModal = dynamic(
   () => import("@/ui/modal/NeedConfirmationModal"),
@@ -104,9 +109,16 @@ export default function SectionArray({
             ) ||
             getValues(`movements[${nestIndex}].sections[${index}].isCutTime`);
           const isSectionOpen = !closedSections[index];
-          const sectionInfos = getValues(
+          const sectionInput = getValues(
             `movements[${nestIndex}].sections[${index}]`,
           ) as SectionInput;
+          const sectionInfos: MakeOptional<SectionState, "id" | "rank"> = {
+            ...sectionInput,
+            tempoIndicationId: sectionInput.tempoIndication.value,
+          };
+          const tempoIndication = tempoIndicationList.find(
+            ({ id }) => id === sectionInput.tempoIndication.value,
+          );
 
           return (
             <li
@@ -175,7 +187,10 @@ export default function SectionArray({
               <div
                 className={`${isSectionOpen ? "hidden" : ""} transition-all duration-150`}
               >
-                <SectionOverview section={sectionInfos} />
+                <SectionOverview
+                  section={sectionInfos}
+                  tempoIndication={tempoIndication}
+                />
               </div>
               <div
                 className={`${isSectionOpen ? "" : "hidden transition-all duration-150"}`}
