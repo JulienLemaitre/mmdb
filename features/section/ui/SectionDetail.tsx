@@ -3,8 +3,15 @@ import { NotesPerSecondCollection } from "@/utils/notesCalculation";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
 import React from "react";
+import { useFeedForm } from "@/context/feedFormContext";
 
 export function SectionDetail({ section }) {
+  const { state } = useFeedForm();
+  const { tempoIndications = [] } = state;
+  const tempoIndication = tempoIndications.find(
+    (ti) => ti.id === section.tempoIndicationId,
+  );
+
   return (
     <div
       key={section.id}
@@ -13,10 +20,9 @@ export function SectionDetail({ section }) {
       <h6 className="text-sm font-semibold text-secondary">
         {`Section ${section.rank}\u2002-\u2002`}
         <SectionMeter section={section} />
-        <span className="italic">
-          {section?.tempoIndication?.text &&
-            `\u2002-\u2002${section.tempoIndication.text}`}
-        </span>
+        {tempoIndication && (
+          <span className="italic">{`\u2002-\u2002${tempoIndication.text}`}</span>
+        )}
       </h6>
       {section.comment && (
         <div className="text-xs italic">
