@@ -10,7 +10,7 @@ export default function SectionOverview({
   noPadding = false,
 }: {
   section: MakeOptional<SectionState, "id" | "rank">;
-  tempoIndication: TempoIndicationState;
+  tempoIndication?: TempoIndicationState;
   isSummaryView?: boolean;
   noPadding?: boolean;
 }) {

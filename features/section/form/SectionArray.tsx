@@ -112,12 +112,13 @@ export default function SectionArray({
           const sectionInput = getValues(
             `movements[${nestIndex}].sections[${index}]`,
           ) as SectionInput;
+          const tempoIndicationId = sectionInput.tempoIndication?.value;
           const sectionInfos: MakeOptional<SectionState, "id" | "rank"> = {
             ...sectionInput,
-            tempoIndicationId: sectionInput.tempoIndication.value,
+            tempoIndicationId,
           };
           const tempoIndication = tempoIndicationList.find(
-            ({ id }) => id === sectionInput.tempoIndication.value,
+            ({ id }) => id === tempoIndicationId,
           );
 
           return (
