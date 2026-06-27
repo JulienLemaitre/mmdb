@@ -2,7 +2,6 @@ import { MovementInput, TempoIndicationState } from "@/types/formTypes";
 import React from "react";
 import getKeyLabel from "@/utils/getKeyLabel";
 import SectionOverview from "@/features/section/ui/SectionOverview";
-import { prodLog } from "@/utils/debugLogger";
 
 export default function MovementOverview({
   movement,
@@ -25,19 +24,14 @@ export default function MovementOverview({
       {movement.sections.length > 0 && (
         <div className={"mt-2"}>
           {movement.sections.map((section, index) => {
+            const tempoIndicationId = section.tempoIndication?.value;
             const tempoIndication = tempoIndicationList.find(
-              (tempoIndication) =>
-                tempoIndication.id === section.tempoIndication.value,
+              (tempoIndication) => tempoIndication.id === tempoIndicationId,
             );
             const sectionInfo = {
               ...section,
-              tempoIndicationId: section.tempoIndication.value,
+              tempoIndicationId,
             };
-
-            if (!tempoIndication) {
-              prodLog.error("Tempo indication not found for section", section);
-              return null;
-            }
 
             return (
               <div key={section.id} className="flex gap-2 my-2">
