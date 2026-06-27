@@ -1,6 +1,6 @@
 const USE_LOCAL_STORAGE = true;
 
-export const LOCAL_STORAGE_SCHEMA_VERSION = 4;
+export const LOCAL_STORAGE_SCHEMA_VERSION = 5;
 
 export type LocalStorageEnvelope<T> = {
   version: number;
