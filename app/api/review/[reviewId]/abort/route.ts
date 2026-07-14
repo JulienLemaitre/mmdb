@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { db } from "@/utils/server/db";
 import { REVIEW_STATE } from "@/prisma/client/enums";
 import { authOptions } from "@/auth/options";
+import sendEmail from "@/utils/server/sendEmail";
 
 export async function POST(
   req: Request,
@@ -70,6 +71,37 @@ export async function POST(
     }
 
     const abortedAt = new Date();
+
+    // Send log email
+    await sendEmail({
+      type: "Review ABORT data",
+      content: {
+        reviewId,
+        abortedAt,
+        creatorId: review.creatorId,
+        mMSourceId: review.mMSourceId,
+      },
+    })
+      .then((result) => {
+        if (result.error) {
+          console.error(
+            `[api/review/${reviewId}/abort] data sendEmail ERROR :`,
+            result.error,
+          );
+        } else {
+          console.log(
+            `[api/review/${reviewId}/abort] data sendEmail result :`,
+            result,
+          );
+        }
+      })
+      .catch((err) =>
+        console.error(
+          `[api/review/${reviewId}/abort] data sendEmail ERROR :`,
+          err.status,
+          err.message,
+        ),
+      );
 
     await db.$transaction(async (tx) => {
       await tx.review.update({
