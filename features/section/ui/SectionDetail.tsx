@@ -2,13 +2,9 @@ import SectionMeter from "@/features/section/ui/SectionMeter";
 import { NotesPerSecondCollection } from "@/utils/notesCalculation";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import getNoteValueLabel from "@/utils/getNoteValueLabel";
-import React from "react";
-import { useFeedForm } from "@/context/feedFormContext";
 
-export function SectionDetail({ section }) {
-  const { state } = useFeedForm();
-  const { tempoIndications = [] } = state;
-  const tempoIndication = tempoIndications.find(
+export function SectionDetail({ section, tempoIndicationList }) {
+  const tempoIndication = tempoIndicationList.find(
     (ti) => ti.id === section.tempoIndicationId,
   );
 

@@ -8,13 +8,16 @@ import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 import getRoleLabel from "@/utils/getRoleLabel";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
+import { TempoIndication } from "@/types/prismaSelections";
 
 export default function MMSourceSummary({
   mMSource,
+  tempoIndicationList,
   sortBySpeed = false,
   tempoIndicationIds = [],
 }: {
   mMSource: any;
+  tempoIndicationList: TempoIndication[];
   sortBySpeed?: boolean;
   tempoIndicationIds?: string[];
 }) {
@@ -255,6 +258,7 @@ export default function MMSourceSummary({
         <div className="p-2 sm:p-4 border-t border-base-300 bg-base-100">
           <MMSourceDetailsCompact
             mMSource={mMSource}
+            tempoIndicationList={tempoIndicationList}
             tempoIndicationIds={tempoIndicationIds}
             completedCollectionIds={completedCollectionIds}
           />

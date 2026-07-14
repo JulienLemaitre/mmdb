@@ -2,6 +2,11 @@ import { db } from "@/utils/server/db";
 import React from "react";
 import getChartDataFromMMSources from "@/utils/getChartDataFromMMSources";
 import AllBySourceList from "@/features/explore/AllBySourceList";
+import {
+  mMSourceInclude,
+  tempoIndicationSelect,
+} from "@/types/prismaSelections";
+import { getTempoIndicationIdListFromPieceVersionList } from "@/features/pieceVersion/utils/getTempoIndicationIdListFromPieceVersionList";
 
 const MAX_LAST_NB_DAYS = 90;
 
@@ -29,54 +34,23 @@ const getData = async ({ last }) => {
     where: {
       createdAt: { gte: lastDate },
     },
-    include: {
-      contributions: {
-        include: {
-          person: true,
-          organization: true,
-        },
-      },
-      creator: true,
-      references: true,
-      pieceVersions: {
-        include: {
-          pieceVersion: {
-            include: {
-              piece: {
-                include: {
-                  collection: {
-                    select: {
-                      id: true,
-                      title: true,
-                      composerId: true,
-                      _count: {
-                        select: {
-                          pieces: true,
-                        },
-                      },
-                    },
-                  },
-                  composer: true,
-                },
-              },
-              movements: {
-                include: {
-                  sections: {
-                    include: {
-                      tempoIndication: true,
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-      metronomeMarks: true,
-    },
+    include: mMSourceInclude,
     orderBy: {
       createdAt: "desc",
     },
+  });
+
+  const tempoIndicationIdList = getTempoIndicationIdListFromPieceVersionList(
+    mMSources.flatMap((mMSource) =>
+      mMSource.pieceVersions.map((pvs) => pvs.pieceVersion),
+    ),
+  );
+
+  const tempoIndicationList = await db.tempoIndication.findMany({
+    where: {
+      id: { in: tempoIndicationIdList },
+    },
+    select: tempoIndicationSelect,
   });
 
   // Get each section metronomeMark from the source's ones only
@@ -99,6 +73,7 @@ const getData = async ({ last }) => {
         },
       })),
     })),
+    tempoIndicationList,
   };
 };
 
@@ -109,10 +84,18 @@ export default async function Page(props: {
 
   const { last } = params;
 
-  const { mMSources } = await getData({ last });
-  const chartData = getChartDataFromMMSources({ mMSources });
+  const { mMSources, tempoIndicationList } = await getData({ last });
+  const chartData = getChartDataFromMMSources({
+    mMSources,
+    tempoIndicationList,
+  });
 
   return (
-    <AllBySourceList mMSources={mMSources} chartData={chartData} last={last} />
+    <AllBySourceList
+      mMSources={mMSources}
+      tempoIndicationList={tempoIndicationList}
+      chartData={chartData}
+      last={last}
+    />
   );
 }

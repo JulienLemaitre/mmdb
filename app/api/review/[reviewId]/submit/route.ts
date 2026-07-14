@@ -267,7 +267,7 @@ export async function POST(
 
   // 5. Send log email before database persistence.
   await sendEmail({
-    type: "Review submit data",
+    type: "Review SUBMIT data",
     content: logSummary,
   })
     .then((result) => {
@@ -955,6 +955,37 @@ export async function POST(
     });
   } catch (err: any) {
     debug.error("Review submit transaction error:", err);
+
+    // Send Error log by email
+    await sendEmail({
+      type: "Review SUBMIT transaction ERROR",
+      content: {
+        reviewId,
+        error: { status: err.status, text: err.text, message: err.message },
+        txDebug,
+      },
+    })
+      .then((result) => {
+        if (result.error) {
+          console.error(
+            `[api/review/${reviewId}/submit] tx sendEmail ERROR :`,
+            result.error,
+          );
+        } else {
+          console.log(
+            `[api/review/${reviewId}/submit] tx sendEmail result :`,
+            result,
+          );
+        }
+      })
+      .catch((err) =>
+        console.error(
+          `[api/review/${reviewId}/submit] tx sendEmail ERROR :`,
+          err.status,
+          err.message,
+        ),
+      );
+
     return NextResponse.json(
       {
         error: `Transaction failed: ${err.message}`,

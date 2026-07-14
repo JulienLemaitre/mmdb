@@ -1,16 +1,18 @@
 "use client";
 
-import React from "react";
 import getKeyLabel from "@/utils/getKeyLabel";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import { SectionDetail } from "@/features/section/ui/SectionDetail";
+import { TempoIndication } from "@/types/prismaSelections";
 
 export default function MMSourceDetailsCompact({
   mMSource,
+  tempoIndicationList,
   tempoIndicationIds = [],
   completedCollectionIds = [],
 }: {
   mMSource: any;
+  tempoIndicationList: TempoIndication[];
   tempoIndicationIds?: string[];
   completedCollectionIds?: string[];
 }) {
@@ -190,6 +192,9 @@ export default function MMSourceDetailsCompact({
                                         <SectionDetail
                                           key={section.id}
                                           section={section}
+                                          tempoIndicationList={
+                                            tempoIndicationList
+                                          }
                                         />
                                       ))}
                                   </div>
@@ -279,6 +284,7 @@ export default function MMSourceDetailsCompact({
                                 <SectionDetail
                                   key={section.id}
                                   section={section}
+                                  tempoIndicationList={tempoIndicationList}
                                 />
                               ))}
                           </div>

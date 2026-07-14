@@ -1,78 +1,21 @@
-import { Prisma, MetronomeMark } from "@/prisma/client";
-
-// mMsource enriched for Explore interface
-export const mMSourceExploreInclude = {
-  contributions: {
-    include: {
-      person: true,
-      organization: true,
-    },
-  },
-  creator: true,
-  references: true,
-  pieceVersions: {
-    include: {
-      pieceVersion: {
-        include: {
-          piece: {
-            include: {
-              collection: {
-                select: {
-                  id: true,
-                  title: true,
-                  composerId: true,
-                  _count: {
-                    select: {
-                      pieces: true,
-                    },
-                  },
-                },
-              },
-              composer: true,
-            },
-          },
-          movements: {
-            include: {
-              sections: {
-                include: {
-                  tempoIndication: true,
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  },
-  metronomeMarks: true,
-} satisfies Prisma.MMSourceInclude; // Utilise satisfies pour vérifier la validité du type
-
-// Génération du type pour le résultat de la requête
-export type MMSourceWithDetailsForExplore = Prisma.MMSourceGetPayload<{
-  include: typeof mMSourceExploreInclude;
-}>;
+import { MetronomeMark } from "@/prisma/client";
+import { MMSourceRecord, TempoIndication } from "@/types/prismaSelections";
 
 // Type enrichi avec les metronomeMarks injectés dans chaque section
-export type MMSourceSearchResult = Omit<
-  MMSourceWithDetailsForExplore,
-  "pieceVersions"
-> & {
+export type MMSourceFull = Omit<MMSourceRecord, "pieceVersions"> & {
   pieceVersions: Array<
-    Omit<
-      MMSourceWithDetailsForExplore["pieceVersions"][number],
-      "pieceVersion"
-    > & {
+    Omit<MMSourceRecord["pieceVersions"][number], "pieceVersion"> & {
       pieceVersion: Omit<
-        MMSourceWithDetailsForExplore["pieceVersions"][number]["pieceVersion"],
+        MMSourceRecord["pieceVersions"][number]["pieceVersion"],
         "movements"
       > & {
         movements: Array<
           Omit<
-            MMSourceWithDetailsForExplore["pieceVersions"][number]["pieceVersion"]["movements"][number],
+            MMSourceRecord["pieceVersions"][number]["pieceVersion"]["movements"][number],
             "sections"
           > & {
             sections: Array<
-              MMSourceWithDetailsForExplore["pieceVersions"][number]["pieceVersion"]["movements"][number]["sections"][number] & {
+              MMSourceRecord["pieceVersions"][number]["pieceVersion"]["movements"][number]["sections"][number] & {
                 metronomeMarks: MetronomeMark[];
               }
             >;
@@ -81,4 +24,9 @@ export type MMSourceSearchResult = Omit<
       };
     }
   >;
+};
+
+export type MMSourceSearchResult = {
+  mMSources: MMSourceFull[];
+  tempoIndicationList: TempoIndication[];
 };

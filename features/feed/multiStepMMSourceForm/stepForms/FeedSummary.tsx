@@ -342,6 +342,9 @@ function FeedSummary() {
                                   >
                                     {movement.sections?.map((section: any) => (
                                       <SectionDetail
+                                        tempoIndicationList={
+                                          state.tempoIndications
+                                        }
                                         key={section.id}
                                         section={section}
                                       />
@@ -427,6 +430,7 @@ function FeedSummary() {
                           >
                             {movement.sections?.map((section: any) => (
                               <SectionDetail
+                                tempoIndicationList={state.tempoIndications}
                                 key={section.id}
                                 section={section}
                               />

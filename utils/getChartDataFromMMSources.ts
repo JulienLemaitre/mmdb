@@ -1,14 +1,17 @@
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import { ChartDatum } from "@/types/chartTypes";
-import { MMSourceSearchResult } from "@/types/dbTypes";
+import { TempoIndication } from "@/types/prismaSelections";
+import { MMSourceFull } from "@/types/dbTypes";
 
 type GetChartDataFromMMSourcesProps = {
-  mMSources?: MMSourceSearchResult[];
+  mMSources: MMSourceFull[];
+  tempoIndicationList: TempoIndication[];
   sectionFilterFn?: (section: any) => boolean;
 };
 
 export default function getChartDataFromMMSources({
-  mMSources,
+  mMSources = [],
+  tempoIndicationList = [],
   sectionFilterFn,
 }: GetChartDataFromMMSourcesProps): ChartDatum[] {
   if (!mMSources || !Array.isArray(mMSources)) {
@@ -27,7 +30,6 @@ export default function getChartDataFromMMSources({
       const piece = pvs.pieceVersion.piece;
       if (typeof year === "number" && year < minDate) {
         minDate = year;
-        console.log(`[] minDate :`, minDate);
       }
       if (typeof year === "number" && year > maxDate) {
         maxDate = year;
@@ -41,6 +43,10 @@ export default function getChartDataFromMMSources({
 
         mvt.sections.forEach((section) => {
           if (sectionFilterFn && !sectionFilterFn(section)) return;
+          const tempoIndication = tempoIndicationList.find(
+            (ti) => ti.id === section.tempoIndicationId,
+          );
+
           section?.metronomeMarks?.forEach((MM) => {
             const notesPerSecond =
               getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM({
@@ -78,7 +84,7 @@ export default function getChartDataFromMMSources({
                   isCutTime: section.isCutTime,
                   comment: section.comment,
                   commentForReview: section.commentForReview,
-                  tempoIndication: section.tempoIndication,
+                  tempoIndication,
                 },
                 mm: { ...MM, mMSource },
               };
