@@ -5,8 +5,8 @@ import Providers from "@/ui/Providers";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { MODAL_AREA_ID } from "@/utils/constants";
-import isDev from "@/utils/envVariable/isDev";
-import isStaging from "@/utils/envVariable/isStaging";
+import { isDev } from "@/utils/envVariable/isDev";
+import { isStaging } from "@/utils/envVariable/isStaging";
 
 const inter = Inter({
   subsets: ["latin"],

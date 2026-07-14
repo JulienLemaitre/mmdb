@@ -1,4 +1,4 @@
-import isProd from "@/utils/envVariable/isProd";
+import { isProd } from "@/utils/envVariable/isProd";
 
 type LogLevel = "log" | "warn" | "error" | "info" | "trace";
 type ConsoleMethod =
@@ -58,9 +58,10 @@ const createDebugLogger = (showInProd: boolean = false): DebugLogger => {
 
   // Return actual console methods for development/staging
   return Object.fromEntries(
-    (methodNames as ConsoleMethod[])
-      // eslint-disable-next-line no-console
-      .map((method) => [method, console[method].bind(console)]),
+    (methodNames as ConsoleMethod[]).map((method) => [
+      method,
+      console[method].bind(console),
+    ]),
   ) as DebugLogger;
 };
 
