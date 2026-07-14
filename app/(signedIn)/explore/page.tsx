@@ -27,7 +27,7 @@ import {
 } from "@/context/toastNotification";
 import { formatPersonOption, getPersonOption } from "@/features/composer/utils";
 import { filterPersonOption } from "@/utils/selectFilterOption";
-import { MMSourceSearchResult } from "@/types/dbTypes";
+import { MMSourceFull, MMSourceSearchResult } from "@/types/dbTypes";
 
 // TODO: What do we want in addition to what is already there:
 //  1. Show all mms that result in speeds of more / less than X notes per second with a selection of note type (strutural, repeated etc.) e.g. show me all Sources that have MMs that result in more than 15 nps (structural)
@@ -61,9 +61,10 @@ function SearchPage() {
   >([]);
   const [lastSearch, setLastSearch] = useState<SearchFormInput>();
   const [composers, setComposers] = useState<PersonState[]>([]);
-  const [mMSourceResults, setMMSourceResults] = useState<
-    MMSourceSearchResult[]
-  >([]);
+  const [mMSourceResults, setMMSourceResults] = useState<{
+    mMSources: MMSourceFull[];
+    tempoIndicationList: TempoIndicationState[];
+  }>({ mMSources: [], tempoIndicationList: [] });
   const [chartData, setChartData] = useState<ChartDatum[]>([]);
   const [selectedTempoIndications, setSelectedTempoIndications] = useState<
     { id: string; text: string }[]
@@ -124,12 +125,13 @@ function SearchPage() {
     console.log(`[onSubmit api/search] searchVariables :`, searchVariables);
     await fetch("/api/search", searchVariables)
       .then((res) => res.json())
-      .then((res: MMSourceSearchResult[]) => {
+      .then((res: MMSourceSearchResult) => {
         console.log(`[onSubmit api/search] res :`, res);
         setMMSourceResults(res);
         setChartData(
           getChartDataFromMMSources({
-            mMSources: res,
+            mMSources: res.mMSources,
+            tempoIndicationList: res.tempoIndicationList,
             sectionFilterFn: (section: any) =>
               selectedTempoIndications.length === 0 ||
               selectedTempoIndications.some(
@@ -268,9 +270,10 @@ function SearchPage() {
       {lastSearch && (
         <div className="mt-8 border-t pt-8">
           <AllBySourceList
-            mMSources={mMSourceResults}
+            mMSources={mMSourceResults.mMSources}
+            tempoIndicationList={mMSourceResults.tempoIndicationList}
             chartData={chartData}
-            message={`Search results: ${mMSourceResults.length} source${mMSourceResults.length > 1 ? "s" : ""} found.`}
+            message={`Search results: ${mMSourceResults.mMSources.length} source${mMSourceResults.mMSources.length > 1 ? "s" : ""} found.`}
             tempoIndicationIds={lastSearch.tempoIndicationIds}
           />
         </div>

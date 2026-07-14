@@ -8,7 +8,12 @@ import {
   unauthorizedResponse,
 } from "@/utils/server/apiRouteResponse";
 import { prodLog } from "@/utils/debugLogger";
-import { mMSourceExploreInclude, MMSourceSearchResult } from "@/types/dbTypes";
+import { MMSourceFull } from "@/types/dbTypes";
+import { getTempoIndicationIdListFromPieceVersionList } from "@/features/pieceVersion/utils/getTempoIndicationIdListFromPieceVersionList";
+import {
+  mMSourceInclude,
+  tempoIndicationSelect,
+} from "@/types/prismaSelections";
 
 export async function POST(req: NextRequest) {
   try {
@@ -63,10 +68,23 @@ export async function POST(req: NextRequest) {
         },
       }),
     },
-    include: mMSourceExploreInclude,
+    include: mMSourceInclude,
     orderBy: {
       createdAt: "desc",
     },
+  });
+
+  const tempoIndicationIdList = getTempoIndicationIdListFromPieceVersionList(
+    mMSources.flatMap((mMSource) =>
+      mMSource.pieceVersions.map((pvs) => pvs.pieceVersion),
+    ),
+  );
+
+  const tempoIndicationList = await db.tempoIndication.findMany({
+    where: {
+      id: { in: tempoIndicationIdList },
+    },
+    select: tempoIndicationSelect,
   });
 
   const mMSourcesWithMMsMapped = mMSources.map((mMSource) => ({
@@ -86,7 +104,10 @@ export async function POST(req: NextRequest) {
         })),
       },
     })),
-  })) satisfies MMSourceSearchResult[];
+  })) satisfies MMSourceFull[];
 
-  return NextResponse.json(mMSourcesWithMMsMapped);
+  return NextResponse.json({
+    mMSources: mMSourcesWithMMsMapped,
+    tempoIndicationList,
+  });
 }

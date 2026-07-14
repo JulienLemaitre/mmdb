@@ -49,3 +49,49 @@ export const tempoIndicationSelect = {
 export type TempoIndication = Prisma.TempoIndicationGetPayload<{
   select: typeof tempoIndicationSelect;
 }>;
+
+export const mMSourceInclude = {
+  contributions: {
+    include: {
+      person: true,
+      organization: true,
+    },
+  },
+  creator: true,
+  references: true,
+  pieceVersions: {
+    include: {
+      pieceVersion: {
+        include: {
+          piece: {
+            include: {
+              collection: {
+                select: {
+                  id: true,
+                  title: true,
+                  composerId: true,
+                  _count: {
+                    select: {
+                      pieces: true,
+                    },
+                  },
+                },
+              },
+              composer: true,
+            },
+          },
+          movements: {
+            include: {
+              sections: true,
+            },
+          },
+        },
+      },
+    },
+  },
+  metronomeMarks: true,
+} satisfies Prisma.MMSourceInclude;
+
+export type MMSourceRecord = Prisma.MMSourceGetPayload<{
+  include: typeof mMSourceInclude;
+}>;

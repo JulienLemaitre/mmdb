@@ -3,17 +3,19 @@
 import ChartWithNoteTypeFilter from "@/features/explore/ChartWithNoteTypeFilter";
 import React, { useState } from "react";
 import MMSourceSummary from "@/features/explore/MMSourceSummary";
-import { MMSourceSearchResult } from "@/types/dbTypes";
 import { ChartDatum } from "@/types/chartTypes";
+import { MMSourceRecord, TempoIndication } from "@/types/prismaSelections";
 
 export default function AllBySourceList({
   mMSources,
+  tempoIndicationList,
   chartData,
   last,
   message,
   tempoIndicationIds = [],
 }: {
-  mMSources: MMSourceSearchResult[];
+  mMSources: MMSourceRecord[];
+  tempoIndicationList: TempoIndication[];
   chartData: ChartDatum[];
   last?: string;
   message?: string;
@@ -58,6 +60,7 @@ export default function AllBySourceList({
         <MMSourceSummary
           key={"comp-" + mMSource.id}
           mMSource={mMSource}
+          tempoIndicationList={tempoIndicationList}
           sortBySpeed={sortBySpeed}
           tempoIndicationIds={tempoIndicationIds}
         />
