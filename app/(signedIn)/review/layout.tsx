@@ -1,6 +1,7 @@
 import NavBar from "@/ui/NavBar";
 import React from "react";
 import ReviewHelpDrawer from "@/features/review/components/ReviewHelpDrawer";
+import { isProd } from "@/utils/envVariable/isProd";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +15,13 @@ export default function FeedLayout({ children }) {
           <NavBar title="MM Source Review" hasHelpSection />
           <div className="bg-zinc-50 dark:bg-zinc-800 flex-1 flex items-stretch">
             <main className="flex-1 min-h-full bg-base-100 p-10">
-              {children}
+              {isProd ? (
+                <div className="mb-3 rounded border border-red-300 bg-red-50 p-2 text-sm text-red-700">
+                  {`Review section is currently in development.`}
+                </div>
+              ) : (
+                children
+              )}
             </main>
           </div>
         </div>
