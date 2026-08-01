@@ -4,6 +4,7 @@ import { getNewUuid } from "@/utils/getNewUuid";
 export function getMovementDefaultValues() {
   return {
     id: getNewUuid(),
+    isVariation: false,
     sections: [getSectionDefaultValues()],
   };
 }

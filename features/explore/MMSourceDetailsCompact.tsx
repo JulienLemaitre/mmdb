@@ -146,6 +146,10 @@ export default function MMSourceDetailsCompact({
                                   • {formatToPhraseCase(pieceVersion.category)}
                                 </span>
                               )}
+                              {isMonoMovementPiece &&
+                                pieceVersion.movements[0].isVariation && (
+                                  <span>• Variation</span>
+                                )}
                             </div>
                           </div>
 
@@ -175,6 +179,9 @@ export default function MMSourceDetailsCompact({
                                       <h5 className="text-[11px] font-bold text-primary">
                                         Mvt {movement.rank}:{" "}
                                         {getKeyLabel(movement.key)}
+                                        {movement.isVariation
+                                          ? " (Variation)"
+                                          : ""}
                                       </h5>
                                     </div>
                                   )}
@@ -228,7 +235,7 @@ export default function MMSourceDetailsCompact({
                           ` in ${getKeyLabel(pieceVersion.movements[0].key)}`}
                       </h3>
                       <span className="text-sm text-accent/80">
-                        {composer && ` - ${getPersonName(composer)}`}
+                        {composer && `- ${getPersonName(composer)}`}
                       </span>
                     </div>
                     <div className="text-[10px] text-accent/70 font-medium flex gap-2">
@@ -240,6 +247,10 @@ export default function MMSourceDetailsCompact({
                           • {formatToPhraseCase(pieceVersion.category)}
                         </span>
                       )}
+                      {isMonoMovementPiece &&
+                        pieceVersion.movements[0].isVariation && (
+                          <span>• Variation</span>
+                        )}
                     </div>
                   </div>
 
@@ -267,6 +278,7 @@ export default function MMSourceDetailsCompact({
                             <div className="px-3 py-1 bg-primary/5">
                               <h5 className="text-[11px] font-bold text-primary">
                                 Mvt {movement.rank}: {getKeyLabel(movement.key)}
+                                {movement.isVariation ? " (Variation)" : ""}
                               </h5>
                             </div>
                           )}

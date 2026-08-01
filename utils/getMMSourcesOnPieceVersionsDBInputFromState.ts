@@ -38,6 +38,7 @@ export default function getMMSourcesOnPieceVersionsDBInputFromState(
                     id: movement.id,
                     rank: movement.rank,
                     key: movement.key,
+                    isVariation: movement.isVariation ?? false,
                     sections: {
                       create: movement.sections
                         .sort((a, b) => a.rank - b.rank)

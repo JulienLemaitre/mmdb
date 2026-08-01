@@ -53,6 +53,7 @@ export async function POST(req: NextRequest) {
           .map((movement) => ({
             rank: movement.rank,
             key: movement.key.value,
+            isVariation: movement.isVariation ?? false,
             sections: {
               create: movement.sections
                 .sort((a, b) => a.rank - b.rank)
@@ -104,6 +105,7 @@ export async function POST(req: NextRequest) {
           id: true,
           rank: true,
           key: true,
+          isVariation: true,
           sections: {
             select: {
               id: true,

@@ -170,14 +170,29 @@ export const MovementAdapter = {
   buildInitialValues(
     graph: any,
     movementId: string,
-  ): { id: string; rank?: number | null; key?: string | null } | null {
+  ): {
+    id: string;
+    rank?: number | null;
+    key?: string | null;
+    isVariation?: boolean | null;
+  } | null {
     const mv = (graph?.movements ?? []).find((m: any) => m.id === movementId);
     if (!mv) return null;
-    return { id: mv.id, rank: mv.rank ?? null, key: mv.key ?? null };
+    return {
+      id: mv.id,
+      rank: mv.rank ?? null,
+      key: mv.key ?? null,
+      isVariation: mv.isVariation ?? false,
+    };
   },
   applySave(
     graph: any,
-    values: { id: string; rank?: number | null; key?: string | null },
+    values: {
+      id: string;
+      rank?: number | null;
+      key?: string | null;
+      isVariation?: boolean | null;
+    },
   ): ApplyResult {
     const list = graph?.movements ?? [];
     const idx = list.findIndex((m: any) => m.id === values.id);
@@ -200,6 +215,8 @@ export const MovementAdapter = {
       affected.push(relToFull("rank"));
     if ((values.key ?? null) !== (before.key ?? null))
       affected.push(relToFull("key"));
+    if ((values.isVariation ?? false) !== (before.isVariation ?? false))
+      affected.push(relToFull("isVariation"));
     return {
       updatedGraph,
       affectedFieldPaths: affected,

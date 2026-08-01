@@ -87,6 +87,7 @@ export async function POST(req: NextRequest) {
       id: movement.id || uuidv4(), // Generate a unique ID for new movements
       rank: movement.rank,
       key: movement.key.value,
+      isVariation: movement.isVariation ?? false,
       pieceVersion: { connect: { id: pieceVersionId } },
     };
 
@@ -161,6 +162,7 @@ export async function POST(req: NextRequest) {
             id: true,
             rank: true,
             key: true,
+            isVariation: true,
             sections: {
               select: {
                 id: true,

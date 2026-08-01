@@ -33,6 +33,7 @@ const PieceVersionSchema = z.object({
       z.object({
         id: z.string().optional(),
         key: getZodOptionFromEnum(KEY),
+        isVariation: z.boolean().optional(),
         sections: z
           .array(
             z.object({

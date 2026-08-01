@@ -36,6 +36,7 @@ export default function PieceVersionDisplay({
                 {isMonoMovementPiece ? "Piece" : `Movement ${movement.rank}`}
                 {" in "}
                 {getKeyLabel(movement.key)}
+                {movement.isVariation ? " (Variation)" : ""}
               </h6>
             </div>
 

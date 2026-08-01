@@ -179,6 +179,7 @@ export default function MMSourceDetails({ mMSource }) {
                           <div key={movement.id} className="flex">
                             <h4 className="text-xl my-1 flex-none pr-4">
                               {movement.rank} - {getKeyLabel(movement.key)}
+                              {movement.isVariation ? " (Variation)" : ""}
                             </h4>
                             <div className="">
                               {

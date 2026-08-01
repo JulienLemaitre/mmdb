@@ -43,6 +43,7 @@ export default function getPieceVersionInputFromPieceVersionState(
     const movementInput: MovementInput = {
       id: movementState.id,
       key: { value: movementState.key, label: getKeyLabel(movementState.key) },
+      isVariation: movementState.isVariation ?? false,
       sections: movementState.sections.map(getSectionInputFromSectionState),
     };
     return movementInput;

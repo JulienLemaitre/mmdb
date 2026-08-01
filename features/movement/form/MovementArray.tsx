@@ -15,6 +15,7 @@ import ChevronDownIcon from "@/ui/svg/ChevronDownIcon";
 import MovementOverview from "@/features/movement/ui/MovementOverview";
 import { MovementInput } from "@/types/formTypes";
 import { filterOptionByWordStart } from "@/utils/selectFilterOption";
+import { FormInput } from "@/ui/form/FormInput";
 
 const NeedConfirmationModal = dynamic(
   () => import("@/ui/modal/NeedConfirmationModal"),
@@ -173,19 +174,27 @@ export default function MovementArray({
               className={`${isMovementOpen ? "" : "hidden"} transition-all duration-150`}
             >
               <input {...register(`movements[${index}].id` as const)} hidden />
-              <ControlledSelect
-                name={`movements[${index}].key` as const}
-                label={`Key`}
-                id={`movements[${index}].key` as const}
-                control={control}
-                options={Object.values(KEY).map((key) => ({
-                  value: key,
-                  label: getKeyLabel(key),
-                }))}
-                filterOption={filterOptionByWordStart}
-                isRequired={true}
-                fieldError={errors?.movements?.[index]?.key}
-              />
+              <div className="flex gap-4 items-center flex-wrap">
+                <ControlledSelect
+                  name={`movements[${index}].key` as const}
+                  label={`Key`}
+                  id={`movements[${index}].key` as const}
+                  control={control}
+                  options={Object.values(KEY).map((key) => ({
+                    value: key,
+                    label: getKeyLabel(key),
+                  }))}
+                  filterOption={filterOptionByWordStart}
+                  isRequired={true}
+                  fieldError={errors?.movements?.[index]?.key}
+                />
+                <FormInput
+                  name={`movements[${index}].isVariation` as const}
+                  type="checkbox"
+                  label="Is variation?"
+                  {...{ register, errors, control }}
+                />
+              </div>
 
               <SectionArray
                 nestIndex={index}

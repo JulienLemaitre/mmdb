@@ -547,12 +547,14 @@ export async function POST(
                   update: {
                     rank: m.rank,
                     key: m.key,
+                    isVariation: m.isVariation ?? false,
                   },
                   create: {
                     id: m.id,
                     pieceVersionId: pv.id,
                     rank: m.rank,
                     key: m.key,
+                    isVariation: m.isVariation ?? false,
                   },
                 }),
               );

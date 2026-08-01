@@ -51,6 +51,7 @@ export default function ComposerPiecesDetails({ person }) {
                         <div key={movement.id} className="flex">
                           <h3 className="text-xl my-1 flex-none pr-4">
                             {movement.rank} - {getKeyLabel(movement.key)}
+                            {movement.isVariation ? " (Variation)" : ""}
                           </h3>
                           <div className="">
                             {

@@ -307,7 +307,7 @@ export default function MetronomeMarkArray({
                             {pieceGroup.piece.title}
                             {isMonoMovementPiece &&
                               pieceGroup.movements[0] &&
-                              ` in ${pieceGroup.movements[0].movement.key.replaceAll("_", " ")}`}
+                              ` in ${pieceGroup.movements[0].movement.key.replaceAll("_", " ")}${pieceGroup.movements[0].movement.isVariation ? " (Variation)" : ""}`}
                           </h4>
                         </div>
 
@@ -333,6 +333,9 @@ export default function MetronomeMarkArray({
                                         "_",
                                         " ",
                                       )}
+                                      {movementGroup.movement.isVariation
+                                        ? " (Variation)"
+                                        : ""}
                                     </h5>
                                   </div>
                                 )}
@@ -377,7 +380,7 @@ export default function MetronomeMarkArray({
                         {pieceGroup.piece.title}
                         {isMonoMovementPiece &&
                           pieceGroup.movements[0] &&
-                          ` in ${pieceGroup.movements[0].movement.key.replaceAll("_", " ")}`}
+                          ` in ${pieceGroup.movements[0].movement.key.replaceAll("_", " ")}${pieceGroup.movements[0].movement.isVariation ? " (Variation)" : ""}`}
                         <span className="text-base font-normal">
                           {pieceGroup.composer &&
                             ` - ${getPersonName(pieceGroup.composer)}`}
@@ -410,6 +413,9 @@ export default function MetronomeMarkArray({
                           <h4 className="text-sm font-bold text-primary">
                             Movement {movementGroup.movement.rank} in{" "}
                             {movementGroup.movement.key.replaceAll("_", " ")}
+                            {movementGroup.movement.isVariation
+                              ? " (Variation)"
+                              : ""}
                           </h4>
                         </div>
                       )}
