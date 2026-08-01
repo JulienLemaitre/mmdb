@@ -132,6 +132,7 @@ export const MovementScalarFieldEnum = {
   pieceVersionId: 'pieceVersionId',
   rank: 'rank',
   key: 'key',
+  isVariation: 'isVariation',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

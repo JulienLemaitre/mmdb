@@ -39,6 +39,7 @@ export type MovementMinAggregateOutputType = {
   pieceVersionId: string | null
   rank: number | null
   key: $Enums.KEY | null
+  isVariation: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -48,6 +49,7 @@ export type MovementMaxAggregateOutputType = {
   pieceVersionId: string | null
   rank: number | null
   key: $Enums.KEY | null
+  isVariation: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -57,6 +59,7 @@ export type MovementCountAggregateOutputType = {
   pieceVersionId: number
   rank: number
   key: number
+  isVariation: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -76,6 +79,7 @@ export type MovementMinAggregateInputType = {
   pieceVersionId?: true
   rank?: true
   key?: true
+  isVariation?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -85,6 +89,7 @@ export type MovementMaxAggregateInputType = {
   pieceVersionId?: true
   rank?: true
   key?: true
+  isVariation?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,6 +99,7 @@ export type MovementCountAggregateInputType = {
   pieceVersionId?: true
   rank?: true
   key?: true
+  isVariation?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -190,6 +196,7 @@ export type MovementGroupByOutputType = {
   pieceVersionId: string
   rank: number
   key: $Enums.KEY
+  isVariation: boolean
   createdAt: Date
   updatedAt: Date
   _count: MovementCountAggregateOutputType | null
@@ -222,6 +229,7 @@ export type MovementWhereInput = {
   pieceVersionId?: Prisma.UuidFilter<"Movement"> | string
   rank?: Prisma.IntFilter<"Movement"> | number
   key?: Prisma.EnumKEYFilter<"Movement"> | $Enums.KEY
+  isVariation?: Prisma.BoolFilter<"Movement"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Movement"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Movement"> | Date | string
   pieceVersion?: Prisma.XOR<Prisma.PieceVersionScalarRelationFilter, Prisma.PieceVersionWhereInput>
@@ -233,6 +241,7 @@ export type MovementOrderByWithRelationInput = {
   pieceVersionId?: Prisma.SortOrder
   rank?: Prisma.SortOrder
   key?: Prisma.SortOrder
+  isVariation?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   pieceVersion?: Prisma.PieceVersionOrderByWithRelationInput
@@ -248,6 +257,7 @@ export type MovementWhereUniqueInput = Prisma.AtLeast<{
   pieceVersionId?: Prisma.UuidFilter<"Movement"> | string
   rank?: Prisma.IntFilter<"Movement"> | number
   key?: Prisma.EnumKEYFilter<"Movement"> | $Enums.KEY
+  isVariation?: Prisma.BoolFilter<"Movement"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Movement"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Movement"> | Date | string
   pieceVersion?: Prisma.XOR<Prisma.PieceVersionScalarRelationFilter, Prisma.PieceVersionWhereInput>
@@ -259,6 +269,7 @@ export type MovementOrderByWithAggregationInput = {
   pieceVersionId?: Prisma.SortOrder
   rank?: Prisma.SortOrder
   key?: Prisma.SortOrder
+  isVariation?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.MovementCountOrderByAggregateInput
@@ -276,6 +287,7 @@ export type MovementScalarWhereWithAggregatesInput = {
   pieceVersionId?: Prisma.UuidWithAggregatesFilter<"Movement"> | string
   rank?: Prisma.IntWithAggregatesFilter<"Movement"> | number
   key?: Prisma.EnumKEYWithAggregatesFilter<"Movement"> | $Enums.KEY
+  isVariation?: Prisma.BoolWithAggregatesFilter<"Movement"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Movement"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Movement"> | Date | string
 }
@@ -284,6 +296,7 @@ export type MovementCreateInput = {
   id?: string
   rank: number
   key: $Enums.KEY
+  isVariation?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   pieceVersion: Prisma.PieceVersionCreateNestedOneWithoutMovementsInput
@@ -295,6 +308,7 @@ export type MovementUncheckedCreateInput = {
   pieceVersionId: string
   rank: number
   key: $Enums.KEY
+  isVariation?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutMovementInput
@@ -304,6 +318,7 @@ export type MovementUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   key?: Prisma.EnumKEYFieldUpdateOperationsInput | $Enums.KEY
+  isVariation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pieceVersion?: Prisma.PieceVersionUpdateOneRequiredWithoutMovementsNestedInput
@@ -315,6 +330,7 @@ export type MovementUncheckedUpdateInput = {
   pieceVersionId?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   key?: Prisma.EnumKEYFieldUpdateOperationsInput | $Enums.KEY
+  isVariation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUncheckedUpdateManyWithoutMovementNestedInput
@@ -325,6 +341,7 @@ export type MovementCreateManyInput = {
   pieceVersionId: string
   rank: number
   key: $Enums.KEY
+  isVariation?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -333,6 +350,7 @@ export type MovementUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   key?: Prisma.EnumKEYFieldUpdateOperationsInput | $Enums.KEY
+  isVariation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -342,6 +360,7 @@ export type MovementUncheckedUpdateManyInput = {
   pieceVersionId?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   key?: Prisma.EnumKEYFieldUpdateOperationsInput | $Enums.KEY
+  isVariation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -366,6 +385,7 @@ export type MovementCountOrderByAggregateInput = {
   pieceVersionId?: Prisma.SortOrder
   rank?: Prisma.SortOrder
   key?: Prisma.SortOrder
+  isVariation?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -379,6 +399,7 @@ export type MovementMaxOrderByAggregateInput = {
   pieceVersionId?: Prisma.SortOrder
   rank?: Prisma.SortOrder
   key?: Prisma.SortOrder
+  isVariation?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -388,6 +409,7 @@ export type MovementMinOrderByAggregateInput = {
   pieceVersionId?: Prisma.SortOrder
   rank?: Prisma.SortOrder
   key?: Prisma.SortOrder
+  isVariation?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -455,6 +477,10 @@ export type EnumKEYFieldUpdateOperationsInput = {
   set?: $Enums.KEY
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type MovementCreateNestedOneWithoutSectionsInput = {
   create?: Prisma.XOR<Prisma.MovementCreateWithoutSectionsInput, Prisma.MovementUncheckedCreateWithoutSectionsInput>
   connectOrCreate?: Prisma.MovementCreateOrConnectWithoutSectionsInput
@@ -473,6 +499,7 @@ export type MovementCreateWithoutPieceVersionInput = {
   id?: string
   rank: number
   key: $Enums.KEY
+  isVariation?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sections?: Prisma.SectionCreateNestedManyWithoutMovementInput
@@ -482,6 +509,7 @@ export type MovementUncheckedCreateWithoutPieceVersionInput = {
   id?: string
   rank: number
   key: $Enums.KEY
+  isVariation?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutMovementInput
@@ -521,6 +549,7 @@ export type MovementScalarWhereInput = {
   pieceVersionId?: Prisma.UuidFilter<"Movement"> | string
   rank?: Prisma.IntFilter<"Movement"> | number
   key?: Prisma.EnumKEYFilter<"Movement"> | $Enums.KEY
+  isVariation?: Prisma.BoolFilter<"Movement"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Movement"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Movement"> | Date | string
 }
@@ -529,6 +558,7 @@ export type MovementCreateWithoutSectionsInput = {
   id?: string
   rank: number
   key: $Enums.KEY
+  isVariation?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   pieceVersion: Prisma.PieceVersionCreateNestedOneWithoutMovementsInput
@@ -539,6 +569,7 @@ export type MovementUncheckedCreateWithoutSectionsInput = {
   pieceVersionId: string
   rank: number
   key: $Enums.KEY
+  isVariation?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -563,6 +594,7 @@ export type MovementUpdateWithoutSectionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   key?: Prisma.EnumKEYFieldUpdateOperationsInput | $Enums.KEY
+  isVariation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pieceVersion?: Prisma.PieceVersionUpdateOneRequiredWithoutMovementsNestedInput
@@ -573,6 +605,7 @@ export type MovementUncheckedUpdateWithoutSectionsInput = {
   pieceVersionId?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   key?: Prisma.EnumKEYFieldUpdateOperationsInput | $Enums.KEY
+  isVariation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -581,6 +614,7 @@ export type MovementCreateManyPieceVersionInput = {
   id?: string
   rank: number
   key: $Enums.KEY
+  isVariation?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -589,6 +623,7 @@ export type MovementUpdateWithoutPieceVersionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   key?: Prisma.EnumKEYFieldUpdateOperationsInput | $Enums.KEY
+  isVariation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUpdateManyWithoutMovementNestedInput
@@ -598,6 +633,7 @@ export type MovementUncheckedUpdateWithoutPieceVersionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   key?: Prisma.EnumKEYFieldUpdateOperationsInput | $Enums.KEY
+  isVariation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUncheckedUpdateManyWithoutMovementNestedInput
@@ -607,6 +643,7 @@ export type MovementUncheckedUpdateManyWithoutPieceVersionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   key?: Prisma.EnumKEYFieldUpdateOperationsInput | $Enums.KEY
+  isVariation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -647,6 +684,7 @@ export type MovementSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   pieceVersionId?: boolean
   rank?: boolean
   key?: boolean
+  isVariation?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   pieceVersion?: boolean | Prisma.PieceVersionDefaultArgs<ExtArgs>
@@ -659,6 +697,7 @@ export type MovementSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   pieceVersionId?: boolean
   rank?: boolean
   key?: boolean
+  isVariation?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   pieceVersion?: boolean | Prisma.PieceVersionDefaultArgs<ExtArgs>
@@ -669,6 +708,7 @@ export type MovementSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   pieceVersionId?: boolean
   rank?: boolean
   key?: boolean
+  isVariation?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   pieceVersion?: boolean | Prisma.PieceVersionDefaultArgs<ExtArgs>
@@ -679,11 +719,12 @@ export type MovementSelectScalar = {
   pieceVersionId?: boolean
   rank?: boolean
   key?: boolean
+  isVariation?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type MovementOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pieceVersionId" | "rank" | "key" | "createdAt" | "updatedAt", ExtArgs["result"]["movement"]>
+export type MovementOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pieceVersionId" | "rank" | "key" | "isVariation" | "createdAt" | "updatedAt", ExtArgs["result"]["movement"]>
 export type MovementInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pieceVersion?: boolean | Prisma.PieceVersionDefaultArgs<ExtArgs>
   sections?: boolean | Prisma.Movement$sectionsArgs<ExtArgs>
@@ -707,6 +748,7 @@ export type $MovementPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     pieceVersionId: string
     rank: number
     key: $Enums.KEY
+    isVariation: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["movement"]>
@@ -1138,6 +1180,7 @@ export interface MovementFieldRefs {
   readonly pieceVersionId: Prisma.FieldRef<"Movement", 'String'>
   readonly rank: Prisma.FieldRef<"Movement", 'Int'>
   readonly key: Prisma.FieldRef<"Movement", 'KEY'>
+  readonly isVariation: Prisma.FieldRef<"Movement", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Movement", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Movement", 'DateTime'>
 }
