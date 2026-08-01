@@ -74,9 +74,11 @@ function getControllerProps({
 
   if (type === "checkbox") {
     controllerProps.onChange = (event: ChangeEvent<HTMLInputElement>) => {
-      console.log(`[checkbox] onChange :`, event.target.checked);
       field.onChange(event.target.checked);
     };
+    // Checkboxes are controlled via `checked`, not `value`.
+    controllerProps.checked = !!field.value;
+    delete controllerProps.value;
   }
 
   return controllerProps;

@@ -299,7 +299,7 @@ function FeedSummary() {
                               {piece?.title}
                               {isMonoMovementPiece &&
                                 pieceVersion.movements?.[0] &&
-                                ` in ${getKeyLabel(pieceVersion.movements[0].key)}`}
+                                ` in ${getKeyLabel(pieceVersion.movements[0].key)}${pieceVersion.movements[0].isVariation ? " (Variation)" : ""}`}
                             </h4>
                             <div className="text-sm text-accent/70 font-medium">
                               {piece?.yearOfComposition ? (
@@ -333,6 +333,9 @@ function FeedSummary() {
                                       <h5 className="text-sm font-bold text-primary">
                                         Movement {movement.rank} in{" "}
                                         {getKeyLabel(movement.key)}
+                                        {movement.isVariation
+                                          ? " (Variation)"
+                                          : ""}
                                       </h5>
                                     </div>
                                   )}
@@ -382,7 +385,7 @@ function FeedSummary() {
                           {piece?.title}
                           {isMonoMovementPiece &&
                             pieceVersion.movements?.[0] &&
-                            ` in ${getKeyLabel(pieceVersion.movements[0].key)}`}
+                            ` in ${getKeyLabel(pieceVersion.movements[0].key)}${pieceVersion.movements[0].isVariation ? " (Variation)" : ""}`}
                           <span className="text-base font-normal">
                             {composer && ` - ${getPersonName(composer)}`}
                           </span>
@@ -421,6 +424,7 @@ function FeedSummary() {
                               <h5 className="text-sm font-bold text-primary">
                                 Movement {movement.rank} in{" "}
                                 {getKeyLabel(movement.key)}
+                                {movement.isVariation ? " (Variation)" : ""}
                               </h5>
                             </div>
                           )}

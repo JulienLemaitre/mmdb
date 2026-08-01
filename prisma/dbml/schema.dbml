@@ -56,6 +56,7 @@ Table Movement {
   pieceVersionId String [not null]
   rank Int [not null]
   key KEY [not null]
+  isVariation Boolean [not null, default: false]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   sections Section [not null]

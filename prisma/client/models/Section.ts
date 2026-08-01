@@ -729,10 +729,6 @@ export type SectionUncheckedUpdateManyWithoutMovementNestedInput = {
   deleteMany?: Prisma.SectionScalarWhereInput | Prisma.SectionScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type FloatFieldUpdateOperationsInput = {
   set?: number
   increment?: number

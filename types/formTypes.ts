@@ -167,7 +167,10 @@ export type SectionStateExtendedForMMForm = SectionState & {
 };
 
 export type MovementState = WithRequiredId<
-  Pick<Prisma.MovementUncheckedCreateInput, "id" | "rank" | "key">
+  Pick<
+    Prisma.MovementUncheckedCreateInput,
+    "id" | "rank" | "key" | "isVariation"
+  >
 > & {
   sections: SectionState[];
 };
@@ -274,6 +277,7 @@ export type SectionInput = Omit<
 export type MovementInput = {
   id?: string;
   key: OptionInputTyped<KEY>;
+  isVariation?: boolean;
   sections: SectionInput[];
 };
 export type PieceVersionInput = {

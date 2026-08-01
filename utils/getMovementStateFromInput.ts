@@ -10,6 +10,7 @@ export default function getMovementStateFromInput(
     id: movementInput.id || uuidv4(),
     rank: index + 1,
     key: movementInput.key.value as MovementState["key"],
+    isVariation: movementInput.isVariation ?? false,
     sections: movementInput.sections.map((sectionInput, index) =>
       getSectionStateFromInput(sectionInput, index),
     ),

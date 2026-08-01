@@ -73,6 +73,7 @@ export const REVIEW_CHECKLIST_SCHEMA: ReviewChecklistSchema = {
     fields: [
       { path: "rank", label: "Movement rank" },
       { path: "key", label: "Key" },
+      { path: "isVariation", label: "Is variation?" },
     ],
   },
 

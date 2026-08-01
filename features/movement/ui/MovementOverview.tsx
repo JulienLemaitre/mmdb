@@ -20,6 +20,11 @@ export default function MovementOverview({
         ) : (
           getKeyLabel(movement.key.value)
         )}
+        {movement.isVariation ? (
+          <span className="ml-2">
+            · <b>Variation</b>
+          </span>
+        ) : null}
       </div>
       {movement.sections.length > 0 && (
         <div className={"mt-2"}>

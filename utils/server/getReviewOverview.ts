@@ -101,6 +101,7 @@ export async function getReviewOverview(reviewId: string): Promise<{
                   id: true,
                   rank: true,
                   key: true,
+                  isVariation: true,
                   sections: {
                     select: {
                       id: true,
@@ -298,6 +299,7 @@ export async function getReviewOverview(reviewId: string): Promise<{
       id: m.id,
       rank: m.rank,
       key: m.key ?? null,
+      isVariation: m.isVariation ?? false,
       sections: m.sections,
     })),
   }));

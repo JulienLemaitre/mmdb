@@ -20,6 +20,7 @@ export async function GET(request: Request) {
           id: true,
           rank: true,
           key: true,
+          isVariation: true,
           sections: {
             select: {
               id: true,

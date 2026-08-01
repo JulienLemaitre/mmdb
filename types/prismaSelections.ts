@@ -10,6 +10,7 @@ export const pieceVersionSelect = {
       id: true,
       rank: true,
       key: true,
+      isVariation: true,
       sections: {
         select: {
           id: true,
