@@ -298,8 +298,10 @@ export type SourceDescriptionInput = Pick<
   id?: string;
   comment?: string;
   title?: string;
-  year: number;
+  year: number | null;
   isYearEstimated: boolean;
+  /** Form-only flag: when true, year is null and isYearEstimated must be false. */
+  noDate?: boolean;
   references: ReferenceInput[];
   type: OptionInputTyped<SOURCE_TYPE>;
 };

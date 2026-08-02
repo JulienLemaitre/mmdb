@@ -26,12 +26,16 @@ export default function getChartDataFromMMSources({
 
   mMSources.forEach((mMSource) => {
     const { year } = mMSource;
+    // Chart X axis is publication year — skip sources without a date
+    if (typeof year !== "number") {
+      return;
+    }
     mMSource.pieceVersions.forEach((pvs) => {
       const piece = pvs.pieceVersion.piece;
-      if (typeof year === "number" && year < minDate) {
+      if (year < minDate) {
         minDate = year;
       }
-      if (typeof year === "number" && year > maxDate) {
+      if (year > maxDate) {
         maxDate = year;
       }
       const composer = piece.composer;

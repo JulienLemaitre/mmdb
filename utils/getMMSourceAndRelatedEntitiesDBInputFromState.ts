@@ -23,8 +23,9 @@ export default function getMMSourceAndRelatedEntitiesDBInputFromState(
       },
     },
     ...(title ? { title } : {}),
-    year,
-    isYearEstimated,
+    year: year ?? null,
+    // DB CHECK: null year requires isYearEstimated = false
+    isYearEstimated: year == null ? false : !!isYearEstimated,
     link,
     permalink: getIMSLPPermaLink(link),
     type: type as SOURCE_TYPE,

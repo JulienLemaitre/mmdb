@@ -16,12 +16,16 @@ const MMSourceDescription = () => {
   ) => {
     // Front input values validation is successful at this point.
 
-    const sourceData = data;
-    // Remove null values from sourceData
-    Object.keys(sourceData).forEach(
+    const { noDate: _noDate, ...sourceData } = data;
+    // Remove null/undefined values from sourceData, but keep year: null
+    // (optional publication year is a valid persisted value).
+    Object.keys(sourceData).forEach((key) => {
+      if (key === "year") return;
       // '== null' is true for undefined AND null values
-      (key) => sourceData[key] == null && delete sourceData[key],
-    );
+      if (sourceData[key as keyof typeof sourceData] == null) {
+        delete sourceData[key as keyof typeof sourceData];
+      }
+    });
 
     const sourceDescriptionState = getMMSourceDescriptionStateFromInput({
       ...sourceData,
