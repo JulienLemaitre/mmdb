@@ -237,7 +237,7 @@ export type MMSourceGroupByOutputType = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year: number | null
   isYearEstimated: boolean
   creatorId: string | null
   comment: string | null
@@ -276,7 +276,7 @@ export type MMSourceWhereInput = {
   type?: Prisma.EnumSOURCE_TYPEFilter<"MMSource"> | $Enums.SOURCE_TYPE
   link?: Prisma.StringFilter<"MMSource"> | string
   permalink?: Prisma.StringFilter<"MMSource"> | string
-  year?: Prisma.IntFilter<"MMSource"> | number
+  year?: Prisma.IntNullableFilter<"MMSource"> | number | null
   isYearEstimated?: Prisma.BoolFilter<"MMSource"> | boolean
   creatorId?: Prisma.UuidNullableFilter<"MMSource"> | string | null
   comment?: Prisma.StringNullableFilter<"MMSource"> | string | null
@@ -298,7 +298,7 @@ export type MMSourceOrderByWithRelationInput = {
   type?: Prisma.SortOrder
   link?: Prisma.SortOrder
   permalink?: Prisma.SortOrder
-  year?: Prisma.SortOrder
+  year?: Prisma.SortOrderInput | Prisma.SortOrder
   isYearEstimated?: Prisma.SortOrder
   creatorId?: Prisma.SortOrderInput | Prisma.SortOrder
   comment?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -323,7 +323,7 @@ export type MMSourceWhereUniqueInput = Prisma.AtLeast<{
   type?: Prisma.EnumSOURCE_TYPEFilter<"MMSource"> | $Enums.SOURCE_TYPE
   link?: Prisma.StringFilter<"MMSource"> | string
   permalink?: Prisma.StringFilter<"MMSource"> | string
-  year?: Prisma.IntFilter<"MMSource"> | number
+  year?: Prisma.IntNullableFilter<"MMSource"> | number | null
   isYearEstimated?: Prisma.BoolFilter<"MMSource"> | boolean
   creatorId?: Prisma.UuidNullableFilter<"MMSource"> | string | null
   comment?: Prisma.StringNullableFilter<"MMSource"> | string | null
@@ -345,7 +345,7 @@ export type MMSourceOrderByWithAggregationInput = {
   type?: Prisma.SortOrder
   link?: Prisma.SortOrder
   permalink?: Prisma.SortOrder
-  year?: Prisma.SortOrder
+  year?: Prisma.SortOrderInput | Prisma.SortOrder
   isYearEstimated?: Prisma.SortOrder
   creatorId?: Prisma.SortOrderInput | Prisma.SortOrder
   comment?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -369,7 +369,7 @@ export type MMSourceScalarWhereWithAggregatesInput = {
   type?: Prisma.EnumSOURCE_TYPEWithAggregatesFilter<"MMSource"> | $Enums.SOURCE_TYPE
   link?: Prisma.StringWithAggregatesFilter<"MMSource"> | string
   permalink?: Prisma.StringWithAggregatesFilter<"MMSource"> | string
-  year?: Prisma.IntWithAggregatesFilter<"MMSource"> | number
+  year?: Prisma.IntNullableWithAggregatesFilter<"MMSource"> | number | null
   isYearEstimated?: Prisma.BoolWithAggregatesFilter<"MMSource"> | boolean
   creatorId?: Prisma.UuidNullableWithAggregatesFilter<"MMSource"> | string | null
   comment?: Prisma.StringNullableWithAggregatesFilter<"MMSource"> | string | null
@@ -385,7 +385,7 @@ export type MMSourceCreateInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
@@ -406,7 +406,7 @@ export type MMSourceUncheckedCreateInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   creatorId?: string | null
   comment?: string | null
@@ -427,7 +427,7 @@ export type MMSourceUpdateInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -448,7 +448,7 @@ export type MMSourceUncheckedUpdateInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -469,7 +469,7 @@ export type MMSourceCreateManyInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   creatorId?: string | null
   comment?: string | null
@@ -485,7 +485,7 @@ export type MMSourceUpdateManyMutationInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -500,7 +500,7 @@ export type MMSourceUncheckedUpdateManyInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -709,7 +709,7 @@ export type MMSourceCreateWithoutMetronomeMarksInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
@@ -729,7 +729,7 @@ export type MMSourceUncheckedCreateWithoutMetronomeMarksInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   creatorId?: string | null
   comment?: string | null
@@ -765,7 +765,7 @@ export type MMSourceUpdateWithoutMetronomeMarksInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -785,7 +785,7 @@ export type MMSourceUncheckedUpdateWithoutMetronomeMarksInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -805,7 +805,7 @@ export type MMSourceCreateWithoutPieceVersionsInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
@@ -825,7 +825,7 @@ export type MMSourceUncheckedCreateWithoutPieceVersionsInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   creatorId?: string | null
   comment?: string | null
@@ -861,7 +861,7 @@ export type MMSourceUpdateWithoutPieceVersionsInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -881,7 +881,7 @@ export type MMSourceUncheckedUpdateWithoutPieceVersionsInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -901,7 +901,7 @@ export type MMSourceCreateWithoutReferencesInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
@@ -921,7 +921,7 @@ export type MMSourceUncheckedCreateWithoutReferencesInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   creatorId?: string | null
   comment?: string | null
@@ -957,7 +957,7 @@ export type MMSourceUpdateWithoutReferencesInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -977,7 +977,7 @@ export type MMSourceUncheckedUpdateWithoutReferencesInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -997,7 +997,7 @@ export type MMSourceCreateWithoutContributionsInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
@@ -1017,7 +1017,7 @@ export type MMSourceUncheckedCreateWithoutContributionsInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   creatorId?: string | null
   comment?: string | null
@@ -1053,7 +1053,7 @@ export type MMSourceUpdateWithoutContributionsInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1073,7 +1073,7 @@ export type MMSourceUncheckedUpdateWithoutContributionsInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1093,7 +1093,7 @@ export type MMSourceCreateWithoutCreatorInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
@@ -1113,7 +1113,7 @@ export type MMSourceUncheckedCreateWithoutCreatorInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
@@ -1162,7 +1162,7 @@ export type MMSourceScalarWhereInput = {
   type?: Prisma.EnumSOURCE_TYPEFilter<"MMSource"> | $Enums.SOURCE_TYPE
   link?: Prisma.StringFilter<"MMSource"> | string
   permalink?: Prisma.StringFilter<"MMSource"> | string
-  year?: Prisma.IntFilter<"MMSource"> | number
+  year?: Prisma.IntNullableFilter<"MMSource"> | number | null
   isYearEstimated?: Prisma.BoolFilter<"MMSource"> | boolean
   creatorId?: Prisma.UuidNullableFilter<"MMSource"> | string | null
   comment?: Prisma.StringNullableFilter<"MMSource"> | string | null
@@ -1178,7 +1178,7 @@ export type MMSourceCreateWithoutReviewsInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
@@ -1198,7 +1198,7 @@ export type MMSourceUncheckedCreateWithoutReviewsInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   creatorId?: string | null
   comment?: string | null
@@ -1234,7 +1234,7 @@ export type MMSourceUpdateWithoutReviewsInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1254,7 +1254,7 @@ export type MMSourceUncheckedUpdateWithoutReviewsInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1274,7 +1274,7 @@ export type MMSourceCreateManyCreatorInput = {
   type: $Enums.SOURCE_TYPE
   link: string
   permalink: string
-  year: number
+  year?: number | null
   isYearEstimated?: boolean
   comment?: string | null
   sectionCount?: number
@@ -1289,7 +1289,7 @@ export type MMSourceUpdateWithoutCreatorInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1309,7 +1309,7 @@ export type MMSourceUncheckedUpdateWithoutCreatorInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1329,7 +1329,7 @@ export type MMSourceUncheckedUpdateManyWithoutCreatorInput = {
   type?: Prisma.EnumSOURCE_TYPEFieldUpdateOperationsInput | $Enums.SOURCE_TYPE
   link?: Prisma.StringFieldUpdateOperationsInput | string
   permalink?: Prisma.StringFieldUpdateOperationsInput | string
-  year?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isYearEstimated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sectionCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1511,7 +1511,7 @@ export type $MMSourcePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     type: $Enums.SOURCE_TYPE
     link: string
     permalink: string
-    year: number
+    year: number | null
     isYearEstimated: boolean
     creatorId: string | null
     comment: string | null
