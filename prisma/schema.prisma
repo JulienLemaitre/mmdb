@@ -148,7 +148,7 @@ model MMSource {
   type            SOURCE_TYPE
   link            String
   permalink       String
-  year            Int
+  year            Int?
   isYearEstimated Boolean                    @default(false)
   references      Reference[] // A source can have many references
   contributions   Contribution[] // A source can have many Contributions

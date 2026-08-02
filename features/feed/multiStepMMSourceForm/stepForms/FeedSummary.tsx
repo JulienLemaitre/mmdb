@@ -160,13 +160,10 @@ function FeedSummary() {
                   </div>
                 )}
                 <div className="pr-3 border-r border-info/20">
-                  {mMSourceToPersist.year ? (
-                    `${displaySourceYear({ year: mMSourceToPersist.year, isYearEstimated: !!mMSourceToPersist.isYearEstimated })}`
-                  ) : (
-                    <span className="italic">
-                      No year of publication provided
-                    </span>
-                  )}
+                  {displaySourceYear({
+                    year: mMSourceToPersist.year ?? null,
+                    isYearEstimated: !!mMSourceToPersist.isYearEstimated,
+                  })}
                 </div>
                 {session?.user?.name && (
                   <div className="text-info/70">

@@ -7,14 +7,14 @@ import {
 } from "@/types/formTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormInput, FormTextarea } from "@/ui/form/FormInput";
-import { getZodOptionFromEnum, zodYear } from "@/types/zodTypes";
+import { getZodOptionFromEnum, zodYearOptional } from "@/types/zodTypes";
 import { REFERENCE_TYPE, SOURCE_TYPE } from "@/prisma/client/enums";
 import ControlledSelect from "@/ui/form/ControlledSelect";
 import ReferenceArray from "@/features/reference/form/ReferenceArray";
 import MMSourceFormStepNavigation from "@/features/feed/multiStepMMSourceForm/MMSourceFormStepNavigation";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import getMMSourceDescriptionInputFromState from "@/utils/getMMSourceDescriptionInputFromState";
 import checkAreFieldsDirty from "@/utils/checkAreFieldsDirty";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
@@ -28,8 +28,9 @@ const SourceSchema = z
     title: z.string().optional(),
     type: getZodOptionFromEnum(SOURCE_TYPE),
     link: z.string().trim().url(),
-    year: zodYear,
+    year: zodYearOptional,
     isYearEstimated: z.boolean(),
+    noDate: z.boolean(),
     references: z.array(
       z.object({
         type: getZodOptionFromEnum(REFERENCE_TYPE),
@@ -38,7 +39,27 @@ const SourceSchema = z
     ),
     comment: z.string().optional(),
   })
-  .superRefine(({ references }, ctx) => {
+  .superRefine(({ references, noDate, year, isYearEstimated }, ctx) => {
+    const hasYear =
+      typeof year === "number" && !Number.isNaN(year) && year !== null;
+
+    if (noDate) {
+      // Mirrors DB CHECK: null year requires isYearEstimated = false
+      if (isYearEstimated) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Cannot estimate a missing year",
+          path: ["isYearEstimated"],
+        });
+      }
+    } else if (!hasYear) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Required",
+        path: ["year"],
+      });
+    }
+
     references.forEach((reference, currentIndex) => {
       const isDuplicate = references.some(
         (existingRef, refIndex) =>
@@ -61,13 +82,29 @@ const DEFAULT_VALUES: Partial<SourceDescriptionInput> = {
     value: SOURCE_TYPE.EDITION,
     label: getSourceTypeLabel(SOURCE_TYPE.EDITION),
   },
-  year: undefined,
+  year: null,
   isYearEstimated: false,
+  noDate: false,
   title: "",
   link: "",
   comment: "",
   references: [],
 };
+
+function getFormDefaultValues(
+  sourceDescription?: SourceDescriptionInput,
+): Partial<SourceDescriptionInput> {
+  if (!sourceDescription) {
+    return DEFAULT_VALUES;
+  }
+  const year = sourceDescription.year ?? null;
+  return {
+    ...sourceDescription,
+    year,
+    noDate: year == null,
+    isYearEstimated: year == null ? false : !!sourceDescription.isYearEstimated,
+  };
+}
 
 export default function SourceDescriptionEditForm(
   props: Readonly<{
@@ -91,12 +128,29 @@ export default function SourceDescriptionEditForm(
     trigger,
     clearErrors,
     setError,
+    setValue,
+    watch,
   } = useForm<SourceDescriptionInput>({
-    defaultValues: sourceDescription ?? DEFAULT_VALUES,
+    defaultValues: getFormDefaultValues(sourceDescription),
     resolver: zodResolver(SourceSchema) as any, // Type assertion to bypass strict overload matching
   });
 
   const computedIsDirty = checkAreFieldsDirty(dirtyFields);
+  const noDate = !!watch("noDate");
+
+  // When "no date" is checked, clear year and estimate flag (DB CHECK constraint).
+  useEffect(() => {
+    if (!noDate) return;
+    if (getValues("year") != null) {
+      setValue("year", null, { shouldDirty: true, shouldValidate: true });
+    }
+    if (getValues("isYearEstimated")) {
+      setValue("isYearEstimated", false, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+    }
+  }, [noDate, getValues, setValue]);
 
   const [isReferenceFormOpen, setIsReferenceFormOpen] = useState(false);
 
@@ -147,7 +201,7 @@ export default function SourceDescriptionEditForm(
   };
 
   const onResetForm = () => {
-    reset(sourceDescription ?? DEFAULT_VALUES);
+    reset(getFormDefaultValues(sourceDescription));
   };
 
   const submitForm = async (option: { goToNextStep: boolean }) => {
@@ -161,11 +215,16 @@ export default function SourceDescriptionEditForm(
 
     if (isValid) {
       await handleSubmit(async (data) => {
-        const newSourceDescriptionState = await onSubmit(data, option);
+        const payload: SourceDescriptionInput = {
+          ...data,
+          year: data.noDate ? null : (data.year ?? null),
+          isYearEstimated: data.noDate ? false : !!data.isYearEstimated,
+        };
+        const newSourceDescriptionState = await onSubmit(payload, option);
         if (!option.goToNextStep && newSourceDescriptionState) {
           const newSourceDescriptionInput =
             getMMSourceDescriptionInputFromState(newSourceDescriptionState);
-          reset(newSourceDescriptionInput);
+          reset(getFormDefaultValues(newSourceDescriptionInput));
         }
       })();
     }
@@ -206,15 +265,25 @@ export default function SourceDescriptionEditForm(
         <div className="flex gap-4 items-center">
           <FormInput
             name="year"
-            isRequired
+            isRequired={!noDate}
             label="Year of publication"
             inputMode="numeric"
+            disabled={noDate}
             {...{ register, errors, control }}
           />
           <FormInput
+            controlClassName={"flex-1"}
             name="isYearEstimated"
             type="checkbox"
             label="Is year estimated?"
+            disabled={noDate}
+            {...{ register, errors, control }}
+          />
+          <FormInput
+            controlClassName={"flex-1"}
+            name="noDate"
+            type="checkbox"
+            label="No date"
             {...{ register, errors, control }}
           />
         </div>

@@ -104,6 +104,18 @@ invalidates piece and pieceVersion; changing piece invalidates pieceVersion).
 `{ version: LOCAL_STORAGE_SCHEMA_VERSION, payload }` and silently drops incompatible data on read. **Bump
 `LOCAL_STORAGE_SCHEMA_VERSION` whenever a persisted form state's shape changes.**
 
+### MM Source data display
+
+When there is a change to the MM Source data structure or fields, the display must be updated to reflect the change.
+There are many places where the MM Source data is displayed:
+- the form where it is edited
+- `features/explore/ComposerPiecesDetails.tsx`
+- `features/explore/MMSourceDetails.tsx`
+- `features/explore/MMSourceDetailsCompact.tsx`
+- `features/feed/multiStepMMSourceForm/stepForms/FeedSummary.tsx`
+- `features/movement/ui/MovementOverview.tsx`
+- `features/section/ui/SectionOverview.tsx`
+
 ### state ⇄ DB conversion
 
 State shapes and Prisma input shapes are deliberately different. Conversion is done by a family of pure

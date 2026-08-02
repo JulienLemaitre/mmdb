@@ -15,12 +15,15 @@ export default function getMMSourceDescriptionInputFromState(
   const { id, title, year, isYearEstimated, type, link, comment, references } =
     sourceDescription;
 
+  const normalizedYear = year ?? null;
+
   // Convert the 'type' and 'references' properties to match the SourceDescriptionInput type
   return {
     id,
     ...(title ? { title } : {}),
-    year,
-    isYearEstimated,
+    year: normalizedYear,
+    isYearEstimated: normalizedYear == null ? false : !!isYearEstimated,
+    noDate: normalizedYear == null,
     link,
     type: { value: type, label: formatToPhraseCase(type) },
     ...(comment ? { comment } : {}),
