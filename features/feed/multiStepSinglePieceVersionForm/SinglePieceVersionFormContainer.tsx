@@ -25,6 +25,7 @@ import { SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY } from "@/utils/constants";
 import { debug, prodLog } from "@/utils/debugLogger";
 import { localStorageRemoveItem } from "@/utils/localStorage";
 import { commitSinglePieceVersionFormToFeedForm } from "@/utils/commitSinglePieceVersionFormToFeedForm";
+import { getNewUuid } from "@/utils/getNewUuid";
 
 type SinglePieceVersionFormProps = {
   onFormClose: () => void;
@@ -235,6 +236,32 @@ const SinglePieceVersionFormContainer = ({
     });
   };
 
+  const onInitPieceVersionCreationFromSelected = (
+    pieceVersion: PieceVersionState,
+  ) => {
+    const newPieceVersion: PieceVersionState = {
+      ...pieceVersion,
+      id: getNewUuid(),
+      isNew: true,
+      movements: pieceVersion.movements.map((movement) => ({
+        ...movement,
+        id: getNewUuid(),
+        sections: movement.sections.map((section) => ({
+          ...section,
+          id: getNewUuid(),
+        })),
+      })),
+    };
+
+    debug.info(
+      "[onInitPieceVersionCreationFromSelected] New pieceVersion cloned from selected pieceVersion",
+      newPieceVersion,
+    );
+    updateSinglePieceVersionForm(dispatch, "pieceVersion", {
+      value: newPieceVersion,
+    });
+  };
+
   const onPieceVersionCreated = (data: PieceVersionInput) => {
     // Front input values validation is successful at this point.
     debug.info("[onPieceVersionCreated] data", data);
@@ -385,6 +412,9 @@ const SinglePieceVersionFormContainer = ({
             !!singlePieceVersionFormState?.pieceVersion?.isNew
           }
           onInitPieceVersionCreation={onInitPieceVersionCreation}
+          onInitPieceVersionCreationFromSelected={
+            onInitPieceVersionCreationFromSelected
+          }
           onCancelPieceVersionCreation={onCancelPieceVersionCreation}
           onAddTempoIndication={onAddTempoIndication}
           onAddTempoIndicationList={onAddTempoIndicationList}

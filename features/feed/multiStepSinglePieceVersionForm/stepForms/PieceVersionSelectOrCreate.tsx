@@ -21,6 +21,9 @@ type PieceVersionSelectOrCreateProps = {
   onPieceVersionCreated: (pieceVersion: PieceVersionInput) => void;
   onPieceVersionSelect: (pieceVersion: PieceVersionState) => void;
   onInitPieceVersionCreation: () => void;
+  onInitPieceVersionCreationFromSelected: (
+    pieceVersion: PieceVersionState,
+  ) => void;
   onCancelPieceVersionCreation: () => void;
   onAddTempoIndication: (tempoIndication: TempoIndicationState) => void;
   onAddTempoIndicationList: (
@@ -41,6 +44,8 @@ function PieceVersionSelectOrCreate({
   onPieceVersionCreated,
   onPieceVersionSelect,
   onInitPieceVersionCreation: onInitPieceVersionCreationFn,
+  onInitPieceVersionCreationFromSelected:
+    onInitPieceVersionCreationFromSelectedFn,
   onCancelPieceVersionCreation,
   onAddTempoIndication,
   onAddTempoIndicationList,
@@ -164,6 +169,13 @@ function PieceVersionSelectOrCreate({
     setIsEditMode(true);
   };
 
+  const onInitPieceVersionCreationFromSelected = (
+    pieceVersion: PieceVersionState,
+  ) => {
+    onInitPieceVersionCreationFromSelectedFn(pieceVersion);
+    setIsEditMode(true);
+  };
+
   const onCancelPieceVersionEdition = () => {
     if (isDataFetchDisabled) {
       onCancelPieceVersionCreation();
@@ -195,10 +207,14 @@ function PieceVersionSelectOrCreate({
 
   return (
     <PieceVersionSelectForm
+      key={selectedPieceId}
       pieceVersions={pieceVersionFullList}
       value={selectedPieceVersion}
       onPieceVersionSelect={onPieceVersionSelect}
       onInitPieceVersionCreation={onInitPieceVersionCreation}
+      onInitPieceVersionCreationFromSelected={
+        onInitPieceVersionCreationFromSelected
+      }
     />
   );
 }
