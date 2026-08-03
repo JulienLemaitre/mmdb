@@ -9,12 +9,16 @@ type PieceVersionSelectFormProps = {
   value?: PieceVersionState;
   onPieceVersionSelect: (event: any) => void;
   onInitPieceVersionCreation: () => void;
+  onInitPieceVersionCreationFromSelected: (
+    pieceVersion: PieceVersionState,
+  ) => void;
 };
 export default function PieceVersionSelectForm({
   pieceVersions,
   value,
   onPieceVersionSelect,
   onInitPieceVersionCreation,
+  onInitPieceVersionCreationFromSelected,
 }: Readonly<PieceVersionSelectFormProps>) {
   const [selectedPieceVersionId, setSelectedPieceVersionId] = useState<
     string | null
@@ -47,7 +51,7 @@ export default function PieceVersionSelectForm({
         onSelect={onSelect}
         selectedPieceVersion={selectedPieceVersion}
       />
-      <div className="mt-4">
+      <div className="mt-4 flex gap-2">
         <button
           type="button"
           className="btn btn-accent"
@@ -56,13 +60,25 @@ export default function PieceVersionSelectForm({
           <PlusIcon className="w-5 h-5" />
           New piece version
         </button>
+        <button
+          type="button"
+          className="btn btn-accent"
+          disabled={!selectedPieceVersion}
+          onClick={() =>
+            selectedPieceVersion &&
+            onInitPieceVersionCreationFromSelected(selectedPieceVersion)
+          }
+        >
+          <PlusIcon className="w-5 h-5" />
+          New piece version from selected
+        </button>
       </div>
       <button
         onClick={() => onPieceVersionSelect(selectedPieceVersion)}
         className="btn btn-primary mt-4"
         {...(selectedPieceVersion ? { disabled: false } : { disabled: true })}
       >
-        Choose Piece Version
+        Choose piece version
       </button>
     </>
   );
