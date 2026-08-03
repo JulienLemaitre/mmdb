@@ -195,6 +195,7 @@ function PieceVersionSelectOrCreate({
 
   return (
     <PieceVersionSelectForm
+      key={selectedPieceId}
       pieceVersions={pieceVersionFullList}
       value={selectedPieceVersion}
       onPieceVersionSelect={onPieceVersionSelect}

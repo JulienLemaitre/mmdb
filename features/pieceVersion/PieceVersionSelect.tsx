@@ -6,7 +6,7 @@ import { useSinglePieceVersionForm } from "@/context/singlePieceVersionFormConte
 type PieceVersionSelectProps = {
   pieceVersions: PieceVersionState[];
   onSelect: (pieceVersionId: string) => void;
-  selectedPieceVersion: PieceVersionState | null;
+  selectedPieceVersion: PieceVersionState | undefined;
 };
 export default function PieceVersionSelect({
   pieceVersions,
