@@ -105,3 +105,17 @@ Le document pourra donc cadrer :
 - l’accès limité au reviewer propriétaire.
 
 Donnez-moi le GO et je rédigerai le document récapitulatif.
+
+## Moi
+
+Tu peux y aller. Crée le document dans le dossier 'specs/review-in-feed-form'[@20260804_review-in-feed-form_prompt.md](file:///home/julien/MonCode/mmdb/specs/20260804_review-in-feed-form_prompt.md)
+
+## GPT
+
+Je rédige le document de cadrage dans le dossier demandé : décisions actées, périmètre, architecture cible, flux et suppressions — sans le transformer en feuille de route d’implémentation.
+
+Le document est créé. Je vérifie simplement sa présence et sa structure, sans modifier les fichiers déjà en cours de travail dans le dépôt.
+
+Document créé : [cadrage de la revue dans Feed](/home/julien/MonCode/mmdb/specs/review-in-feed-form/20260805_cadrage-review-dans-feed-form.md).
+
+Il fixe les décisions, le flux cible, le contexte générique, le brouillon isolé, l’approbation/audit et les suppressions prévues. Les fichiers déjà modifiés ont été laissés intacts.

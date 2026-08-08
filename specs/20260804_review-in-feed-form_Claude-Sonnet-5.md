@@ -75,3 +75,53 @@ I. Le commentaire est persisté avec le payload final de la review.
 
 ## Sonnet 5
 
+Vos réponses résolvent la plupart des points. J'ai vérifié deux choses dans le code avant de continuer, et il en ressort une clarification nécessaire sur le point C, plus deux conséquences directes de vos réponses B et D.
+
+**C — le fork automatique dépend d'une prémisse UI que je n'ai pas encore vérifiée**
+
+J'ai regardé `SinglePieceVersionFormContainer.tsx:239-263` : il existe déjà un mécanisme de clonage, mais c'est un **bouton explicite** ("Create new piece version from selected") qui génère de nouveaux ids pour la pieceVersion + movements + sections *avant* toute édition — donc l'original partagé n'est jamais muté par ce chemin-là. Ma question porte sur l'autre chemin : une fois qu'une pieceVersion existante-mais-non-reviewée est **sélectionnée** (pas clonée), est-ce que ses champs (category, movements, sections...) apparaissent ensuite dans un formulaire **éditable** qu'on peut modifier directement, sans passer par le bouton de clonage ? Si oui, votre préoccupation est fondée et il faut le fork serveur. Si non (sélection = verrouillé en lecture, seul le clonage permet l'édition), alors le risque n'existe pas dans l'UI actuelle et le fork automatique côté serveur devient une ceinture de sécurité plutôt qu'un besoin fonctionnel réel.
+
+Deuxième sous-question, indépendante de la réponse à la première : ce risque de mutation d'une entité partagée concerne-t-il **seulement PieceVersion** (+ son arbre Movement/Section), comme dans votre exemple, ou aussi Person/Organization/Collection/Piece dès qu'ils sont sélectionnés existants-non-reviewés puis édités ? Et est-ce un risque **déjà présent aujourd'hui** dans la saisie normale `/feed` (un éditeur qui réutilise une pieceVersion d'une autre source non encore reviewée), ou un risque que la review-in-feed-form introduit nouvellement en rendant ces entités plus facilement atteignables ? Ça détermine si c'est un correctif à porter dans ce projet ou un souci préexistant à traiter séparément.
+
+**D — conséquence sur `review/start`**
+
+En confirmant "une seule review active possible, il faut l'abandonner pour en commencer une autre" : j'ai vérifié `app/api/review/start/route.ts`, et aujourd'hui il empêche seulement de reverrouiller la **même** MMSource (`db.review.findFirst({ mMSourceId, state: IN_REVIEW })`) — il ne vérifie pas si **ce reviewer** a déjà une autre review `IN_REVIEW` sur une source différente. La redirection auto de `/review` (point H) masque ce trou en pratique, mais elle est contournable (navigation directe, onglet différent). Puisque vous voulez une seule clé de brouillon "review en cours" sans id, deux reviews actives simultanées pour le même reviewer écraseraient silencieusement l'une des deux dans le localStorage. Je propose d'ajouter cette vérification serveur dans `review/start` (le reviewer ne peut démarrer une review que s'il n'en a pas déjà une `IN_REVIEW`). Vous confirmez ?
+
+Aussi, pour D : même avec une clé statique, `FeedFormProvider` (et les deux providers de sous-wizard single-piece/collection) doivent quand même être modifiés pour choisir entre deux clés fixes (`"feedForm"` vs `"reviewDraft"` par ex.) selon le mode — aujourd'hui la clé est figée en dur à la définition du reducer (`feedFormReducer.ts:644`), donc il faut bien un petit refactor (juste plus simple qu'un templating par reviewId). Je le note comme acté, pas besoin de reconfirmer.
+
+## Me
+
+C. Si elle n'est pas reviewée, une pieceVersion avoir `isNew: true` , et ainsi sera accessible en mode éditable dans le formulaire. C'est ce qui est voulu et rend la revue sans friction. C'est donc bien un fork serveur qu'il faut prévoir, en clonant la pieceVersion si elle est utilisée dans une autre MMSource (et en reportant le nouvel id de pieceVersion dans le MMSourceOnPieceVersion correspondant dans les données de la review en question)
+=> Cela ne concerne que l'entité pieceVersion, les autres (Person/Organization/Collection/Piece) peuvent voir leurs propriétés modifiées durant la review sans changer d'id.
+
+D. Je confirme que c'est une bonne chose de vérifier côté serveur que le reviewer n'a pas de review en cours.
+
+## Sonnet 5
+
+C et D sont clairs et cohérents (musicalement ça a du sens : PieceVersion/Movement/Section capturent une structure propre à l'édition-source, donc jamais partagée en mutation, alors que Person/Organization/Collection/Piece sont des référentiels canoniques qu'on corrige en place). Je note pour le document : fork serveur au submit, uniquement sur PieceVersion (+ ses Movement/Section), avec report du nouvel id dans le `mMSourceOnPieceVersion` correspondant à *cette* review — et remap des `MetronomeMark.sectionId` de cette même MMSource vers les nouveaux ids de section clonés.
+
+Une dernière incohérence que j'ai trouvée en comparant les routes actuelles, à trancher avant de rédiger :
+
+**Accès admin à une review en cours d'un autre reviewer**
+
+Aujourd'hui : `getReviewOverview.ts` et l'ancien `checklist/layout.tsx` autorisent `isOwner || isAdmin` à consulter/éditer une review active, mais `submit/route.ts` refuse avec 403 si `review.creatorId !== userId` — donc un admin peut déjà aujourd'hui ouvrir et modifier la checklist d'un autre reviewer, mais ne peut jamais la soumettre (incohérence déjà présente, sans grande consé quence puisque la checklist est une UI de lecture/coche assez neutre).
+
+Le problème devient plus concret avec le nouveau design : la nouvelle page `/review/[reviewId]` sera littéralement le formulaire feed, entièrement éditable, avec sauvegarde locale automatique dans la clé "review en cours". Si on garde la même règle d'accès (`isOwner || isAdmin`), un admin qui ouvre par erreur/curiosité la review d'un autre reviewer se retrouve avec un formulaire pleinement éditable qui écrit dans son propre brouillon local "review en cours" — et qui échouera de toute façon au submit final (403). Trois options :
+- (a) Restreindre `/review/[reviewId]` strictement au reviewer propriétaire (l'admin perd l'accès direct à une review active, il garde la liste + l'audit log une fois terminée) ;
+- (b) Autoriser aussi l'admin à soumettre (aligner `submit/route.ts` sur `isOwner || isAdmin`), assumant qu'un admin peut reprendre/finir la review de quelqu'un d'autre ;
+- (c) Garder l'admin en lecture seule uniquement (nécessite un mode "lecture" du formulaire feed qui n'existe pas aujourd'hui — plus de travail, pour un besoin qui n'est pas exprimé).
+
+Je recommande (a), la plus simple et cohérente avec le reste (aucune UI admin n'expose aujourd'hui d'action sur une review active de quelqu'un d'autre). Vous validez ?
+
+Une fois ce point tranché, je considère qu'on n'a plus de zone d'ombre bloquante pour rédiger le document récapitulatif — dites-moi si c'est le cas pour vous aussi, ou s'il reste un point que vous voulez ajouter.
+
+## Me
+
+Option a : de toute façon, un admin qui ouvre une review d'un autre reviewer n'aura pas accès à son brouillon qui vit dans le navigateur de l'autre, donc c'est inutile.
+Tu peux rédiger le document. Mets-le dans 'specs/review-in-feed-form' stp.
+
+## Sonnet 5
+
+J'ai rédigé le document dans `specs/review-in-feed-form/20260805_decisions.md`. Il couvre les 12 points tranchés : principe général, mode générique du feed form, hydratation des données (remplaçant le bridge), persistance locale, wrapper "review en cours", diff & audit, `isNew`/fork de PieceVersion, abandon, accès/concurrence, commentaire général, la liste des fichiers à supprimer/adapter/conserver, et le rappel du hors-scope (`self-source-edit`).
+
+Ce document est prêt à servir de base pour la feuille de route détaillée.
