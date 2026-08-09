@@ -581,7 +581,7 @@ async function forkModifiedSharedPieceVersions(
    - `mMSourceOnPieceVersions` : l'entrée dont `pieceVersionId` correspond passe au nouvel id, rang
      inchangé. La contrainte `@@unique([mMSourceId, pieceVersionId])` garantit l'unicité de l'entrée
      à remapper ;
-   - `metronomeMarks` : `sectionId` et `pieceVersionId` remappés. **Seules les marques de la source
+   - `metronomeMarks` : `sectionId` remappés. **Seules les marques de la source
      en revue existent dans l'état** — celles des autres sources ne sont pas dans le périmètre et ne
      doivent jamais être touchées.
 4. Constituer `protectedEntityIds` avec tous les ids d'origine (`PieceVersion`, `Movement`,

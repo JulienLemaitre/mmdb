@@ -315,11 +315,11 @@ reviewer), pas celles de la baseline.
 Un remappage `{ ancien id → nouvel id }` est construit pour la `PieceVersion`, ses `Movement` et ses
 `Section`, puis appliqué à l'état soumis **avant** le recalcul du diff :
 
-- `mMSourceOnPieceVersions` : l'entrée de la source revue passe au nouveau `pieceVersionId`, rang
+- `mMSourceOnPieceVersions` : l'entrée pointant la pieceVersion objet du fork passe au nouveau `pieceVersionId`, rang
   inchangé. La contrainte `@@unique([mMSourceId, pieceVersionId])` garantit qu'il n'existe qu'une
   seule entrée à remapper.
-- `metronomeMarks` : tous les `sectionId` (et `pieceVersionId`) des marques **de la source revue**
-  pointent vers les sections clonées. Les marques des autres sources ne sont pas touchées.
+- `metronomeMarks` : tous les `sectionId` des `metronomeMark` **de la source revue** et **pointant vers les sections de la pieceVersion objet du fork**,
+  pointent vers les sections clonées. Les `metronomeMark` liés aux autres pièces de la MMSource revue ne sont pas touchées.
 - L'ancienne `PieceVersion` est retirée de l'état soumis, remplacée par la copie.
 
 ### 7.5 Audit du fork
@@ -328,7 +328,7 @@ Après remappage, le diff est **recalculé**, et produit exactement :
 
 - la **création** de la nouvelle `PieceVersion` et de ses `Movement`/`Section` (leurs ids sont absents
   de la base) ;
-- la **mise à jour de la relation source/version**, enregistrée sous l'entité `MM_SOURCE` via le
+- la **mise à jour de la relation source/pieceVersion**, enregistrée sous l'entité `MM_SOURCE` via le
   snapshot d'ordonnancement `contentsOrder` étendu à `{ pieceVersionId, rank }` avant/après.
   *Décision : pas de nouvelle valeur `MM_SOURCE_ON_PIECE_VERSION` dans l'enum `AUDIT_ENTITY_TYPE`,
   donc pas de migration.*
@@ -388,6 +388,8 @@ Règle de classification qui en découle :
 
 Sans cette extension, une entité préexistante simplement sélectionnée serait auditée comme une
 création, et une modification comme une création — deux erreurs de fond dans la trace d'audit.
+
+**Règle de protection des entités existante en base** : une entité person/organisation/pièce/collection/tempoIndication présente dans la baseline, mais absente de l'état soumis ne doit pas supprimer l'entité en base, **seulement** sa liaison comme contribution, MMSourceOnPieceVersion etc.
 
 ### 8.2 Validation
 

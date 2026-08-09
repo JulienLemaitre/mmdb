@@ -32,7 +32,7 @@ This document captures project-specific knowledge that will speed up development
   - Path aliases: use @/* and @/auth as configured in tsconfig.json. Keep these in sync if re-organizing folders.
 
 - ESLint/Prettier
-  - Run lint: npm run lint
+  - Run lint: `npx eslint .`
   - The flat ESLint config (eslint.config.mjs) combines next/core-web-vitals, Prettier, and TypeScript rules. Testing-library plugin is active for test files.
   - Prefer fixing warnings (e.g., @typescript-eslint/no-unused-vars with underscore ignore patterns) rather than suppressing them.
 
