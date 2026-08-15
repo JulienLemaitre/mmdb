@@ -62,6 +62,9 @@ justifiait pas le coût de maintenance de la checklist.
 - Isolation du brouillon de revue par `reviewId`, séparée du brouillon `/feed`.
 - Réécriture du moteur de diff/audit sur `FeedFormState`.
 - Réécriture de la route de soumission de revue (baseline serveur, normalisation, fork, transaction).
+- Bouton dans le bandeau supérieur et modale de visualisation des modifications (`ReviewDiffModal`) accessibles à tout moment en cours de revue.
+- Notification par toast d'avertissement en cas d'invalidation ou de purge de données locales (`localStorage`) suite à un changement de version, corruption ou incohérence de session.
+- Langue de l'interface : respect strict de la langue anglaise pour l'intégralité des textes affichés (UI, boutons, modales, toasts, libellés, alertes).
 - Correction des défauts latents listés en §12.
 - Renommage systématique du vocabulaire de checklist.
 
@@ -99,7 +102,7 @@ suivante fait foi :
 
 | Terme | Définition | Emplacement |
 |---|---|---|
-| **Enveloppe de version** | Le wrapper technique `{ version, payload }` appliqué à *toute* écriture localStorage, qui invalide silencieusement les données lors d'un bump de `LOCAL_STORAGE_SCHEMA_VERSION`. | `utils/localStorage.ts` — inchangé |
+| **Enveloppe de version** | Le wrapper technique `{ version, payload }` appliqué à *toute* écriture localStorage, qui invalide les données lors d'un bump de `LOCAL_STORAGE_SCHEMA_VERSION`. L'invalidation n'est plus silencieuse : elle déclenche un toast d'avertissement (en anglais) à l'utilisateur via `ToastNotificationProvider`. | `utils/localStorage.ts` |
 | **Métadonnées de session de revue** | `{ reviewId, reviewerId, mMSourceId, mode, overallComment, globallyReviewed }`. Un état React tenu par un provider **autour** de `FeedFormProvider`, synchronisé vers sa propre clé localStorage. | Nouveau `ReviewSessionProvider` |
 | **Brouillon** | Le `FeedFormState` lui-même, plus les états des deux sous-wizards. | Clés localStorage dédiées |
 
@@ -138,8 +141,17 @@ découverte d'implémentation.
    initial. Pas de fusion : une fusion profonde d'arrays par index produirait des états hybrides
    incohérents (voir §12.4).
 3. Un brouillon est *valide* si son enregistrement de session porte le bon `reviewId` **et** le bon
-   `reviewerId`. Sinon les quatre clés du préfixe sont purgées et l'état serveur s'applique.
+   `reviewerId`. Sinon les quatre clés du préfixe sont purgées, l'état serveur s'applique et un
+   toast d'avertissement en anglais est affiché à l'utilisateur.
 4. `LOCAL_STORAGE_SCHEMA_VERSION` passe de 6 à 7 : la forme de `FeedFormInfo` change.
+
+**Notification lors de l'invalidation locale.** L'effacement silencieux du stockage local est supprimé.
+Dès lors que `utils/localStorage.ts` supprime un enregistrement (incompatibilité de version de schéma,
+JSON invalide/corrompu) ou que la session locale est incohérente (mauvais `reviewId` ou `reviewerId`),
+un signal (événement personnalisé `window.dispatchEvent("mmdb:storage-invalidated", { detail: { key, reason } })`
+ou gestionnaire dans le Provider) déclenche l'affichage d'un toast d'avertissement (`ToastNotificationProvider` /
+`toastNotificationAction.WARNING`) avec un message explicatif en anglais (ex. : *"Your previous local draft was reset due to an application update."*
+ou *"Local draft reset: session does not match current user."*).
 
 **Aucune péremption.** Sans abandon explicite, le verrou `IN_REVIEW` et le brouillon persistent
 indéfiniment, et la revue reprend telle quelle au retour sur la page.
@@ -172,6 +184,7 @@ zéro friction — le reviewer ne re-valide jamais une étape qu'il n'a pas touc
 Un composant léger, monté dans le layout de revue, remplace `ReviewEditBanner`. Il affiche :
 
 - l'indication qu'une revue est en cours et l'identification de la source ;
+- un bouton ouvrant la modale de visualisation des différences en cours de revue (`ReviewDiffModal`), accessible à tout moment, calculant et affichant en temps réel les champs modifiés / ajoutés / supprimés par rapport à la baseline de départ via `computeChangedFieldPaths(baseline, state)` ;
 - un bouton ouvrant le commentaire général (`overallComment`), éditable à tout moment ;
 - un bouton « Abandonner la revue ».
 
@@ -194,6 +207,8 @@ redirection vers `/review/[reviewId]`.
 Le reviewer parcourt les cinq étapes du formulaire plus le récapitulatif. Toute modification reste
 locale. Les sous-formulaires pièce unique et collection s'ouvrent depuis l'étape 3 par le mécanisme
 existant de ré-ouverture d'une entrée déjà présente — aucune logique de seed spécifique à la revue.
+À tout moment de la session, le reviewer peut ouvrir la modale de diff depuis le bandeau supérieur pour
+consulter les écarts en cours par rapport à la baseline initiale.
 
 ### 4.3 Reprise
 
@@ -498,7 +513,9 @@ lecture, pas une colonne.
 
 ---
 
-## 10. Vocabulaire
+## 10. Vocabulaire et langue de l'interface
+
+### 10.1 Vocabulaire
 
 Le refactoring supprime la notion de checklist. **Aucun nom issu du processus actuel ne doit
 survivre** dans les types, les fonctions, les fichiers ou les tests. Les notions cibles sont le
@@ -509,6 +526,17 @@ quels champs comparer — mais dépouillé de ses `label` et `meta` (qui ne serv
 la checklist) et renommé. Il doit continuer d'être maintenu à la main à chaque évolution du schéma
 de base de données ; `movement.isVariation`, ajouté récemment, y figure déjà et sert d'exemple de
 cette servitude.
+
+### 10.2 Langue des textes de l'application (UI)
+
+Tous les textes visibles par l'utilisateur final dans l'interface applicative doivent impérativement
+être rédigés en **anglais**. Cela s'applique sans exception à :
+- l'UI des étapes du formulaire et des sous-formulaires (titres, libellés de champs, placeholders, infobulles) ;
+- le bandeau de session de revue (`ReviewSessionBanner`) ;
+- l'ensemble des boutons d'action et libellés interactifs ;
+- les modales de dialogue, de confirmation, de commentaire (`OverallCommentModal`) et de diff (`ReviewDiffModal`) ;
+- les notifications et alertes sous forme de toasts (`ToastNotificationProvider`) ;
+- les messages d'erreur et d'avertissement renvoyés ou affichés côté client.
 
 ---
 
@@ -561,6 +589,11 @@ Critères d'acceptation transverses, à vérifier par des tests.
 **Non-régression**
 21. La saisie initiale `/feed` fonctionne exactement comme avant : mêmes clés, mêmes étapes, même
     route de persistance, même comportement de réinitialisation.
+
+**Langue de l'interface**
+22. **Tous les textes et messages affichés à l'utilisateur** (boutons, modales, bandeaux,
+    notifications toasts, labels de formulaires, retours API destinés à l'UI) sont impérativement
+    rédigés en anglais.
 
 ---
 

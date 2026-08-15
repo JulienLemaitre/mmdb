@@ -19,8 +19,15 @@ Ce document ne redécide rien : il découpe et ordonne les travaux. En cas d'éc
    complète.
 5. `npx eslint .` — `npm run lint` est cassé (`next lint` retiré en Next 16).
 6. `git add` les fichiers créés, y compris le client Prisma régénéré et les migrations.
+7. **Langue des textes de l'application :** TOUS les textes affichés dans l'application (UI, boutons,
+   titres, libellés de champs, messages d'erreur ou d'alerte, modales, toasts, placeholders,
+   infobulles, descriptions) doivent impérativement être rédigés en **anglais**.
 
-### Conventions de nommage retenues
+### Conventions de nommage et langue retenues
+
+**Convention linguistique (UI) :** Tous les libellés et textes visibles dans l'interface utilisateur
+(UI, messages de toast, modales, boutons, aides contextuelles, placeholders, alertes d'erreur/succès)
+sont impérativement en **anglais**.
 
 Noms proposés, à ajuster à la marge en implémentation si un meilleur se présente — mais **aucun ne
 doit contenir « checklist »**.
@@ -223,6 +230,14 @@ initiale.
    toutes les clés préfixées `review:` si l'argument est omis. Nécessaire pour évacuer un brouillon
    résiduel d'une revue antérieure.
 6. **Bumper `LOCAL_STORAGE_SCHEMA_VERSION` de 6 à 7.**
+7. **Signal d'invalidation locale dans `utils/localStorage.ts` et écouteur Toast global** :
+   - Lorsque `localStorageGetItem` supprime un item en raison d'une version obsolète
+     (`LOCAL_STORAGE_SCHEMA_VERSION`), d'un JSON corrompu ou d'une enveloppe invalide, émettre un
+     événement DOM personnalisé (ex: `window.dispatchEvent(new CustomEvent("mmdb:storage-invalidated", { detail: { key, reason } }))`).
+   - Dans `context/toastNotification/toastNotificationContext.tsx` (ou dans `ui/Providers.tsx`), écouter
+     cet événement et afficher un toast d'avertissement (`toastNotificationAction.WARNING`) avec un
+     message en anglais (ex. : *"Your previous local draft was reset due to an application update."*)
+     plutôt que d'échouer silencieusement.
 
 ### Tests
 
@@ -230,6 +245,9 @@ initiale.
   inchangé) vs `replace` ; deux instances de fabrique n'interfèrent pas (clés distinctes, closures
   indépendantes).
 - `__tests__/utils/purgeReviewLocalDrafts.test.ts`.
+- `__tests__/utils/localStorage.test.ts` : émission de l'événement `mmdb:storage-invalidated` lors d'une
+  suppression pour version obsolète ou JSON corrompu.
+- `__tests__/context/toastNotificationContext.test.tsx` (ou test de l'écouteur) : affichage du toast d'avertissement en anglais à la réception de l'événement.
 - **Non-régression `/feed`** : le brouillon de saisie initiale se sauvegarde et se restaure comme
   avant.
 
@@ -336,10 +354,15 @@ Remplacer `getReviewOverview` (qui produit un `ChecklistGraph`) par un chargeur 
      `storageKey = GET_REVIEW_STORAGE_KEYS(reviewId).feedForm` et
      `initialState = buildReviewInitialFeedFormState(...)`, puis `FeedFormShell` avec le bandeau du
      lot 5.
-3. **Validation du brouillon à l'hydratation** (composant client, dans le provider de session) :
-   lire `review:<reviewId>:session` ; si absent, l'initialiser depuis les données serveur ; si
-   présent avec un `reviewId` ou un `reviewerId` divergent, appeler `purgeReviewLocalDrafts(reviewId)`
-   et repartir de l'état serveur. Journaliser en `debug`.
+3. **Validation du brouillon à l'hydratation et gestion de l'invalidation locale** (composant client,
+   dans le provider de session / `FeedFormShell`) :
+   - lire `review:<reviewId>:session` ; si absent, l'initialiser depuis les données serveur ; si
+     présent avec un `reviewId` ou un `reviewerId` divergent, appeler `purgeReviewLocalDrafts(reviewId)`,
+     déclencher un toast d'avertissement en anglais (ex. : *"Local draft reset: session does not match current user."*)
+     prévenant l'utilisateur de la réinitialisation de son brouillon de session, et repartir de l'état serveur.
+     Journaliser en `debug`.
+   - l'écouteur global `mmdb:storage-invalidated` (Lot 2) notifie automatiquement par toast d'avertissement
+     en cas d'incompatibilité de version de schéma ou de données corrompues.
 4. **`review/[reviewId]/page.tsx`** : `<MMSourceForm />`, comme la page `/feed`.
 5. **`utils/routes.ts`** : remplacer `GET_URL_REVIEW_CHECKLIST` par
    `GET_URL_REVIEW = (reviewId) => \`/review/${reviewId}\``, et ajouter
@@ -354,7 +377,7 @@ Remplacer `getReviewOverview` (qui produit un `ChecklistGraph`) par un chargeur 
 
 - Test d'intégration du layout : un non-propriétaire est redirigé avec `reason=notOwner` ; une revue
   `APPROVED` avec `reason=notActive`.
-- Test d'hydratation : brouillon avec mauvais `reviewerId` → purgé, état serveur appliqué.
+- Test d'hydratation : brouillon avec mauvais `reviewerId` → purgé, état serveur appliqué et toast d'avertissement en anglais affiché.
 
 ---
 
@@ -366,22 +389,29 @@ Remplacer `getReviewOverview` (qui produit un `ChecklistGraph`) par un chargeur 
 
 - Nouveau : `features/review/components/ReviewSessionBanner.tsx`
 - Nouveau : `features/review/components/OverallCommentModal.tsx`
+- Nouveau : `features/review/components/ReviewDiffModal.tsx`
 - Nouveau : `features/review/components/AbortReviewButton.tsx`
 
 ### Tâches
 
 1. **`ReviewSessionBanner`** : indique qu'une revue est en cours, rappelle que les modifications
    restent locales jusqu'à l'approbation, identifie la source (titre, compositeur ou lien).
+   Porte les boutons d'ouverture de `OverallCommentModal`, de `ReviewDiffModal` et d'`AbortReviewButton`.
    **Aucun affichage de progression** — décision actée.
 2. **`OverallCommentModal`** : zone de texte alimentant `overallComment` du contexte de session,
    accessible à tout moment. Aucun appel API : la valeur part avec le payload final.
-3. **`AbortReviewButton`** : modale de confirmation avertissant de la perte des modifications
+3. **`ReviewDiffModal`** : modale affichant en direct l'ensemble des modifications apportées par le
+   reviewer en comparant l'état courant (`FeedFormState`) à la `baseline` serveur du contexte de session.
+   Elle consomme `computeChangedFieldPaths(baseline, state)` (introduit au Lot 7 — si L5 est réalisé en
+   amont/parallèle de L7, poser le composant avec un bouchon et brancher la fonction réelle lors de la convergence).
+4. **`AbortReviewButton`** : modale de confirmation avertissant de la perte des modifications
    locales et du commentaire → `POST /api/review/[reviewId]/abort` → `purgeReviewLocalDrafts(reviewId)`
    **après succès** → redirection vers `/review`.
    En cas d'échec de l'appel : afficher l'erreur, **ne rien purger**.
 
 ### Tests
 
+- `ReviewDiffModal` : affichage des modifications par rapport à la baseline, accessible à tout moment depuis le bandeau.
 - `AbortReviewButton` : purge et redirection seulement après réponse en succès ; aucune purge sur
   erreur réseau ou HTTP.
 
@@ -899,32 +929,36 @@ précédent. Établir la table de correspondance invariant → test dans la PR.
 2. L'étape Intro s'affiche avec le contenu de revue ; valider.
 3. Les étapes 1 à 4 sont préremplies et marquées complètes sans intervention.
 4. Modifier un champ à chaque niveau (source, contribution, pièce, section, marque).
-5. Recharger la page → tout est restauré.
-6. Ouvrir le commentaire général, saisir un texte, fermer, recharger → le texte est restauré.
-7. Approuver → confirmation → retour à `/review`, source disparue de la liste.
-8. Vérifier en base : `Review.state = APPROVED`, `MMSource.reviewState = APPROVED`, les `AuditLog`
+5. Ouvrir la modale de visualisation des modifications (« Voir les modifications » dans le bandeau) → vérifier que l'ensemble des champs modifiés apparaît correctement avec leurs nouvelles valeurs.
+6. Recharger la page → tout est restauré.
+7. Ouvrir le commentaire général, saisir un texte, fermer, recharger → le texte est restauré.
+8. Approuver → confirmation → retour à `/review`, source disparue de la liste.
+9. Vérifier en base : `Review.state = APPROVED`, `MMSource.reviewState = APPROVED`, les `AuditLog`
    correspondent exactement aux modifications, les `ReviewedEntity` sont créés, `sectionCount` est
    juste, le brouillon local est vide.
 
+**Visualisation et gestion des alertes**
+10. Simuler une invalidation de stockage local (version de schéma obsolète ou session incohérente) → vérifier qu'un toast d'avertissement en anglais apparaît clairement en haut de l'écran sans échec silencieux.
+
 **Isolation des brouillons**
-9. Ouvrir `/feed` dans un autre onglet, saisir quelque chose, revenir à la revue → aucune
+11. Ouvrir `/feed` dans un autre onglet, saisir quelque chose, revenir à la revue → aucune
    contamination dans les deux sens.
 
 **Fork**
-10. Sur une source dont une `PieceVersion` est partagée avec une autre source, modifier une section →
+12. Sur une source dont une `PieceVersion` est partagée avec une autre source, modifier une section →
     approuver → vérifier que l'autre source pointe toujours l'originale intacte, que la source revue
     pointe la copie, et que les marques métronomiques de chaque source visent les bonnes sections.
 
 **Abandon**
-11. Démarrer une revue, modifier, abandonner → la source revient dans la liste, aucune modification
+13. Démarrer une revue, modifier, abandonner → la source revient dans la liste, aucune modification
     en base, brouillon local purgé.
 
 **Concurrence**
-12. Tenter de démarrer une seconde revue avec le même compte → refusée.
-13. Ouvrir `/review/[reviewId]` d'un autre reviewer avec un compte admin → redirigé vers `/review`.
+14. Tenter de démarrer une seconde revue avec le même compte → refusée.
+15. Ouvrir `/review/[reviewId]` d'un autre reviewer avec un compte admin → redirigé vers `/review`.
 
 **Non-régression de la saisie initiale**
-14. Saisir une MM Source complète via `/feed` et l'enregistrer. Vérifier le brouillon, la
+16. Saisir une MM Source complète via `/feed` et l'enregistrer. Vérifier le brouillon, la
     réinitialisation, et la source créée en base.
 
 ### Documentation
