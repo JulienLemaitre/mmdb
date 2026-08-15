@@ -79,7 +79,7 @@ Le brouillon normal de `/feed` reste séparé et intact. Une revue utilise un es
 - les éventuels états des sous-formulaires collection et pièce unique ;
 - les métadonnées de session, dont le commentaire général.
 
-Toutes ces données sont enveloppées par les helpers versionnés existants de `utils/localStorage.ts`. Toute modification de leur forme impose une hausse de `LOCAL_STORAGE_SCHEMA_VERSION`.
+Toutes ces données sont enveloppées par les helpers versionnés existants de `../utils/localStorage.ts`. Toute modification de leur forme impose une hausse de `LOCAL_STORAGE_SCHEMA_VERSION`.
 
 À l’ouverture d’une revue, un brouillon local valide est prioritaire. En son absence, la page initialise l’état depuis la MM Source chargée côté serveur. Ainsi, un rechargement ou une nouvelle session dans le même navigateur reprend la revue sans toucher au brouillon de saisie normale.
 

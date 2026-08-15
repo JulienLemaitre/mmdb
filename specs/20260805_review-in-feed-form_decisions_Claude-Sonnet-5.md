@@ -46,10 +46,10 @@ la feuille de route d'implémentation — ce n'est pas la feuille de route elle-
 
 ## 3. Hydratation des données (remplace le bridge)
 
-- `features/review/reviewEditBridge.ts` disparaît entièrement (`buildFeedFormBootStateFromWorkingCopy`,
+- `../features/review/reviewEditBridge.ts` disparaît entièrement (`buildFeedFormBootStateFromWorkingCopy`,
   `rebuildWorkingCopyFromFeedForm`, `writeBootStateForFeedForm`/`consumeBootStateForFeedForm`,
   `FEED_FORM_BOOT_KEY`).
-- `utils/server/getReviewOverview.ts` est conservé et adapté : au lieu de produire un
+- `../utils/server/getReviewOverview.ts` est conservé et adapté : au lieu de produire un
   `ChecklistGraph`, il produit directement un objet compatible `FeedFormState` (les deux
   types sont déjà structurellement alignés — mêmes `*State`, mêmes imbrications
   `pieceVersions[].movements[].sections[]`) plus les `globallyReviewed` (ids Person/
@@ -82,7 +82,7 @@ la feuille de route d'implémentation — ce n'est pas la feuille de route elle-
   automatiquement au retour sur `/review/[reviewId]` — même comportement que le brouillon
   `/feed` actuel.
 - Le vidage lors d'un changement de version de schéma suit le mécanisme existant
-  (`LOCAL_STORAGE_SCHEMA_VERSION` dans `utils/localStorage.ts`) : à bumper puisque la forme
+  (`LOCAL_STORAGE_SCHEMA_VERSION` dans `../utils/localStorage.ts`) : à bumper puisque la forme
   de `FeedFormState`/`FeedFormInfo` change (ajout de `mode`, suppression d'`anchors`, etc.).
 
 ## 5. Wrapper "review en cours"
@@ -162,7 +162,7 @@ la feuille de route d'implémentation — ce n'est pas la feuille de route elle-
 - `/review` continue de rediriger automatiquement le reviewer vers sa review `IN_REVIEW`
   active si elle existe (comportement actuel de `app/(signedIn)/review/page.tsx:30-36`,
   pointant vers la nouvelle URL).
-- `app/api/review/start/route.ts` doit désormais vérifier, en plus du verrou existant sur la
+- `../app/api/review/start/route.ts` doit désormais vérifier, en plus du verrou existant sur la
   MMSource, que **le reviewer n'a pas déjà une autre review `IN_REVIEW`** (aujourd'hui
   seule la même MMSource est protégée contre le double-lock). Nécessaire dès qu'on adopte
   une clé de brouillon unique sans id (§4) : deux reviews actives en parallèle pour le même
@@ -187,36 +187,36 @@ la feuille de route d'implémentation — ce n'est pas la feuille de route elle-
 
 **Supprimés :**
 - `app/(signedIn)/review/[reviewId]/checklist/` (page + layout)
-- `features/review/reviewEditBridge.ts`
-- `context/reviewWorkingCopyContext.tsx`
-- `features/review/components/ReviewWorkingCopyClientProvider.tsx`
-- `features/review/components/ReviewEditBanner.tsx`
-- `features/review/reviewAdapters.ts`, `reviewProgress.ts`, `utils/expandRequiredChecklistItems.ts`,
+- `../features/review/reviewEditBridge.ts`
+- `../context/reviewWorkingCopyContext.tsx`
+- `../features/review/components/ReviewWorkingCopyClientProvider.tsx`
+- `../features/review/components/ReviewEditBanner.tsx`
+- `../features/review/reviewAdapters.ts`, `reviewProgress.ts`, `utils/expandRequiredChecklistItems.ts`,
   `utils/areAllItemsChecked.ts`, `utils/getItemValueDisplay.ts`
 - `features/review/slices/*`, `SliceHeader.tsx`, `components/ChecklistItemRow.tsx`, `components/ChecklistRow.tsx`
-- `utils/constants.ts` : `FEED_FORM_BOOT_KEY`
+- `../utils/constants.ts` : `FEED_FORM_BOOT_KEY`
 
 **Adaptés en profondeur :**
-- `utils/server/getReviewOverview.ts` (retourne un `FeedFormState`-shape au lieu d'un `ChecklistGraph`)
-- `features/review/reviewChecklistSchema.ts` → renommé, débarrassé des `label`
-- `features/review/reviewDiff.ts`, `features/review/utils/auditCompose.ts` (opèrent sur `FeedFormState`)
+- `../utils/server/getReviewOverview.ts` (retourne un `FeedFormState`-shape au lieu d'un `ChecklistGraph`)
+- `../features/review/reviewChecklistSchema.ts` → renommé, débarrassé des `label`
+- `../features/review/reviewDiff.ts`, `../features/review/utils/auditCompose.ts` (opèrent sur `FeedFormState`)
 - `app/api/review/[reviewId]/submit/route.ts` (payload, validation, fork PieceVersion)
-- `app/api/review/start/route.ts` (garde "une seule review active par reviewer")
-- `types/feedFormTypes.ts` (`mode` généralisé, `anchors` retiré)
-- `context/feedFormContext.tsx`, `context/feedFormReducer.ts`, `context/utils/localStorageReducerWrapper.ts`,
+- `../app/api/review/start/route.ts` (garde "une seule review active par reviewer")
+- `../types/feedFormTypes.ts` (`mode` généralisé, `anchors` retiré)
+- `../context/feedFormContext.tsx`, `../context/feedFormReducer.ts`, `../context/utils/localStorageReducerWrapper.ts`,
   et les deux providers/reducers de sous-wizard (single-piece, collection) : clé de
   localStorage sélectionnée par mode au lieu d'être figée à la définition du module
-- `features/feed/multiStepMMSourceForm/stepForms/FeedSummary.tsx` (polymorphe par mode)
+- `../features/feed/multiStepMMSourceForm/stepForms/FeedSummary.tsx` (polymorphe par mode)
 - `app/(signedIn)/review/reviewListClient.tsx` (route de destination après "Start review")
 
 **Conservés sans changement notable :**
 - `app/api/review/[reviewId]/abort/route.ts`
 - `app/api/review/[reviewId]/audit/route.ts`, `audit-logs/route.ts`, `ReviewAuditLogPanel.tsx`
 - Modèles Prisma `Review`, `ReviewedEntity`, `AuditLog`, enum `REVIEW_STATE`
-- `proxy.ts` (le matcher `/review/:path*` couvre déjà la nouvelle route)
+- `../proxy.ts` (le matcher `/review/:path*` couvre déjà la nouvelle route)
 
 **À l'étude en implémentation (non bloquant pour la feuille de route) :**
-- `features/review/utils/isCollectionCompleteInChecklistGraph.ts` et
+- `../features/review/utils/isCollectionCompleteInChecklistGraph.ts` et
   `utils/processSourceOnPieceVersionsForDisplay.ts` : logique probablement réutilisable
   telle quelle dans la fonction d'hydratation adaptée (§3), à vérifier au moment de
   l'implémentation plutôt qu'à trancher ici.

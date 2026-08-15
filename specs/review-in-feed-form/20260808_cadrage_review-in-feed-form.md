@@ -12,8 +12,8 @@ Ils restent consultables comme trace de la réflexion, mais ne font plus autorit
 
 - `specs/20260804_review-in-feed-form_GPT-5.6.md` (discussion)
 - `specs/20260804_review-in-feed-form_Claude-Sonnet-5.md` (discussion)
-- `specs/review-in-feed-form/20260805_cadrage-review-dans-feed-form_GPT-5.6.md`
-- `specs/review-in-feed-form/20260805_review-in-feed-form_decisions_Claude-Sonnet-5.md`
+- `specs/20260805_cadrage-review-dans-feed-form_GPT-5.6.md`
+- `specs/20260805_review-in-feed-form_decisions_Claude-Sonnet-5.md`
 - `specs/20260806_review-in-feed_synthese.md` (comparaison des deux précédents)
 
 En cas de contradiction entre l'un de ces documents et le présent cadrage, **le présent cadrage
