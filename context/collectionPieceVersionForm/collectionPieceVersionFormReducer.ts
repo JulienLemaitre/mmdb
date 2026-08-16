@@ -136,11 +136,21 @@ function collectionPieceVersionsFormReducerCore(
   return newState;
 }
 
-export const collectionPieceVersionsFormReducer = withLocalStorage(
-  collectionPieceVersionsFormReducerCore,
-  COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-  COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
-);
+export function createCollectionPieceVersionsFormReducer(
+  storageKey: string = COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+  initialState: CollectionPieceVersionsFormState = COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
+  options?: { hydrationStrategy?: "merge" | "replace" },
+) {
+  return withLocalStorage(
+    collectionPieceVersionsFormReducerCore,
+    storageKey,
+    initialState,
+    options,
+  );
+}
+
+export const collectionPieceVersionsFormReducer =
+  createCollectionPieceVersionsFormReducer();
 
 function goToPrevStep(state: CollectionPieceVersionsFormState) {
   const currentStepRank = state?.formInfo?.currentStepRank || 1;

@@ -5,12 +5,13 @@ import {
   useEffect,
   useMemo,
   useReducer,
+  useState,
 } from "react";
 import {
   getCollectionFormStepByRank,
   getLastCompletedStep,
 } from "@/features/feed/multiStepCollectionPieceVersionsForm/stepsUtils";
-import { collectionPieceVersionsFormReducer } from "@/context/collectionPieceVersionForm/collectionPieceVersionFormReducer";
+import { createCollectionPieceVersionsFormReducer } from "@/context/collectionPieceVersionForm/collectionPieceVersionFormReducer";
 import {
   CollectionPieceVersionsFormInfo,
   CollectionPieceVersionsFormProviderProps,
@@ -41,17 +42,22 @@ const CollectionPieceVersionsFormContext = createContext<
 
 export function CollectionPieceVersionsFormProvider({
   children,
+  storageKey = COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
   initialState,
 }: Readonly<CollectionPieceVersionsFormProviderProps>) {
+  const [reducer] = useState(() =>
+    createCollectionPieceVersionsFormReducer(
+      storageKey,
+      initialState || COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
+    ),
+  );
   const [state, dispatch] = useReducer(
-    collectionPieceVersionsFormReducer,
+    reducer,
     initialState || COLLECTION_PIECE_VERSION_FORM_INITIAL_STATE,
   );
 
   useEffect(() => {
-    const localStorageValue: any = localStorageGetItem(
-      COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-    );
+    const localStorageValue: any = localStorageGetItem(storageKey);
     if (localStorageValue) {
       console.log(
         `[INIT] collectionPieceVersionsForm from localStorage`,
@@ -59,7 +65,7 @@ export function CollectionPieceVersionsFormProvider({
       );
       initCollectionPieceVersionsForm(dispatch, localStorageValue);
     }
-  }, []);
+  }, [storageKey]);
 
   const value = useMemo(() => ({ state, dispatch }), [state]);
 

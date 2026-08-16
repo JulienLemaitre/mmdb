@@ -16,6 +16,14 @@ export const SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY =
 export const COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY =
   "collectionPieceVersionForm";
 
+export const REVIEW_LOCAL_STORAGE_PREFIX = "review";
+export const GET_REVIEW_STORAGE_KEYS = (reviewId: string) => ({
+  session: `review:${reviewId}:session`,
+  feedForm: `review:${reviewId}:feedForm`,
+  singlePieceVersionForm: `review:${reviewId}:singlePieceVersionForm`,
+  collectionPieceVersionForm: `review:${reviewId}:collectionPieceVersionForm`,
+});
+
 // Feed Form
 
 export const FEED_FORM_LOCAL_STORAGE_KEY = "feedForm";

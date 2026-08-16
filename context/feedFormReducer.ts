@@ -641,8 +641,17 @@ function feedFormReducerCore(state: FeedFormState, action: PieceFormAction) {
   );
 }
 
-export const feedFormReducer = withLocalStorage(
-  feedFormReducerCore,
-  FEED_FORM_LOCAL_STORAGE_KEY,
-  FEED_FORM_INITIAL_STATE,
-);
+export function createFeedFormReducer(
+  storageKey: string = FEED_FORM_LOCAL_STORAGE_KEY,
+  initialState: FeedFormState = FEED_FORM_INITIAL_STATE,
+  options?: { hydrationStrategy?: "merge" | "replace" },
+) {
+  return withLocalStorage(
+    feedFormReducerCore,
+    storageKey,
+    initialState,
+    options,
+  );
+}
+
+export const feedFormReducer = createFeedFormReducer();

@@ -5,6 +5,7 @@ import {
   useEffect,
   useMemo,
   useReducer,
+  useState,
 } from "react";
 import {
   CollectionState,
@@ -24,7 +25,7 @@ import {
   FeedFormState,
 } from "@/types/feedFormTypes";
 import { localStorageGetItem, localStorageSetItem } from "@/utils/localStorage";
-import { feedFormReducer } from "@/context/feedFormReducer";
+import { createFeedFormReducer } from "@/context/feedFormReducer";
 import {
   FEED_FORM_INITIAL_STATE,
   FEED_FORM_LOCAL_STORAGE_KEY,
@@ -46,10 +47,18 @@ const FeedFormContext = createContext<
 
 export function FeedFormProvider({
   children,
+  storageKey = FEED_FORM_LOCAL_STORAGE_KEY,
+  initialState,
 }: Readonly<FeedFormProviderProps>) {
+  const [reducer] = useState(() =>
+    createFeedFormReducer(
+      storageKey,
+      initialState || FEED_FORM_INITIAL_STATE,
+    ),
+  );
   const [state, dispatch] = useReducer(
-    feedFormReducer,
-    FEED_FORM_INITIAL_STATE,
+    reducer,
+    initialState || FEED_FORM_INITIAL_STATE,
   );
 
   useEffect(() => {
@@ -57,7 +66,7 @@ export function FeedFormProvider({
     try {
       const bootRaw: FeedBootType | null = consumeBootStateForFeedForm();
       if (bootRaw) {
-        localStorageSetItem(FEED_FORM_LOCAL_STORAGE_KEY, bootRaw.feedFormState);
+        localStorageSetItem(storageKey, bootRaw.feedFormState);
 
         if (bootRaw.collectionPieceVersionsFormState) {
           localStorageSetItem(
@@ -75,12 +84,12 @@ export function FeedFormProvider({
     } catch {
       // ignore
     }
-    const localStorageValue = localStorageGetItem(FEED_FORM_LOCAL_STORAGE_KEY);
+    const localStorageValue = localStorageGetItem(storageKey);
     if (localStorageValue) {
       console.log(`[INIT] feedForm from localStorage`, localStorageValue);
       initFeedForm(dispatch, localStorageValue);
     }
-  }, []);
+  }, [storageKey]);
 
   const value = useMemo(() => ({ state, dispatch }), [state]);
 
