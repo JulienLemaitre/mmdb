@@ -3,6 +3,7 @@
 **Date :** 2026-08-08
 **Document de cadrage associé :** `20260808_cadrage_review-in-feed-form.md` — **à lire en premier**.
 Ce document ne redécide rien : il découpe et ordonne les travaux. En cas d'écart, le cadrage fait foi.
+**Document où consigner la progression de l'implémentation :** `review-in-feed-form_progression.md`
 
 ---
 
@@ -22,6 +23,19 @@ Ce document ne redécide rien : il découpe et ordonne les travaux. En cas d'éc
 7. **Langue des textes de l'application :** TOUS les textes affichés dans l'application (UI, boutons,
    titres, libellés de champs, messages d'erreur ou d'alerte, modales, toasts, placeholders,
    infobulles, descriptions) doivent impérativement être rédigés en **anglais**.
+
+### Typage et validation : Zod vs Prisma
+
+Une séparation nette des responsabilités de typage est appliquée dans l'ensemble du projet :
+
+1. **Données de base de données & requêtes ORM (Prisma) :**
+   - **Prisma** est la source unique de vérité pour les entités et relations en base de données.
+   - Utiliser systématiquement les types dérivés de Prisma (`Prisma.PieceVersionGetPayload<...>`, `Prisma.MMSourceCreateInput`, `Prisma.ContributionUncheckedCreateInput`, etc.). Ne pas réécrire de types manuels pour les entités DB.
+
+2. **Formulaires, sessions, validation runtime & API (Zod) :**
+   - **Zod (`types/zodTypes.ts`)** est la source unique de vérité pour toutes les structures de données applicatives, les états de session, les données de formulaire, les charges utiles d'API (requêtes et réponses) et la validation des données stockées (`localStorage`).
+   - **Règle absolue :** Tout nouveau type non dérivé de Prisma doit être déclaré sous forme de schéma Zod (`export const XxxSchema = z.object(...)`) et exporter son type TypeScript inféré (`export type Xxx = z.infer<typeof XxxSchema>`) directement depuis `types/zodTypes.ts`.
+   - Utiliser systématiquement les schémas Zod (`safeParse`) aux frontières runtime (lecture depuis le `localStorage`, validation des corps de requêtes d'API) pour garantir la sécurité d'exécution face aux données corrompues ou obsolètes.
 
 ### Conventions de nommage et langue retenues
 
@@ -93,7 +107,7 @@ lot 12.
 
 ### Critère de sortie
 
-L'état de départ des tests est écrit quelque part de consultable (issue, note de PR).
+L'état de départ des tests est écrit dans `review-in-feed-form_progression.md`.
 
 ---
 
@@ -110,7 +124,7 @@ qui portera les trois modes.
 
 - `types/feedFormTypes.ts`
 - `types/formTypes.ts`
-- Nouveau : `types/formSessionTypes.ts`
+- `types/zodTypes.ts`
 - Nouveau : `context/formSessionContext.tsx`
 
 ### Tâches
@@ -120,35 +134,45 @@ qui portera les trois modes.
    - supprimer `FeedFormInfo.allSourceContributionsDone` (déclaré, utilisé nulle part) ;
    - étendre `FeedFormProviderProps` avec `storageKey: string` et
      `initialState?: FeedFormState | null` (préparation du lot 2).
-2. Créer `types/formSessionTypes.ts` :
+2. Dans `types/zodTypes.ts`, déclarer les schémas Zod et exporter les types TypeScript inférés :
    ```ts
-   export type FormMode = "data-entering" | "self-source-edit" | "review";
+   export const FormModeSchema = z.enum(["data-entering", "self-source-edit", "review"]);
+   export type FormMode = z.infer<typeof FormModeSchema>;
 
-   export type GloballyReviewedIds = {
-     personIds: string[];
-     organizationIds: string[];
-     collectionIds: string[];
-     pieceIds: string[];
-     pieceVersionIds: string[];
-   };
+   export const GloballyReviewedIdsSchema = z.object({
+     personIds: z.array(z.string()),
+     organizationIds: z.array(z.string()),
+     collectionIds: z.array(z.string()),
+     pieceIds: z.array(z.string()),
+     pieceVersionIds: z.array(z.string()),
+   });
+   export type GloballyReviewedIds = z.infer<typeof GloballyReviewedIdsSchema>;
 
-   export type ReviewSessionMeta = {
-     reviewId: string;
-     reviewerId: string;
-     mMSourceId: string;
-     overallComment: string | null;
-   };
+   export const ReviewSessionMetaSchema = z.object({
+     reviewId: z.string(),
+     reviewerId: z.string(),
+     mMSourceId: z.string(),
+     overallComment: z.string().nullable(),
+   });
+   export type ReviewSessionMeta = z.infer<typeof ReviewSessionMetaSchema>;
 
-   export type FormSession =
-     | { mode: "data-entering" }
-     | { mode: "review"; review: ReviewSessionMeta; globallyReviewed: GloballyReviewedIds };
+   export const FormSessionSchema = z.discriminatedUnion("mode", [
+     z.object({ mode: z.literal("data-entering") }),
+     z.object({
+       mode: z.literal("review"),
+       review: ReviewSessionMetaSchema,
+       globallyReviewed: GloballyReviewedIdsSchema,
+     }),
+   ]);
+   export type FormSession = z.infer<typeof FormSessionSchema>;
    ```
-   `self-source-edit` est volontairement absent de l'union tant qu'il n'est pas implémenté :
+   `self-source-edit` est volontairement absent de l'union `FormSessionSchema` tant qu'il n'est pas implémenté :
    l'ajouter plus tard produira des erreurs de compilation aux points à traiter, ce qui est le
    comportement voulu.
 3. Créer `context/formSessionContext.tsx` : provider + `useFormSession()`. En mode revue, il
    expose aussi `setOverallComment()` et synchronise `ReviewSessionMeta` vers la clé
-   `review:<reviewId>:session` via `localStorageSetItem`.
+   `review:<reviewId>:session` via `localStorageSetItem`. La lecture initiale depuis `localStorage`
+   doit valider la donnée avec `ReviewSessionMetaSchema.safeParse()`.
    `useFormSession()` doit renvoyer `{ mode: "data-entering" }` par défaut si aucun provider n'est
    monté, afin que `/feed` fonctionne sans modification de son layout.
 4. Dans `types/formTypes.ts`, retirer de `assertsIsPersistableFeedFormState` la ligne
@@ -283,7 +307,7 @@ Remplacer `getReviewOverview` (qui produit un `ChecklistGraph`) par un chargeur 
      review: { id, creatorId, state, mMSourceId },
      mMSource: { id, title, ... },        // pour l'affichage du bandeau
      baseline: FeedFormState,              // sans formInfo
-     globallyReviewed: GloballyReviewedIds,
+     globallyReviewed: GloballyReviewedIds, // importé depuis @/types/zodTypes
    }
    ```
    Correspondances de forme à établir :
@@ -356,9 +380,10 @@ Remplacer `getReviewOverview` (qui produit un `ChecklistGraph`) par un chargeur 
      lot 5.
 3. **Validation du brouillon à l'hydratation et gestion de l'invalidation locale** (composant client,
    dans le provider de session / `FeedFormShell`) :
-   - lire `review:<reviewId>:session` ; si absent, l'initialiser depuis les données serveur ; si
-     présent avec un `reviewId` ou un `reviewerId` divergent, appeler `purgeReviewLocalDrafts(reviewId)`,
-     déclencher un toast d'avertissement en anglais (ex. : *"Local draft reset: session does not match current user."*)
+   - lire `review:<reviewId>:session` et valider sa structure via `ReviewSessionMetaSchema.safeParse` ;
+     si absent ou invalide, l'initialiser depuis les données serveur ; si présent avec un `reviewId`
+     ou un `reviewerId` divergent, appeler `purgeReviewLocalDrafts(reviewId)`, déclencher un toast
+     d'avertissement en anglais (ex. : *"Local draft reset: session does not match current user."*)
      prévenant l'utilisateur de la réinitialisation de son brouillon de session, et repartir de l'état serveur.
      Journaliser en `debug`.
    - l'écouteur global `mmdb:storage-invalidated` (Lot 2) notifie automatiquement par toast d'avertissement
@@ -499,8 +524,8 @@ Remplacer `getReviewOverview` (qui produit un `ChecklistGraph`) par un chargeur 
    `DELETE` dont l'`entityId` y figure est écartée. C'est le point d'accroche du fork (L9).
 6. **`types/reviewTypes.ts`** — supprimer `ChecklistGraph` et `RequiredChecklistItem` ; renommer les
    types conservés selon la table de nommage. Conserver `AuditEntry`, `AuditEntityType`,
-   `AuditOperation`, `GloballyReviewedEntityArrays` (à aligner sur `GloballyReviewedIds` du L1 —
-   n'en garder qu'un seul).
+   `AuditOperation` ; supprimer `GloballyReviewedEntityArrays` (remplacé par `GloballyReviewedIds`
+   défini dans `types/zodTypes.ts`).
 
 ### Tests
 
@@ -659,7 +684,7 @@ async function forkModifiedSharedPieceVersions(
 
 ```
 1. session, rôle, propriétaire, état IN_REVIEW
-2. payload { feedFormState, overallComment }
+2. payload { feedFormState, overallComment } (contrôle de structure)
 3. contrôle des champs obligatoires (modèle app/api/feedForm/route.ts)
 4. assertsIsPersistableFeedFormState(feedFormState)
 5. baseline = getReviewBaseline(...) puis extendBaselineByExistence(baseline, state)
@@ -669,7 +694,7 @@ async function forkModifiedSharedPieceVersions(
 9. diff #2 = computeChangedFieldPaths(baseline, fork.state)   ← RECALCUL
 10. auditEntries = composeAuditEntries(reviewId, baseline, fork.state, fork.protectedEntityIds)
 11. derived = computeMMSourceDerivedData(fork.state)
-12. e-mail de journalisation (comportement actuel conservé)
+12. e-mail de journalisation pré-transaction (type "Review SUBMIT data" : baseline, diff, audit, summary)
 ```
 
 **Ne pas rejouer les prédicats `isComplete` côté serveur** — décision actée : on fait confiance au
@@ -745,12 +770,14 @@ Conserver la logique actuelle, qui est correcte : déduplication par `type:id`, 
 entités déjà globalement revues** pour ne pas réattribuer le marqueur d'origine au reviewer courant.
 Ajouter les `PieceVersion` créées par le fork ; ne pas toucher aux marqueurs des originales.
 
-### 10.7 Gestion d'erreur
+### 10.7 Gestion d'erreur et e-mails de journalisation
 
-Conserver la journalisation par e-mail (données avant transaction, `txDebug` après succès, erreur en
-cas d'échec) et l'objet `txDebug`. Traduire les violations de contrainte d'unicité (`Piece`,
-`Reference`, `Collection`) en réponse `409` avec un message exploitable par le reviewer, plutôt qu'en
-`500` opaque.
+Conserver la journalisation par e-mail en deux temps (comportement existant enrichi) :
+1. **Avant transaction :** e-mail de données (`"Review SUBMIT data"`) contenant l'état soumis, la baseline, le diff calculé, les entrées `AuditLog` prévues et le résumé des entités touchées.
+2. **Après transaction réussie (SUCCESS) :** e-mail de debug transactionnel (`"Review submit transaction debug"`) contenant l'identifiant de la revue, l'objet `txDebug` et les données complètes rechargées depuis la base (`mMSourceFromDb` incluant les `auditLog` liés).
+3. **En cas d'échec (ERROR / catch) :** e-mail d'erreur (`"Review SUBMIT transaction ERROR"`) contenant le détail de l'erreur levée et l'état d'avancement de `txDebug`.
+
+Traduire les violations de contrainte d'unicité (`Piece`, `Reference`, `Collection`, index partiels) en réponse `409` avec un message exploitable par le reviewer, plutôt qu'en `500` opaque.
 
 ### Tests
 
