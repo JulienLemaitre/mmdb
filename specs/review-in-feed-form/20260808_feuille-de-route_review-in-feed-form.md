@@ -258,8 +258,8 @@ initiale.
    - Lorsque `localStorageGetItem` supprime un item en raison d'une version obsolète
      (`LOCAL_STORAGE_SCHEMA_VERSION`), d'un JSON corrompu ou d'une enveloppe invalide, émettre un
      événement DOM personnalisé (ex: `window.dispatchEvent(new CustomEvent("mmdb:storage-invalidated", { detail: { key, reason } }))`).
-   - Dans `context/toastNotification/toastNotificationContext.tsx` (ou dans `ui/Providers.tsx`), écouter
-     cet événement et afficher un toast d'avertissement (`toastNotificationAction.WARNING`) avec un
+   - Dans `context/toastNotification/toastNotificationContext.tsx` (au sein de `ToastNotificationProvider`), écouter
+     cet événement via un `useEffect` et afficher un toast d'avertissement (`toastNotificationAction.WARNING`) avec un
      message en anglais (ex. : *"Your previous local draft was reset due to an application update."*)
      plutôt que d'échouer silencieusement.
 
@@ -271,7 +271,7 @@ initiale.
 - `__tests__/utils/purgeReviewLocalDrafts.test.ts`.
 - `__tests__/utils/localStorage.test.ts` : émission de l'événement `mmdb:storage-invalidated` lors d'une
   suppression pour version obsolète ou JSON corrompu.
-- `__tests__/context/toastNotificationContext.test.tsx` (ou test de l'écouteur) : affichage du toast d'avertissement en anglais à la réception de l'événement.
+- `__tests__/context/toastNotificationContext.test.tsx` : affichage du toast d'avertissement en anglais à la réception de l'événement `mmdb:storage-invalidated`.
 - **Non-régression `/feed`** : le brouillon de saisie initiale se sauvegarde et se restaure comme
   avant.
 
