@@ -1,6 +1,14 @@
 // Bridge between Review working copy and Feed Form state
 
-import { FeedFormState, ReviewContext } from "@/types/feedFormTypes";
+import { FeedFormState } from "@/types/feedFormTypes";
+
+// Temporary local type until reviewEditBridge is removed in L12
+type ReviewContext = {
+  reviewId: string;
+  reviewEdit: true;
+  updatedAt: string; // ISO
+  anchors?: { pvId?: string; movId?: string; secId?: string; mmId?: string };
+};
 import {
   FEED_FORM_BOOT_KEY,
   feedFormFromWorkingCopyError,
@@ -367,7 +375,7 @@ export function buildFeedFormBootStateFromWorkingCopy(
         isSourceOnPieceVersionformOpen: true,
         formType: isCollectionFormOpen ? "collection" : "single",
       }),
-    },
+    } as any,
     // Deep-copy all the relevant slices from the working copy graph
     mMSourceDescription: { ...workingCopy.graph.source },
     mMSourceContributions: [...(workingCopy.graph.contributions ?? [])],
@@ -447,7 +455,7 @@ export function rebuildWorkingCopyFromFeedForm(
   const prevGraph = previousWorkingCopy.graph || {};
 
   // If the feedFormState is not from a review edit session, do nothing.
-  if (!feedFormState?.formInfo?.reviewContext) {
+  if (!(feedFormState?.formInfo as any)?.reviewContext) {
     return previousWorkingCopy;
   }
 

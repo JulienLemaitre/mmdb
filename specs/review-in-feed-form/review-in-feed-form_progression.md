@@ -36,3 +36,18 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - Migration : `prisma/migrations/20260809124656_review_unique_in_review_per_source/migration.sql`
   - Vérification en base PostgreSQL (`pg_indexes`) : index `review_unique_in_review_per_source` présent et actif (`WHERE (state = 'IN_REVIEW'::"REVIEW_STATE")`).
 - **Statut L0 :** Terminé / Validé.
+- **Cost :** 0.13 credits (Gemini 3.7 Flash - High)
+
+## L1 — Socle de types et contexte de session
+
+- **Fichiers modifiés / créés :**
+  - `types/feedFormTypes.ts` : suppression de `ReviewContext`, de `FeedFormInfo.reviewContext` et de `FeedFormInfo.allSourceContributionsDone` ; extension de `FeedFormProviderProps` avec `storageKey?: string` et `initialState?: FeedFormState | null`.
+  - `types/zodTypes.ts` : ajout des schémas Zod `FormModeSchema`, `GloballyReviewedIdsSchema`, `ReviewSessionMetaSchema`, `FormSessionSchema` et export des types inférés correspondants (`FormMode`, `GloballyReviewedIds`, `ReviewSessionMeta`, `FormSession`).
+  - `context/formSessionContext.tsx` (nouveau) : implémentation de `FormSessionProvider` et du hook `useFormSession()`. Gestion du mode par défaut (`data-entering`) hors provider, synchronisation et validation de `ReviewSessionMeta` via `ReviewSessionMetaSchema.safeParse` vers la clé `review:<reviewId>:session`, exposition de `setOverallComment()` en mode `review`.
+  - `types/formTypes.ts` : retrait de la vérification de `reviewContext` dans `assertsIsPersistableFeedFormState`.
+  - `__tests__/context/formSessionContext.test.tsx` (nouveau) : couverture complète des cas de test (mode par défaut hors provider, mode data-entering, mode review, lecture/écriture de `overallComment`, persistance et hydratation `localStorage`, repli en cas de données invalides ou divergentes).
+- **Vérifications :**
+  - `npx tsc --noEmit` : 0 erreur.
+  - `npm run test:ci` : 40 suites passées / 40 total, 163 tests passés / 163 total (0 échec).
+- **Statut L1 :** Terminé / Validé.
+- **Cost :** 0.32 credits (Gemini 3.7 Flash - High)

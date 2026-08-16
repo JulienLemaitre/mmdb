@@ -52,7 +52,7 @@ describe("Inverse bridge mapping: FeedFormState -> WorkingCopy graph", () => {
           reviewEdit: true,
           updatedAt: new Date().toISOString(),
         },
-      },
+      } as any,
       // Minimal source description slice
       mMSourceDescription: {
         id: graph.source.id,

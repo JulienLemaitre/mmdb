@@ -292,7 +292,7 @@ export default function ChecklistPage() {
     }
 
     const bootState = result.value;
-    if (!bootState?.feedFormState?.formInfo?.reviewContext) {
+    if (!(bootState?.feedFormState?.formInfo as any)?.reviewContext) {
       console.error(
         "ERROR: Something went wrong in buildFeedFormBootStateFromWorkingCopy",
       );
@@ -388,7 +388,7 @@ export default function ChecklistPage() {
         FEED_FORM_LOCAL_STORAGE_KEY,
       );
       if (!feedState) return;
-      const rc = feedState?.formInfo?.reviewContext;
+      const rc = (feedState?.formInfo as any)?.reviewContext;
       if (!rc?.reviewEdit || rc.reviewId !== reviewData.reviewId) return;
 
       const prevWc = {

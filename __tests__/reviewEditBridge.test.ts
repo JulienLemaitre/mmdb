@@ -181,7 +181,7 @@ describe("reviewEditBridge utilities", () => {
     const consumed = consumeBootStateForFeedForm();
     expect(localStorageGetItem(FEED_FORM_BOOT_KEY)).toBeNull();
     expect(consumed?.feedFormState.formInfo?.currentStepRank).toBe(2);
-    expect(consumed?.feedFormState.formInfo?.reviewContext?.reviewId).toBe(
+    expect((consumed?.feedFormState.formInfo as any)?.reviewContext?.reviewId).toBe(
       "r1",
     );
   });
@@ -236,10 +236,10 @@ describe("buildFeedFormBootStateFromWorkingCopy", () => {
 
     // Check feedFormState formInfo and context
     expect(feedFormState.formInfo?.currentStepRank).toBe(computedFeedFormStep); // SECTION is step 3
-    expect(feedFormState.formInfo?.reviewContext?.reviewId).toBe("rev-xyz");
-    expect(feedFormState.formInfo?.reviewContext?.anchors?.pvId).toBe("pv-1");
-    expect(feedFormState.formInfo?.reviewContext?.anchors?.movId).toBe("mov-1");
-    expect(feedFormState.formInfo?.reviewContext?.anchors?.secId).toBe("sec-1");
+    expect((feedFormState.formInfo as any)?.reviewContext?.reviewId).toBe("rev-xyz");
+    expect((feedFormState.formInfo as any)?.reviewContext?.anchors?.pvId).toBe("pv-1");
+    expect((feedFormState.formInfo as any)?.reviewContext?.anchors?.movId).toBe("mov-1");
+    expect((feedFormState.formInfo as any)?.reviewContext?.anchors?.secId).toBe("sec-1");
     expect(feedFormState.formInfo?.isSourceOnPieceVersionformOpen).toBe(true);
     expect(feedFormState.formInfo?.formType).toBe("collection");
 
@@ -430,7 +430,7 @@ describe("rebuildWorkingCopyFromFeedForm", () => {
           reviewEdit: true,
           updatedAt: new Date().toISOString(),
         },
-      },
+      } as any,
       mMSourceDescription: {
         title: "New Title",
         type: "EDITION",
@@ -469,7 +469,7 @@ describe("rebuildWorkingCopyFromFeedForm", () => {
           reviewEdit: true,
           updatedAt: new Date().toISOString(),
         },
-      },
+      } as any,
       pieces: [], // User explicitly deleted all pieces
     };
     const result = rebuildWorkingCopyFromFeedForm(formState, previousWc);
@@ -485,7 +485,7 @@ describe("rebuildWorkingCopyFromFeedForm", () => {
           reviewEdit: true,
           updatedAt: new Date().toISOString(),
         },
-      },
+      } as any,
       mMSourceDescription: {
         title: "A Brand New Title",
         type: "EDITION",

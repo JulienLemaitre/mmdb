@@ -10,7 +10,7 @@ import { localStorageSetItem } from "@/utils/localStorage";
 export default function ReviewEditBanner() {
   const { state } = useFeedForm();
   const router = useRouter();
-  const reviewContext = state.formInfo?.reviewContext;
+  const reviewContext = (state.formInfo as any)?.reviewContext;
   const appliedRef = useRef(false);
 
   useEffect(() => {
