@@ -43,8 +43,7 @@ Une séparation nette des responsabilités de typage est appliquée dans l'ensem
 (UI, messages de toast, modales, boutons, aides contextuelles, placeholders, alertes d'erreur/succès)
 sont impérativement en **anglais**.
 
-Noms proposés, à ajuster à la marge en implémentation si un meilleur se présente — mais **aucun ne
-doit contenir « checklist »**.
+**Noms contractuels (à respecter strictement, aucun ne doit contenir « checklist ») :**
 
 | Ancien | Nouveau |
 |---|---|
@@ -335,10 +334,7 @@ Remplacer `getReviewOverview` (qui produit un `ChecklistGraph`) par un chargeur 
    baseline. Couvrir `Person`, `Organization`, `Collection`, `Piece`, `PieceVersion` (+ `Movement`,
    `Section`), `TempoIndication`, `Reference`, `Contribution`, `MetronomeMark`.
    Une requête groupée par type (`findMany({ where: { id: { in: [...] } } })`), pas de requête par id.
-5. Vérifier si `features/review/utils/processSourceOnPieceVersionsForDisplay.ts` et
-   `features/review/utils/isCollectionCompleteInChecklistGraph.ts` sont réutilisables sur
-   `FeedFormState` (ils opèrent sur `ChecklistGraph`, structurellement proche). Si oui, les adapter
-   et les renommer ; sinon les supprimer en L12.
+5. Ne pas réécrire de helpers d'affichage de collection dans ce lot : `features/feed/multiStepMMSourceForm/utils/ProcessMMSourceOnPieceVersionsForDisplay.ts` remplit déjà ce rôle pour `FeedFormState`. Les fichiers `features/review/utils/processSourceOnPieceVersionsForDisplay.ts` et `features/review/utils/isCollectionCompleteInChecklistGraph.ts` sont obsolètes et seront supprimés en L12.
 
 ### Tests
 
@@ -391,10 +387,14 @@ Remplacer `getReviewOverview` (qui produit un `ChecklistGraph`) par un chargeur 
    - l'écouteur global `mmdb:storage-invalidated` (Lot 2) notifie automatiquement par toast d'avertissement
      en cas d'incompatibilité de version de schéma ou de données corrompues.
 4. **`review/[reviewId]/page.tsx`** : `<MMSourceForm />`, comme la page `/feed`.
-5. **`utils/routes.ts`** : remplacer `GET_URL_REVIEW_CHECKLIST` par
-   `GET_URL_REVIEW = (reviewId) => \`/review/${reviewId}\``, et ajouter
-   `GET_URL_API_REVIEW_SUBMIT` / `GET_URL_API_REVIEW_ABORT` si absents. Supprimer
-   `GET_URL_API_REVIEW_OVERVIEW`.
+5. **`utils/routes.ts`** :
+   - Ajouter :
+     ```ts
+     export const GET_URL_REVIEW = (reviewId: string) => `/review/${reviewId}` as const;
+     export const GET_URL_API_REVIEW_SUBMIT = (reviewId: string) => `/api/review/${reviewId}/submit` as const;
+     export const GET_URL_API_REVIEW_ABORT = (reviewId: string) => `/api/review/${reviewId}/abort` as const;
+     ```
+   - Conserver temporairement `GET_URL_REVIEW_CHECKLIST` et `GET_URL_API_REVIEW_OVERVIEW` pour préserver la compilation de l'ancienne page checklist jusqu'à sa suppression en L12.
 6. Mettre à jour la redirection automatique de `app/(signedIn)/review/page.tsx` et la redirection
    après démarrage dans `reviewListClient.tsx`.
 7. `proxy.ts` : vérifier que le matcher `/review/:path*` couvre déjà la route — **aucune
@@ -429,8 +429,8 @@ Remplacer `getReviewOverview` (qui produit un `ChecklistGraph`) par un chargeur 
    accessible à tout moment. Aucun appel API : la valeur part avec le payload final.
 3. **`ReviewDiffModal`** : modale affichant en direct l'ensemble des modifications apportées par le
    reviewer en comparant l'état courant (`FeedFormState`) à la `baseline` serveur du contexte de session.
-   Elle consomme `computeChangedFieldPaths(baseline, state)` (introduit au Lot 7 — si L5 est réalisé en
-   amont/parallèle de L7, poser le composant avec un bouchon et brancher la fonction réelle lors de la convergence).
+   Elle consomme `computeChangedFieldPaths(baseline, state)` importé depuis `features/review/reviewDiff.ts`.
+   *(Note : si L5 est implémenté avant L7, implémenter temporairement `computeChangedFieldPaths` comme renvoyant `[] as ChangedField[]` pour satisfaire le typage sans bloquer le rendu).*
 4. **`AbortReviewButton`** : modale de confirmation avertissant de la perte des modifications
    locales et du commentaire → `POST /api/review/[reviewId]/abort` → `purgeReviewLocalDrafts(reviewId)`
    **après succès** → redirection vers `/review`.
@@ -455,11 +455,13 @@ Remplacer `getReviewOverview` (qui produit un `ChecklistGraph`) par un chargeur 
 
 ### Tâches
 
-1. **`Intro`** — conditionner le contenu affiché sur `useFormSession().mode`. En mode revue :
-   consignes destinées au reviewer au lieu du tutoriel de saisie initiale, et libellé de bouton
-   adapté. Le bouton continue de poser `introDone: true` et d'avancer d'une étape.
-   Le contenu rédactionnel définitif du mode revue sera fourni plus tard : poser un texte provisoire
-   explicite et signalé comme tel dans le code.
+1. **`Intro`** — conditionner le contenu affiché sur `useFormSession().mode`.
+   - En mode revue (`mode === "review"`) :
+     - Titre : `"Review Process"`
+     - Texte descriptif : `"You are reviewing a submitted MM Source. Inspect and adjust any fields across the steps. Your modifications are kept in a local draft until final submission."`
+     - Libellé du bouton de validation : `"Start Review"` (au lieu de `"Get Started"`).
+     - Le bouton pose `introDone: true` et avance à l'étape suivante.
+   - En mode saisie (`mode === "data-entering"`) : comportement et textes existants inchangés.
 2. **`FeedSummary`** — factoriser en trois parties : le rendu du récapitulatif (commun), l'action
    finale (par mode), la réinitialisation (par mode).
    - Mode `data-entering` : comportement actuel strictement inchangé
@@ -516,12 +518,20 @@ Remplacer `getReviewOverview` (qui produit un `ChecklistGraph`) par un chargeur 
    **rangs**, indexés par `joinId`. Elle doit désormais détecter, indexée par `pieceVersionId` :
    les **ajouts**, les **retraits** et les **substitutions** de `pieceVersionId`, en plus des
    changements de rang. C'est ce qui rendra visible la substitution opérée par le fork (L9).
-4. **`auditCompose.ts`** — adapter `findNodeInGraph` aux accesseurs `FeedFormState` (la fonction
-   actuelle mélange déjà des heuristiques par préfixe de propriété : en profiter pour la remplacer
-   par une table de correspondance explicite type → accesseur, plus lisible et moins fragile).
-   Étendre `buildSourceOrderingSnapshot` pour produire `{ pieceVersionId, rank }` trié — la forme
-   est déjà celle-là, il faut surtout garantir qu'elle est bien émise dans le `before`/`after` de
-   `MM_SOURCE` dès qu'un join change, et pas seulement quand un rang change.
+4. **`auditCompose.ts`** — adapter `findNodeInGraph` aux accesseurs `FeedFormState` en remplaçant les heuristiques actuelles par une table de correspondance explicite et exhaustive `AuditEntityType` → liste de nœuds dans `FeedFormState` :
+   - `PERSON` → `state.persons`
+   - `ORGANIZATION` → `state.organizations`
+   - `COLLECTION` → `state.collections`
+   - `PIECE` → `state.pieces`
+   - `PIECE_VERSION` → `state.pieceVersions`
+   - `MOVEMENT` → `state.movements`
+   - `SECTION` → `state.sections`
+   - `TEMPO_INDICATION` → `state.tempoIndications`
+   - `METRONOME_MARK` → `state.metronomeMarks`
+   - `REFERENCE` → `state.mMSourceDescription.references`
+   - `CONTRIBUTION` → `state.mMSourceContributions`
+   - `MM_SOURCE` → `[state.mMSourceDescription]`
+   Étendre `buildSourceOrderingSnapshot` pour produire `{ pieceVersionId, rank }` trié — garantir qu'elle est bien émise dans le `before`/`after` de `MM_SOURCE` dès qu'un join change, et pas seulement quand un rang change.
 5. Ajouter à `composeAuditEntries` un paramètre `protectedEntityIds?: Set<string>` : toute entrée
    `DELETE` dont l'`entityId` y figure est écartée. C'est le point d'accroche du fork (L9).
 6. **`types/reviewTypes.ts`** — supprimer `ChecklistGraph` et `RequiredChecklistItem` ; renommer les
@@ -750,9 +760,7 @@ Réécrire intégralement la route `POST /api/review/[reviewId]/submit` pour orc
 **Ne pas rejouer les prédicats `isComplete` côté serveur** — décision actée : on fait confiance au
 formulaire de front pour la complétude métier, le serveur se limite au garde structurel de l'étape 4.
 
-Le fork exige un accès base (le `count`) : soit ouvrir la transaction dès l'étape 8 et y faire les
-calculs restants, soit exécuter le `count` hors transaction. **Préférer la première option** : le
-comptage doit être cohérent avec les écritures.
+La transaction Prisma (`db.$transaction`) doit être ouverte dès l'étape 8 (fork) : le comptage de partages (`count`), le calcul du diff remappé et l'ensemble des 4 phases de mutations sont exécutés à l'intérieur de cette transaction unique pour garantir une atomicité et une cohérence strictes.
 
 ### 10B.2 Ordre des mutations dans la transaction
 
@@ -841,14 +849,13 @@ Traduire les violations de contrainte d'unicité (`Piece`, `Reference`, `Collect
 1. Dans `start/route.ts`, ajouter avant la création : refuser en `409` si
    `db.review.findFirst({ where: { creatorId: session.user.id, state: IN_REVIEW } })` retourne
    quelque chose. Message explicite invitant à terminer ou abandonner la revue en cours.
-2. Créer la note de migration manuelle, sur le modèle de
-   `specs/20250811_MIGRATION_NOTE_review-partial-unique-index_manual-SQL.md` :
-   ```sql
-   CREATE UNIQUE INDEX CONCURRENTLY review_unique_in_review_per_reviewer
-   ON "Review" ("creatorId")
-   WHERE state = 'IN_REVIEW';
-   ```
-   Le contrôle applicatif seul est sujet aux compétitions ; l'index est la garantie réelle.
+2. **Index unique partiel Prisma :**
+   - Ajouter l'index directement dans `prisma/schema.prisma` sous le modèle `Review` :
+     ```prisma
+     @@unique([creatorId], map: "review_unique_in_review_per_reviewer", where: raw("state = 'IN_REVIEW'"))
+     ```
+   - Appliquer la migration via `npx prisma migrate dev --name review_unique_in_review_per_reviewer` et régénérer le client (`npx prisma generate`).
+   - Créer le document d'accompagnement `specs/20260808_MIGRATION_NOTE_review-unique-in-review-per-reviewer.md`.
 3. Élargir la traduction d'erreur du bloc `catch` existant (qui détecte déjà
    `/unique|constraint|duplicate/i`) pour distinguer les deux conflits : source déjà en revue, ou
    reviewer ayant déjà une revue active.
@@ -898,18 +905,16 @@ compile plus pendant les lots intermédiaires.
 
 **Tests** — cf. inventaire du lot 0.
 
-### À examiner avant suppression
+### Actions spécifiques de nettoyage
 
-- `features/review/utils/isCollectionCompleteInChecklistGraph.ts` et
-  `features/review/utils/processSourceOnPieceVersionsForDisplay.ts` : réutilisables sur
-  `FeedFormState` ? Si oui, adapter et renommer (L3, tâche 5) ; sinon supprimer.
-- `features/review/components/ReviewHelpDrawer.tsx` : monté par `app/(signedIn)/review/layout.tsx`.
-  Vérifier s'il reste pertinent pour la liste `/review`, ou s'il est remplacé par
-  `FeedFormHelpDrawer` sur la page de revue.
-- `utils/getEntityByIdOrKey.ts` : typé sur `ChecklistGraph`, mais probablement générique. À
-  regénéraliser plutôt qu'à supprimer.
-- `app/api/review/[reviewId]/audit/route.ts` et `audit-logs/route.ts`,
-  `features/review/ReviewAuditLogPanel.tsx` : **conservés**, hors périmètre.
+1. **Suppression définitive des helpers checklist obsolètes :**
+   - Supprimer `features/review/utils/isCollectionCompleteInChecklistGraph.ts` et `features/review/utils/processSourceOnPieceVersionsForDisplay.ts` (déjà remplacés par `ProcessMMSourceOnPieceVersionsForDisplay.ts`).
+2. **Conservation du tiroir d'aide de la liste des revues :**
+   - Conserver `features/review/components/ReviewHelpDrawer.tsx` qui reste monté par `app/(signedIn)/review/layout.tsx` pour l'aide de la liste `/review`.
+3. **Généralisation de `utils/getEntityByIdOrKey.ts` :**
+   - Retirer l'import et l'union `| ChecklistGraph` dans `utils/getEntityByIdOrKey.ts` pour ne conserver que `state: FeedFormState` (ou un type générique `Record<string, unknown[]>`).
+4. **Conservation des routes d'audit :**
+   - Conserver `app/api/review/[reviewId]/audit/route.ts`, `app/api/audit-logs/route.ts` et `features/review/ReviewAuditLogPanel.tsx` (hors périmètre de suppression).
 
 ### Vérification finale
 
