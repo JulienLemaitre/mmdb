@@ -67,16 +67,18 @@ doit contenir « checklist »**.
 L0 ──┬─> L1 ──┬─> L2 ──┬─> L4 ──> L5 ──> L6 ──┐
      │        │        │                       │
      │        └────────┴─> L3 ─────────────────┤
-     │                                          ├─> L12 ──> L14
-     ├─> L7 ──> L8 ──> L9 ──> L10 ──────────────┤
-     │                                          │
-     ├─> L11 ───────────────────────────────────┤
-     │                                          │
-     └─> L13 ───────────────────────────────────┘
+     │                                         │
+     │                 ┌─> L10A ──┐            │
+     │                 │          ▼            ├─> L12 ──> L14
+     ├─> L7 ──> L8 ──> L9 ──────> L10B ────────┤
+     │                                         │
+     ├─> L11 ──────────────────────────────────┤
+     │                                         │
+     └─> L13 ──────────────────────────────────┘
 ```
 
-**Parallélisables sans conflit :** {L1+L2}, {L7}, {L11}, {L13} peuvent démarrer en même temps après
-L0. La chaîne serveur (L7→L8→L9→L10) et la chaîne client (L1→L2→L4→L5→L6) ne se croisent qu'au
+**Parallélisables sans conflit :** {L1+L2}, {L7}, {L10A}, {L11}, {L13} peuvent démarrer en même temps après
+L0. La chaîne serveur (L7→L8→L9→L10B) et la chaîne client (L1→L2→L4→L5→L6) ne se croisent qu'au
 lot 12.
 
 ---
@@ -328,7 +330,7 @@ Remplacer `getReviewOverview` (qui produit un `ChecklistGraph`) par un chargeur 
      **`introDone` reste à `false`** : l'étape d'introduction n'est pas sautée en revue.
      `allSourceOnPieceVersionsDone` est posé à `true` pour éviter que l'étape 3 apparaisse incomplète
      alors que les données préremplies sont cohérentes.
-4. **`extendBaselineByExistence(baseline, submittedState)`** (serveur, utilisé par L10) : pour chaque
+4. **`extendBaselineByExistence(baseline, submittedState)`** (serveur, utilisé par L10B) : pour chaque
    id présent dans l'état soumis et absent de la baseline, lire la ligne en base et l'ajouter à la
    baseline. Couvrir `Person`, `Organization`, `Collection`, `Piece`, `PieceVersion` (+ `Movement`,
    `Section`), `TempoIndication`, `Reference`, `Contribution`, `MetronomeMark`.
@@ -650,7 +652,7 @@ async function forkModifiedSharedPieceVersions(
 - Il ne supprime rien.
 - Il ne modifie aucune ligne de la `PieceVersion` d'origine ni de ses descendants.
 - Il ne produit aucune entrée d'audit lui-même : c'est le **recalcul du diff** sur l'état remappé
-  (L10, étape 7) qui produit les `CREATE` des copies et l'`UPDATE` de `MM_SOURCE`.
+  (L10B, étape 9) qui produit les `CREATE` des copies et l'`UPDATE` de `MM_SOURCE`.
 
 ### Tests
 
@@ -670,17 +672,65 @@ async function forkModifiedSharedPieceVersions(
 
 ---
 
-## Lot 10 — Route de soumission réécrite
+## Lot 10A — Helpers de soumission et gestion des rangs en deux phases
 
-**Dépendances :** L3, L9. **Taille :** XL. **À découper si nécessaire.**
+**Dépendances :** L0. **Taille :** M. **Parallélisable.**
+
+### Objectif
+
+Implémenter et tester unitairement les deux modules auxiliaires purs et critiques nécessaires à la route de soumission : le calcul des données dérivées et l'algorithme de mise à jour des rangs en deux phases.
+
+### Fichiers
+
+- Nouveau : `utils/server/computeMMSourceDerivedData.ts`
+- Nouveau : `utils/server/applyRankUpdatesInTwoPhases.ts`
+
+### Tâches
+
+1. **`computeMMSourceDerivedData(state)`** — helper pur extrayant les données dérivées de `FeedFormState` :
+   - `sectionCount` : somme du nombre de sections de toutes les `PieceVersion` liées à la source via `mMSourceOnPieceVersions` (après remappage du fork). Reprendre la formule de calcul de `app/api/feedForm/route.ts`.
+   - `permalink` : `getIMSLPPermaLink(state.mMSourceDescription.link)`. Recalculé systématiquement côté serveur, jamais repris du client (correction du défaut §12.3 du cadrage).
+2. **`applyRankUpdatesInTwoPhases(tx, { model, updates, scope })`** — helper transactionnel Prisma gérant les permutations de rangs sans collision d'unicité :
+   - Algorithme d'écriture en 2 passes :
+     1. Écrire d'abord des rangs temporaires hors plage (`max(rangs) + 1000 + offset`) pour libérer les places ordonnées.
+     2. Écrire les rangs définitifs cibles.
+   - Supporter et couvrir les **quatre** contraintes d'unicité de rangs du schéma :
+     | Modèle | Contrainte | Contexte / Scope |
+     |---|---|---|
+     | `MMSourcesOnPieceVersions` | `@@unique([mMSourceId, rank])` | `{ mMSourceId }` |
+     | `Movement` | `@@unique([pieceVersionId, rank])` | `{ pieceVersionId }` |
+     | `Section` | `@@unique([movementId, rank])` | `{ movementId }` |
+     | `Piece` | `@@unique([collectionId, collectionRank])` | `{ collectionId }` (si présent) |
+
+### Tests
+
+- `__tests__/server/computeMMSourceDerivedData.test.ts` :
+  - calcul de `sectionCount` sur un état multi-pièces / multi-mouvements / multi-sections ;
+  - génération de `permalink` à partir d'un lien IMSLP valide ou retour d'une chaîne vide si absent.
+- `__tests__/server/applyRankUpdatesInTwoPhases.test.ts` :
+  - permutation simple de 2 rangs (swap 1 ↔ 2) sans violation d'unicité pour chacun des 4 modèles ;
+  - décalages complexes et réordonnancements complets de listes ;
+  - gestion des cas sans changement (aucun appel inutile).
+
+### Critère de sortie
+
+Les deux fichiers utilitaires sont créés, typés avec rigueur et validés par leurs tests unitaires dédiés.
+
+---
+
+## Lot 10B — Route de soumission réécrite et clôture de revue
+
+**Dépendances :** L3, L7, L8, L9, L10A. **Taille :** L.
+
+### Objectif
+
+Réécrire intégralement la route `POST /api/review/[reviewId]/submit` pour orchestrer la validation, le fork éventuel, le recalcul du diff, les mutations transactionnelles en 4 phases, la journalisation par e-mails et la clôture de la revue.
 
 ### Fichiers
 
 - `app/api/review/[reviewId]/submit/route.ts`
-- Nouveau : `utils/server/applyRankUpdatesInTwoPhases.ts`
-- Nouveau : `utils/server/computeMMSourceDerivedData.ts`
 
-### 10.1 Séquence hors transaction
+### 10B.1 Séquence hors transaction
 
 ```
 1. session, rôle, propriétaire, état IN_REVIEW
@@ -704,7 +754,7 @@ Le fork exige un accès base (le `count`) : soit ouvrir la transaction dès l'é
 calculs restants, soit exécuter le `count` hors transaction. **Préférer la première option** : le
 comptage doit être cohérent avec les écritures.
 
-### 10.2 Ordre des mutations dans la transaction
+### 10B.2 Ordre des mutations dans la transaction
 
 **Phase 1 — suppressions** (avant tout upsert, pour libérer les rangs) :
 
@@ -725,14 +775,15 @@ comptage doit être cohérent avec les écritures.
 (y compris les créations du fork) → `Movement` → `Section`.
 
 **Phase 3 — source et enfants directs :**
-`MMSource` (champs + `sectionCount` + `permalink`) → `Reference` → `Contribution` →
+`MMSource` (champs + `sectionCount` + `permalink` via `computeMMSourceDerivedData`) → `Reference` → `Contribution` →
 `MMSourcesOnPieceVersions` → `MetronomeMark`.
+Les permutations de rangs s'appuient sur `applyRankUpdatesInTwoPhases`.
 
 **Phase 4 — traçabilité et clôture :**
 `AuditLog.createMany` → `ReviewedEntity` upsert → `Review` en `APPROVED` (`endedAt`,
 `overallComment`) → `MMSource.reviewState` en `APPROVED`.
 
-### 10.3 Règle d'écriture par entité
+### 10B.3 Règle d'écriture par entité
 
 Reprendre le principe existant `shouldUpsertEntity`, mais **fondé sur la baseline étendue** :
 
@@ -742,35 +793,13 @@ Reprendre le principe existant `shouldUpsertEntity`, mais **fondé sur la baseli
 
 `isNew` de l'état client **n'entre jamais** dans cette décision.
 
-### 10.4 Mise à jour des rangs en deux phases
-
-`applyRankUpdatesInTwoPhases(tx, { model, updates, scope })` : écrire d'abord des rangs temporaires
-hors plage (`max(rangs) + 1000 + offset`), puis les rangs définitifs. À appliquer aux **quatre**
-contraintes :
-
-| Modèle | Contrainte | Statut actuel |
-|---|---|---|
-| `MMSourcesOnPieceVersions` | `@@unique([mMSourceId, rank])` | déjà traité — à extraire dans le helper |
-| `Movement` | `@@unique([pieceVersionId, rank])` | **à ajouter** |
-| `Section` | `@@unique([movementId, rank])` | **à ajouter** |
-| `Piece` | `@@unique([collectionId, collectionRank])` | **à ajouter** |
-
-### 10.5 Données dérivées
-
-`computeMMSourceDerivedData(state)` retourne `{ sectionCount, permalink }` :
-
-- `sectionCount` : somme des sections de toutes les `PieceVersion` liées à la source, **après**
-  remappage du fork. Réutiliser la formule de `app/api/feedForm/route.ts`.
-- `permalink` : `getIMSLPPermaLink(state.mMSourceDescription.link)`. Recalculé systématiquement,
-  jamais repris du client (défaut §12.3 du cadrage).
-
-### 10.6 `ReviewedEntity`
+### 10B.4 `ReviewedEntity`
 
 Conserver la logique actuelle, qui est correcte : déduplication par `type:id`, et **exclusion des
 entités déjà globalement revues** pour ne pas réattribuer le marqueur d'origine au reviewer courant.
 Ajouter les `PieceVersion` créées par le fork ; ne pas toucher aux marqueurs des originales.
 
-### 10.7 Gestion d'erreur et e-mails de journalisation
+### 10B.5 Gestion d'erreur et e-mails de journalisation
 
 Conserver la journalisation par e-mail en deux temps (comportement existant enrichi) :
 1. **Avant transaction :** e-mail de données (`"Review SUBMIT data"`) contenant l'état soumis, la baseline, le diff calculé, les entrées `AuditLog` prévues et le résumé des entités touchées.
@@ -789,12 +818,12 @@ Traduire les violations de contrainte d'unicité (`Piece`, `Reference`, `Collect
 - une entité préexistante **modifiée** → `UPDATE`, jamais `CREATE` ;
 - une entité réellement nouvelle → `CREATE` ;
 - marque basculée en `noMM` → la ligne est supprimée ;
-- échange de rangs entre deux mouvements → réussit sans violation d'unicité ; idem sections, idem
-  `collectionRank`, idem joins ;
+- échange de rangs entre deux mouvements → réussit sans violation d'unicité (via `applyRankUpdatesInTwoPhases`) ; idem sections, idem `collectionRank`, idem joins ;
 - fork : la `PieceVersion` d'origine et son arbre sont **intacts en base** ; aucun `AuditLog`
   `DELETE` ne les concerne ; l'audit contient les `CREATE` des copies et un `UPDATE` de `MM_SOURCE` ;
-- `sectionCount` et `permalink` recalculés ;
-- atomicité : une erreur en phase 3 laisse la base strictement inchangée, y compris `Review.state`.
+- `sectionCount` et `permalink` recalculés (via `computeMMSourceDerivedData`) ;
+- atomicité : une erreur en phase 3 laisse la base strictement inchangée, y compris `Review.state` ;
+- protocole de journalisation par e-mails validé.
 
 ---
 
@@ -834,7 +863,7 @@ source » reste inchangé.
 
 ## Lot 12 — Suppressions et nettoyage
 
-**Dépendances :** L6, L10, L11. **Taille :** M. **À faire en dernier**, sinon la base de code ne
+**Dépendances :** L6, L10B, L11. **Taille :** M. **À faire en dernier**, sinon la base de code ne
 compile plus pendant les lots intermédiaires.
 
 ### Fichiers et dossiers à supprimer
@@ -1011,8 +1040,9 @@ précédent. Établir la table de correspondance invariant → test dans la PR.
 | L7 | Moteur de diff sur `FeedFormState` | L | L0 |
 | L8 | Normalisation serveur | M | L7 |
 | L9 | Fork de `PieceVersion` | L | L8 |
-| L10 | Route de soumission | XL | L3, L9 |
+| L10A | Helpers de soumission et gestion des rangs | M | L0 |
+| L10B | Route de soumission réécrite | L | L3, L7, L8, L9, L10A |
 | L11 | Gardes de démarrage et index | S | L0 |
-| L12 | Suppressions et nettoyage | M | L6, L10, L11 |
+| L12 | Suppressions et nettoyage | M | L6, L10B, L11 |
 | L13 | Audit de préservation des ids | M | L0 |
 | L14 | Recette et non-régression | M | L12 |
