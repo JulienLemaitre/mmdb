@@ -116,3 +116,25 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npm run test:ci` : 47 suites passées / 47 total, 200 tests passés / 200 total (0 échec).
 - **Statut L4 :** Terminé / Validé.
 - **Cout :** 0.48 credits (Gemini 3.7 Flash - High)
+
+## L5 — Habillage de la session de revue
+
+- **Fichiers modifiés / créés :**
+  - `features/review/components/ReviewSessionBanner.tsx` (nouveau) : bandeau supérieur de session de revue indiquant l'état en cours, rappelant que les modifications restent locales, identifiant la source (titre, compositeur, lien permanent), et portant les boutons d'accès aux modales de diff et de commentaire ainsi qu'au bouton d'abandon (aucun indicateur de progression).
+  - `features/review/components/OverallCommentModal.tsx` (nouveau) : modale de saisie et d'édition du commentaire général de revue (`overallComment`), synchronisée avec `FormSessionContext` et le stockage local, accessible à tout moment sans requête réseau intermédiaire.
+  - `features/review/components/ReviewDiffModal.tsx` (nouveau) : modale affichant en temps réel la liste des différences entre l'état courant (`FeedFormState`) et la `baseline` serveur, consommant `computeChangedFieldPaths(baseline, state)`.
+  - `features/review/components/AbortReviewButton.tsx` (nouveau) : bouton et modale de confirmation d'abandon de revue avertissant de la perte définitive des modifications locales, appelant `POST /api/review/[reviewId]/abort`, purgeant les brouillons locaux via `purgeReviewLocalDrafts` uniquement après confirmation de succès, et redirigeant vers `/review` (sans purge en cas d'échec de la requête).
+  - `features/review/reviewDiff.ts` : export de `ChangedField` et déclaration de `computeChangedFieldPaths` (implémentation temporaire typée pour L5 avant L7).
+  - `app/(signedIn)/review/[reviewId]/layout.tsx` : injection de `ReviewSessionBanner` dans le slot `banner` de `FeedFormShell`.
+  - Tests créés :
+    - `__tests__/features/review/AbortReviewButton.test.tsx` : tests d'ouverture de modale, annulation, succès avec purge et redirection, et gestion des erreurs d'API/réseau sans purge.
+    - `__tests__/features/review/OverallCommentModal.test.tsx` : tests d'ouverture/fermeture, préremplissage, édition, effacement et sauvegarde dans `FormSessionContext`.
+    - `__tests__/features/review/ReviewDiffModal.test.tsx` : tests d'affichage sans modification et avec liste détaillée de champs modifiés.
+    - `__tests__/features/review/ReviewSessionBanner.test.tsx` : tests de non-rendu hors mode revue, affichage des métadonnées de source, ouverture des modales de diff et de commentaire, et présence du bouton d'abandon.
+    - `__tests__/app/reviewLayout.test.tsx` : mise à jour pour valider le rendu du bandeau dans le layout.
+- **Vérifications :**
+  - `npx tsc --noEmit` : 0 erreur.
+  - `npx eslint features/review/reviewDiff.ts features/review/components/AbortReviewButton.tsx features/review/components/OverallCommentModal.tsx features/review/components/ReviewDiffModal.tsx features/review/components/ReviewSessionBanner.tsx app/(signedIn)/review/[reviewId]/layout.tsx __tests__/features/review/AbortReviewButton.test.tsx __tests__/features/review/OverallCommentModal.test.tsx __tests__/features/review/ReviewDiffModal.test.tsx __tests__/features/review/ReviewSessionBanner.test.tsx __tests__/app/reviewLayout.test.tsx` : 0 erreur, 0 avertissement.
+  - `npm run test:ci` : 51 suites passées / 51 total, 219 tests passés / 219 total (0 échec).
+- **Statut L5 :** Terminé / Validé.
+- **Coût :** 0.64 credits (Gemini 3.7 Flash - High)

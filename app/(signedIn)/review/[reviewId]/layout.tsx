@@ -10,6 +10,7 @@ import {
 import { FormSessionProvider } from "@/context/formSessionContext";
 import { FeedFormProvider } from "@/context/feedFormContext";
 import FeedFormShell from "@/features/feed/FeedFormShell";
+import ReviewSessionBanner from "@/features/review/components/ReviewSessionBanner";
 import { GET_REVIEW_STORAGE_KEYS } from "@/utils/constants";
 import { FormSession } from "@/types/zodTypes";
 
@@ -91,6 +92,12 @@ export default async function ReviewLayout({
       <FeedFormProvider storageKey={storageKey} initialState={initialState}>
         <FeedFormShell
           title={`Review: ${mMSource.title ?? "Untitled MM Source"}`}
+          banner={
+            <ReviewSessionBanner
+              baseline={baseline}
+              mMSource={mMSource}
+            />
+          }
         >
           {children}
         </FeedFormShell>

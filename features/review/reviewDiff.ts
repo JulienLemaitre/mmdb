@@ -12,6 +12,22 @@ export type ChangedChecklistItem = {
   fieldPath: string;
 };
 
+export type ChangedField = {
+  entityType?: ChecklistEntityType | string;
+  entityId?: string | null;
+  fieldPath: string;
+};
+
+/**
+ * Temporary implementation for L5 until L7 rewrites the full FeedFormState diff engine.
+ */
+export function computeChangedFieldPaths(
+  _baseline: any,
+  _working: any,
+): ChangedField[] {
+  return [];
+}
+
 function norm(v: any) {
   if (v === undefined || v === "") return null;
   return v;

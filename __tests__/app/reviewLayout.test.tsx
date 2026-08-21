@@ -3,11 +3,15 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 const mockRedirect = jest.fn();
+const mockPush = jest.fn();
 jest.mock("next/navigation", () => ({
   redirect: (url: string) => {
     mockRedirect(url);
     throw new Error(`NEXT_REDIRECT:${url}`);
   },
+  useRouter: () => ({
+    push: mockPush,
+  }),
 }));
 
 const mockGetServerSession = jest.fn();
@@ -28,12 +32,15 @@ jest.mock("@/features/feed/FeedFormShell", () => {
   return function MockFeedFormShell({
     children,
     title,
+    banner,
   }: {
     children: React.ReactNode;
     title?: string;
+    banner?: React.ReactNode;
   }) {
     return (
       <div data-testid="feed-form-shell" data-title={title}>
+        {banner}
         {children}
       </div>
     );
