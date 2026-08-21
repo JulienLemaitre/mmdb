@@ -77,3 +77,22 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npm run test:ci` : 44 suites passées / 44 total, 178 tests passés / 178 total (0 échec).
 - **Statut L2 :** Terminé / Validé.
 - **Cost :** 0.52 credits (Gemini 3.7 Flash - High)
+
+## L3 — Baseline serveur et hydratation
+
+- **Fichiers modifiés / créés :**
+  - `utils/server/getReviewBaseline.ts` (nouveau) :
+    - Implémentation de `getReviewBaseline(reviewId, options?: { requireOwner?: boolean })` extrayant le graphe de la source MMSource et produisant une `FeedFormState` de base (sans `formInfo`), les métadonnées de revue / MMSource et le registre `GloballyReviewedIds`.
+    - Resserrement de l'autorisation d'accès au propriétaire (`requireOwner: true` par défaut), avec contrôle de rôle (`REVIEWER`/`ADMIN`) et d'état (`IN_REVIEW`).
+    - Implémentation de `buildReviewInitialFeedFormState({ baseline, globallyReviewed })` ajoutant les drapeaux `isNew` sur `persons`, `organizations`, `collections`, `pieces`, `pieceVersions` en fonction de `globallyReviewed` et initialisant `formInfo: { currentStepRank: 0, introDone: false, allSourceOnPieceVersionsDone: true }`.
+  - `utils/server/extendBaselineByExistence.ts` (nouveau) :
+    - Implémentation de `extendBaselineByExistence(baseline, submittedState, prisma?)` pour charger depuis la base de données toutes les entités existantes présentes dans l'état soumis mais absentes de la baseline (`Person`, `Organization`, `Collection`, `Piece`, `PieceVersion` avec `Movement`/`Section`, `TempoIndication`, `Reference`, `Contribution`, `MetronomeMark`), avec au plus 1 requête groupée `findMany` par type d'entité et aucune requête si aucun ID n'est manquant.
+  - `eslint.config.mjs` : mise à jour de la configuration ESLint pour utiliser `testingLibrary.configs["flat/react"]` compatible Flat Config.
+  - `__tests__/server/getReviewBaseline.test.ts` (nouveau) : tests de conformité `FeedFormState`, initialisation des drapeaux `isNew` et de `formInfo`, gestion des permissions / rôles / statuts `IN_REVIEW`.
+  - `__tests__/server/extendBaselineByExistence.test.ts` (nouveau) : tests d'extension des entités existantes, absence des IDs inexistants, absence de requêtes inutiles et support de transaction Prisma personnalisée.
+- **Vérifications :**
+  - `npx tsc --noEmit` : 0 erreur.
+  - `npx eslint utils/server/getReviewBaseline.ts utils/server/extendBaselineByExistence.ts __tests__/server/getReviewBaseline.test.ts __tests__/server/extendBaselineByExistence.test.ts` : 0 erreur, 0 avertissement.
+  - `npm run test:ci` : 46 suites passées / 46 total, 193 tests passés / 193 total (0 échec).
+- **Statut L3 :** Terminé / Validé.
+- **Cost :** 1.09 credits (Gemini 3.7 Flash - High)
