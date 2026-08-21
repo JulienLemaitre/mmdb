@@ -138,3 +138,21 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npm run test:ci` : 51 suites passées / 51 total, 219 tests passés / 219 total (0 échec).
 - **Statut L5 :** Terminé / Validé.
 - **Coût :** 0.64 credits (Gemini 3.7 Flash - High)
+
+## L6 — Étapes polymorphes : `Intro` et `FeedSummary`
+
+- **Fichiers modifiés / créés :**
+  - `features/feed/multiStepMMSourceForm/stepForms/Intro.tsx` : conditionnement du contenu affiché sur `useFormSession().mode` (en mode `review` : titre `"Review Process"`, texte descriptif de revue, bouton `"Start Review"` posant `introDone: true` et passant à l'étape suivante ; en mode `data-entering` : comportement et textes de tutoriel existants préservés).
+  - `features/feed/multiStepMMSourceForm/stepForms/FeedSummary.tsx` : factorisation et polymorphisme des actions et états :
+    - En mode `data-entering` : maintien strict du comportement existant (`POST /api/feedForm`, emails de log, modale d'information, réinitialisation locale des 3 clés et `initFeedForm`).
+    - En mode `review` : désactivation du bouton tant que les étapes précédentes ne sont pas complètes selon `lastCompletedStepRank >= 4`, libellé `"Approve and Submit Review"`, modale de confirmation explicite avant soumission, appel à `POST /api/review/[reviewId]/submit` avec payload `{ feedFormState: state, overallComment }`, purge des brouillons locaux via `purgeReviewLocalDrafts(reviewId)` et redirection vers `/review` sur succès, affichage de l'erreur sans purge ni redirection en cas d'échec serveur.
+  - Tests créés :
+    - `__tests__/features/feed/Intro.test.tsx` : tests du rendu et des interactions en mode `data-entering` et en mode `review`.
+    - `__tests__/features/feed/FeedSummary.dataEntering.test.tsx` : tests de non-régression de la soumission de création, envoi d'emails, affichage de modale et réinitialisation du formulaire.
+    - `__tests__/features/feed/FeedSummary.review.test.tsx` : tests de désactivation si étape incomplète, activation si étapes complètes, ouverture et annulation de modale de confirmation, soumission réussie avec purge locale et redirection vers `/review`, gestion d'erreur serveur sans purge ni redirection.
+- **Vérifications :**
+  - `npx tsc --noEmit` : 0 erreur.
+  - `npx eslint features/feed/multiStepMMSourceForm/stepForms/Intro.tsx features/feed/multiStepMMSourceForm/stepForms/FeedSummary.tsx __tests__/features/feed/Intro.test.tsx __tests__/features/feed/FeedSummary.dataEntering.test.tsx __tests__/features/feed/FeedSummary.review.test.tsx` : 0 erreur, 0 avertissement.
+  - `npm run test:ci` : 54 suites passées / 54 total, 229 tests passés / 229 total (0 échec).
+- **Statut L6 :** Terminé / Validé.
+- **Coût :** 0.83 credits (Gemini 3.7 Flash - High)
