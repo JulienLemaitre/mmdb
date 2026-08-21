@@ -36,7 +36,7 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - Migration : `prisma/migrations/20260809124656_review_unique_in_review_per_source/migration.sql`
   - Vérification en base PostgreSQL (`pg_indexes`) : index `review_unique_in_review_per_source` présent et actif (`WHERE (state = 'IN_REVIEW'::"REVIEW_STATE")`).
 - **Statut L0 :** Terminé / Validé.
-- **Cost :** 0.13 credits (Gemini 3.7 Flash - High)
+- **Coût :** 0.13 credits (Gemini 3.7 Flash - High)
 
 ## L1 — Socle de types et contexte de session
 
@@ -50,7 +50,7 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npx tsc --noEmit` : 0 erreur.
   - `npm run test:ci` : 40 suites passées / 40 total, 163 tests passés / 163 total (0 échec).
 - **Statut L1 :** Terminé / Validé.
-- **Cost :** 0.32 credits (Gemini 3.7 Flash - High)
+- **Coût :** 0.32 credits (Gemini 3.7 Flash - High)
 
 ## L2 — Clés de stockage paramétrables
 
@@ -76,7 +76,7 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npx tsc --noEmit` : 0 erreur.
   - `npm run test:ci` : 44 suites passées / 44 total, 178 tests passés / 178 total (0 échec).
 - **Statut L2 :** Terminé / Validé.
-- **Cost :** 0.52 credits (Gemini 3.7 Flash - High)
+- **Coût :** 0.52 credits (Gemini 3.7 Flash - High)
 
 ## L3 — Baseline serveur et hydratation
 
@@ -95,4 +95,24 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npx eslint utils/server/getReviewBaseline.ts utils/server/extendBaselineByExistence.ts __tests__/server/getReviewBaseline.test.ts __tests__/server/extendBaselineByExistence.test.ts` : 0 erreur, 0 avertissement.
   - `npm run test:ci` : 46 suites passées / 46 total, 193 tests passés / 193 total (0 échec).
 - **Statut L3 :** Terminé / Validé.
-- **Cost :** 1.09 credits (Gemini 3.7 Flash - High)
+- **Coût :** 1.09 credits (Gemini 3.7 Flash - High)
+
+## L4 — Nouvelle route `/review/[reviewId]`
+
+- **Fichiers modifiés / créés :**
+  - `features/feed/FeedFormShell.tsx` (nouveau) : extraction du shell visuel du formulaire (drawer + `NavBar` + colonne latérale `Steps` + zone principale avec `banner` optionnelle + `FeedFormHelpDrawer`), acceptant `title`, `asideExtra` et `banner`.
+  - `app/(signedIn)/feed/layout.tsx` : refactorisé pour consommer `FeedFormShell` avec `ResetAllForms` dans `asideExtra`, et retrait de `ReviewEditBanner`.
+  - `utils/routes.ts` : ajout des routes `GET_URL_REVIEW(reviewId)`, `GET_URL_API_REVIEW_SUBMIT(reviewId)`, et `GET_URL_API_REVIEW_ABORT(reviewId)`.
+  - `app/(signedIn)/review/page.tsx` et `app/(signedIn)/review/reviewListClient.tsx` : mise à jour des redirections pour router vers `GET_URL_REVIEW(reviewId)`.
+  - `context/formSessionContext.tsx` : gestion de l'invalidation locale lors de l'hydratation (purge des brouillons via `purgeReviewLocalDrafts` et notification toast WARNING en anglais `"Local draft reset: session does not match current user."` si le `reviewId` ou le `reviewerId` stocké diverge).
+  - `app/(signedIn)/review/[reviewId]/layout.tsx` (nouveau) : composant serveur sécurisé vérifiant l'authentification (`REVIEWER`/`ADMIN`), chargeant la baseline via `getReviewBaseline(reviewId, { requireOwner: true })`, gérant les redirections `?reason=notFound | notOwner | notActive | unauthorized` vers `/review`, et montant `FormSessionProvider` (mode `review`), `FeedFormProvider` (clé `review:<reviewId>:feedForm` et `initialState` de revue) et `FeedFormShell`.
+  - `app/(signedIn)/review/[reviewId]/page.tsx` (nouveau) : montage du formulaire `<MMSourceForm />` identique à la page `/feed`.
+  - `__tests__/app/reviewLayout.test.tsx` (nouveau) : tests d'intégration du layout de revue (redirections `unauthorized`, `notOwner`, `notActive`, `notFound`, et montage réussi des providers et de `FeedFormShell`).
+  - `__tests__/context/formSessionContext.test.tsx` : enrichissement avec le test d'invalidation locale du brouillon et affichage du toast WARNING.
+- **Vérifications :**
+  - `proxy.ts` : vérification que le matcher `/review/:path*` couvre la route.
+  - `npx tsc --noEmit` : 0 erreur.
+  - `npx eslint app/(signedIn)/review/[reviewId]/layout.tsx app/(signedIn)/review/[reviewId]/page.tsx features/feed/FeedFormShell.tsx app/(signedIn)/feed/layout.tsx app/(signedIn)/review/page.tsx app/(signedIn)/review/reviewListClient.tsx utils/routes.ts context/formSessionContext.tsx __tests__/app/reviewLayout.test.tsx __tests__/context/formSessionContext.test.tsx` : 0 erreur, 0 avertissement.
+  - `npm run test:ci` : 47 suites passées / 47 total, 200 tests passés / 200 total (0 échec).
+- **Statut L4 :** Terminé / Validé.
+- **Cout :** 0.48 credits (Gemini 3.7 Flash - High)

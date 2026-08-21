@@ -6,7 +6,7 @@ import React from "react";
 import { REVIEW_STATE } from "@/prisma/client/enums";
 import ReviewListClient from "./reviewListClient";
 import { getToReviewFromDb } from "@/utils/server/getToReviewFromDb";
-import { GET_URL_REVIEW_CHECKLIST } from "@/utils/routes";
+import { GET_URL_REVIEW } from "@/utils/routes";
 
 export const dynamic = "force-dynamic";
 
@@ -26,13 +26,13 @@ export default async function ReviewListPage({
     redirect("/");
   }
 
-  // Routing guard: if the reviewer has an active IN_REVIEW review, redirect to its checklist
+  // Routing guard: if the reviewer has an active IN_REVIEW review, redirect to it
   const active = await db.review.findFirst({
     where: { creatorId: session.user.id, state: REVIEW_STATE.IN_REVIEW },
     select: { id: true },
   });
   if (active) {
-    redirect(GET_URL_REVIEW_CHECKLIST(active.id));
+    redirect(GET_URL_REVIEW(active.id));
   }
 
   const data = await getToReviewFromDb().catch((e) => {

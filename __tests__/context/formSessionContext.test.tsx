@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent, renderHook, act } from "@testing-library/react";
+import { render, screen, fireEvent, renderHook } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import {
   FormSessionProvider,
@@ -7,6 +7,8 @@ import {
 } from "@/context/formSessionContext";
 import { FormSession, ReviewSessionMeta } from "@/types/zodTypes";
 import { localStorageGetItem, localStorageSetItem } from "@/utils/localStorage";
+
+import { ToastNotificationProvider } from "@/context/toastNotification/toastNotificationContext";
 
 describe("FormSessionContext", () => {
   beforeEach(() => {
@@ -213,5 +215,70 @@ describe("FormSessionContext", () => {
     const fixedSaved = localStorageGetItem<ReviewSessionMeta>(storageKey);
     expect(fixedSaved?.reviewId).toBe(reviewId);
     expect(fixedSaved?.reviewerId).toBe("user-actual");
+  });
+
+  it("purges review drafts and displays a warning toast when stored reviewerId does not match current reviewer", () => {
+    const reviewId = "rev-toast-mismatch";
+    const sessionKey = `review:${reviewId}:session`;
+    const feedKey = `review:${reviewId}:feedForm`;
+
+    // Stored session and feed form from a different reviewer
+    localStorageSetItem(sessionKey, {
+      reviewId,
+      reviewerId: "previous-reviewer-id",
+      mMSourceId: "source-123",
+      overallComment: "Previous draft comment",
+    });
+    localStorageSetItem(feedKey, { some: "stale data" });
+
+    const session: FormSession = {
+      mode: "review",
+      review: {
+        reviewId,
+        reviewerId: "current-reviewer-id",
+        mMSourceId: "source-123",
+        overallComment: null,
+      },
+      globallyReviewed: {
+        personIds: [],
+        organizationIds: [],
+        collectionIds: [],
+        pieceIds: [],
+        pieceVersionIds: [],
+      },
+    };
+
+    const TestReviewChild = () => {
+      const formSession = useFormSession();
+      if (formSession.mode !== "review") return null;
+      return (
+        <div data-testid="active-reviewer">
+          {formSession.review.reviewerId}
+        </div>
+      );
+    };
+
+    render(
+      <ToastNotificationProvider>
+        <FormSessionProvider session={session}>
+          <TestReviewChild />
+        </FormSessionProvider>
+      </ToastNotificationProvider>,
+    );
+
+    // Draft for feedForm was purged
+    expect(localStorageGetItem(feedKey)).toBeNull();
+
+    // Session has been reset to current reviewer
+    expect(screen.getByTestId("active-reviewer")).toHaveTextContent(
+      "current-reviewer-id",
+    );
+
+    // Warning toast in English is displayed
+    expect(
+      screen.getByText(
+        "Local draft reset: session does not match current user.",
+      ),
+    ).toBeInTheDocument();
   });
 });

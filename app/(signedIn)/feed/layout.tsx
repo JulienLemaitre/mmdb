@@ -1,37 +1,23 @@
 import { FeedFormProvider } from "@/context/feedFormContext";
-import NavBar from "@/ui/NavBar";
-import React from "react";
-import FeedFormHelpDrawer from "@/features/feed/FeedFormHelpDrawer";
-import Steps from "@/features/feed/multiStepMMSourceForm/Steps";
+import FeedFormShell from "@/features/feed/FeedFormShell";
 import ResetAllForms from "@/features/feed/ResetAllForms";
-import ReviewEditBanner from "@/features/review/components/ReviewEditBanner";
+import React, { ReactNode } from "react";
 
 export const dynamic = "force-dynamic";
 
-export default function FeedLayout({ children }) {
+export default function FeedLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
-    <div className="drawer drawer-end flex-1">
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <FeedFormProvider>
-        <div className="drawer-content min-h-full">
-          {/* Page content here */}
-          <div className="min-h-full flex flex-col">
-            <NavBar title="Feeding the database" hasHelpSection />
-            <div className="bg-zinc-50 dark:bg-zinc-800 flex-1 flex items-stretch">
-              <aside className="bg-base-100 w-1/2 max-w-sm p-10 overflow-auto border-r-base-200 border-r-4">
-                <Steps />
-                <ResetAllForms />
-              </aside>
-              <main className="flex-1 bg-base-100 p-10">
-                {/* Review edit-mode banner (only visible when feed form is opened from review) */}
-                <ReviewEditBanner />
-                {children}
-              </main>
-            </div>
-          </div>
-        </div>
-        <FeedFormHelpDrawer />
-      </FeedFormProvider>
-    </div>
+    <FeedFormProvider>
+      <FeedFormShell
+        title="Feeding the database"
+        asideExtra={<ResetAllForms />}
+      >
+        {children}
+      </FeedFormShell>
+    </FeedFormProvider>
   );
 }

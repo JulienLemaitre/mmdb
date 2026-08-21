@@ -15,7 +15,18 @@ import {
   ReviewSessionMeta,
   ReviewSessionMetaSchema,
 } from "@/types/zodTypes";
-import { localStorageGetItem, localStorageSetItem } from "@/utils/localStorage";
+import {
+  localStorageGetItem,
+  localStorageSetItem,
+  purgeReviewLocalDrafts,
+} from "@/utils/localStorage";
+import {
+  closeNotification,
+  ToastNotificationContext,
+} from "@/context/toastNotification/toastNotificationContext";
+import { toastNotificationAction } from "@/context/toastNotification/toastNotificationAction";
+import { debug } from "@/utils/debugLogger";
+import { getNewUuid } from "@/utils/getNewUuid";
 
 export type FormSessionContextValue =
   | {
@@ -44,24 +55,49 @@ export function FormSessionProvider({
   children,
   session,
 }: Readonly<FormSessionProviderProps>) {
-  const [review, setReview] = useState<ReviewSessionMeta | null>(() => {
-    if (session?.mode === "review") {
-      const storageKey = `review:${session.review.reviewId}:session`;
-      const stored = localStorageGetItem<unknown>(storageKey);
-      if (stored) {
-        const parsed = ReviewSessionMetaSchema.safeParse(stored);
-        if (
-          parsed.success &&
-          parsed.data.reviewId === session.review.reviewId &&
-          parsed.data.reviewerId === session.review.reviewerId
-        ) {
-          return parsed.data;
+  const toastContext = useContext(ToastNotificationContext);
+
+  const getInitialReviewMeta = useCallback(
+    (sess: FormSession | undefined): ReviewSessionMeta | null => {
+      if (sess?.mode === "review") {
+        const storageKey = `review:${sess.review.reviewId}:session`;
+        const stored = localStorageGetItem<unknown>(storageKey);
+        if (stored) {
+          const parsed = ReviewSessionMetaSchema.safeParse(stored);
+          if (
+            parsed.success &&
+            parsed.data.reviewId === sess.review.reviewId &&
+            parsed.data.reviewerId === sess.review.reviewerId
+          ) {
+            return parsed.data;
+          }
         }
+        return sess.review;
       }
-      return session.review;
-    }
-    return null;
-  });
+      return null;
+    },
+    [],
+  );
+
+  const [review, setReview] = useState<ReviewSessionMeta | null>(() =>
+    getInitialReviewMeta(session),
+  );
+
+  const [prevSessionKey, setPrevSessionKey] = useState<string | null>(
+    session?.mode === "review"
+      ? `${session.review.reviewId}:${session.review.reviewerId}`
+      : null,
+  );
+
+  const currentSessionKey =
+    session?.mode === "review"
+      ? `${session.review.reviewId}:${session.review.reviewerId}`
+      : null;
+
+  if (currentSessionKey !== prevSessionKey) {
+    setPrevSessionKey(currentSessionKey);
+    setReview(getInitialReviewMeta(session));
+  }
 
   useEffect(() => {
     if (session?.mode === "review") {
@@ -71,17 +107,39 @@ export function FormSessionProvider({
         const parsed = ReviewSessionMetaSchema.safeParse(stored);
         if (
           parsed.success &&
-          parsed.data.reviewId === session.review.reviewId &&
-          parsed.data.reviewerId === session.review.reviewerId
+          (parsed.data.reviewId !== session.review.reviewId ||
+            parsed.data.reviewerId !== session.review.reviewerId)
         ) {
-          setReview(parsed.data);
-          return;
+          purgeReviewLocalDrafts(session.review.reviewId);
+          debug.log(
+            "[formSessionContext] Local draft reset: session does not match current user.",
+            { expected: session.review, stored: parsed.data },
+          );
+          if (toastContext?.dispatch) {
+            const notificationId = getNewUuid();
+            toastContext.dispatch({
+              type: toastNotificationAction.ADD,
+              payload: {
+                notification: {
+                  id: notificationId,
+                  type: toastNotificationAction.WARNING,
+                  message:
+                    "Local draft reset: session does not match current user.",
+                  active: true,
+                },
+              },
+            });
+            setTimeout(() => {
+              closeNotification(toastContext.dispatch, notificationId);
+            }, 6000);
+          }
+          localStorageSetItem(storageKey, session.review);
         }
+      } else {
+        localStorageSetItem(storageKey, session.review);
       }
-      localStorageSetItem(storageKey, session.review);
-      setReview(session.review);
     }
-  }, [session]);
+  }, [session, toastContext]);
 
   const setOverallComment = useCallback(
     (comment: string | null) => {
