@@ -14,7 +14,7 @@ import {
   REVIEW_STATE,
   REVIEWED_ENTITY_TYPE,
 } from "@/prisma/client";
-import { ChecklistGraph } from "@/types/reviewTypes";
+import { ChecklistGraph, ChangedField } from "@/types/reviewTypes";
 import sendEmail from "@/utils/server/sendEmail";
 
 // POST /api/review/[reviewId]/submit
@@ -159,9 +159,9 @@ export async function POST(
     baselineGraph,
     workingCopy,
   );
-  const changedUniqueByEntityType = changedFieldPaths.reduce<
-    Record<string, Set<string>>
-  >((acc, c) => {
+  const changedUniqueByEntityType = (
+    changedFieldPaths as ChangedField[]
+  ).reduce<Record<string, Set<string>>>((acc, c) => {
     acc[c.entityType] = acc[c.entityType] || new Set<string>();
     if (c.entityId) acc[c.entityType].add(c.entityId);
     else acc[c.entityType].add("__source__");
@@ -261,7 +261,10 @@ export async function POST(
     hasMMSourceFieldChanges,
     changedCount: changedFieldPaths.length,
     entitiesTouched: Object.fromEntries(
-      Object.entries(changedUniqueByEntityType).map(([k, v]) => [k, v.size]),
+      Object.entries(changedUniqueByEntityType).map(([k, v]) => [
+        k,
+        (v as Set<string>).size,
+      ]),
     ),
   };
 
@@ -943,7 +946,10 @@ export async function POST(
       submittedCheckedCount: submitted.size,
       changedCount: changedFieldPaths.length,
       entitiesTouched: Object.fromEntries(
-        Object.entries(changedUniqueByEntityType).map(([k, v]) => [k, v.size]),
+        Object.entries(changedUniqueByEntityType).map(([k, v]) => [
+          k,
+          (v as Set<string>).size,
+        ]),
       ),
       changedFieldPathsSample: changedFieldPaths
         .slice(0, 100)

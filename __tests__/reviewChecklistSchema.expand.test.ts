@@ -23,25 +23,23 @@ describe("ReviewChecklistSchema helpers", () => {
   it("expandRequiredChecklistItems includes MM_SOURCE fields and per-join rank items", () => {
     const { graph } = buildMockOverview("r-1");
     const items = expandRequiredChecklistItems(graph);
-    const labels = items.map((i) => i.label);
-    // Source title, type, link, permalink, year, comment, contents.order logical, and per-join Rank in source
-    expect(labels).toEqual(
+    const paths = items.map((i) => i.fieldPath);
+    // Source title, type, link, permalink, year, comment, and per-join Rank in source
+    expect(paths).toEqual(
       expect.arrayContaining([
-        "Source title",
-        "Source type",
-        "Link to online score",
-        "Permalink",
-        "Publication year",
-        "Is publication year an estimation?",
-        "Source comment",
-        // "Ordering of pieces and versions",
-        "Rank",
-        "Reference type",
-        "Reference value",
+        "source.title",
+        "source.type",
+        "source.link",
+        "source.permalink",
+        "source.year",
+        "source.isYearEstimated",
+        "source.comment",
       ]),
     );
     // Expect as many per-join rank checks as there are sourceOnPieceVersions rows
-    const perJoin = items.filter((i) => i.label === "Rank");
+    const perJoin = items.filter((i) =>
+      i.fieldPath.startsWith("sourceOnPieceVersion"),
+    );
     expect(perJoin).toHaveLength(graph.sourceOnPieceVersions?.length ?? 0);
   });
 

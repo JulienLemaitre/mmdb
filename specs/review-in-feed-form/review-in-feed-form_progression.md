@@ -17,7 +17,7 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `__tests__/bridge.inverseMapping.roundtrip.test.ts`
   - `__tests__/reviewChecklistSchema.expand.test.ts`
   - `__tests__/reviewChecklistSchema.test.ts`
-  - `__tests__/reviewDiff.degeCases.test.ts`
+  - `__tests__/reviewDiff.edgeCases.test.ts`
   - `__tests__/reviewDiff.rankChange.test.ts`
   - `__tests__/reviewDiff.test.ts`
   - `__tests__/ReviewEditBanner.test.tsx`
@@ -156,3 +156,26 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npm run test:ci` : 54 suites passées / 54 total, 229 tests passés / 229 total (0 échec).
 - **Statut L6 :** Terminé / Validé.
 - **Coût :** 0.83 credits (Gemini 3.7 Flash - High)
+
+## L7 — Moteur de diff sur `FeedFormState`
+
+- **Fichiers modifiés / créés :**
+  - `features/review/reviewDiffFieldsSchema.ts` (nouveau) : définition de `REVIEW_DIFF_FIELDS_SCHEMA`, `getDiffFields`, `isDoNotReviewTwice`, `buildFieldPath`, `buildSourceJoinRankPath` et `ENTITY_PREFIX` épurés de tout champ UI (`label`, `meta`), avec avertissement de maintenance en tête.
+  - `features/review/reviewChecklistSchema.ts` : re-export pour rétrocompatibilité jusqu'au lot L12.
+  - `features/review/reviewDiff.ts` : réécriture complète de `computeChangedFieldPaths(baseline, working)` opérant sur deux `FeedFormState`, comparant récursivement la source, les références, les contributions, les entités de premier niveau (`Person`, `Organization`, `Collection`, `Piece`, `TempoIndication`, `MetronomeMark`), l'arbre des versions de pièces (`PieceVersion` -> `Movement` -> `Section`), et détectant les ajouts, suppressions, substitutions et changements de rang des joins `mMSourceOnPieceVersions` indexés par `pieceVersionId`.
+  - `features/review/utils/auditCompose.ts` : adaptation de `findNodeInState` et de `composeAuditEntries` à `FeedFormState` avec table de correspondance exhaustive `AuditEntityType`, calcul systématique de `contentsOrder` trié dans les snapshots `before`/`after` de `MM_SOURCE`, et filtrage des suppressions d'entités protégées via `protectedEntityIds`.
+  - `types/reviewTypes.ts` : mise à jour des types (`ReviewEntityType`, `ReviewDiffField`, `ReviewDiffEntitySchema`, `ReviewDiffFieldsSchema`, `ChangedField`, `AuditOperation`, `AuditEntityType`, `AuditEntry`, et alias de compatibilité).
+  - `features/review/reviewMock.ts` : export de `buildMockFeedFormState` et enrichissement de `buildMockOverview` retournant `state` (`FeedFormState`), `graph` et `globallyReviewed`.
+  - Tests modifiés / créés :
+    - `__tests__/reviewDiffFieldsSchema.test.ts` (nouveau) : tests unitaires du schéma de diff, des drapeaux `doNotReviewTwice`, et des formateurs de chemin `buildFieldPath` et `buildSourceJoinRankPath`.
+    - `__tests__/reviewDiff.test.ts` : tests exhaustifs de diff à chaque niveau de `FeedFormState` (source, références, contributions, personnes, organisations, collections, pièces, versions, mouvements, sections, marques métronomiques, joins).
+    - `__tests__/reviewDiff.edgeCases.test.ts` : tests des cas limites (normalisation `"" ≡ undefined ≡ null`, transitions `null -> valeur` et `valeur -> null`, créations d'entités).
+    - `__tests__/reviewDiff.rankChange.test.ts` : tests des permutations de rangs, ajouts, retraits et substitutions de `pieceVersionId` de joins.
+    - `__tests__/auditCompose.test.ts` : tests de composition des entrées d'audit, snapshots `contentsOrder`, créations/suppressions et filtrage par `protectedEntityIds`.
+    - `__tests__/reviewChecklistSchema.test.ts` & `__tests__/reviewChecklistSchema.expand.test.ts` : adaptation aux nouveaux schémas sans `label`.
+- **Vérifications :**
+  - `npx tsc --noEmit` : 0 erreur.
+  - `npx eslint features/review/reviewDiffFieldsSchema.ts features/review/reviewChecklistSchema.ts features/review/reviewDiff.ts features/review/utils/auditCompose.ts types/reviewTypes.ts features/review/reviewMock.ts __tests__/reviewDiffFieldsSchema.test.ts __tests__/reviewDiff.test.ts __tests__/reviewDiff.edgeCases.test.ts __tests__/reviewDiff.rankChange.test.ts __tests__/auditCompose.test.ts __tests__/reviewChecklistSchema.test.ts __tests__/reviewChecklistSchema.expand.test.ts features/review/utils/expandRequiredChecklistItems.ts app/api/review/[reviewId]/submit/route.ts` : 0 erreur, 0 avertissement.
+  - `npm run test:ci` : 55 suites passées / 55 total, 245 tests passés / 245 total (0 échec).
+- **Statut L7 :** Terminé / Validé.
+- **Coût :** 0.85 credits (Gemini 3.7 Flash - High)

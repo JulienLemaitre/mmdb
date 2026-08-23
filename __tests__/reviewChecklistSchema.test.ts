@@ -8,9 +8,8 @@ import {
 describe("ReviewChecklistSchema basics", () => {
   it("exposes fields for SECTION including rank and metre fields", () => {
     const fields = getChecklistFields("SECTION");
-    const labels = fields.map((f) => f.label);
     const paths = fields.map((f) => f.path);
-    expect(labels).toContain("Section rank");
+    expect(paths).toContain("rank");
     expect(paths).toContain("metreNumerator");
     expect(paths).toContain("metreDenominator");
   });

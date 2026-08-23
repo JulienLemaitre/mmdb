@@ -97,7 +97,7 @@ lot 12.
    `__tests__/api.overview.test.ts`, `__tests__/api.submit.test.ts`,
    `__tests__/auditCompose.test.ts`, `__tests__/bridge.inverseMapping.roundtrip.test.ts`,
    `__tests__/reviewChecklistSchema.expand.test.ts`, `__tests__/reviewChecklistSchema.test.ts`,
-   `__tests__/reviewDiff.degeCases.test.ts`, `__tests__/reviewDiff.rankChange.test.ts`,
+   `__tests__/reviewDiff.edgeCases.test.ts`, `__tests__/reviewDiff.rankChange.test.ts`,
    `__tests__/reviewDiff.test.ts`, `__tests__/ReviewEditBanner.test.tsx`,
    `__tests__/reviewEditBridge.test.ts`, `__tests__/reviewProgress.test.ts`,
    `__tests__/reviewProgress.withChecked.test.ts`, `__tests__/review-ui/*`,
@@ -541,7 +541,7 @@ Remplacer `getReviewOverview` (qui produit un `ChecklistGraph`) par un chargeur 
 
 ### Tests
 
-Réécrire à partir des tests existants (`reviewDiff.test.ts`, `reviewDiff.degeCases.test.ts`,
+Réécrire à partir des tests existants (`reviewDiff.test.ts`, `reviewDiff.edgeCases.test.ts`,
 `reviewDiff.rankChange.test.ts`, `auditCompose.test.ts`), en remplaçant les fixtures `ChecklistGraph`
 par des `FeedFormState`. Cas à couvrir :
 

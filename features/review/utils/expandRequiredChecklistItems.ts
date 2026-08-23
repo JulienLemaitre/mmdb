@@ -244,7 +244,7 @@ export function expandRequiredChecklistItems(
             entityId: n.id,
             field,
             fieldPath: buildFieldPath(entityType, n.id, field.path),
-            label: field.label,
+            label: (field as any).label ?? field.path,
             value,
             lineage, // Attach the complete lineage to each item
           });
