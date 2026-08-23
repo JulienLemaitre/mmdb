@@ -166,6 +166,7 @@ next-auth (credentials + JWT) configured in `auth/options.ts`. Roles are ordered
   (see `types/prismaSelections.ts`, `types/formTypes.ts`). Add to `types/` only what the client actually needs.
 - Naming: PascalCase types/enums/components, camelCase functions/variables/files, UPPER_CASE constants,
   camelCase singular directories for entity folders.
+- use `getNewUuid` from `@/utils/getNewUuid` to generate new UUIDs. DO NOT import from `uuid` package directly.
 - **Log/error messages are prefixed with the source in brackets**: `` `[feedFormReducer] action :` ``,
   `"[review start] Unauthorized"`. Keep this — triage depends on it.
 - Use `debug` from `utils/debugLogger.ts` for development logging (no-ops in production); `prodLog` only when

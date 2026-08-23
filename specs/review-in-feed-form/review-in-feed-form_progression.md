@@ -197,3 +197,23 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npm run test:ci` : 56 suites passées / 56 total, 260 tests passés / 260 total (0 échec).
 - **Statut L8 :** Terminé / Validé.
 - **Coût :** 0.51 credits (Gemini 3.7 Flash - High)
+
+## L9 — Fork de `PieceVersion`
+
+- **Fichiers modifiés / créés :**
+  - `utils/server/forkModifiedSharedPieceVersions.ts` (nouveau) : implémentation de l'évaluation et du clonage transactionnel des `PieceVersion` partagées et modifiées :
+    - `isPieceVersionModified(baselinePv, statePv)` : détection de modification sur le sous-arbre `PieceVersion` (`category`, `pieceId`, `Movement`s, `Section`s) en réutilisant le moteur de diff du Lot L7 (`computeChangedFieldPaths`).
+    - `forkModifiedSharedPieceVersions(tx, { mMSourceId, baseline, state })` :
+      - Parcours des versions liées à la source en revue (`state.mMSourceOnPieceVersions`).
+      - Détection de partage en base via `tx.mMSourcesOnPieceVersions.count({ where: { pieceVersionId: pv.id, mMSourceId: { not: mMSourceId } } })`.
+      - Si modifiée et partagée avec au moins une autre source : clonage complet (`PieceVersion`, `Movement`s, `Section`s avec nouvelles UUIDs et valeurs issues de l'état soumis, `pieceId` et `tempoIndicationId` préservés).
+      - Enregistrement de tous les IDs d'origine (baseline et état) dans `protectedEntityIds` pour empêcher toute suppression en base ou dans l'audit lors de la persistance.
+      - Remappage strict de l'état soumis (`pieceVersions`, `mMSourceOnPieceVersions`, `metronomeMarks`, `mMSourceDescription.pieceVersions`).
+      - Journalisation serveur via `prodLog.info("[forkPieceVersion] <ancien> → <nouveau> (source <id>)")`.
+  - `__tests__/server/forkModifiedSharedPieceVersions.test.ts` (nouveau) : suite de tests unitaires couvrant l'ensemble des 10 scénarios et cas limites spécifiés (version modifiée+partagée, modifiée+non partagée, non modifiée+partagée, partagée uniquement avec elle-même, ajout de section seul, suppression de mouvement seule, transitions `null ↔ valeur`, préservation de `tempoIndicationId`, intégrité de `protectedEntityIds`, isolation des marques métronomiques et gestion de multiples versions mixtes).
+- **Vérifications :**
+  - `npx tsc --noEmit` : 0 erreur.
+  - `npx eslint utils/server/forkModifiedSharedPieceVersions.ts __tests__/server/forkModifiedSharedPieceVersions.test.ts` : 0 erreur, 0 avertissement.
+  - `npm run test:ci` : 57 suites passées / 57 total, 279 tests passés / 279 total (0 échec).
+- **Statut L9 :** Terminé / Validé.
+- **Coût :** 0.4 credits (Gemini 3.7 Flash - High)
