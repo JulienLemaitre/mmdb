@@ -217,3 +217,23 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npm run test:ci` : 57 suites passées / 57 total, 279 tests passés / 279 total (0 échec).
 - **Statut L9 :** Terminé / Validé.
 - **Coût :** 0.4 credits (Gemini 3.7 Flash - High)
+
+## L10A — Helpers de soumission et gestion des rangs en deux phases
+
+- **Fichiers modifiés / créés :**
+  - `utils/server/computeMMSourceDerivedData.ts` (nouveau) : helper pur extrayant les données dérivées de `FeedFormState` :
+    - `sectionCount` : somme du nombre de sections de toutes les `PieceVersion` liées à la source via `mMSourceOnPieceVersions` (après remappage du fork).
+    - `permalink` : calcul systématique du permalien canonique via `getIMSLPPermaLink(state.mMSourceDescription.link)` (ou chaîne vide si absent/vide).
+  - `utils/server/applyRankUpdatesInTwoPhases.ts` (nouveau) : helper transactionnel Prisma gérant les permutations et réordonnancements de rangs sans collision d'unicité :
+    - Algorithme en 2 passes : assignation préalable de rangs temporaires hors plage (`baseOffset + i + 1` avec `baseOffset = Math.max(1000, maxRank + 1000)`) pour libérer les places ordonnées, puis écriture des rangs définitifs cibles.
+    - Support des 4 modèles et contraintes d'unicité du schéma : `MMSourcesOnPieceVersions` (`mMSourceId`), `Movement` (`pieceVersionId`), `Section` (`movementId`), `Piece` (`collectionId`, `collectionRank`).
+    - Détection et optimisation pour ignorer les éléments dont le rang ne change pas (aucun appel DB inutile si aucun changement).
+    - Validation préalable : vérification d'unicité des rangs cibles dans l'entrée, présence des champs de scope et existence des enregistrements ciblés.
+  - `__tests__/server/computeMMSourceDerivedData.test.ts` (nouveau) : tests unitaires couvrant les calculs multi-pièces/mouvements/sections, l'exclusion des versions non liées, les états vides/minimaux et les divers formats de liens IMSLP / miroirs / Gallica / vides.
+  - `__tests__/server/applyRankUpdatesInTwoPhases.test.ts` (nouveau) : suite de tests unitaires avec mock transactionnel simulant strictement les contraintes d'unicité de PostgreSQL, couvrant le swap 1 ↔ 2 sur les 4 modèles (en PascalCase et camelCase), les inversions complètes et décalages cycliques de listes, la gestion des non-changements et réordonnancements partiels, ainsi que l'ensemble des cas d'erreurs de validation.
+- **Vérifications :**
+  - `npx tsc --noEmit` : 0 erreur.
+  - `npx eslint utils/server/computeMMSourceDerivedData.ts utils/server/applyRankUpdatesInTwoPhases.ts __tests__/server/computeMMSourceDerivedData.test.ts __tests__/server/applyRankUpdatesInTwoPhases.test.ts` : 0 erreur, 0 avertissement.
+  - `npm run test:ci` : 59 suites passées / 59 total, 300 tests passés / 300 total (0 échec).
+- **Statut L10A :** Terminé / Validé.
+- **Coût :** 0.39 credits (Gemini 3.7 Flash - High)
