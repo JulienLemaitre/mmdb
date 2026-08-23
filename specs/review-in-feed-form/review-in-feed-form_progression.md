@@ -179,3 +179,21 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npm run test:ci` : 55 suites passées / 55 total, 245 tests passés / 245 total (0 échec).
 - **Statut L7 :** Terminé / Validé.
 - **Coût :** 0.85 credits (Gemini 3.7 Flash - High)
+
+## L8 — Normalisation serveur
+
+- **Fichiers modifiés / créés :**
+  - `utils/server/normalizeFeedFormStateForPersistence.ts` (nouveau) : fonction pure de normalisation de `FeedFormState` pour la persistance et le diff, appliquant dans l'ordre strict :
+    1. Retrait des marques métronomiques `noMM: true` pour produire les suppressions en base et les `DELETE` d'audit correspondants (§12.1).
+    2. Retrait de l'intégralité des drapeaux UI de formulaire (`isNew`, `isComposerNew`, `isCollectionNew`, `isPieceNew`, `next`, `noDate`, etc.).
+    3. Normalisation des valeurs vides (`""` et `undefined` → `null`), partageant l'implémentation de `norm()` du moteur de diff pour prévenir les faux positifs.
+    4. Réindexation et garantie de continuité des rangs de `mMSourceOnPieceVersions` à partir de 1.
+    5. Attribution d'UUIDs serveur pour les entités sans ID (sans avertissement pour les `Reference`, avec avertissement `prodLog.warn` pour les autres entités).
+    6. Vérification de cohérence (présence obligatoire de `tempoIndicationId` sur chaque section, et validation que chaque marque métronomique conservée référence un `sectionId` existant dans l'état).
+  - `__tests__/server/normalizeFeedFormStateForPersistence.test.ts` (nouveau) : suite de tests unitaires couvrant exhaustivement chacune des 6 règles, le scénario dédié `noMM`, l'attribution d'IDs avec et sans log d'avertissement, les erreurs de cohérence et l'immutabilité de l'état d'entrée.
+- **Vérifications :**
+  - `npx tsc --noEmit` : 0 erreur.
+  - `npx eslint utils/server/normalizeFeedFormStateForPersistence.ts __tests__/server/normalizeFeedFormStateForPersistence.test.ts` : 0 erreur, 0 avertissement.
+  - `npm run test:ci` : 56 suites passées / 56 total, 260 tests passés / 260 total (0 échec).
+- **Statut L8 :** Terminé / Validé.
+- **Coût :** 0.51 credits (Gemini 3.7 Flash - High)
