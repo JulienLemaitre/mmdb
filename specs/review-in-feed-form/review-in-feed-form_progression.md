@@ -262,3 +262,22 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npm run test:ci` : 59 suites passées / 59 total, 312 tests passés / 312 total (0 échec).
 - **Statut L10B :** Terminé / Validé.
 - **Coût :** 0.72 credits (Gemini 3.7 Flash - High)
+
+## L11 — Gardes de démarrage et contraintes en base
+
+- **Fichiers modifiés / créés :**
+  - `prisma/schema.prisma` : ajout de l'index unique partiel `@@unique([creatorId], map: "review_unique_in_review_per_reviewer", where: raw("state = 'IN_REVIEW'"))` sur le modèle `Review`.
+  - `prisma/migrations/20260825182000_review_unique_in_review_per_reviewer/migration.sql` (nouveau) : migration SQL appliquant la création concurrente de l'index unique partiel `review_unique_in_review_per_reviewer`.
+  - `specs/20260808_MIGRATION_NOTE_review-unique-in-review-per-reviewer.md` (nouveau) : note de migration d'accompagnement décrivant l'objectif, la déclaration Prisma, le SQL appliqué et les requêtes de vérification en base.
+  - `app/api/review/start/route.ts` :
+    - Ajout du contrôle préalable vérifiant qu'aucune revue `IN_REVIEW` n'est déjà en cours pour le reviewer (`db.review.findFirst({ where: { creatorId: session.user.id, state: REVIEW_STATE.IN_REVIEW } })`) avec retour d'une erreur 409 explicite.
+    - Élargissement de la détection d'erreurs en cas de violation de contrainte d'unicité (bloc `catch`) pour distinguer les conflits d'index `review_unique_in_review_per_reviewer` (revue déjà en cours pour ce reviewer) et `review_unique_in_review_per_source` (source déjà prise par un autre reviewer).
+  - `app/(signedIn)/review/reviewListClient.tsx` : affichage du message d'erreur serveur spécifique lors d'un code HTTP 409 lorsque le reviewer a déjà une revue active.
+  - `__tests__/api.start.test.ts` : adaptation et enrichissement de la suite de tests pour couvrir le refus si le reviewer a déjà une revue active, le refus si la source est déjà en cours de revue, le refus pour sa propre source, la gestion des conflits sur les deux index uniques partiels et le cas nominal de création.
+- **Vérifications :**
+  - Migration appliquée avec succès via `npx prisma migrate deploy` et client régénéré via `npx prisma generate`.
+  - `npx tsc --noEmit` : 0 erreur.
+  - `npx eslint app/api/review/start/route.ts app/(signedIn)/review/reviewListClient.tsx __tests__/api.start.test.ts` : 0 erreur, 0 avertissement.
+  - `npm run test:ci` : 59 suites passées / 59 total, 317 tests passés / 317 total (0 échec).
+- **Statut L11 :** Terminé / Validé.
+- **Coût :** 0.45 credits (Gemini 3.7 Flash - High)

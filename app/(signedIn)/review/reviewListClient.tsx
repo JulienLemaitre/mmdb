@@ -57,10 +57,18 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
         // ignore JSON parse error; keep defaults
       }
       if (res.status === 409) {
-        setError(
-          "This source was just locked by another reviewer. Refreshing list…",
-        );
-        router.refresh();
+        if (
+          apiError &&
+          (apiError.toLowerCase().includes("active review in progress") ||
+            apiError.toLowerCase().includes("already have an active review"))
+        ) {
+          setError(apiError.replace(/^\[review start]\s*/, ""));
+        } else {
+          setError(
+            "This source was just locked by another reviewer. Refreshing list…",
+          );
+          router.refresh();
+        }
       } else if (
         res.status === 400 &&
         (apiError?.toLowerCase()?.includes("own mm source") ?? false)
