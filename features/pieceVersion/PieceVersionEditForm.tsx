@@ -27,6 +27,7 @@ import getPieceVersionInputFromPieceVersionState from "@/utils/getPieceVersionIn
 import { filterOptionByWordStart } from "@/utils/selectFilterOption";
 
 const PieceVersionSchema = z.object({
+  id: z.string().optional(),
   category: getZodOptionFromEnum(PIECE_CATEGORY),
   movements: z
     .array(
@@ -164,6 +165,9 @@ export default function PieceVersionEditForm({
         onSubmit={handleSubmit(onSubmit)}
         onKeyDown={preventEnterKeySubmission}
       >
+        {pieceVersion?.id && (
+          <input type="hidden" {...register("id" as any)} />
+        )}
         <fieldset className="fieldset text-base border border-base-300 rounded-lg hover:border-base-400 hover:shadow-xs hover:bg-primary/5 transition-all duration-150 px-4 pb-4">
           <legend className="fieldset-legend">Piece</legend>
           <ControlledSelect

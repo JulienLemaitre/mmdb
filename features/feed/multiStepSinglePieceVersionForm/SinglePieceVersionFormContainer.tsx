@@ -124,11 +124,14 @@ const SinglePieceVersionFormContainer = ({
     });
   };
   const onComposerCreated = (composer: PersonInput) => {
+    const previousComposer = selectedComposerId
+      ? singlePieceVersionFormState?.composer ||
+        feedFormState.persons?.find((p) => p.id === selectedComposerId)
+      : undefined;
     const newComposer: PersonState = getPersonStateFromPersonInput({
-      ...(selectedComposerId
-        ? feedFormState.persons?.find((p) => p.id === selectedComposerId)
-        : {}),
+      ...previousComposer,
       ...composer,
+      ...(selectedComposerId ? { id: selectedComposerId } : {}),
     });
     newComposer.isNew = true;
     updateSinglePieceVersionForm(dispatch, "composer", {
@@ -178,9 +181,15 @@ const SinglePieceVersionFormContainer = ({
     }
 
     const previousValue = selectedPieceId
-      ? feedFormState.pieces?.find((piece) => piece.id === selectedPieceId)
+      ? singlePieceVersionFormState?.piece ||
+        feedFormState.pieces?.find((piece) => piece.id === selectedPieceId)
       : {};
-    const finalValue = { ...previousValue, ...pieceData, composerId };
+    const finalValue = {
+      ...previousValue,
+      ...pieceData,
+      composerId,
+      ...(selectedPieceId ? { id: selectedPieceId } : {}),
+    };
 
     // Remove null values from finalValue
     Object.keys(finalValue).forEach(

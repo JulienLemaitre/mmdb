@@ -106,6 +106,7 @@ function CollectionPieceVersionsFormContainer({
     const newComposer: PersonState = getPersonStateFromPersonInput({
       ...previousComposer,
       ...composer,
+      ...(selectedComposerId ? { id: selectedComposerId } : {}),
     });
     newComposer.isNew = true;
     upsertCollectionPersons(dispatch, { array: [newComposer] });
@@ -169,7 +170,7 @@ function CollectionPieceVersionsFormContainer({
     const newCollection: MakeOptional<CollectionState, "pieceCount"> = {
       ...collection,
       composerId: selectedComposerId,
-      id: collection.id || uuidv4(),
+      id: collection.id || selectedCollectionId || uuidv4(),
       isNew: true,
     };
     updateCollection(dispatch, {

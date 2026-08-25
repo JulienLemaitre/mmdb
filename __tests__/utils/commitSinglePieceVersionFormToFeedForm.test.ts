@@ -302,4 +302,81 @@ describe("commitSinglePieceVersionFormToFeedForm", () => {
       },
     });
   });
+
+  it("should preserve existing entity IDs when committing with isNew: true", () => {
+    const existingComposer: PersonState = {
+      id: "existing-composer-123",
+      firstName: "Ludwig van",
+      lastName: "Beethoven (Edited)",
+      birthYear: 1770,
+      deathYear: 1827,
+      isNew: true,
+    };
+
+    const existingPiece: PieceState = {
+      id: "existing-piece-456",
+      title: "Symphony No. 5 in C Minor (Edited)",
+      composerId: "existing-composer-123",
+      isNew: true,
+    };
+
+    const existingPieceVersion: PieceVersionState = {
+      id: "existing-pv-789",
+      pieceId: "existing-piece-456",
+      category: PIECE_CATEGORY.OTHER,
+      movements: [
+        {
+          id: "existing-mov-1",
+          key: KEY.C_MINOR,
+          rank: 1,
+          sections: [
+            {
+              id: "existing-sec-1",
+              rank: 1,
+              metreNumerator: 2,
+              metreDenominator: 4,
+              isCommonTime: false,
+              isCutTime: false,
+              comment: "Edited section",
+              commentForReview: "",
+              fastestStructuralNotesPerBar: 0,
+              fastestBelCantoNotesPerBar: 0,
+              fastestStaccatoNotesPerBar: 0,
+              fastestRepeatedNotesPerBar: 0,
+              fastestOrnamentalNotesPerBar: 0,
+              tempoIndicationId: "tempo-id",
+            },
+          ],
+        },
+      ],
+      isNew: true,
+    };
+
+    commitSinglePieceVersionFormToFeedForm({
+      singlePieceVersionFormState: {
+        formInfo: { currentStepRank: 4 },
+        composer: existingComposer,
+        piece: existingPiece,
+        pieceVersion: existingPieceVersion,
+        tempoIndications: [mockTempoIndication],
+      },
+      feedFormState: mockFeedFormState,
+      feedFormDispatch,
+      isUpdateMode: true,
+    });
+
+    // Check that dispatch was called with exactly the existing IDs
+    expect(feedFormDispatch).toHaveBeenCalledWith({
+      type: "persons",
+      payload: { array: [existingComposer] },
+    });
+    expect(feedFormDispatch).toHaveBeenCalledWith({
+      type: "pieces",
+      payload: { array: [existingPiece] },
+    });
+    expect(feedFormDispatch).toHaveBeenCalledWith({
+      type: "pieceVersions",
+      payload: { array: [existingPieceVersion] },
+    });
+  });
 });

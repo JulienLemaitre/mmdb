@@ -9,6 +9,7 @@ export const zodYear = z.coerce
 export const zodYearOptional = zodYear.or(z.nan()).optional().nullable();
 
 export const zodPerson = z.object({
+  id: z.string().optional(),
   firstName: z.string().min(2),
   lastName: z.string().min(2),
   birthYear: zodYear,

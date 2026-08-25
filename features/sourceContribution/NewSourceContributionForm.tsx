@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { v4 as uuidv4 } from "uuid";
+import { getNewUuid } from "@/utils/getNewUuid";
 import {
   ContributionInput,
   OrganizationState,
@@ -15,6 +15,7 @@ import { ChangeEvent, useState } from "react";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 import getRoleLabel from "@/utils/getRoleLabel";
 import { filterOptionByWordStart } from "@/utils/selectFilterOption";
+import { prodLog } from "@/utils/debugLogger";
 
 const SourceContributionsSchema = z.union([
   z.object({
@@ -75,11 +76,11 @@ export default function NewSourceContributionForm({
   };
 
   const onSubmit = async (data: ContributionInput) => {
-    console.log(`[] data :`, data);
+    prodLog.info(`[NewSourceContributionForm] onSubmit data :`, data);
     if ("person" in data) {
       // Persist the new person in state
       const newPerson: PersonState = {
-        id: uuidv4(),
+        id: (data.person as any)?.id || getNewUuid(),
         birthYear: data.person.birthYear,
         deathYear:
           data.person.deathYear && !Number.isNaN(data.person?.deathYear)
@@ -99,7 +100,7 @@ export default function NewSourceContributionForm({
     if ("organization" in data) {
       // Persist the new organization in state
       const newOrganization: OrganizationState = {
-        id: uuidv4(),
+        id: (data.organization as any)?.id || getNewUuid(),
         name: data.organization.name,
         isNew: true,
       };

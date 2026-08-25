@@ -333,3 +333,28 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npm run test:ci` : 44 suites passées / 44 total, 282 tests passés / 282 total (0 échec).
 - **Statut L12 :** Terminé / Validé.
 - **Coût :** 0.61 credits (Gemini 3.7 Flash - High)
+
+## L13 — Audit de préservation des identifiants dans les sous-formulaires
+
+- **Fichiers modifiés / créés :**
+  - `types/zodTypes.ts` : ajout de `id: z.string().optional()` au schéma `zodPerson`.
+  - `features/composer/form/ComposerEditForm.tsx` : injection d'un champ caché `id` (`{composer?.id && <input type="hidden" {...register("id" as any)} />}`) pour conserver l'identifiant existant lors de la soumission.
+  - `features/piece/form/PieceEditForm.tsx` : ajout de `id: z.string().optional()` à `PieceSchema` et injection du champ caché `id` (`{piece?.id && <input type="hidden" {...register("id" as any)} />}`).
+  - `features/pieceVersion/PieceVersionEditForm.tsx` : ajout de `id: z.string().optional()` à `PieceVersionSchema` et injection du champ caché `id` (`{pieceVersion?.id && <input type="hidden" {...register("id" as any)} />}`).
+  - `features/feed/multiStepSinglePieceVersionForm/SinglePieceVersionFormContainer.tsx` :
+    - `onComposerCreated` : préservation explicite de `selectedComposerId` lors de la mise à jour du compositeur.
+    - `onPieceCreated` : préservation explicite de `selectedPieceId` lors de la mise à jour de la pièce.
+    - `onPieceVersionCreated` : conservation de l'identifiant de version existant lors de la validation.
+  - `features/feed/multiStepCollectionPieceVersionsForm/CollectionPieceVersionsFormContainer.tsx` :
+    - `onComposerCreated` : préservation explicite de `selectedComposerId`.
+    - `onCollectionCreated` : préservation explicite de `selectedCollectionId`.
+  - `features/sourceContribution/NewSourceContributionForm.tsx` : utilisation de `getNewUuid()` et préservation des identifiants existants si fournis.
+  - `__tests__/utils/commitSinglePieceVersionFormToFeedForm.test.ts` : ajout de tests vérifiant la préservation des IDs existants (`isNew: true`) sur `Person`, `Piece` et `PieceVersion` lors du commit vers `FeedFormState`.
+  - `__tests__/utils/commitCollectionPieceVersionsFormToFeedForm.test.ts` : ajout de tests vérifiant la préservation des IDs existants (`isNew: true`) sur `Collection`, `Person`, `Piece` et `PieceVersion` lors du commit vers `FeedFormState`.
+  - `__tests__/utils/subFormIdPreservation.test.ts` (nouveau) : suite complète de tests validant la préservation d'identifiant sur les 5 entités (`Person`, `Organization`, `Collection`, `Piece`, `PieceVersion` + `Movement`, `Section`, `TempoIndication`), ainsi que l'absence d'élagage d'entités actives dans `cleanFeedFormState`.
+- **Vérifications :**
+  - `npx tsc --noEmit` : 0 erreur.
+  - `npx eslint` sur l'ensemble des fichiers modifiés et créés : 0 erreur, 0 avertissement.
+  - `npm run test:ci` : 45 suites passées / 45 total, 293 tests passés / 293 total (0 échec).
+- **Statut L13 :** Terminé / Validé.
+- **Coût :** 0.78 credits (Gemini 3.7 Flash - High) + .22 pour corriger le tests initialement problématiques

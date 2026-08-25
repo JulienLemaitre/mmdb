@@ -279,4 +279,88 @@ describe("commitCollectionPieceVersionsFormToFeedForm", () => {
       },
     });
   });
+
+  it("should preserve existing collection, composer, piece and pieceVersion IDs when committing", () => {
+    const existingComposer: PersonState = {
+      id: "existing-col-composer-1",
+      firstName: "Frederic",
+      lastName: "Chopin (Edited)",
+      birthYear: 1810,
+      deathYear: 1849,
+      isNew: true,
+    };
+
+    const existingCollection = {
+      id: "existing-collection-100",
+      composerId: existingComposer.id,
+      title: "Nocturnes (Edited)",
+      isNew: true,
+    };
+
+    const existingPiece: PieceState = {
+      id: "existing-col-piece-100",
+      title: "Nocturne Op. 9 No. 1 (Edited)",
+      composerId: existingComposer.id,
+      collectionId: existingCollection.id,
+      collectionRank: 1,
+      isNew: true,
+    };
+
+    const existingPieceVersion: PieceVersionState = {
+      id: "existing-col-pv-100",
+      pieceId: existingPiece.id,
+      category: PIECE_CATEGORY.OTHER,
+      movements: [
+        {
+          id: "existing-col-mov-100",
+          rank: 1,
+          key: KEY.B_FLAT_MINOR,
+          sections: [buildSection("existing-col-sec-100", 1, tempo)],
+        },
+      ],
+      isNew: true,
+    };
+
+    const sourceOnPieceVersions: MMSourceOnPieceVersionsState[] = [
+      { pieceVersionId: existingPieceVersion.id, rank: 1 },
+    ];
+
+    const state: CollectionPieceVersionsFormState = {
+      formInfo: { currentStepRank: 2 },
+      collection: existingCollection,
+      persons: [existingComposer],
+      pieces: [existingPiece],
+      pieceVersions: [existingPieceVersion],
+      tempoIndications: [tempo],
+      mMSourceOnPieceVersions: sourceOnPieceVersions,
+    };
+
+    const result = commitCollectionPieceVersionsFormToFeedForm({
+      collectionPieceVersionFormState: state,
+      sourceOnPieceVersions,
+      feedFormState: { mMSourceOnPieceVersions: [] },
+      feedFormDispatch,
+    });
+
+    expect(result).toBe(true);
+
+    expect(feedFormDispatch).toHaveBeenCalledWith({
+      type: "persons",
+      payload: { array: [existingComposer] },
+    });
+    expect(feedFormDispatch).toHaveBeenCalledWith({
+      type: "collections",
+      payload: {
+        array: [{ ...existingCollection, pieceCount: 1 }],
+      },
+    });
+    expect(feedFormDispatch).toHaveBeenCalledWith({
+      type: "pieces",
+      payload: { array: [existingPiece] },
+    });
+    expect(feedFormDispatch).toHaveBeenCalledWith({
+      type: "pieceVersions",
+      payload: { array: [existingPieceVersion] },
+    });
+  });
 });
