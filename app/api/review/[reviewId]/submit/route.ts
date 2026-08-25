@@ -1,10 +1,5 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { getReviewOverview } from "@/utils/server/getReviewOverview";
-import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
-import { composeAuditEntries } from "@/features/review/utils/auditCompose";
-import { expandRequiredChecklistItems } from "@/features/review/utils/expandRequiredChecklistItems";
-import { debug } from "@/utils/debugLogger";
 import { authOptions } from "@/auth/options";
 import { db } from "@/utils/server/db";
 import {
@@ -14,16 +9,26 @@ import {
   REVIEW_STATE,
   REVIEWED_ENTITY_TYPE,
 } from "@/prisma/client";
-import { ChecklistGraph, ChangedField } from "@/types/reviewTypes";
+import { FeedFormState } from "@/types/feedFormTypes";
+import { assertsIsPersistableFeedFormState } from "@/types/formTypes";
+import { getReviewBaseline } from "@/utils/server/getReviewBaseline";
+import { extendBaselineByExistence } from "@/utils/server/extendBaselineByExistence";
+import { normalizeFeedFormStateForPersistence } from "@/utils/server/normalizeFeedFormStateForPersistence";
+import { computeChangedFieldPaths } from "@/features/review/reviewDiff";
+import { forkModifiedSharedPieceVersions } from "@/utils/server/forkModifiedSharedPieceVersions";
+import { composeAuditEntries } from "@/features/review/utils/auditCompose";
+import { computeMMSourceDerivedData } from "@/utils/server/computeMMSourceDerivedData";
+import { applyRankUpdatesInTwoPhases } from "@/utils/server/applyRankUpdatesInTwoPhases";
 import sendEmail from "@/utils/server/sendEmail";
+import { debug, prodLog } from "@/utils/debugLogger";
 
 // POST /api/review/[reviewId]/submit
-// Body: { workingCopy, checklistState: Array<{entityType, entityId, fieldPath, checked}>, overallComment? }
+// Body: { feedFormState: FeedFormState, overallComment?: string | null }
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ reviewId: string }> },
 ) {
-  // Enforce authenticated reviewer/admin access for submissions.
+  // 1. Session & role checks
   const session = await getServerSession(authOptions);
   if (!session || !session.user) {
     return NextResponse.json(
@@ -41,769 +46,786 @@ export async function POST(
     );
   }
 
-  // Parse request and validate required payload fields.
   const { reviewId } = await params;
 
+  // 2. Parse JSON body & extract payload
   let body: any;
   try {
     body = await req.json();
   } catch {
-    debug.error("Invalid JSON body");
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
-  }
-
-  const workingCopy = body?.workingCopy as ChecklistGraph;
-  const checklistState = Array.isArray(body?.checklistState)
-    ? body.checklistState
-    : [];
-  const overallComment = body?.overallComment ?? null;
-
-  if (!workingCopy || !Array.isArray(checklistState)) {
-    debug.error(
-      `Missing : ${workingCopy ? "" : "workingCopy"} ${Array.isArray(checklistState) ? "" : "checklistState"}`,
-    );
-    debug.error(`[error] workingCopy`, JSON.stringify(workingCopy, null, 2));
-    debug.error(
-      `[error] checklistState`,
-      JSON.stringify(checklistState, null, 2),
-    );
+    debug.error("[review submit] Invalid JSON body");
     return NextResponse.json(
-      { error: "Missing workingCopy or checklistState" },
+      { error: "[review submit] Invalid JSON body" },
       { status: 400 },
     );
   }
 
-  // 1. Verify review exists, state is valid, and caller owns it.
+  const submittedState = (body?.feedFormState || body?.state) as FeedFormState;
+  const overallComment =
+    body?.overallComment !== undefined ? body.overallComment : null;
+
+  if (!submittedState) {
+    return NextResponse.json(
+      { error: "[review submit] Missing feedFormState in request body" },
+      { status: 400 },
+    );
+  }
+
+  // 3. Verify review ownership & IN_REVIEW state
   const review = await db.review.findUnique({
     where: { id: reviewId },
     select: { id: true, state: true, creatorId: true, mMSourceId: true },
   });
 
   if (!review) {
-    return NextResponse.json({ error: "Review not found" }, { status: 404 });
+    return NextResponse.json(
+      { error: "[review submit] Review not found" },
+      { status: 404 },
+    );
   }
+
   if (review.creatorId !== userId) {
     return NextResponse.json(
-      { error: "Forbidden: You are not the owner of this review" },
+      {
+        error:
+          "[review submit] Forbidden: You are not the owner of this review",
+      },
       { status: 403 },
     );
   }
+
   if (review.state !== REVIEW_STATE.IN_REVIEW) {
     return NextResponse.json(
-      { error: `Review is not IN_REVIEW (current: ${review.state})` },
-      { status: 400 },
-    );
-  }
-
-  // 2. Load baseline graph used for diffing/persistence decisions.
-  let baselineGraph: ChecklistGraph;
-  let globallyReviewed: any;
-  try {
-    const reviewOverview = await getReviewOverview(reviewId);
-    baselineGraph = reviewOverview.graph;
-    globallyReviewed = reviewOverview.globallyReviewed;
-  } catch (err: any) {
-    debug.error(`getReviewOverview error: ${err.message}`);
-    return NextResponse.json(
-      { error: err.message || "Failed to load review overview" },
-      { status: 500 },
-    );
-  }
-
-  // 3. Validate checklist completeness against working copy (server authoritative).
-  // We validate against the workingCopy because the reviewer might have deleted items (which removes the requirement to check them)
-  // or added new items (which creates new requirements). The baseline is only used for diffing/persistence.
-  const requiredItems = expandRequiredChecklistItems(workingCopy, {
-    globallyReviewed: {
-      personIds: new Set(globallyReviewed.personIds ?? []),
-      organizationIds: new Set(globallyReviewed.organizationIds ?? []),
-      collectionIds: new Set(globallyReviewed.collectionIds ?? []),
-      pieceIds: new Set(globallyReviewed.pieceIds ?? []),
-      pieceVersionIds: new Set(globallyReviewed.pieceVersionIds ?? []),
-    },
-  });
-
-  // Build a map of submitted checks for quick lookup
-  const submitted = new Set(checklistState.map((it: any) => it.fieldPath));
-
-  const missing = requiredItems.filter((it) => !submitted.has(it.fieldPath));
-
-  if (missing.length > 0) {
-    debug.error(
-      "requiredItems keys",
-      requiredItems.map((it) => it.fieldPath),
-    );
-    debug.error(
-      `[review submit] submitted`,
-      JSON.stringify(submitted, null, 2),
-    );
-    debug.error(`[review submit] missing`, JSON.stringify(missing, null, 2));
-    return NextResponse.json(
       {
-        error: "Incomplete checklist: some required items are not checked",
-        missing: missing.slice(0, 100),
-        missingCount: missing.length,
+        error: `[review submit] Review is not IN_REVIEW (current: ${review.state})`,
       },
       { status: 400 },
     );
   }
 
-  // 4. Compute audit entries and changed field paths for persistence decisions.
-  // (Note: We recalculate diffs for audit, but for DB updates we traverse the working copy)
-  const auditEntries = composeAuditEntries(
-    reviewId,
-    baselineGraph,
-    workingCopy,
+  // 4. Mandatory fields check (similar to app/api/feedForm/route.ts)
+  const mandatoryFields = [
+    "mMSourceDescription",
+    "mMSourceContributions",
+    "mMSourceOnPieceVersions",
+    "metronomeMarks",
+  ] as const;
+
+  const missingMandatoryFields = mandatoryFields.filter(
+    (field) =>
+      !submittedState[field] ||
+      (Array.isArray(submittedState[field]) &&
+        (submittedState[field] as any).length === 0),
   );
-  const changedFieldPaths = computeChangedChecklistFieldPaths(
-    baselineGraph,
-    workingCopy,
-  );
-  const changedUniqueByEntityType = (
-    changedFieldPaths as ChangedField[]
-  ).reduce<Record<string, Set<string>>>((acc, c) => {
-    acc[c.entityType] = acc[c.entityType] || new Set<string>();
-    if (c.entityId) acc[c.entityType].add(c.entityId);
-    else acc[c.entityType].add("__source__");
-    return acc;
-  }, {});
 
-  // Helpers for detecting new/changed entities vs baseline.
-  const buildIdSet = (items?: Array<{ id?: string | null }>) =>
-    new Set((items ?? []).map((item) => item?.id).filter(Boolean) as string[]);
-
-  // Precompute nested IDs so movement/section diffs can be resolved quickly.
-  const baselineMovementIds = new Set<string>();
-  const baselineSectionIds = new Set<string>();
-  for (const pv of baselineGraph.pieceVersions ?? []) {
-    const movements = (pv as any).movements || [];
-    for (const movement of movements) {
-      if (movement?.id) baselineMovementIds.add(movement.id);
-      const sections = (movement as any).sections || [];
-      for (const section of sections) {
-        if (section?.id) baselineSectionIds.add(section.id);
-      }
-    }
-  }
-
-  const baselineIdsByType: Record<string, Set<string>> = {
-    PERSON: buildIdSet(baselineGraph.persons),
-    ORGANIZATION: buildIdSet(baselineGraph.organizations),
-    COLLECTION: buildIdSet(baselineGraph.collections),
-    PIECE: buildIdSet(baselineGraph.pieces),
-    PIECE_VERSION: buildIdSet(baselineGraph.pieceVersions),
-    MOVEMENT: baselineMovementIds,
-    SECTION: baselineSectionIds,
-    TEMPO_INDICATION: buildIdSet(baselineGraph.tempoIndications),
-    METRONOME_MARK: buildIdSet(baselineGraph.metronomeMarks),
-    REFERENCE: buildIdSet(baselineGraph.source?.references),
-    CONTRIBUTION: buildIdSet(baselineGraph.contributions),
-  };
-
-  // Contributions use polymorphic person/organization, so compare explicitly.
-  const baselineContributionById = new Map<
-    string,
-    { role: string; personId: string | null; organizationId: string | null }
-  >();
-  for (const c of baselineGraph.contributions ?? []) {
-    if (!c?.id) continue;
-    baselineContributionById.set(c.id, {
-      role: c.role,
-      personId: "personId" in c ? (c.personId ?? null) : null,
-      organizationId: "organizationId" in c ? (c.organizationId ?? null) : null,
-    });
-  }
-
-  const hasChangedEntity = (type: string, id: string | undefined | null) =>
-    !!id && !!changedUniqueByEntityType[type]?.has(id);
-  const isNewEntity = (type: string, id: string | undefined | null) =>
-    !!id && !baselineIdsByType[type]?.has(id);
-  const shouldUpsertEntity = (type: string, id: string | undefined | null) =>
-    !!id && (isNewEntity(type, id) || hasChangedEntity(type, id));
-  const shouldUpsertContribution = (c: any) => {
-    if (!c?.id) return true;
-    if (isNewEntity("CONTRIBUTION", c.id)) return true;
-    if (hasChangedEntity("CONTRIBUTION", c.id)) return true;
-    const baseline = baselineContributionById.get(c.id);
-    if (!baseline) return true;
-    const personId = "person" in c ? (c.person?.id ?? null) : null;
-    const organizationId =
-      "organization" in c ? (c.organization?.id ?? null) : null;
-    return (
-      baseline.role !== c.role ||
-      baseline.personId !== personId ||
-      baseline.organizationId !== organizationId
+  if (missingMandatoryFields.length > 0) {
+    return NextResponse.json(
+      {
+        error: `[review submit] Missing mandatory fields: ${missingMandatoryFields.join(", ")}`,
+      },
+      { status: 400 },
     );
-  };
-  // Ignore sourceOnPieceVersions rank-only changes for MM_SOURCE update.
-  const hasMMSourceFieldChanges = changedFieldPaths.some(
-    (c) =>
-      c.entityType === "MM_SOURCE" &&
-      !c.fieldPath.startsWith("source.pieceVersions["),
-  );
+  }
 
-  const logSummary = {
+  // 5. Structure validation (assertsIsPersistableFeedFormState)
+  try {
+    assertsIsPersistableFeedFormState(submittedState);
+  } catch (err: any) {
+    return NextResponse.json(
+      { error: `[review submit] Invalid feedFormState: ${err.message}` },
+      { status: 400 },
+    );
+  }
+
+  // 6. Baseline loading & extension by existence
+  let baseline: FeedFormState;
+  let globallyReviewed: any;
+  try {
+    const reviewBaseline = await getReviewBaseline(reviewId, {
+      requireOwner: true,
+    });
+    baseline = reviewBaseline.baseline;
+    globallyReviewed = reviewBaseline.globallyReviewed;
+    baseline = await extendBaselineByExistence(baseline, submittedState);
+  } catch (err: any) {
+    debug.error(`[review submit] Failed to load review baseline: ${err.message}`);
+    return NextResponse.json(
+      { error: err.message || "[review submit] Failed to load review baseline" },
+      { status: 500 },
+    );
+  }
+
+  // 7. Normalization of submitted state for persistence
+  let normalizedState: FeedFormState;
+  try {
+    normalizedState = normalizeFeedFormStateForPersistence(submittedState);
+  } catch (err: any) {
+    debug.error(`[review submit] Normalization error: ${err.message}`);
+    return NextResponse.json(
+      { error: `[review submit] Normalization error: ${err.message}` },
+      { status: 400 },
+    );
+  }
+
+  // 8. Pre-transaction diff, audit and log email
+  const preDiff = computeChangedFieldPaths(baseline, normalizedState);
+  const preAudit = composeAuditEntries(reviewId, baseline, normalizedState);
+
+  const preLogSummary = {
     reviewId,
-    workingCopy,
-    checklistState,
-    reviewInit: review,
-    baselineGraph,
+    state: normalizedState,
+    baseline,
     globallyReviewed,
     overallComment,
-    requiredCount: requiredItems.length,
-    submittedCheckedCount: submitted.size,
-    requiredItems,
-    auditEntries,
-    changedFieldPaths,
-    changedUniqueByEntityType,
-    baselineIdsByType,
-    baselineContributionById,
-    hasMMSourceFieldChanges,
-    changedCount: changedFieldPaths.length,
+    changedFieldPaths: preDiff,
+    auditEntries: preAudit,
+    changedCount: preDiff.length,
     entitiesTouched: Object.fromEntries(
-      Object.entries(changedUniqueByEntityType).map(([k, v]) => [
-        k,
-        (v as Set<string>).size,
+      Array.from(new Set(preDiff.map((d) => d.entityType))).map((et) => [
+        et,
+        new Set(
+          preDiff
+            .filter((d) => d.entityType === et)
+            .map((d) => d.entityId ?? "__source__"),
+        ).size,
       ]),
     ),
   };
 
-  // 5. Send log email before database persistence.
   await sendEmail({
     type: "Review SUBMIT data",
-    content: logSummary,
-  })
-    .then((result) => {
-      if (result.error) {
-        console.error(
-          `[api/review/${reviewId}/submit] data sendEmail ERROR :`,
-          result.error,
-        );
-      } else {
-        console.log(
-          `[api/review/${reviewId}/submit] data sendEmail result :`,
-          result,
-        );
-      }
-    })
-    .catch((err) =>
-      console.error(
-        `[api/review/${reviewId}/submit] data sendEmail ERROR :`,
-        err.status,
-        err.message,
-      ),
-    );
+    content: preLogSummary,
+  }).catch((err) =>
+    console.error(
+      `[api/review/${reviewId}/submit] data sendEmail ERROR :`,
+      err?.status,
+      err?.message,
+    ),
+  );
 
-  // 6. Persist to database transactionally.
+  // 9. Execute transaction
   const txDebug: any = {};
   try {
+    let finalAuditEntries: any[] = [];
+    let finalChangedFieldPaths: any[] = [];
+    let finalForkResult: any = null;
+
     await db.$transaction(
       async (tx) => {
-        // --- A. Deletions (Cascading & Cleanup) ---
-        // Compare baseline vs working copy to find removed entities.
-        // We focus on strict dependencies: References, Contributions, MetronomeMarks, Sections, Movements.
+        // --- Step A: Fork modified shared PieceVersions ---
+        finalForkResult = await forkModifiedSharedPieceVersions(tx, {
+          mMSourceId: review.mMSourceId,
+          baseline,
+          state: normalizedState,
+        });
 
-        // 1. References (on Source)
-        const workingRefIds = new Set(
-          (workingCopy.source.references || [])
+        const finalState = finalForkResult.state;
+        const protectedEntityIds = finalForkResult.protectedEntityIds;
+
+        // --- Step B: Recalculate diff, audit & derived data on remapped state ---
+        finalChangedFieldPaths = computeChangedFieldPaths(baseline, finalState);
+        finalAuditEntries = composeAuditEntries(
+          reviewId,
+          baseline,
+          finalState,
+          protectedEntityIds,
+        );
+        const derived = computeMMSourceDerivedData(finalState);
+
+        // Map changed entity IDs by ReviewEntityType
+        const changedEntitiesByType = new Map<string, Set<string>>();
+        for (const change of finalChangedFieldPaths) {
+          const set =
+            changedEntitiesByType.get(change.entityType) ?? new Set<string>();
+          if (change.entityId) {
+            set.add(change.entityId);
+          } else {
+            set.add("__source__");
+          }
+          changedEntitiesByType.set(change.entityType, set);
+        }
+
+        // Precompute baseline IDs for fast existence checks (3-way decision: create / update / none)
+        const baselinePersonIds = new Set(
+          (baseline.persons ?? []).map((p) => p.id),
+        );
+        const baselineOrgIds = new Set(
+          (baseline.organizations ?? []).map((o) => o.id),
+        );
+        const baselineCollectionIds = new Set(
+          (baseline.collections ?? []).map((c) => c.id),
+        );
+        const baselinePieceIds = new Set(
+          (baseline.pieces ?? []).map((p) => p.id),
+        );
+        const baselinePieceVersionIds = new Set(
+          (baseline.pieceVersions ?? []).map((pv) => pv.id),
+        );
+        const baselineMovementIds = new Set<string>();
+        const baselineSectionIds = new Set<string>();
+        for (const pv of baseline.pieceVersions ?? []) {
+          for (const m of pv.movements ?? []) {
+            if (m.id) baselineMovementIds.add(m.id);
+            for (const s of m.sections ?? []) {
+              if (s.id) baselineSectionIds.add(s.id);
+            }
+          }
+        }
+        const baselineTempoIndicationIds = new Set(
+          (baseline.tempoIndications ?? [])
+            .map((ti) => ti.id)
+            .filter((id): id is string => Boolean(id)),
+        );
+        const baselineReferenceIds = new Set(
+          (baseline.mMSourceDescription?.references ?? [])
+            .map((r) => r.id)
+            .filter((id): id is string => Boolean(id)),
+        );
+        const baselineContributionIds = new Set(
+          (baseline.mMSourceContributions ?? [])
+            .map((c) => c.id)
+            .filter((id): id is string => Boolean(id)),
+        );
+        const baselineMMIds = new Set(
+          (baseline.metronomeMarks ?? [])
+            .map((mm) => mm.id)
+            .filter((id): id is string => Boolean(id)),
+        );
+
+        // ==========================================
+        // Phase 1 — Deletions (Cascading & Cleanup)
+        // ==========================================
+
+        // 1. MetronomeMarks (noMM marks already removed by normalization)
+        const stateMMIds = new Set(
+          (finalState.metronomeMarks ?? [])
+            .map((mm) => mm.id)
+            .filter(Boolean),
+        );
+        const deletedMMIds = Array.from(baselineMMIds).filter(
+          (id) => !stateMMIds.has(id),
+        );
+        if (deletedMMIds.length > 0) {
+          txDebug.deletedMetronomeMarks = await tx.metronomeMark.deleteMany({
+            where: { id: { in: deletedMMIds } },
+          });
+        }
+
+        // 2. Sections (excluding protectedEntityIds)
+        const stateSectionIds = new Set<string>();
+        for (const pv of finalState.pieceVersions ?? []) {
+          for (const m of pv.movements ?? []) {
+            for (const s of m.sections ?? []) {
+              if (s.id) stateSectionIds.add(s.id);
+            }
+          }
+        }
+        const deletedSectionIds = Array.from(baselineSectionIds).filter(
+          (id) => !stateSectionIds.has(id) && !protectedEntityIds.has(id),
+        );
+        if (deletedSectionIds.length > 0) {
+          txDebug.deletedSections = await tx.section.deleteMany({
+            where: { id: { in: deletedSectionIds } },
+          });
+        }
+
+        // 3. Movements (excluding protectedEntityIds)
+        const stateMovementIds = new Set<string>();
+        for (const pv of finalState.pieceVersions ?? []) {
+          for (const m of pv.movements ?? []) {
+            if (m.id) stateMovementIds.add(m.id);
+          }
+        }
+        const deletedMovementIds = Array.from(baselineMovementIds).filter(
+          (id) => !stateMovementIds.has(id) && !protectedEntityIds.has(id),
+        );
+        if (deletedMovementIds.length > 0) {
+          txDebug.deletedMovements = await tx.movement.deleteMany({
+            where: { id: { in: deletedMovementIds } },
+          });
+        }
+
+        // 4. References
+        const stateRefIds = new Set(
+          (finalState.mMSourceDescription?.references ?? [])
             .map((r) => r.id)
             .filter(Boolean),
         );
-        const removedRefIds = (baselineGraph.source.references || [])
-          .map((r) => r.id)
-          .filter((id) => id && !workingRefIds.has(id));
-        if (removedRefIds.length > 0) {
-          debug.log(`[review submit] DELETING removedRefIds`, removedRefIds);
-          txDebug.removedReferences = await tx.reference.deleteMany({
-            where: { id: { in: removedRefIds as string[] } },
-          });
-        }
-
-        // 2. Contributions (on Source)
-        const workingContribIds = new Set(
-          (workingCopy.contributions || []).map((c) => c.id).filter(Boolean),
+        const deletedRefIds = Array.from(baselineReferenceIds).filter(
+          (id) => !stateRefIds.has(id),
         );
-        const removedContribIds = (baselineGraph.contributions || [])
-          .map((c) => c.id)
-          .filter((id) => id && !workingContribIds.has(id));
-        if (removedContribIds.length > 0) {
-          debug.log(
-            `[review submit] DELETING removedContribIds`,
-            removedContribIds,
-          );
-          txDebug.removedContributions = await tx.contribution.deleteMany({
-            where: { id: { in: removedContribIds as string[] } },
+        if (deletedRefIds.length > 0) {
+          txDebug.deletedReferences = await tx.reference.deleteMany({
+            where: { id: { in: deletedRefIds } },
           });
         }
 
-        // 3. MetronomeMarks (on Source)
-        const workingMMIds = new Set(
-          (workingCopy.metronomeMarks || []).map((m) => m.id).filter(Boolean),
+        // 5. Contributions
+        const stateContribIds = new Set(
+          (finalState.mMSourceContributions ?? [])
+            .map((c) => c.id)
+            .filter(Boolean),
         );
-        const removedMMIds = (baselineGraph.metronomeMarks || [])
-          .map((m) => m.id)
-          .filter((id) => id && !workingMMIds.has(id));
-        if (removedMMIds.length > 0) {
-          debug.log(`[review submit] DELETING removedMMIds`, removedMMIds);
-          txDebug.removedMetronomeMarks = await tx.metronomeMark.deleteMany({
-            where: { id: { in: removedMMIds as string[] } },
+        const deletedContribIds = Array.from(baselineContributionIds).filter(
+          (id) => !stateContribIds.has(id),
+        );
+        if (deletedContribIds.length > 0) {
+          txDebug.deletedContributions = await tx.contribution.deleteMany({
+            where: { id: { in: deletedContribIds } },
           });
         }
 
-        // 4. Sections & Movements (Hierarchical check)
-        // We need to check if a Movement or Section present in baseline is missing in working copy
-        // for the SAME PieceVersion / Movement.
-        for (const basePV of baselineGraph.pieceVersions || []) {
-          const wcPV = (workingCopy.pieceVersions || []).find(
-            (pv) => pv.id === basePV.id,
-          );
-          if (!wcPV) {
-            // pieceVersion removed from working copy? In review context, we don't strictly delete the pieceVersion
-            // as it might be shared, but we unlink it later.
-            // However, if we want to clean up created-for-source pieceVersions, it's complex.
-            // We stick to "Delete safe dependencies" rule.
-            continue;
+        // 6. MMSourcesOnPieceVersions (joins of the source absent from state)
+        const statePvIdsOnJoin = new Set<string>(
+          (finalState.mMSourceOnPieceVersions ?? [])
+            .map((j) => j.pieceVersionId)
+            .filter((id): id is string => Boolean(id)),
+        );
+        txDebug.deletedMMSourcesOnPieceVersions =
+          await tx.mMSourcesOnPieceVersions.deleteMany({
+            where: {
+              mMSourceId: review.mMSourceId,
+              pieceVersionId: {
+                notIn: Array.from(statePvIdsOnJoin),
+              },
+            },
+          });
+
+        // ==========================================
+        // Phase 2 — Referentials and Musical Tree
+        // ==========================================
+
+        // Persons
+        for (const p of finalState.persons ?? []) {
+          if (!p.id) continue;
+          if (!baselinePersonIds.has(p.id)) {
+            await tx.person.create({
+              data: {
+                id: p.id,
+                firstName: p.firstName,
+                lastName: p.lastName,
+                birthYear: p.birthYear,
+                deathYear: p.deathYear ?? null,
+                creatorId: userId,
+              },
+            });
+          } else if (changedEntitiesByType.get("PERSON")?.has(p.id)) {
+            await tx.person.update({
+              where: { id: p.id },
+              data: {
+                firstName: p.firstName,
+                lastName: p.lastName,
+                birthYear: p.birthYear,
+                deathYear: p.deathYear ?? null,
+              },
+            });
           }
+        }
 
-          // Check Movements
-          const baseMovs = (basePV as any).movements || [];
-          const wcMovs = (wcPV as any).movements || [];
-          const wcMovIds = new Set(wcMovs.map((m: any) => m.id));
-          const removedMovIds = baseMovs
-            .filter((m: any) => m.id && !wcMovIds.has(m.id))
-            .map((m: any) => m.id);
+        // Organizations
+        for (const o of finalState.organizations ?? []) {
+          if (!o.id) continue;
+          if (!baselineOrgIds.has(o.id)) {
+            await tx.organization.create({
+              data: {
+                id: o.id,
+                name: o.name,
+                creatorId: userId,
+              },
+            });
+          } else if (changedEntitiesByType.get("ORGANIZATION")?.has(o.id)) {
+            await tx.organization.update({
+              where: { id: o.id },
+              data: {
+                name: o.name,
+              },
+            });
+          }
+        }
 
-          // Check Sections (for retained movements)
-          const removedSecIds: string[] = [];
-          for (const baseMov of baseMovs) {
-            if (removedMovIds.includes(baseMov.id)) continue; // Already deleting movement
+        // Collections
+        for (const c of finalState.collections ?? []) {
+          if (!c.id) continue;
+          if (!baselineCollectionIds.has(c.id)) {
+            await tx.collection.create({
+              data: {
+                id: c.id,
+                title: c.title,
+                composerId: c.composerId,
+                creatorId: userId,
+              },
+            });
+          } else if (changedEntitiesByType.get("COLLECTION")?.has(c.id)) {
+            await tx.collection.update({
+              where: { id: c.id },
+              data: {
+                title: c.title,
+                composerId: c.composerId,
+              },
+            });
+          }
+        }
 
-            const wcMov = wcMovs.find((m: any) => m.id === baseMov.id);
-            if (wcMov) {
-              const baseSecs = (baseMov as any).sections || [];
-              const wcSecs = (wcMov as any).sections || [];
-              const wcSecIds = new Set(wcSecs.map((s: any) => s.id));
-              baseSecs.forEach((s: any) => {
-                if (s.id && !wcSecIds.has(s.id)) {
-                  removedSecIds.push(s.id);
-                }
+        // TempoIndications
+        for (const ti of finalState.tempoIndications ?? []) {
+          if (!ti.id) continue;
+          if (!baselineTempoIndicationIds.has(ti.id)) {
+            await tx.tempoIndication.create({
+              data: {
+                id: ti.id,
+                text: ti.text,
+                creatorId: userId,
+              },
+            });
+          } else if (changedEntitiesByType.get("TEMPO_INDICATION")?.has(ti.id)) {
+            await tx.tempoIndication.update({
+              where: { id: ti.id },
+              data: {
+                text: ti.text,
+              },
+            });
+          }
+        }
+
+        // Pieces (creation / attribute updates)
+        for (const p of finalState.pieces ?? []) {
+          if (!p.id) continue;
+          if (!baselinePieceIds.has(p.id)) {
+            await tx.piece.create({
+              data: {
+                id: p.id,
+                title: p.title,
+                nickname: p.nickname ?? null,
+                yearOfComposition: p.yearOfComposition ?? null,
+                composerId: p.composerId,
+                collectionId: p.collectionId ?? null,
+                collectionRank: p.collectionRank ?? null,
+                creatorId: userId,
+              },
+            });
+          } else if (changedEntitiesByType.get("PIECE")?.has(p.id)) {
+            await tx.piece.update({
+              where: { id: p.id },
+              data: {
+                title: p.title,
+                nickname: p.nickname ?? null,
+                yearOfComposition: p.yearOfComposition ?? null,
+                composerId: p.composerId,
+                collectionId: p.collectionId ?? null,
+              },
+            });
+          }
+        }
+
+        // Piece collection rank updates via applyRankUpdatesInTwoPhases
+        const piecesByCollection = new Map<
+          string,
+          Array<{ id: string; rank: number }>
+        >();
+        for (const p of finalState.pieces ?? []) {
+          if (p.collectionId && typeof p.collectionRank === "number") {
+            const list = piecesByCollection.get(p.collectionId) ?? [];
+            list.push({ id: p.id, rank: p.collectionRank });
+            piecesByCollection.set(p.collectionId, list);
+          }
+        }
+        for (const [collectionId, updates] of piecesByCollection.entries()) {
+          await applyRankUpdatesInTwoPhases(tx, {
+            model: "Piece",
+            scope: { collectionId },
+            updates,
+          });
+        }
+
+        // PieceVersions (including newly created / forked ones)
+        for (const pv of finalState.pieceVersions ?? []) {
+          if (!pv.id) continue;
+          if (!baselinePieceVersionIds.has(pv.id)) {
+            await tx.pieceVersion.create({
+              data: {
+                id: pv.id,
+                category: pv.category,
+                pieceId: pv.pieceId,
+                creatorId: userId,
+              },
+            });
+          } else if (changedEntitiesByType.get("PIECE_VERSION")?.has(pv.id)) {
+            await tx.pieceVersion.update({
+              where: { id: pv.id },
+              data: {
+                category: pv.category,
+                pieceId: pv.pieceId,
+              },
+            });
+          }
+        }
+
+        // Movements (creation & non-rank field updates)
+        for (const pv of finalState.pieceVersions ?? []) {
+          for (const m of pv.movements ?? []) {
+            if (!m.id) continue;
+            if (!baselineMovementIds.has(m.id)) {
+              await tx.movement.create({
+                data: {
+                  id: m.id,
+                  pieceVersionId: pv.id,
+                  rank: m.rank,
+                  key: m.key ?? null,
+                  isVariation: m.isVariation ?? false,
+                },
+              });
+            } else if (changedEntitiesByType.get("MOVEMENT")?.has(m.id)) {
+              await tx.movement.update({
+                where: { id: m.id },
+                data: {
+                  key: m.key ?? null,
+                  isVariation: m.isVariation ?? false,
+                },
               });
             }
           }
 
-          if (removedSecIds.length > 0) {
-            debug.log(`[review submit] DELETING removedSecIds`, removedSecIds);
-            if (!txDebug.removedSections) txDebug.removedSections = [];
-            txDebug.removedSections.push(
-              await tx.section.deleteMany({
-                where: { id: { in: removedSecIds } },
-              }),
-            );
-          }
-          if (removedMovIds.length > 0) {
-            debug.log(`[review submit] DELETING removedMovIds`, removedMovIds);
-            if (!txDebug.removedMovements) txDebug.removedMovements = [];
-            txDebug.removedMovements.push(
-              await tx.movement.deleteMany({
-                where: { id: { in: removedMovIds } },
-              }),
-            );
+          // Movement 2-phase rank updates
+          const movementUpdates = (pv.movements ?? [])
+            .filter((m) => typeof m.rank === "number")
+            .map((m) => ({ id: m.id, rank: m.rank }));
+          if (movementUpdates.length > 0) {
+            await applyRankUpdatesInTwoPhases(tx, {
+              model: "Movement",
+              scope: { pieceVersionId: pv.id },
+              updates: movementUpdates,
+            });
           }
         }
 
-        // --- B. Independent Entity Upserts ---
-
-        // Persons
-        for (const p of workingCopy.persons || []) {
-          if (!shouldUpsertEntity("PERSON", p.id)) continue;
-          if (!txDebug.upsertedPersons) txDebug.upsertedPersons = [];
-          txDebug.upsertedPersons.push(
-            await tx.person.upsert({
-              where: { id: p.id },
-              update: {
-                firstName: p.firstName,
-                lastName: p.lastName,
-                birthYear: p.birthYear,
-                deathYear: p.deathYear,
-              },
-              create: {
-                id: p.id,
-                firstName: p.firstName,
-                lastName: p.lastName,
-                birthYear: p.birthYear,
-                deathYear: p.deathYear,
-                creatorId: review.creatorId,
-              },
-            }),
-          );
-        }
-
-        // Organizations
-        for (const o of workingCopy.organizations || []) {
-          if (!shouldUpsertEntity("ORGANIZATION", o.id)) continue;
-          if (!txDebug.upsertedOrganizations)
-            txDebug.upsertedOrganizations = [];
-          txDebug.upsertedOrganizations.push(
-            await tx.organization.upsert({
-              where: { id: o.id },
-              update: { name: o.name },
-              create: { id: o.id, name: o.name, creatorId: review.creatorId },
-            }),
-          );
-        }
-
-        // TempoIndications
-        for (const ti of workingCopy.tempoIndications || []) {
-          if (!shouldUpsertEntity("TEMPO_INDICATION", ti.id)) continue;
-          if (!txDebug.upsertedTempoIndications)
-            txDebug.upsertedTempoIndications = [];
-          txDebug.upsertedTempoIndications.push(
-            await tx.tempoIndication.upsert({
-              where: { id: ti.id },
-              update: { text: ti.text },
-              create: { id: ti.id, text: ti.text, creatorId: review.creatorId },
-            }),
-          );
-        }
-
-        // --- C. Hierarchical Upserts ---
-
-        // Collections
-        for (const c of workingCopy.collections || []) {
-          if (!shouldUpsertEntity("COLLECTION", c.id)) continue;
-          if (!txDebug.upsertedCollections) txDebug.upsertedCollections = [];
-          txDebug.upsertedCollections.push(
-            await tx.collection.upsert({
-              where: { id: c.id },
-              update: {
-                title: c.title,
-                composerId: c.composerId,
-              },
-              create: {
-                id: c.id,
-                title: c.title,
-                composerId: c.composerId,
-                creatorId: review.creatorId,
-              },
-            }),
-          );
-        }
-
-        // Pieces
-        for (const p of workingCopy.pieces || []) {
-          if (!shouldUpsertEntity("PIECE", p.id)) continue;
-          if (!txDebug.upsertedPieces) txDebug.upsertedPieces = [];
-          txDebug.upsertedPieces.push(
-            await tx.piece.upsert({
-              where: { id: p.id },
-              update: {
-                title: p.title,
-                nickname: p.nickname,
-                yearOfComposition: p.yearOfComposition,
-                composerId: p.composerId,
-                collectionId: p.collectionId,
-                collectionRank: p.collectionRank,
-              },
-              create: {
-                id: p.id,
-                title: p.title,
-                nickname: p.nickname,
-                yearOfComposition: p.yearOfComposition,
-                composerId: p.composerId,
-                collectionId: p.collectionId,
-                collectionRank: p.collectionRank,
-                creatorId: review.creatorId,
-              },
-            }),
-          );
-        }
-
-        // PieceVersions & Structure
-        for (const pv of workingCopy.pieceVersions || []) {
-          if (shouldUpsertEntity("PIECE_VERSION", pv.id)) {
-            if (!txDebug.upsertedPieceVersions)
-              txDebug.upsertedPieceVersions = [];
-            txDebug.upsertedPieceVersions.push(
-              await tx.pieceVersion.upsert({
-                where: { id: pv.id },
-                update: {
-                  category: pv.category,
-                  pieceId: pv.pieceId,
-                },
-                create: {
-                  id: pv.id,
-                  category: pv.category,
-                  pieceId: pv.pieceId,
-                  creatorId: review.creatorId,
-                },
-              }),
-            );
-          }
-
-          const movements = (pv as any).movements || [];
-          for (const m of movements) {
-            if (shouldUpsertEntity("MOVEMENT", m.id)) {
-              if (!txDebug.upsertedMovements) txDebug.upsertedMovements = [];
-              txDebug.upsertedMovements.push(
-                await tx.movement.upsert({
-                  where: { id: m.id },
-                  update: {
-                    rank: m.rank,
-                    key: m.key,
-                    isVariation: m.isVariation ?? false,
+        // Sections (creation & non-rank field updates)
+        for (const pv of finalState.pieceVersions ?? []) {
+          for (const m of pv.movements ?? []) {
+            for (const s of m.sections ?? []) {
+              if (!s.id) continue;
+              if (!baselineSectionIds.has(s.id)) {
+                await tx.section.create({
+                  data: {
+                    id: s.id,
+                    movementId: m.id,
+                    rank: s.rank,
+                    metreNumerator: s.metreNumerator ?? null,
+                    metreDenominator: s.metreDenominator ?? null,
+                    isCommonTime: s.isCommonTime ?? false,
+                    isCutTime: s.isCutTime ?? false,
+                    fastestStructuralNotesPerBar:
+                      s.fastestStructuralNotesPerBar ?? null,
+                    fastestBelCantoNotesPerBar:
+                      s.fastestBelCantoNotesPerBar ?? null,
+                    fastestStaccatoNotesPerBar:
+                      s.fastestStaccatoNotesPerBar ?? null,
+                    fastestRepeatedNotesPerBar:
+                      s.fastestRepeatedNotesPerBar ?? null,
+                    fastestOrnamentalNotesPerBar:
+                      s.fastestOrnamentalNotesPerBar ?? null,
+                    tempoIndicationId: s.tempoIndicationId,
+                    comment: s.comment ?? null,
+                    commentForReview: s.commentForReview ?? null,
                   },
-                  create: {
-                    id: m.id,
-                    pieceVersionId: pv.id,
-                    rank: m.rank,
-                    key: m.key,
-                    isVariation: m.isVariation ?? false,
+                });
+              } else if (changedEntitiesByType.get("SECTION")?.has(s.id)) {
+                await tx.section.update({
+                  where: { id: s.id },
+                  data: {
+                    metreNumerator: s.metreNumerator ?? null,
+                    metreDenominator: s.metreDenominator ?? null,
+                    isCommonTime: s.isCommonTime ?? false,
+                    isCutTime: s.isCutTime ?? false,
+                    fastestStructuralNotesPerBar:
+                      s.fastestStructuralNotesPerBar ?? null,
+                    fastestBelCantoNotesPerBar:
+                      s.fastestBelCantoNotesPerBar ?? null,
+                    fastestStaccatoNotesPerBar:
+                      s.fastestStaccatoNotesPerBar ?? null,
+                    fastestRepeatedNotesPerBar:
+                      s.fastestRepeatedNotesPerBar ?? null,
+                    fastestOrnamentalNotesPerBar:
+                      s.fastestOrnamentalNotesPerBar ?? null,
+                    tempoIndicationId: s.tempoIndicationId,
+                    comment: s.comment ?? null,
+                    commentForReview: s.commentForReview ?? null,
                   },
-                }),
-              );
-            }
-
-            const sections = (m as any).sections || [];
-            for (const s of sections) {
-              if (shouldUpsertEntity("SECTION", s.id)) {
-                if (!txDebug.upsertedSections) txDebug.upsertedSections = [];
-                txDebug.upsertedSections.push(
-                  await tx.section.upsert({
-                    where: { id: s.id },
-                    update: {
-                      rank: s.rank,
-                      metreNumerator: s.metreNumerator,
-                      metreDenominator: s.metreDenominator,
-                      isCommonTime: s.isCommonTime,
-                      isCutTime: s.isCutTime,
-                      fastestStructuralNotesPerBar:
-                        s.fastestStructuralNotesPerBar,
-                      fastestBelCantoNotesPerBar: s.fastestBelCantoNotesPerBar,
-                      fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar,
-                      fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar,
-                      fastestOrnamentalNotesPerBar:
-                        s.fastestOrnamentalNotesPerBar,
-                      tempoIndicationId: s.tempoIndication.id, // Validated by previous TI upsert
-                      comment: s.comment,
-                      commentForReview: s.commentForReview,
-                    },
-                    create: {
-                      id: s.id,
-                      movementId: m.id,
-                      rank: s.rank,
-                      metreNumerator: s.metreNumerator,
-                      metreDenominator: s.metreDenominator,
-                      isCommonTime: s.isCommonTime,
-                      isCutTime: s.isCutTime,
-                      fastestStructuralNotesPerBar:
-                        s.fastestStructuralNotesPerBar,
-                      fastestBelCantoNotesPerBar: s.fastestBelCantoNotesPerBar,
-                      fastestStaccatoNotesPerBar: s.fastestStaccatoNotesPerBar,
-                      fastestRepeatedNotesPerBar: s.fastestRepeatedNotesPerBar,
-                      fastestOrnamentalNotesPerBar:
-                        s.fastestOrnamentalNotesPerBar,
-                      tempoIndicationId: s.tempoIndication.id,
-                      comment: s.comment,
-                      commentForReview: s.commentForReview,
-                    },
-                  }),
-                );
+                });
               }
             }
+
+            // Section 2-phase rank updates
+            const sectionUpdates = (m.sections ?? [])
+              .filter((s) => typeof s.rank === "number")
+              .map((s) => ({ id: s.id, rank: s.rank }));
+            if (sectionUpdates.length > 0) {
+              await applyRankUpdatesInTwoPhases(tx, {
+                model: "Section",
+                scope: { movementId: m.id },
+                updates: sectionUpdates,
+              });
+            }
           }
         }
 
-        // --- D. Source & Direct Children ---
+        // ==========================================
+        // Phase 3 — Source and Direct Children
+        // ==========================================
 
-        // Update MM Source
-        if (hasMMSourceFieldChanges) {
-          txDebug.mMSource = await tx.mMSource.update({
-            where: { id: review.mMSourceId },
-            data: {
-              title: workingCopy.source.title,
-              type: workingCopy.source.type,
-              link: workingCopy.source.link,
-              permalink: workingCopy.source.permalink,
-              year: workingCopy.source.year,
-              isYearEstimated: workingCopy.source.isYearEstimated,
-              comment: workingCopy.source.comment,
-            },
-          });
-        }
+        // MMSource update (fields + sectionCount + permalink)
+        const srcDesc = finalState.mMSourceDescription;
+        txDebug.mMSource = await tx.mMSource.update({
+          where: { id: review.mMSourceId },
+          data: {
+            title: srcDesc?.title ?? null,
+            type: srcDesc?.type ?? null,
+            link: srcDesc?.link ?? "",
+            permalink: derived.permalink || "",
+            year: srcDesc?.year ?? null,
+            isYearEstimated: srcDesc?.isYearEstimated ?? false,
+            comment: srcDesc?.comment ?? null,
+            sectionCount: derived.sectionCount,
+          },
+        });
 
-        // Upsert References
-        for (const r of workingCopy.source.references || []) {
-          if (!r.id) continue; // Should have ID
-          if (!shouldUpsertEntity("REFERENCE", r.id)) continue;
-          if (!txDebug.upsertedReferences) txDebug.upsertedReferences = [];
-          txDebug.upsertedReferences.push(
-            await tx.reference.upsert({
-              where: { id: r.id },
-              update: { type: r.type, reference: r.reference },
-              create: {
+        // References
+        for (const r of finalState.mMSourceDescription?.references ?? []) {
+          if (!r.id) continue;
+          if (!baselineReferenceIds.has(r.id)) {
+            await tx.reference.create({
+              data: {
                 id: r.id,
                 mMSourceId: review.mMSourceId,
                 type: r.type,
                 reference: r.reference,
               },
-            }),
-          );
+            });
+          } else if (changedEntitiesByType.get("REFERENCE")?.has(r.id)) {
+            await tx.reference.update({
+              where: { id: r.id },
+              data: {
+                type: r.type,
+                reference: r.reference,
+              },
+            });
+          }
         }
 
-        // Upsert Contributions
-        for (const c of workingCopy.contributions || []) {
-          if (!shouldUpsertContribution(c)) continue;
-          if (!txDebug.upsertedContributions)
-            txDebug.upsertedContributions = [];
-          txDebug.upsertedContributions.push(
-            await tx.contribution.upsert({
-              where: { id: c.id },
-              update: {
-                role: c.role,
-                ...("personId" in c
-                  ? {
-                      personId: c.personId,
-                    }
-                  : {
-                      organizationId: c.organizationId,
-                    }),
-              },
-              create: {
+        // Contributions
+        for (const c of finalState.mMSourceContributions ?? []) {
+          if (!c.id) continue;
+          if (!baselineContributionIds.has(c.id)) {
+            await tx.contribution.create({
+              data: {
                 id: c.id,
                 mMSourceId: review.mMSourceId,
                 role: c.role,
-                ...("personId" in c
-                  ? {
-                      personId: c.personId,
-                    }
-                  : {
-                      organizationId: c.organizationId,
-                    }),
+                personId: c.personId ?? null,
+                organizationId: c.organizationId ?? null,
               },
-            }),
-          );
-        }
-
-        // Upsert Metronome Marks
-        for (const mm of workingCopy.metronomeMarks || []) {
-          if (!mm.noMM) {
-            if (!shouldUpsertEntity("METRONOME_MARK", mm.id)) continue;
-            if (!txDebug.upsertedMetronomeMarks)
-              txDebug.upsertedMetronomeMarks = [];
-            txDebug.upsertedMetronomeMarks.push(
-              await tx.metronomeMark.upsert({
-                where: { id: mm.id },
-                update: {
-                  sectionId: mm.sectionId,
-                  beatUnit: mm.beatUnit,
-                  bpm: mm.bpm,
-                  comment: mm.comment,
-                },
-                create: {
-                  id: mm.id,
-                  mMSourceId: review.mMSourceId,
-                  sectionId: mm.sectionId,
-                  beatUnit: mm.beatUnit,
-                  bpm: mm.bpm,
-                  comment: mm.comment,
-                },
-              }),
-            );
+            });
+          } else if (changedEntitiesByType.get("CONTRIBUTION")?.has(c.id)) {
+            await tx.contribution.update({
+              where: { id: c.id },
+              data: {
+                role: c.role,
+                personId: c.personId ?? null,
+                organizationId: c.organizationId ?? null,
+              },
+            });
           }
         }
 
-        // --- E. Associations (MMSourcesOnPieceVersions) ---
-        // Use minimal diff to preserve timestamps and avoid unnecessary writes.
-        const baselineSOPV = baselineGraph.sourceOnPieceVersions ?? [];
-        const workingSOPV = workingCopy.sourceOnPieceVersions ?? [];
-
-        const baselineSOPVByPieceVersionId = new Map(
-          baselineSOPV
-            .filter((item) => item?.pieceVersionId)
-            .map((item) => [item.pieceVersionId, item]),
+        // MMSourcesOnPieceVersions (ensure new rows exist with temporary ranks, then apply 2-phase ranks)
+        const existingJoins = await tx.mMSourcesOnPieceVersions.findMany({
+          where: { mMSourceId: review.mMSourceId },
+          select: { id: true, pieceVersionId: true, rank: true },
+        });
+        const existingJoinPvIds = new Set(
+          existingJoins.map((j) => j.pieceVersionId),
         );
-        const workingSOPVByPieceVersionId = new Map(
-          workingSOPV
-            .filter((item) => item?.pieceVersionId)
-            .map((item) => [item.pieceVersionId, item]),
+        const newJoinRows = (finalState.mMSourceOnPieceVersions ?? []).filter(
+          (j) => !existingJoinPvIds.has(j.pieceVersionId),
         );
 
-        const removedJoinIds: string[] = [];
-        for (const [pieceVersionId, base] of baselineSOPVByPieceVersionId) {
-          if (!workingSOPVByPieceVersionId.has(pieceVersionId)) {
-            removedJoinIds.push(base.joinId);
-          }
-        }
-
-        if (removedJoinIds.length > 0) {
-          txDebug.deletedMMSourcesOnPieceVersions =
-            await tx.mMSourcesOnPieceVersions.deleteMany({
-              where: { id: { in: removedJoinIds } },
-            });
-        }
-
-        const rankUpdates: Array<{ id: string; rank: number }> = [];
-        for (const [pieceVersionId, work] of workingSOPVByPieceVersionId) {
-          const base = baselineSOPVByPieceVersionId.get(pieceVersionId);
-          if (!base) continue;
-          if (base.rank !== work.rank) {
-            rankUpdates.push({ id: base.joinId, rank: work.rank });
-          }
-        }
-
-        if (rankUpdates.length > 0) {
-          // Update ranks in two steps to avoid unique constraint collisions.
-          const ranks = [
-            ...baselineSOPV.map((item) => item.rank),
-            ...workingSOPV.map((item) => item.rank),
-          ].filter((rank) => Number.isFinite(rank)) as number[];
-          const tempRankBase =
-            (ranks.length > 0 ? Math.max(...ranks) : 0) + 1000;
-
-          let offset = 0;
-          for (const item of rankUpdates) {
-            const tempRank = tempRankBase + offset;
-            offset += 1;
-            await tx.mMSourcesOnPieceVersions.update({
-              where: { id: item.id },
-              data: { rank: tempRank },
-            });
-          }
-
-          for (const item of rankUpdates) {
-            if (!txDebug.updatedMMSourcesOnPieceVersions)
-              txDebug.updatedMMSourcesOnPieceVersions = [];
-            txDebug.updatedMMSourcesOnPieceVersions.push(
-              await tx.mMSourcesOnPieceVersions.update({
-                where: { id: item.id },
-                data: { rank: item.rank },
-              }),
-            );
-          }
-        }
-
-        const additions: Prisma.MMSourcesOnPieceVersionsCreateManyInput[] = [];
-        for (const [pieceVersionId, work] of workingSOPVByPieceVersionId) {
-          if (!baselineSOPVByPieceVersionId.has(pieceVersionId)) {
-            additions.push({
-              mMSourceId: review.mMSourceId,
-              pieceVersionId: work.pieceVersionId,
-              rank: work.rank,
+        if (newJoinRows.length > 0) {
+          const maxExistingRank =
+            existingJoins.length > 0
+              ? Math.max(...existingJoins.map((j) => j.rank))
+              : 0;
+          for (let i = 0; i < newJoinRows.length; i++) {
+            const row = newJoinRows[i];
+            await tx.mMSourcesOnPieceVersions.create({
+              data: {
+                mMSourceId: review.mMSourceId,
+                pieceVersionId: row.pieceVersionId,
+                rank: maxExistingRank + 5000 + i + 1,
+              },
             });
           }
         }
 
-        if (additions.length > 0) {
-          txDebug.createdMMSourcesOnPieceVersions =
-            await tx.mMSourcesOnPieceVersions.createMany({
-              data: additions,
-            });
+        const allJoinsNow = await tx.mMSourcesOnPieceVersions.findMany({
+          where: { mMSourceId: review.mMSourceId },
+          select: { id: true, pieceVersionId: true },
+        });
+        const joinIdByPvId = new Map(
+          allJoinsNow.map((j) => [j.pieceVersionId, j.id]),
+        );
+        const joinRankUpdates = (finalState.mMSourceOnPieceVersions ?? [])
+          .filter(
+            (j) =>
+              joinIdByPvId.has(j.pieceVersionId) &&
+              typeof j.rank === "number",
+          )
+          .map((j) => ({
+            id: joinIdByPvId.get(j.pieceVersionId)!,
+            rank: j.rank,
+          }));
+
+        if (joinRankUpdates.length > 0) {
+          await applyRankUpdatesInTwoPhases(tx, {
+            model: "MMSourcesOnPieceVersions",
+            scope: { mMSourceId: review.mMSourceId },
+            updates: joinRankUpdates,
+          });
         }
 
-        // --- F. Audit Logging ---
-        if (auditEntries.length > 0) {
+        // MetronomeMarks
+        for (const mm of finalState.metronomeMarks ?? []) {
+          if (!mm.id) continue;
+          if (!baselineMMIds.has(mm.id)) {
+            await tx.metronomeMark.create({
+              data: {
+                id: mm.id,
+                mMSourceId: review.mMSourceId,
+                sectionId: mm.sectionId,
+                beatUnit: mm.beatUnit,
+                bpm: mm.bpm,
+                comment: mm.comment ?? null,
+              },
+            });
+          } else if (changedEntitiesByType.get("METRONOME_MARK")?.has(mm.id)) {
+            await tx.metronomeMark.update({
+              where: { id: mm.id },
+              data: {
+                sectionId: mm.sectionId,
+                beatUnit: mm.beatUnit,
+                bpm: mm.bpm,
+                comment: mm.comment ?? null,
+              },
+            });
+          }
+        }
+
+        // ==========================================
+        // Phase 4 — Traceability and Closure
+        // ==========================================
+
+        // AuditLog entries
+        if (finalAuditEntries.length > 0) {
           txDebug.auditLogs = await tx.auditLog.createMany({
-            data: auditEntries.map((entry) => ({
+            data: finalAuditEntries.map((entry) => ({
               reviewId: entry.reviewId,
               entityType: entry.entityType as AUDIT_ENTITY_TYPE,
               entityId: entry.entityId,
@@ -811,55 +833,61 @@ export async function POST(
               before: (entry.before as any) ?? Prisma.DbNull,
               after: (entry.after as any) ?? Prisma.DbNull,
               authorId: userId,
-              // comment: // Future per-field comment
             })),
           });
         }
 
-        // --- G. Global Reviewed Flags ---
-        // Upsert ReviewedEntity for Person, Organization, Collection, Piece and PieceVersion
-        // FIX: Deduplicate entries and SKIP entities that were already globally reviewed
-        // to prevent overwriting the original reviewer's record with the current user's ID.
-
+        // ReviewedEntity entries
         const reviewedEntityPayloads = new Map<
           string,
           { type: REVIEWED_ENTITY_TYPE; id: string }
         >();
 
-        const addToPayload = (
+        const addReviewedEntity = (
           type: REVIEWED_ENTITY_TYPE,
-          id: string | undefined,
+          id: string | undefined | null,
           alreadyReviewedIds: string[] | undefined | null,
         ) => {
           if (!id) return;
-          // 1. Deduplication check
           const key = `${type}:${id}`;
           if (reviewedEntityPayloads.has(key)) return;
-
-          // 2. Global Review check: If it was already reviewed, the UI hid it,
-          // so the current user did NOT review it. Do not touch the DB record.
           if (alreadyReviewedIds?.includes(id)) return;
-
           reviewedEntityPayloads.set(key, { type, id });
         };
 
-        workingCopy.persons?.forEach((p) =>
-          addToPayload("PERSON", p.id, globallyReviewed.personIds),
+        finalState.persons?.forEach((p) =>
+          addReviewedEntity(
+            REVIEWED_ENTITY_TYPE.PERSON,
+            p.id,
+            globallyReviewed?.personIds,
+          ),
         );
-        workingCopy.organizations?.forEach((o) =>
-          addToPayload("ORGANIZATION", o.id, globallyReviewed.organizationIds),
+        finalState.organizations?.forEach((o) =>
+          addReviewedEntity(
+            REVIEWED_ENTITY_TYPE.ORGANIZATION,
+            o.id,
+            globallyReviewed?.organizationIds,
+          ),
         );
-        workingCopy.collections?.forEach((c) =>
-          addToPayload("COLLECTION", c.id, globallyReviewed.collectionIds),
+        finalState.collections?.forEach((c) =>
+          addReviewedEntity(
+            REVIEWED_ENTITY_TYPE.COLLECTION,
+            c.id,
+            globallyReviewed?.collectionIds,
+          ),
         );
-        workingCopy.pieces?.forEach((p) =>
-          addToPayload("PIECE", p.id, globallyReviewed.pieceIds),
+        finalState.pieces?.forEach((p) =>
+          addReviewedEntity(
+            REVIEWED_ENTITY_TYPE.PIECE,
+            p.id,
+            globallyReviewed?.pieceIds,
+          ),
         );
-        workingCopy.pieceVersions?.forEach((pv) =>
-          addToPayload(
-            "PIECE_VERSION",
+        finalState.pieceVersions?.forEach((pv) =>
+          addReviewedEntity(
+            REVIEWED_ENTITY_TYPE.PIECE_VERSION,
             pv.id,
-            globallyReviewed.pieceVersionIds,
+            globallyReviewed?.pieceVersionIds,
           ),
         );
 
@@ -889,14 +917,14 @@ export async function POST(
           );
         }
 
-        // --- H. Finalize State ---
+        // Finalize Review & MMSource states
         const now = new Date();
         txDebug.finalReviewUpdate = await tx.review.update({
           where: { id: reviewId },
           data: {
             state: REVIEW_STATE.APPROVED,
             endedAt: now,
-            overallComment: overallComment,
+            overallComment: overallComment || null,
           },
         });
 
@@ -907,54 +935,61 @@ export async function POST(
           },
         });
       },
-      { timeout: 20000 }, // Extended timeout for large transactions
+      { timeout: 30000 },
     );
 
-    // Send txDebug log by email
+    // Fetch updated MM Source from DB for post-transaction log email
+    const mMSourceFromDb = await db.mMSource
+      .findUnique({
+        where: { id: review.mMSourceId },
+        include: {
+          references: true,
+          contributions: true,
+          mMSourcesOnPieceVersions: true,
+          metronomeMarks: true,
+          auditLogs: { where: { reviewId } },
+        },
+      })
+      .catch(() => null);
+
     await sendEmail({
       type: "Review submit transaction debug",
       content: {
         reviewId,
         txDebug,
+        mMSourceFromDb,
       },
-    })
-      .then((result) => {
-        if (result.error) {
-          console.error(
-            `[api/review/${reviewId}/submit] tx sendEmail ERROR :`,
-            result.error,
-          );
-        } else {
-          console.log(
-            `[api/review/${reviewId}/submit] tx sendEmail result :`,
-            result,
-          );
-        }
-      })
-      .catch((err) =>
-        console.error(
-          `[api/review/${reviewId}/submit] tx sendEmail ERROR :`,
-          err.status,
-          err.message,
-        ),
-      );
+    }).catch((err) =>
+      console.error(
+        `[api/review/${reviewId}/submit] tx sendEmail ERROR :`,
+        err?.status,
+        err?.message,
+      ),
+    );
 
     const summary = {
       reviewId,
       overallComment: overallComment || null,
-      requiredCount: requiredItems.length,
-      submittedCheckedCount: submitted.size,
-      changedCount: changedFieldPaths.length,
+      changedCount: finalChangedFieldPaths.length,
+      auditEntriesCount: finalAuditEntries.length,
+      forkedCount: finalForkResult?.createdPieceVersionIds?.length ?? 0,
       entitiesTouched: Object.fromEntries(
-        Object.entries(changedUniqueByEntityType).map(([k, v]) => [
-          k,
-          (v as Set<string>).size,
+        Array.from(
+          new Set(finalChangedFieldPaths.map((d) => d.entityType)),
+        ).map((et) => [
+          et,
+          new Set(
+            finalChangedFieldPaths
+              .filter((d) => d.entityType === et)
+              .map((d) => d.entityId ?? "__source__"),
+          ).size,
         ]),
       ),
-      changedFieldPathsSample: changedFieldPaths
-        .slice(0, 100)
-        .map((c) => c.fieldPath),
     };
+
+    prodLog.info(
+      `[review submit] Review ${reviewId} successfully approved and submitted`,
+    );
 
     return NextResponse.json({
       ok: true,
@@ -962,41 +997,42 @@ export async function POST(
       txDebug,
     });
   } catch (err: any) {
-    debug.error("Review submit transaction error:", err);
+    debug.error("[review submit] Transaction error:", err);
 
-    // Send Error log by email
     await sendEmail({
       type: "Review SUBMIT transaction ERROR",
       content: {
         reviewId,
-        error: { status: err.status, text: err.text, message: err.message },
+        error: {
+          status: err?.status,
+          message: err?.message,
+          stack: err?.stack,
+        },
         txDebug,
       },
-    })
-      .then((result) => {
-        if (result.error) {
-          console.error(
-            `[api/review/${reviewId}/submit] tx sendEmail ERROR :`,
-            result.error,
-          );
-        } else {
-          console.log(
-            `[api/review/${reviewId}/submit] tx sendEmail result :`,
-            result,
-          );
-        }
-      })
-      .catch((err) =>
-        console.error(
-          `[api/review/${reviewId}/submit] tx sendEmail ERROR :`,
-          err.status,
-          err.message,
-        ),
+    }).catch((emailErr) =>
+      console.error(
+        `[api/review/${reviewId}/submit] error sendEmail ERROR :`,
+        emailErr?.status,
+        emailErr?.message,
+      ),
+    );
+
+    if (
+      err?.code === "P2002" ||
+      /unique|constraint|duplicate/i.test(err?.message ?? "")
+    ) {
+      return NextResponse.json(
+        {
+          error: `[review submit] Conflict: A unique constraint violation occurred (${err.message})`,
+        },
+        { status: 409 },
       );
+    }
 
     return NextResponse.json(
       {
-        error: `Transaction failed: ${err.message}`,
+        error: `[review submit] Transaction failed: ${err.message}`,
         txDebug,
       },
       { status: 500 },

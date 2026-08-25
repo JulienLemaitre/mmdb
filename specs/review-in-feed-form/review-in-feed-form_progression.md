@@ -237,3 +237,28 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npm run test:ci` : 59 suites passées / 59 total, 300 tests passés / 300 total (0 échec).
 - **Statut L10A :** Terminé / Validé.
 - **Coût :** 0.39 credits (Gemini 3.7 Flash - High)
+
+## L10B — Route de soumission réécrite et clôture de revue
+
+- **Fichiers modifiés / créés :**
+  - `app/api/review/[reviewId]/submit/route.ts` : réécriture intégrale de la route `POST /api/review/[reviewId]/submit` orchestrant :
+    1. Authentification (`getServerSession(authOptions)`), vérification des rôles (`REVIEWER`/`ADMIN`), de l'appartenance de la revue (`review.creatorId === session.user.id`) et de l'état actif (`IN_REVIEW`).
+    2. Extraction et validation du payload `{ feedFormState, overallComment }`, vérification des champs obligatoires (sur le modèle de `app/api/feedForm/route.ts`) et garde de structure `assertsIsPersistableFeedFormState`.
+    3. Chargement de la baseline serveur via `getReviewBaseline(reviewId, { requireOwner: true })` et extension par existence via `extendBaselineByExistence(baseline, state)`.
+    4. Normalisation de l'état soumis via `normalizeFeedFormStateForPersistence(state)`.
+    5. Calcul du pré-diff et pré-audit, et envoi de l'e-mail de log de pré-transaction (`"Review SUBMIT data"`).
+    6. Exécution de la transaction unique Prisma (`db.$transaction`) :
+       - **Étape A / Fork :** appel de `forkModifiedSharedPieceVersions(tx, ...)` produisant l'état remappé et l'ensemble `protectedEntityIds`.
+       - **Étape B / Recalcul :** recalcul du diff final (`computeChangedFieldPaths`), des entrées d'audit (`composeAuditEntries` avec exclusion des `DELETE` sur `protectedEntityIds`), et des données dérivées (`computeMMSourceDerivedData`).
+       - **Phase 1 — Suppressions :** suppression en cascade et nettoyage des marques métronomiques (`noMM`), sections et mouvements (hors `protectedEntityIds`), références, contributions et joins `mMSourcesOnPieceVersions` retirés ou remappés.
+       - **Phase 2 — Référentiels et arbre musical :** mutations ordonnées `Person` → `Organization` → `Collection` → `TempoIndication` → `Piece` → `PieceVersion` (copies du fork incluses) → `Movement` → `Section`, fondées sur la baseline étendue (nouveau → `create`, modifié → `update`, inchangé → aucune écriture), avec réordonnancements de rangs en 2 passes via `applyRankUpdatesInTwoPhases` pour `Piece` (`collectionRank`), `Movement` et `Section`.
+       - **Phase 3 — Source et enfants directs :** mise à jour de `MMSource` (champs, `permalink` et `sectionCount`), upserts de `Reference`, `Contribution`, création et mise à jour de rangs en 2 passes de `MMSourcesOnPieceVersions`, et upserts de `MetronomeMark`.
+       - **Phase 4 — Traçabilité et clôture :** `AuditLog.createMany`, upsert dédupliqué de `ReviewedEntity` (avec exclusion des entités déjà globalement revues), passage de `Review` en `APPROVED` (`endedAt`, `overallComment`), et passage de `MMSource.reviewState` en `APPROVED`.
+    7. Envoi de l'e-mail de succès transactionnel (`"Review submit transaction debug"`) avec données DB rechargées, ou e-mail d'erreur (`"Review SUBMIT transaction ERROR"`), avec traduction des conflits d'unicité en `409` et retour JSON synthétique.
+  - `__tests__/api.reviewSubmit.test.ts` (nouveau, remplace `__tests__/api.submit.test.ts`) : suite de tests d'intégration avec mock transactionnel Prisma couvrant l'ensemble des 14 scénarios et exigences du lot 10B.
+- **Vérifications :**
+  - `npx tsc --noEmit` : 0 erreur.
+  - `npx eslint app/api/review/[reviewId]/submit/route.ts __tests__/api.reviewSubmit.test.ts` : 0 erreur, 0 avertissement.
+  - `npm run test:ci` : 59 suites passées / 59 total, 312 tests passés / 312 total (0 échec).
+- **Statut L10B :** Terminé / Validé.
+- **Coût :** 0.72 credits (Gemini 3.7 Flash - High)
