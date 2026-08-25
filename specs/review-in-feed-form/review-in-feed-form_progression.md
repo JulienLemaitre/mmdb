@@ -357,4 +357,45 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npx eslint` sur l'ensemble des fichiers modifiés et créés : 0 erreur, 0 avertissement.
   - `npm run test:ci` : 45 suites passées / 45 total, 293 tests passés / 293 total (0 échec).
 - **Statut L13 :** Terminé / Validé.
-- **Coût :** 0.78 credits (Gemini 3.7 Flash - High) + .22 pour corriger le tests initialement problématiques
+- **Coût :** 0.78 credits (Gemini 3.7 Flash - High) + 0.22 pour corriger le tests initialement problématiques
+
+## L14 — Recette et non-régression
+
+- **Fichiers modifiés / créés :**
+  - `AGENTS.md` : mise à jour de la documentation pour refléter le nouveau parcours de revue (suppression des références à l'ancienne checklist / bridge / workingCopy, documentation de `/review/[reviewId]`, `FormSessionProvider`, clés de stockage paramétrables `review:<reviewId>:*`, `ReviewSessionBanner`, schéma déclaratif `reviewDiffFieldsSchema.ts`, pipeline de soumission transactionnelle en 4 phases et contrainte d'index partiel `review_unique_in_review_per_reviewer`).
+  - `__tests__/reviewInvariants.test.ts` (nouveau) : suite dédiée d'automatisation validant les invariants fondamentaux de l'architecture de revue (§11 du cadrage).
+  - `specs/review-in-feed-form/review-in-feed-form_progression.md` : consignation de la table exhaustive de correspondance invariant → test et validation finale du lot 14.
+
+### Table de correspondance exhaustive des 22 Invariants (§11 du Cadrage)
+
+| # | Invariant (§11 Cadrage) | Mécanisme de garantie | Suites de tests & assertions de vérification |
+|---|---|---|---|
+| **1** | Une seule `Review` `IN_REVIEW` par MM Source | Index unique partiel PostgreSQL `review_unique_in_review_per_source` | `__tests__/api.start.test.ts` (`"should reject start review if source is already in review by someone else"`, `"should handle database unique constraint conflict (race condition) on source"`) |
+| **2** | Un reviewer ne peut avoir qu'une seule `Review` `IN_REVIEW` | Index unique partiel PostgreSQL `review_unique_in_review_per_reviewer` | `__tests__/api.start.test.ts` (`"should reject start review if reviewer already has an active review in progress"`, `"should handle database unique constraint conflict (race condition) on reviewer"`) |
+| **3** | Un reviewer ne peut pas réviser une MM Source dont il est le créateur | Contrôle d'autorité `start/route.ts` | `__tests__/api.start.test.ts` (`"should reject start review if user is the creator of the MM source"`) |
+| **4** | Redirection systématique du reviewer ayant une revue active | Redirection layout/page `/review` | `__tests__/app/reviewLayout.test.tsx` & `app/(signedIn)/review/page.tsx` |
+| **5** | Aucune écriture métier en base avant l'approbation finale | Isolation stricte des états de formulaire et commits locaux | `__tests__/utils/commitSinglePieceVersionFormToFeedForm.test.ts`, `__tests__/utils/commitCollectionPieceVersionsFormToFeedForm.test.ts`, `__tests__/utils/subFormIdPreservation.test.ts`, `__tests__/features/review/OverallCommentModal.test.tsx` |
+| **6** | L'abandon est sans effet sur les données métier (aucune mutation, aucun AuditLog) | `POST /api/review/[reviewId]/abort` rétablit `PENDING` sans mutations | `__tests__/api.abort.test.ts`, `__tests__/features/review/AbortReviewButton.test.tsx` |
+| **7** | Purge du brouillon local uniquement après succès confirmé de la transaction | Handlers de succès/erreur dans `FeedSummary` et `AbortReviewButton` | `__tests__/features/feed/FeedSummary.review.test.tsx` (`"does not purge local draft when submit API fails"`, `"purges local draft on submit success"`), `__tests__/features/review/AbortReviewButton.test.tsx` (`"does not purge local draft on error"`, `"purges local draft on abort success"`), `__tests__/reviewInvariants.test.ts` |
+| **8** | Une `PieceVersion` partagée n'est jamais mutée pour le compte de la source en revue | Fork transactionnel automatique (`forkModifiedSharedPieceVersions`) | `__tests__/server/forkModifiedSharedPieceVersions.test.ts` (`"should fork when piece version is modified AND shared with another source"`), `__tests__/api.reviewSubmit.test.ts` |
+| **9** | Aucune ligne `PieceVersion` n'est jamais supprimée par une soumission de revue | Phase 1 d'élagage exclut strictement `PieceVersion` et référentiels | `__tests__/api.reviewSubmit.test.ts` (`"never deletes PieceVersion, Piece, Person, Organization, Collection, TempoIndication"`) |
+| **10** | Le sous-arbre forké protégé n'est ni supprimé, ni audité en `DELETE` | `protectedEntityIds` injecté dans les suppressions et `composeAuditEntries` | `__tests__/server/forkModifiedSharedPieceVersions.test.ts`, `__tests__/auditCompose.test.ts` (`"should discard DELETE audit entries for protected entity IDs (fork)"`), `__tests__/reviewInvariants.test.ts` |
+| **11** | Les `MetronomeMark` des autres sources ne sont jamais remappées | Périmètre de remappage strict limité aux marques de la source en revue | `__tests__/server/forkModifiedSharedPieceVersions.test.ts` (`"should not affect metronome marks of another source pointing to original sections"`) |
+| **12** | Atomicité stricte de la persistance et des entrées d'audit | Transaction unique Prisma `db.$transaction` englobant phases 1 à 4 | `__tests__/api.reviewSubmit.test.ts` (`"rolls back entire transaction if any phase fails (atomic)"`) |
+| **13** | Le diff et l'audit sont calculés exclusivement côté serveur | Calcul serveur depuis la baseline étendue au moment du submit | `__tests__/api.reviewSubmit.test.ts` (`"recomputes diff and audit on server from baseline ignoring client diff"`), `__tests__/reviewInvariants.test.ts` |
+| **14** | Une entité préexistante en base n'est jamais auditée en `CREATE` | Résolution de baseline étendue et comparaison des nœuds | `__tests__/auditCompose.test.ts`, `__tests__/api.reviewSubmit.test.ts`, `__tests__/reviewInvariants.test.ts` |
+| **15** | Une entité préexistante inchangée ne produit aucune entrée d'audit | Filtrage strict du diff et `shouldUpsertEntity` | `__tests__/auditCompose.test.ts`, `__tests__/api.reviewSubmit.test.ts`, `__tests__/reviewInvariants.test.ts` |
+| **16** | Les marqueurs `ReviewedEntity` existants ne sont jamais réattribués au reviewer courant | Déduplication et exclusion des entités de `globallyReviewed` | `__tests__/api.reviewSubmit.test.ts` (`"does not reassign ReviewedEntity for globally reviewed entities"`) |
+| **17** | Isolation totale des stockages locaux entre saisie `/feed` et revues | Clés paramétrables distinctes (`review:<reviewId>:*`) et closures de reducers | `__tests__/context/localStorageReducerWrapper.test.ts` (`"should maintain complete storage isolation between distinct storage keys"`), `__tests__/reviewInvariants.test.ts` |
+| **18** | Rejet et purge des brouillons locaux divergents (`reviewId` / `reviewerId`) | Validation de session à l'hydratation et fallback serveur | `__tests__/context/formSessionContext.test.tsx` (`"purges local draft and falls back to server session if stored review session has divergent reviewerId or reviewId"`) |
+| **19** | Contrôle exclusif des règles d'autorisation côté serveur | Vérifications de rôle (`REVIEWER`/`ADMIN`) et propriété en layout/API | `__tests__/app/reviewLayout.test.tsx`, `__tests__/server/getReviewBaseline.test.ts`, `__tests__/api.reviewSubmit.test.ts` |
+| **20** | `/review/[reviewId]` et sa soumission réservées au reviewer propriétaire | `requireOwner: true` dans `getReviewBaseline` et garde de route `submit` | `__tests__/server/getReviewBaseline.test.ts` (`"rejects access if user is not the creator/owner with requireOwner: true"`), `__tests__/app/reviewLayout.test.tsx`, `__tests__/api.reviewSubmit.test.ts` |
+| **21** | Non-régression totale du parcours de saisie initiale `/feed` | Modes et formulaires polymorphes préservant le parcours `data-entering` | `__tests__/features/feed/FeedSummary.dataEntering.test.tsx`, `__tests__/features/feed/Intro.test.tsx`, `__tests__/context/localStorageReducerWrapper.test.ts`, `__tests__/utils/commitSinglePieceVersionFormToFeedForm.test.ts` |
+| **22** | Tous les textes et messages affichés à l'utilisateur sont en anglais | Internationalisation et politique stricte d'anglais dans l'UI | `__tests__/features/feed/Intro.test.tsx`, `__tests__/features/feed/FeedSummary.review.test.tsx`, `__tests__/features/review/ReviewSessionBanner.test.tsx`, `__tests__/features/review/AbortReviewButton.test.tsx`, `__tests__/features/review/OverallCommentModal.test.tsx`, `__tests__/features/review/ReviewDiffModal.test.tsx`, `__tests__/context/toastNotificationContext.test.tsx` |
+
+- **Vérifications :**
+  - `npx tsc --noEmit` : 0 erreur.
+  - `npx eslint .` : 0 erreur, 0 avertissement.
+  - `npm run test:ci` : 46 suites passées / 46 total, 298 tests passés / 298 total (0 échec).
+- **Statut L14 :** Terminé / Validé.
+- **Coût :** 0.32 credits (Gemini 3.7 Flash - High) + 0.13 pour la traductio en anglais de parties du fichier de test.
