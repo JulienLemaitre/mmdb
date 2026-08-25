@@ -141,10 +141,6 @@ export function getDiffFields(
   return REVIEW_DIFF_FIELDS_SCHEMA[entityType].fields;
 }
 
-// Backward-compatibility alias
-export const getChecklistFields = getDiffFields;
-export const REVIEW_CHECKLIST_SCHEMA = REVIEW_DIFF_FIELDS_SCHEMA;
-
 // Helper: returns whether the entity type participates in “do not review twice.”
 export function isDoNotReviewTwice(entityType: ReviewEntityType): boolean {
   return !!REVIEW_DIFF_FIELDS_SCHEMA[entityType].doNotReviewTwice;

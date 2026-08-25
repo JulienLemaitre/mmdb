@@ -24,18 +24,12 @@ import {
   FeedFormProviderProps,
   FeedFormState,
 } from "@/types/feedFormTypes";
-import { localStorageGetItem, localStorageSetItem } from "@/utils/localStorage";
+import { localStorageGetItem } from "@/utils/localStorage";
 import { createFeedFormReducer } from "@/context/feedFormReducer";
 import {
   FEED_FORM_INITIAL_STATE,
   FEED_FORM_LOCAL_STORAGE_KEY,
-  COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-  SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
-import {
-  consumeBootStateForFeedForm,
-  FeedBootType,
-} from "@/features/review/reviewEditBridge";
 
 const FeedFormContext = createContext<
   | {
@@ -62,28 +56,6 @@ export function FeedFormProvider({
   );
 
   useEffect(() => {
-    // If a boot payload exists (coming from review edit mode), consume it
-    try {
-      const bootRaw: FeedBootType | null = consumeBootStateForFeedForm();
-      if (bootRaw) {
-        localStorageSetItem(storageKey, bootRaw.feedFormState);
-
-        if (bootRaw.collectionPieceVersionsFormState) {
-          localStorageSetItem(
-            COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-            bootRaw.collectionPieceVersionsFormState,
-          );
-        }
-        if (bootRaw.singlePieceVersionFormState) {
-          localStorageSetItem(
-            SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-            bootRaw.singlePieceVersionFormState,
-          );
-        }
-      }
-    } catch {
-      // ignore
-    }
     const localStorageValue = localStorageGetItem(storageKey);
     if (localStorageValue) {
       console.log(`[INIT] feedForm from localStorage`, localStorageValue);

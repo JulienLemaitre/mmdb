@@ -18,8 +18,6 @@ export const GET_URL_API_REVIEW_SUBMIT = (reviewId: string) =>
   `/api/review/${reviewId}/submit` as const;
 export const GET_URL_API_REVIEW_ABORT = (reviewId: string) =>
   `/api/review/${reviewId}/abort` as const;
-export const GET_URL_API_REVIEW_OVERVIEW = (reviewId: string) =>
-  `/api/review/${reviewId}/overview` as const;
 
 // FRONT routes
 
@@ -30,5 +28,3 @@ export const URL_REVIEW_LIST = "/review";
 export const URL_ADMIN = "/admin";
 export const GET_URL_REVIEW = (reviewId: string) =>
   `/review/${reviewId}` as const;
-export const GET_URL_REVIEW_CHECKLIST = (reviewId: string) =>
-  `/review/${reviewId}/checklist` as const;

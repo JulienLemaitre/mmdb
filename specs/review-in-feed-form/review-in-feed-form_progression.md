@@ -281,3 +281,55 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npm run test:ci` : 59 suites passées / 59 total, 317 tests passés / 317 total (0 échec).
 - **Statut L11 :** Terminé / Validé.
 - **Coût :** 0.45 credits (Gemini 3.7 Flash - High)
+
+## L12 — Suppressions et nettoyage
+
+- **Fichiers et dossiers supprimés :**
+  - **Routes et pages :**
+    - `app/(signedIn)/review/[reviewId]/checklist/` (layout + page)
+    - `app/api/review/[reviewId]/overview/` (route)
+  - **Contexte et bridge :**
+    - `features/review/reviewEditBridge.ts`
+    - `context/reviewWorkingCopyContext.tsx`
+    - `features/review/components/ReviewWorkingCopyClientProvider.tsx`
+    - `features/review/components/ReviewEditBanner.tsx`
+  - **Logique de checklist et anciens helpers :**
+    - `features/review/reviewChecklistSchema.ts`
+    - `features/review/reviewAdapters.ts`
+    - `features/review/reviewProgress.ts`
+    - `features/review/utils/expandRequiredChecklistItems.ts`
+    - `features/review/utils/areAllItemsChecked.ts`
+    - `features/review/utils/getItemValueDisplay.ts`
+    - `features/review/utils/isCollectionCompleteInChecklistGraph.ts`
+    - `features/review/utils/processSourceOnPieceVersionsForDisplay.ts`
+    - `features/review/slices/` (`CollectionSlice.tsx`, `PieceSlice.tsx`, `SummarySlice.tsx`)
+    - `features/review/SliceHeader.tsx`
+    - `features/review/components/ChecklistItemRow.tsx`
+    - `features/review/components/ChecklistRow.tsx`
+    - `utils/server/getReviewOverview.ts`
+  - **Anciens tests obsolètes :**
+    - `__tests__/ReviewEditBanner.test.tsx`
+    - `__tests__/api.overview.test.ts`
+    - `__tests__/bridge.inverseMapping.roundtrip.test.ts`
+    - `__tests__/reviewChecklistSchema.expand.test.ts`
+    - `__tests__/reviewChecklistSchema.test.ts`
+    - `__tests__/reviewEditBridge.test.ts`
+    - `__tests__/reviewProgress.test.ts`
+    - `__tests__/reviewProgress.withChecked.test.ts`
+    - `__tests__/review-ui/` (`checklistPage.progress.test.tsx`, `checklistRow.visualHints.test.tsx`, `restoreSliceScroll.test.tsx`, `sliceHeader.sticky.test.tsx`, `submitFlow.integration.test.tsx`, `submitGating.test.tsx`)
+    - `__tests__/ui.checklist.disabledSubmit.test.tsx`
+- **Fichiers modifiés pour nettoyage des références :**
+  - `utils/getEntityByIdOrKey.ts` : suppression de l'union `| ChecklistGraph` et typage exclusif sur `FeedFormState`.
+  - `types/reviewTypes.ts` : suppression de `ChecklistGraph`, `RequiredChecklistItem`, `GloballyReviewedEntityArrays`, `RequiredPredicateCtx`, `ExpandOptions`, `NodeLike`, `ApiOverview`, `SourceOnPieceVersion` et des alias de rétrocompatibilité checklist.
+  - `utils/constants.ts` : suppression des constantes obsolètes `FEED_FORM_BOOT_KEY` et `feedFormFromWorkingCopyError`.
+  - `utils/routes.ts` : suppression des helpers de routes obsolètes `GET_URL_API_REVIEW_OVERVIEW` et `GET_URL_REVIEW_CHECKLIST`.
+  - `features/review/reviewMock.ts` : suppression de `ChecklistGraph` et de `buildMockOverview` (seul `buildMockFeedFormState` est conservé).
+  - `context/feedFormContext.tsx` : retrait de l'effet de consommation du boot bridge (`consumeBootStateForFeedForm`).
+  - `features/review/reviewDiffFieldsSchema.ts` & `features/review/reviewDiff.ts` : retrait des alias de compatibilité temporaires (`getChecklistFields`, `REVIEW_CHECKLIST_SCHEMA`, `ChangedChecklistItem`, `computeChangedChecklistFieldPaths`).
+- **Vérifications :**
+  - Recherche globale grep de `checklist|Checklist|CHECKLIST|workingCopy|WorkingCopy|reviewContext|BOOT_KEY` dans tous les fichiers `*.ts` et `*.tsx` : 0 occurrence.
+  - `npx tsc --noEmit` : 0 erreur.
+  - `npx eslint` sur l'ensemble des fichiers modifiés : 0 erreur, 0 avertissement.
+  - `npm run test:ci` : 44 suites passées / 44 total, 282 tests passés / 282 total (0 échec).
+- **Statut L12 :** Terminé / Validé.
+- **Coût :** 0.61 credits (Gemini 3.7 Flash - High)

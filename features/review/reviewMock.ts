@@ -1,17 +1,4 @@
-import { ChecklistGraph } from "@/types/reviewTypes";
 import { FeedFormState } from "@/types/feedFormTypes";
-
-export type MockOverview = {
-  graph: ChecklistGraph;
-  state: FeedFormState;
-  globallyReviewed: {
-    personIds: string[];
-    organizationIds: string[];
-    collectionIds: string[];
-    pieceIds: string[];
-    pieceVersionIds: string[];
-  };
-};
 
 export function buildMockFeedFormState(reviewId: string): FeedFormState {
   const sourceId = "src-1";
@@ -180,67 +167,4 @@ export function buildMockFeedFormState(reviewId: string): FeedFormState {
     ],
     organizations: [],
   };
-}
-
-export function buildMockOverview(reviewId: string): MockOverview {
-  const state = buildMockFeedFormState(reviewId);
-  const sourceId = state.mMSourceDescription!.id!;
-  const personId = state.persons![0].id;
-  const collectionId = state.collections![0].id;
-  const pieceAId = state.pieces![0].id;
-  const pieceBId = state.pieces![1].id;
-  const pvAId = state.pieceVersions![0].id;
-  const pvBId = state.pieceVersions![1].id;
-  const editorId = "account-1";
-
-  const graph: ChecklistGraph = {
-    source: {
-      ...state.mMSourceDescription!,
-      id: sourceId,
-      enteredBy: {
-        id: editorId,
-        name: "John Doe",
-        email: "john.doe@example.com",
-      },
-      references: state.mMSourceDescription!.references,
-    },
-    collections: state.collections as any,
-    pieces: state.pieces as any,
-    pieceVersions: state.pieceVersions as any,
-    tempoIndications: state.tempoIndications as any,
-    metronomeMarks: state.metronomeMarks as any,
-    contributions: state.mMSourceContributions as any,
-    persons: state.persons as any,
-    organizations: state.organizations as any,
-    sourceOnPieceVersions: [
-      {
-        joinId: "join-1",
-        mMSourceId: sourceId,
-        pieceVersionId: pvAId,
-        rank: 1,
-        pieceId: pieceAId,
-        collectionId,
-        collectionRank: 1,
-      },
-      {
-        joinId: "join-2",
-        mMSourceId: sourceId,
-        pieceVersionId: pvBId,
-        rank: 2,
-        pieceId: pieceBId,
-        collectionId,
-        collectionRank: 2,
-      },
-    ],
-  };
-
-  const globallyReviewed = {
-    personIds: [personId],
-    organizationIds: [],
-    collectionIds: [],
-    pieceIds: [],
-    pieceVersionIds: [],
-  };
-
-  return { graph, state, globallyReviewed };
 }

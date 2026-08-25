@@ -8,7 +8,6 @@ import { ReviewEntityType, ChangedField } from "@/types/reviewTypes";
 import { FeedFormState } from "@/types/feedFormTypes";
 
 export type { ChangedField };
-export type ChangedChecklistItem = ChangedField;
 
 export function norm(v: any) {
   if (v === undefined || v === "") return null;
@@ -199,9 +198,3 @@ export function computeChangedFieldPaths(
 
   return out;
 }
-
-// Backward-compatibility alias
-export const computeChangedChecklistFieldPaths: (
-  baseline: any,
-  working: any,
-) => ChangedField[] = computeChangedFieldPaths as any;
