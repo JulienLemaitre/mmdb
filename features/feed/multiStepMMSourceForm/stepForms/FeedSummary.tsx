@@ -36,16 +36,19 @@ const InfoModal = dynamic(() => import("@/ui/modal/InfoModal"), {
   ssr: false,
 });
 
+type SubmitStatus = "idle" | "submitting" | "success" | "error";
+
 export default function FeedSummary() {
   const router = useRouter();
   const portalContainer = usePortal();
   const formSession = useFormSession();
   const isReviewMode = formSession.mode === "review";
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSaveSuccess, setIsSaveSuccess] = useState<boolean>();
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+
+  const isSubmitting = submitStatus === "submitting";
 
   const { dispatch, state, lastCompletedStepRank } = useFeedForm();
   const { data: session } = useSession();
@@ -55,13 +58,22 @@ export default function FeedSummary() {
 
   const mMSourceToPersist = computeMMSourceToPersistFromState(state);
 
+  const onReset = () => {
+    localStorageRemoveItems([
+      SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+      COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+      FEED_FORM_LOCAL_STORAGE_KEY,
+    ]);
+    initFeedForm(dispatch);
+  };
+
   const saveAll = () => {
     console.log(
       `[FeedSummary] saveAll mMSourceToPersist :`,
       JSON.stringify(mMSourceToPersist),
     );
     console.log(`[FeedSummary] saveAll state :`, JSON.stringify(state));
-    setIsSubmitting(true);
+    setSubmitStatus("submitting");
     setErrorMessage(null);
     fetchAPI(
       URL_API_FEEDFORM_SUBMIT,
@@ -70,69 +82,76 @@ export default function FeedSummary() {
       },
       session?.user?.accessToken,
     )
-      .then(async (response) => {
+      .then((response) => {
         console.log("response", response);
 
         if (response.error) {
           console.error("Error submitting form:", JSON.stringify(response));
           setErrorMessage(response.error);
-          setIsSaveSuccess(false);
+          setSubmitStatus("error");
           // Send log email
-          await fetchAPI(
-            "/api/sendEmail",
-            {
-              body: {
-                type: "FeedForm ERROR",
-                mMSourceToPersist,
-                state,
-                message: `Error submitting form`,
-                errorStatus: response.status,
-                error: response.error,
-                response,
+          try {
+            fetchAPI(
+              "/api/sendEmail",
+              {
+                body: {
+                  type: "FeedForm ERROR",
+                  mMSourceToPersist,
+                  state,
+                  message: `Error submitting form`,
+                  errorStatus: response.status,
+                  error: response.error,
+                  response,
+                },
               },
-            },
-            session?.user?.accessToken,
-          )
-            .then((result) =>
-              console.log(`[FeedSummary] result from sendEmail :`, result),
+              session?.user?.accessToken,
             )
-            .catch((reason) =>
-              console.error(
-                `[FeedSummary] error reason from sendEmail :`,
-                reason,
-              ),
-            );
+              .then((result) =>
+                console.log(`[FeedSummary] result from sendEmail :`, result),
+              )
+              .catch((reason) =>
+                console.error(
+                  `[FeedSummary] error reason from sendEmail :`,
+                  reason,
+                ),
+              );
+          } catch (e) {
+            console.error(`[FeedSummary] unexpected error sending error email:`, e);
+          }
           return;
         } else {
-          setIsSaveSuccess(true);
+          onReset();
+          setSubmitStatus("success");
           // Send log email
-          await fetchAPI(
-            "/api/sendEmail",
-            {
-              body: {
-                type: "FeedForm SUCCESS",
-                mMSourceFromDb: response.mMSourceFromDb,
+          try {
+            fetchAPI(
+              "/api/sendEmail",
+              {
+                body: {
+                  type: "FeedForm SUCCESS",
+                  mMSourceFromDb: response.mMSourceFromDb,
+                },
               },
-            },
-            session?.user?.accessToken,
-          )
-            .then((result) =>
-              console.log(`[FeedSummary] result from sendEmail :`, result),
+              session?.user?.accessToken,
             )
-            .catch((reason) =>
-              console.error(
-                `[FeedSummary] error reason from sendEmail :`,
-                reason,
-              ),
-            );
+              .then((result) =>
+                console.log(`[FeedSummary] result from sendEmail :`, result),
+              )
+              .catch((reason) =>
+                console.error(
+                  `[FeedSummary] error reason from sendEmail :`,
+                  reason,
+                ),
+              );
+          } catch (e) {
+            console.error(`[FeedSummary] unexpected error sending success email:`, e);
+          }
         }
-        setIsSubmitting(false);
       })
       .catch((error) => {
         console.log("error in /api/feedForm", error);
         setErrorMessage(error?.message || "Error submitting form");
-        setIsSaveSuccess(false);
-        setIsSubmitting(false);
+        setSubmitStatus("error");
       });
   };
 
@@ -143,7 +162,7 @@ export default function FeedSummary() {
     const overallComment = formSession.review.overallComment;
 
     setIsConfirmModalOpen(false);
-    setIsSubmitting(true);
+    setSubmitStatus("submitting");
     setErrorMessage(null);
 
     fetchAPI(
@@ -160,19 +179,16 @@ export default function FeedSummary() {
         if (response.error) {
           console.error("[FeedSummary] Error submitting review:", response.error);
           setErrorMessage(response.error);
-          setIsSaveSuccess(false);
+          setSubmitStatus("error");
         } else {
           purgeReviewLocalDrafts(reviewId);
-          setIsSaveSuccess(true);
+          setSubmitStatus("success");
         }
       })
       .catch((error) => {
         console.error("[FeedSummary] Error in review submit:", error);
         setErrorMessage(error?.message || "Failed to submit review");
-        setIsSaveSuccess(false);
-      })
-      .finally(() => {
-        setIsSubmitting(false);
+        setSubmitStatus("error");
       });
   };
 
@@ -182,44 +198,46 @@ export default function FeedSummary() {
   };
 
   useEffect(() => {
-    if (typeof isSaveSuccess !== "boolean") return;
-
-    onInfoModalOpen(SAVE_INFO_MODAL_ID);
-  }, [isSaveSuccess]);
-
-  const onReset = () => {
-    localStorageRemoveItems([
-      SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-      COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-      FEED_FORM_LOCAL_STORAGE_KEY,
-    ]);
-    initFeedForm(dispatch);
-  };
+    if (submitStatus === "success" || submitStatus === "error") {
+      onInfoModalOpen(SAVE_INFO_MODAL_ID);
+    }
+  }, [submitStatus]);
 
   const handleModalClose = () => {
     if (isReviewMode) {
-      if (isSaveSuccess) {
+      if (submitStatus === "success") {
         router.push(URL_REVIEW_LIST);
+        return;
       }
+      setSubmitStatus("idle");
     } else {
-      onReset();
+      if (submitStatus === "success") {
+        onReset();
+      }
+      setSubmitStatus("idle");
     }
-    setIsSaveSuccess(undefined);
   };
 
   const getModalDescription = () => {
-    if (isReviewMode) {
-      if (isSaveSuccess) {
+    if (submitStatus === "success") {
+      if (isReviewMode) {
         return "The review has been approved and submitted successfully.";
+      }
+      return "Your Metronome Mark Source and all the related data has been saved successfully. Thank you!";
+    }
+    if (submitStatus === "error") {
+      if (isReviewMode) {
+        return (
+          errorMessage ||
+          "Oops! Something went wrong while submitting the review. Please try again."
+        );
       }
       return (
         errorMessage ||
-        "Oops! Something went wrong while submitting the review. Please try again."
+        "Oops! Something went wrong. We have been notified and we will try to fix the problem soon."
       );
     }
-    return isSaveSuccess
-      ? "Your Metronome Mark Source and all the related data has been saved successfully. Thank you!"
-      : "Oops! Something went wrong. We have been notified and we will try to fix the problem soon.";
+    return "";
   };
 
   const handleClickSubmit = () => {
@@ -636,7 +654,7 @@ export default function FeedSummary() {
 
       <InfoModal
         modalId={SAVE_INFO_MODAL_ID}
-        type={isSaveSuccess ? "success" : "error"}
+        type={submitStatus === "error" ? "error" : "success"}
         description={getModalDescription()}
         onClose={handleModalClose}
       />

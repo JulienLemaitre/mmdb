@@ -145,7 +145,7 @@ describe("FeedSummary - data-entering mode", () => {
     ).toBeInTheDocument();
   });
 
-  it("submits to /api/feedForm, sends success email, and resets local storage on modal close", async () => {
+  it("submits to /api/feedForm, purges drafts immediately upon success response, sends email, and closes modal cleanly", async () => {
     (fetchAPI as jest.Mock).mockResolvedValue({
       mMSourceFromDb: { id: "src-1", title: "Sonata No. 1" },
     });
@@ -175,6 +175,13 @@ describe("FeedSummary - data-entering mode", () => {
       );
     });
 
+    // Verify localStorage drafts are purged IMMEDIATELY upon success (before modal close)
+    expect(localStorageRemoveItems).toHaveBeenCalledWith([
+      "singlePieceVersionForm",
+      "collectionPieceVersionForm",
+      "feedForm",
+    ]);
+
     // Check success email call
     await waitFor(() => {
       expect(fetchAPI).toHaveBeenCalledWith(
@@ -193,11 +200,68 @@ describe("FeedSummary - data-entering mode", () => {
     expect(
       screen.getByText(/Your Metronome Mark Source and all the related data has been saved successfully/i),
     ).toBeInTheDocument();
+    const modalTitle = screen.getByRole("heading", { level: 3, name: /success/i });
+    expect(modalTitle).toBeInTheDocument();
+    expect(modalTitle).toHaveClass("text-success");
+    expect(screen.queryByRole("heading", { level: 3, name: /error/i })).not.toBeInTheDocument();
 
     const closeBtn = screen.getByRole("button", { name: /close/i });
     fireEvent.click(closeBtn);
 
-    expect(localStorageRemoveItems).toHaveBeenCalled();
+    expect(screen.queryByRole("heading", { level: 3, name: /error/i })).not.toBeInTheDocument();
+  });
+
+  it("submits successfully and purges local storage drafts even if sendEmail rejects or fails", async () => {
+    (fetchAPI as jest.Mock).mockImplementation((url: string) => {
+      if (url === "/api/feedForm") {
+        return Promise.resolve({
+          mMSourceFromDb: { id: "src-1", title: "Sonata No. 1" },
+        });
+      }
+      if (url === "/api/sendEmail") {
+        return Promise.reject(new Error("Email service unavailable"));
+      }
+      return Promise.resolve({});
+    });
+
+    render(
+      <FormSessionProvider session={{ mode: "data-entering" }}>
+        <FeedFormProvider initialState={mockState} storageKey="test-summary-de-2">
+          <FeedSummary />
+        </FeedFormProvider>
+      </FormSessionProvider>,
+    );
+
+    const submitBtn = screen.getByRole("button", {
+      name: /save the complete metronome mark source/i,
+    });
+    fireEvent.click(submitBtn);
+
+    await waitFor(() => {
+      expect(fetchAPI).toHaveBeenCalledWith(
+        "/api/feedForm",
+        expect.anything(),
+        "valid-token",
+      );
+    });
+
+    // Drafts must still be purged
+    expect(localStorageRemoveItems).toHaveBeenCalledWith([
+      "singlePieceVersionForm",
+      "collectionPieceVersionForm",
+      "feedForm",
+    ]);
+
+    // Success modal must still be shown without crashing or switching to error
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Your Metronome Mark Source and all the related data has been saved successfully/i),
+      ).toBeInTheDocument();
+    });
+    const modalTitle = screen.getByRole("heading", { level: 3, name: /success/i });
+    expect(modalTitle).toBeInTheDocument();
+    expect(modalTitle).toHaveClass("text-success");
+    expect(screen.queryByRole("heading", { level: 3, name: /error/i })).not.toBeInTheDocument();
   });
 
   it("handles error response: sends error email, shows error modal, does NOT reset local storage", async () => {
@@ -233,8 +297,11 @@ describe("FeedSummary - data-entering mode", () => {
     });
 
     expect(
-      screen.getByText(/Oops! Something went wrong/i),
+      screen.getByText(/Validation failed/i),
     ).toBeInTheDocument();
+    const modalTitle = screen.getByRole("heading", { level: 3, name: /error/i });
+    expect(modalTitle).toBeInTheDocument();
+    expect(modalTitle).toHaveClass("text-error");
 
     expect(localStorageRemoveItems).not.toHaveBeenCalled();
   });

@@ -260,10 +260,20 @@ describe("FeedSummary - review mode", () => {
       ).toBeInTheDocument();
     });
 
+    const modalTitle = screen.getByRole("heading", { level: 3, name: /success/i });
+    expect(modalTitle).toBeInTheDocument();
+    expect(modalTitle).toHaveClass("text-success");
+    expect(screen.queryByRole("heading", { level: 3, name: /error/i })).not.toBeInTheDocument();
+
     const closeBtn = await screen.findByRole("button", { name: "Close" });
     fireEvent.click(closeBtn);
 
     expect(mockPush).toHaveBeenCalledWith("/review");
+    // Verify modal retains success status and does not flash error styling or copy
+    expect(screen.queryByRole("heading", { level: 3, name: /error/i })).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Oops! Something went wrong/i),
+    ).not.toBeInTheDocument();
   });
 
   it("handles server error: shows error message, does NOT purge drafts, does NOT redirect", async () => {
@@ -294,11 +304,16 @@ describe("FeedSummary - review mode", () => {
       ).toBeInTheDocument();
     });
 
+    const modalTitle = screen.getByRole("heading", { level: 3, name: /error/i });
+    expect(modalTitle).toBeInTheDocument();
+    expect(modalTitle).toHaveClass("text-error");
+
     expect(purgeReviewLocalDrafts).not.toHaveBeenCalled();
 
     const closeBtn = await screen.findByRole("button", { name: "Close" });
     fireEvent.click(closeBtn);
 
     expect(mockPush).not.toHaveBeenCalled();
+    expect(screen.queryByRole("heading", { level: 3, name: /success/i })).not.toBeInTheDocument();
   });
 });
