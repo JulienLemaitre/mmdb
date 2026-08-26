@@ -397,5 +397,34 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
   - `npx tsc --noEmit` : 0 erreur.
   - `npx eslint .` : 0 erreur, 0 avertissement.
   - `npm run test:ci` : 46 suites passées / 46 total, 298 tests passés / 298 total (0 échec).
-- **Statut L14 :** Terminé / Validé.
+- **Statut L14 :** Automatisation terminée ; recette manuelle exécutée avec anomalies (12 PASS / 4 FAIL).
 - **Coût :** 0.32 credits (Gemini 3.7 Flash - High) + 0.13 pour la traductio en anglais de parties du fichier de test.
+
+### Recette manuelle — 2026-08-26
+
+Recette exécutée dans un navigateur Chrome réel et visible, sur `http://localhost:3000`, avec les
+credentials de `.env.test`. Les données de recette ont été créées, modifiées, approuvées ou
+abandonnées dans la base de test selon les scénarios.
+
+| # | Résultat | Observations |
+|---:|---|---|
+| 1 | PASS | Depuis `/review`, le démarrage d'une revue redirige vers `/review/[reviewId]`. Revue nominale : `c3e4a28f-f28c-4b55-9e18-73d52259f29c`. |
+| 2 | PASS | L'Intro affiche le contenu de la revue et peut être validée. |
+| 3 | PASS | Les étapes 1 à 4 sont préremplies et complètes. |
+| 4 | PASS | Un champ a été modifié à chaque niveau : source, contribution, pièce, section et marque métronomique. |
+| 5 | FAIL | « View Changes » affiche `0 changed fields` puis une erreur `missing entityId for CONTRIBUTION`, alors que des modifications ont été effectuées. |
+| 6 | PASS | Après rechargement, le brouillon de revue restaure les modifications. |
+| 7 | PASS | Le commentaire général est sauvegardé, puis restauré après fermeture et rechargement. |
+| 8 | FAIL | Lors de l'approbation, un succès est affiché puis une modale d'erreur apparaît, bien que la transaction soit effectivement réussie en base. |
+| 9 | FAIL | La base passe bien la revue et la source à `APPROVED`, mais les `AuditLog` contiennent de nombreuses créations/suppressions de marques et une suppression de source qui ne correspondent pas exactement aux modifications réalisées. |
+| 10 | PASS | Une divergence de session déclenche le toast anglais `Local draft reset: session does not match current user.` |
+| 11 | PASS | Le brouillon `/feed` reste isolé du brouillon de revue, dans les deux sens. |
+| 12 | PASS | Le fork est vérifié en base : source forkée `b6313e88-962d-4a0e-bbd9-0ac610ea96a8`, source originale conservée `44331c51-d784-48a2-ab38-44b98ade1011`, `PieceVersion` originale `c9c9a7c0-2d71-45b1-9146-baf2fde471c5`, forkée `5ae83d80-35db-4857-8b9b-072453fcb2be`. |
+| 13 | PASS | Après abandon, la revue `3ff99dca-decc-414a-9276-ae993ba23ee8` revient à `ABORTED`, la source `b9a82c0c-1be7-4e53-8a79-dfd330775140` est `ABORTED`, aucune revue active ne subsiste et les clés localStorage de revue sont purgées. |
+| 14 | PASS | Une seconde tentative avec le même compte est refusée/redirigée vers la revue active existante. |
+| 15 | PASS adapté | `REVIEWER_2` n'existe pas dans la base de test. Le scénario a été exécuté avec `REVIEWER_1`, puis l'accès à la revue depuis ADMIN a été refusé avec redirection vers `/review?reason=notOwner`. |
+| 16 | FAIL | La création complète `/feed` réussit et crée la source `3c404929-c153-4ce2-83dd-9cc4708f7cbb` ainsi que la pièce `0719a6f0-ac5b-4089-89c6-5e84d8c53fb7`, mais la réinitialisation automatique laisse les données saisies dans `feedForm` ; une réinitialisation manuelle est nécessaire. |
+
+**Bilan : 12 PASS, 4 FAIL (scénarios 5, 8, 9 et 16).** Les défauts constatés sont consignés
+sans modification du code applicatif : diff de contribution, affichage d'erreur post-approbation,
+composition des audits et réinitialisation automatique du formulaire Feed.
