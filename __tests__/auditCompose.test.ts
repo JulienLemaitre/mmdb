@@ -170,4 +170,54 @@ describe("auditCompose with FeedFormState", () => {
     const entries = composeAuditEntries("r-1", baseline, working);
     expect(entries.length).toBe(0);
   });
+
+  describe("Scenario 9 — Source description updates and metronome mark stability", () => {
+    it("emits only a single targeted UPDATE audit entry for MM_SOURCE when editing source description fields without touching metronome marks", () => {
+      const working = deepClone(baseline);
+      working.mMSourceDescription!.title = "Updated Symphony Edition Title";
+      working.mMSourceDescription!.year = 1805;
+      working.mMSourceDescription!.comment = "Revised edition comments";
+
+      const entries = composeAuditEntries("r-1", baseline, working);
+
+      // Only one audit entry should exist
+      expect(entries).toHaveLength(1);
+
+      const sourceEntry = entries[0];
+      expect(sourceEntry.entityType).toBe("MM_SOURCE");
+      expect(sourceEntry.entityId).toBe(baseline.mMSourceDescription!.id);
+      expect(sourceEntry.operation).toBe("UPDATE");
+      expect((sourceEntry.before as any).title).toBe(
+        baseline.mMSourceDescription!.title,
+      );
+      expect((sourceEntry.after as any).title).toBe(
+        "Updated Symphony Edition Title",
+      );
+      expect((sourceEntry.before as any).year).toBe(
+        baseline.mMSourceDescription!.year,
+      );
+      expect((sourceEntry.after as any).year).toBe(1805);
+
+      // Metronome marks must NOT appear in audit entries
+      const mmEntries = entries.filter((e) => e.entityType === "METRONOME_MARK");
+      expect(mmEntries).toHaveLength(0);
+    });
+
+    it("correctly matches singleton source and produces UPDATE even if working state has minor structural variations", () => {
+      const working = deepClone(baseline);
+      working.mMSourceDescription!.title = "Structural Variation Title";
+      delete (working.mMSourceDescription as any).pieceVersions;
+      delete (working.mMSourceDescription as any).comment;
+
+      const entries = composeAuditEntries("r-1", baseline, working);
+      const sourceEntry = entries.find((e) => e.entityType === "MM_SOURCE");
+
+      expect(sourceEntry).toBeTruthy();
+      expect(sourceEntry!.operation).toBe("UPDATE");
+      expect(sourceEntry!.entityId).toBe(baseline.mMSourceDescription!.id);
+      expect((sourceEntry!.after as any).title).toBe(
+        "Structural Variation Title",
+      );
+    });
+  });
 });

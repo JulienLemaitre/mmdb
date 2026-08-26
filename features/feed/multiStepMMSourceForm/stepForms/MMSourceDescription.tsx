@@ -27,10 +27,19 @@ const MMSourceDescription = () => {
       }
     });
 
+    const existingDescription = state?.mMSourceDescription;
     const sourceDescriptionState = getMMSourceDescriptionStateFromInput({
+      id: sourceData.id ?? existingDescription?.id,
       ...sourceData,
     });
-    sourceDescriptionState.isNew = true;
+    if (existingDescription?.permalink !== undefined) {
+      sourceDescriptionState.permalink = existingDescription.permalink;
+    }
+    if (existingDescription?.isNew !== undefined) {
+      sourceDescriptionState.isNew = existingDescription.isNew;
+    } else if (!sourceDescriptionState.id) {
+      sourceDescriptionState.isNew = true;
+    }
     updateFeedForm(dispatch, "mMSourceDescription", {
       value: sourceDescriptionState,
       next: !!option?.goToNextStep,

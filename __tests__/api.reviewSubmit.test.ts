@@ -852,5 +852,53 @@ describe("POST /api/review/[reviewId]/submit", () => {
       const data = await res.json();
       expect(data.error).toMatch(/Conflict: A unique constraint violation/);
     });
+
+    it("Scenario 9: updates source description fields, leaves unchanged metronome marks untouched, and produces single UPDATE audit entry", async () => {
+      const state = buildValidState();
+      state.mMSourceDescription!.title = "New Corrected Source Title";
+      state.mMSourceDescription!.year = 1809;
+      state.mMSourceDescription!.comment = "Updated source comment";
+
+      const req: any = { json: async () => ({ feedFormState: state }) };
+      const res = await submitPost(req, {
+        params: Promise.resolve({ reviewId: REVIEW_ID }),
+      });
+      expect(res.status).toBe(200);
+
+      // Verify mMSource.update called with updated fields and preserved MM_SOURCE_ID
+      expect(mockPrismaInstance.tx.mMSource.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { id: MM_SOURCE_ID },
+          data: expect.objectContaining({
+            title: "New Corrected Source Title",
+            year: 1809,
+            comment: "Updated source comment",
+          }),
+        }),
+      );
+
+      // Verify unchanged metronome marks are not recreated, updated, or deleted
+      expect(mockPrismaInstance.tx.metronomeMark.create).not.toHaveBeenCalled();
+      expect(mockPrismaInstance.tx.metronomeMark.update).not.toHaveBeenCalled();
+      expect(
+        mockPrismaInstance.tx.metronomeMark.deleteMany,
+      ).not.toHaveBeenCalled();
+
+      // Verify audit logs only contain 1 entry for MMSource (UPDATE) and 0 for MetronomeMark
+      const auditLogs = mockPrismaInstance.store.auditLog;
+      expect(auditLogs).toHaveLength(1);
+      expect(auditLogs[0]).toEqual(
+        expect.objectContaining({
+          entityId: MM_SOURCE_ID,
+          entityType: AUDIT_ENTITY_TYPE.MM_SOURCE,
+          operation: OPERATION.UPDATE,
+        }),
+      );
+      expect(
+        auditLogs.some(
+          (a) => a.entityType === AUDIT_ENTITY_TYPE.METRONOME_MARK,
+        ),
+      ).toBe(false);
+    });
   });
 });
