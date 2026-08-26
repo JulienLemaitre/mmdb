@@ -257,7 +257,7 @@ export default async function Home({ searchParams }: Props) {
                     ) : (
                       <span className="text-amber-600 font-semibold">
                         💪 Still waiting for some contributions to secure this
-                        week's streak!
+                        week&apos;s streak!
                       </span>
                     )}
                   </div>
@@ -355,7 +355,7 @@ export default async function Home({ searchParams }: Props) {
                         </span>
                       ) : (
                         <span className="text-error font-semibold">
-                          🚨 You haven't contributed this week yet.
+                          🚨 You haven&apos;t contributed this week yet.
                           <br />
                           Keep your streak alive!
                         </span>

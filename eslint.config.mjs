@@ -16,11 +16,31 @@ import testingLibrary from "eslint-plugin-testing-library";
  */
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
+  // Global ignores
+  {
+    ignores: [
+      ".next/**",
+      "node_modules/**",
+      "prisma/client/**",
+      "prisma/output/**",
+      "__httprequest__/**",
+      "**/*.output.txt",
+      "**/*.md"
+    ],
+  },
+
   // Base JS recommended rules
   js.configs.recommended,
 
   // Next.js + React rules (flat config from eslint-config-next@16)
   ...nextConfig,
+
+  // Rule overrides for Next.js / React
+  {
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
 
   // Global language options and common globals
   {
