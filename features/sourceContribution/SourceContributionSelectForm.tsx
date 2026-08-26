@@ -1,5 +1,5 @@
 import {
-  ContributionStateWithoutId,
+  ContributionState,
   OptionOrganizationInput,
   OptionPersonInput,
   OrganizationState,
@@ -14,13 +14,14 @@ import TrashIcon from "@/ui/svg/TrashIcon";
 import getRoleLabel from "@/utils/getRoleLabel";
 import _isEqual from "lodash/isEqual";
 import DebugBox from "@/ui/DebugBox";
+import { getNewUuid } from "@/utils/getNewUuid";
 
 type SourceContributionSelectFormProps = {
-  contributions?: ContributionStateWithoutId[];
+  contributions?: ContributionState[];
   persons: PersonState[];
   organizations: OrganizationState[];
   onSubmit: (
-    contributions: ContributionStateWithoutId[],
+    contributions: ContributionState[],
     option: { goToNextStep: boolean },
   ) => void;
   onAddDraftPerson: (person: PersonState) => void;
@@ -42,7 +43,7 @@ export default function SourceContributionSelectForm({
   title,
 }: SourceContributionSelectFormProps) {
   const [selectedContributions, setSelectedContributions] = useState<
-    ContributionStateWithoutId[]
+    ContributionState[]
   >(contributions || []);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -53,7 +54,11 @@ export default function SourceContributionSelectForm({
   }) => {
     setSelectedContributions((prevList) => [
       ...prevList,
-      { personId: personContribution.personId, role: personContribution.role },
+      {
+        id: getNewUuid(),
+        personId: personContribution.personId,
+        role: personContribution.role,
+      },
     ]);
     const person = persons.find((p) => p.id === personContribution.personId);
     if (person) {
@@ -68,6 +73,7 @@ export default function SourceContributionSelectForm({
     setSelectedContributions((prevList) => [
       ...prevList,
       {
+        id: getNewUuid(),
         organizationId: organizationContribution.organizationId,
         role: organizationContribution.role,
       },

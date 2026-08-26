@@ -30,10 +30,7 @@ export const REVIEW_DIFF_FIELDS_SCHEMA: ReviewDiffFieldsSchema = {
   COLLECTION: {
     entity: "COLLECTION",
     doNotReviewTwice: true,
-    fields: [
-      { path: "title" },
-      { path: "composerId" },
-    ],
+    fields: [{ path: "title" }, { path: "composerId" }],
   },
 
   PIECE: {
@@ -52,18 +49,12 @@ export const REVIEW_DIFF_FIELDS_SCHEMA: ReviewDiffFieldsSchema = {
   PIECE_VERSION: {
     entity: "PIECE_VERSION",
     doNotReviewTwice: true,
-    fields: [
-      { path: "category" },
-    ],
+    fields: [{ path: "category" }],
   },
 
   MOVEMENT: {
     entity: "MOVEMENT",
-    fields: [
-      { path: "rank" },
-      { path: "key" },
-      { path: "isVariation" },
-    ],
+    fields: [{ path: "rank" }, { path: "key" }, { path: "isVariation" }],
   },
 
   SECTION: {
@@ -92,19 +83,12 @@ export const REVIEW_DIFF_FIELDS_SCHEMA: ReviewDiffFieldsSchema = {
 
   METRONOME_MARK: {
     entity: "METRONOME_MARK",
-    fields: [
-      { path: "beatUnit" },
-      { path: "bpm" },
-      { path: "comment" },
-    ],
+    fields: [{ path: "beatUnit" }, { path: "bpm" }, { path: "comment" }],
   },
 
   REFERENCE: {
     entity: "REFERENCE",
-    fields: [
-      { path: "type" },
-      { path: "reference" },
-    ],
+    fields: [{ path: "type" }, { path: "reference" }],
   },
 
   CONTRIBUTION: {
@@ -135,9 +119,7 @@ export const REVIEW_DIFF_FIELDS_SCHEMA: ReviewDiffFieldsSchema = {
 };
 
 // Helper: get the set of diff fields for an entity type.
-export function getDiffFields(
-  entityType: ReviewEntityType,
-): ReviewDiffField[] {
+export function getDiffFields(entityType: ReviewEntityType): ReviewDiffField[] {
   return REVIEW_DIFF_FIELDS_SCHEMA[entityType].fields;
 }
 
@@ -177,11 +159,9 @@ export function buildFieldPath(
     return `${prefix}.${relativePath}`;
   }
   if (!entityId || typeof entityId !== "string" || entityId.trim() === "") {
-    if (process.env.NODE_ENV !== "production") {
-      throw new Error(
-        `buildFieldPath: missing entityId for ${entityType} (non-singleton). relativePath=${relativePath}`,
-      );
-    }
+    console.warn(
+      `[reviewDiffFieldsSchema] buildFieldPath: missing entityId for ${entityType} (non-singleton). relativePath=${relativePath}`,
+    );
   }
   const idPart = entityId ? `[${entityId}]` : "";
   return `${prefix}${idPart}.${relativePath}`;

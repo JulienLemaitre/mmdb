@@ -75,8 +75,19 @@ export function computeChangedFieldPaths(
     bList: any[] | undefined,
     wList: any[] | undefined,
   ) => {
-    const baseMap = new Map((bList ?? []).map((n) => [n.id, n]));
-    const workMap = new Map((wList ?? []).map((n) => [n.id, n]));
+    const getEntityKey = (node: any, index: number, prefix: string) => {
+      if (node && typeof node.id === "string" && node.id.trim() !== "") {
+        return node.id;
+      }
+      return `__missing_id_${prefix}_${index}`;
+    };
+
+    const baseMap = new Map(
+      (bList ?? []).map((n, idx) => [getEntityKey(n, idx, "base"), n]),
+    );
+    const workMap = new Map(
+      (wList ?? []).map((n, idx) => [getEntityKey(n, idx, "work"), n]),
+    );
     const allIds = new Set([...baseMap.keys(), ...workMap.keys()]);
 
     for (const id of allIds) {
@@ -100,8 +111,8 @@ export function computeChangedFieldPaths(
           try {
             out.push({
               entityType,
-              entityId: node.id,
-              fieldPath: buildFieldPath(entityType, node.id, field.path),
+              entityId: node?.id ?? null,
+              fieldPath: buildFieldPath(entityType, node?.id, field.path),
             });
           } catch (e) {
             console.error("Error computing CREATE / DELETE field path", {

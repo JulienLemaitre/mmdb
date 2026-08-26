@@ -25,6 +25,7 @@ import { filterOptionByWordStart } from "@/utils/selectFilterOption";
 
 const SourceSchema = z
   .object({
+    id: z.string().optional(),
     title: z.string().optional(),
     type: getZodOptionFromEnum(SOURCE_TYPE),
     link: z.string().trim().url(),
@@ -33,6 +34,7 @@ const SourceSchema = z
     noDate: z.boolean(),
     references: z.array(
       z.object({
+        id: z.string().optional(),
         type: getZodOptionFromEnum(REFERENCE_TYPE),
         reference: z.string().min(2),
       }),
@@ -78,6 +80,7 @@ const SourceSchema = z
   });
 
 const DEFAULT_VALUES: Partial<SourceDescriptionInput> = {
+  id: undefined,
   type: {
     value: SOURCE_TYPE.EDITION,
     label: getSourceTypeLabel(SOURCE_TYPE.EDITION),
@@ -100,6 +103,7 @@ function getFormDefaultValues(
   const year = sourceDescription.year ?? null;
   return {
     ...sourceDescription,
+    id: sourceDescription.id,
     year,
     noDate: year == null,
     isYearEstimated: year == null ? false : !!sourceDescription.isYearEstimated,
@@ -217,6 +221,7 @@ export default function SourceDescriptionEditForm(
       await handleSubmit(async (data) => {
         const payload: SourceDescriptionInput = {
           ...data,
+          id: data.id ?? sourceDescription?.id,
           year: data.noDate ? null : (data.year ?? null),
           isYearEstimated: data.noDate ? false : !!data.isYearEstimated,
         };

@@ -208,4 +208,57 @@ describe("computeChangedFieldPaths with FeedFormState", () => {
     const changes = computeChangedFieldPaths(baseline, working);
     expect(changes.length).toBe(0);
   });
+
+  describe("resilience against missing entity IDs (Scenario 5)", () => {
+    it("handles contribution added without ID without throwing and retains all diff entries", () => {
+      const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+      const working = clone(baseline);
+      working.mMSourceContributions!.push({
+        // Missing id
+        personId: "p-new",
+        role: "TRANSCRIBER" as any,
+      } as any);
+
+      // Modify something else as well to ensure other diff items are not skipped
+      working.mMSourceDescription!.title = "New Title";
+
+      const changes = computeChangedFieldPaths(baseline, working);
+      const paths = changes.map((c) => c.fieldPath);
+
+      expect(paths).toContain("source.title");
+      expect(paths).toContain("contribution.personId");
+      expect(paths).toContain("contribution.role");
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringMatching(
+          /^\[reviewDiffFieldsSchema] buildFieldPath: missing entityId for CONTRIBUTION/,
+        ),
+      );
+      warnSpy.mockRestore();
+    });
+
+    it("handles multiple entities missing IDs in base and working arrays without crashing", () => {
+      const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+      const working = clone(baseline);
+      working.persons = [
+        ...(baseline.persons ?? []),
+        {
+          // Missing id
+          firstName: "Anonymous",
+          lastName: "Author",
+        } as any,
+      ];
+
+      const changes = computeChangedFieldPaths(baseline, working);
+      const paths = changes.map((c) => c.fieldPath);
+
+      expect(paths).toContain("person.firstName");
+      expect(paths).toContain("person.lastName");
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringMatching(
+          /^\[reviewDiffFieldsSchema] buildFieldPath: missing entityId for PERSON/,
+        ),
+      );
+      warnSpy.mockRestore();
+    });
+  });
 });

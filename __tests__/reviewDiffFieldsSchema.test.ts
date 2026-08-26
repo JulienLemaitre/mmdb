@@ -47,4 +47,36 @@ describe("reviewDiffFieldsSchema basics", () => {
       "source.pieceVersions[pv-123].rank",
     );
   });
+
+  it("warns with [reviewDiffFieldsSchema] and returns fallback path when entityId is missing for non-singleton entity", () => {
+    const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+
+    const path1 = buildFieldPath("CONTRIBUTION", undefined, "role");
+    expect(path1).toBe("contribution.role");
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringMatching(
+        /^\[reviewDiffFieldsSchema\] buildFieldPath: missing entityId for CONTRIBUTION/,
+      ),
+    );
+
+    warnSpy.mockClear();
+    const path2 = buildFieldPath("PERSON", null, "firstName");
+    expect(path2).toBe("person.firstName");
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringMatching(
+        /^\[reviewDiffFieldsSchema\] buildFieldPath: missing entityId for PERSON/,
+      ),
+    );
+
+    warnSpy.mockClear();
+    const path3 = buildFieldPath("SECTION", "", "metreNumerator");
+    expect(path3).toBe("section.metreNumerator");
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringMatching(
+        /^\[reviewDiffFieldsSchema\] buildFieldPath: missing entityId for SECTION/,
+      ),
+    );
+
+    warnSpy.mockRestore();
+  });
 });
