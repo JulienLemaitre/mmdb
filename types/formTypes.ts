@@ -325,10 +325,12 @@ export type MetronomeMarkInput =
       Prisma.MetronomeMarkUncheckedCreateInput,
       "sectionId" | "bpm" | "comment"
     > & {
+      id?: string;
       beatUnit: OptionInputTyped<NOTE_VALUE>;
       noMM: false;
     })
   | (Pick<Prisma.MetronomeMarkUncheckedCreateInput, "sectionId" | "comment"> & {
+      id?: string;
       noMM: true;
     });
 

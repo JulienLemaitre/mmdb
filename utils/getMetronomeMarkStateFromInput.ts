@@ -16,15 +16,17 @@ export default function getMetronomeMarkStateFromInput(
       );
     }
     const { pieceVersionId } = sectionInfo.mMSourceOnPieceVersion;
-    const { sectionId, noMM } = mMinput;
+    const { sectionId, noMM, id } = mMinput;
 
     const metronomeMarkState: MetronomeMarkState = noMM
       ? {
+          ...(id ? { id } : {}),
           sectionId,
           noMM: true,
           pieceVersionId,
         }
       : {
+          ...(id ? { id } : {}),
           sectionId,
           bpm: mMinput.bpm,
           comment: mMinput.comment,

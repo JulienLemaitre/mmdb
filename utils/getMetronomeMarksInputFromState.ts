@@ -5,14 +5,16 @@ import { NOTE_VALUE } from "@/prisma/client/enums";
 export default function getMetronomeMarkInputFromState(
   metronomeMark: MetronomeMarkState,
 ): MetronomeMarkInput {
-  const { sectionId, noMM } = metronomeMark;
+  const { sectionId, noMM, id } = metronomeMark;
 
   return noMM
     ? {
+        ...(id ? { id } : {}),
         sectionId,
         noMM: true,
       }
     : {
+        ...(id ? { id } : {}),
         noMM: false,
         sectionId,
         bpm: metronomeMark.bpm,

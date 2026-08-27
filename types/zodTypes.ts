@@ -50,11 +50,13 @@ export const zodPositiveNumberOrEmpty = z
 
 const MetronomeMarkSchema = z.discriminatedUnion("noMM", [
   z.object({
+    id: z.string().optional(),
     noMM: z.literal(true),
     sectionId: z.string(),
     comment: z.string().optional().nullable(),
   }),
   z.object({
+    id: z.string().optional(),
     noMM: z.literal(false),
     sectionId: z.string(),
     beatUnit: getZodOptionFromEnum(NOTE_VALUE),

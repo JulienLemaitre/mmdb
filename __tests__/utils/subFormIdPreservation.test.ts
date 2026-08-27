@@ -27,20 +27,25 @@ import getPieceStateFromInput from "@/utils/getPieceStateFromInput";
 import getPieceVersionStateFromInput from "@/utils/getPieceVersionStateFromInput";
 import getMovementStateFromInput from "@/utils/getMovementStateFromInput";
 import getSectionStateFromInput from "@/utils/getSectionStateFromInput";
+import getMetronomeMarkInputFromState from "@/utils/getMetronomeMarksInputFromState";
+import getMetronomeMarkStateFromInput from "@/utils/getMetronomeMarkStateFromInput";
 import { cleanFeedFormState } from "@/context/utils/cleanFeedFormState";
 import { FeedFormState } from "@/types/feedFormTypes";
 import {
   CollectionState,
+  MetronomeMarkInput,
   MetronomeMarkState,
   MovementState,
   PersonState,
   PieceState,
   PieceVersionState,
   SectionState,
+  SectionStateExtendedForMMForm,
   TempoIndicationState,
 } from "@/types/formTypes";
 import { KEY } from "@/prisma/client";
-import { PIECE_CATEGORY } from "@/prisma/client/enums";
+import { NOTE_VALUE, PIECE_CATEGORY } from "@/prisma/client/enums";
+import { MetronomeMarkListSchema } from "@/types/zodTypes";
 import { v4 as uuidv4 } from "uuid";
 
 describe("Sub-forms ID preservation audit (Lot 13)", () => {
@@ -422,14 +427,191 @@ describe("Sub-forms ID preservation audit (Lot 13)", () => {
       expect(cleaned.persons?.map((p) => p.id).sort()).toEqual(
         [composer.id, contributor.id].sort(),
       );
-      expect(cleaned.organizations?.map((o) => o.id)).toEqual([organization.id]);
+      expect(cleaned.organizations?.map((o) => o.id)).toEqual([
+        organization.id,
+      ]);
       expect(cleaned.collections?.map((c) => c.id)).toEqual([collection.id]);
       expect(cleaned.pieces?.map((p) => p.id)).toEqual([piece.id]);
-      expect(cleaned.pieceVersions?.map((pv) => pv.id)).toEqual([pieceVersion.id]);
+      expect(cleaned.pieceVersions?.map((pv) => pv.id)).toEqual([
+        pieceVersion.id,
+      ]);
       expect(cleaned.tempoIndications?.map((t) => t.id).sort()).toEqual(
         [tempo1.id, tempo2.id].sort(),
       );
       expect(cleaned.metronomeMarks?.map((mm) => mm.id)).toEqual([mm1.id]);
+    });
+  });
+
+  describe("6. MetronomeMark ID preservation", () => {
+    const mockSectionList: SectionStateExtendedForMMForm[] = [
+      {
+        id: "sec-1",
+        rank: 1,
+        metreNumerator: 4,
+        metreDenominator: 4,
+        isCommonTime: true,
+        isCutTime: false,
+        fastestStructuralNotesPerBar: 0,
+        fastestBelCantoNotesPerBar: 0,
+        fastestStaccatoNotesPerBar: 0,
+        fastestRepeatedNotesPerBar: 0,
+        fastestOrnamentalNotesPerBar: 0,
+        pieceId: "piece-1",
+        tempoIndicationId: "tempo-individual-1",
+        tempoIndication: {
+          id: "tempo-individual-1",
+          text: "tempoIndication-1",
+        },
+        movement: {
+          id: "mov-1",
+          rank: 1,
+          key: KEY.C_MAJOR,
+          isVariation: false,
+        },
+        mMSourceOnPieceVersion: {
+          pieceVersionId: "pv-1",
+          rank: 1,
+        },
+      },
+      {
+        id: "sec-2",
+        rank: 2,
+        metreNumerator: 3,
+        metreDenominator: 4,
+        isCommonTime: false,
+        isCutTime: false,
+        fastestStructuralNotesPerBar: 0,
+        fastestBelCantoNotesPerBar: 0,
+        fastestStaccatoNotesPerBar: 0,
+        fastestRepeatedNotesPerBar: 0,
+        fastestOrnamentalNotesPerBar: 0,
+        pieceId: "piece-1",
+        tempoIndicationId: "tempo-individual-2",
+        tempoIndication: {
+          id: "tempo-individual-2",
+          text: "tempoIndication-2",
+        },
+        movement: {
+          id: "mov-1",
+          rank: 1,
+          key: KEY.C_MAJOR,
+          isVariation: false,
+        },
+        mMSourceOnPieceVersion: {
+          pieceVersionId: "pv-1",
+          rank: 1,
+        },
+      },
+    ];
+
+    it("should preserve existing ID in getMetronomeMarkInputFromState for both MM and noMM", () => {
+      const mmWithBpm: MetronomeMarkState = {
+        id: "mm-uuid-123",
+        sectionId: "sec-1",
+        pieceVersionId: "pv-1",
+        beatUnit: NOTE_VALUE.QUARTER,
+        bpm: 120,
+        comment: "Allegro vivace",
+        noMM: false,
+      };
+
+      const mmWithoutBpm: MetronomeMarkState = {
+        id: "mm-uuid-456",
+        sectionId: "sec-2",
+        pieceVersionId: "pv-1",
+        noMM: true,
+      };
+
+      const inputWithBpm = getMetronomeMarkInputFromState(mmWithBpm);
+      expect(inputWithBpm.id).toBe("mm-uuid-123");
+      expect(inputWithBpm.noMM).toBe(false);
+      if (!inputWithBpm.noMM) {
+        expect(inputWithBpm.bpm).toBe(120);
+        expect(inputWithBpm.beatUnit.value).toBe(NOTE_VALUE.QUARTER);
+      }
+
+      const inputWithoutBpm = getMetronomeMarkInputFromState(mmWithoutBpm);
+      expect(inputWithoutBpm.id).toBe("mm-uuid-456");
+      expect(inputWithoutBpm.noMM).toBe(true);
+      expect(inputWithoutBpm.comment).toBeUndefined();
+    });
+
+    it("should preserve existing ID in getMetronomeMarkStateFromInput for both MM and noMM", () => {
+      const inputs: MetronomeMarkInput[] = [
+        {
+          id: "mm-uuid-123",
+          sectionId: "sec-1",
+          noMM: false,
+          bpm: 132,
+          beatUnit: { value: NOTE_VALUE.HALF, label: "Half" },
+          comment: "Presto",
+        },
+        {
+          id: "mm-uuid-456",
+          sectionId: "sec-2",
+          noMM: true,
+          comment: "No MM",
+        },
+      ];
+
+      const states = getMetronomeMarkStateFromInput(inputs, mockSectionList);
+
+      expect(states).toHaveLength(2);
+      expect(states[0].id).toBe("mm-uuid-123");
+      expect(states[0].noMM).toBe(false);
+      expect((states[0] as any).bpm).toBe(132);
+      expect((states[0] as any).beatUnit).toBe(NOTE_VALUE.HALF);
+      expect(states[0].pieceVersionId).toBe("pv-1");
+
+      expect(states[1].id).toBe("mm-uuid-456");
+      expect(states[1].noMM).toBe(true);
+      expect((states[1] as any).comment).toBeUndefined();
+      expect(states[1].pieceVersionId).toBe("pv-1");
+    });
+
+    it("should allow schema validation with and without id", () => {
+      const payloadWithIds = {
+        metronomeMarks: [
+          {
+            id: "mm-uuid-1",
+            sectionId: "sec-1",
+            noMM: false,
+            beatUnit: { value: NOTE_VALUE.QUARTER, label: "Quarter" },
+            bpm: 100,
+          },
+          {
+            id: "mm-uuid-2",
+            sectionId: "sec-2",
+            noMM: true,
+          },
+        ],
+      };
+
+      const parsedWithIds = MetronomeMarkListSchema.safeParse(payloadWithIds);
+      expect(parsedWithIds.success).toBe(true);
+      if (parsedWithIds.success) {
+        expect(parsedWithIds.data.metronomeMarks[0].id).toBe("mm-uuid-1");
+        expect(parsedWithIds.data.metronomeMarks[1].id).toBe("mm-uuid-2");
+      }
+
+      const payloadWithoutIds = {
+        metronomeMarks: [
+          {
+            sectionId: "sec-1",
+            noMM: false,
+            beatUnit: { value: NOTE_VALUE.QUARTER, label: "Quarter" },
+            bpm: 100,
+          },
+          {
+            sectionId: "sec-2",
+            noMM: true,
+          },
+        ],
+      };
+
+      const parsedWithoutIds =
+        MetronomeMarkListSchema.safeParse(payloadWithoutIds);
+      expect(parsedWithoutIds.success).toBe(true);
     });
   });
 });
