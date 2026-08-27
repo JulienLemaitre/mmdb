@@ -27,14 +27,7 @@ export type ReferenceTypeAndReference = Pick<
 // More generic types
 
 export type InputMethod =
-  | "none"
-  | "text"
-  | "decimal"
-  | "numeric"
-  | "tel"
-  | "search"
-  | "email"
-  | "url";
+  "none" | "text" | "decimal" | "numeric" | "tel" | "search" | "email" | "url";
 
 export type KeyBase =
   | "fastestStructuralNotes"
@@ -351,35 +344,33 @@ export type SearchFormState = {
 export function assertsIsPersistableFeedFormState(
   valueToTest: any,
 ): asserts valueToTest is PersistableFeedFormState {
-  if (
-    !(
-      valueToTest &&
-      typeof valueToTest === "object" &&
-      "formInfo" in valueToTest &&
-      typeof valueToTest["formInfo"] === "object" &&
-      "mMSourceDescription" in valueToTest &&
-      typeof valueToTest["mMSourceDescription"] === "object" &&
-      "mMSourceContributions" in valueToTest &&
-      Array.isArray(valueToTest.mMSourceContributions) &&
-      valueToTest.mMSourceContributions.length > 0 &&
-      "mMSourceOnPieceVersions" in valueToTest &&
-      Array.isArray(valueToTest.mMSourceOnPieceVersions) &&
-      valueToTest.mMSourceOnPieceVersions.length > 0 &&
-      "metronomeMarks" in valueToTest &&
-      Array.isArray(valueToTest.metronomeMarks) &&
-      valueToTest.metronomeMarks.length > 0 &&
-      "organizations" in valueToTest &&
-      Array.isArray(valueToTest.organizations) &&
-      "persons" in valueToTest &&
-      Array.isArray(valueToTest.persons) &&
-      "pieces" in valueToTest &&
-      Array.isArray(valueToTest.pieces) &&
-      "pieceVersions" in valueToTest &&
-      Array.isArray(valueToTest.pieceVersions) &&
-      "tempoIndications" in valueToTest &&
-      Array.isArray(valueToTest.tempoIndications)
-    )
-  ) {
+  if (!(
+    valueToTest &&
+    typeof valueToTest === "object" &&
+    "formInfo" in valueToTest &&
+    typeof valueToTest["formInfo"] === "object" &&
+    "mMSourceDescription" in valueToTest &&
+    typeof valueToTest["mMSourceDescription"] === "object" &&
+    "mMSourceContributions" in valueToTest &&
+    Array.isArray(valueToTest.mMSourceContributions) &&
+    valueToTest.mMSourceContributions.length > 0 &&
+    "mMSourceOnPieceVersions" in valueToTest &&
+    Array.isArray(valueToTest.mMSourceOnPieceVersions) &&
+    valueToTest.mMSourceOnPieceVersions.length > 0 &&
+    "metronomeMarks" in valueToTest &&
+    Array.isArray(valueToTest.metronomeMarks) &&
+    valueToTest.metronomeMarks.length > 0 &&
+    "organizations" in valueToTest &&
+    Array.isArray(valueToTest.organizations) &&
+    "persons" in valueToTest &&
+    Array.isArray(valueToTest.persons) &&
+    "pieces" in valueToTest &&
+    Array.isArray(valueToTest.pieces) &&
+    "pieceVersions" in valueToTest &&
+    Array.isArray(valueToTest.pieceVersions) &&
+    "tempoIndications" in valueToTest &&
+    Array.isArray(valueToTest.tempoIndications)
+  )) {
     throw new Error(
       `Value does not appear to be a PersistableFeedFormState: ${JSON.stringify(valueToTest)}`,
     );
@@ -390,20 +381,18 @@ type MetronomeMarkStateWithValue = MetronomeMarkState & { noMM: false };
 export function assertsIsMetronomeMarkWithValue(
   valueToTest: any,
 ): asserts valueToTest is MetronomeMarkStateWithValue {
-  if (
-    !(
-      valueToTest &&
-      typeof valueToTest === "object" &&
-      "sectionId" in valueToTest &&
-      typeof valueToTest["sectionId"] === "string" &&
-      "bpm" in valueToTest &&
-      typeof valueToTest["bpm"] === "number" &&
-      "beatUnit" in valueToTest &&
-      typeof valueToTest["beatUnit"] === "string" &&
-      "noMM" in valueToTest &&
-      valueToTest["noMM"] === false
-    )
-  ) {
+  if (!(
+    valueToTest &&
+    typeof valueToTest === "object" &&
+    "sectionId" in valueToTest &&
+    typeof valueToTest["sectionId"] === "string" &&
+    "bpm" in valueToTest &&
+    typeof valueToTest["bpm"] === "number" &&
+    "beatUnit" in valueToTest &&
+    typeof valueToTest["beatUnit"] === "string" &&
+    "noMM" in valueToTest &&
+    valueToTest["noMM"] === false
+  )) {
     throw new Error(
       `Value does not appear to be a MetronomeMarkState with noMM === false: ${JSON.stringify(valueToTest)}`,
     );
@@ -422,27 +411,25 @@ type PersistableContribution = Pick<
 export function assertsContributionHasPersonOrOrganization(
   valueToTest: any,
 ): asserts valueToTest is PersistableContribution {
-  if (
-    !(
-      (valueToTest &&
-        typeof valueToTest === "object" &&
-        "role" in valueToTest &&
-        typeof valueToTest["role"] === "string" &&
-        "personId" in valueToTest &&
-        typeof valueToTest["personId"] === "string" &&
-        (("organizationId" in valueToTest &&
-          valueToTest["organizationId"] == null) ||
-          !("organizationId" in valueToTest))) ||
-      (valueToTest &&
-        typeof valueToTest === "object" &&
-        "role" in valueToTest &&
-        typeof valueToTest["role"] === "string" &&
-        (("personId" in valueToTest && valueToTest["personId"] == null) ||
-          !("personId" in valueToTest)) &&
-        "organizationId" in valueToTest &&
-        typeof valueToTest["organizationId"] === "string")
-    )
-  ) {
+  if (!(
+    (valueToTest &&
+      typeof valueToTest === "object" &&
+      "role" in valueToTest &&
+      typeof valueToTest["role"] === "string" &&
+      "personId" in valueToTest &&
+      typeof valueToTest["personId"] === "string" &&
+      (("organizationId" in valueToTest &&
+        valueToTest["organizationId"] == null) ||
+        !("organizationId" in valueToTest))) ||
+    (valueToTest &&
+      typeof valueToTest === "object" &&
+      "role" in valueToTest &&
+      typeof valueToTest["role"] === "string" &&
+      (("personId" in valueToTest && valueToTest["personId"] == null) ||
+        !("personId" in valueToTest)) &&
+      "organizationId" in valueToTest &&
+      typeof valueToTest["organizationId"] === "string")
+  )) {
     throw new Error(
       `Value does not appear to be a PersistableContribution: ${JSON.stringify(valueToTest)}`,
     );

@@ -128,13 +128,20 @@ export function composeAuditEntries(
   for (const { entityType, entityId } of changedEntities.values()) {
     const resolvedId =
       entityId ??
-      baseline.mMSourceDescription?.id ??
-      working.mMSourceDescription?.id ??
-      "unknown_source";
-    if (resolvedId === "unknown_source") continue;
+      (entityType === "MM_SOURCE" ||
+      entityType === "MM_SOURCE_ON_PIECE_VERSION"
+        ? (baseline?.mMSourceDescription?.id ??
+          working?.mMSourceDescription?.id ??
+          "unknown_source")
+        : null);
+    if (!resolvedId || resolvedId === "unknown_source") continue;
 
     const before = findNodeInState(baseline, entityType, resolvedId);
     const after = findNodeInState(working, entityType, resolvedId);
+
+    if (before == null && after == null) {
+      continue;
+    }
 
     let operation: AuditOperation = "UPDATE";
     if (before == null && after != null) operation = "CREATE";

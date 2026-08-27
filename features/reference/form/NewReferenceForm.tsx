@@ -5,6 +5,7 @@ import getReferenceTypeLabel from "@/utils/getReferenceTypeLabel";
 import SimpleSelect from "@/ui/form/SimpleSelect";
 import { SimpleInput } from "@/ui/form/SimpleInput";
 import dynamic from "next/dynamic";
+import { getNewUuid } from "@/utils/getNewUuid";
 
 const DuplicatePlateNumberWarningModal = dynamic(
   () => import("@/ui/modal/DuplicatePlateNumberWarningModal"),
@@ -51,12 +52,13 @@ function NewReferenceForm({
   };
 
   const createNewReference = () => {
-    const data = {
+    const data: ReferenceInput = {
+      id: getNewUuid(),
       type: refTypeOptionList.find(
         (typeOption) => typeOption.value === refType,
-      ),
-      reference: refValue,
-    } as ReferenceInput;
+      )!,
+      reference: refValue!,
+    };
     onReferenceCreated(data);
     setError(ERROR_INIT);
   };
@@ -168,13 +170,13 @@ function NewReferenceForm({
   };
 
   return (
-    <div className="border-accent border-1 rounded-md px-6 pt-4 pb-6 my-3">
+    <div className="border-accent border rounded-md px-6 pt-4 pb-6 my-3">
       <h6 className="mb-2 text-lg font-normal text-accent">
         {`Add a reference`}
       </h6>
 
       <div className="flex items-end gap-3">
-        <div className="shrink-0 min-w-[230px]">
+        <div className="shrink-0 min-w-57.5">
           <SimpleSelect
             name={`type` as const}
             label={`Type`}

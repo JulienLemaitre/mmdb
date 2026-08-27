@@ -220,4 +220,68 @@ describe("auditCompose with FeedFormState", () => {
       );
     });
   });
+
+  describe("Reference audit entries", () => {
+    it("emits CREATE entry for REFERENCE when a reference is added with an id", () => {
+      const working = deepClone(baseline);
+      const newRef = {
+        id: "ref-uuid-1",
+        type: "PLATE_NUMBER" as const,
+        reference: "VN 1234",
+      };
+      working.mMSourceDescription!.references.push(newRef);
+
+      const entries = composeAuditEntries("r-1", baseline, working);
+      expect(entries).toHaveLength(1);
+
+      const refEntry = entries[0];
+      expect(refEntry.entityType).toBe("REFERENCE");
+      expect(refEntry.entityId).toBe("ref-uuid-1");
+      expect(refEntry.operation).toBe("CREATE");
+      expect(refEntry.before).toBeNull();
+      expect((refEntry.after as any).reference).toBe("VN 1234");
+      expect((refEntry.after as any).type).toBe("PLATE_NUMBER");
+    });
+
+    it("emits UPDATE entry for REFERENCE when a reference is modified", () => {
+      const working = deepClone(baseline);
+      const existingRefId = baseline.mMSourceDescription!.references[0].id;
+      working.mMSourceDescription!.references[0].reference = "https://updated.org/op10";
+
+      const entries = composeAuditEntries("r-1", baseline, working);
+      expect(entries).toHaveLength(1);
+
+      const refEntry = entries[0];
+      expect(refEntry.entityType).toBe("REFERENCE");
+      expect(refEntry.entityId).toBe(existingRefId);
+      expect(refEntry.operation).toBe("UPDATE");
+      expect((refEntry.before as any).reference).toBe(
+        baseline.mMSourceDescription!.references[0].reference,
+      );
+      expect((refEntry.after as any).reference).toBe("https://updated.org/op10");
+    });
+
+    it("emits DELETE entry for REFERENCE when a reference is removed", () => {
+      const working = deepClone(baseline);
+      const existingRefId = baseline.mMSourceDescription!.references[0].id;
+      working.mMSourceDescription!.references = [];
+
+      const entries = composeAuditEntries("r-1", baseline, working);
+      expect(entries).toHaveLength(1);
+
+      const refEntry = entries[0];
+      expect(refEntry.entityType).toBe("REFERENCE");
+      expect(refEntry.entityId).toBe(existingRefId);
+      expect(refEntry.operation).toBe("DELETE");
+      expect(refEntry.before).toBeTruthy();
+      expect(refEntry.after).toBeNull();
+    });
+
+    it("does not emit phantom UPDATE entry if a non-source change has no corresponding nodes", () => {
+      const working = deepClone(baseline);
+      // Supposing a change without matching node
+      const entries = composeAuditEntries("r-1", baseline, working);
+      expect(entries).toHaveLength(0);
+    });
+  });
 });
