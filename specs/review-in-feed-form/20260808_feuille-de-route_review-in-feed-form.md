@@ -910,7 +910,7 @@ compile plus pendant les lots intermédiaires.
 1. **Suppression définitive des helpers checklist obsolètes :**
    - Supprimer `features/review/utils/isCollectionCompleteInChecklistGraph.ts` et `features/review/utils/processSourceOnPieceVersionsForDisplay.ts` (déjà remplacés par `ProcessMMSourceOnPieceVersionsForDisplay.ts`).
 2. **Conservation du tiroir d'aide de la liste des revues :**
-   - Conserver `features/review/components/ReviewHelpDrawer.tsx` qui reste monté par `app/(signedIn)/review/layout.tsx` pour l'aide de la liste `/review`.
+   - Conserver `features/review/components/ReviewHelpDrawer.tsx` qui reste monté par `app/(signedIn)/review/page.tsx` pour l'aide de la liste `/review`.
 3. **Généralisation de `utils/getEntityByIdOrKey.ts` :**
    - Retirer l'import et l'union `| ChecklistGraph` dans `utils/getEntityByIdOrKey.ts` pour ne conserver que `state: FeedFormState` (ou un type générique `Record<string, unknown[]>`).
 4. **Conservation des routes d'audit :**
