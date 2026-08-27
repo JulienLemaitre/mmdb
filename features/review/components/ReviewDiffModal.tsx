@@ -4,122 +4,83 @@ import React, { useMemo } from "react";
 import { createPortal } from "react-dom";
 import { usePortal } from "@/hooks/usePortal";
 import { useFeedForm } from "@/context/feedFormContext";
+import { useFormSession } from "@/context/formSessionContext";
 import { FeedFormState } from "@/types/feedFormTypes";
-import {
-  ChangedField,
-  computeChangedFieldPaths,
-} from "@/features/review/reviewDiff";
+import { AuditLogItem } from "@/types/auditTypes";
+import { composeAuditEntries } from "@/features/review/utils/auditCompose";
+import AuditLogHeader from "@/features/audit/AuditLogHeader";
+import AuditLogContent from "@/features/audit/AuditLogContent";
 
 export type ReviewDiffModalProps = {
   isOpen: boolean;
   onClose: () => void;
   baseline: FeedFormState;
+  title?: string;
 };
 
 export default function ReviewDiffModal({
   isOpen,
   onClose,
   baseline,
+  title,
 }: Readonly<ReviewDiffModalProps>) {
   const portalContainer = usePortal();
+  const session = useFormSession();
   const { state } = useFeedForm();
 
-  const changedFields: ChangedField[] = useMemo(() => {
+  const reviewId =
+    session.mode === "review" ? session.review.reviewId : "current-review";
+
+  const diffItems: AuditLogItem[] = useMemo(() => {
     if (!isOpen || !baseline || !state) return [];
     try {
-      return computeChangedFieldPaths(baseline, state);
+      const entries = composeAuditEntries(reviewId, baseline, state);
+      const now = new Date().toISOString();
+      return entries.map((entry, index) => ({
+        id: `${entry.entityType}-${entry.entityId}-${entry.operation}-${index}`,
+        reviewId,
+        entityType: entry.entityType,
+        entityId: entry.entityId,
+        operation: entry.operation,
+        before: entry.before ?? null,
+        after: entry.after ?? null,
+        authorId: null,
+        createdAt: now,
+        comment: null,
+      }));
     } catch (e) {
-      console.error("[ReviewDiffModal] Error computing changed field paths:", e);
+      console.error("[ReviewDiffModal] Error composing audit entries:", e);
       return [];
     }
-  }, [isOpen, baseline, state]);
+  }, [isOpen, baseline, state, reviewId]);
 
   if (!isOpen || !portalContainer) return null;
 
+  const modalTitle =
+    title || state.mMSourceDescription?.title || "Review Modifications";
+
   return createPortal(
     <dialog open className="modal modal-open">
-      <div className="modal-box w-11/12 max-w-4xl max-h-[85vh] flex flex-col">
-        <div className="flex items-center justify-between pb-2 border-b border-base-200">
-          <div>
-            <h3 className="font-bold text-lg">Review Modifications</h3>
-            <p className="text-xs text-base-content/70">
-              Overview of changes made during this review compared to the
-              original baseline.
-            </p>
-          </div>
-          <span className="badge badge-outline">
-            {changedFields.length} changed field
-            {changedFields.length === 1 ? "" : "s"}
-          </span>
-        </div>
-
-        <div className="py-4 flex-1 overflow-y-auto">
-          {changedFields.length === 0 ? (
-            <div className="alert bg-base-200 text-base-content my-4 p-4 rounded-lg flex items-center gap-3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="stroke-info shrink-0 w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <div>
-                <div className="font-semibold">No modifications detected</div>
-                <div className="text-xs opacity-80">
-                  All fields currently match the original baseline. Any changes
-                  you make in the steps will appear here.
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="table table-zebra table-sm w-full">
-                <thead>
-                  <tr>
-                    <th className="w-1/4">Entity Type</th>
-                    <th className="w-1/2">Field Path</th>
-                    <th className="w-1/4">Entity ID</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {changedFields.map((field, idx) => (
-                    <tr
-                      key={`${field.entityType ?? "ENTITY"}-${field.fieldPath}-${field.entityId ?? idx}`}
-                    >
-                      <td>
-                        <span className="badge badge-sm badge-ghost font-mono">
-                          {field.entityType ?? "MM_SOURCE"}
-                        </span>
-                      </td>
-                      <td className="font-mono text-xs text-primary">
-                        {field.fieldPath}
-                      </td>
-                      <td className="font-mono text-xs text-base-content/60 truncate max-w-xs">
-                        {field.entityId ?? "-"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-
-        <div className="modal-action pt-2 border-t border-base-200">
-          <button
-            type="button"
-            className="btn btn-sm btn-primary"
-            onClick={onClose}
-          >
-            Close
-          </button>
-        </div>
+      <div className="modal-box w-11/12 max-w-5xl max-h-[85vh] flex flex-col overflow-y-auto">
+        <AuditLogHeader
+          title={modalTitle}
+          action={
+            <button
+              type="button"
+              className="btn btn-sm"
+              onClick={onClose}
+            >
+              Close
+            </button>
+          }
+        />
+        <AuditLogContent
+          items={diffItems}
+          nextCursor={null}
+          loading={false}
+          resetKey={reviewId}
+          emptyLabel="No modifications detected."
+        />
       </div>
       <form method="dialog" className="modal-backdrop">
         <button type="button" onClick={onClose}>

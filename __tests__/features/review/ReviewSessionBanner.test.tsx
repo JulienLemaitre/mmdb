@@ -109,7 +109,9 @@ describe("ReviewSessionBanner", () => {
     });
     fireEvent.click(viewChangesBtn);
 
-    expect(screen.getByText(/Review Modifications/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/No modifications detected/i),
+    ).toBeInTheDocument();
   });
 
   it("opens General Comment modal when clicking the button", () => {

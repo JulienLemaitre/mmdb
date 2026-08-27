@@ -153,6 +153,7 @@ export default function ReviewSessionBanner({
         isOpen={isDiffModalOpen}
         onClose={() => setIsDiffModalOpen(false)}
         baseline={baseline}
+        title={title}
       />
 
       <OverallCommentModal
