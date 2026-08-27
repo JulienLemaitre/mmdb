@@ -76,15 +76,31 @@ Ce document sert de mémoire persistante pour l'implémentation de la feuille de
   - `npx eslint .` : 0 erreur sur l'ensemble du dépôt.
   - `npm run test:ci` : 46 suites de tests passées, 305 tests passés (0 échec).
   - `npx tsc --noEmit` : 0 erreur de typage TypeScript.
-  - Validation complète des 4 scénarios de recette :
+  - Validation automatisée des 4 scénarios de recette :
     - Scénario 5 : Intégrité des IDs et tolérance du diff (pas d'exception `missing entityId`).
     - Scénario 8 : Cycle de vie de la modale de succès en révision sans flash d'erreur à la fermeture.
     - Scénario 9 : Préservation des IDs source et audit ciblé `UPDATE` sans altération des marques métronomiques.
     - Scénario 16 : Purge immédiate des brouillons de saisie `/feed` après création réussie.
-- **Statut R5 :** Terminé / Validé.
+- **Statut R5 :** Automatisation terminée / recette manuelle partiellement validée (3 PASS / 1 FAIL).
 
 ---
 
+## Rejouage manuel des scénarios corrigés — 2026-08-26
+
+Les scénarios 5, 8, 9 et 16 ont été rejoués dans un navigateur Chrome réel et visible, sur la base
+de test configurée par `.env.test`.
+
+| Scénario | Résultat | Vérification |
+|---:|---|---|
+| 5 | PASS | Revue `5829a24d-a3fc-47fe-8a0c-ee04bff03c26` : la modale « Review Modifications » affiche 7 champs modifiés, dont les entrées `CONTRIBUTION` avec leurs identifiants ; aucune erreur `missing entityId` ne survient. |
+| 8 | PASS | La même revue est approuvée. Chrome affiche uniquement la modale `Success` (« The review has been approved and submitted successfully. »), sans flash d'erreur, puis redirige vers `/review`. |
+| 9 | FAIL | Revue `56b80e1c-c8bd-49ea-922f-d99633ea4fc4`, source `8e96ebca-ae11-43f6-84c8-a9d546cbe945` : `Review.state` et `MMSource.reviewState` sont `APPROVED`, `sectionCount = 1`, mais les 3 audits contiennent 1 `UPDATE` `MM_SOURCE` ainsi qu'un `DELETE` et un `CREATE` `METRONOME_MARK` pour une modification limitée au titre. |
+| 16 | PASS | La création `/feed` réussit. Source créée : `a103dbd3-c822-469a-b1b4-125593417669`; pièce : `8ab4fcce-12a8-4f13-b5cf-c0147ed54ffa`; `sectionCount = 1`. Après succès, Chrome revient à l'écran initial et `feedForm` ne contient plus que l'enveloppe d'état initial vide (aucune donnée saisie résiduelle). |
+
+**Bilan du rejouage : 3 PASS, 1 FAIL (scénario 9).** Le scénario 9 reste à corriger malgré la
+validation automatisée de R2 ; l'anomalie observée concerne la conservation de l'identifiant des
+marques métronomiques lors de l'hydratation ou de la soumission manuelle.
+
 ## Bilan Global
 
-Tous les lots (R1 à R5) de la feuille de route `specs/review-in-feed-form/20260826_recette-fix_feuille-de-route.md` sont implémentés et validés avec succès. La suite globale de tests automatisés et le linter s'exécutent proprement sans aucune erreur.
+Tous les lots (R1 à R5) de la feuille de route `specs/review-in-feed-form/20260826_recette-fix_feuille-de-route.md` sont implémentés. La suite globale de tests automatisés et le linter s'exécutent proprement ; le rejouage manuel confirme les scénarios 5, 8 et 16, mais le scénario 9 reste en échec.
