@@ -140,7 +140,7 @@ export default function MMSourceSummary({
             <div className="flex-1">
               <div className="mb-1">
                 <span className="text-lg font-semibold text-info">
-                  {collectionName || pieceTitles}
+                  {mMSource.title || collectionName || pieceTitles}
                 </span>
               </div>
               <div className="flex items-center gap-2 mb-1">
@@ -148,11 +148,9 @@ export default function MMSourceSummary({
                   {displaySourceYear(mMSource)} -{" "}
                   {getSourceTypeLabel(mMSource.type)}
                 </span>
-                {mMSource.title && (
-                  <span className="text-info font-medium">
-                    | {mMSource.title}
-                  </span>
-                )}
+                <span className="text-info font-medium">
+                  | {collectionName || pieceTitles}
+                </span>
               </div>
 
               <div className="text-xs text-base-content/70 flex flex-wrap gap-x-4 gap-y-1 mb-2">
