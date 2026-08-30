@@ -259,7 +259,7 @@ describe("getReviewBaseline", () => {
         id: "col-1",
         title: "Complete Sonatas",
         composerId: "person-composer",
-        _count: { pieces: 3 },
+        _count: { pieces: 1 },
       },
     ]);
 
@@ -340,7 +340,7 @@ describe("getReviewBaseline", () => {
         id: "col-1",
         title: "Complete Sonatas",
         composerId: "person-composer",
-        pieceCount: 3,
+        pieceCount: 1,
       },
     ]);
 
@@ -469,6 +469,285 @@ describe("getReviewBaseline", () => {
         noMM: true,
       },
     ]);
+  });
+
+  describe("collection filtering", () => {
+    const defaultReview = {
+      id: "rev-1",
+      creatorId: "user-1",
+      state: REVIEW_STATE.IN_REVIEW,
+      mMSourceId: "src-1",
+    };
+
+    function createMockPieceVersion(params: {
+      pvId: string;
+      pieceId: string;
+      pieceTitle: string;
+      composerId: string;
+      collectionId: string | null;
+      collectionRank: number | null;
+    }) {
+      return {
+        id: `join-${params.pvId}`,
+        rank: 1,
+        pieceVersionId: params.pvId,
+        pieceVersion: {
+          id: params.pvId,
+          category: PIECE_CATEGORY.KEYBOARD,
+          piece: {
+            id: params.pieceId,
+            title: params.pieceTitle,
+            nickname: null,
+            yearOfComposition: null,
+            composerId: params.composerId,
+            collectionId: params.collectionId,
+            collectionRank: params.collectionRank,
+          },
+          movements: [],
+        },
+      };
+    }
+
+    function createMockSourceWithPieceVersions(
+      pieceVersions: ReturnType<typeof createMockPieceVersion>[],
+    ) {
+      return {
+        id: "src-1",
+        title: "Source with collections",
+        type: SOURCE_TYPE.EDITION,
+        link: null,
+        permalink: null,
+        year: 1800,
+        isYearEstimated: false,
+        comment: null,
+        creator: null,
+        references: [],
+        contributions: [],
+        pieceVersions: pieceVersions.map((pv, idx) => ({
+          ...pv,
+          rank: idx + 1,
+        })),
+        metronomeMarks: [],
+      };
+    }
+
+    it("includes a collection in baseline when all of its pieces are present in the MMSource", async () => {
+      setSession({ id: "user-1", role: "REVIEWER" });
+      mockReviewFindUnique.mockResolvedValue(defaultReview);
+      mockReviewedEntityFindMany.mockResolvedValue([]);
+      mockPersonFindMany.mockResolvedValue([]);
+      mockOrganizationFindMany.mockResolvedValue([]);
+
+      const mockSource = createMockSourceWithPieceVersions([
+        createMockPieceVersion({
+          pvId: "pv-1",
+          pieceId: "piece-1",
+          pieceTitle: "Sonata 1",
+          composerId: "c-1",
+          collectionId: "col-1",
+          collectionRank: 1,
+        }),
+        createMockPieceVersion({
+          pvId: "pv-2",
+          pieceId: "piece-2",
+          pieceTitle: "Sonata 2",
+          composerId: "c-1",
+          collectionId: "col-1",
+          collectionRank: 2,
+        }),
+      ]);
+      mockMMSourceFindUnique.mockResolvedValue(mockSource);
+
+      mockCollectionFindMany.mockResolvedValue([
+        {
+          id: "col-1",
+          title: "Two Sonatas Op. 1",
+          composerId: "c-1",
+          _count: { pieces: 2 },
+        },
+      ]);
+
+      const result = await getReviewBaseline("rev-1");
+
+      expect(result.baseline.collections).toEqual([
+        {
+          id: "col-1",
+          title: "Two Sonatas Op. 1",
+          composerId: "c-1",
+          pieceCount: 2,
+        },
+      ]);
+      expect(result.baseline.pieces).toHaveLength(2);
+      expect(result.baseline.pieces?.map((p) => p.id)).toEqual([
+        "piece-1",
+        "piece-2",
+      ]);
+    });
+
+    it("excludes a collection from baseline when only a subset of its pieces are present in the MMSource", async () => {
+      setSession({ id: "user-1", role: "REVIEWER" });
+      mockReviewFindUnique.mockResolvedValue(defaultReview);
+      mockReviewedEntityFindMany.mockResolvedValue([]);
+      mockPersonFindMany.mockResolvedValue([]);
+      mockOrganizationFindMany.mockResolvedValue([]);
+
+      const mockSource = createMockSourceWithPieceVersions([
+        createMockPieceVersion({
+          pvId: "pv-1",
+          pieceId: "piece-1",
+          pieceTitle: "Sonata 1",
+          composerId: "c-1",
+          collectionId: "col-1",
+          collectionRank: 1,
+        }),
+      ]);
+      mockMMSourceFindUnique.mockResolvedValue(mockSource);
+
+      // Collection has 3 pieces in total, but only 1 piece is in this MMSource
+      mockCollectionFindMany.mockResolvedValue([
+        {
+          id: "col-1",
+          title: "Three Sonatas Op. 2",
+          composerId: "c-1",
+          _count: { pieces: 3 },
+        },
+      ]);
+
+      const result = await getReviewBaseline("rev-1");
+
+      expect(result.baseline.collections).toEqual([]);
+      // The piece itself is still in baseline.pieces with its collectionId
+      expect(result.baseline.pieces).toHaveLength(1);
+      expect(result.baseline.pieces![0]).toEqual({
+        id: "piece-1",
+        title: "Sonata 1",
+        nickname: null,
+        composerId: "c-1",
+        yearOfComposition: null,
+        collectionId: "col-1",
+        collectionRank: 1,
+      });
+    });
+
+    it("filters collections independently when multiple collections are present in the MMSource", async () => {
+      setSession({ id: "user-1", role: "REVIEWER" });
+      mockReviewFindUnique.mockResolvedValue(defaultReview);
+      mockReviewedEntityFindMany.mockResolvedValue([]);
+      mockPersonFindMany.mockResolvedValue([]);
+      mockOrganizationFindMany.mockResolvedValue([]);
+
+      const mockSource = createMockSourceWithPieceVersions([
+        // Complete collection: col-complete (2/2 pieces present)
+        createMockPieceVersion({
+          pvId: "pv-c1",
+          pieceId: "p-c1",
+          pieceTitle: "Piece C1",
+          composerId: "c-1",
+          collectionId: "col-complete",
+          collectionRank: 1,
+        }),
+        createMockPieceVersion({
+          pvId: "pv-c2",
+          pieceId: "p-c2",
+          pieceTitle: "Piece C2",
+          composerId: "c-1",
+          collectionId: "col-complete",
+          collectionRank: 2,
+        }),
+        // Partial collection: col-partial (1/4 pieces present)
+        createMockPieceVersion({
+          pvId: "pv-p1",
+          pieceId: "p-p1",
+          pieceTitle: "Piece P1",
+          composerId: "c-1",
+          collectionId: "col-partial",
+          collectionRank: 1,
+        }),
+        // Standalone piece (no collection)
+        createMockPieceVersion({
+          pvId: "pv-s1",
+          pieceId: "p-s1",
+          pieceTitle: "Standalone Piece",
+          composerId: "c-1",
+          collectionId: null,
+          collectionRank: null,
+        }),
+      ]);
+      mockMMSourceFindUnique.mockResolvedValue(mockSource);
+
+      mockCollectionFindMany.mockResolvedValue([
+        {
+          id: "col-complete",
+          title: "Complete Set",
+          composerId: "c-1",
+          _count: { pieces: 2 },
+        },
+        {
+          id: "col-partial",
+          title: "Partial Set",
+          composerId: "c-1",
+          _count: { pieces: 4 },
+        },
+      ]);
+
+      const result = await getReviewBaseline("rev-1");
+
+      expect(result.baseline.collections).toEqual([
+        {
+          id: "col-complete",
+          title: "Complete Set",
+          composerId: "c-1",
+          pieceCount: 2,
+        },
+      ]);
+      expect(result.baseline.pieces).toHaveLength(4);
+    });
+
+    it("counts distinct pieces and excludes collection when multiple piece versions belong to the same piece", async () => {
+      setSession({ id: "user-1", role: "REVIEWER" });
+      mockReviewFindUnique.mockResolvedValue(defaultReview);
+      mockReviewedEntityFindMany.mockResolvedValue([]);
+      mockPersonFindMany.mockResolvedValue([]);
+      mockOrganizationFindMany.mockResolvedValue([]);
+
+      // Two different piece versions in the source, but both belong to the SAME piece piece-1
+      const mockSource = createMockSourceWithPieceVersions([
+        createMockPieceVersion({
+          pvId: "pv-1a",
+          pieceId: "piece-1",
+          pieceTitle: "Sonata 1 (Original)",
+          composerId: "c-1",
+          collectionId: "col-1",
+          collectionRank: 1,
+        }),
+        createMockPieceVersion({
+          pvId: "pv-1b",
+          pieceId: "piece-1",
+          pieceTitle: "Sonata 1 (Facsimile)",
+          composerId: "c-1",
+          collectionId: "col-1",
+          collectionRank: 1,
+        }),
+      ]);
+      mockMMSourceFindUnique.mockResolvedValue(mockSource);
+
+      // Collection has 2 pieces in DB (piece-1 and piece-2)
+      mockCollectionFindMany.mockResolvedValue([
+        {
+          id: "col-1",
+          title: "Two Sonatas Op. 1",
+          composerId: "c-1",
+          _count: { pieces: 2 },
+        },
+      ]);
+
+      const result = await getReviewBaseline("rev-1");
+
+      // Even though there are 2 piece versions in the source, only 1 distinct piece is present, so collection is excluded
+      expect(result.baseline.collections).toEqual([]);
+      expect(result.baseline.pieces).toHaveLength(1);
+      expect(result.baseline.pieceVersions).toHaveLength(2);
+    });
   });
 });
 
