@@ -483,12 +483,22 @@ export async function getReviewBaseline(
       id: o.id,
       name: o.name,
     })),
-    collections: collections.map((c) => ({
-      id: c.id,
-      title: c.title,
-      composerId: c.composerId,
-      pieceCount: c._count.pieces,
-    })),
+    collections: collections
+      .filter((c) => {
+        // We keep only a collection if all of its pieces are present in the MM Source.
+        const collectionPieceCount = c._count.pieces;
+        const collectionPresentPieceCount = pieces.filter(
+          (p) => p.collectionId === c.id,
+        ).length;
+
+        return collectionPresentPieceCount === collectionPieceCount;
+      })
+      .map((c) => ({
+        id: c.id,
+        title: c.title,
+        composerId: c.composerId,
+        pieceCount: c._count.pieces,
+      })),
     persons: persons.map((p) => ({
       id: p.id,
       firstName: p.firstName,
