@@ -8,6 +8,7 @@ import ArrowLeftIcon from "@/ui/svg/ArrowLeftIcon";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
 
 const PieceSchema = z.object({
+  id: z.string().optional(),
   title: z.string().min(2),
   nickname: z.string().optional().nullable(),
   yearOfComposition: zodYearOptional,
@@ -46,6 +47,7 @@ export default function PieceEditForm({
         onSubmit={handleSubmit(onSubmit)}
         onKeyDown={preventEnterKeySubmission}
       >
+        {piece?.id && <input type="hidden" {...register("id" as any)} />}
         <FormInput name="title" isRequired {...{ register, control, errors }} />
         <FormInput name="nickname" {...{ register, control, errors }} />
         <FormInput

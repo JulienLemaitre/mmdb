@@ -16,10 +16,17 @@ export const SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY =
 export const COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY =
   "collectionPieceVersionForm";
 
+export const REVIEW_LOCAL_STORAGE_PREFIX = "review";
+export const GET_REVIEW_STORAGE_KEYS = (reviewId: string) => ({
+  session: `review:${reviewId}:session`,
+  feedForm: `review:${reviewId}:feedForm`,
+  singlePieceVersionForm: `review:${reviewId}:singlePieceVersionForm`,
+  collectionPieceVersionForm: `review:${reviewId}:collectionPieceVersionForm`,
+});
+
 // Feed Form
 
 export const FEED_FORM_LOCAL_STORAGE_KEY = "feedForm";
-export const FEED_FORM_BOOT_KEY = "feedForm:boot";
 // @ts-ignore
 export const FEED_FORM_TEST_STATE: FeedFormState = getFeedFormTestState();
 
@@ -82,11 +89,3 @@ export const userRoleOrderedList = [
   userRole.REVIEWER,
   userRole.ADMIN,
 ] as const;
-
-export const feedFormFromWorkingCopyError = {
-  COLLECTION_FIRST_PIECE_NOT_FOUND_IN_SOURCE:
-    "COLLECTION_FIRST_PIECE_NOT_FOUND_IN_SOURCE",
-  COLLECTION_FIRST_PIECE_SOURCE_RANK_NOT_FOUND:
-    "COLLECTION_FIRST_PIECE_SOURCE_RANK_NOT_FOUND",
-  CLICKED_PIECE_SOURCE_RANK_NOT_FOUND: "CLICKED_PIECE_SOURCE_RANK_NOT_FOUND",
-} as const;

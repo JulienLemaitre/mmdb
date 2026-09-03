@@ -1,26 +1,4 @@
-import {
-  CollectionState,
-  ContributionState,
-  MetronomeMarkState,
-  MMSourceDescriptionState,
-  OrganizationState,
-  PersonState,
-  PieceState,
-  PieceVersionState,
-  TempoIndicationState,
-} from "@/types/formTypes";
-
-export type SourceOnPieceVersion = {
-  joinId: string;
-  mMSourceId: string;
-  pieceVersionId: string;
-  rank: number;
-  pieceId: string;
-  collectionId?: string;
-  collectionRank?: number;
-};
-
-export type ChecklistEntityType =
+export type ReviewEntityType =
   | "MM_SOURCE"
   | "MM_SOURCE_ON_PIECE_VERSION"
   | "COLLECTION"
@@ -35,110 +13,25 @@ export type ChecklistEntityType =
   | "PERSON"
   | "ORGANIZATION";
 
-export type ChecklistGraph = {
-  // Singleton source node for this review context
-  source: MMSourceDescriptionState & {
-    id: string;
-    enteredBy: { id: string; name: string | null; email: string | null } | null;
-  };
-  // Arrays of nodes in scope
-  collections?: (CollectionState & { pieceCount: number })[];
-  pieces: PieceState[];
-  pieceVersions: PieceVersionState[];
-  tempoIndications?: TempoIndicationState[];
-  metronomeMarks: MetronomeMarkState[];
-  contributions: ContributionState[];
-  persons?: PersonState[];
-  organizations?: OrganizationState[];
-  // Ordering join rows for the source contents (MMSourcesOnPieceVersions)
-  sourceOnPieceVersions: SourceOnPieceVersion[];
-};
-
-export type RequiredPredicateCtx = {
-  graph: ChecklistGraph;
-  entityType: ChecklistEntityType;
-  entityId?: string | null;
-  fieldRelativePath: string;
-};
-
-export type ChecklistField = {
-  // Field path relative to the entity object used in your working copy payload.
-  // Use simple dot paths for scalar fields.
+export type ReviewDiffField = {
   path: string;
-  // Human-friendly label to show next to the checkbox in the UI.
-  label: string;
-  // Optional helper for validation or UI rules (e.g., XOR on Contribution.personId/organizationId)
-  meta?: {
-    required?: boolean | ((ctx: RequiredPredicateCtx) => boolean); // default true; predicate can inspect contextual graph
-    notes?: string;
-  };
 };
 
-export type ChecklistEntitySchema = {
-  entity: ChecklistEntityType;
-  // If true, omit from the checklist when a ReviewedEntity flag exists for this entity row.
+export type ReviewDiffEntitySchema = {
+  entity: ReviewEntityType;
   doNotReviewTwice?: boolean;
-  // The fields that must be checked for this entity.
-  fields: ChecklistField[];
+  fields: ReviewDiffField[];
 };
 
-export type ReviewChecklistSchema = Record<
-  ChecklistEntityType,
-  ChecklistEntitySchema
+export type ReviewDiffFieldsSchema = Record<
+  ReviewEntityType,
+  ReviewDiffEntitySchema
 >;
 
-export type GloballyReviewedEntitySets = {
-  personIds?: Set<string>;
-  organizationIds?: Set<string>;
-  collectionIds?: Set<string>;
-  pieceIds?: Set<string>;
-  pieceVersionIds?: Set<string>;
-};
-
-export type ExpandOptions = {
-  globallyReviewed?: GloballyReviewedEntitySets;
-};
-
-export type NodeLike = {
-  id: string;
-  [key: string]: unknown;
-};
-
-export type RequiredChecklistItem = {
-  entityType: ChecklistEntityType;
-  entityId?: string | null;
+export type ChangedField = {
+  entityType: ReviewEntityType;
+  entityId: string | null;
   fieldPath: string;
-  field: ChecklistField | SourceOnPieceVersion;
-  label: string;
-  value: any;
-  lineage: {
-    collectionId?: string;
-    pieceId?: string;
-    pieceVersionId?: string;
-    movementId?: string;
-    sectionId?: string;
-  };
-};
-
-export type GloballyReviewedEntityArrays = {
-  personIds: string[];
-  organizationIds: string[];
-  collectionIds: string[];
-  pieceIds: string[];
-  pieceVersionIds: string[];
-};
-
-// API payload shape from /api/review/[reviewId]/overview
-export type ApiOverview = {
-  reviewId: string;
-  graph: ChecklistGraph; // ChecklistGraph-like
-  globallyReviewed: GloballyReviewedEntityArrays;
-  sourceOnPieceVersions: Array<SourceOnPieceVersion>;
-  progress: {
-    source: { required: number; checked: number };
-    perCollection: Record<string, { required: number; checked: number }>;
-    perPiece: Record<string, { required: number; checked: number }>;
-  };
 };
 
 // Audit
@@ -176,12 +69,14 @@ export type SuccessSumary = {
   entitiesTouched: Record<string, number>;
   changedFieldPathsSample: string[];
 };
+
 export type ReviewSubmitSuccess = {
   ok: true;
   summary: SuccessSumary;
 };
+
 export type ReviewSubmitError = {
   error: string;
-  missing?: RequiredChecklistItem[];
+  missing?: any[];
   missingCount?: number;
 };

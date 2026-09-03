@@ -14,8 +14,10 @@ export const URL_API_GETMANY_PIECEVERSIONS = "/api/pieceVersion/getMany";
 export const URL_API_FEEDFORM_SUBMIT = "/api/feedForm";
 export const URL_API_REVIEW_START = "/api/review/start";
 export const URL_API_TO_REVIEW = "/api/mMSource/toReview";
-export const GET_URL_API_REVIEW_OVERVIEW = (reviewId: string) =>
-  `/api/review/${reviewId}/overview` as const;
+export const GET_URL_API_REVIEW_SUBMIT = (reviewId: string) =>
+  `/api/review/${reviewId}/submit` as const;
+export const GET_URL_API_REVIEW_ABORT = (reviewId: string) =>
+  `/api/review/${reviewId}/abort` as const;
 
 // FRONT routes
 
@@ -24,5 +26,5 @@ export const URL_EXPLORE = "/explore";
 export const URL_FEED = "/feed";
 export const URL_REVIEW_LIST = "/review";
 export const URL_ADMIN = "/admin";
-export const GET_URL_REVIEW_CHECKLIST = (reviewId: string) =>
-  `/review/${reviewId}/checklist` as const;
+export const GET_URL_REVIEW = (reviewId: string) =>
+  `/review/${reviewId}` as const;

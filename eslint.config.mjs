@@ -1,7 +1,6 @@
 import js from "@eslint/js";
 import nextConfig from "eslint-config-next";
-import tseslint from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
+import tseslint from "typescript-eslint";
 import testingLibrary from "eslint-plugin-testing-library";
 
 /**
@@ -17,11 +16,31 @@ import testingLibrary from "eslint-plugin-testing-library";
  */
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
+  // Global ignores
+  {
+    ignores: [
+      ".next/**",
+      "node_modules/**",
+      "prisma/client/**",
+      "prisma/output/**",
+      "__httprequest__/**",
+      "**/*.output.txt",
+      "**/*.md"
+    ],
+  },
+
   // Base JS recommended rules
   js.configs.recommended,
 
   // Next.js + React rules (flat config from eslint-config-next@16)
   ...nextConfig,
+
+  // Rule overrides for Next.js / React
+  {
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
 
   // Global language options and common globals
   {
@@ -46,7 +65,7 @@ export default [
   {
     files: ["**/*.ts", "**/*.tsx"],
     languageOptions: {
-      parser: tsParser,
+      parser: tseslint.parser,
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
@@ -57,7 +76,7 @@ export default [
       },
     },
     plugins: {
-      "@typescript-eslint": tseslint,
+      "@typescript-eslint": tseslint.plugin,
     },
     rules: {
       // Disable the base rule for TS files
@@ -98,6 +117,6 @@ export default [
   // Testing Library rules for React tests (flat config from the plugin)
   {
     files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
-    ...testingLibrary.configs.react,
+    ...testingLibrary.configs["flat/react"],
   },
 ];

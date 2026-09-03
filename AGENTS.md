@@ -115,6 +115,7 @@ There are many places where the MM Source data is displayed:
 - `features/feed/multiStepMMSourceForm/stepForms/FeedSummary.tsx`
 - `features/movement/ui/MovementOverview.tsx`
 - `features/section/ui/SectionOverview.tsx`
+- `features/review/reviewDiffFieldsSchema.ts` (review diff & audit field declarations)
 
 ### state ⇄ DB conversion
 
@@ -131,21 +132,21 @@ and its metronome marks in a transaction.
 
 ### Review process
 
-Reviewers (`REVIEWER`/`ADMIN`) validate submitted MM Sources field by field.
+Reviewers (`REVIEWER`/`ADMIN`) validate and edit submitted MM Sources directly within the feed form interface at `/review/[reviewId]`.
 
 - `MMSource.reviewState` (`PENDING` → `IN_REVIEW` → `APPROVED`/`ABORTED`) acts as a lock; `Review`,
   `ReviewedEntity` (entities validated once, never re-reviewed: `doNotReviewTwice`) and `AuditLog`
   (before/after JSON per field change) record the outcome.
-- `features/review/reviewChecklistSchema.ts` declares, per entity type, which fields must be checked.
-  `reviewAdapters.ts` builds the `ChecklistGraph` from the DB overview, `expandRequiredChecklistItems.ts`
-  expands it into concrete rows, `reviewProgress.ts` computes completion, `reviewDiff.ts` diffs the working
-  copy against the original to find changed field paths, `auditCompose.ts` turns those into `AuditLog` rows.
-- The reviewer edits by **round-tripping through the feed form**: `reviewEditBridge.ts` converts the review
-  working copy into a `FeedFormState` boot payload (localStorage key `feedForm:boot`, consumed by
-  `FeedFormProvider`), and `rebuildWorkingCopyFromFeedForm` converts it back on return. Any change to the feed
-  form state shape must be mirrored here.
-- Submission (`app/api/review/[reviewId]/submit/route.ts`) recomputes the diff **server-side** — the client
-  payload is not trusted.
+- **Concurrency & single-active review constraints**: at most one review can be active per MM Source (`review_unique_in_review_per_source`) and at most one active review per reviewer (`review_unique_in_review_per_reviewer`), both enforced via partial unique indexes in PostgreSQL.
+- **Server layout & baseline loading**: `app/(signedIn)/review/[reviewId]/layout.tsx` validates session ownership (`requireOwner: true`) and loads the baseline via `getReviewBaseline(reviewId)` as a `FeedFormState`.
+- **Form session & storage keys**: review runs in `FormSessionProvider` with `mode = "review"`. Local storage keys are scoped per review: `GET_REVIEW_STORAGE_KEYS(reviewId)` (`review:<reviewId>:session`, `review:<reviewId>:feedForm`, `review:<reviewId>:singlePieceVersionForm`, `review:<reviewId>:collectionPieceVersionForm`). If session metadata diverges or storage invalidates, drafts are purged (`purgeReviewLocalDrafts`) and a warning toast is shown.
+- **UI & shell**: `FeedFormShell` embeds `ReviewSessionBanner` (overall comment modal, live diff modal via `computeChangedFieldPaths(baseline, state)`, and abort review button). Step forms `Intro` and `FeedSummary` adapt polymorphically to review mode.
+- **Diff & audit schema**: `features/review/reviewDiffFieldsSchema.ts` declares field paths and `doNotReviewTwice` metadata for diff and audit. `features/review/reviewDiff.ts` diffs `FeedFormState` trees.
+- **Submission pipeline**: `POST /api/review/[reviewId]/submit` executes server-side validation and a 4-phase transaction (`db.$transaction`):
+  1. Extends baseline with existing unlinked entities (`extendBaselineByExistence`) and normalizes state (`normalizeFeedFormStateForPersistence`, stripping `noMM: true` and UI flags).
+  2. Forks modified shared `PieceVersion`s (`forkModifiedSharedPieceVersions`) to protect original versions referenced by other sources.
+  3. Recomputes diff and audit entries (`composeAuditEntries` excluding protected entity deletions) and derived source data (`computeMMSourceDerivedData`).
+  4. Applies deletions (phase 1), reference data & musical tree updates with 2-phase rank collision prevention (`applyRankUpdatesInTwoPhases`) (phase 2), source & metronome marks upsert (phase 3), and audit log creation / `ReviewedEntity` tracking / `Review` & `MMSource` approval (phase 4).
 
 ### Auth & authorization
 
@@ -162,10 +163,12 @@ next-auth (credentials + JWT) configured in `auth/options.ts`. Roles are ordered
 
 ## Conventions
 
+- **Language**: all code and test files (including variable/type names, comments, docstrings, test suites and descriptions, log/error messages, and UI copy) must be written in **English**. French is reserved solely for conversational exchanges with AI and specification/roadmap documents in `specs/`.
 - **Types are derived from Prisma**, not hand-written: `Prisma.XGetPayload<...>`, `satisfies Prisma.XSelect`
   (see `types/prismaSelections.ts`, `types/formTypes.ts`). Add to `types/` only what the client actually needs.
 - Naming: PascalCase types/enums/components, camelCase functions/variables/files, UPPER_CASE constants,
   camelCase singular directories for entity folders.
+- use `getNewUuid` from `@/utils/getNewUuid` to generate new UUIDs. DO NOT import from `uuid` package directly.
 - **Log/error messages are prefixed with the source in brackets**: `` `[feedFormReducer] action :` ``,
   `"[review start] Unauthorized"`. Keep this — triage depends on it.
 - Use `debug` from `utils/debugLogger.ts` for development logging (no-ops in production); `prodLog` only when
@@ -177,3 +180,13 @@ next-auth (credentials + JWT) configured in `auth/options.ts`. Roles are ordered
 - Jest 30 removed `toThrowError` — use `toThrow`.
 - Prefer targeted edits over rewriting whole files; ask before a full rewrite (`.aiassistant/rules/mmdb.md`).
 - `git add` newly created files — the generated Prisma client and migrations in particular.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

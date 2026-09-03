@@ -218,8 +218,18 @@ export function singlePieceVersionFormReducerCore(
   throw new Error(`Unhandled action type: ${action.type}`);
 }
 
-export const singlePieceVersionFormReducer = withLocalStorage(
-  singlePieceVersionFormReducerCore,
-  SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-  SINGLE_PIECE_VERSION_FORM_INITIAL_STATE,
-);
+export function createSinglePieceVersionFormReducer(
+  storageKey: string = SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+  initialState: SinglePieceVersionFormState = SINGLE_PIECE_VERSION_FORM_INITIAL_STATE,
+  options?: { hydrationStrategy?: "merge" | "replace" },
+) {
+  return withLocalStorage(
+    singlePieceVersionFormReducerCore,
+    storageKey,
+    initialState,
+    options,
+  );
+}
+
+export const singlePieceVersionFormReducer =
+  createSinglePieceVersionFormReducer();

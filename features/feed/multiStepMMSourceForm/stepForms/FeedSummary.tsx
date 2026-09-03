@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { initFeedForm, useFeedForm } from "@/context/feedFormContext";
-import { URL_API_FEEDFORM_SUBMIT } from "@/utils/routes";
+import { useFormSession } from "@/context/formSessionContext";
+import { useRouter } from "next/navigation";
+import {
+  URL_API_FEEDFORM_SUBMIT,
+  GET_URL_API_REVIEW_SUBMIT,
+  URL_REVIEW_LIST,
+} from "@/utils/routes";
 import { fetchAPI } from "@/utils/fetchAPI";
 import { useSession } from "next-auth/react";
 import computeMMSourceToPersistFromState from "@/utils/computeMMSourceToPersistFromState";
@@ -9,7 +15,10 @@ import {
   FEED_FORM_LOCAL_STORAGE_KEY,
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
-import { localStorageRemoveItems } from "@/utils/localStorage";
+import {
+  localStorageRemoveItems,
+  purgeReviewLocalDrafts,
+} from "@/utils/localStorage";
 import dynamic from "next/dynamic";
 import getKeyLabel from "@/utils/getKeyLabel";
 import formatToPhraseCase from "@/utils/formatToPhraseCase";
@@ -19,19 +28,44 @@ import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 import getRoleLabel from "@/utils/getRoleLabel";
 import { SectionDetail } from "@/features/section/ui/SectionDetail";
 import { displaySourceYear } from "@/utils/displaySourceYear";
+import { usePortal } from "@/hooks/usePortal";
+import { createPortal } from "react-dom";
 
 const SAVE_INFO_MODAL_ID = "save-info-modal";
 const InfoModal = dynamic(() => import("@/ui/modal/InfoModal"), {
   ssr: false,
 });
 
-function FeedSummary() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSaveSuccess, setIsSaveSuccess] = useState<boolean>();
-  const { dispatch, state } = useFeedForm();
+type SubmitStatus = "idle" | "submitting" | "success" | "error";
+
+export default function FeedSummary() {
+  const router = useRouter();
+  const portalContainer = usePortal();
+  const formSession = useFormSession();
+  const isReviewMode = formSession.mode === "review";
+
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+
+  const isSubmitting = submitStatus === "submitting";
+
+  const { dispatch, state, lastCompletedStepRank } = useFeedForm();
   const { data: session } = useSession();
 
+  const isAllStepsComplete =
+    typeof lastCompletedStepRank === "number" && lastCompletedStepRank >= 4;
+
   const mMSourceToPersist = computeMMSourceToPersistFromState(state);
+
+  const onReset = () => {
+    localStorageRemoveItems([
+      SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+      COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+      FEED_FORM_LOCAL_STORAGE_KEY,
+    ]);
+    initFeedForm(dispatch);
+  };
 
   const saveAll = () => {
     console.log(
@@ -39,7 +73,8 @@ function FeedSummary() {
       JSON.stringify(mMSourceToPersist),
     );
     console.log(`[FeedSummary] saveAll state :`, JSON.stringify(state));
-    setIsSubmitting(true);
+    setSubmitStatus("submitting");
+    setErrorMessage(null);
     fetchAPI(
       URL_API_FEEDFORM_SUBMIT,
       {
@@ -47,67 +82,113 @@ function FeedSummary() {
       },
       session?.user?.accessToken,
     )
-      .then(async (response) => {
+      .then((response) => {
         console.log("response", response);
 
         if (response.error) {
           console.error("Error submitting form:", JSON.stringify(response));
-          setIsSaveSuccess(false);
+          setErrorMessage(response.error);
+          setSubmitStatus("error");
           // Send log email
-          await fetchAPI(
-            "/api/sendEmail",
-            {
-              body: {
-                type: "FeedForm ERROR",
-                mMSourceToPersist,
-                state,
-                message: `Error submitting form`,
-                errorStatus: response.status,
-                error: response.error,
-                response,
+          try {
+            fetchAPI(
+              "/api/sendEmail",
+              {
+                body: {
+                  type: "FeedForm ERROR",
+                  mMSourceToPersist,
+                  state,
+                  message: `Error submitting form`,
+                  errorStatus: response.status,
+                  error: response.error,
+                  response,
+                },
               },
-            },
-            session?.user?.accessToken,
-          )
-            .then((result) =>
-              console.log(`[FeedSummary] result from sendEmail :`, result),
+              session?.user?.accessToken,
             )
-            .catch((reason) =>
-              console.error(
-                `[FeedSummary] error reason from sendEmail :`,
-                reason,
-              ),
-            );
+              .then((result) =>
+                console.log(`[FeedSummary] result from sendEmail :`, result),
+              )
+              .catch((reason) =>
+                console.error(
+                  `[FeedSummary] error reason from sendEmail :`,
+                  reason,
+                ),
+              );
+          } catch (e) {
+            console.error(`[FeedSummary] unexpected error sending error email:`, e);
+          }
           return;
         } else {
-          setIsSaveSuccess(true);
+          onReset();
+          setSubmitStatus("success");
           // Send log email
-          await fetchAPI(
-            "/api/sendEmail",
-            {
-              body: {
-                type: "FeedForm SUCCESS",
-                mMSourceFromDb: response.mMSourceFromDb,
+          try {
+            fetchAPI(
+              "/api/sendEmail",
+              {
+                body: {
+                  type: "FeedForm SUCCESS",
+                  mMSourceFromDb: response.mMSourceFromDb,
+                },
               },
-            },
-            session?.user?.accessToken,
-          )
-            .then((result) =>
-              console.log(`[FeedSummary] result from sendEmail :`, result),
+              session?.user?.accessToken,
             )
-            .catch((reason) =>
-              console.error(
-                `[FeedSummary] error reason from sendEmail :`,
-                reason,
-              ),
-            );
+              .then((result) =>
+                console.log(`[FeedSummary] result from sendEmail :`, result),
+              )
+              .catch((reason) =>
+                console.error(
+                  `[FeedSummary] error reason from sendEmail :`,
+                  reason,
+                ),
+              );
+          } catch (e) {
+            console.error(`[FeedSummary] unexpected error sending success email:`, e);
+          }
         }
-        setIsSubmitting(false);
       })
       .catch((error) => {
         console.log("error in /api/feedForm", error);
-        setIsSaveSuccess(false);
-        setIsSubmitting(false);
+        setErrorMessage(error?.message || "Error submitting form");
+        setSubmitStatus("error");
+      });
+  };
+
+  const submitReview = () => {
+    if (formSession.mode !== "review") return;
+
+    const reviewId = formSession.review.reviewId;
+    const overallComment = formSession.review.overallComment;
+
+    setIsConfirmModalOpen(false);
+    setSubmitStatus("submitting");
+    setErrorMessage(null);
+
+    fetchAPI(
+      GET_URL_API_REVIEW_SUBMIT(reviewId),
+      {
+        body: {
+          feedFormState: state,
+          overallComment,
+        },
+      },
+      session?.user?.accessToken,
+    )
+      .then((response) => {
+        if (response.error) {
+          console.error("[FeedSummary] Error submitting review:", response.error);
+          setErrorMessage(response.error);
+          setSubmitStatus("error");
+        } else {
+          purgeReviewLocalDrafts(reviewId);
+          setSubmitStatus("success");
+        }
+      })
+      .catch((error) => {
+        console.error("[FeedSummary] Error in review submit:", error);
+        setErrorMessage(error?.message || "Failed to submit review");
+        setSubmitStatus("error");
       });
   };
 
@@ -117,18 +198,78 @@ function FeedSummary() {
   };
 
   useEffect(() => {
-    if (typeof isSaveSuccess !== "boolean") return;
+    if (submitStatus === "success" || submitStatus === "error") {
+      onInfoModalOpen(SAVE_INFO_MODAL_ID);
+    }
+  }, [submitStatus]);
 
-    onInfoModalOpen(SAVE_INFO_MODAL_ID);
-  }, [isSaveSuccess]);
+  const handleModalClose = () => {
+    if (isReviewMode) {
+      if (submitStatus === "success") {
+        router.push(URL_REVIEW_LIST);
+        return;
+      }
+      setSubmitStatus("idle");
+    } else {
+      if (submitStatus === "success") {
+        onReset();
+      }
+      setSubmitStatus("idle");
+    }
+  };
 
-  const onReset = () => {
-    localStorageRemoveItems([
-      SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-      COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-      FEED_FORM_LOCAL_STORAGE_KEY,
-    ]);
-    initFeedForm(dispatch);
+  const getModalDescription = () => {
+    if (submitStatus === "success") {
+      if (isReviewMode) {
+        return "The review has been approved and submitted successfully.";
+      }
+      return "Your Metronome Mark Source and all the related data has been saved successfully. Thank you!";
+    }
+    if (submitStatus === "error") {
+      if (isReviewMode) {
+        return (
+          errorMessage ||
+          "Oops! Something went wrong while submitting the review. Please try again."
+        );
+      }
+      return (
+        errorMessage ||
+        "Oops! Something went wrong. We have been notified and we will try to fix the problem soon."
+      );
+    }
+    return "";
+  };
+
+  const handleClickSubmit = () => {
+    if (isReviewMode) {
+      setIsConfirmModalOpen(true);
+    } else {
+      saveAll();
+    }
+  };
+
+  const getButtonLabel = () => {
+    if (isReviewMode) {
+      if (isSubmitting) {
+        return (
+          <>
+            <span className="loading loading-spinner loading-xs mr-2"></span>
+            Submitting...
+          </>
+        );
+      }
+      return "Approve and Submit Review";
+    }
+
+    if (isSubmitting) {
+      return (
+        <>
+          <span className="loading loading-spinner loading-xs mr-2"></span>
+          Saving...
+        </>
+      );
+    }
+    return "Save the complete Metronome Mark Source";
   };
 
   // Main render function for the source details
@@ -459,35 +600,67 @@ function FeedSummary() {
         <button
           className="btn btn-primary btn-lg"
           type="button"
-          onClick={saveAll}
-          disabled={isSubmitting}
+          onClick={handleClickSubmit}
+          disabled={isSubmitting || (isReviewMode && !isAllStepsComplete)}
         >
-          {isSubmitting ? (
-            <>
-              <span className="loading loading-spinner loading-xs mr-2"></span>
-              {`Saving...`}
-            </>
-          ) : (
-            "Save the complete Metronome Mark Source"
-          )}
+          {getButtonLabel()}
         </button>
       </div>
 
+      {isReviewMode &&
+        portalContainer &&
+        createPortal(
+          <dialog
+            id="review-confirm-submit-modal"
+            className={`modal ${isConfirmModalOpen ? "modal-open" : ""}`}
+            open={isConfirmModalOpen}
+          >
+            <div className="modal-box">
+              <h3 className="font-bold text-lg">Confirm Review Approval</h3>
+              <p className="py-4 text-sm">
+                Are you sure you want to approve and submit this review? All
+                your modifications will be permanently applied to the database.
+              </p>
+              <div className="modal-action">
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={() => setIsConfirmModalOpen(false)}
+                  disabled={isSubmitting}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={submitReview}
+                  disabled={isSubmitting}
+                >
+                  Confirm and Submit
+                </button>
+              </div>
+            </div>
+            <form method="dialog" className="modal-backdrop">
+              <button
+                type="button"
+                onClick={() => !isSubmitting && setIsConfirmModalOpen(false)}
+              >
+                close
+              </button>
+            </form>
+          </dialog>,
+          portalContainer,
+        )}
+
       <InfoModal
         modalId={SAVE_INFO_MODAL_ID}
-        type={isSaveSuccess ? "success" : "error"}
-        description={
-          isSaveSuccess
-            ? "Your Metronome Mark Source and all the related data has been saved successfully. Thank you!"
-            : "Oops! Something went wrong. We have been notified and we will try to fix the problem soon."
-        }
-        onClose={onReset}
+        type={submitStatus === "error" ? "error" : "success"}
+        description={getModalDescription()}
+        onClose={handleModalClose}
       />
     </div>
   );
 }
-
-export default FeedSummary;
 
 // Utility function to organize piece versions into groups by collection
 function processPieceVersionsForDisplay(pieceVersions: any[]) {

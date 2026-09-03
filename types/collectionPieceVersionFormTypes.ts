@@ -57,5 +57,6 @@ export type CollectionPieceVersionsFormState = {
 };
 export type CollectionPieceVersionsFormProviderProps = {
   children: ReactNode;
+  storageKey?: string;
   initialState?: CollectionPieceVersionsFormState | null;
 };

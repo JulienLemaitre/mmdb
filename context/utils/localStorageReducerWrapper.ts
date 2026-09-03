@@ -1,10 +1,15 @@
 import { localStorageSetItem, localStorageGetItem } from "@/utils/localStorage";
 import { isEqual, merge } from "lodash";
 
+export type WithLocalStorageOptions = {
+  hydrationStrategy?: "merge" | "replace";
+};
+
 export function withLocalStorage<T, U>(
   reducer: (state: T, action: U) => T,
   storageKey: string,
   initialState: T,
+  options?: WithLocalStorageOptions,
 ) {
   let isInitialized = false;
   let lastSavedState: T;
@@ -12,20 +17,24 @@ export function withLocalStorage<T, U>(
   return (state: T, action: U): T => {
     let currentState = state;
 
-    // On first call, merge with localStorage if available
+    // On first call, hydrate from localStorage if available
     if (!isInitialized) {
       const savedState = localStorageGetItem<T>(storageKey);
 
       if (savedState) {
         try {
-          // Create a new merged state without mutating the input
-          currentState = merge({}, initialState, savedState) as T;
+          if (options?.hydrationStrategy === "replace") {
+            currentState = savedState;
+          } else {
+            // Create a new merged state without mutating the input
+            currentState = merge({}, initialState, savedState) as T;
+          }
         } catch (error) {
           console.warn(
-            `Failed to merge localStorage state for key "${storageKey}":`,
+            `Failed to hydrate localStorage state for key "${storageKey}":`,
             error,
           );
-          // Fallback to the current state if merge fails
+          // Fallback to the current state if hydration fails
           currentState = state;
         }
       }

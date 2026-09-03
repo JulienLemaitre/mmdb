@@ -50,6 +50,21 @@ export async function POST(req: Request) {
       );
     }
 
+    // Check existing active review for this reviewer
+    const reviewerActiveReview = await db.review.findFirst({
+      where: { creatorId: session.user.id, state: REVIEW_STATE.IN_REVIEW },
+      select: { id: true },
+    });
+    if (reviewerActiveReview) {
+      return NextResponse.json(
+        {
+          error:
+            "[review start] You already have an active review in progress. Please complete or abort it before starting a new one.",
+        },
+        { status: 409 },
+      );
+    }
+
     // Check existing active review lock
     const active = await db.review.findFirst({
       where: { mMSourceId: mmSourceId, state: REVIEW_STATE.IN_REVIEW },
@@ -89,6 +104,15 @@ export async function POST(req: Request) {
       typeof err?.message === "string" ? err.message : String(err);
     const isConflict = /unique|constraint|duplicate/i.test(message);
     if (isConflict) {
+      if (/review_unique_in_review_per_reviewer|creatorId/i.test(message)) {
+        return NextResponse.json(
+          {
+            error:
+              "[review start] You already have an active review in progress. Please complete or abort it before starting a new one.",
+          },
+          { status: 409 },
+        );
+      }
       return NextResponse.json(
         { error: "[review start] Another review just started for this source" },
         { status: 409 },

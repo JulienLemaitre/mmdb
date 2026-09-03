@@ -34,6 +34,7 @@ export default function getMMSourceAndRelatedEntitiesDBInputFromState(
       ? {
           references: {
             create: references.map((reference) => ({
+              ...(reference.id ? { id: reference.id } : {}),
               type: reference.type,
               reference: reference.reference,
             })),

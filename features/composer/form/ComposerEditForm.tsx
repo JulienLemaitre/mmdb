@@ -36,6 +36,7 @@ export default function ComposerEditForm({
         onSubmit={handleSubmit(onSubmit)}
         onKeyDown={preventEnterKeySubmission}
       >
+        {composer?.id && <input type="hidden" {...register("id" as any)} />}
         <FormInput
           name="firstName"
           isRequired

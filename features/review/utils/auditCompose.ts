@@ -1,98 +1,117 @@
-import { ENTITY_PREFIX } from "@/features/review/reviewChecklistSchema";
-import { computeChangedChecklistFieldPaths } from "@/features/review/reviewDiff";
+import { computeChangedFieldPaths } from "@/features/review/reviewDiff";
 import {
   AuditEntityType,
   AuditEntry,
   AuditOperation,
-  ChecklistEntityType,
-  ChecklistGraph,
+  ReviewEntityType,
 } from "@/types/reviewTypes";
+import { FeedFormState } from "@/types/feedFormTypes";
 
-export function toAuditEntityType(t: ChecklistEntityType): AuditEntityType {
-  return t as unknown as AuditEntityType;
+export function toAuditEntityType(
+  t: ReviewEntityType | AuditEntityType,
+): AuditEntityType {
+  if (t === "MM_SOURCE_ON_PIECE_VERSION") {
+    return "MM_SOURCE";
+  }
+  return t as AuditEntityType;
 }
 
 /**
- * JSDoc: Finds a specific node within a ChecklistGraph by its type and ID.
- * This helper function is essential for diffing and auditing, as it can
- * locate entities regardless of whether they are in a top-level array
- * (e.g., `graph.pieces`) or deeply nested (e.g., a `SECTION` within a `MOVEMENT`).
+ * Finds a specific node within a FeedFormState by its entity type and ID.
  *
- * @param graph The ChecklistGraph to search within.
+ * @param state The FeedFormState to search within.
  * @param entityType The type of the entity to find.
  * @param entityId The ID of the entity to find.
  * @returns The found entity node, or null if not found.
  */
-function findNodeInGraph(
-  graph: ChecklistGraph,
-  entityType: ChecklistEntityType,
+export function findNodeInState(
+  state: FeedFormState | null | undefined,
+  entityType: ReviewEntityType | AuditEntityType,
   entityId: string,
 ): any | null {
-  if (entityType === "MM_SOURCE") {
-    return graph.source;
-  }
+  if (!state) return null;
 
-  const topLevelProps: (keyof ChecklistGraph)[] = [
-    "persons",
-    "organizations",
-    "collections",
-    "pieces",
-    "tempoIndications",
-    "metronomeMarks",
-    "contributions",
-  ];
-  if (graph.source?.references) {
-    topLevelProps.push("references" as any);
-  }
-
-  for (const prop of topLevelProps) {
-    if (prop.startsWith(ENTITY_PREFIX[entityType])) {
-      const list = (graph as any)[prop] ?? (graph.source as any)?.[prop];
-      const node = list?.find((n: any) => n.id === entityId);
-      if (node) return node;
-    }
-  }
-
-  // Traverse nested structures for piece-related entities
-  for (const pv of graph.pieceVersions ?? []) {
-    if (entityType === "PIECE_VERSION" && pv.id === entityId) return pv;
-    for (const mov of (pv as any).movements ?? []) {
-      if (entityType === "MOVEMENT" && mov.id === entityId) return mov;
-      for (const sec of (mov as any).sections ?? []) {
-        if (entityType === "SECTION" && sec.id === entityId) return sec;
+  switch (entityType) {
+    case "MM_SOURCE":
+    case "MM_SOURCE_ON_PIECE_VERSION": {
+      const src = state.mMSourceDescription;
+      if (!src) return null;
+      if (src.id === entityId || !entityId || entityId === "unknown_source") {
+        return src;
       }
+      return src.id ? (src.id === entityId ? src : null) : src;
     }
+    case "PERSON":
+      return state.persons?.find((n) => n.id === entityId) ?? null;
+    case "ORGANIZATION":
+      return state.organizations?.find((n) => n.id === entityId) ?? null;
+    case "COLLECTION":
+      return state.collections?.find((n) => n.id === entityId) ?? null;
+    case "PIECE":
+      return state.pieces?.find((n) => n.id === entityId) ?? null;
+    case "PIECE_VERSION":
+      return state.pieceVersions?.find((n) => n.id === entityId) ?? null;
+    case "MOVEMENT": {
+      for (const pv of state.pieceVersions ?? []) {
+        const mov = pv.movements?.find((m) => m.id === entityId);
+        if (mov) return mov;
+      }
+      return null;
+    }
+    case "SECTION": {
+      for (const pv of state.pieceVersions ?? []) {
+        for (const mov of pv.movements ?? []) {
+          const sec = mov.sections?.find((s) => s.id === entityId);
+          if (sec) return sec;
+        }
+      }
+      return null;
+    }
+    case "TEMPO_INDICATION":
+      return state.tempoIndications?.find((n) => n.id === entityId) ?? null;
+    case "METRONOME_MARK":
+      return state.metronomeMarks?.find((n) => n.id === entityId) ?? null;
+    case "REFERENCE":
+      return (
+        state.mMSourceDescription?.references?.find((n) => n.id === entityId) ??
+        null
+      );
+    case "CONTRIBUTION":
+      return (
+        state.mMSourceContributions?.find((n) => n.id === entityId) ?? null
+      );
+    default:
+      return null;
   }
-
-  return null;
 }
 
-function buildSourceOrderingSnapshot(graph: ChecklistGraph) {
-  return (graph.sourceOnPieceVersions ?? [])
+export function buildSourceOrderingSnapshot(
+  state: FeedFormState | null | undefined,
+) {
+  return (state?.mMSourceOnPieceVersions ?? [])
     .slice()
     .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0))
     .map((row) => ({ pieceVersionId: row.pieceVersionId, rank: row.rank }));
 }
 
 /**
- * JSDoc: Composes a list of audit entries by comparing a baseline and working graph.
- * It first computes the set of changed fields, then groups those changes by
- * entity. For each changed entity, it retrieves the full "before" and "after"
- * snapshots by traversing the graphs and records the change as a CREATE,
- * UPDATE, or DELETE operation.
+ * Composes a list of audit entries by comparing a baseline and working FeedFormState.
+ * It computes changed fields, groups them by entity, checks for protected entity deletions,
+ * and attaches full before/after snapshots (including contentsOrder for MM_SOURCE).
  */
 export function composeAuditEntries(
   reviewId: string,
-  baseline: ChecklistGraph,
-  working: ChecklistGraph,
+  baseline: any,
+  working: any,
+  protectedEntityIds?: Set<string>,
 ): AuditEntry[] {
-  const changes = computeChangedChecklistFieldPaths(baseline, working);
+  const changes = computeChangedFieldPaths(baseline, working);
 
-  const key = (et: ChecklistEntityType, id?: string | null) =>
+  const key = (et: ReviewEntityType, id?: string | null) =>
     `${et}:${id ?? "MM_SOURCE"}`;
   const changedEntities = new Map<
     string,
-    { entityType: ChecklistEntityType; entityId: string | null }
+    { entityType: ReviewEntityType; entityId: string | null }
   >();
 
   for (const c of changes) {
@@ -108,21 +127,39 @@ export function composeAuditEntries(
   const entries: AuditEntry[] = [];
   for (const { entityType, entityId } of changedEntities.values()) {
     const resolvedId =
-      entityId ?? baseline.source?.id ?? working.source?.id ?? "unknown_source";
-    if (resolvedId === "unknown_source") continue;
+      entityId ??
+      (entityType === "MM_SOURCE" ||
+      entityType === "MM_SOURCE_ON_PIECE_VERSION"
+        ? (baseline?.mMSourceDescription?.id ??
+          working?.mMSourceDescription?.id ??
+          "unknown_source")
+        : null);
+    if (!resolvedId || resolvedId === "unknown_source") continue;
 
-    const before = findNodeInGraph(baseline, entityType, resolvedId);
-    const after = findNodeInGraph(working, entityType, resolvedId);
+    const before = findNodeInState(baseline, entityType, resolvedId);
+    const after = findNodeInState(working, entityType, resolvedId);
+
+    if (before == null && after == null) {
+      continue;
+    }
 
     let operation: AuditOperation = "UPDATE";
     if (before == null && after != null) operation = "CREATE";
     else if (after == null && before != null) operation = "DELETE";
 
+    // Discard DELETE entries for protected entities (e.g. forked originals)
+    if (operation === "DELETE" && protectedEntityIds?.has(resolvedId)) {
+      continue;
+    }
+
     let beforeSnap = before;
     let afterSnap = after;
 
-    // For source, add the ordering as a special field for auditing
-    if (entityType === "MM_SOURCE") {
+    // For source, add contentsOrder snapshot for auditing
+    if (
+      entityType === "MM_SOURCE" ||
+      entityType === "MM_SOURCE_ON_PIECE_VERSION"
+    ) {
       beforeSnap = {
         ...(before ?? {}),
         contentsOrder: buildSourceOrderingSnapshot(baseline),

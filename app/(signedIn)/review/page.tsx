@@ -6,7 +6,10 @@ import React from "react";
 import { REVIEW_STATE } from "@/prisma/client/enums";
 import ReviewListClient from "./reviewListClient";
 import { getToReviewFromDb } from "@/utils/server/getToReviewFromDb";
-import { GET_URL_REVIEW_CHECKLIST } from "@/utils/routes";
+import { GET_URL_REVIEW } from "@/utils/routes";
+import NavBar from "@/ui/NavBar";
+import { isProd } from "@/utils/envVariable/isProd";
+import ReviewHelpDrawer from "@/features/review/components/ReviewHelpDrawer";
 
 export const dynamic = "force-dynamic";
 
@@ -26,13 +29,13 @@ export default async function ReviewListPage({
     redirect("/");
   }
 
-  // Routing guard: if the reviewer has an active IN_REVIEW review, redirect to its checklist
+  // Routing guard: if the reviewer has an active IN_REVIEW review, redirect to it
   const active = await db.review.findFirst({
     where: { creatorId: session.user.id, state: REVIEW_STATE.IN_REVIEW },
     select: { id: true },
   });
   if (active) {
-    redirect(GET_URL_REVIEW_CHECKLIST(active.id));
+    redirect(GET_URL_REVIEW(active.id));
   }
 
   const data = await getToReviewFromDb().catch((e) => {
@@ -58,14 +61,36 @@ export default async function ReviewListPage({
             : undefined;
 
   return (
-    <div className="container mx-auto p-4">
-      {reasonMessage && (
-        <div className="mb-3 rounded border border-yellow-300 bg-yellow-50 p-2 text-sm text-yellow-800">
-          {reasonMessage}
+    <div className="drawer drawer-end min-h-full flex flex-col">
+      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+      <div className="drawer-content min-h-full">
+        {/* Page content here */}
+        <div className="min-h-screen flex flex-col">
+          <NavBar title="MM Source Review" hasHelpSection />
+          <div className="bg-zinc-50 dark:bg-zinc-800 flex-1 flex items-stretch">
+            <main className="flex-1 min-h-full bg-base-100 p-10">
+              {isProd ? (
+                <div className="mb-3 rounded border border-red-300 bg-red-50 p-2 text-sm text-red-700">
+                  {`Review section is currently in development.`}
+                </div>
+              ) : (
+                <div className="container mx-auto p-4">
+                  {reasonMessage && (
+                    <div className="mb-3 rounded border border-yellow-300 bg-yellow-50 p-2 text-sm text-yellow-800">
+                      {reasonMessage}
+                    </div>
+                  )}
+                  <h1 className="text-2xl font-semibold mb-4">
+                    MM Sources to review
+                  </h1>
+                  <ReviewListClient items={data.items} />
+                </div>
+              )}
+            </main>
+          </div>
         </div>
-      )}
-      <h1 className="text-2xl font-semibold mb-4">MM Sources to review</h1>
-      <ReviewListClient items={data.items} />
+      </div>
+      <ReviewHelpDrawer />
     </div>
   );
 }

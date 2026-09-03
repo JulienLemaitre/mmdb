@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { GET_URL_REVIEW_CHECKLIST } from "@/utils/routes";
+import { GET_URL_REVIEW } from "@/utils/routes";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 
 export type ToReviewItem = {
@@ -44,7 +44,7 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
       });
       if (res.ok) {
         const data = (await res.json()) as { reviewId: string };
-        router.push(GET_URL_REVIEW_CHECKLIST(data.reviewId));
+        router.push(GET_URL_REVIEW(data.reviewId));
         return;
       }
       // Non-OK
@@ -57,10 +57,18 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
         // ignore JSON parse error; keep defaults
       }
       if (res.status === 409) {
-        setError(
-          "This source was just locked by another reviewer. Refreshing list…",
-        );
-        router.refresh();
+        if (
+          apiError &&
+          (apiError.toLowerCase().includes("active review in progress") ||
+            apiError.toLowerCase().includes("already have an active review"))
+        ) {
+          setError(apiError.replace(/^\[review start]\s*/, ""));
+        } else {
+          setError(
+            "This source was just locked by another reviewer. Refreshing list…",
+          );
+          router.refresh();
+        }
       } else if (
         res.status === 400 &&
         (apiError?.toLowerCase()?.includes("own mm source") ?? false)

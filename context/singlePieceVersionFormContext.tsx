@@ -2,11 +2,11 @@
 
 import {
   createContext,
-  ReactNode,
   useContext,
   useEffect,
   useMemo,
   useReducer,
+  useState,
 } from "react";
 import {
   getLastCompletedStep,
@@ -14,9 +14,10 @@ import {
 } from "@/features/feed/multiStepSinglePieceVersionForm/stepsUtils";
 import {
   SinglePieceVersionFormAction,
+  SinglePieceVersionFormProviderProps,
   SinglePieceVersionFormState,
 } from "@/types/singlePieceVersionFormTypes";
-import { singlePieceVersionFormReducer } from "@/context/singlePieceVersionFormReducer";
+import { createSinglePieceVersionFormReducer } from "@/context/singlePieceVersionFormReducer";
 import { localStorageGetItem } from "@/utils/localStorage";
 import {
   SINGLE_PIECE_VERSION_FORM_INITIAL_STATE,
@@ -24,11 +25,6 @@ import {
 } from "@/utils/constants";
 
 type Dispatch = (action: SinglePieceVersionFormAction) => void;
-
-type SinglePieceVersionFormProviderProps = {
-  children: ReactNode;
-  initialState?: SinglePieceVersionFormState | null;
-};
 
 const SinglePieceVersionFormContext = createContext<
   | {
@@ -40,10 +36,17 @@ const SinglePieceVersionFormContext = createContext<
 
 export function SinglePieceVersionFormProvider({
   children,
+  storageKey = SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
   initialState,
 }: Readonly<SinglePieceVersionFormProviderProps>) {
+  const [reducer] = useState(() =>
+    createSinglePieceVersionFormReducer(
+      storageKey,
+      initialState || SINGLE_PIECE_VERSION_FORM_INITIAL_STATE,
+    ),
+  );
   const [state, dispatch] = useReducer(
-    singlePieceVersionFormReducer,
+    reducer,
     initialState || SINGLE_PIECE_VERSION_FORM_INITIAL_STATE,
   );
 
@@ -54,17 +57,15 @@ export function SinglePieceVersionFormProvider({
       );
       return;
     }
-    const localStorageValue: any = localStorageGetItem(
-      SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
-    );
+    const localStorageValue: any = localStorageGetItem(storageKey);
     if (localStorageValue) {
       console.info(
-        `[INIT] SinglePieceVersions from localStorage key: ${SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY}`,
+        `[INIT] SinglePieceVersions from localStorage key: ${storageKey}`,
         localStorageValue,
       );
       initSinglePieceVersionForm(dispatch, localStorageValue);
     }
-  }, [initialState]);
+  }, [initialState, storageKey]);
 
   const value = useMemo(() => ({ state, dispatch }), [state]);
 

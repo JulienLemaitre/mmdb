@@ -2,6 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useReducer,
 } from "react";
@@ -17,6 +18,7 @@ import {
 } from "@/types/toastNotificationTypes";
 import ToastNotificationCard from "@/ui/ToastNotificationCard";
 import { getNewUuid } from "@/utils/getNewUuid";
+import { STORAGE_INVALIDATED_EVENT } from "@/utils/localStorage";
 
 export const ToastNotificationContext = createContext<
   | {
@@ -31,6 +33,29 @@ export function ToastNotificationProvider({ children }) {
     toastNotificationReducer,
     TOAST_NOTIFICATION_INITIAL_STATE,
   );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleStorageInvalidated = () => {
+      notify(
+        dispatch,
+        toastNotificationAction.WARNING,
+        "Your previous local draft was reset due to an application update.",
+      );
+    };
+
+    window.addEventListener(
+      STORAGE_INVALIDATED_EVENT,
+      handleStorageInvalidated,
+    );
+    return () => {
+      window.removeEventListener(
+        STORAGE_INVALIDATED_EVENT,
+        handleStorageInvalidated,
+      );
+    };
+  }, [dispatch]);
 
   const showNotifications = useCallback(
     () => (

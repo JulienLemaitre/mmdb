@@ -1,6 +1,12 @@
+import {
+  GET_REVIEW_STORAGE_KEYS,
+  REVIEW_LOCAL_STORAGE_PREFIX,
+} from "@/utils/constants";
+
 const USE_LOCAL_STORAGE = true;
 
-export const LOCAL_STORAGE_SCHEMA_VERSION = 6;
+export const LOCAL_STORAGE_SCHEMA_VERSION = 7;
+export const STORAGE_INVALIDATED_EVENT = "mmdb:storage-invalidated";
 
 export type LocalStorageEnvelope<T> = {
   version: number;
@@ -21,6 +27,26 @@ export function isVersionedLocalStorageEnvelope(
     typeof (value as { version?: unknown }).version === "number" &&
     "payload" in value
   );
+}
+
+function dispatchStorageInvalidated(key: string, reason: string): void {
+  if (
+    typeof window !== "undefined" &&
+    typeof window.dispatchEvent === "function"
+  ) {
+    try {
+      window.dispatchEvent(
+        new CustomEvent(STORAGE_INVALIDATED_EVENT, {
+          detail: { key, reason },
+        }),
+      );
+    } catch (e) {
+      console.error(
+        `[localStorage] Error while dispatching ${STORAGE_INVALIDATED_EVENT}:`,
+        e,
+      );
+    }
+  }
 }
 
 export function localStorageSetItem<T>(key: string, value: T): void {
@@ -56,6 +82,7 @@ export function localStorageGetItem<T>(key: string): T | null {
       e,
     );
     localStorage.removeItem(key);
+    dispatchStorageInvalidated(key, "corrupted_json");
     return null;
   }
 
@@ -64,6 +91,7 @@ export function localStorageGetItem<T>(key: string): T | null {
       `[localStorageGetItem] Invalid envelope for key "${key}". Removing.`,
     );
     localStorage.removeItem(key);
+    dispatchStorageInvalidated(key, "invalid_envelope");
     return null;
   }
 
@@ -72,6 +100,7 @@ export function localStorageGetItem<T>(key: string): T | null {
       `[localStorageGetItem] Removed incompatible localStorage data for key "${key}". Stored version: ${parsed.version}, current version: ${LOCAL_STORAGE_SCHEMA_VERSION}.`,
     );
     localStorage.removeItem(key);
+    dispatchStorageInvalidated(key, "incompatible_version");
     return null;
   }
 
@@ -88,4 +117,27 @@ export function localStorageRemoveItems(keys: string[]): void {
   if (!isLocalStorageAvailable()) return;
   console.info(`[localStorageRemoveItems] Removing localStorage items ${keys}`);
   keys.forEach((key) => localStorageRemoveItem(key));
+}
+
+export function purgeReviewLocalDrafts(reviewId?: string): void {
+  if (!isLocalStorageAvailable()) return;
+
+  if (reviewId) {
+    const keys = Object.values(GET_REVIEW_STORAGE_KEYS(reviewId));
+    localStorageRemoveItems(keys);
+    return;
+  }
+
+  const keysToRemove: string[] = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (
+      key &&
+      (key.startsWith(`${REVIEW_LOCAL_STORAGE_PREFIX}:`) ||
+        key === REVIEW_LOCAL_STORAGE_PREFIX)
+    ) {
+      keysToRemove.push(key);
+    }
+  }
+  localStorageRemoveItems(keysToRemove);
 }

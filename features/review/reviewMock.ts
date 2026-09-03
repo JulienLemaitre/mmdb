@@ -1,17 +1,6 @@
-import { ChecklistGraph } from "@/types/reviewTypes";
+import { FeedFormState } from "@/types/feedFormTypes";
 
-export type MockOverview = {
-  graph: ChecklistGraph;
-  globallyReviewed: {
-    personIds: string[];
-    organizationIds: string[];
-    collectionIds: string[];
-    pieceIds: string[];
-  };
-};
-
-export function buildMockOverview(reviewId: string): MockOverview {
-  // Mock entities
+export function buildMockFeedFormState(reviewId: string): FeedFormState {
   const sourceId = "src-1";
   const collectionId = "col-1";
   const pieceAId = "p-1";
@@ -27,12 +16,11 @@ export function buildMockOverview(reviewId: string): MockOverview {
   const mmAId = "mm-1";
   const mmBId = "mm-2";
   const personId = "person-1";
-  const editorId = "account-1";
   const refId = "ref-1";
   const contribId = "cont-1";
 
-  const graph: ChecklistGraph = {
-    source: {
+  return {
+    mMSourceDescription: {
       id: sourceId,
       title: `Mock Review Source ${reviewId}`,
       type: "EDITION",
@@ -41,15 +29,27 @@ export function buildMockOverview(reviewId: string): MockOverview {
       year: 1820,
       isYearEstimated: false,
       comment: "Demo comment",
-      enteredBy: {
-        id: editorId,
-        name: "John Doe",
-        email: "john.doe@example.com",
-      },
       references: [
         { id: refId, type: "ISMN", reference: "https://example.com/op10" },
       ],
     },
+    mMSourceContributions: [
+      {
+        id: contribId,
+        role: "MM_PROVIDER",
+        personId,
+      },
+    ],
+    mMSourceOnPieceVersions: [
+      {
+        pieceVersionId: pvAId,
+        rank: 1,
+      },
+      {
+        pieceVersionId: pvBId,
+        rank: 2,
+      },
+    ],
     collections: [
       {
         id: collectionId,
@@ -88,6 +88,7 @@ export function buildMockOverview(reviewId: string): MockOverview {
             id: movA1Id,
             rank: 1,
             key: "C_MINOR",
+            isVariation: false,
             sections: [
               {
                 id: secA1Id,
@@ -113,6 +114,7 @@ export function buildMockOverview(reviewId: string): MockOverview {
             id: movB1Id,
             rank: 1,
             key: "F_MAJOR",
+            isVariation: false,
             sections: [
               {
                 id: secB1Id,
@@ -154,13 +156,6 @@ export function buildMockOverview(reviewId: string): MockOverview {
         pieceVersionId: pvBId,
       },
     ],
-    contributions: [
-      {
-        id: contribId,
-        role: "MM_PROVIDER",
-        personId,
-      },
-    ],
     persons: [
       {
         id: personId,
@@ -171,34 +166,5 @@ export function buildMockOverview(reviewId: string): MockOverview {
       },
     ],
     organizations: [],
-    sourceOnPieceVersions: [
-      {
-        joinId: "join-1",
-        mMSourceId: sourceId,
-        pieceVersionId: pvAId,
-        rank: 1,
-        pieceId: pieceAId,
-        collectionId,
-        collectionRank: 1,
-      },
-      {
-        joinId: "join-2",
-        mMSourceId: sourceId,
-        pieceVersionId: pvBId,
-        rank: 2,
-        pieceId: pieceBId,
-        collectionId,
-        collectionRank: 2,
-      },
-    ],
   };
-
-  const globallyReviewed = {
-    personIds: [personId],
-    organizationIds: [],
-    collectionIds: [],
-    pieceIds: [],
-  };
-
-  return { graph, globallyReviewed };
 }

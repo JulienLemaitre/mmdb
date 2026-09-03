@@ -4,6 +4,7 @@ import {
   PieceVersionState,
   TempoIndicationState,
 } from "@/types/formTypes";
+import { ReactNode } from "react";
 
 export type SinglePieceVersionFormInfo = {
   currentStepRank: number;
@@ -17,6 +18,12 @@ export type SinglePieceVersionFormState = {
   piece?: PieceState;
   pieceVersion?: PieceVersionState;
   tempoIndications?: TempoIndicationState[];
+};
+
+export type SinglePieceVersionFormProviderProps = {
+  children: ReactNode;
+  storageKey?: string;
+  initialState?: SinglePieceVersionFormState | null;
 };
 
 export type SinglePieceVersionFormAction =

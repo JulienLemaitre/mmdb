@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { updateFeedForm, useFeedForm } from "@/context/feedFormContext";
 import { getStepByRank } from "@/features/feed/multiStepMMSourceForm/stepsUtils";
 import {
-  ContributionStateWithoutId,
+  ContributionState,
   OrganizationState,
   PersonState,
 } from "@/types/formTypes";
@@ -26,7 +26,7 @@ export default function MMSourceContributions() {
   const step = getStepByRank(currentStepRank);
 
   const onSubmit = (
-    selectedContributions: ContributionStateWithoutId[],
+    selectedContributions: ContributionState[],
     option: { goToNextStep: boolean },
   ) => {
     if (draftPersons.length > 0) {

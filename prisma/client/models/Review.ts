@@ -238,11 +238,11 @@ export type ReviewOrderByWithRelationInput = {
 
 export type ReviewWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  mMSourceId?: string
+  creatorId?: string
   AND?: Prisma.ReviewWhereInput | Prisma.ReviewWhereInput[]
   OR?: Prisma.ReviewWhereInput[]
   NOT?: Prisma.ReviewWhereInput | Prisma.ReviewWhereInput[]
-  mMSourceId?: Prisma.UuidFilter<"Review"> | string
-  creatorId?: Prisma.UuidFilter<"Review"> | string
   state?: Prisma.EnumREVIEW_STATEFilter<"Review"> | $Enums.REVIEW_STATE
   startedAt?: Prisma.DateTimeFilter<"Review"> | Date | string
   endedAt?: Prisma.DateTimeNullableFilter<"Review"> | Date | string | null
@@ -253,7 +253,7 @@ export type ReviewWhereUniqueInput = Prisma.AtLeast<{
   creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   auditLogs?: Prisma.AuditLogListRelationFilter
   reviewedEntities?: Prisma.ReviewedEntityListRelationFilter
-}, "id">
+}, "id" | "mMSourceId" | "creatorId">
 
 export type ReviewOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

@@ -30,12 +30,6 @@ export type PieceFormAction =
   | { type: "editedSourceOnPieceVersions"; payload: any }
   | { type: "metronomeMarks"; payload: any };
 export type Dispatch = (action: PieceFormAction) => void;
-export type ReviewContext = {
-  reviewId: string;
-  reviewEdit: true;
-  updatedAt: string; // ISO
-  anchors?: { pvId?: string; movId?: string; secId?: string; mmId?: string };
-};
 
 export type FeedFormInfo = {
   currentStepRank: number;
@@ -43,8 +37,6 @@ export type FeedFormInfo = {
   isSourceOnPieceVersionformOpen?: boolean;
   formType?: SourceOnPieceVersionsFormType;
   allSourceOnPieceVersionsDone?: boolean;
-  allSourceContributionsDone?: boolean;
-  reviewContext?: ReviewContext; // present when the feed form is opened from review edit mode
 };
 export type FeedFormState = {
   formInfo?: FeedFormInfo;
@@ -60,4 +52,8 @@ export type FeedFormState = {
   metronomeMarks?: MetronomeMarkState[];
 };
 export type PersistableFeedFormState = Required<FeedFormState>;
-export type FeedFormProviderProps = { children: ReactNode };
+export type FeedFormProviderProps = {
+  children: ReactNode;
+  storageKey?: string;
+  initialState?: FeedFormState | null;
+};

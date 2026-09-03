@@ -1,18 +1,15 @@
 import {
-  REVIEW_CHECKLIST_SCHEMA,
+  REVIEW_DIFF_FIELDS_SCHEMA,
   buildFieldPath,
   buildSourceJoinRankPath,
   ENTITY_PREFIX,
-} from "@/features/review/reviewChecklistSchema";
-import { ChecklistEntityType, ChecklistGraph } from "@/types/reviewTypes";
+} from "@/features/review/reviewDiffFieldsSchema";
+import { ReviewEntityType, ChangedField } from "@/types/reviewTypes";
+import { FeedFormState } from "@/types/feedFormTypes";
 
-export type ChangedChecklistItem = {
-  entityType: ChecklistEntityType;
-  entityId?: string | null;
-  fieldPath: string;
-};
+export type { ChangedField };
 
-function norm(v: any) {
+export function norm(v: any) {
   if (v === undefined || v === "") return null;
   return v;
 }
@@ -23,31 +20,27 @@ function getNestedValue(obj: any, path: string): any {
 }
 
 /**
- * JSDoc: Computes a list of all fields that have changed between a baseline
- * and a working version of a ChecklistGraph.
+ * Computes a list of all fields that have changed between a baseline
+ * and a working version of a FeedFormState.
  *
- * This function recursively traverses both graphs in parallel, comparing
- * entities and their fields as defined in the `REVIEW_CHECKLIST_SCHEMA`.
- * It correctly handles nested structures (like movements and sections within
- * piece versions) and identifies changes in value, as well as the creation
- * or deletion of entire entities.
- *
- * @param baseline - The original ChecklistGraph, typically from the server.
- * @param working - The potentially modified ChecklistGraph from the user's session.
- * @returns An array of `ChangedChecklistItem` objects, one for each detected change.
+ * @param baseline - The original FeedFormState from the server.
+ * @param working - The potentially modified FeedFormState from the user's session.
+ * @returns An array of ChangedField objects, one for each detected change.
  */
-export function computeChangedChecklistFieldPaths(
-  baseline: ChecklistGraph,
-  working: ChecklistGraph,
-): ChangedChecklistItem[] {
-  const out: ChangedChecklistItem[] = [];
+export function computeChangedFieldPaths(
+  baseline: FeedFormState | null | undefined,
+  working: FeedFormState | null | undefined,
+): ChangedField[] {
+  const out: ChangedField[] = [];
+  const base = baseline ?? {};
+  const work = working ?? {};
 
   const compareNodes = (
-    entityType: ChecklistEntityType,
+    entityType: ReviewEntityType,
     bNode: any,
     wNode: any,
   ) => {
-    const fields = REVIEW_CHECKLIST_SCHEMA[entityType].fields;
+    const fields = REVIEW_DIFF_FIELDS_SCHEMA[entityType].fields;
     for (const f of fields) {
       const bValue = norm(getNestedValue(bNode, f.path));
       const wValue = norm(getNestedValue(wNode, f.path));
@@ -55,7 +48,7 @@ export function computeChangedChecklistFieldPaths(
         try {
           out.push({
             entityType,
-            entityId: bNode?.id ?? wNode?.id,
+            entityId: bNode?.id ?? wNode?.id ?? null,
             fieldPath: buildFieldPath(
               entityType,
               bNode?.id ?? wNode?.id,
@@ -70,7 +63,7 @@ export function computeChangedChecklistFieldPaths(
             wNode,
           });
           throw new Error(
-            `[computeChangedChecklistFieldPaths] Error computing field path for entity ${entityType}, field ${JSON.stringify(f)}, bNode ${JSON.stringify(bNode)}, wNode ${JSON.stringify(wNode)} : ${e instanceof Error ? e.message : e}`,
+            `[computeChangedFieldPaths] Error computing field path for entity ${entityType}, field ${JSON.stringify(f)}, bNode ${JSON.stringify(bNode)}, wNode ${JSON.stringify(wNode)} : ${e instanceof Error ? e.message : e}`,
           );
         }
       }
@@ -78,12 +71,23 @@ export function computeChangedChecklistFieldPaths(
   };
 
   const diffEntityArray = (
-    entityType: ChecklistEntityType,
+    entityType: ReviewEntityType,
     bList: any[] | undefined,
     wList: any[] | undefined,
   ) => {
-    const baseMap = new Map((bList ?? []).map((n) => [n.id, n]));
-    const workMap = new Map((wList ?? []).map((n) => [n.id, n]));
+    const getEntityKey = (node: any, index: number, prefix: string) => {
+      if (node && typeof node.id === "string" && node.id.trim() !== "") {
+        return node.id;
+      }
+      return `__missing_id_${prefix}_${index}`;
+    };
+
+    const baseMap = new Map(
+      (bList ?? []).map((n, idx) => [getEntityKey(n, idx, "base"), n]),
+    );
+    const workMap = new Map(
+      (wList ?? []).map((n, idx) => [getEntityKey(n, idx, "work"), n]),
+    );
     const allIds = new Set([...baseMap.keys(), ...workMap.keys()]);
 
     for (const id of allIds) {
@@ -102,13 +106,13 @@ export function computeChangedChecklistFieldPaths(
       } else {
         // CREATE / DELETE: Mark all fields as changed
         const node = bNode ?? wNode;
-        const schema = REVIEW_CHECKLIST_SCHEMA[entityType];
+        const schema = REVIEW_DIFF_FIELDS_SCHEMA[entityType];
         for (const field of schema.fields) {
           try {
             out.push({
               entityType,
-              entityId: node.id,
-              fieldPath: buildFieldPath(entityType, node.id, field.path),
+              entityId: node?.id ?? null,
+              fieldPath: buildFieldPath(entityType, node?.id, field.path),
             });
           } catch (e) {
             console.error("Error computing CREATE / DELETE field path", {
@@ -117,7 +121,7 @@ export function computeChangedChecklistFieldPaths(
               node,
             });
             throw new Error(
-              `[computeChangedChecklistFieldPaths] Error computing CREATE / DELETE field path for entity ${entityType}, field ${JSON.stringify(field)}, node ${JSON.stringify(node)} : ${e instanceof Error ? e.message : e}`,
+              `[computeChangedFieldPaths] Error computing CREATE / DELETE field path for entity ${entityType}, field ${JSON.stringify(field)}, node ${JSON.stringify(node)} : ${e instanceof Error ? e.message : e}`,
             );
           }
         }
@@ -133,55 +137,72 @@ export function computeChangedChecklistFieldPaths(
   };
 
   // 1. Diff MM_SOURCE (singleton)
-  if (baseline.source || working.source) {
-    compareNodes("MM_SOURCE", baseline.source, working.source);
+  if (base.mMSourceDescription || work.mMSourceDescription) {
+    compareNodes(
+      "MM_SOURCE",
+      base.mMSourceDescription,
+      work.mMSourceDescription,
+    );
   }
 
-  // 2. Diff nested and top-level arrays
+  // 2. Diff nested references on source
   diffEntityArray(
     "REFERENCE",
-    baseline.source?.references,
-    working.source?.references,
+    base.mMSourceDescription?.references,
+    work.mMSourceDescription?.references,
   );
 
-  const topLevelTypes: ChecklistEntityType[] = [
+  // 3. Diff contributions
+  diffEntityArray(
+    "CONTRIBUTION",
+    base.mMSourceContributions,
+    work.mMSourceContributions,
+  );
+
+  // 4. Diff top-level entity arrays
+  const topLevelTypes: Array<
+    | "PERSON"
+    | "ORGANIZATION"
+    | "COLLECTION"
+    | "PIECE"
+    | "TEMPO_INDICATION"
+    | "METRONOME_MARK"
+  > = [
     "PERSON",
     "ORGANIZATION",
     "COLLECTION",
     "PIECE",
     "TEMPO_INDICATION",
-    "CONTRIBUTION",
     "METRONOME_MARK",
   ];
 
   for (const type of topLevelTypes) {
     const prop = ENTITY_PREFIX[type];
-    const bList = (baseline as any)[`${prop}s`];
-    const wList = (working as any)[`${prop}s`];
+    const bList = (base as any)[`${prop}s`];
+    const wList = (work as any)[`${prop}s`];
     diffEntityArray(type, bList, wList);
   }
 
-  // 3. Diff PieceVersions (which will recurse into movements/sections)
-  diffEntityArray(
-    "PIECE_VERSION",
-    baseline.pieceVersions,
-    working.pieceVersions,
-  );
+  // 5. Diff PieceVersions (recursing into movements and sections)
+  diffEntityArray("PIECE_VERSION", base.pieceVersions, work.pieceVersions);
 
-  // 4. Diff sourceOnPieceVersions (ranks)
+  // 6. Diff mMSourceOnPieceVersions (detects rank changes, additions, removals, substitutions of pieceVersionId)
   const bRanks = new Map(
-    (baseline.sourceOnPieceVersions ?? []).map((j) => [j.joinId, j.rank]),
+    (base.mMSourceOnPieceVersions ?? []).map((j) => [j.pieceVersionId, j.rank]),
   );
   const wRanks = new Map(
-    (working.sourceOnPieceVersions ?? []).map((j) => [j.joinId, j.rank]),
+    (work.mMSourceOnPieceVersions ?? []).map((j) => [j.pieceVersionId, j.rank]),
   );
-  const allJoinIds = new Set([...bRanks.keys(), ...wRanks.keys()]);
-  for (const joinId of allJoinIds) {
-    if (norm(bRanks.get(joinId)) !== norm(wRanks.get(joinId))) {
+  const allPvIds = new Set([...bRanks.keys(), ...wRanks.keys()]);
+  const sourceId =
+    base.mMSourceDescription?.id ?? work.mMSourceDescription?.id ?? null;
+
+  for (const pvId of allPvIds) {
+    if (norm(bRanks.get(pvId)) !== norm(wRanks.get(pvId))) {
       out.push({
         entityType: "MM_SOURCE",
-        entityId: null,
-        fieldPath: buildSourceJoinRankPath(String(joinId)),
+        entityId: sourceId,
+        fieldPath: buildSourceJoinRankPath(String(pvId)),
       });
     }
   }

@@ -432,6 +432,8 @@ model Review {
   auditLogs        AuditLog[]
   reviewedEntities ReviewedEntity[]
 
+  @@unique([mMSourceId], map: "review_unique_in_review_per_source", where: raw("state = 'IN_REVIEW'"))
+  @@unique([creatorId], map: "review_unique_in_review_per_reviewer", where: raw("state = 'IN_REVIEW'"))
   @@index([mMSourceId])
 }
 

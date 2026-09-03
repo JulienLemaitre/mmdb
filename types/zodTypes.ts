@@ -9,6 +9,7 @@ export const zodYear = z.coerce
 export const zodYearOptional = zodYear.or(z.nan()).optional().nullable();
 
 export const zodPerson = z.object({
+  id: z.string().optional(),
   firstName: z.string().min(2),
   lastName: z.string().min(2),
   birthYear: zodYear,
@@ -49,11 +50,13 @@ export const zodPositiveNumberOrEmpty = z
 
 const MetronomeMarkSchema = z.discriminatedUnion("noMM", [
   z.object({
+    id: z.string().optional(),
     noMM: z.literal(true),
     sectionId: z.string(),
     comment: z.string().optional().nullable(),
   }),
   z.object({
+    id: z.string().optional(),
     noMM: z.literal(false),
     sectionId: z.string(),
     beatUnit: getZodOptionFromEnum(NOTE_VALUE),
@@ -65,3 +68,37 @@ const MetronomeMarkSchema = z.discriminatedUnion("noMM", [
 export const MetronomeMarkListSchema = z.object({
   metronomeMarks: z.array(MetronomeMarkSchema).nonempty(),
 });
+
+export const FormModeSchema = z.enum([
+  "data-entering",
+  "self-source-edit",
+  "review",
+]);
+export type FormMode = z.infer<typeof FormModeSchema>;
+
+export const GloballyReviewedIdsSchema = z.object({
+  personIds: z.array(z.string()),
+  organizationIds: z.array(z.string()),
+  collectionIds: z.array(z.string()),
+  pieceIds: z.array(z.string()),
+  pieceVersionIds: z.array(z.string()),
+});
+export type GloballyReviewedIds = z.infer<typeof GloballyReviewedIdsSchema>;
+
+export const ReviewSessionMetaSchema = z.object({
+  reviewId: z.string(),
+  reviewerId: z.string(),
+  mMSourceId: z.string(),
+  overallComment: z.string().nullable(),
+});
+export type ReviewSessionMeta = z.infer<typeof ReviewSessionMetaSchema>;
+
+export const FormSessionSchema = z.discriminatedUnion("mode", [
+  z.object({ mode: z.literal("data-entering") }),
+  z.object({
+    mode: z.literal("review"),
+    review: ReviewSessionMetaSchema,
+    globallyReviewed: GloballyReviewedIdsSchema,
+  }),
+]);
+export type FormSession = z.infer<typeof FormSessionSchema>;

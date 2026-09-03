@@ -204,6 +204,11 @@ export default function MetronomeMarkArray({
         )}
 
         <input
+          {...register(`metronomeMarks.${formIndex}.id` as const)}
+          type="hidden"
+        />
+
+        <input
           {...register(`metronomeMarks.${formIndex}.sectionId`, {
             value: section.id,
           })}
