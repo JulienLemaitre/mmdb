@@ -9,6 +9,8 @@ import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 import getRoleLabel from "@/utils/getRoleLabel";
 import getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM from "@/utils/getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM";
 import { TempoIndication } from "@/types/prismaSelections";
+import getPersonName from "@/utils/getPersonName";
+import { MMSourceFull } from "@/types/dbTypes";
 
 export default function MMSourceSummary({
   mMSource,
@@ -16,7 +18,7 @@ export default function MMSourceSummary({
   sortBySpeed = false,
   tempoIndicationIds = [],
 }: {
-  mMSource: any;
+  mMSource: MMSourceFull;
   tempoIndicationList: TempoIndication[];
   sortBySpeed?: boolean;
   tempoIndicationIds?: string[];
@@ -62,6 +64,14 @@ export default function MMSourceSummary({
       ).join(", ")
     : null;
 
+  const composerList = new Set<string>();
+  mMSource.pieceVersions.forEach((pvs) => {
+    composerList.add(getPersonName(pvs.pieceVersion.piece.composer));
+  });
+  const composerNames = Array.from(composerList).join(", ");
+
+  const isReviewed = mMSource.reviewState === "APPROVED";
+
   // Collect all speed computations for the indicator line
   const speeds: number[] = [];
   mMSource.pieceVersions.forEach((pvs) => {
@@ -70,13 +80,12 @@ export default function MMSourceSummary({
         // Filter by tempo indication if provided
         if (
           tempoIndicationIds.length > 0 &&
-          !tempoIndicationIds.includes(section?.tempoIndication?.id)
+          !tempoIndicationIds.includes(section?.tempoIndicationId)
         ) {
           return;
         }
 
         section.metronomeMarks.forEach((mm) => {
-          if (mm.noMM) return;
           try {
             const npsCollection =
               getNotesPerSecondCollectionFromNotesPerBarCollectionAndMM({
@@ -142,6 +151,16 @@ export default function MMSourceSummary({
                 <span className="text-lg font-semibold text-info">
                   {mMSource.title || collectionName || pieceTitles}
                 </span>
+                <span className="text-lg text-info ml-1">
+                  / {composerNames}
+                </span>
+                {isReviewed && (
+                  <span
+                    className={`badge badge-xs badge-soft badge-secondary badge-outline ml-2`}
+                  >
+                    Reviewed
+                  </span>
+                )}
               </div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="font-bold text-lg text-info">

@@ -7,6 +7,7 @@ import {
   tempoIndicationSelect,
 } from "@/types/prismaSelections";
 import { getTempoIndicationIdListFromPieceVersionList } from "@/features/pieceVersion/utils/getTempoIndicationIdListFromPieceVersionList";
+import { MMSourceSearchResult } from "@/types/dbTypes";
 
 const MAX_LAST_NB_DAYS = 90;
 
@@ -14,7 +15,7 @@ const MAX_LAST_NB_DAYS = 90;
 // const dynamic = "force-dynamic";
 // const revalidate = 0;
 
-const getData = async ({ last }) => {
+const getData = async ({ last }): Promise<MMSourceSearchResult> => {
   // compute a number from string last argument
   let lastNumber = parseInt(last, 10);
 
