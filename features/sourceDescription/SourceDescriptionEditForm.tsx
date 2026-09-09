@@ -20,6 +20,7 @@ import checkAreFieldsDirty from "@/utils/checkAreFieldsDirty";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 import XMarkIcon from "@/ui/svg/XMarkIcon";
 import CheckIcon from "@/ui/svg/CheckIcon";
+import ExternalLinkIcon from "@/ui/svg/ExternalLinkIcon";
 import getSourceTypeLabel from "@/utils/getSourceTypeLabel";
 import { filterOptionByWordStart } from "@/utils/selectFilterOption";
 
@@ -160,7 +161,11 @@ export default function SourceDescriptionEditForm(
 
   const [isLinkDirty, setIsLinkDirty] = useState(false);
   const [isCheckingLink, setIsCheckingLink] = useState(false);
-  const hasLinkValue = !!getValues("link");
+  const linkValue = watch("link");
+  const hasLinkValue = !!linkValue;
+  const isUrlValid = Boolean(
+    linkValue && z.httpUrl().safeParse(linkValue).success,
+  );
   const onLinkInputChange = () => {
     setIsLinkDirty(true);
     clearErrors(`link`);
@@ -308,6 +313,22 @@ export default function SourceDescriptionEditForm(
             onInputChange={onLinkInputChange}
             {...{ register, errors, control }}
           />
+          <a
+            role="link"
+            href={isUrlValid ? linkValue?.trim() : undefined}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`btn btn-ghost btn-square btn-sm text-base-content/70 hover:text-primary ${!isUrlValid ? "btn-disabled pointer-events-none opacity-30" : ""}`}
+            title={
+              isUrlValid
+                ? "Open score link in new tab"
+                : "Enter a valid URL to open"
+            }
+            aria-label="Open score link in new tab"
+            aria-disabled={!isUrlValid}
+          >
+            <ExternalLinkIcon className="w-5 h-5" />
+          </a>
           <div
             className={`badge badge-outline py-3.5 gap-1 ${!hasLinkValue ? "badge-neutral" : isLinkDirty ? (isCheckingLink ? "badge-disabled" : "badge-warning") : "badge-success"} cursor-${isLinkDirty ? "pointer" : "auto"}`}
             onClick={(e) => {
