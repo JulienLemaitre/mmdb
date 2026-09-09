@@ -466,7 +466,7 @@ export async function getReviewBaseline(
       id: mmSource.id,
       title: mmSource.title ?? null,
       type: mmSource.type,
-      link: mmSource.link ?? null,
+      link: mmSource.permalink ?? mmSource.link ?? null,
       permalink: mmSource.permalink ?? null,
       year: mmSource.year ?? null,
       isYearEstimated: mmSource.isYearEstimated ?? false,
