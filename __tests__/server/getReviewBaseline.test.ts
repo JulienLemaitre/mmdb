@@ -312,7 +312,7 @@ describe("getReviewBaseline", () => {
       id: "src-1",
       title: "Sonata Op. 1",
       type: SOURCE_TYPE.EDITION,
-      link: "https://imslp.org/wiki/Sonata_1",
+      link: "https://imslp.org/wiki/Special:ReverseLookup/123",
       permalink: "https://imslp.org/wiki/Special:ReverseLookup/123",
       year: 1820,
       isYearEstimated: false,
@@ -469,6 +469,65 @@ describe("getReviewBaseline", () => {
         noMM: true,
       },
     ]);
+  });
+
+  it("sets baseline mMSourceDescription.link to permalink when available, otherwise falls back to link", async () => {
+    setSession({ id: "user-1", role: "REVIEWER" });
+    mockReviewFindUnique.mockResolvedValue({
+      id: "rev-1",
+      creatorId: "user-1",
+      state: REVIEW_STATE.IN_REVIEW,
+      mMSourceId: "src-1",
+    });
+
+    // Case 1: permalink is present -> baseline link is permalink
+    mockMMSourceFindUnique.mockResolvedValue({
+      id: "src-1",
+      title: "Source 1",
+      type: SOURCE_TYPE.EDITION,
+      link: "https://vmirror.imslp.org/files/imglnks/usimg/1/12/IMSLP12345-score.pdf",
+      permalink: "https://imslp.org/wiki/Special:ImagefromIndex/12345",
+      year: null,
+      isYearEstimated: false,
+      comment: null,
+      creator: null,
+      references: [],
+      contributions: [],
+      pieceVersions: [],
+      metronomeMarks: [],
+    });
+    mockReviewedEntityFindMany.mockResolvedValue([]);
+
+    const resultWithPerma = await getReviewBaseline("rev-1");
+    expect(resultWithPerma.baseline.mMSourceDescription?.link).toBe(
+      "https://imslp.org/wiki/Special:ImagefromIndex/12345",
+    );
+    expect(resultWithPerma.baseline.mMSourceDescription?.permalink).toBe(
+      "https://imslp.org/wiki/Special:ImagefromIndex/12345",
+    );
+
+    // Case 2: permalink is null, link is present -> baseline link is link
+    mockMMSourceFindUnique.mockResolvedValue({
+      id: "src-1",
+      title: "Source 1",
+      type: SOURCE_TYPE.EDITION,
+      link: "https://example.com/score.pdf",
+      permalink: null,
+      year: null,
+      isYearEstimated: false,
+      comment: null,
+      creator: null,
+      references: [],
+      contributions: [],
+      pieceVersions: [],
+      metronomeMarks: [],
+    });
+
+    const resultWithoutPerma = await getReviewBaseline("rev-1");
+    expect(resultWithoutPerma.baseline.mMSourceDescription?.link).toBe(
+      "https://example.com/score.pdf",
+    );
+    expect(resultWithoutPerma.baseline.mMSourceDescription?.permalink).toBeNull();
   });
 
   describe("collection filtering", () => {
