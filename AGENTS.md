@@ -181,6 +181,22 @@ next-auth (credentials + JWT) configured in `auth/options.ts`. Roles are ordered
 - Prefer targeted edits over rewriting whole files; ask before a full rewrite (`.aiassistant/rules/mmdb.md`).
 - `git add` newly created files — the generated Prisma client and migrations in particular.
 
+## How to use the app in a browser
+
+When you need to use the app in a browser, you can run the following command:
+
+```bash
+npm run dev
+```
+
+This will start the development server and you can access the app at `http://localhost:3000`.
+
+To use a browser, use the chrome-devtools-cli available in WebStorm.
+You can find test credentials and test database access you can use in `.env.test`.
+You can create/modify/delete data in this test database.
+
+Always provide me a way to see the browser while you use it.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
