@@ -120,9 +120,16 @@ export default function SourceDescriptionEditForm(
     ) => Promise<MMSourceDescriptionState | undefined>;
     submitTitle?: string;
     title?: string;
+    isReviewMode?: boolean;
   }>,
 ) {
-  const { sourceDescription, onSubmit, submitTitle, title } = props;
+  const {
+    sourceDescription,
+    onSubmit,
+    submitTitle,
+    title,
+    isReviewMode = false,
+  } = props;
   const {
     formState: { errors, isSubmitting, dirtyFields },
     handleSubmit,
@@ -309,6 +316,7 @@ export default function SourceDescriptionEditForm(
             isRequired
             label="Link to the online score"
             controlClassName="flex-none"
+            disabled={isReviewMode}
             onBlur={onLinkBlur}
             onInputChange={onLinkInputChange}
             {...{ register, errors, control }}
@@ -330,9 +338,10 @@ export default function SourceDescriptionEditForm(
             <ExternalLinkIcon className="w-5 h-5" />
           </a>
           <div
-            className={`badge badge-outline py-3.5 gap-1 ${!hasLinkValue ? "badge-neutral" : isLinkDirty ? (isCheckingLink ? "badge-disabled" : "badge-warning") : "badge-success"} cursor-${isLinkDirty ? "pointer" : "auto"}`}
+            className={`badge badge-outline py-3.5 gap-1 ${!hasLinkValue ? "badge-neutral" : isLinkDirty ? (isCheckingLink ? "badge-disabled" : "badge-warning") : "badge-success"} cursor-${!isReviewMode && isLinkDirty ? "pointer" : "auto"}`}
             onClick={(e) => {
               e.preventDefault();
+              if (isReviewMode) return;
               onLinkBlur();
             }}
           >
