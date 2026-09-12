@@ -1,6 +1,6 @@
 "use client";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import {
   MMSourceDescriptionState,
   SourceDescriptionInput,
@@ -120,9 +120,16 @@ export default function SourceDescriptionEditForm(
     ) => Promise<MMSourceDescriptionState | undefined>;
     submitTitle?: string;
     title?: string;
+    isReviewMode?: boolean;
   }>,
 ) {
-  const { sourceDescription, onSubmit, submitTitle, title } = props;
+  const {
+    sourceDescription,
+    onSubmit,
+    submitTitle,
+    title,
+    isReviewMode = false,
+  } = props;
   const {
     formState: { errors, isSubmitting, dirtyFields },
     handleSubmit,
@@ -134,14 +141,13 @@ export default function SourceDescriptionEditForm(
     clearErrors,
     setError,
     setValue,
-    watch,
   } = useForm<SourceDescriptionInput>({
     defaultValues: getFormDefaultValues(sourceDescription),
     resolver: zodResolver(SourceSchema) as any, // Type assertion to bypass strict overload matching
   });
 
   const computedIsDirty = checkAreFieldsDirty(dirtyFields);
-  const noDate = !!watch("noDate");
+  const noDate = !!useWatch({ control, name: "noDate" });
 
   // When "no date" is checked, clear year and estimate flag (DB CHECK constraint).
   useEffect(() => {
@@ -161,7 +167,7 @@ export default function SourceDescriptionEditForm(
 
   const [isLinkDirty, setIsLinkDirty] = useState(false);
   const [isCheckingLink, setIsCheckingLink] = useState(false);
-  const linkValue = watch("link");
+  const linkValue = useWatch({ control, name: "link" });
   const hasLinkValue = !!linkValue;
   const isUrlValid = Boolean(
     linkValue && z.httpUrl().safeParse(linkValue).success,
@@ -309,6 +315,7 @@ export default function SourceDescriptionEditForm(
             isRequired
             label="Link to the online score"
             controlClassName="flex-none"
+            disabled={isReviewMode}
             onBlur={onLinkBlur}
             onInputChange={onLinkInputChange}
             {...{ register, errors, control }}
@@ -330,9 +337,10 @@ export default function SourceDescriptionEditForm(
             <ExternalLinkIcon className="w-5 h-5" />
           </a>
           <div
-            className={`badge badge-outline py-3.5 gap-1 ${!hasLinkValue ? "badge-neutral" : isLinkDirty ? (isCheckingLink ? "badge-disabled" : "badge-warning") : "badge-success"} cursor-${isLinkDirty ? "pointer" : "auto"}`}
+            className={`badge badge-outline py-3.5 gap-1 ${!hasLinkValue ? "badge-neutral" : isLinkDirty ? (isCheckingLink ? "badge-disabled" : "badge-warning") : "badge-success"} cursor-${!isReviewMode && isLinkDirty ? "pointer" : "auto"}`}
             onClick={(e) => {
               e.preventDefault();
+              if (isReviewMode) return;
               onLinkBlur();
             }}
           >

@@ -5,9 +5,12 @@ import { updateFeedForm } from "@/context/feedFormContext";
 import { useFeedForm } from "@/context/feedFormContext";
 import { getStepByRank } from "@/features/feed/multiStepMMSourceForm/stepsUtils";
 import getMMSourceDescriptionInputFromState from "@/utils/getMMSourceDescriptionInputFromState";
+import { useFormSession } from "@/context/formSessionContext";
 
 const MMSourceDescription = () => {
   const { dispatch, currentStepRank, state } = useFeedForm();
+  const formSession = useFormSession();
+  const isReviewMode = formSession.mode === "review";
   const step = getStepByRank(currentStepRank);
 
   const onSubmit = async (
@@ -60,6 +63,7 @@ const MMSourceDescription = () => {
       submitTitle={step.title}
       sourceDescription={sourceDescriptionInput}
       title={step.title}
+      isReviewMode={isReviewMode}
     />
   );
 };
