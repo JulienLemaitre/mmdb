@@ -1,6 +1,6 @@
 "use client";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import {
   MMSourceDescriptionState,
   SourceDescriptionInput,
@@ -141,14 +141,13 @@ export default function SourceDescriptionEditForm(
     clearErrors,
     setError,
     setValue,
-    watch,
   } = useForm<SourceDescriptionInput>({
     defaultValues: getFormDefaultValues(sourceDescription),
     resolver: zodResolver(SourceSchema) as any, // Type assertion to bypass strict overload matching
   });
 
   const computedIsDirty = checkAreFieldsDirty(dirtyFields);
-  const noDate = !!watch("noDate");
+  const noDate = !!useWatch({ control, name: "noDate" });
 
   // When "no date" is checked, clear year and estimate flag (DB CHECK constraint).
   useEffect(() => {
@@ -168,7 +167,7 @@ export default function SourceDescriptionEditForm(
 
   const [isLinkDirty, setIsLinkDirty] = useState(false);
   const [isCheckingLink, setIsCheckingLink] = useState(false);
-  const linkValue = watch("link");
+  const linkValue = useWatch({ control, name: "link" });
   const hasLinkValue = !!linkValue;
   const isUrlValid = Boolean(
     linkValue && z.httpUrl().safeParse(linkValue).success,
