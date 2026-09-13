@@ -9,6 +9,8 @@ export const ONE_MM_REQUIRED = "At least one metronome mark is required.";
 export const MODAL_AREA_ID = "modal-area";
 export const NEED_CONFIRMATION_MODAL_ID = "need-confirmation-modal";
 export const CONFIRM_RESET_ALL_FORMS_MODAL_ID = "confirm-reset-all-forms-modal";
+export const CONFIRM_RESET_SOURCE_CHANGES_MODAL_ID =
+  "confirm-reset-source-changes-modal";
 
 // localStorage
 export const SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY =

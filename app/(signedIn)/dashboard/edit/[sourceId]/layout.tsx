@@ -8,6 +8,7 @@ import { FormSessionProvider } from "@/context/formSessionContext";
 import { FeedFormProvider } from "@/context/feedFormContext";
 import FeedFormShell from "@/features/feed/FeedFormShell";
 import SelfEditSessionBanner from "@/features/feed/components/SelfEditSessionBanner";
+import ResetSourceChanges from "@/features/feed/ResetSourceChanges";
 import { GET_SELF_EDIT_STORAGE_KEYS } from "@/utils/constants";
 import { FormSession } from "@/types/zodTypes";
 
@@ -78,6 +79,7 @@ export default async function SourceEditLayout({
               mMSource={mMSource}
             />
           }
+          asideExtra={<ResetSourceChanges initialState={initialState} />}
         >
           {children}
         </FeedFormShell>
