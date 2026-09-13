@@ -18,6 +18,8 @@ export const GET_URL_API_REVIEW_SUBMIT = (reviewId: string) =>
   `/api/review/${reviewId}/submit` as const;
 export const GET_URL_API_REVIEW_ABORT = (reviewId: string) =>
   `/api/review/${reviewId}/abort` as const;
+export const GET_URL_API_SOURCE_EDIT_SUBMIT = (sourceId: string) =>
+  `/api/source/${sourceId}/edit` as const;
 
 // FRONT routes
 

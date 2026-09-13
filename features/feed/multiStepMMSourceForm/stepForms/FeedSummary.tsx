@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import {
   URL_API_FEEDFORM_SUBMIT,
   GET_URL_API_REVIEW_SUBMIT,
+  GET_URL_API_SOURCE_EDIT_SUBMIT,
   URL_REVIEW_LIST,
+  URL_DASHBOARD,
 } from "@/utils/routes";
 import { fetchAPI } from "@/utils/fetchAPI";
 import { useSession } from "next-auth/react";
@@ -18,6 +20,7 @@ import {
 import {
   localStorageRemoveItems,
   purgeReviewLocalDrafts,
+  purgeSelfEditLocalDrafts,
 } from "@/utils/localStorage";
 import dynamic from "next/dynamic";
 import getKeyLabel from "@/utils/getKeyLabel";
@@ -43,6 +46,7 @@ export default function FeedSummary() {
   const portalContainer = usePortal();
   const formSession = useFormSession();
   const isReviewMode = formSession.mode === "review";
+  const isSelfEditMode = formSession.mode === "self-source-edit";
 
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -192,6 +196,44 @@ export default function FeedSummary() {
       });
   };
 
+  const submitSelfEdit = () => {
+    if (formSession.mode !== "self-source-edit") return;
+
+    const sourceId = formSession.selfEdit.mMSourceId;
+
+    setIsConfirmModalOpen(false);
+    setSubmitStatus("submitting");
+    setErrorMessage(null);
+
+    fetchAPI(
+      GET_URL_API_SOURCE_EDIT_SUBMIT(sourceId),
+      {
+        body: {
+          feedFormState: state,
+        },
+      },
+      session?.user?.accessToken,
+    )
+      .then((response) => {
+        if (response.error) {
+          console.error(
+            "[FeedSummary] Error submitting self-edit:",
+            response.error,
+          );
+          setErrorMessage(response.error);
+          setSubmitStatus("error");
+        } else {
+          purgeSelfEditLocalDrafts(sourceId);
+          setSubmitStatus("success");
+        }
+      })
+      .catch((error) => {
+        console.error("[FeedSummary] Error in self-edit submit:", error);
+        setErrorMessage(error?.message || "Failed to save modifications");
+        setSubmitStatus("error");
+      });
+  };
+
   const onInfoModalOpen = (modalId: string) => {
     //@ts-ignore => Daisy UI modal has an unconventional showModal method
     document?.getElementById(modalId)?.showModal();
@@ -210,6 +252,12 @@ export default function FeedSummary() {
         return;
       }
       setSubmitStatus("idle");
+    } else if (isSelfEditMode) {
+      if (submitStatus === "success") {
+        router.push(URL_DASHBOARD);
+        return;
+      }
+      setSubmitStatus("idle");
     } else {
       if (submitStatus === "success") {
         onReset();
@@ -223,6 +271,9 @@ export default function FeedSummary() {
       if (isReviewMode) {
         return "The review has been approved and submitted successfully.";
       }
+      if (isSelfEditMode) {
+        return "Your modifications have been saved successfully.";
+      }
       return "Your Metronome Mark Source and all the related data has been saved successfully. Thank you!";
     }
     if (submitStatus === "error") {
@@ -230,6 +281,12 @@ export default function FeedSummary() {
         return (
           errorMessage ||
           "Oops! Something went wrong while submitting the review. Please try again."
+        );
+      }
+      if (isSelfEditMode) {
+        return (
+          errorMessage ||
+          "Oops! Something went wrong while saving your modifications. Please try again."
         );
       }
       return (
@@ -241,7 +298,7 @@ export default function FeedSummary() {
   };
 
   const handleClickSubmit = () => {
-    if (isReviewMode) {
+    if (isReviewMode || isSelfEditMode) {
       setIsConfirmModalOpen(true);
     } else {
       saveAll();
@@ -259,6 +316,18 @@ export default function FeedSummary() {
         );
       }
       return "Approve and Submit Review";
+    }
+
+    if (isSelfEditMode) {
+      if (isSubmitting) {
+        return (
+          <>
+            <span className="loading loading-spinner loading-xs mr-2"></span>
+            Saving Modifications...
+          </>
+        );
+      }
+      return "Save Modifications";
     }
 
     if (isSubmitting) {
@@ -601,25 +670,34 @@ export default function FeedSummary() {
           className="btn btn-primary btn-lg"
           type="button"
           onClick={handleClickSubmit}
-          disabled={isSubmitting || (isReviewMode && !isAllStepsComplete)}
+          disabled={
+            isSubmitting ||
+            (isReviewMode && !isAllStepsComplete) ||
+            (isSelfEditMode && !isAllStepsComplete)
+          }
         >
           {getButtonLabel()}
         </button>
       </div>
 
-      {isReviewMode &&
+      {(isReviewMode || isSelfEditMode) &&
         portalContainer &&
         createPortal(
           <dialog
-            id="review-confirm-submit-modal"
+            id="confirm-submit-modal"
             className={`modal ${isConfirmModalOpen ? "modal-open" : ""}`}
             open={isConfirmModalOpen}
           >
             <div className="modal-box">
-              <h3 className="font-bold text-lg">Confirm Review Approval</h3>
+              <h3 className="font-bold text-lg">
+                {isReviewMode
+                  ? "Confirm Review Approval"
+                  : "Confirm Modifications"}
+              </h3>
               <p className="py-4 text-sm">
-                Are you sure you want to approve and submit this review? All
-                your modifications will be permanently applied to the database.
+                {isReviewMode
+                  ? "Are you sure you want to approve and submit this review? All your modifications will be permanently applied to the database."
+                  : "Are you sure you want to save these modifications to your MM Source? Changes will be immediately applied to the database."}
               </p>
               <div className="modal-action">
                 <button
@@ -633,10 +711,10 @@ export default function FeedSummary() {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={submitReview}
+                  onClick={isReviewMode ? submitReview : submitSelfEdit}
                   disabled={isSubmitting}
                 >
-                  Confirm and Submit
+                  {isReviewMode ? "Confirm and Submit" : "Confirm and Save"}
                 </button>
               </div>
             </div>
