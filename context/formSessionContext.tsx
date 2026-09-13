@@ -14,11 +14,14 @@ import {
   GloballyReviewedIds,
   ReviewSessionMeta,
   ReviewSessionMetaSchema,
+  SelfEditSessionMeta,
+  SelfEditSessionMetaSchema,
 } from "@/types/zodTypes";
 import {
   localStorageGetItem,
   localStorageSetItem,
   purgeReviewLocalDrafts,
+  purgeSelfEditLocalDrafts,
 } from "@/utils/localStorage";
 import {
   closeNotification,
@@ -31,6 +34,10 @@ import { getNewUuid } from "@/utils/getNewUuid";
 export type FormSessionContextValue =
   | {
       mode: "data-entering";
+    }
+  | {
+      mode: "self-source-edit";
+      selfEdit: SelfEditSessionMeta;
     }
   | {
       mode: "review";
@@ -138,6 +145,44 @@ export function FormSessionProvider({
       } else {
         localStorageSetItem(storageKey, session.review);
       }
+    } else if (session?.mode === "self-source-edit") {
+      const storageKey = `selfEdit:${session.selfEdit.mMSourceId}:session`;
+      const stored = localStorageGetItem<unknown>(storageKey);
+      if (stored) {
+        const parsed = SelfEditSessionMetaSchema.safeParse(stored);
+        if (
+          parsed.success &&
+          (parsed.data.mMSourceId !== session.selfEdit.mMSourceId ||
+            parsed.data.authorId !== session.selfEdit.authorId)
+        ) {
+          purgeSelfEditLocalDrafts(session.selfEdit.mMSourceId);
+          debug.log(
+            "[formSessionContext] Local draft reset: session does not match current user.",
+            { expected: session.selfEdit, stored: parsed.data },
+          );
+          if (toastContext?.dispatch) {
+            const notificationId = getNewUuid();
+            toastContext.dispatch({
+              type: toastNotificationAction.ADD,
+              payload: {
+                notification: {
+                  id: notificationId,
+                  type: toastNotificationAction.WARNING,
+                  message:
+                    "Local draft reset: session does not match current user.",
+                  active: true,
+                },
+              },
+            });
+            setTimeout(() => {
+              closeNotification(toastContext.dispatch, notificationId);
+            }, 6000);
+          }
+          localStorageSetItem(storageKey, session.selfEdit);
+        }
+      } else {
+        localStorageSetItem(storageKey, session.selfEdit);
+      }
     }
   }, [session, toastContext]);
 
@@ -165,6 +210,12 @@ export function FormSessionProvider({
         review: review && review.reviewId === session.review.reviewId ? review : session.review,
         globallyReviewed: session.globallyReviewed,
         setOverallComment,
+      };
+    }
+    if (session?.mode === "self-source-edit") {
+      return {
+        mode: "self-source-edit",
+        selfEdit: session.selfEdit,
       };
     }
     return {

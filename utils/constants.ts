@@ -24,6 +24,14 @@ export const GET_REVIEW_STORAGE_KEYS = (reviewId: string) => ({
   collectionPieceVersionForm: `review:${reviewId}:collectionPieceVersionForm`,
 });
 
+export const SELF_EDIT_LOCAL_STORAGE_PREFIX = "selfEdit";
+export const GET_SELF_EDIT_STORAGE_KEYS = (mMSourceId: string) => ({
+  session: `selfEdit:${mMSourceId}:session`,
+  feedForm: `selfEdit:${mMSourceId}:feedForm`,
+  singlePieceVersionForm: `selfEdit:${mMSourceId}:singlePieceVersionForm`,
+  collectionPieceVersionForm: `selfEdit:${mMSourceId}:collectionPieceVersionForm`,
+});
+
 // Feed Form
 
 export const FEED_FORM_LOCAL_STORAGE_KEY = "feedForm";

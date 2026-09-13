@@ -29,3 +29,5 @@ export const URL_REVIEW_LIST = "/review";
 export const URL_ADMIN = "/admin";
 export const GET_URL_REVIEW = (reviewId: string) =>
   `/review/${reviewId}` as const;
+export const GET_URL_SOURCE_EDIT = (sourceId: string) =>
+  `/dashboard/edit/${sourceId}` as const;
