@@ -64,6 +64,14 @@ export default withAuth(
         return NextResponse.rewrite(new URL("/not-authorized", req.url));
       }
     }
+    if (req.nextUrl.pathname.startsWith("/dashboard")) {
+      if (!hasValidToken) {
+        return NextResponse.rewrite(new URL("/logout", req.url));
+      }
+      if (!["USER", "EDITOR", "REVIEWER", "ADMIN"].includes(userRole)) {
+        return NextResponse.rewrite(new URL("/not-authorized", req.url));
+      }
+    }
   },
   // These are the options
   {
@@ -77,5 +85,11 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/admin/:path*", "/feed/:path*", "/explore/:path*", "/review/:path*"],
+  matcher: [
+    "/admin/:path*",
+    "/dashboard/:path*",
+    "/feed/:path*",
+    "/explore/:path*",
+    "/review/:path*",
+  ],
 };
