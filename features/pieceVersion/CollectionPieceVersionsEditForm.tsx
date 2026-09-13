@@ -34,6 +34,7 @@ import XMarkIcon from "@/ui/svg/XMarkIcon";
 import PieceVersionDisplay from "@/features/pieceVersion/PieceVersionDisplay";
 import InformationCircleIcon from "@/ui/svg/InformationCircleIcon";
 import { useFeedForm } from "@/context/feedFormContext";
+import { prodLog } from "@/utils/debugLogger";
 
 type CollectionPieceVersionsEditFormProps = {
   isUpdateMode: boolean;
@@ -87,7 +88,7 @@ function CollectionPieceVersionsEditForm({
     (list, pieceId) => {
       const piece = getPieceById(pieceId);
       if (!piece) {
-        console.warn(
+        prodLog.warn(
           `[CollectionPieceVersionsEditForm] piece not found for pieceIdNeedingVersion: ${pieceId}`,
         );
       }
@@ -127,8 +128,7 @@ function CollectionPieceVersionsEditForm({
   // When an existing collection has been selected, and a piece is selected in order to select or create its pieceVersion
   const onEditCollectionPieceVersion = (
     collectionPieceVersion:
-      | MMSourceOnPieceVersionsState
-      | PieceStateWithCollectionRank,
+      MMSourceOnPieceVersionsState | PieceStateWithCollectionRank,
   ) => {
     let pieceVersion: PieceVersionState | undefined,
       piece: PieceState | undefined,
@@ -151,7 +151,7 @@ function CollectionPieceVersionsEditForm({
     }
 
     if (!piece) {
-      console.warn(
+      prodLog.warn(
         `[CollectionPieceVersionsEditForm] onEditCollectionPieceVersion - piece not found`,
       );
       return;
@@ -167,9 +167,12 @@ function CollectionPieceVersionsEditForm({
         ),
     );
 
+    // In collection edit mode, composer and piece are already defined: start directly at pieceVersion step (rank 2)
+    const initialStepRank = pieceVersion ? 2 : 1;
+
     const singlePieceVersionFormEditState: SinglePieceVersionFormState = {
       formInfo: {
-        currentStepRank: 0,
+        currentStepRank: initialStepRank,
         mMSourceOnPieceVersionRank: rank,
       },
       composer,
@@ -177,7 +180,7 @@ function CollectionPieceVersionsEditForm({
       pieceVersion,
       tempoIndications,
     };
-    console.info(
+    prodLog.info(
       `[onEditCollectionPieceVersion] singlePieceVersionFormEditState :`,
       singlePieceVersionFormEditState,
     );
@@ -189,7 +192,7 @@ function CollectionPieceVersionsEditForm({
     setPieceVersionToDiscardId(pieceVersionId);
   };
 
-  const onDeletePieceVersion = (pieceVersionId) => {
+  const onDeletePieceVersion = (pieceVersionId: string) => {
     upsertCollectionMMSourceOnPieceVersions(dispatch, {
       deleteIdArray: [pieceVersionId],
     });
@@ -203,21 +206,21 @@ function CollectionPieceVersionsEditForm({
     );
 
     if (!mMSourceOnPieceVersion) {
-      console.log(`[onMovePiece] Piece version not found: ${pieceVersionId}`);
+      prodLog.info(`[onMovePiece] Piece version not found: ${pieceVersionId}`);
       return;
     }
 
     // Check boundaries based on direction
     if (direction === "up") {
       if (mMSourceOnPieceVersion.rank <= 1) {
-        console.log(`[onMovePiece] Piece is already at the top`);
+        prodLog.info(`[onMovePiece] Piece is already at the top`);
         return;
       }
     } else if (
       mMSourceOnPieceVersion.rank >=
       (state.mMSourceOnPieceVersions || []).length
     ) {
-      console.log(`[onMovePiece] Piece is already at the bottom`);
+      prodLog.info(`[onMovePiece] Piece is already at the bottom`);
       return;
     }
 
@@ -243,7 +246,7 @@ function CollectionPieceVersionsEditForm({
       singlePieceVersionFormState;
 
     if (!piece || !pieceVersion) {
-      console.error(
+      prodLog.error(
         `[CollectionPieceVersionsEditForm] onSinglePieceSubmit - missing piece or pieceVersion`,
         { piece, pieceVersion },
       );
@@ -313,37 +316,6 @@ function CollectionPieceVersionsEditForm({
 
   return (
     <>
-      <style jsx>{`
-        .tooltip:hover .tooltip-content {
-          display: block;
-          position: absolute;
-          z-index: 1000;
-          background: white;
-          border: 1px solid #e5e7eb;
-          border-radius: 0.5rem;
-          padding: 1rem;
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-          max-width: 600px;
-          right: 100%;
-          top: 50%;
-          transform: translateY(-50%);
-          margin-right: 0.5rem;
-          text-align: left;
-        }
-        .tooltip-content {
-          display: none;
-        }
-        .tooltip-icon {
-          cursor: help;
-        }
-        @media (prefers-color-scheme: dark) {
-          .tooltip:hover .tooltip-content {
-            background: #1f2937;
-            border-color: #374151;
-            color: white;
-          }
-        }
-      `}</style>
       {isSinglePieceVersionFormOpen ? (
         <>
           <SinglePieceVersionFormProvider initialState={updateInitState}>
@@ -392,11 +364,9 @@ function CollectionPieceVersionsEditForm({
                                     {`${index + 1} - ${piece.title}`}
                                   </h4>
                                   {pieceVersion && (
-                                    <div
-                                      className="tooltip tooltip-right"
-                                      data-tip=""
-                                    >
-                                      <div className="tooltip-content">
+                                    <div className="relative group">
+                                      <InformationCircleIcon className="w-5 h-5 text-info/50 hover:text-info cursor-help" />
+                                      <div className="hidden group-hover:block absolute z-50 bg-base-100 dark:bg-base-200 border border-base-300 rounded-lg p-4 shadow-lg w-max max-w-xl left-full top-1/2 -translate-y-1/2 ml-2 text-left">
                                         <PieceVersionDisplay
                                           pieceVersion={pieceVersion}
                                           tempoIndicationList={
@@ -404,7 +374,6 @@ function CollectionPieceVersionsEditForm({
                                           }
                                         />
                                       </div>
-                                      <InformationCircleIcon className="w-5 h-5 text-info/50 hover:text-info tooltip-icon" />
                                     </div>
                                   )}
                                 </div>
@@ -461,7 +430,7 @@ function CollectionPieceVersionsEditForm({
                       : undefined;
 
                     if (!pieceVersion || !piece) {
-                      console.warn(
+                      prodLog.warn(
                         `[CollectionPieceVersionsEditForm] Cannot render piece row: missing pieceVersion or piece for pieceVersionId ${collectionPieceVersion.pieceVersionId}`,
                       );
                       return null;
@@ -473,10 +442,21 @@ function CollectionPieceVersionsEditForm({
                       >
                         <div className="px-4 py-3 border border-base-300 rounded-lg hover:border-base-400 hover:shadow-xs hover:bg-primary/5 transition-all duration-150">
                           <div className="flex gap-4 items-center justify-between">
-                            <div className="grow">
+                            <div className="grow flex items-center gap-2">
                               <h4 className="text-base font-bold text-secondary">
                                 {`${index + 1} - ${piece.title}`}
                               </h4>
+                              {pieceVersion && (
+                                <div className="relative group">
+                                  <InformationCircleIcon className="w-5 h-5 text-info/50 hover:text-info cursor-help" />
+                                  <div className="hidden group-hover:block absolute z-50 bg-base-100 dark:bg-base-200 border border-base-300 rounded-lg p-4 shadow-lg w-max max-w-xl left-full top-1/2 -translate-y-1/2 ml-2 text-left">
+                                    <PieceVersionDisplay
+                                      pieceVersion={pieceVersion}
+                                      tempoIndicationList={tempoIndicationList}
+                                    />
+                                  </div>
+                                </div>
+                              )}
                             </div>
                             <div className="flex gap-2 shrink-0">
                               <button
@@ -573,7 +553,9 @@ function CollectionPieceVersionsEditForm({
       )}
       <NeedConfirmationModal
         modalId={NEED_CONFIRMATION_MODAL_ID}
-        onConfirm={() => onDeletePieceVersion(pieceVersionToDiscardId)}
+        onConfirm={
+          () => onDeletePieceVersion(pieceVersionToDiscardId as string) // By design, isConfirmationModalOpened = true implies pieceVersionToDiscardId: string
+        }
         onCancel={() => setPieceVersionToDiscardId(null)}
         description={`Delete a piece version from the collection`}
         isOpened={isConfirmationModalOpened}

@@ -23,6 +23,7 @@ import {
   SINGLE_PIECE_VERSION_FORM_INITIAL_STATE,
   SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
 } from "@/utils/constants";
+import { prodLog } from "@/utils/debugLogger";
 
 type Dispatch = (action: SinglePieceVersionFormAction) => void;
 
@@ -39,6 +40,7 @@ export function SinglePieceVersionFormProvider({
   storageKey = SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
   initialState,
 }: Readonly<SinglePieceVersionFormProviderProps>) {
+  prodLog.info(`[SinglePieceVersionFormProvider] initialState :`, initialState);
   const [reducer] = useState(() =>
     createSinglePieceVersionFormReducer(
       storageKey,
@@ -52,14 +54,14 @@ export function SinglePieceVersionFormProvider({
 
   useEffect(() => {
     if (initialState) {
-      console.info(
+      prodLog.info(
         `[useEffect] initialState is not null => don't use localStorage value`,
       );
       return;
     }
     const localStorageValue: any = localStorageGetItem(storageKey);
     if (localStorageValue) {
-      console.info(
+      prodLog.info(
         `[INIT] SinglePieceVersions from localStorage key: ${storageKey}`,
         localStorageValue,
       );

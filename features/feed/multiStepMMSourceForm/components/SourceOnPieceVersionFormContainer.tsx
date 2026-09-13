@@ -280,37 +280,6 @@ const SourceOnPieceVersionFormContainer = ({
 
   return (
     <>
-      <style jsx>{`
-        .tooltip:hover .tooltip-content {
-          display: block;
-          position: absolute;
-          z-index: 1000;
-          background: white;
-          border: 1px solid #e5e7eb;
-          border-radius: 0.5rem;
-          padding: 1rem;
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-          max-width: 600px;
-          right: 100%;
-          top: 50%;
-          transform: translateY(-50%);
-          margin-right: 0.5rem;
-          text-align: left;
-        }
-        .tooltip-content {
-          display: none;
-        }
-        .tooltip-icon {
-          cursor: help;
-        }
-        @media (prefers-color-scheme: dark) {
-          .tooltip:hover .tooltip-content {
-            background: #1f2937;
-            border-color: #374151;
-            color: white;
-          }
-        }
-      `}</style>
       {isIntro ? (
         <div className="w-full prose">
           <h1>{title}</h1>
@@ -457,11 +426,9 @@ const SourceOnPieceVersionFormContainer = ({
                                   <h4 className="text-base font-medium text-secondary">
                                     {`${item.mMSourceOnPieceVersion.rank} - ${item.piece.title}`}
                                   </h4>
-                                  <div
-                                    className="tooltip tooltip-right"
-                                    data-tip=""
-                                  >
-                                    <div className="tooltip-content">
+                                  <div className="relative group">
+                                    <InformationCircleIcon className="w-5 h-5 text-info/50 hover:text-info cursor-help" />
+                                    <div className="hidden group-hover:block absolute z-50 bg-base-100 dark:bg-base-200 border border-base-300 rounded-lg p-4 shadow-lg w-max max-w-xl left-full top-1/2 -translate-y-1/2 ml-2 text-left">
                                       <PieceVersionDisplay
                                         pieceVersion={item.pieceVersion}
                                         tempoIndicationList={
@@ -469,7 +436,6 @@ const SourceOnPieceVersionFormContainer = ({
                                         }
                                       />
                                     </div>
-                                    <InformationCircleIcon className="w-5 h-5 text-info/50 hover:text-info tooltip-icon" />
                                   </div>
                                 </div>
                               </div>
@@ -498,14 +464,14 @@ const SourceOnPieceVersionFormContainer = ({
                                   ` - ${getPersonName(item.composer)}`}
                               </span>
                             </h4>
-                            <div className="tooltip tooltip-right" data-tip="">
-                              <div className="tooltip-content">
+                            <div className="relative group">
+                              <InformationCircleIcon className="w-5 h-5 text-info/50 hover:text-info cursor-help" />
+                              <div className="hidden group-hover:block absolute z-50 bg-base-100 dark:bg-base-200 border border-base-300 rounded-lg p-4 shadow-lg w-max max-w-xl left-full top-1/2 -translate-y-1/2 ml-2 text-left">
                                 <PieceVersionDisplay
                                   pieceVersion={item.pieceVersion}
                                   tempoIndicationList={tempoIndicationList}
                                 />
                               </div>
-                              <InformationCircleIcon className="w-5 h-5 text-info/50 hover:text-info tooltip-icon" />
                             </div>
                           </div>
                         </div>
