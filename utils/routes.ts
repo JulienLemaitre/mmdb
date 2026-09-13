@@ -24,6 +24,7 @@ export const GET_URL_API_REVIEW_ABORT = (reviewId: string) =>
 export const URL_HOME = "/";
 export const URL_EXPLORE = "/explore";
 export const URL_FEED = "/feed";
+export const URL_DASHBOARD = "/dashboard";
 export const URL_REVIEW_LIST = "/review";
 export const URL_ADMIN = "/admin";
 export const GET_URL_REVIEW = (reviewId: string) =>
