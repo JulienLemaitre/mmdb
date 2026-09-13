@@ -29,7 +29,11 @@ export default function ReviewDiffModal({
   const { state } = useFeedForm();
 
   const reviewId =
-    session.mode === "review" ? session.review.reviewId : "current-review";
+    session.mode === "review"
+      ? session.review.reviewId
+      : session.mode === "self-source-edit"
+        ? session.selfEdit.mMSourceId
+        : "current-review";
 
   const diffItems: AuditLogItem[] = useMemo(() => {
     if (!isOpen || !baseline || !state) return [];
@@ -57,7 +61,11 @@ export default function ReviewDiffModal({
   if (!isOpen || !portalContainer) return null;
 
   const modalTitle =
-    title || state.mMSourceDescription?.title || "Review Modifications";
+    title ||
+    state.mMSourceDescription?.title ||
+    (session.mode === "self-source-edit"
+      ? "Source Modifications"
+      : "Review Modifications");
 
   return createPortal(
     <dialog open className="modal modal-open">

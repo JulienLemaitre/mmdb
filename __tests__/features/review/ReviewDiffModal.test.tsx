@@ -242,6 +242,41 @@ describe("ReviewDiffModal", () => {
     expect(screen.getByText("Review Modifications")).toBeInTheDocument();
   });
 
+  it("supports self-source-edit mode and falls back to 'Source Modifications' when title is absent", () => {
+    const selfEditSession: FormSession = {
+      mode: "self-source-edit",
+      selfEdit: {
+        mMSourceId: "src-1",
+        authorId: "user-123",
+      },
+    };
+
+    const baselineWithoutTitle = {
+      ...mockBaseline,
+      mMSourceDescription: {
+        ...mockBaseline.mMSourceDescription,
+        title: undefined,
+      },
+    } as unknown as FeedFormState;
+
+    render(
+      <FormSessionProvider session={selfEditSession}>
+        <FeedFormProvider
+          initialState={baselineWithoutTitle}
+          storageKey="test-feed-form"
+        >
+          <ReviewDiffModal
+            isOpen={true}
+            onClose={mockOnClose}
+            baseline={baselineWithoutTitle}
+          />
+        </FeedFormProvider>
+      </FormSessionProvider>,
+    );
+
+    expect(screen.getByText("Source Modifications")).toBeInTheDocument();
+  });
+
   it("handles errors gracefully if composeAuditEntries throws", () => {
     const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
     mockComposeAuditEntries.mockImplementationOnce(() => {

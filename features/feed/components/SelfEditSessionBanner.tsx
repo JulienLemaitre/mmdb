@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useFormSession } from "@/context/formSessionContext";
 import { useFeedForm } from "@/context/feedFormContext";
 import { FeedFormState } from "@/types/feedFormTypes";
+import ReviewDiffModal from "@/features/review/components/ReviewDiffModal";
+import EyeIcon from "@/ui/svg/EyeIcon";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
 import { URL_DASHBOARD } from "@/utils/routes";
 
@@ -26,6 +28,7 @@ export default function SelfEditSessionBanner({
   const session = useFormSession();
   const { state } = useFeedForm();
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [isDiffModalOpen, setIsDiffModalOpen] = useState(false);
 
   if (session.mode !== "self-source-edit") {
     return null;
@@ -117,8 +120,17 @@ export default function SelfEditSessionBanner({
           </p>
         </div>
 
-        {/* Right: Cancel button */}
-        <div className="flex items-center gap-2 shrink-0">
+        {/* Right: Actions */}
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <button
+            type="button"
+            className="btn btn-sm btn-outline gap-1.5"
+            onClick={() => setIsDiffModalOpen(true)}
+          >
+            <EyeIcon className="w-4 h-4" />
+            <span>View Changes</span>
+          </button>
+
           <button
             type="button"
             className="btn btn-sm btn-outline btn-neutral"
@@ -129,9 +141,17 @@ export default function SelfEditSessionBanner({
         </div>
       </div>
 
+      {/* Modals */}
+      <ReviewDiffModal
+        isOpen={isDiffModalOpen}
+        onClose={() => setIsDiffModalOpen(false)}
+        baseline={baseline}
+        title={title}
+      />
+
       {/* Confirmation Modal */}
       {isCancelModalOpen && (
-        <dialog className="modal modal-open">
+        <dialog open className="modal modal-open">
           <div className="modal-box max-w-md">
             <h3 className="font-bold text-lg">Leave Editing Session?</h3>
             <p className="py-4 text-sm text-base-content/80">
