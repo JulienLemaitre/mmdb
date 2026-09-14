@@ -93,8 +93,18 @@ export const ReviewSessionMetaSchema = z.object({
 });
 export type ReviewSessionMeta = z.infer<typeof ReviewSessionMetaSchema>;
 
+export const SelfEditSessionMetaSchema = z.object({
+  mMSourceId: z.string(),
+  authorId: z.string(),
+});
+export type SelfEditSessionMeta = z.infer<typeof SelfEditSessionMetaSchema>;
+
 export const FormSessionSchema = z.discriminatedUnion("mode", [
   z.object({ mode: z.literal("data-entering") }),
+  z.object({
+    mode: z.literal("self-source-edit"),
+    selfEdit: SelfEditSessionMetaSchema,
+  }),
   z.object({
     mode: z.literal("review"),
     review: ReviewSessionMetaSchema,

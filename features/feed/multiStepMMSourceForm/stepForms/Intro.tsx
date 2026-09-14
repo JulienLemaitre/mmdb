@@ -16,6 +16,39 @@ export default function Intro() {
     });
   };
 
+  if (session.mode === "self-source-edit") {
+    return (
+      <div className="w-full prose prose-a:text-primary prose-a:hover:text-primary/70">
+        <h1>Editing Your MM Source</h1>
+        <p>
+          You are editing an MM Source you previously submitted. You can modify
+          any metadata, pieces, movements, sections, and metronome marks. Your
+          modifications are kept in a local draft until you save them in the final
+          summary step.
+        </p>
+        <p>
+          Please note: modifications can only be saved while the source is still
+          pending and no review has started.
+        </p>
+        <p>
+          You can access the help section at any time by clicking the{" "}
+          <label
+            htmlFor="my-drawer-4"
+            className="drawer-button btn btn-link h-auto min-h-fit px-0 align-bottom"
+          >
+            <QuestionMarkCircleIcon className="w-7 h-7" />
+          </label>{" "}
+          button at the top right of this page. You will find contextual help for
+          each step and a general glossary of the terminology used on this
+          website.
+        </p>
+        <button className="btn btn-primary" onClick={handleStart}>
+          Start Editing
+        </button>
+      </div>
+    );
+  }
+
   if (session.mode === "review") {
     return (
       <div className="w-full prose prose-a:text-primary prose-a:hover:text-primary/70">

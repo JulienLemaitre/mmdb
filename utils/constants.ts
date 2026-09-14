@@ -9,6 +9,8 @@ export const ONE_MM_REQUIRED = "At least one metronome mark is required.";
 export const MODAL_AREA_ID = "modal-area";
 export const NEED_CONFIRMATION_MODAL_ID = "need-confirmation-modal";
 export const CONFIRM_RESET_ALL_FORMS_MODAL_ID = "confirm-reset-all-forms-modal";
+export const CONFIRM_RESET_SOURCE_CHANGES_MODAL_ID =
+  "confirm-reset-source-changes-modal";
 
 // localStorage
 export const SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY =
@@ -22,6 +24,14 @@ export const GET_REVIEW_STORAGE_KEYS = (reviewId: string) => ({
   feedForm: `review:${reviewId}:feedForm`,
   singlePieceVersionForm: `review:${reviewId}:singlePieceVersionForm`,
   collectionPieceVersionForm: `review:${reviewId}:collectionPieceVersionForm`,
+});
+
+export const SELF_EDIT_LOCAL_STORAGE_PREFIX = "selfEdit";
+export const GET_SELF_EDIT_STORAGE_KEYS = (mMSourceId: string) => ({
+  session: `selfEdit:${mMSourceId}:session`,
+  feedForm: `selfEdit:${mMSourceId}:feedForm`,
+  singlePieceVersionForm: `selfEdit:${mMSourceId}:singlePieceVersionForm`,
+  collectionPieceVersionForm: `selfEdit:${mMSourceId}:collectionPieceVersionForm`,
 });
 
 // Feed Form

@@ -17,7 +17,7 @@ export default function DebugBox({
 }: DebugBoxProps) {
   const searchParams = useSearchParams();
 
-  const debug = searchParams.get("debug");
+  const debug = searchParams?.get("debug");
   const isDebug = debug === "true";
 
   if (!isDebug) return null;

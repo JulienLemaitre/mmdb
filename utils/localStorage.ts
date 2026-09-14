@@ -1,6 +1,8 @@
 import {
   GET_REVIEW_STORAGE_KEYS,
+  GET_SELF_EDIT_STORAGE_KEYS,
   REVIEW_LOCAL_STORAGE_PREFIX,
+  SELF_EDIT_LOCAL_STORAGE_PREFIX,
 } from "@/utils/constants";
 
 const USE_LOCAL_STORAGE = true;
@@ -135,6 +137,29 @@ export function purgeReviewLocalDrafts(reviewId?: string): void {
       key &&
       (key.startsWith(`${REVIEW_LOCAL_STORAGE_PREFIX}:`) ||
         key === REVIEW_LOCAL_STORAGE_PREFIX)
+    ) {
+      keysToRemove.push(key);
+    }
+  }
+  localStorageRemoveItems(keysToRemove);
+}
+
+export function purgeSelfEditLocalDrafts(mMSourceId?: string): void {
+  if (!isLocalStorageAvailable()) return;
+
+  if (mMSourceId) {
+    const keys = Object.values(GET_SELF_EDIT_STORAGE_KEYS(mMSourceId));
+    localStorageRemoveItems(keys);
+    return;
+  }
+
+  const keysToRemove: string[] = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (
+      key &&
+      (key.startsWith(`${SELF_EDIT_LOCAL_STORAGE_PREFIX}:`) ||
+        key === SELF_EDIT_LOCAL_STORAGE_PREFIX)
     ) {
       keysToRemove.push(key);
     }

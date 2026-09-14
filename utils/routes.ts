@@ -18,13 +18,18 @@ export const GET_URL_API_REVIEW_SUBMIT = (reviewId: string) =>
   `/api/review/${reviewId}/submit` as const;
 export const GET_URL_API_REVIEW_ABORT = (reviewId: string) =>
   `/api/review/${reviewId}/abort` as const;
+export const GET_URL_API_SOURCE_EDIT_SUBMIT = (sourceId: string) =>
+  `/api/source/${sourceId}/edit` as const;
 
 // FRONT routes
 
 export const URL_HOME = "/";
 export const URL_EXPLORE = "/explore";
 export const URL_FEED = "/feed";
+export const URL_DASHBOARD = "/dashboard";
 export const URL_REVIEW_LIST = "/review";
 export const URL_ADMIN = "/admin";
 export const GET_URL_REVIEW = (reviewId: string) =>
   `/review/${reviewId}` as const;
+export const GET_URL_SOURCE_EDIT = (sourceId: string) =>
+  `/dashboard/edit/${sourceId}` as const;

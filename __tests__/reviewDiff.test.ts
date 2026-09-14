@@ -209,6 +209,67 @@ describe("computeChangedFieldPaths with FeedFormState", () => {
     expect(changes.length).toBe(0);
   });
 
+  it("ignores noMM: true entries and detects no changes between identical baselines with noMM entries", () => {
+    const working = clone(baseline);
+    const noMmEntry = {
+      sectionId: "sec-empty-1",
+      pieceVersionId: "pv-1",
+      noMM: true,
+    } as any;
+    baseline.metronomeMarks!.push(noMmEntry);
+    working.metronomeMarks!.push(clone(noMmEntry));
+
+    const changes = computeChangedFieldPaths(baseline, working);
+    expect(changes.length).toBe(0);
+  });
+
+  it("detects creation when a section with noMM: true receives a real metronome mark", () => {
+    baseline.metronomeMarks!.push({
+      sectionId: "sec-empty-1",
+      pieceVersionId: "pv-1",
+      noMM: true,
+    } as any);
+
+    const working = clone(baseline);
+    working.metronomeMarks = working.metronomeMarks!.filter(
+      (m: any) => m.sectionId !== "sec-empty-1",
+    );
+    working.metronomeMarks.push({
+      id: "mm-new-1",
+      sectionId: "sec-empty-1",
+      pieceVersionId: "pv-1",
+      beatUnit: "QUARTER",
+      bpm: 132,
+      comment: "Newly added mark",
+      noMM: false,
+    } as any);
+
+    const changes = computeChangedFieldPaths(baseline, working);
+    const paths = changes.map((c) => c.fieldPath);
+
+    expect(paths).toContain("metronomeMark[mm-new-1].bpm");
+    expect(paths).toContain("metronomeMark[mm-new-1].beatUnit");
+    expect(paths).toContain("metronomeMark[mm-new-1].comment");
+  });
+
+  it("detects deletion when an existing real metronome mark is turned into noMM: true", () => {
+    const deletedMmId = baseline.metronomeMarks![0].id;
+    const working = clone(baseline);
+
+    working.metronomeMarks![0] = {
+      sectionId: baseline.metronomeMarks![0].sectionId,
+      pieceVersionId: baseline.metronomeMarks![0].pieceVersionId,
+      noMM: true,
+    } as any;
+
+    const changes = computeChangedFieldPaths(baseline, working);
+    const paths = changes.map((c) => c.fieldPath);
+
+    expect(paths).toContain(`metronomeMark[${deletedMmId}].bpm`);
+    expect(paths).toContain(`metronomeMark[${deletedMmId}].beatUnit`);
+    expect(paths).toContain(`metronomeMark[${deletedMmId}].comment`);
+  });
+
   describe("resilience against missing entity IDs (Scenario 5)", () => {
     it("handles contribution added without ID without throwing and retains all diff entries", () => {
       const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
