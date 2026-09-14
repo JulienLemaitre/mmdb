@@ -86,7 +86,7 @@ export default async function DashboardPage({
     <div className="min-h-screen flex flex-col bg-base-200/30">
       <NavBar title="Dashboard" />
 
-      <main className="flex-1 container mx-auto px-4 py-8 max-w-6xl">
+      <main className="flex-1 container mx-auto px-4 py-8 max-w-7xl">
         <div className="space-y-6">
           {reasonMessage && (
             <div className="alert alert-warning shadow-sm">
@@ -113,8 +113,8 @@ export default async function DashboardPage({
                 My MM Sources
               </h1>
               <p className="text-sm text-base-content/60 mt-1">
-                Manage and track review status for your contributed metronome mark
-                sources.
+                Manage and track review status for your contributed metronome
+                mark sources.
               </p>
             </div>
             <div className="flex items-center gap-2">

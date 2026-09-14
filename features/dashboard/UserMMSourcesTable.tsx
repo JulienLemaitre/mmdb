@@ -143,7 +143,7 @@ export default function UserMMSourcesTable({
                       : "This MM Source cannot be edited.";
 
               return (
-                <tr key={source.id} className="hover">
+                <tr key={source.id} className="hover hover:bg-base-200">
                   <td className="font-semibold text-base-content max-w-xs">
                     <div
                       className="truncate"
