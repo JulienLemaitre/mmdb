@@ -186,6 +186,108 @@ describe("getSourceFeedFormBaseline & getSourceEditBaseline", () => {
       expect(baseline.metronomeMarks![0].bpm).toBe(108);
       expect(baseline.metronomeMarks![0].noMM).toBe(false);
     });
+
+    it("generates noMM: true for sections that have no metronome mark in the database", async () => {
+      const sourceWithEmptySections = {
+        ...sampleDbMMSource,
+        pieceVersions: [
+          {
+            ...sampleDbMMSource.pieceVersions[0],
+            pieceVersion: {
+              ...sampleDbMMSource.pieceVersions[0].pieceVersion,
+              movements: [
+                {
+                  ...sampleDbMMSource.pieceVersions[0].pieceVersion.movements[0],
+                  sections: [
+                    sampleDbMMSource.pieceVersions[0].pieceVersion.movements[0].sections[0],
+                    {
+                      id: "sec-2",
+                      rank: 1,
+                      metreNumerator: 3,
+                      metreDenominator: 4,
+                      isCommonTime: false,
+                      isCutTime: false,
+                      fastestStructuralNotesPerBar: NOTE_VALUE.QUARTER,
+                      fastestBelCantoNotesPerBar: null,
+                      fastestStaccatoNotesPerBar: null,
+                      fastestRepeatedNotesPerBar: null,
+                      fastestOrnamentalNotesPerBar: null,
+                      tempoIndicationId: null,
+                      tempoIndication: null,
+                      comment: null,
+                      commentForReview: null,
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+        // metronomeMarks contains only sec-1, sec-2 has none
+        metronomeMarks: [
+          {
+            id: "mm-1",
+            beatUnit: NOTE_VALUE.HALF,
+            bpm: 108,
+            comment: "Half note = 108",
+            sectionId: "sec-1",
+          },
+        ],
+      };
+
+      mockMMSourceFindUnique.mockResolvedValue(sourceWithEmptySections);
+      mockOrganizationFindMany.mockResolvedValue([]);
+      mockPersonFindMany.mockResolvedValue([]);
+      mockCollectionFindMany.mockResolvedValue([]);
+
+      const result = await getSourceFeedFormBaseline("src-1");
+      expect(result).not.toBeNull();
+      const { baseline } = result!;
+
+      expect(baseline.metronomeMarks).toHaveLength(2);
+      const mm1 = baseline.metronomeMarks!.find((m) => m.sectionId === "sec-1");
+      const mm2 = baseline.metronomeMarks!.find((m) => m.sectionId === "sec-2");
+
+      expect(mm1).toEqual({
+        id: "mm-1",
+        sectionId: "sec-1",
+        beatUnit: NOTE_VALUE.HALF,
+        bpm: 108,
+        comment: "Half note = 108",
+        pieceVersionId: "pv-1",
+        noMM: false,
+      });
+
+      expect(mm2).toEqual({
+        sectionId: "sec-2",
+        pieceVersionId: "pv-1",
+        noMM: true,
+      });
+    });
+
+    it("throws an error if a metronome mark references an orphan sectionId", async () => {
+      const sourceWithOrphanMM = {
+        ...sampleDbMMSource,
+        metronomeMarks: [
+          {
+            id: "mm-orphan",
+            beatUnit: NOTE_VALUE.HALF,
+            bpm: 108,
+            comment: null,
+            sectionId: "sec-non-existent",
+          },
+        ],
+      };
+
+      mockMMSourceFindUnique.mockResolvedValue(sourceWithOrphanMM);
+      mockOrganizationFindMany.mockResolvedValue([]);
+      mockPersonFindMany.mockResolvedValue([]);
+      mockCollectionFindMany.mockResolvedValue([]);
+
+      await expect(getSourceFeedFormBaseline("src-1")).rejects.toThrow(
+        "[getSourceFeedFormBaseline] Metronome mark sectionId sec-non-existent not found in pieceVersions",
+      );
+    });
   });
 
   describe("getSourceEditBaseline", () => {
@@ -261,6 +363,75 @@ describe("getSourceFeedFormBaseline & getSourceEditBaseline", () => {
         introDone: false,
         allSourceOnPieceVersionsDone: true,
       });
+    });
+
+    it("generates noMM: true entries in both baseline and initialState for sections without DB marks", async () => {
+      const sourceWithEmptySections = {
+        ...sampleDbMMSource,
+        pieceVersions: [
+          {
+            ...sampleDbMMSource.pieceVersions[0],
+            pieceVersion: {
+              ...sampleDbMMSource.pieceVersions[0].pieceVersion,
+              movements: [
+                {
+                  ...sampleDbMMSource.pieceVersions[0].pieceVersion.movements[0],
+                  sections: [
+                    sampleDbMMSource.pieceVersions[0].pieceVersion.movements[0].sections[0],
+                    {
+                      id: "sec-2",
+                      rank: 1,
+                      metreNumerator: 3,
+                      metreDenominator: 4,
+                      isCommonTime: false,
+                      isCutTime: false,
+                      fastestStructuralNotesPerBar: null,
+                      fastestBelCantoNotesPerBar: null,
+                      fastestStaccatoNotesPerBar: null,
+                      fastestRepeatedNotesPerBar: null,
+                      fastestOrnamentalNotesPerBar: null,
+                      tempoIndicationId: null,
+                      tempoIndication: null,
+                      comment: null,
+                      commentForReview: null,
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+        metronomeMarks: [
+          {
+            id: "mm-1",
+            beatUnit: NOTE_VALUE.HALF,
+            bpm: 108,
+            comment: "Half note = 108",
+            sectionId: "sec-1",
+          },
+        ],
+      };
+
+      setSession({ id: "user-author", role: "EDITOR" });
+      mockReviewFindFirst.mockResolvedValue(null);
+      mockMMSourceFindUnique.mockResolvedValue(sourceWithEmptySections);
+      mockOrganizationFindMany.mockResolvedValue([]);
+      mockPersonFindMany.mockResolvedValue([]);
+      mockCollectionFindMany.mockResolvedValue([]);
+
+      const result = await getSourceEditBaseline("src-1");
+      expect(result.baseline.metronomeMarks).toHaveLength(2);
+      expect(result.initialState.metronomeMarks).toHaveLength(2);
+
+      const baselineNoMM = result.baseline.metronomeMarks!.find(
+        (m) => m.sectionId === "sec-2",
+      );
+      const initialNoMM = result.initialState.metronomeMarks!.find(
+        (m) => m.sectionId === "sec-2",
+      );
+
+      expect(baselineNoMM?.noMM).toBe(true);
+      expect(initialNoMM?.noMM).toBe(true);
     });
   });
 });

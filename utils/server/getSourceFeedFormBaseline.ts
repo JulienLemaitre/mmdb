@@ -292,38 +292,58 @@ export async function getSourceFeedFormBaseline(
     return { id: tiId, text: "" };
   });
 
-  const metronomeMarks: MetronomeMarkState[] = mmSource.metronomeMarks.map(
-    (mm) => {
-      const sourceOnPieceVersion = mmSource.pieceVersions.find((pv) =>
-        pv.pieceVersion?.movements?.some((m) =>
-          m.sections?.some((s) => s.id === mm.sectionId),
-        ),
-      );
-      if (!sourceOnPieceVersion || !sourceOnPieceVersion.pieceVersion) {
-        throw new Error(
-          `[getSourceFeedFormBaseline] Metronome mark sectionId ${mm.sectionId} not found in pieceVersions`,
-        );
-      }
-      const pieceVersionId = sourceOnPieceVersion.pieceVersion.id;
-      if (!mm.beatUnit || mm.bpm == null) {
-        return {
-          id: mm.id,
-          sectionId: mm.sectionId,
-          pieceVersionId,
-          noMM: true,
-        };
-      }
-      return {
-        id: mm.id,
-        sectionId: mm.sectionId,
-        beatUnit: mm.beatUnit,
-        bpm: mm.bpm,
-        comment: mm.comment ?? null,
-        pieceVersionId,
-        noMM: false,
-      };
-    },
+  const mmBySectionId = new Map(
+    mmSource.metronomeMarks.map((mm) => [mm.sectionId, mm]),
   );
+
+  const metronomeMarks: MetronomeMarkState[] = [];
+  const foundMmSectionIds = new Set<string>();
+
+  for (const join of mmSource.pieceVersions) {
+    const pv = join.pieceVersion;
+    if (!pv) continue;
+    for (const mov of pv.movements ?? []) {
+      for (const sec of mov.sections ?? []) {
+        const mm = mmBySectionId.get(sec.id);
+        if (mm) {
+          foundMmSectionIds.add(sec.id);
+          if (mm.beatUnit && mm.bpm != null) {
+            metronomeMarks.push({
+              id: mm.id,
+              sectionId: sec.id,
+              beatUnit: mm.beatUnit,
+              bpm: mm.bpm,
+              comment: mm.comment ?? null,
+              pieceVersionId: pv.id,
+              noMM: false,
+            });
+          } else {
+            metronomeMarks.push({
+              id: mm.id,
+              sectionId: sec.id,
+              pieceVersionId: pv.id,
+              noMM: true,
+            });
+          }
+        } else {
+          metronomeMarks.push({
+            sectionId: sec.id,
+            pieceVersionId: pv.id,
+            noMM: true,
+          });
+        }
+      }
+    }
+  }
+
+  // Consistency check: ensure no orphan metronome mark exists in mmSource
+  for (const mm of mmSource.metronomeMarks) {
+    if (!foundMmSectionIds.has(mm.sectionId)) {
+      throw new Error(
+        `[getSourceFeedFormBaseline] Metronome mark sectionId ${mm.sectionId} not found in pieceVersions`,
+      );
+    }
+  }
 
   const mMSourceContributions: MMSourceContributionsState =
     mmSource.contributions

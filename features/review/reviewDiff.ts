@@ -178,8 +178,12 @@ export function computeChangedFieldPaths(
 
   for (const type of topLevelTypes) {
     const prop = ENTITY_PREFIX[type];
-    const bList = (base as any)[`${prop}s`];
-    const wList = (work as any)[`${prop}s`];
+    let bList = (base as any)[`${prop}s`];
+    let wList = (work as any)[`${prop}s`];
+    if (type === "METRONOME_MARK") {
+      bList = (bList ?? []).filter((mm: any) => !mm?.noMM);
+      wList = (wList ?? []).filter((mm: any) => !mm?.noMM);
+    }
     diffEntityArray(type, bList, wList);
   }
 
