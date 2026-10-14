@@ -12,6 +12,7 @@ import { computeChangedFieldPaths } from "@/features/review/reviewDiff";
 import { forkModifiedSharedPieceVersions } from "@/utils/server/forkModifiedSharedPieceVersions";
 import { computeMMSourceDerivedData } from "@/utils/server/computeMMSourceDerivedData";
 import { applyRankUpdatesInTwoPhases } from "@/utils/server/applyRankUpdatesInTwoPhases";
+import { fetchAPI } from "@/utils/fetchAPI";
 import { debug } from "@/utils/debugLogger";
 
 export const dynamic = "force-dynamic";
@@ -174,7 +175,51 @@ export async function POST(
     );
   }
 
+  const preChangedFieldPaths = computeChangedFieldPaths(
+    baseline,
+    normalizedState,
+  );
+  await fetchAPI(
+    "/sendEmail",
+    {
+      serverSide: true,
+      body: {
+        type: "Self-source edit SUBMIT data",
+        sourceId,
+        authorId: userId,
+        authorEmail: session.user.email,
+        state: normalizedState,
+        baseline,
+        changedFieldPaths: preChangedFieldPaths,
+        changedCount: preChangedFieldPaths.length,
+      },
+    },
+    session.user.accessToken,
+  )
+    .then((result) => {
+      if (result.error) {
+        console.error(
+          `[api/source/${sourceId}/edit] pre-submit sendEmail ERROR :`,
+          result.error,
+        );
+      } else {
+        console.log(
+          `[api/source/${sourceId}/edit] pre-submit sendEmail result :`,
+          result,
+        );
+      }
+    })
+    .catch((err) =>
+      console.error(
+        `[api/source/${sourceId}/edit] pre-submit sendEmail ERROR :`,
+        err?.status,
+        err?.message,
+      ),
+    );
+
   // 7. Execute atomic database transaction with concurrency guard
+  const txDebug: Record<string, unknown> = {};
+  let finalChangedFieldPaths: ReturnType<typeof computeChangedFieldPaths> = [];
   try {
     await db.$transaction(async (tx) => {
       // --- Concurrency guard: verify atomically that source is still PENDING and no active review exists ---
@@ -206,16 +251,20 @@ export async function POST(
         baseline,
         state: normalizedState,
       });
+      txDebug.forkedPairs = forkResult.forkedPairs;
+      txDebug.protectedEntityIds = Array.from(forkResult.protectedEntityIds);
 
       const finalState = forkResult.state;
       const protectedEntityIds = forkResult.protectedEntityIds;
 
       // --- Step B: Calculate diff & derived data on final state ---
-      const finalChangedFieldPaths = computeChangedFieldPaths(
+      finalChangedFieldPaths = computeChangedFieldPaths(
         baseline,
         finalState,
       );
       const derived = computeMMSourceDerivedData(finalState);
+      txDebug.changedFieldPaths = finalChangedFieldPaths;
+      txDebug.derived = derived;
 
       const changedEntitiesByType = new Map<string, Set<string>>();
       for (const change of finalChangedFieldPaths) {
@@ -805,9 +854,108 @@ export async function POST(
       }
     });
 
+    const mMSourceFromDb = await db.mMSource
+      .findUnique({
+        where: { id: sourceId },
+        include: {
+          references: true,
+          contributions: {
+            include: {
+              person: true,
+              organization: true,
+            },
+          },
+          mMSourcesOnPieceVersions: true,
+          metronomeMarks: true,
+        },
+      })
+      .catch((err) => {
+        debug.error(`[selfEdit submit] Failed to load persisted source:`, err);
+        return null;
+      });
+
+    await fetchAPI(
+      "/sendEmail",
+      {
+        serverSide: true,
+        body: {
+          type: "Self-source edit submit transaction debug",
+          sourceId,
+          authorId: userId,
+          changedFieldPaths: finalChangedFieldPaths,
+          changedCount: finalChangedFieldPaths.length,
+          txDebug,
+          mMSourceFromDb,
+        },
+      },
+      session.user.accessToken,
+    )
+      .then((result) => {
+        if (result.error) {
+          console.error(
+            `[api/source/${sourceId}/edit] transaction sendEmail ERROR :`,
+            result.error,
+          );
+        } else {
+          console.log(
+            `[api/source/${sourceId}/edit] transaction sendEmail result :`,
+            result,
+          );
+        }
+      })
+      .catch((err) =>
+        console.error(
+          `[api/source/${sourceId}/edit] transaction sendEmail ERROR :`,
+          err?.status,
+          err?.message,
+        ),
+      );
+
     return NextResponse.json({ success: true, mMSourceId: sourceId });
   } catch (err: any) {
     debug.error(`[selfEdit submit] Transaction failed:`, err);
+    await fetchAPI(
+      "/sendEmail",
+      {
+        serverSide: true,
+        body: {
+          type: "Self-source edit SUBMIT transaction ERROR",
+          sourceId,
+          authorId: userId,
+          changedFieldPaths: finalChangedFieldPaths,
+          changedCount: finalChangedFieldPaths.length,
+          error: {
+            status: err?.status,
+            code: err?.code,
+            message: err?.message,
+            stack: err?.stack,
+          },
+          txDebug,
+        },
+      },
+      session.user.accessToken,
+    )
+      .then((result) => {
+        if (result.error) {
+          console.error(
+            `[api/source/${sourceId}/edit] error sendEmail ERROR :`,
+            result.error,
+          );
+        } else {
+          console.log(
+            `[api/source/${sourceId}/edit] error sendEmail result :`,
+            result,
+          );
+        }
+      })
+      .catch((emailErr) =>
+        console.error(
+          `[api/source/${sourceId}/edit] error sendEmail ERROR :`,
+          emailErr?.status,
+          emailErr?.message,
+        ),
+      );
+
     if (err?.message === "CONFLICT_REVIEW_STARTED") {
       return NextResponse.json(
         {

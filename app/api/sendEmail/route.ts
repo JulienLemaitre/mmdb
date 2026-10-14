@@ -7,7 +7,18 @@ interface RequestBody {
   type: string;
 }
 
-const emailTypeList = ["FeedForm submit", "FeedForm ERROR", "FeedForm SUCCESS"];
+const emailTypeList = [
+  "FeedForm submit",
+  "FeedForm ERROR",
+  "FeedForm SUCCESS",
+  "Self-source edit SUBMIT data",
+  "Self-source edit submit transaction debug",
+  "Self-source edit SUBMIT transaction ERROR",
+  "Review ABORT data",
+  "Review SUBMIT data",
+  "Review submit transaction debug",
+  "Review SUBMIT transaction ERROR",
+];
 
 export async function POST(request: NextRequest) {
   if (!isReqAuthorized(request)) {

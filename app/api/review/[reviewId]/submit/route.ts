@@ -19,7 +19,7 @@ import { forkModifiedSharedPieceVersions } from "@/utils/server/forkModifiedShar
 import { composeAuditEntries } from "@/features/review/utils/auditCompose";
 import { computeMMSourceDerivedData } from "@/utils/server/computeMMSourceDerivedData";
 import { applyRankUpdatesInTwoPhases } from "@/utils/server/applyRankUpdatesInTwoPhases";
-import sendEmail from "@/utils/server/sendEmail";
+import { fetchAPI } from "@/utils/fetchAPI";
 import { debug, prodLog } from "@/utils/debugLogger";
 
 // POST /api/review/[reviewId]/submit
@@ -192,16 +192,37 @@ export async function POST(
     ),
   };
 
-  await sendEmail({
-    type: "Review SUBMIT data",
-    content: preLogSummary,
-  }).catch((err) =>
-    console.error(
-      `[api/review/${reviewId}/submit] data sendEmail ERROR :`,
-      err?.status,
-      err?.message,
-    ),
-  );
+  await fetchAPI(
+    "/sendEmail",
+    {
+      serverSide: true,
+      body: {
+        type: "Review SUBMIT data",
+        ...preLogSummary,
+      },
+    },
+    session.user.accessToken,
+  )
+    .then((result) => {
+      if (result.error) {
+        console.error(
+          `[api/review/${reviewId}/submit] data sendEmail ERROR :`,
+          result.error,
+        );
+      } else {
+        console.log(
+          `[api/review/${reviewId}/submit] data sendEmail result :`,
+          result,
+        );
+      }
+    })
+    .catch((err) =>
+      console.error(
+        `[api/review/${reviewId}/submit] data sendEmail ERROR :`,
+        err?.status,
+        err?.message,
+      ),
+    );
 
   // 9. Execute transaction
   const txDebug: any = {};
@@ -952,20 +973,39 @@ export async function POST(
       })
       .catch(() => null);
 
-    await sendEmail({
-      type: "Review submit transaction debug",
-      content: {
-        reviewId,
-        txDebug,
-        mMSourceFromDb,
+    await fetchAPI(
+      "/sendEmail",
+      {
+        serverSide: true,
+        body: {
+          type: "Review submit transaction debug",
+          reviewId,
+          txDebug,
+          mMSourceFromDb,
+        },
       },
-    }).catch((err) =>
-      console.error(
-        `[api/review/${reviewId}/submit] tx sendEmail ERROR :`,
-        err?.status,
-        err?.message,
-      ),
-    );
+      session.user.accessToken,
+    )
+      .then((result) => {
+        if (result.error) {
+          console.error(
+            `[api/review/${reviewId}/submit] tx sendEmail ERROR :`,
+            result.error,
+          );
+        } else {
+          console.log(
+            `[api/review/${reviewId}/submit] tx sendEmail result :`,
+            result,
+          );
+        }
+      })
+      .catch((err) =>
+        console.error(
+          `[api/review/${reviewId}/submit] tx sendEmail ERROR :`,
+          err?.status,
+          err?.message,
+        ),
+      );
 
     const summary = {
       reviewId,
@@ -999,24 +1039,43 @@ export async function POST(
   } catch (err: any) {
     debug.error("[review submit] Transaction error:", err);
 
-    await sendEmail({
-      type: "Review SUBMIT transaction ERROR",
-      content: {
-        reviewId,
-        error: {
-          status: err?.status,
-          message: err?.message,
-          stack: err?.stack,
+    await fetchAPI(
+      "/sendEmail",
+      {
+        serverSide: true,
+        body: {
+          type: "Review SUBMIT transaction ERROR",
+          reviewId,
+          error: {
+            status: err?.status,
+            message: err?.message,
+            stack: err?.stack,
+          },
+          txDebug,
         },
-        txDebug,
       },
-    }).catch((emailErr) =>
-      console.error(
-        `[api/review/${reviewId}/submit] error sendEmail ERROR :`,
-        emailErr?.status,
-        emailErr?.message,
-      ),
-    );
+      session.user.accessToken,
+    )
+      .then((result) => {
+        if (result.error) {
+          console.error(
+            `[api/review/${reviewId}/submit] error sendEmail ERROR :`,
+            result.error,
+          );
+        } else {
+          console.log(
+            `[api/review/${reviewId}/submit] error sendEmail result :`,
+            result,
+          );
+        }
+      })
+      .catch((emailErr) =>
+        console.error(
+          `[api/review/${reviewId}/submit] error sendEmail ERROR :`,
+          emailErr?.status,
+          emailErr?.message,
+        ),
+      );
 
     if (
       err?.code === "P2002" ||
