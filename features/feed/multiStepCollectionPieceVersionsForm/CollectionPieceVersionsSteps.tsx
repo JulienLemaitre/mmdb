@@ -6,13 +6,11 @@ import {
 } from "@/context/collectionPieceVersionForm/collectionPieceVersionsFormContext";
 
 type CollectionPieceVersionsStepsProps = {
-  hasCollectionJustBeenCreated: boolean;
-  isUpdateMode: boolean;
+  shouldSkipComposerAndCollectionSteps: boolean;
 };
 
 const CollectionPieceVersionsSteps = ({
-  hasCollectionJustBeenCreated,
-  isUpdateMode,
+  shouldSkipComposerAndCollectionSteps,
 }: CollectionPieceVersionsStepsProps) => {
   const { currentStepRank, lastCompletedStepRank, dispatch } =
     useCollectionPieceVersionsForm();
@@ -26,10 +24,10 @@ const CollectionPieceVersionsSteps = ({
     }
   };
 
-  // skip the two first "composer" and "piece" steps if we are updating a selected existing collection
+  // Skip the first two steps only while editing the original selected collection.
   const formSteps = collectionFormSteps.toSpliced(
     0,
-    isUpdateMode && !hasCollectionJustBeenCreated ? 2 : 0,
+    shouldSkipComposerAndCollectionSteps ? 2 : 0,
   );
 
   return (

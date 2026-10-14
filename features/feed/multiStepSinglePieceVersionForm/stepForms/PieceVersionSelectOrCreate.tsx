@@ -98,7 +98,8 @@ function PieceVersionSelectOrCreate({
       (pieceVersion) => pieceVersion.id === selectedPieceVersionId,
     );
 
-  const isNewPieceVersionUpdate = !!isUpdateMode && !!newSelectedPieceVersion;
+  const isNewPieceVersionUpdate =
+    !!isUpdateMode && !!newSelectedPieceVersion?.isNew;
   const isCollectionCreation = !!isCollectionMode && !isUpdateMode;
   const [isEditMode, setIsEditMode] = useState(
     isCollectionCreation ||
@@ -106,10 +107,16 @@ function PieceVersionSelectOrCreate({
       hasPieceVersionJustBeenCreated ||
       isNewPieceVersionUpdate,
   );
-  let pieceVersionFullList = [
+  const pieceVersionFullListById = new Map<string, PieceVersionState>();
+  [
     ...(existingPieceVersions || []),
     ...(newPieceVersions || []),
-  ];
+  ].forEach((pieceVersion) => {
+    // The selected form value may also be present in the fetched API results.
+    // Keep one option per ID, with the form state taking precedence.
+    pieceVersionFullListById.set(pieceVersion.id, pieceVersion);
+  });
+  const pieceVersionFullList = [...pieceVersionFullListById.values()];
 
   const selectedPieceVersion: PieceVersionState | undefined =
     pieceVersionFullList?.find(
