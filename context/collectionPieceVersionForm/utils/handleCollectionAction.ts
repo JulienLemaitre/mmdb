@@ -24,14 +24,20 @@ export function handleCollectionAction(
 
   // If composer has changed
   if (hasComposerChanged) {
-    // Delete collection.id, .title and .isNew if exists
-    if (newState.collection?.id) {
+    // Remove data that belongs to the previous composer and collection.
+    if (newState.collection) {
+      const isComposerNew = value?.isComposerNew === true;
       prodLog.log(
-        `[composer changed] delete collection.id, .title and .isNew -`,
+        `[composer changed] clear collection details from previous composer -`,
       );
       delete newState.collection.id;
       delete newState.collection.title;
       delete newState.collection.isNew;
+      delete newState.collection.pieceCount;
+      delete newState.collection.isComposerNew;
+      if (isComposerNew) {
+        newState.collection.isComposerNew = true;
+      }
     }
 
     newState = {

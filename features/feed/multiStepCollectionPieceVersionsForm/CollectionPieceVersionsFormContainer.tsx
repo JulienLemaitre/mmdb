@@ -58,6 +58,23 @@ function CollectionPieceVersionsFormContainer({
     !!collectionPieceVersionFormState.collection?.isNew;
   const hasComposerJustBeenCreated =
     !!collectionPieceVersionFormState.collection?.isComposerNew;
+  const originalPieceVersionId = feedFormState.mMSourceOnPieceVersions?.find(
+    ({ rank }) =>
+      rank ===
+      collectionPieceVersionFormState.formInfo
+        .collectionFirstMMSourceOnPieceVersionRank,
+  )?.pieceVersionId;
+  const originalPieceVersion = feedFormState.pieceVersions?.find(
+    ({ id }) => id === originalPieceVersionId,
+  );
+  const originalCollectionId = feedFormState.pieces?.find(
+    ({ id }) => id === originalPieceVersion?.pieceId,
+  )?.collectionId;
+  const shouldSkipComposerAndCollectionSteps =
+    isUpdateMode &&
+    !hasCollectionJustBeenCreated &&
+    !!selectedCollectionId &&
+    selectedCollectionId === originalCollectionId;
 
   // When updating a collection that has not just been created, we start by completing the "composer" and "collection" steps automatically and go to the third step = pieceVersions
   useEffect(() => {
@@ -112,7 +129,6 @@ function CollectionPieceVersionsFormContainer({
     upsertCollectionPersons(dispatch, { array: [newComposer] });
     updateCollection(dispatch, {
       value: { composerId: newComposer.id, isComposerNew: true },
-      reset: true,
       next: true,
     });
   };
@@ -120,7 +136,6 @@ function CollectionPieceVersionsFormContainer({
     upsertCollectionPersons(dispatch, { array: [composer] });
     updateCollection(dispatch, {
       value: { composerId: composer.id },
-      reset: true,
       next: true,
     });
   };
@@ -314,8 +329,9 @@ function CollectionPieceVersionsFormContainer({
         <div className="flex-1">
           <h2 className="mb-3 text-3xl font-bold">{`${isUpdateMode ? "Update" : "Add"} a complete collection`}</h2>
           <CollectionPieceVersionsSteps
-            isUpdateMode={isUpdateMode}
-            hasCollectionJustBeenCreated={hasCollectionJustBeenCreated}
+            shouldSkipComposerAndCollectionSteps={
+              shouldSkipComposerAndCollectionSteps
+            }
           />
         </div>
         <div className="width-1/3 pt-2">
