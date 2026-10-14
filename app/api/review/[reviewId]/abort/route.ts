@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { db } from "@/utils/server/db";
 import { REVIEW_STATE } from "@/prisma/client/enums";
 import { authOptions } from "@/auth/options";
-import sendEmail from "@/utils/server/sendEmail";
+import { fetchAPI } from "@/utils/fetchAPI";
 
 export async function POST(
   req: Request,
@@ -73,15 +73,20 @@ export async function POST(
     const abortedAt = new Date();
 
     // Send log email
-    await sendEmail({
-      type: "Review ABORT data",
-      content: {
-        reviewId,
-        abortedAt,
-        creatorId: review.creatorId,
-        mMSourceId: review.mMSourceId,
+    await fetchAPI(
+      "/sendEmail",
+      {
+        serverSide: true,
+        body: {
+          type: "Review ABORT data",
+          reviewId,
+          abortedAt,
+          creatorId: review.creatorId,
+          mMSourceId: review.mMSourceId,
+        },
       },
-    })
+      session.user.accessToken,
+    )
       .then((result) => {
         if (result.error) {
           console.error(
