@@ -6,8 +6,10 @@ import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FormInput } from "@/ui/form/FormInput";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
+import { URL_LOGIN } from "@/utils/routes";
 
 const UserSchema = z
   .object({
@@ -72,7 +74,7 @@ export default function Register() {
 
   return (
     <div className="flex-col items-center">
-      <h1 className="mb-4 text-4xl font-bold">Register</h1>
+      <h1 className="mb-4 text-4xl font-bold">Create your account</h1>
       {message ? (
         <div role="alert" className="alert alert-warning">
           <svg
@@ -138,12 +140,23 @@ export default function Register() {
             type="submit"
             disabled={isSubmitting}
           >
-            Register
+            Sign up
             {isSubmitting && (
               <span className="loading loading-spinner loading-sm"></span>
             )}
           </button>
         </form>
+      ) : null}
+      {!session?.user ? (
+        <>
+          <div className="divider my-3" />
+          <p className="text-center text-sm">
+            Already have an account?{" "}
+            <Link href={URL_LOGIN} className="link link-primary">
+              Log in
+            </Link>
+          </p>
+        </>
       ) : null}
     </div>
   );
