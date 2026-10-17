@@ -120,11 +120,18 @@ export default function FeedSummary() {
                 ),
               );
           } catch (e) {
-            console.error(`[FeedSummary] unexpected error sending error email:`, e);
+            console.error(
+              `[FeedSummary] unexpected error sending error email:`,
+              e,
+            );
           }
           return;
         } else {
-          onReset();
+          localStorageRemoveItems([
+            SINGLE_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+            COLLECTION_PIECE_VERSION_FORM_LOCAL_STORAGE_KEY,
+            FEED_FORM_LOCAL_STORAGE_KEY,
+          ]);
           setSubmitStatus("success");
           // Send log email
           try {
@@ -148,7 +155,10 @@ export default function FeedSummary() {
                 ),
               );
           } catch (e) {
-            console.error(`[FeedSummary] unexpected error sending success email:`, e);
+            console.error(
+              `[FeedSummary] unexpected error sending success email:`,
+              e,
+            );
           }
         }
       })
@@ -181,7 +191,10 @@ export default function FeedSummary() {
     )
       .then((response) => {
         if (response.error) {
-          console.error("[FeedSummary] Error submitting review:", response.error);
+          console.error(
+            "[FeedSummary] Error submitting review:",
+            response.error,
+          );
           setErrorMessage(response.error);
           setSubmitStatus("error");
         } else {
