@@ -1,6 +1,7 @@
 import { db } from "@/utils/server/db";
 import * as bcrypt from "bcrypt";
 import { signJwtAccessToken } from "@/utils/server/jwt";
+import { prodLog } from "@/utils/debugLogger";
 
 interface RequestBody {
   email: string;
@@ -15,11 +16,38 @@ export async function POST(request: Request) {
   });
 
   if (
+    !user ||
+    !user.passwordHash ||
+    !(await bcrypt.compare(body.password, user.passwordHash))
+  ) {
+    return new Response(
+      JSON.stringify({
+        error: "Wrong login / password combination",
+      }),
+      {
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+  }
+
+  if (!user.emailVerified) {
+    return new Response(
+      JSON.stringify({
+        error: "Email/account not verified",
+      }),
+      {
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+  }
+
+  if (
     user &&
     user.passwordHash &&
+    user.emailVerified &&
     (await bcrypt.compare(body.password, user.passwordHash))
   ) {
-    const { passwordHash, ...userWithoutPassword } = user;
+    const { passwordHash: _hash, ...userWithoutPassword } = user;
     const accessToken = signJwtAccessToken(userWithoutPassword);
     const result = {
       ...userWithoutPassword,
@@ -28,18 +56,7 @@ export async function POST(request: Request) {
     return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
     });
-  } else {
-    console.log(
-      `[] No user or no passwordHash in user or wrong password provided :`,
-      user,
-    );
-    return new Response(
-      JSON.stringify({
-        error: "No user or no passwordHash in user or wrong password provided",
-      }),
-      {
-        headers: { "Content-Type": "application/json" },
-      },
-    );
   }
+
+  prodLog.warn("Error while login - this case should not happen");
 }
