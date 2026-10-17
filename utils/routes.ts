@@ -29,6 +29,8 @@ export const URL_FEED = "/feed";
 export const URL_DASHBOARD = "/dashboard";
 export const URL_REVIEW_LIST = "/review";
 export const URL_ADMIN = "/admin";
+export const URL_LOGIN = "/login";
+export const URL_REGISTER = "/register";
 export const GET_URL_REVIEW = (reviewId: string) =>
   `/review/${reviewId}` as const;
 export const GET_URL_SOURCE_EDIT = (sourceId: string) =>

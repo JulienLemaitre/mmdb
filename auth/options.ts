@@ -1,6 +1,7 @@
 import { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { debug } from "@/utils/debugLogger";
+import { URL_LOGIN } from "@/utils/routes";
 
 const API_URL = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}/api`
@@ -94,10 +95,8 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: "/login",
+    signIn: URL_LOGIN,
     // signOut: "/logout",
     error: "/auth/error",
-    // verifyRequest: "/login",
-    // newUser: "/login",
   },
 };

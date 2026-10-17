@@ -5,9 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { FormInput } from "@/ui/form/FormInput";
 import { Suspense } from "react";
 import preventEnterKeySubmission from "@/utils/preventEnterKeySubmission";
+import { URL_REGISTER } from "@/utils/routes";
 
 const LoginSchema = z.object({
   email: z.string().email(),
@@ -72,6 +74,13 @@ function LoginPage() {
           )}
         </button>
       </form>
+      <div className="divider my-3" />
+      <p className="text-center text-sm">
+        Don&apos;t have an account?{" "}
+        <Link href={URL_REGISTER} className="link link-primary">
+          Sign up
+        </Link>
+      </p>
     </div>
   );
 }
