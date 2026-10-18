@@ -1,4 +1,5 @@
 import getPersonName from "@/utils/getPersonName";
+import { normalizeForSearch } from "@/utils/normalizeForSearch";
 
 export function filterOptionByWordStart(
   option: {
@@ -11,7 +12,7 @@ export function filterOptionByWordStart(
   const isCreateOption = option.label.startsWith("Create");
   return (
     isCreateOption ||
-    option.label.toLowerCase().startsWith(inputValue.toLowerCase())
+    normalizeForSearch(option.label).startsWith(normalizeForSearch(inputValue))
   );
 }
 
