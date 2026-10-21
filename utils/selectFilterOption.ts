@@ -25,18 +25,22 @@ export function filterPersonOption(
   inputValue: string,
 ): boolean {
   const isCreateOption = option.label.startsWith("Create");
+  const normalizedInput = normalizeForSearch(inputValue);
   const isFirstNameSelected = option.data?.person?.firstName
-    ?.toLowerCase()
-    .startsWith(inputValue.toLowerCase());
+    ? normalizeForSearch(option.data.person.firstName).startsWith(
+        normalizedInput,
+      )
+    : false;
   const isLastNameSelected = option.data?.person?.lastName
-    ?.toLowerCase()
-    .startsWith(inputValue.toLowerCase());
+    ? normalizeForSearch(option.data.person.lastName).startsWith(
+        normalizedInput,
+      )
+    : false;
   const fullName = option.data?.person
     ? getPersonName(option.data?.person)
     : "";
-  const isFullNameSelected = fullName
-    .toLowerCase()
-    .startsWith(inputValue.toLowerCase());
+  const isFullNameSelected =
+    normalizeForSearch(fullName).startsWith(normalizedInput);
 
   return (
     isCreateOption ||
@@ -63,9 +67,16 @@ export function filterContributionOption(
     return filterPersonOption(option, inputValue);
   }
   // Organization - match any word start
-  return option.data?.label
+  const organizationName = option.data?.label
     ?.replaceAll(" [organization]", "")
-    ?.toLowerCase()
-    ?.split(" ")
-    .some((word) => word.startsWith(inputValue.toLowerCase()));
+    ?.trim();
+  const normalizedName = organizationName
+    ? normalizeForSearch(organizationName)
+    : "";
+  return (
+    normalizedName.startsWith(normalizeForSearch(inputValue)) ||
+    normalizedName
+      .split(" ")
+      .some((word) => word.startsWith(normalizeForSearch(inputValue)))
+  );
 }

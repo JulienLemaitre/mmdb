@@ -15,6 +15,7 @@ import { applyRankUpdatesInTwoPhases } from "@/utils/server/applyRankUpdatesInTw
 import { fetchAPI } from "@/utils/fetchAPI";
 import { debug } from "@/utils/debugLogger";
 import { deduplicateNewTempoIndications } from "@/utils/server/deduplicateNewTempoIndications";
+import { deduplicateNewPersonsAndOrganizations } from "@/utils/server/deduplicateNewPersonsAndOrganizations";
 
 export const dynamic = "force-dynamic";
 
@@ -159,6 +160,22 @@ export async function POST(
     );
   }
 
+  // Resolve new people and organizations that already exist in the database.
+  try {
+    stateForPersistence =
+      await deduplicateNewPersonsAndOrganizations(stateForPersistence);
+  } catch (err: any) {
+    debug.error(
+      `[selfEdit submit] Person and organization resolution error: ${err.message}`,
+    );
+    return NextResponse.json(
+      {
+        error: `[selfEdit submit] Person and organization resolution error: ${err.message}`,
+      },
+      { status: 500 },
+    );
+  }
+
   // 7. Baseline loading and state normalization
   let baseline: FeedFormState;
   try {
@@ -201,11 +218,12 @@ export async function POST(
     {
       serverSide: true,
       body: {
-        type: "Self-source edit SUBMIT data",
+        type: "Self-source edit submit",
         sourceId,
         authorId: userId,
         authorEmail: session.user.email,
-        state: normalizedState,
+        submittedState,
+        normalizedState,
         baseline,
         changedFieldPaths: preChangedFieldPaths,
         changedCount: preChangedFieldPaths.length,
@@ -275,10 +293,7 @@ export async function POST(
       const protectedEntityIds = forkResult.protectedEntityIds;
 
       // --- Step B: Calculate diff & derived data on final state ---
-      finalChangedFieldPaths = computeChangedFieldPaths(
-        baseline,
-        finalState,
-      );
+      finalChangedFieldPaths = computeChangedFieldPaths(baseline, finalState);
       const derived = computeMMSourceDerivedData(finalState);
       txDebug.changedFieldPaths = finalChangedFieldPaths;
       txDebug.derived = derived;
@@ -348,9 +363,7 @@ export async function POST(
 
       // 1. MetronomeMarks
       const stateMMIds = new Set(
-        (finalState.metronomeMarks ?? [])
-          .map((mm) => mm.id)
-          .filter(Boolean),
+        (finalState.metronomeMarks ?? []).map((mm) => mm.id).filter(Boolean),
       );
       const deletedMMIds = Array.from(baselineMMIds).filter(
         (id) => !stateMMIds.has(id),
@@ -827,8 +840,7 @@ export async function POST(
       const joinUpdates = (finalState.mMSourceOnPieceVersions ?? [])
         .filter(
           (j) =>
-            joinIdByPvId.has(j.pieceVersionId) &&
-            typeof j.rank === "number",
+            joinIdByPvId.has(j.pieceVersionId) && typeof j.rank === "number",
         )
         .map((j) => ({
           id: joinIdByPvId.get(j.pieceVersionId)!,
@@ -896,7 +908,7 @@ export async function POST(
       {
         serverSide: true,
         body: {
-          type: "Self-source edit submit transaction debug",
+          type: "Self-source edit SUCCESS",
           sourceId,
           authorId: userId,
           changedFieldPaths: finalChangedFieldPaths,
@@ -936,7 +948,7 @@ export async function POST(
       {
         serverSide: true,
         body: {
-          type: "Self-source edit SUBMIT transaction ERROR",
+          type: "Self-source edit ERROR",
           sourceId,
           authorId: userId,
           changedFieldPaths: finalChangedFieldPaths,

@@ -2,7 +2,7 @@
 // @no-log
 < {%
   import { getToken } from './getToken.js'
-  const creatorId = request.environment.get("accountId_Johan");
+  const creatorId = request.environment.get("userId_Wim");
   const payload = {
     id: creatorId
   }
@@ -17,1016 +17,334 @@ Content-Type: application/json
     "currentStepRank": 5,
     "introDone": true,
     "isSourceOnPieceVersionformOpen": false,
-    "formType": "single",
+    "formType": "collection",
     "allSourceOnPieceVersionsDone": true
   },
   "mMSourceDescription": {
-    "title": "50 Selected Studies",
-    "year": 1868,
+    "title": "",
+    "year": 1895,
     "isYearEstimated": false,
     "type": "EDITION",
-    "link": "https://s9.imslp.org/files/imglnks/usimg/b/bd/IMSLP451784-PMLP645830-cramer-50_ausgew%C3%A4hlte_Clavier-Et%C3%BCden_in_systematischer_Reihenfolge_unter_genauer_kritischer_Revision.pdf",
+    "link": "https://ks15.imslp.org/files/imglnks/usimg/f/f6/IMSLP309417-PMLP07375-Skrjabin_op.08_Zwoelf_Etueden.pdf",
     "comment": "",
     "references": [
       {
+        "id": "b7bc873c-45a5-4fe5-878f-174460dcef9b",
         "type": "PLATE_NUMBER",
-        "reference": " Plate 2077"
+        "reference": "1180"
       }
     ],
     "isNew": true
   },
   "mMSourceContributions": [
     {
-      "personId": "63833d92-8c49-4ef6-ae87-f8c3d3e2f6a2",
-      "role": "MM_PROVIDER"
-    },
-    {
-      "organizationId": "7ef5aacf-7302-48a4-b858-60600aeaf71a",
+      "id": "3cb03414-2fd5-49fa-92cd-40d042096659",
+      "organizationId": "90551d20-aa11-47a3-88cd-ef2eaad5c912",
       "role": "PUBLISHER"
-    },
-    {
-      "personId": "63833d92-8c49-4ef6-ae87-f8c3d3e2f6a2",
-      "role": "EDITOR"
     }
   ],
   "mMSourceOnPieceVersions": [
     {
-      "pieceVersionId": "72975947-4960-4e85-b58b-21a706d58a72",
+      "pieceVersionId": "45538af4-7947-4945-83bb-9291ec5a8ff0",
       "rank": 1
     },
     {
-      "pieceVersionId": "cb990637-351c-4857-b2e1-6f134d8b444e",
+      "pieceVersionId": "89733db1-98de-41ee-be17-2c7118407304",
       "rank": 2
     },
     {
-      "pieceVersionId": "e0a5bcf5-58d2-4498-893a-1e82d8bb4a43",
+      "pieceVersionId": "fbcabbd5-caee-494f-a5b1-eadf0bc313a2",
       "rank": 3
     },
     {
-      "pieceVersionId": "da283e33-5b2a-408c-b0e3-09f0d18d3080",
+      "pieceVersionId": "c87eb70f-6eb3-4fa0-ac71-fd81cb4ce7b2",
       "rank": 4
     },
     {
-      "pieceVersionId": "a00643ef-a298-458b-ac2d-c8a3ae71b323",
+      "pieceVersionId": "7bd4ebc3-eea6-4632-be1c-72f6963964eb",
       "rank": 5
     },
     {
-      "pieceVersionId": "7e3a4c95-7448-4113-bf4e-61cf6d86b406",
+      "pieceVersionId": "3b0ea893-00c0-4585-b00e-a730b580205e",
       "rank": 6
     },
     {
-      "pieceVersionId": "e4247e11-fba6-45e8-b7d4-beb932df9857",
+      "pieceVersionId": "d498b795-0058-4dec-a2c7-f11ed39404fd",
       "rank": 7
     },
     {
-      "pieceVersionId": "ab6c57b0-d1d7-4ffc-ad59-585490ab4146",
+      "pieceVersionId": "668a9200-e020-4c10-8cc1-5128b7bfb538",
       "rank": 8
     },
     {
-      "pieceVersionId": "608782b2-0ef1-4fac-82de-662b3e753930",
+      "pieceVersionId": "efd2ae95-4cd9-40d3-8824-b1b42300feac",
       "rank": 9
     },
     {
-      "pieceVersionId": "d79bb114-fa4c-481e-931c-af09a7bcd406",
+      "pieceVersionId": "7c117181-08fc-4530-b82e-d319d4d5d633",
       "rank": 10
     },
     {
-      "pieceVersionId": "d8f5db75-1e39-4403-9cef-8c72aa89b4e7",
+      "pieceVersionId": "7d5891c0-982e-443d-bd66-4656892c567d",
       "rank": 11
     },
     {
-      "pieceVersionId": "a71e8d37-26ff-4742-8091-277da4fe3d7a",
+      "pieceVersionId": "19f18161-9b60-4005-8ee0-0e005eedd733",
       "rank": 12
-    },
-    {
-      "pieceVersionId": "0f40bc87-83da-4e52-931d-3990f589d4f8",
-      "rank": 13
-    },
-    {
-      "pieceVersionId": "3d967d76-690e-4e9d-9e37-c785bee7c457",
-      "rank": 14
-    },
-    {
-      "pieceVersionId": "548808ae-7183-4d05-9cd2-dac5e4b3b5ef",
-      "rank": 15
-    },
-    {
-      "pieceVersionId": "a40b8772-f3c1-4b57-be9c-00df301b4fab",
-      "rank": 16
-    },
-    {
-      "pieceVersionId": "277e5e12-f296-476d-81c8-fea2ea59aea7",
-      "rank": 17
-    },
-    {
-      "pieceVersionId": "8bc0bf30-a8bf-4a03-81a6-a8d09421bbbc",
-      "rank": 18
-    },
-    {
-      "pieceVersionId": "9643b6ff-ac1c-44bb-a121-dd356e5307b0",
-      "rank": 19
-    },
-    {
-      "pieceVersionId": "06985cd6-f7ec-4814-b513-7b15f8b22906",
-      "rank": 20
-    },
-    {
-      "pieceVersionId": "2fb6d7d4-16ae-4a48-b3a3-84b0bf647f7c",
-      "rank": 21
-    },
-    {
-      "pieceVersionId": "bb9ef4d4-93f1-487d-8539-839fe23ce1ef",
-      "rank": 22
-    },
-    {
-      "pieceVersionId": "5b0873fd-8d44-4ec7-8e41-4cccaa0b072d",
-      "rank": 23
-    },
-    {
-      "pieceVersionId": "94348a26-e16d-4d56-a33e-fa7552e9aff9",
-      "rank": 24
-    },
-    {
-      "pieceVersionId": "dce30b98-8cbc-4f13-8588-00959fab113f",
-      "rank": 25
-    },
-    {
-      "pieceVersionId": "80efb8cc-4412-465d-8e7a-a7496ea554b0",
-      "rank": 26
-    },
-    {
-      "pieceVersionId": "58dc6e33-e137-4dda-a06d-f466cd0f167c",
-      "rank": 27
-    },
-    {
-      "pieceVersionId": "31fde840-58a9-46c5-b4e2-44bb597a5023",
-      "rank": 28
-    },
-    {
-      "pieceVersionId": "68d8b289-ccaf-452d-b48c-2947746e6879",
-      "rank": 29
-    },
-    {
-      "pieceVersionId": "810a9180-941c-46a2-86ef-852bc4e30164",
-      "rank": 30
-    },
-    {
-      "pieceVersionId": "6abffaa5-8b71-44f4-89b6-968500884fca",
-      "rank": 31
-    },
-    {
-      "pieceVersionId": "57d020a4-d2e2-4a7d-b7df-e18caa3fc638",
-      "rank": 32
-    },
-    {
-      "pieceVersionId": "4e9a1bf4-d2ce-45db-81ea-41d706ca34f6",
-      "rank": 33
-    },
-    {
-      "pieceVersionId": "cab48aa8-2374-4a94-ad55-4ec8b7ed2992",
-      "rank": 34
-    },
-    {
-      "pieceVersionId": "53efe9c5-2ce0-4846-8b37-f9fbefd3fa9d",
-      "rank": 35
-    },
-    {
-      "pieceVersionId": "b9db387b-2263-4eac-a756-5c71c7c35dae",
-      "rank": 36
-    },
-    {
-      "pieceVersionId": "a1b87cce-ec06-4597-9244-96af6aa308a8",
-      "rank": 37
-    },
-    {
-      "pieceVersionId": "c6309e1c-f377-4f2f-8803-8958c0a39974",
-      "rank": 38
-    },
-    {
-      "pieceVersionId": "c721a754-f140-48fa-8fa8-70881fba49ed",
-      "rank": 39
-    },
-    {
-      "pieceVersionId": "4d809319-99c7-4669-b1b0-b8c43d0f7199",
-      "rank": 40
-    },
-    {
-      "pieceVersionId": "6dcc1178-2db7-48d9-952e-2198ac15e61e",
-      "rank": 41
-    },
-    {
-      "pieceVersionId": "387c577a-cf63-4f21-ae59-8476227d95ae",
-      "rank": 42
-    },
-    {
-      "pieceVersionId": "35db66ef-2bc0-402f-8318-96afb994ec17",
-      "rank": 43
-    },
-    {
-      "pieceVersionId": "b4cd201f-972b-43ff-8614-bcfe7f1b58c0",
-      "rank": 44
-    },
-    {
-      "pieceVersionId": "8084f876-e699-4dd7-b1f4-d90c0762e74e",
-      "rank": 45
-    },
-    {
-      "pieceVersionId": "215efa30-704a-4755-a918-da6c569f8c8b",
-      "rank": 46
-    },
-    {
-      "pieceVersionId": "31ff02e8-47b0-413a-a894-7f19678cab37",
-      "rank": 47
-    },
-    {
-      "pieceVersionId": "2746727a-7797-4598-9805-43156a9bbdaa",
-      "rank": 48
-    },
-    {
-      "pieceVersionId": "9fa8aef7-06e6-46f6-8348-d4ae5e532259",
-      "rank": 49
-    },
-    {
-      "pieceVersionId": "41dbb78f-228c-46c1-b9fb-f5cb8648b10c",
-      "rank": 50
     }
   ],
-  "collections": [],
+  "collections": [
+    {
+      "id": "9d2e7a21-8ad6-4c6d-9f33-d150dc734a53",
+      "composerId": "a73d4163-d149-44d1-b8fb-14d72403fd60",
+      "title": "12 Etudes, Op.8",
+      "isNew": true,
+      "pieceCount": 12
+    }
+  ],
   "metronomeMarks": [
     {
-      "sectionId": "0e4f2e89-db99-4e29-8a2a-48aeba79ea6f",
-      "bpm": 132,
+      "sectionId": "3a11fcd4-525f-474d-85ec-577bead7ac0c",
+      "bpm": 168,
       "comment": "",
       "beatUnit": "QUARTER",
       "noMM": false,
-      "pieceVersionId": "72975947-4960-4e85-b58b-21a706d58a72"
+      "pieceVersionId": "45538af4-7947-4945-83bb-9291ec5a8ff0"
     },
     {
-      "sectionId": "768a4b89-6475-4308-aed0-578511ad9e82",
-      "bpm": 88,
-      "comment": "",
-      "beatUnit": "HALF",
-      "noMM": false,
-      "pieceVersionId": "cb990637-351c-4857-b2e1-6f134d8b444e"
-    },
-    {
-      "sectionId": "313b51f7-7a87-4ce1-8f84-e87864601211",
-      "bpm": 138,
-      "comment": "",
-      "beatUnit": "EIGHTH",
-      "noMM": false,
-      "pieceVersionId": "e0a5bcf5-58d2-4498-893a-1e82d8bb4a43"
-    },
-    {
-      "sectionId": "2efc4a98-99a5-4aad-9070-b151c008de7e",
-      "bpm": 132,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "da283e33-5b2a-408c-b0e3-09f0d18d3080"
-    },
-    {
-      "sectionId": "1b10d772-cb86-4d44-8ac0-30489503ae1e",
-      "bpm": 114,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "a00643ef-a298-458b-ac2d-c8a3ae71b323"
-    },
-    {
-      "sectionId": "376f57cf-6c84-426a-979e-1348f1f1cd40",
-      "bpm": 100,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "7e3a4c95-7448-4113-bf4e-61cf6d86b406"
-    },
-    {
-      "sectionId": "f6ffdd75-9a90-4acc-ab0c-62b3cd344fc1",
-      "bpm": 132,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "e4247e11-fba6-45e8-b7d4-beb932df9857"
-    },
-    {
-      "sectionId": "482f9310-281f-46d4-b1b3-c4f5fa1a470f",
-      "bpm": 132,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "ab6c57b0-d1d7-4ffc-ad59-585490ab4146"
-    },
-    {
-      "sectionId": "222ddca8-ba04-4244-8dfe-a1d3d3973929",
-      "bpm": 62,
-      "comment": "",
-      "beatUnit": "HALF",
-      "noMM": false,
-      "pieceVersionId": "608782b2-0ef1-4fac-82de-662b3e753930"
-    },
-    {
-      "sectionId": "2e6fb233-0733-4fc4-a7a4-4743bfff2f2d",
-      "bpm": 72,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "d79bb114-fa4c-481e-931c-af09a7bcd406"
-    },
-    {
-      "sectionId": "5522d970-1c4c-49fb-aadc-f3ccc6fa721c",
-      "bpm": 112,
-      "comment": "",
-      "beatUnit": "EIGHTH",
-      "noMM": false,
-      "pieceVersionId": "d8f5db75-1e39-4403-9cef-8c72aa89b4e7"
-    },
-    {
-      "sectionId": "98972495-a0f6-4ff2-96bf-136a77b810e8",
-      "bpm": 76,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "a71e8d37-26ff-4742-8091-277da4fe3d7a"
-    },
-    {
-      "sectionId": "fb10a3f2-16d1-400c-bdb9-cff6910d5d24",
-      "bpm": 100,
-      "comment": "",
-      "beatUnit": "DOTTED_EIGHTH",
-      "noMM": false,
-      "pieceVersionId": "0f40bc87-83da-4e52-931d-3990f589d4f8"
-    },
-    {
-      "sectionId": "896049e5-7376-40c0-95ac-3373506a0ca2",
+      "sectionId": "1bdcb9b3-c3c5-40cc-b570-fdd762c5b1b8",
       "bpm": 92,
       "comment": "",
-      "beatUnit": "DOTTED_QUARTER",
-      "noMM": false,
-      "pieceVersionId": "3d967d76-690e-4e9d-9e37-c785bee7c457"
-    },
-    {
-      "sectionId": "4c55370d-b499-4f9a-a21c-60600b1e7861",
-      "bpm": 138,
-      "comment": "Misprint in MM in source (8th-dot=138)",
-      "beatUnit": "EIGHTH",
-      "noMM": false,
-      "pieceVersionId": "548808ae-7183-4d05-9cd2-dac5e4b3b5ef"
-    },
-    {
-      "sectionId": "6e187d21-ddab-4ff3-a2ba-d5931e2d7296",
-      "bpm": 138,
-      "comment": "Misprint in MM in source (Q-dot=138)",
-      "beatUnit": "EIGHTH",
-      "noMM": false,
-      "pieceVersionId": "a40b8772-f3c1-4b57-be9c-00df301b4fab"
-    },
-    {
-      "sectionId": "bad319ba-87ef-48f9-808c-bdb023d5fd83",
-      "bpm": 66,
-      "comment": "",
-      "beatUnit": "DOTTED_QUARTER",
-      "noMM": false,
-      "pieceVersionId": "277e5e12-f296-476d-81c8-fea2ea59aea7"
-    },
-    {
-      "sectionId": "895548f2-fa5a-40b3-97a4-27dc13f8212c",
-      "bpm": 132,
-      "comment": "Misprint in MM in source (8th-dot=132)",
       "beatUnit": "QUARTER",
       "noMM": false,
-      "pieceVersionId": "8bc0bf30-a8bf-4a03-81a6-a8d09421bbbc"
+      "pieceVersionId": "89733db1-98de-41ee-be17-2c7118407304"
     },
     {
-      "sectionId": "f2387852-dca2-470d-b71d-c9859488e960",
-      "bpm": 100,
+      "sectionId": "74baf994-6e23-40ef-b9ed-48cae4ca9e24",
+      "bpm": 92,
       "comment": "",
       "beatUnit": "DOTTED_HALF",
       "noMM": false,
-      "pieceVersionId": "9643b6ff-ac1c-44bb-a121-dd356e5307b0"
+      "pieceVersionId": "fbcabbd5-caee-494f-a5b1-eadf0bc313a2"
     },
     {
-      "sectionId": "9864e13d-5d5e-4915-a4b3-cc562c21a684",
-      "bpm": 84,
-      "comment": "",
-      "beatUnit": "DOTTED_QUARTER",
-      "noMM": false,
-      "pieceVersionId": "06985cd6-f7ec-4814-b513-7b15f8b22906"
-    },
-    {
-      "sectionId": "2ed0c999-ad95-4d81-8040-50ca2a440e96",
-      "bpm": 132,
-      "comment": "Misprint in MM in source (Q-dot=132)",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "2fb6d7d4-16ae-4a48-b3a3-84b0bf647f7c"
-    },
-    {
-      "sectionId": "068311db-6cce-4315-83b9-fd498fccac97",
-      "bpm": 104,
-      "comment": "Misprint in MM in source (H-dot=104)",
-      "beatUnit": "HALF",
-      "noMM": false,
-      "pieceVersionId": "bb9ef4d4-93f1-487d-8539-839fe23ce1ef"
-    },
-    {
-      "sectionId": "441238a0-40d3-49b3-9961-ca40fc3fef0f",
-      "bpm": 138,
-      "comment": "Misprint in MM in source (Q-dot=138)",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "5b0873fd-8d44-4ec7-8e41-4cccaa0b072d"
-    },
-    {
-      "sectionId": "2cb38b29-80ad-4dc9-a347-f4639188a6f9",
-      "bpm": 160,
-      "comment": "Misprint in MM in source (8th-dot=160)",
-      "beatUnit": "EIGHTH",
-      "noMM": false,
-      "pieceVersionId": "94348a26-e16d-4d56-a33e-fa7552e9aff9"
-    },
-    {
-      "sectionId": "a34db9c4-d5d9-4c37-a4f4-7418d8196f94",
-      "bpm": 108,
-      "comment": "Misprint in MM in source (Q-dot=108)",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "dce30b98-8cbc-4f13-8588-00959fab113f"
-    },
-    {
-      "sectionId": "0b557faf-0204-4204-a55e-7b344e13a90f",
-      "bpm": 152,
+      "sectionId": "85e9d0c1-360e-45b3-a337-bf872c72fef1",
+      "bpm": 100,
       "comment": "",
       "beatUnit": "QUARTER",
       "noMM": false,
-      "pieceVersionId": "80efb8cc-4412-465d-8e7a-a7496ea554b0"
+      "pieceVersionId": "c87eb70f-6eb3-4fa0-ac71-fd81cb4ce7b2"
     },
     {
-      "sectionId": "529c4fde-e892-4391-8a67-3081d226dfa3",
-      "bpm": 152,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "58dc6e33-e137-4dda-a06d-f466cd0f167c"
-    },
-    {
-      "sectionId": "97459a95-d1f6-41fb-a1b6-e5540d16a996",
-      "bpm": 126,
-      "comment": "Possible misprint in MM?",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "31fde840-58a9-46c5-b4e2-44bb597a5023"
-    },
-    {
-      "sectionId": "3b742796-0cb3-4538-b4af-417058685b32",
-      "bpm": 152,
-      "comment": "Possible misprint in MM?",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "68d8b289-ccaf-452d-b48c-2947746e6879"
-    },
-    {
-      "sectionId": "1eb44cd7-155f-4218-9042-3a9f19c99342",
-      "bpm": 160,
-      "comment": "Possible misprint in MM?",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "810a9180-941c-46a2-86ef-852bc4e30164"
-    },
-    {
-      "sectionId": "f804e99d-beae-4a5d-87f1-1961f80c3fb4",
-      "bpm": 104,
-      "comment": "Possible misprint in MM?",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "6abffaa5-8b71-44f4-89b6-968500884fca"
-    },
-    {
-      "sectionId": "55a7dab9-be06-405c-ba87-c78c406af324",
-      "bpm": 108,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "57d020a4-d2e2-4a7d-b7df-e18caa3fc638"
-    },
-    {
-      "sectionId": "de13683a-9208-4cf9-811b-0180b5597b6c",
-      "bpm": 76,
-      "comment": "Possible misprint in MM?",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "4e9a1bf4-d2ce-45db-81ea-41d706ca34f6"
-    },
-    {
-      "sectionId": "0903b621-6625-4ea4-81d6-7b8b2327c7fe",
-      "bpm": 116,
-      "comment": "",
-      "beatUnit": "HALF",
-      "noMM": false,
-      "pieceVersionId": "cab48aa8-2374-4a94-ad55-4ec8b7ed2992"
-    },
-    {
-      "sectionId": "4d9a833e-d0a4-44bd-8d8c-521ad8ecb822",
-      "bpm": 108,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "53efe9c5-2ce0-4846-8b37-f9fbefd3fa9d"
-    },
-    {
-      "sectionId": "b05b85e4-23c3-4628-a196-ec5e40c83df6",
-      "bpm": 144,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "b9db387b-2263-4eac-a756-5c71c7c35dae"
-    },
-    {
-      "sectionId": "77bfef0d-c338-47f5-b072-628865d3d56c",
-      "bpm": 96,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "a1b87cce-ec06-4597-9244-96af6aa308a8"
-    },
-    {
-      "sectionId": "03d29fad-7903-4fe1-aa78-063f0b26462b",
-      "bpm": 138,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "c6309e1c-f377-4f2f-8803-8958c0a39974"
-    },
-    {
-      "sectionId": "745ae74c-fac2-436b-b491-6a220a77e8b6",
-      "bpm": 132,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "c721a754-f140-48fa-8fa8-70881fba49ed"
-    },
-    {
-      "sectionId": "2f7b5bbc-beb3-43e7-bc7f-2d96bdf80328",
-      "bpm": 96,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "4d809319-99c7-4669-b1b0-b8c43d0f7199"
-    },
-    {
-      "sectionId": "cd030c3d-8a7e-481b-8eec-5b880bb1bc56",
-      "bpm": 92,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "6dcc1178-2db7-48d9-952e-2198ac15e61e"
-    },
-    {
-      "sectionId": "66951479-7c62-42c3-8e59-bf7ffc06a261",
-      "bpm": 126,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "387c577a-cf63-4f21-ae59-8476227d95ae"
-    },
-    {
-      "sectionId": "632e4959-3367-45d5-8b85-17c19c070418",
-      "bpm": 160,
-      "comment": "",
-      "beatUnit": "EIGHTH",
-      "noMM": false,
-      "pieceVersionId": "35db66ef-2bc0-402f-8318-96afb994ec17"
-    },
-    {
-      "sectionId": "287138fd-6a90-4fcf-a2dc-451dc0076b5d",
-      "bpm": 160,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "b4cd201f-972b-43ff-8614-bcfe7f1b58c0"
-    },
-    {
-      "sectionId": "5077b4a0-c952-4bb5-8559-080a04c0dd9d",
-      "bpm": 116,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "8084f876-e699-4dd7-b1f4-d90c0762e74e"
-    },
-    {
-      "sectionId": "bc702660-c1b8-49b9-a71c-312918a3dff7",
-      "bpm": 116,
-      "comment": "",
-      "beatUnit": "QUARTER",
-      "noMM": false,
-      "pieceVersionId": "215efa30-704a-4755-a918-da6c569f8c8b"
-    },
-    {
-      "sectionId": "b253a053-e52a-473b-bd85-199f2a19fcca",
+      "sectionId": "53cd80b2-cfea-4ccf-ab07-61f19f812b48",
       "bpm": 72,
       "comment": "",
-      "beatUnit": "DOTTED_QUARTER",
+      "beatUnit": "HALF",
       "noMM": false,
-      "pieceVersionId": "31ff02e8-47b0-413a-a894-7f19678cab37"
+      "pieceVersionId": "7bd4ebc3-eea6-4632-be1c-72f6963964eb"
     },
     {
-      "sectionId": "dd407356-0a2a-4e5d-9b1a-7fd07dc6849f",
-      "bpm": 126,
+      "sectionId": "ea9a6a53-ee4e-462f-8a9d-2fa309a18424",
+      "bpm": 44,
+      "comment": "",
+      "beatUnit": "DOTTED_HALF",
+      "noMM": false,
+      "pieceVersionId": "3b0ea893-00c0-4585-b00e-a730b580205e"
+    },
+    {
+      "sectionId": "c5f59f5b-3374-491c-bd57-7727fb0cfbbe",
+      "bpm": 132,
+      "comment": "",
+      "beatUnit": "QUARTER",
+      "noMM": false,
+      "pieceVersionId": "d498b795-0058-4dec-a2c7-f11ed39404fd"
+    },
+    {
+      "sectionId": "e7c6efc4-912b-4c65-93d2-2867c0fec646",
+      "noMM": true,
+      "pieceVersionId": "d498b795-0058-4dec-a2c7-f11ed39404fd"
+    },
+    {
+      "sectionId": "46e463cc-c570-4b08-a95b-020f3496eee5",
+      "bpm": 52,
+      "comment": "",
+      "beatUnit": "QUARTER",
+      "noMM": false,
+      "pieceVersionId": "668a9200-e020-4c10-8cc1-5128b7bfb538"
+    },
+    {
+      "sectionId": "940629b5-88d8-4b21-a290-ba3a40d52845",
+      "bpm": 66,
+      "comment": "",
+      "beatUnit": "QUARTER",
+      "noMM": false,
+      "pieceVersionId": "668a9200-e020-4c10-8cc1-5128b7bfb538"
+    },
+    {
+      "sectionId": "679c56b3-b96b-4947-8410-e96c1a3d2098",
+      "bpm": 52,
+      "comment": "",
+      "beatUnit": "QUARTER",
+      "noMM": false,
+      "pieceVersionId": "668a9200-e020-4c10-8cc1-5128b7bfb538"
+    },
+    {
+      "sectionId": "ed922bcf-5ade-469e-b1f7-aa25ab396166",
+      "bpm": 136,
+      "comment": "",
+      "beatUnit": "QUARTER",
+      "noMM": false,
+      "pieceVersionId": "efd2ae95-4cd9-40d3-8824-b1b42300feac"
+    },
+    {
+      "sectionId": "f7ee5728-c71f-433c-8234-406fcc3661eb",
+      "bpm": 184,
       "comment": "",
       "beatUnit": "EIGHTH",
       "noMM": false,
-      "pieceVersionId": "2746727a-7797-4598-9805-43156a9bbdaa"
+      "pieceVersionId": "7c117181-08fc-4530-b82e-d319d4d5d633"
     },
     {
-      "sectionId": "ea6e6125-b4f3-45f8-9882-758af3de4b8b",
-      "bpm": 152,
+      "sectionId": "5c6ccab5-0bdf-4824-ba90-4a4f55f39e44",
+      "bpm": 63,
       "comment": "",
       "beatUnit": "QUARTER",
       "noMM": false,
-      "pieceVersionId": "9fa8aef7-06e6-46f6-8348-d4ae5e532259"
+      "pieceVersionId": "7d5891c0-982e-443d-bd66-4656892c567d"
     },
     {
-      "sectionId": "bc3516fd-841a-4576-91d4-bf026c3b6a0f",
-      "bpm": 92,
+      "sectionId": "344544ab-dd11-4919-9fd1-3b7559320d58",
+      "bpm": 112,
       "comment": "",
       "beatUnit": "QUARTER",
       "noMM": false,
-      "pieceVersionId": "41dbb78f-228c-46c1-b9fb-f5cb8648b10c"
+      "pieceVersionId": "19f18161-9b60-4005-8ee0-0e005eedd733"
     }
   ],
   "organizations": [
     {
-      "id": "7ef5aacf-7302-48a4-b858-60600aeaf71a",
-      "name": "Jos. Aibl Verlag"
+      "id": "90551d20-aa11-47a3-88cd-ef2eaad5c912",
+      "name": "M.P. Belaieff",
+      "isNew": true
     }
   ],
   "persons": [
     {
-      "id": "63833d92-8c49-4ef6-ae87-f8c3d3e2f6a2",
-      "firstName": "Hans",
-      "lastName": "von B\u00fclow",
-      "birthYear": 1830,
-      "deathYear": 1894
-    },
-    {
-      "id": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "firstName": "Johann Baptist",
-      "lastName": "Cramer",
-      "birthYear": 1771,
-      "deathYear": 1858,
-      "isNew": true
+      "id": "a73d4163-d149-44d1-b8fb-14d72403fd60",
+      "firstName": "Aleksandr",
+      "lastName": "Scriabin,",
+      "birthYear": 1872,
+      "deathYear": 1915
     }
   ],
   "pieces": [
     {
-      "title": "Study nr. 1 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "df204e47-3a6a-438f-8dd0-c2109e720b90",
-      "isNew": true
+      "title": "12 Etudes, Op.8 No.1",
+      "yearOfComposition": 1894,
+      "composerId": "a73d4163-d149-44d1-b8fb-14d72403fd60",
+      "id": "bdda1e47-ebe2-402f-af82-76af8ce73fad",
+      "isNew": true,
+      "collectionId": "9d2e7a21-8ad6-4c6d-9f33-d150dc734a53",
+      "collectionRank": 1
     },
     {
-      "title": "Study nr. 2 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
+      "title": "12 Etudes, Op.8 No.2",
+      "composerId": "a73d4163-d149-44d1-b8fb-14d72403fd60",
       "yearOfComposition": null,
-      "id": "1f823aa6-59e2-43b5-9455-370caab6653e",
-      "isNew": true
+      "id": "a5b1bc2a-ef53-4533-ac96-a56fd4c3fb29",
+      "isNew": true,
+      "collectionId": "9d2e7a21-8ad6-4c6d-9f33-d150dc734a53",
+      "collectionRank": 2
     },
     {
-      "title": "Study nr. 3 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
+      "title": "12 Etudes, Op.8 No.3",
+      "composerId": "a73d4163-d149-44d1-b8fb-14d72403fd60",
       "yearOfComposition": null,
-      "id": "54b071ee-1e7e-479f-a8b6-4cf7fadb6f22",
-      "isNew": true
+      "id": "4e07fa49-c688-415c-8fa6-af4c6a9f906e",
+      "isNew": true,
+      "collectionId": "9d2e7a21-8ad6-4c6d-9f33-d150dc734a53",
+      "collectionRank": 3
     },
     {
-      "title": "Study nr. 4 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
+      "title": "12 Etudes, Op.8 No.4",
+      "composerId": "a73d4163-d149-44d1-b8fb-14d72403fd60",
       "yearOfComposition": null,
-      "id": "4683f438-86d2-4d1b-ae64-65f570a14436",
-      "isNew": true
+      "id": "44ba965e-3c89-4f91-ab84-05937a96b25f",
+      "isNew": true,
+      "collectionId": "9d2e7a21-8ad6-4c6d-9f33-d150dc734a53",
+      "collectionRank": 4
     },
     {
-      "title": "Study nr. 5 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
+      "title": "12 Etudes, Op.8 No.5",
+      "composerId": "a73d4163-d149-44d1-b8fb-14d72403fd60",
       "yearOfComposition": null,
-      "id": "8d4bacff-f12b-48d4-9370-1c837304838f",
-      "isNew": true
+      "id": "9312dcb8-6504-49ef-9567-855021807555",
+      "isNew": true,
+      "collectionId": "9d2e7a21-8ad6-4c6d-9f33-d150dc734a53",
+      "collectionRank": 5
     },
     {
-      "title": "Study nr. 6 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
+      "title": "12 Etudes, Op.8 No.6",
+      "composerId": "a73d4163-d149-44d1-b8fb-14d72403fd60",
       "yearOfComposition": null,
-      "id": "86fe7cf8-da4e-4b51-8d26-b61990cc4095",
-      "isNew": true
+      "id": "741e2db3-2a97-4f93-bbda-1f24d3de6eaf",
+      "isNew": true,
+      "collectionId": "9d2e7a21-8ad6-4c6d-9f33-d150dc734a53",
+      "collectionRank": 6
     },
     {
-      "title": "Study nr. 7 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
+      "title": "12 Etudes, Op.8 No.7",
+      "composerId": "a73d4163-d149-44d1-b8fb-14d72403fd60",
       "yearOfComposition": null,
-      "id": "a6fd38d9-d4e0-469b-a537-8a95673c3d8e",
-      "isNew": true
+      "id": "7a44fa7d-fa06-48e5-be0a-6d5ca40503f0",
+      "isNew": true,
+      "collectionId": "9d2e7a21-8ad6-4c6d-9f33-d150dc734a53",
+      "collectionRank": 7
     },
     {
-      "title": "Study nr. 8 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
+      "title": "12 Etudes, Op.8 No.8",
+      "composerId": "a73d4163-d149-44d1-b8fb-14d72403fd60",
       "yearOfComposition": null,
-      "id": "ad06eb6a-e4c8-4438-86db-651567579c64",
-      "isNew": true
+      "id": "33119ac6-cf04-4538-83df-98f0fa464a06",
+      "isNew": true,
+      "collectionId": "9d2e7a21-8ad6-4c6d-9f33-d150dc734a53",
+      "collectionRank": 8
     },
     {
-      "title": "Study nr. 9 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
+      "title": "12 Etudes, Op.8 No.9",
+      "composerId": "a73d4163-d149-44d1-b8fb-14d72403fd60",
       "yearOfComposition": null,
-      "id": "edb2cc33-497c-484f-8966-ac6f3eb12a60",
-      "isNew": true
+      "id": "e32050a3-6058-45db-8265-687c12113799",
+      "isNew": true,
+      "collectionId": "9d2e7a21-8ad6-4c6d-9f33-d150dc734a53",
+      "collectionRank": 9
     },
     {
-      "title": "Study nr. 10 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
+      "title": "12 Etudes, Op.8 No.10",
+      "composerId": "a73d4163-d149-44d1-b8fb-14d72403fd60",
       "yearOfComposition": null,
-      "id": "11e092b0-a540-42dd-9718-29591700dd14",
-      "isNew": true
+      "id": "60c4aec5-7bd1-4937-bc9a-e1a910f4d391",
+      "isNew": true,
+      "collectionId": "9d2e7a21-8ad6-4c6d-9f33-d150dc734a53",
+      "collectionRank": 10
     },
     {
-      "title": "Study nr. 11 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
+      "title": "12 Etudes, Op.8 No.11",
+      "composerId": "a73d4163-d149-44d1-b8fb-14d72403fd60",
       "yearOfComposition": null,
-      "id": "75024ed3-d58b-4403-9911-c260900f4512",
-      "isNew": true
+      "id": "d3417e6d-9d5b-4791-a944-85a18a4d50ce",
+      "isNew": true,
+      "collectionId": "9d2e7a21-8ad6-4c6d-9f33-d150dc734a53",
+      "collectionRank": 11
     },
     {
-      "title": "Study nr. 12 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
+      "title": "12 Etudes, Op.8 No.12",
+      "composerId": "a73d4163-d149-44d1-b8fb-14d72403fd60",
       "yearOfComposition": null,
-      "id": "b0f223ba-9faa-4516-8003-26a62196a9c9",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 13 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "23691af5-499f-4838-bfd0-80be05a0d0f5",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 14 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "429fc65f-04a4-4876-b421-deb04877df54",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 15 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "652a8ca8-0b60-404a-a229-2c086149228b",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 16 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "8ca1a8e4-7a5c-4397-99e0-8cb2022fc6db",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 17 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "377fd738-6408-4bd2-b010-84e8cfa41860",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 18 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "44bbfba2-4f9d-420b-ba5d-7383afe6ee69",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 19 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "7bbaf41a-99b1-4667-95ed-f90a975709fe",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 20 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "72d7faf0-e343-4caa-b1c8-f089c9fd61dd",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 21 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "9831e646-f940-4f60-8318-d57f12aaa327",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 22 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "1ff49173-21f2-4e47-b763-395deb96006a",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 23 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "b3f360a4-7d98-475c-99e5-2280ba83dbe1",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 24 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "c84cb55a-647b-4556-abcb-a0696496f13e",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 25 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "84cc010e-59a6-4042-a1bb-959cf8842122",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 26 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "d2bd52f3-7b9f-449f-8b32-91bf240191bd",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 27 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "443eb98e-aad4-4b30-9df0-12b84da459b0",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 28 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "f5f287bf-abfe-4cc4-a844-cc30cd12e0c8",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 29 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "a0fceedf-2c5a-4bb0-85f2-c551aa4d10f2",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 30 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "a530955f-93cb-4ef4-a105-40d17d74b0eb",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 31 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "45fee411-62a7-4197-95ea-12d5319909e5",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 32 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "f7184ba0-c5f2-42dd-874d-a2ae6afb40d1",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 33 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "51bf9afe-8b62-4c04-a0ac-3c74398e318c",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 34 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "a9284d4e-304b-4595-a5cb-4d36cfe11bae",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 35 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "9ea46ce0-58f9-4bd6-b53f-376a5f013251",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 36 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "f3a7e5a6-6b89-48f3-a020-eae3f5d5d9c2",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 37 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "5798df08-a6bd-4fde-b073-81b47b04ab78",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 38 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "47ada57d-0941-4bc9-ac32-49c39a52c378",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 39 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "6eeb7bc2-6bee-4910-8425-ea13b7452ba8",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 40 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "07712d5c-81e2-43da-b3ce-560762f13ea3",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 41 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "49e06e68-cef5-40d4-90c2-f350623bdd83",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 42 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "a303f1f4-d7fa-46b1-84aa-eda1938c5a02",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 43 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "0cb2b7b2-c754-4fb9-ac70-61c9823ad405",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 44 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "6dbe889f-eeff-4074-992d-602e63191807",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 45 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "79753623-fb09-4c2c-90ee-9d1cf2fc9e0e",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 46 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "81735198-c0a7-4772-9592-319835a497f0",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 47 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "f9421c76-e5d0-4ed3-b45a-c21f575e2dd8",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 48 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "002f60b0-2979-44bf-bb17-6e68a3277197",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 49 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "365df40c-f522-4f29-bfad-59fc984b9b93",
-      "isNew": true
-    },
-    {
-      "title": "Study nr. 50 (of 50)",
-      "composerId": "764fc003-b39b-4323-ae90-d0b5b7bad934",
-      "yearOfComposition": null,
-      "id": "85cb94ef-7125-4fe7-8c78-a3f9880c2584",
-      "isNew": true
+      "id": "a59c56b2-bb4c-418a-8125-813b65fee0b5",
+      "isNew": true,
+      "collectionId": "9d2e7a21-8ad6-4c6d-9f33-d150dc734a53",
+      "collectionRank": 12
     }
   ],
   "pieceVersions": [
@@ -1034,1355 +352,421 @@ Content-Type: application/json
       "category": "KEYBOARD",
       "movements": [
         {
-          "id": "8f64f238-4f91-454c-96c9-b3e82a1972a5",
+          "id": "68644b1b-2297-48b8-8634-a79641f4d6b0",
           "rank": 1,
-          "key": "C_MAJOR",
+          "key": "G_SHARP_MINOR",
+          "isVariation": false,
           "sections": [
             {
-              "id": "0e4f2e89-db99-4e29-8a2a-48aeba79ea6f",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestRepeatedNotesPerBar": 16,
-              "comment": "Repeated: 16th note in final system on p.2 (PDF p.14)",
-              "rank": 1,
-              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
-            }
-          ]
-        }
-      ],
-      "pieceId": "df204e47-3a6a-438f-8dd0-c2109e720b90",
-      "id": "72975947-4960-4e85-b58b-21a706d58a72",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "f5712b76-d405-4ab7-acec-33eb4898631a",
-          "rank": 1,
-          "key": "E_MINOR",
-          "sections": [
-            {
-              "id": "768a4b89-6475-4308-aed0-578511ad9e82",
+              "id": "3a11fcd4-525f-474d-85ec-577bead7ac0c",
               "metreNumerator": 4,
               "metreDenominator": 4,
               "isCommonTime": true,
               "isCutTime": false,
               "fastestStructuralNotesPerBar": 12,
               "fastestRepeatedNotesPerBar": 12,
+              "tempoIndication": {
+                "value": "2fadca09-f577-430a-840e-25f9b5ce16e4",
+                "label": "Allegro"
+              },
               "rank": 1,
               "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
             }
           ]
         }
       ],
-      "pieceId": "1f823aa6-59e2-43b5-9455-370caab6653e",
-      "id": "cb990637-351c-4857-b2e1-6f134d8b444e",
+      "pieceId": "bdda1e47-ebe2-402f-af82-76af8ce73fad",
+      "id": "45538af4-7947-4945-83bb-9291ec5a8ff0",
       "isNew": true
     },
     {
       "category": "KEYBOARD",
       "movements": [
         {
-          "id": "1094ab26-20ef-4988-a420-0b5e7a735715",
-          "rank": 1,
-          "key": "A_MINOR",
-          "sections": [
-            {
-              "id": "313b51f7-7a87-4ce1-8f84-e87864601211",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestRepeatedNotesPerBar": 16,
-              "comment": "Repeated: 32nd note in final system on p.6 (PDF p.18)",
-              "rank": 1,
-              "tempoIndicationId": "2f8b3ff3-2d91-4580-bdf8-0b700f9d9154"
-            }
-          ]
-        }
-      ],
-      "pieceId": "54b071ee-1e7e-479f-a8b6-4cf7fadb6f22",
-      "id": "e0a5bcf5-58d2-4498-893a-1e82d8bb4a43",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "93b7d7fc-7b24-422b-a41a-4048e84ff3bf",
-          "rank": 1,
-          "key": "A_MAJOR",
-          "sections": [
-            {
-              "id": "2efc4a98-99a5-4aad-9070-b151c008de7e",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestRepeatedNotesPerBar": 16,
-              "fastestOrnamentalNotesPerBar": 32,
-              "comment": "Ornamental: Arpeggio penultimate bar requires hand shift",
-              "rank": 1,
-              "tempoIndicationId": "59a80b85-ffd5-438e-9678-fc753b1a8f59"
-            }
-          ]
-        }
-      ],
-      "pieceId": "4683f438-86d2-4d1b-ae64-65f570a14436",
-      "id": "da283e33-5b2a-408c-b0e3-09f0d18d3080",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "8ae85193-be9e-41d7-9e80-e86049247c03",
+          "id": "27e03a9e-4804-4d28-b56b-22241a1306e4",
           "rank": 1,
           "key": "F_SHARP_MINOR",
+          "isVariation": false,
           "sections": [
             {
-              "id": "1b10d772-cb86-4d44-8ac0-30489503ae1e",
+              "id": "1bdcb9b3-c3c5-40cc-b570-fdd762c5b1b8",
               "metreNumerator": 4,
               "metreDenominator": 4,
               "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestStaccatoNotesPerBar": 4,
-              "fastestRepeatedNotesPerBar": 4,
-              "rank": 1,
-              "tempoIndicationId": "4a399d19-b0f4-45cf-ac01-5c55afbe76a9"
-            }
-          ]
-        }
-      ],
-      "pieceId": "8d4bacff-f12b-48d4-9370-1c837304838f",
-      "id": "a00643ef-a298-458b-ac2d-c8a3ae71b323",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "dee189a6-bef1-4c33-a1fd-48f07be5266e",
-          "rank": 1,
-          "key": "D_FLAT_MAJOR",
-          "sections": [
-            {
-              "id": "376f57cf-6c84-426a-979e-1348f1f1cd40",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "rank": 1,
-              "tempoIndicationId": "2f0a179e-bc46-4b8f-a4e6-be3f64e7935b"
-            }
-          ]
-        }
-      ],
-      "pieceId": "86fe7cf8-da4e-4b51-8d26-b61990cc4095",
-      "id": "7e3a4c95-7448-4113-bf4e-61cf6d86b406",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "51f782a7-f197-4a84-a2bd-f93525048e67",
-          "rank": 1,
-          "key": "F_MINOR",
-          "sections": [
-            {
-              "id": "f6ffdd75-9a90-4acc-ab0c-62b3cd344fc1",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestRepeatedNotesPerBar": 4,
-              "fastestOrnamentalNotesPerBar": 48,
-              "comment": "Ornamental: Remark 3 on execution of turn",
-              "rank": 1,
-              "tempoIndicationId": "b746457f-8ce2-4291-807b-705a316fbff3"
-            }
-          ]
-        }
-      ],
-      "pieceId": "a6fd38d9-d4e0-469b-a537-8a95673c3d8e",
-      "id": "e4247e11-fba6-45e8-b7d4-beb932df9857",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "59c99263-581b-4e29-8266-91a0caeff4ba",
-          "rank": 1,
-          "key": "C_MAJOR",
-          "sections": [
-            {
-              "id": "482f9310-281f-46d4-b1b3-c4f5fa1a470f",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestStaccatoNotesPerBar": 16,
-              "fastestRepeatedNotesPerBar": 16,
-              "rank": 1,
-              "tempoIndicationId": "3d9f7a22-b600-40e1-8d99-d68edb065f00"
-            }
-          ]
-        }
-      ],
-      "pieceId": "ad06eb6a-e4c8-4438-86db-651567579c64",
-      "id": "ab6c57b0-d1d7-4ffc-ad59-585490ab4146",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "c8013d14-a8b6-4af9-86d3-95a66b6849ee",
-          "rank": 1,
-          "key": "C_MINOR",
-          "sections": [
-            {
-              "id": "222ddca8-ba04-4244-8dfe-a1d3d3973929",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 6,
-              "comment": "Remark 1 indicates alternative (for advanced players) with 12 structural notes per bar",
-              "rank": 1,
-              "tempoIndicationId": "2f0a179e-bc46-4b8f-a4e6-be3f64e7935b"
-            }
-          ]
-        }
-      ],
-      "pieceId": "edb2cc33-497c-484f-8966-ac6f3eb12a60",
-      "id": "608782b2-0ef1-4fac-82de-662b3e753930",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "ef6d78b4-9c02-4450-8cdc-9f9483af3aaf",
-          "rank": 1,
-          "key": "F_MINOR",
-          "sections": [
-            {
-              "id": "2e6fb233-0733-4fc4-a7a4-4743bfff2f2d",
-              "metreNumerator": 3,
-              "metreDenominator": 4,
-              "isCommonTime": false,
               "isCutTime": false,
               "fastestStructuralNotesPerBar": 24,
-              "fastestRepeatedNotesPerBar": 3,
+              "fastestStaccatoNotesPerBar": 24,
+              "tempoIndication": {
+                "value": "dda2053e-2f2a-497f-b5f0-a8c5ff03e332",
+                "label": "A capriccio, con forza"
+              },
               "rank": 1,
-              "tempoIndicationId": "2f3e6f15-0d38-42bd-9aab-32025ba267e2"
+              "tempoIndicationId": "dda2053e-2f2a-497f-b5f0-a8c5ff03e332"
             }
           ]
         }
       ],
-      "pieceId": "11e092b0-a540-42dd-9718-29591700dd14",
-      "id": "d79bb114-fa4c-481e-931c-af09a7bcd406",
+      "pieceId": "a5b1bc2a-ef53-4533-ac96-a56fd4c3fb29",
+      "id": "89733db1-98de-41ee-be17-2c7118407304",
       "isNew": true
     },
     {
       "category": "KEYBOARD",
       "movements": [
         {
-          "id": "dc78a59e-de69-4b8b-9dc5-b394752869d7",
+          "id": "c91e26dd-06e4-4141-ae2a-442bfa479db1",
           "rank": 1,
-          "key": "F_MAJOR",
+          "key": "B_MINOR",
+          "isVariation": false,
           "sections": [
             {
-              "id": "5522d970-1c4c-49fb-aadc-f3ccc6fa721c",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 24,
-              "fastestStaccatoNotesPerBar": 4,
-              "fastestRepeatedNotesPerBar": 4,
-              "rank": 1,
-              "tempoIndicationId": "bbe31fd3-4468-414a-ad50-cfa7767852fd"
-            }
-          ]
-        }
-      ],
-      "pieceId": "75024ed3-d58b-4403-9911-c260900f4512",
-      "id": "d8f5db75-1e39-4403-9cef-8c72aa89b4e7",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "e38c4049-0501-4fc6-9491-5fa723679dde",
-          "rank": 1,
-          "key": "B_MAJOR",
-          "sections": [
-            {
-              "id": "98972495-a0f6-4ff2-96bf-136a77b810e8",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 32,
-              "fastestStaccatoNotesPerBar": 4,
-              "fastestRepeatedNotesPerBar": 8,
-              "rank": 1,
-              "tempoIndicationId": "9b4691ea-431a-4bd8-9388-3717b389049c"
-            }
-          ]
-        }
-      ],
-      "pieceId": "b0f223ba-9faa-4516-8003-26a62196a9c9",
-      "id": "a71e8d37-26ff-4742-8091-277da4fe3d7a",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "66982249-f503-43a0-846e-2c28a95ad4b8",
-          "rank": 1,
-          "key": "D_MAJOR",
-          "sections": [
-            {
-              "id": "fb10a3f2-16d1-400c-bdb9-cff6910d5d24",
-              "metreNumerator": 9,
-              "metreDenominator": 16,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 18,
-              "fastestRepeatedNotesPerBar": 18,
-              "rank": 1,
-              "tempoIndicationId": "61dc44d6-1b3b-4e5d-9440-9d59e45516ce"
-            }
-          ]
-        }
-      ],
-      "pieceId": "23691af5-499f-4838-bfd0-80be05a0d0f5",
-      "id": "0f40bc87-83da-4e52-931d-3990f589d4f8",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "fe933023-1204-4568-aa1d-d40b2e043b81",
-          "rank": 1,
-          "key": "D_MINOR",
-          "sections": [
-            {
-              "id": "896049e5-7376-40c0-95ac-3373506a0ca2",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 12,
-              "fastestStaccatoNotesPerBar": 4,
-              "rank": 1,
-              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
-            }
-          ]
-        }
-      ],
-      "pieceId": "429fc65f-04a4-4876-b421-deb04877df54",
-      "id": "3d967d76-690e-4e9d-9e37-c785bee7c457",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "e162cc53-eb65-4979-ad6b-65f7a6f56659",
-          "rank": 1,
-          "key": "D_MINOR",
-          "sections": [
-            {
-              "id": "4c55370d-b499-4f9a-a21c-60600b1e7861",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestStaccatoNotesPerBar": 2,
-              "fastestOrnamentalNotesPerBar": 64,
-              "comment": "Ornamental: Remark 1 on execution of arpeggi",
-              "rank": 1,
-              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
-            }
-          ]
-        }
-      ],
-      "pieceId": "652a8ca8-0b60-404a-a229-2c086149228b",
-      "id": "548808ae-7183-4d05-9cd2-dac5e4b3b5ef",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "9acfd19a-88cc-46cb-b2b5-1c70fcd63251",
-          "rank": 1,
-          "key": "D_MAJOR",
-          "sections": [
-            {
-              "id": "6e187d21-ddab-4ff3-a2ba-d5931e2d7296",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestStaccatoNotesPerBar": 2,
-              "fastestRepeatedNotesPerBar": 4,
-              "rank": 1,
-              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
-            }
-          ]
-        }
-      ],
-      "pieceId": "8ca1a8e4-7a5c-4397-99e0-8cb2022fc6db",
-      "id": "a40b8772-f3c1-4b57-be9c-00df301b4fab",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "8ff05f0f-3f39-4554-811a-304f78e87392",
-          "rank": 1,
-          "key": "G_MINOR",
-          "sections": [
-            {
-              "id": "bad319ba-87ef-48f9-808c-bdb023d5fd83",
+              "id": "74baf994-6e23-40ef-b9ed-48cae4ca9e24",
               "metreNumerator": 6,
               "metreDenominator": 8,
               "isCommonTime": false,
               "isCutTime": false,
-              "fastestStructuralNotesPerBar": 24,
-              "fastestStaccatoNotesPerBar": 6,
-              "fastestRepeatedNotesPerBar": 6,
-              "comment": "Remark 1 indicates alternative (for advanced players) with 48 structural notes per bar",
-              "rank": 1,
-              "tempoIndicationId": "6991e7c5-d51a-4fb7-bbc5-7bcf3e9eac6e"
-            }
-          ]
-        }
-      ],
-      "pieceId": "377fd738-6408-4bd2-b010-84e8cfa41860",
-      "id": "277e5e12-f296-476d-81c8-fea2ea59aea7",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "6e3e2ab8-3ca8-4991-b1c2-573ad512358d",
-          "rank": 1,
-          "key": "G_MAJOR",
-          "sections": [
-            {
-              "id": "895548f2-fa5a-40b3-97a4-27dc13f8212c",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 12,
-              "fastestRepeatedNotesPerBar": 4,
-              "fastestOrnamentalNotesPerBar": 32,
-              "comment": "Ornamental: Remark 3 on execution of trills",
-              "rank": 1,
-              "tempoIndicationId": "4a399d19-b0f4-45cf-ac01-5c55afbe76a9"
-            }
-          ]
-        }
-      ],
-      "pieceId": "44bbfba2-4f9d-420b-ba5d-7383afe6ee69",
-      "id": "8bc0bf30-a8bf-4a03-81a6-a8d09421bbbc",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "0f48d6da-d571-4704-83de-f52cafde8ad5",
-          "rank": 1,
-          "key": "E_MINOR",
-          "sections": [
-            {
-              "id": "f2387852-dca2-470d-b71d-c9859488e960",
-              "metreNumerator": 12,
-              "metreDenominator": 8,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 18,
-              "fastestRepeatedNotesPerBar": 18,
-              "fastestOrnamentalNotesPerBar": 36,
-              "comment": "Repeated: In next to last system; Ornamental: Acciaccatura",
-              "rank": 1,
-              "tempoIndicationId": "3ecc1cb7-5000-405d-ac02-37071647ff0e"
-            }
-          ]
-        }
-      ],
-      "pieceId": "7bbaf41a-99b1-4667-95ed-f90a975709fe",
-      "id": "9643b6ff-ac1c-44bb-a121-dd356e5307b0",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "60d00ca8-3bb6-4ab5-92c6-a2a4b1212dfd",
-          "rank": 1,
-          "key": "G_MAJOR",
-          "sections": [
-            {
-              "id": "9864e13d-5d5e-4915-a4b3-cc562c21a684",
-              "metreNumerator": 12,
-              "metreDenominator": 8,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 24,
-              "fastestStaccatoNotesPerBar": 12,
-              "fastestRepeatedNotesPerBar": 24,
-              "comment": "Repeated: in 3rd to last system",
-              "rank": 1,
-              "tempoIndicationId": "2f0a179e-bc46-4b8f-a4e6-be3f64e7935b"
-            }
-          ]
-        }
-      ],
-      "pieceId": "72d7faf0-e343-4caa-b1c8-f089c9fd61dd",
-      "id": "06985cd6-f7ec-4814-b513-7b15f8b22906",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "52fcd20c-4623-4f51-91ab-22b32919b7f5",
-          "rank": 1,
-          "key": "C_MAJOR",
-          "sections": [
-            {
-              "id": "2ed0c999-ad95-4d81-8040-50ca2a440e96",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 8,
-              "fastestStaccatoNotesPerBar": 4,
-              "fastestRepeatedNotesPerBar": 8,
-              "fastestOrnamentalNotesPerBar": 16,
-              "rank": 1,
-              "tempoIndicationId": "68b97adb-f73f-40ab-8aac-6eb184e3adfc"
-            }
-          ]
-        }
-      ],
-      "pieceId": "9831e646-f940-4f60-8318-d57f12aaa327",
-      "id": "2fb6d7d4-16ae-4a48-b3a3-84b0bf647f7c",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "f68492d9-5b4d-4dca-9f2a-bcd1877fc376",
-          "rank": 1,
-          "key": "C_MINOR",
-          "sections": [
-            {
-              "id": "068311db-6cce-4315-83b9-fd498fccac97",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 8,
-              "fastestRepeatedNotesPerBar": 8,
-              "rank": 1,
-              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
-            }
-          ]
-        }
-      ],
-      "pieceId": "1ff49173-21f2-4e47-b763-395deb96006a",
-      "id": "bb9ef4d4-93f1-487d-8539-839fe23ce1ef",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "0fcaae8f-43e9-4006-8bff-806a27d7340f",
-          "rank": 1,
-          "key": "G_MAJOR",
-          "sections": [
-            {
-              "id": "441238a0-40d3-49b3-9961-ca40fc3fef0f",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 8,
-              "fastestRepeatedNotesPerBar": 2,
-              "comment": "Repeated: Technically 2.67",
-              "rank": 1,
-              "tempoIndicationId": "c674ebc7-54de-425e-9df3-b584d2654427"
-            }
-          ]
-        }
-      ],
-      "pieceId": "b3f360a4-7d98-475c-99e5-2280ba83dbe1",
-      "id": "5b0873fd-8d44-4ec7-8e41-4cccaa0b072d",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "bea54977-e3b8-4266-81a0-9f02aadaefd5",
-          "rank": 1,
-          "key": "G_MINOR",
-          "sections": [
-            {
-              "id": "2cb38b29-80ad-4dc9-a347-f4639188a6f9",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 12,
-              "fastestStaccatoNotesPerBar": 4,
-              "fastestRepeatedNotesPerBar": 4,
-              "fastestOrnamentalNotesPerBar": 24,
-              "comment": "Ornamental: Remark 3 on execution of acciaccatura",
-              "rank": 1,
-              "tempoIndicationId": "5465034c-b59d-4553-93bc-eebd40500ddf"
-            }
-          ]
-        }
-      ],
-      "pieceId": "c84cb55a-647b-4556-abcb-a0696496f13e",
-      "id": "94348a26-e16d-4d56-a33e-fa7552e9aff9",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "a3bda6b6-d4c1-4ef1-88fb-a651e4097c98",
-          "rank": 1,
-          "key": "B_FLAT_MAJOR",
-          "sections": [
-            {
-              "id": "a34db9c4-d5d9-4c37-a4f4-7418d8196f94",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 24,
-              "fastestStaccatoNotesPerBar": 8,
-              "fastestRepeatedNotesPerBar": 16,
-              "fastestOrnamentalNotesPerBar": 32,
-              "comment": "12/8 sections converted to common time",
-              "rank": 1,
-              "tempoIndicationId": "8c6676e4-d0b9-433f-b111-97b6f030c65b"
-            }
-          ]
-        }
-      ],
-      "pieceId": "84cc010e-59a6-4042-a1bb-959cf8842122",
-      "id": "dce30b98-8cbc-4f13-8588-00959fab113f",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "6fa5125b-141c-4a23-993a-4db414e770f5",
-          "rank": 1,
-          "key": "C_MAJOR",
-          "sections": [
-            {
-              "id": "0b557faf-0204-4204-a55e-7b344e13a90f",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestStaccatoNotesPerBar": 8,
-              "fastestRepeatedNotesPerBar": 16,
-              "fastestOrnamentalNotesPerBar": 48,
-              "rank": 1,
-              "tempoIndicationId": "581e9953-9703-44e7-a3fc-ddeb83374620"
-            }
-          ]
-        }
-      ],
-      "pieceId": "d2bd52f3-7b9f-449f-8b32-91bf240191bd",
-      "id": "80efb8cc-4412-465d-8e7a-a7496ea554b0",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "0a73012b-b6fd-439e-b0f5-2a95bef11a59",
-          "rank": 1,
-          "key": "E_MINOR",
-          "sections": [
-            {
-              "id": "529c4fde-e892-4391-8a67-3081d226dfa3",
-              "metreNumerator": 3,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 12,
-              "rank": 1,
-              "tempoIndicationId": "411b3f81-a83a-4c7f-aec2-386e1f2408fe"
-            }
-          ]
-        }
-      ],
-      "pieceId": "443eb98e-aad4-4b30-9df0-12b84da459b0",
-      "id": "58dc6e33-e137-4dda-a06d-f466cd0f167c",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "b4967ae5-ff7b-4430-9a3c-b987938e7579",
-          "rank": 1,
-          "key": "A_MINOR",
-          "sections": [
-            {
-              "id": "97459a95-d1f6-41fb-a1b6-e5540d16a996",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestRepeatedNotesPerBar": 16,
-              "rank": 1,
-              "tempoIndicationId": "2f8c16fc-f22a-4c67-be52-bdfd65b6793e"
-            }
-          ]
-        }
-      ],
-      "pieceId": "f5f287bf-abfe-4cc4-a844-cc30cd12e0c8",
-      "id": "31fde840-58a9-46c5-b4e2-44bb597a5023",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "19da1830-ffdc-4abd-aa63-369f7049a7d0",
-          "rank": 1,
-          "key": "A_MAJOR",
-          "sections": [
-            {
-              "id": "3b742796-0cb3-4538-b4af-417058685b32",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestRepeatedNotesPerBar": 16,
-              "rank": 1,
-              "tempoIndicationId": "581e9953-9703-44e7-a3fc-ddeb83374620"
-            }
-          ]
-        }
-      ],
-      "pieceId": "a0fceedf-2c5a-4bb0-85f2-c551aa4d10f2",
-      "id": "68d8b289-ccaf-452d-b48c-2947746e6879",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "be2071ef-662d-4e98-9953-b13f69a3e981",
-          "rank": 1,
-          "key": "A_MAJOR",
-          "sections": [
-            {
-              "id": "1eb44cd7-155f-4218-9042-3a9f19c99342",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestStaccatoNotesPerBar": 4,
-              "fastestOrnamentalNotesPerBar": 24,
-              "rank": 1,
-              "tempoIndicationId": "59a80b85-ffd5-438e-9678-fc753b1a8f59"
-            }
-          ]
-        }
-      ],
-      "pieceId": "a530955f-93cb-4ef4-a105-40d17d74b0eb",
-      "id": "810a9180-941c-46a2-86ef-852bc4e30164",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "049ef82b-2320-4ead-a427-d342ec63aa45",
-          "rank": 1,
-          "key": "D_MINOR",
-          "sections": [
-            {
-              "id": "f804e99d-beae-4a5d-87f1-1961f80c3fb4",
-              "metreNumerator": 3,
-              "metreDenominator": 8,
-              "isCommonTime": false,
-              "isCutTime": false,
               "fastestStructuralNotesPerBar": 6,
-              "fastestRepeatedNotesPerBar": 3,
-              "fastestOrnamentalNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": 4,
+              "fastestRepeatedNotesPerBar": 6,
+              "tempoIndication": {
+                "value": "65fc8413-ed97-4297-9883-7bc9ad78492d",
+                "label": "Tempestoso"
+              },
               "rank": 1,
-              "tempoIndicationId": "3ecc1cb7-5000-405d-ac02-37071647ff0e"
+              "tempoIndicationId": "65fc8413-ed97-4297-9883-7bc9ad78492d"
             }
           ]
         }
       ],
-      "pieceId": "45fee411-62a7-4197-95ea-12d5319909e5",
-      "id": "6abffaa5-8b71-44f4-89b6-968500884fca",
+      "pieceId": "4e07fa49-c688-415c-8fa6-af4c6a9f906e",
+      "id": "fbcabbd5-caee-494f-a5b1-eadf0bc313a2",
       "isNew": true
     },
     {
       "category": "KEYBOARD",
       "movements": [
         {
-          "id": "327a192a-f3a7-4c23-bf1a-4535988c87fe",
+          "id": "8b10af87-2b1a-4d4a-8bdc-56790a79dccf",
           "rank": 1,
-          "key": "D_MINOR",
+          "key": "B_MAJOR",
+          "isVariation": false,
           "sections": [
             {
-              "id": "55a7dab9-be06-405c-ba87-c78c406af324",
+              "id": "85e9d0c1-360e-45b3-a337-bf872c72fef1",
               "metreNumerator": 4,
               "metreDenominator": 4,
               "isCommonTime": true,
               "isCutTime": false,
-              "fastestStructuralNotesPerBar": 24,
-              "fastestStaccatoNotesPerBar": 8,
-              "fastestRepeatedNotesPerBar": 8,
-              "fastestOrnamentalNotesPerBar": 48,
-              "rank": 1,
-              "tempoIndicationId": "40e99953-ea31-4f2c-a742-0fc7428d8c76"
-            }
-          ]
-        }
-      ],
-      "pieceId": "f7184ba0-c5f2-42dd-874d-a2ae6afb40d1",
-      "id": "57d020a4-d2e2-4a7d-b7df-e18caa3fc638",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "ab5c4310-ed35-4717-8c3e-df5d7c70f3eb",
-          "rank": 1,
-          "key": "B_FLAT_MAJOR",
-          "sections": [
-            {
-              "id": "de13683a-9208-4cf9-811b-0180b5597b6c",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "rank": 1,
-              "tempoIndicationId": "b60f45e1-0fe6-45f1-8d4f-2582e596f465"
-            }
-          ]
-        }
-      ],
-      "pieceId": "51bf9afe-8b62-4c04-a0ac-3c74398e318c",
-      "id": "4e9a1bf4-d2ce-45db-81ea-41d706ca34f6",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "82163fc3-42cb-4d87-a331-d189b6022118",
-          "rank": 1,
-          "key": "F_MINOR",
-          "sections": [
-            {
-              "id": "0903b621-6625-4ea4-81d6-7b8b2327c7fe",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 8,
-              "fastestStaccatoNotesPerBar": 4,
-              "fastestRepeatedNotesPerBar": 4,
-              "rank": 1,
-              "tempoIndicationId": "8c8920a6-3775-4110-afd1-8536ad0f9a30"
-            }
-          ]
-        }
-      ],
-      "pieceId": "a9284d4e-304b-4595-a5cb-4d36cfe11bae",
-      "id": "cab48aa8-2374-4a94-ad55-4ec8b7ed2992",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "9a2c3941-9215-462c-8c12-050c4769c5ca",
-          "rank": 1,
-          "key": "B_MINOR",
-          "sections": [
-            {
-              "id": "4d9a833e-d0a4-44bd-8d8c-521ad8ecb822",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 12,
-              "fastestStaccatoNotesPerBar": 4,
+              "fastestStructuralNotesPerBar": 20,
               "fastestRepeatedNotesPerBar": 12,
+              "tempoIndication": {
+                "value": "ac8ebd5b-f0a8-4ffe-9cf2-6eddb4d41635",
+                "label": "Piacevole"
+              },
               "rank": 1,
-              "tempoIndicationId": "3d10365e-3185-4a64-80a7-16304dd7e344"
+              "tempoIndicationId": "ac8ebd5b-f0a8-4ffe-9cf2-6eddb4d41635"
             }
           ]
         }
       ],
-      "pieceId": "9ea46ce0-58f9-4bd6-b53f-376a5f013251",
-      "id": "53efe9c5-2ce0-4846-8b37-f9fbefd3fa9d",
+      "pieceId": "44ba965e-3c89-4f91-ab84-05937a96b25f",
+      "id": "c87eb70f-6eb3-4fa0-ac71-fd81cb4ce7b2",
       "isNew": true
     },
     {
       "category": "KEYBOARD",
       "movements": [
         {
-          "id": "45e93888-ca7c-4c80-946f-f7b968b83ffd",
-          "rank": 1,
-          "key": "D_MINOR",
-          "sections": [
-            {
-              "id": "b05b85e4-23c3-4628-a196-ec5e40c83df6",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestStaccatoNotesPerBar": 16,
-              "fastestRepeatedNotesPerBar": 16,
-              "fastestOrnamentalNotesPerBar": 48,
-              "comment": "Ornamental: minimum number of notes required to play trills on 16th notes",
-              "rank": 1,
-              "tempoIndicationId": "e6e8cd25-2a25-4c16-bb2d-9772da93e311"
-            }
-          ]
-        }
-      ],
-      "pieceId": "f3a7e5a6-6b89-48f3-a020-eae3f5d5d9c2",
-      "id": "b9db387b-2263-4eac-a756-5c71c7c35dae",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "005dc0ee-fcf6-42ca-a048-2082bcc6e37e",
-          "rank": 1,
-          "key": "F_SHARP_MINOR",
-          "sections": [
-            {
-              "id": "77bfef0d-c338-47f5-b072-628865d3d56c",
-              "metreNumerator": 9,
-              "metreDenominator": 8,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 18,
-              "fastestStaccatoNotesPerBar": 9,
-              "fastestRepeatedNotesPerBar": 9,
-              "rank": 1,
-              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
-            }
-          ]
-        }
-      ],
-      "pieceId": "5798df08-a6bd-4fde-b073-81b47b04ab78",
-      "id": "a1b87cce-ec06-4597-9244-96af6aa308a8",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "257a629f-9f18-4dc4-9037-49a27a07029a",
-          "rank": 1,
-          "key": "C_MINOR",
-          "sections": [
-            {
-              "id": "03d29fad-7903-4fe1-aa78-063f0b26462b",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestStaccatoNotesPerBar": 8,
-              "fastestRepeatedNotesPerBar": 16,
-              "fastestOrnamentalNotesPerBar": 48,
-              "rank": 1,
-              "tempoIndicationId": "c7e22ce5-abd4-4d27-b53a-91bc452f0f77"
-            }
-          ]
-        }
-      ],
-      "pieceId": "47ada57d-0941-4bc9-ac32-49c39a52c378",
-      "id": "c6309e1c-f377-4f2f-8803-8958c0a39974",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "aac4911d-0939-4ee3-b8e3-9293b40490d0",
-          "rank": 1,
-          "key": "B_FLAT_MAJOR",
-          "sections": [
-            {
-              "id": "745ae74c-fac2-436b-b491-6a220a77e8b6",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestRepeatedNotesPerBar": 8,
-              "rank": 1,
-              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
-            }
-          ]
-        }
-      ],
-      "pieceId": "6eeb7bc2-6bee-4910-8425-ea13b7452ba8",
-      "id": "c721a754-f140-48fa-8fa8-70881fba49ed",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "6b961f54-eeb0-44fd-88a8-8f810ad27a11",
-          "rank": 1,
-          "key": "B_FLAT_MAJOR",
-          "sections": [
-            {
-              "id": "2f7b5bbc-beb3-43e7-bc7f-2d96bdf80328",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 12,
-              "fastestStaccatoNotesPerBar": 4,
-              "fastestRepeatedNotesPerBar": 12,
-              "rank": 1,
-              "tempoIndicationId": "5729fcb9-75d3-49a6-a2d7-6a6ca7241750"
-            }
-          ]
-        }
-      ],
-      "pieceId": "07712d5c-81e2-43da-b3ce-560762f13ea3",
-      "id": "4d809319-99c7-4669-b1b0-b8c43d0f7199",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "91ccc10c-d090-45a7-8dc9-9ff8a9de5c85",
-          "rank": 1,
-          "key": "B_FLAT_MAJOR",
-          "sections": [
-            {
-              "id": "cd030c3d-8a7e-481b-8eec-5b880bb1bc56",
-              "metreNumerator": 24,
-              "metreDenominator": 16,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 24,
-              "fastestStaccatoNotesPerBar": 8,
-              "fastestRepeatedNotesPerBar": 8,
-              "comment": "Second staff should have common time as meter to match number of notes to bar",
-              "rank": 1,
-              "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
-            }
-          ]
-        }
-      ],
-      "pieceId": "49e06e68-cef5-40d4-90c2-f350623bdd83",
-      "id": "6dcc1178-2db7-48d9-952e-2198ac15e61e",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "10fd78da-12b6-45e8-83ce-63fab6bcff94",
-          "rank": 1,
-          "key": "B_FLAT_MAJOR",
-          "sections": [
-            {
-              "id": "66951479-7c62-42c3-8e59-bf7ffc06a261",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 8,
-              "fastestStaccatoNotesPerBar": 8,
-              "fastestRepeatedNotesPerBar": 8,
-              "rank": 1,
-              "tempoIndicationId": "c0ba0c6e-83b4-4d8d-89c9-6060e1b3f86a"
-            }
-          ]
-        }
-      ],
-      "pieceId": "a303f1f4-d7fa-46b1-84aa-eda1938c5a02",
-      "id": "387c577a-cf63-4f21-ae59-8476227d95ae",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "251b95c2-0d94-467b-98bc-e547c4d8160b",
-          "rank": 1,
-          "key": "D_MAJOR",
-          "sections": [
-            {
-              "id": "632e4959-3367-45d5-8b85-17c19c070418",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 24,
-              "fastestRepeatedNotesPerBar": 32,
-              "fastestOrnamentalNotesPerBar": 128,
-              "comment": "Ornamental: minimum number of notes required to play turn on 32nd note in 3rd staff p.95 (PDF  p.107)",
-              "rank": 1,
-              "tempoIndicationId": "03447412-c616-40b7-93f0-423ce4454033"
-            }
-          ]
-        }
-      ],
-      "pieceId": "0cb2b7b2-c754-4fb9-ac70-61c9823ad405",
-      "id": "35db66ef-2bc0-402f-8318-96afb994ec17",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "dbb39c01-116a-4ec3-9fec-eef2a4e1eb6a",
-          "rank": 1,
-          "key": "G_MAJOR",
-          "sections": [
-            {
-              "id": "287138fd-6a90-4fcf-a2dc-451dc0076b5d",
-              "metreNumerator": 4,
-              "metreDenominator": 4,
-              "isCommonTime": true,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestStaccatoNotesPerBar": 8,
-              "fastestRepeatedNotesPerBar": 16,
-              "fastestOrnamentalNotesPerBar": 32,
-              "rank": 1,
-              "tempoIndicationId": "59a80b85-ffd5-438e-9678-fc753b1a8f59"
-            }
-          ]
-        }
-      ],
-      "pieceId": "6dbe889f-eeff-4074-992d-602e63191807",
-      "id": "b4cd201f-972b-43ff-8614-bcfe7f1b58c0",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "fcf2c159-4bc1-4feb-903a-375e26a34716",
-          "rank": 1,
-          "key": "B_FLAT_MINOR",
-          "sections": [
-            {
-              "id": "5077b4a0-c952-4bb5-8559-080a04c0dd9d",
-              "metreNumerator": 2,
-              "metreDenominator": 4,
-              "isCommonTime": false,
-              "isCutTime": false,
-              "fastestStructuralNotesPerBar": 8,
-              "fastestStaccatoNotesPerBar": 4,
-              "fastestRepeatedNotesPerBar": 4,
-              "comment": "Staccato: penultimate staff on p.103 (PDF p.115)",
-              "rank": 1,
-              "tempoIndicationId": "2f8b3ff3-2d91-4580-bdf8-0b700f9d9154"
-            }
-          ]
-        }
-      ],
-      "pieceId": "79753623-fb09-4c2c-90ee-9d1cf2fc9e0e",
-      "id": "8084f876-e699-4dd7-b1f4-d90c0762e74e",
-      "isNew": true
-    },
-    {
-      "category": "KEYBOARD",
-      "movements": [
-        {
-          "id": "bf83c03a-196a-4686-bab9-0febff8b18bd",
+          "id": "5418e6ce-ee3b-43a0-aea8-2675c6d11401",
           "rank": 1,
           "key": "E_MAJOR",
+          "isVariation": false,
           "sections": [
             {
-              "id": "bc702660-c1b8-49b9-a71c-312918a3dff7",
-              "metreNumerator": 3,
+              "id": "53cd80b2-cfea-4ccf-ab07-61f19f812b48",
+              "metreNumerator": 4,
               "metreDenominator": 4,
-              "isCommonTime": false,
+              "isCommonTime": true,
               "isCutTime": false,
               "fastestStructuralNotesPerBar": 12,
-              "fastestRepeatedNotesPerBar": 6,
+              "fastestRepeatedNotesPerBar": 16,
+              "tempoIndication": {
+                "value": "46082737-4232-44c5-9017-4524e8fefd99",
+                "label": "Brioso"
+              },
               "rank": 1,
-              "tempoIndicationId": "fa063370-e09c-41e5-acde-e1a72b1b2578"
+              "tempoIndicationId": "46082737-4232-44c5-9017-4524e8fefd99"
             }
           ]
         }
       ],
-      "pieceId": "81735198-c0a7-4772-9592-319835a497f0",
-      "id": "215efa30-704a-4755-a918-da6c569f8c8b",
+      "pieceId": "9312dcb8-6504-49ef-9567-855021807555",
+      "id": "7bd4ebc3-eea6-4632-be1c-72f6963964eb",
       "isNew": true
     },
     {
       "category": "KEYBOARD",
       "movements": [
         {
-          "id": "2cb4c06d-902e-487d-85a0-4931597cedc9",
+          "id": "cd66b20e-d822-4551-8dce-d5087c230bae",
           "rank": 1,
-          "key": "F_MINOR",
+          "key": "A_MAJOR",
+          "isVariation": false,
           "sections": [
             {
-              "id": "b253a053-e52a-473b-bd85-199f2a19fcca",
+              "id": "ea9a6a53-ee4e-462f-8a9d-2fa309a18424",
               "metreNumerator": 3,
-              "metreDenominator": 8,
+              "metreDenominator": 4,
               "isCommonTime": false,
               "isCutTime": false,
               "fastestStructuralNotesPerBar": 9,
-              "fastestStaccatoNotesPerBar": 3,
-              "fastestRepeatedNotesPerBar": 3,
+              "tempoIndication": {
+                "value": "3b8e8df7-dfc2-4d36-b31e-f73a3ca0153c",
+                "label": "Con grazia"
+              },
               "rank": 1,
-              "tempoIndicationId": "8c8920a6-3775-4110-afd1-8536ad0f9a30"
+              "tempoIndicationId": "3b8e8df7-dfc2-4d36-b31e-f73a3ca0153c"
             }
           ]
         }
       ],
-      "pieceId": "f9421c76-e5d0-4ed3-b45a-c21f575e2dd8",
-      "id": "31ff02e8-47b0-413a-a894-7f19678cab37",
+      "pieceId": "741e2db3-2a97-4f93-bbda-1f24d3de6eaf",
+      "id": "3b0ea893-00c0-4585-b00e-a730b580205e",
       "isNew": true
     },
     {
       "category": "KEYBOARD",
       "movements": [
         {
-          "id": "b4b42e75-47dd-44c6-b7bb-cc0e732ad864",
+          "id": "ffb70d80-030a-4a4d-aca5-676b65d464b4",
           "rank": 1,
-          "key": "E_MINOR",
+          "key": "B_FLAT_MINOR",
+          "isVariation": false,
           "sections": [
             {
-              "id": "dd407356-0a2a-4e5d-9b1a-7fd07dc6849f",
-              "metreNumerator": 2,
+              "id": "c5f59f5b-3374-491c-bd57-7727fb0cfbbe",
+              "metreNumerator": 4,
               "metreDenominator": 4,
-              "isCommonTime": false,
+              "isCommonTime": true,
               "isCutTime": false,
-              "fastestStructuralNotesPerBar": 16,
-              "fastestStaccatoNotesPerBar": 4,
-              "fastestRepeatedNotesPerBar": 4,
-              "fastestOrnamentalNotesPerBar": 32,
+              "fastestStructuralNotesPerBar": 12,
+              "tempoIndication": {
+                "value": "97a756c5-77a5-4dd9-9de8-6825a9a1a80e",
+                "label": "Presto tenebroso, agitato"
+              },
               "rank": 1,
-              "tempoIndicationId": "4a399d19-b0f4-45cf-ac01-5c55afbe76a9"
+              "tempoIndicationId": "97a756c5-77a5-4dd9-9de8-6825a9a1a80e"
+            },
+            {
+              "id": "e7c6efc4-912b-4c65-93d2-2867c0fec646",
+              "metreNumerator": 4,
+              "metreDenominator": 4,
+              "isCommonTime": true,
+              "isCutTime": false,
+              "fastestStructuralNotesPerBar": 6,
+              "fastestRepeatedNotesPerBar": 6,
+              "tempoIndication": {
+                "value": "e999abb2-4aee-4a2f-af40-3969cddb1cd8",
+                "label": "Meno vivo"
+              },
+              "rank": 2,
+              "tempoIndicationId": "e999abb2-4aee-4a2f-af40-3969cddb1cd8"
             }
           ]
         }
       ],
-      "pieceId": "002f60b0-2979-44bf-bb17-6e68a3277197",
-      "id": "2746727a-7797-4598-9805-43156a9bbdaa",
+      "pieceId": "7a44fa7d-fa06-48e5-be0a-6d5ca40503f0",
+      "id": "d498b795-0058-4dec-a2c7-f11ed39404fd",
       "isNew": true
     },
     {
       "category": "KEYBOARD",
       "movements": [
         {
-          "id": "d4167aff-89dd-4670-a023-560213aa82ce",
+          "id": "d3abe981-a133-4540-85b8-843c070a119f",
           "rank": 1,
-          "key": "E_FLAT_MAJOR",
+          "key": "A_FLAT_MAJOR",
+          "isVariation": false,
           "sections": [
             {
-              "id": "ea6e6125-b4f3-45f8-9882-758af3de4b8b",
+              "id": "46e463cc-c570-4b08-a95b-020f3496eee5",
               "metreNumerator": 3,
               "metreDenominator": 4,
               "isCommonTime": false,
               "isCutTime": false,
               "fastestStructuralNotesPerBar": 6,
+              "fastestStaccatoNotesPerBar": 6,
               "fastestRepeatedNotesPerBar": 6,
+              "tempoIndication": {
+                "value": "9b4691ea-431a-4bd8-9388-3717b389049c",
+                "label": "Lento"
+              },
+              "rank": 1,
+              "tempoIndicationId": "9b4691ea-431a-4bd8-9388-3717b389049c"
+            },
+            {
+              "id": "940629b5-88d8-4b21-a290-ba3a40d52845",
+              "metreNumerator": 3,
+              "metreDenominator": 4,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "fastestStructuralNotesPerBar": 9,
+              "fastestStaccatoNotesPerBar": 6,
+              "tempoIndication": {
+                "value": "de4ac4b4-6992-400b-bcac-87dc8b06fd58",
+                "label": "Poco più vivo"
+              },
+              "rank": 2,
+              "tempoIndicationId": "de4ac4b4-6992-400b-bcac-87dc8b06fd58"
+            },
+            {
+              "id": "679c56b3-b96b-4947-8410-e96c1a3d2098",
+              "metreNumerator": 3,
+              "metreDenominator": 4,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "fastestStructuralNotesPerBar": 12,
+              "fastestRepeatedNotesPerBar": 12,
+              "tempoIndication": {
+                "value": "08dfd2dd-9ad6-4fe2-9020-7cb623a60f11",
+                "label": "Tempo Primo"
+              },
+              "rank": 3,
+              "tempoIndicationId": "08dfd2dd-9ad6-4fe2-9020-7cb623a60f11"
+            }
+          ]
+        }
+      ],
+      "pieceId": "33119ac6-cf04-4538-83df-98f0fa464a06",
+      "id": "668a9200-e020-4c10-8cc1-5128b7bfb538",
+      "isNew": true
+    },
+    {
+      "category": "KEYBOARD",
+      "movements": [
+        {
+          "id": "e98d2af6-26f8-4af6-9092-a2282a4f77f2",
+          "rank": 1,
+          "key": "G_SHARP_MINOR",
+          "isVariation": false,
+          "sections": [
+            {
+              "id": "ed922bcf-5ade-469e-b1f7-aa25ab396166",
+              "metreNumerator": 4,
+              "metreDenominator": 4,
+              "isCommonTime": true,
+              "isCutTime": false,
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": 12,
+              "fastestRepeatedNotesPerBar": 16,
+              "tempoIndication": {
+                "value": "ec3e3420-3efa-4776-b366-b8b86cabdceb",
+                "label": "Alla ballata"
+              },
+              "rank": 1,
+              "tempoIndicationId": "ec3e3420-3efa-4776-b366-b8b86cabdceb"
+            }
+          ]
+        }
+      ],
+      "pieceId": "e32050a3-6058-45db-8265-687c12113799",
+      "id": "efd2ae95-4cd9-40d3-8824-b1b42300feac",
+      "isNew": true
+    },
+    {
+      "category": "KEYBOARD",
+      "movements": [
+        {
+          "id": "b2a623bd-2652-4452-b262-465c7d0862d1",
+          "rank": 1,
+          "key": "G_FLAT_MAJOR",
+          "isVariation": false,
+          "sections": [
+            {
+              "id": "f7ee5728-c71f-433c-8234-406fcc3661eb",
+              "metreNumerator": 3,
+              "metreDenominator": 8,
+              "isCommonTime": false,
+              "isCutTime": false,
+              "fastestStructuralNotesPerBar": 6,
+              "fastestStaccatoNotesPerBar": 6,
+              "fastestRepeatedNotesPerBar": 6,
+              "tempoIndication": {
+                "value": "2fadca09-f577-430a-840e-25f9b5ce16e4",
+                "label": "Allegro"
+              },
               "rank": 1,
               "tempoIndicationId": "2fadca09-f577-430a-840e-25f9b5ce16e4"
             }
           ]
         }
       ],
-      "pieceId": "365df40c-f522-4f29-bfad-59fc984b9b93",
-      "id": "9fa8aef7-06e6-46f6-8348-d4ae5e532259",
+      "pieceId": "60c4aec5-7bd1-4937-bc9a-e1a910f4d391",
+      "id": "7c117181-08fc-4530-b82e-d319d4d5d633",
       "isNew": true
     },
     {
       "category": "KEYBOARD",
       "movements": [
         {
-          "id": "f8cf2b10-40bb-412a-9b6b-031175d283b7",
+          "id": "00913ea3-c448-45a0-ba18-2ba36201c77e",
           "rank": 1,
-          "key": "C_MAJOR",
+          "key": "B_FLAT_MINOR",
+          "isVariation": false,
           "sections": [
             {
-              "id": "bc3516fd-841a-4576-91d4-bf026c3b6a0f",
-              "metreNumerator": 4,
+              "id": "5c6ccab5-0bdf-4824-ba90-4a4f55f39e44",
+              "metreNumerator": 3,
               "metreDenominator": 4,
-              "isCommonTime": true,
+              "isCommonTime": false,
               "isCutTime": false,
-              "fastestStructuralNotesPerBar": 8,
-              "fastestStaccatoNotesPerBar": 8,
-              "fastestRepeatedNotesPerBar": 8,
+              "fastestStructuralNotesPerBar": 12,
+              "fastestStaccatoNotesPerBar": 18,
+              "fastestRepeatedNotesPerBar": 12,
+              "fastestOrnamentalNotesPerBar": 18,
+              "tempoIndication": {
+                "value": "bf6dae0f-cea8-4f33-bcec-4dcb2d6adc60",
+                "label": "Andante cantabile"
+              },
               "rank": 1,
-              "tempoIndicationId": "2f8c16fc-f22a-4c67-be52-bdfd65b6793e"
+              "tempoIndicationId": "bf6dae0f-cea8-4f33-bcec-4dcb2d6adc60"
             }
           ]
         }
       ],
-      "pieceId": "85cb94ef-7125-4fe7-8c78-a3f9880c2584",
-      "id": "41dbb78f-228c-46c1-b9fb-f5cb8648b10c",
+      "pieceId": "d3417e6d-9d5b-4791-a944-85a18a4d50ce",
+      "id": "7d5891c0-982e-443d-bd66-4656892c567d",
+      "isNew": true
+    },
+    {
+      "category": "KEYBOARD",
+      "movements": [
+        {
+          "id": "185c617c-bd9f-4c69-a169-04e8ff2376ac",
+          "rank": 1,
+          "key": "D_SHARP_MINOR",
+          "isVariation": false,
+          "sections": [
+            {
+              "id": "344544ab-dd11-4919-9fd1-3b7559320d58",
+              "metreNumerator": 4,
+              "metreDenominator": 4,
+              "isCommonTime": true,
+              "isCutTime": false,
+              "fastestStructuralNotesPerBar": 16,
+              "fastestRepeatedNotesPerBar": 32,
+              "tempoIndication": {
+                "value": "15677ee7-8887-45a5-909c-2d48a4218acb",
+                "label": "Patetico"
+              },
+              "rank": 1,
+              "tempoIndicationId": "15677ee7-8887-45a5-909c-2d48a4218acb"
+            }
+          ]
+        }
+      ],
+      "pieceId": "a59c56b2-bb4c-418a-8125-813b65fee0b5",
+      "id": "19f18161-9b60-4005-8ee0-0e005eedd733",
       "isNew": true
     }
   ],
@@ -2392,126 +776,64 @@ Content-Type: application/json
       "text": "Allegro"
     },
     {
-      "id": "2f8b3ff3-2d91-4580-bdf8-0b700f9d9154",
-      "text": "Moderato espressivo",
+      "id": "dda2053e-2f2a-497f-b5f0-a8c5ff03e332",
+      "text": "A capriccio, con forza",
       "isNew": true
     },
     {
-      "id": "59a80b85-ffd5-438e-9678-fc753b1a8f59",
-      "text": "Allegro con spirito"
+      "id": "65fc8413-ed97-4297-9883-7bc9ad78492d",
+      "text": "Tempestoso",
+      "isNew": true
     },
     {
-      "id": "4a399d19-b0f4-45cf-ac01-5c55afbe76a9",
-      "text": "Allegro moderato"
+      "id": "ac8ebd5b-f0a8-4ffe-9cf2-6eddb4d41635",
+      "text": "Piacevole"
     },
     {
-      "id": "2f0a179e-bc46-4b8f-a4e6-be3f64e7935b",
-      "text": "Moderato"
+      "id": "46082737-4232-44c5-9017-4524e8fefd99",
+      "text": "Brioso",
+      "isNew": true
     },
     {
-      "id": "b746457f-8ce2-4291-807b-705a316fbff3",
-      "text": "Moderato con espressione"
+      "id": "3b8e8df7-dfc2-4d36-b31e-f73a3ca0153c",
+      "text": "Con grazia",
+      "isNew": true
     },
     {
-      "id": "3d9f7a22-b600-40e1-8d99-d68edb065f00",
-      "text": "Allegro brillante"
+      "id": "97a756c5-77a5-4dd9-9de8-6825a9a1a80e",
+      "text": "Presto tenebroso, agitato",
+      "isNew": true
     },
     {
-      "id": "2f3e6f15-0d38-42bd-9aab-32025ba267e2",
-      "text": "Allegro non troppo"
-    },
-    {
-      "id": "bbe31fd3-4468-414a-ad50-cfa7767852fd",
-      "text": "Andante"
+      "id": "e999abb2-4aee-4a2f-af40-3969cddb1cd8",
+      "text": "Meno vivo",
+      "isNew": true
     },
     {
       "id": "9b4691ea-431a-4bd8-9388-3717b389049c",
       "text": "Lento"
     },
     {
-      "id": "61dc44d6-1b3b-4e5d-9440-9d59e45516ce",
-      "text": "Vivace"
-    },
-    {
-      "id": "6991e7c5-d51a-4fb7-bbc5-7bcf3e9eac6e",
-      "text": "Allegro agitato"
-    },
-    {
-      "id": "3ecc1cb7-5000-405d-ac02-37071647ff0e",
-      "text": "Presto"
-    },
-    {
-      "id": "68b97adb-f73f-40ab-8aac-6eb184e3adfc",
-      "text": "Allegretto"
-    },
-    {
-      "id": "c674ebc7-54de-425e-9df3-b584d2654427",
-      "text": "Allegro non tanto",
+      "id": "de4ac4b4-6992-400b-bcac-87dc8b06fd58",
+      "text": "Poco più vivo",
       "isNew": true
     },
     {
-      "id": "5465034c-b59d-4553-93bc-eebd40500ddf",
-      "text": "Allegro vivace"
+      "id": "08dfd2dd-9ad6-4fe2-9020-7cb623a60f11",
+      "text": "Tempo Primo"
     },
     {
-      "id": "8c6676e4-d0b9-433f-b111-97b6f030c65b",
-      "text": "Maestoso energico",
+      "id": "ec3e3420-3efa-4776-b366-b8b86cabdceb",
+      "text": "Alla ballata",
       "isNew": true
     },
     {
-      "id": "581e9953-9703-44e7-a3fc-ddeb83374620",
-      "text": "Allegro con brio"
+      "id": "bf6dae0f-cea8-4f33-bcec-4dcb2d6adc60",
+      "text": "Andante cantabile"
     },
     {
-      "id": "411b3f81-a83a-4c7f-aec2-386e1f2408fe",
-      "text": "Allegro assai"
-    },
-    {
-      "id": "2f8c16fc-f22a-4c67-be52-bdfd65b6793e",
-      "text": "Moderato assai"
-    },
-    {
-      "id": "40e99953-ea31-4f2c-a742-0fc7428d8c76",
-      "text": "Allegro con fuoco"
-    },
-    {
-      "id": "b60f45e1-0fe6-45f1-8d4f-2582e596f465",
-      "text": "Prestissimo"
-    },
-    {
-      "id": "8c8920a6-3775-4110-afd1-8536ad0f9a30",
-      "text": "Molto agitato"
-    },
-    {
-      "id": "3d10365e-3185-4a64-80a7-16304dd7e344",
-      "text": "Allegro molto agitato"
-    },
-    {
-      "id": "e6e8cd25-2a25-4c16-bb2d-9772da93e311",
-      "text": "Allegro strepitoso",
-      "isNew": true
-    },
-    {
-      "id": "c7e22ce5-abd4-4d27-b53a-91bc452f0f77",
-      "text": "Allegro moderato ma energico",
-      "isNew": true
-    },
-    {
-      "id": "5729fcb9-75d3-49a6-a2d7-6a6ca7241750",
-      "text": "Con moto"
-    },
-    {
-      "id": "c0ba0c6e-83b4-4d8d-89c9-6060e1b3f86a",
-      "text": "Scherzando"
-    },
-    {
-      "id": "03447412-c616-40b7-93f0-423ce4454033",
-      "text": "Andante maestoso ed espressivo",
-      "isNew": true
-    },
-    {
-      "id": "fa063370-e09c-41e5-acde-e1a72b1b2578",
-      "text": "Arioso moderato",
+      "id": "15677ee7-8887-45a5-909c-2d48a4218acb",
+      "text": "Patetico",
       "isNew": true
     }
   ]

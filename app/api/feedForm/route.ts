@@ -13,6 +13,7 @@ import { fetchAPI } from "@/utils/fetchAPI";
 import getAccessTokenFromReq from "@/utils/server/getAccessTokenFromReq";
 import { FeedFormState } from "@/types/feedFormTypes";
 import { deduplicateNewTempoIndications } from "@/utils/server/deduplicateNewTempoIndications";
+import { deduplicateNewPersonsAndOrganizations } from "@/utils/server/deduplicateNewPersonsAndOrganizations";
 
 /**
  * Handles the POST request to persist a feed form state into the database, including related entities such as composers, organizations,
@@ -39,9 +40,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const state = (await request.json()) as FeedFormState;
+  const submittedState = (await request.json()) as FeedFormState;
   console.log(`[feedForm API route] ---------- BEGIN ----------`);
-  console.log(`[api/feedForm] state`, JSON.stringify(state));
+  console.log(`[api/feedForm] state`, JSON.stringify(submittedState));
 
   // Checking mandatory fields
   const mandatoryFields = [
@@ -51,7 +52,7 @@ export async function POST(request: NextRequest) {
     "metronomeMarks",
   ];
   const missingMandatoryFields = mandatoryFields.filter(
-    (field) => !state[field] || state[field].length === 0,
+    (field) => !submittedState[field] || submittedState[field].length === 0,
   );
   if (missingMandatoryFields.length > 0) {
     return new Response(
@@ -65,9 +66,11 @@ export async function POST(request: NextRequest) {
   }
 
   // Type guard
-  assertsIsPersistableFeedFormState(state);
+  assertsIsPersistableFeedFormState(submittedState);
 
-  const persistenceState = await deduplicateNewTempoIndications(state);
+  const persistenceState = await deduplicateNewPersonsAndOrganizations(
+    await deduplicateNewTempoIndications(submittedState),
+  );
   assertsIsPersistableFeedFormState(persistenceState);
 
   // We need to persist new composers first, as it is used by collection and mMSource queries below
@@ -90,7 +93,8 @@ export async function POST(request: NextRequest) {
       serverSide: true,
       body: {
         type: "FeedForm submit",
-        state: persistenceState,
+        submittedState,
+        persistenceState,
         personCreateManyInput,
         organizationCreateManyInput,
         collectionCreateManyInput,
@@ -117,10 +121,9 @@ export async function POST(request: NextRequest) {
 
   // Transaction debug object
   const txDebug: any = {};
-
-  // Execute all operations in a single transaction
-  return await db
-    .$transaction(
+  try {
+    // Execute all operations in a single transaction
+    const txResult = await db.$transaction(
       async (tx) => {
         txDebug.persons = await tx.person.createMany({
           data: personCreateManyInput,
@@ -178,35 +181,34 @@ export async function POST(request: NextRequest) {
         maxWait: 5000,
         timeout: 60000,
       },
-    )
-    .then(async (results) => {
-      // Fetch info for newly registered mMSource
-      const mMSourceFromDb = await db.mMSource.findUnique({
-        where: { id: results.mMSource.id },
-        include: {
-          references: true,
-          contributions: {
-            include: {
-              person: true,
-              organization: true,
-            },
+    );
+
+    // Fetch info for newly registered mMSource
+    const mMSourceFromDb = await db.mMSource.findUnique({
+      where: { id: txResult.mMSource.id },
+      include: {
+        references: true,
+        contributions: {
+          include: {
+            person: true,
+            organization: true,
           },
-          pieceVersions: {
-            include: {
-              pieceVersion: {
-                include: {
-                  piece: {
-                    include: {
-                      composer: true,
-                      collection: true,
-                    },
+        },
+        pieceVersions: {
+          include: {
+            pieceVersion: {
+              include: {
+                piece: {
+                  include: {
+                    composer: true,
+                    collection: true,
                   },
-                  movements: {
-                    include: {
-                      sections: {
-                        include: {
-                          tempoIndication: true,
-                        },
+                },
+                movements: {
+                  include: {
+                    sections: {
+                      include: {
+                        tempoIndication: true,
                       },
                     },
                   },
@@ -214,50 +216,88 @@ export async function POST(request: NextRequest) {
               },
             },
           },
-          metronomeMarks: true,
         },
-      });
-
-      const mMSourceFromDBWithMMs = mMSourceFromDb
-        ? {
-            ...mMSourceFromDb,
-            pieceVersions: mMSourceFromDb.pieceVersions.map((pvs) => ({
-              ...pvs,
-              pieceVersion: {
-                ...pvs.pieceVersion,
-                movements: pvs.pieceVersion.movements.map((mv) => ({
-                  ...mv,
-                  sections: mv.sections.map((section) => ({
-                    ...section,
-                    metronomeMarks: mMSourceFromDb.metronomeMarks.filter(
-                      (mm) => mm.sectionId === section.id,
-                    ),
-                  })),
-                })),
-              },
-            })),
-          }
-        : null;
-
-      console.log(`[feedForm API route] ---------- END / Success ----------`);
-      return NextResponse.json({
-        ...results,
-        mMSourceFromDb: mMSourceFromDBWithMMs,
-      });
-    })
-    .catch((error) => {
-      console.log(`[api/feedForm] ERROR txDebug`, JSON.stringify(txDebug));
-      console.log(`[feedForm API route] ---------- END / Error ----------`);
-      return NextResponse.json(
-        {
-          error: `Error during DB persistence: ${error.message}`,
-          personCreateManyInput,
-          organizationCreateManyInput,
-          collectionCreateManyInput,
-          mMSourceInput,
-          txDebug,
-        },
-        { status: 500 },
-      );
+        metronomeMarks: true,
+      },
     });
+
+    const mMSourceFromDBWithMMs = mMSourceFromDb
+      ? {
+          ...mMSourceFromDb,
+          pieceVersions: mMSourceFromDb.pieceVersions.map((pvs) => ({
+            ...pvs,
+            pieceVersion: {
+              ...pvs.pieceVersion,
+              movements: pvs.pieceVersion.movements.map((mv) => ({
+                ...mv,
+                sections: mv.sections.map((section) => ({
+                  ...section,
+                  metronomeMarks: mMSourceFromDb.metronomeMarks.filter(
+                    (mm) => mm.sectionId === section.id,
+                  ),
+                })),
+              })),
+            },
+          })),
+        }
+      : null;
+
+    await fetchAPI(
+      "/sendEmail",
+      {
+        serverSide: true,
+        body: {
+          type: "FeedForm SUCCESS",
+          ...txResult,
+          mMSourceFromDBWithMMs,
+        },
+      },
+      getAccessTokenFromReq(request),
+    )
+      .then((result) =>
+        console.log(`[FeedSummary] result from sendEmail :`, result),
+      )
+      .catch((reason) =>
+        console.error(`[FeedSummary] error reason from sendEmail :`, reason),
+      );
+
+    console.log(`[feedForm API route] ---------- END / Success ----------`);
+    return NextResponse.json({
+      ...txResult,
+      mMSourceFromDb: mMSourceFromDBWithMMs,
+    });
+  } catch (error) {
+    console.log(`[api/feedForm] ERROR txDebug`, JSON.stringify(txDebug));
+    await fetchAPI(
+      "/sendEmail",
+      {
+        serverSide: true,
+        body: {
+          type: "FeedForm ERROR",
+          message: `Error submitting form`,
+          error: error instanceof Error ? error.message : error,
+          submittedState,
+        },
+      },
+      getAccessTokenFromReq(request),
+    )
+      .then((result) =>
+        console.log(`[FeedSummary] result from sendEmail :`, result),
+      )
+      .catch((reason) =>
+        console.error(`[FeedSummary] error reason from sendEmail :`, reason),
+      );
+    console.log(`[feedForm API route] ---------- END / Error ----------`);
+    return NextResponse.json(
+      {
+        error: `Error during DB persistence: ${error instanceof Error ? error.message : error}`,
+        personCreateManyInput,
+        organizationCreateManyInput,
+        collectionCreateManyInput,
+        mMSourceInput,
+        txDebug,
+      },
+      { status: 500 },
+    );
+  }
 }

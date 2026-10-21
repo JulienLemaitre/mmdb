@@ -580,7 +580,7 @@ describe("POST /api/review/[reviewId]/submit", () => {
       expect(mockFetchAPI).toHaveBeenCalledWith(
         "/sendEmail",
         expect.objectContaining({
-          body: expect.objectContaining({ type: "Review SUBMIT data" }),
+          body: expect.objectContaining({ type: "Review submit" }),
         }),
         undefined,
       );
@@ -588,7 +588,7 @@ describe("POST /api/review/[reviewId]/submit", () => {
         "/sendEmail",
         expect.objectContaining({
           body: expect.objectContaining({
-            type: "Review submit transaction debug",
+            type: "Review SUCCESS",
           }),
         }),
         undefined,
@@ -878,7 +878,7 @@ describe("POST /api/review/[reviewId]/submit", () => {
         "/sendEmail",
         expect.objectContaining({
           body: expect.objectContaining({
-            type: "Review SUBMIT transaction ERROR",
+            type: "Review ERROR",
             reviewId: REVIEW_ID,
             error: expect.objectContaining({
               message: "Database connection lost",
