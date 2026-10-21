@@ -12,6 +12,7 @@ import getOrganizationCreateInput from "@/utils/getOrganizationCreateInput";
 import { fetchAPI } from "@/utils/fetchAPI";
 import getAccessTokenFromReq from "@/utils/server/getAccessTokenFromReq";
 import { FeedFormState } from "@/types/feedFormTypes";
+import { deduplicateNewTempoIndications } from "@/utils/server/deduplicateNewTempoIndications";
 
 /**
  * Handles the POST request to persist a feed form state into the database, including related entities such as composers, organizations,
@@ -66,18 +67,21 @@ export async function POST(request: NextRequest) {
   // Type guard
   assertsIsPersistableFeedFormState(state);
 
+  const persistenceState = await deduplicateNewTempoIndications(state);
+  assertsIsPersistableFeedFormState(persistenceState);
+
   // We need to persist new composers first, as it is used by collection and mMSource queries below
   const personCreateManyInput: Prisma.PersonCreateManyInput[] =
-    getPersonCreateInput(state, creatorId);
+    getPersonCreateInput(persistenceState, creatorId);
 
   const organizationCreateManyInput: Prisma.OrganizationCreateManyInput[] =
-    getOrganizationCreateInput(state, creatorId);
+    getOrganizationCreateInput(persistenceState, creatorId);
 
   const collectionCreateManyInput: Prisma.CollectionCreateManyInput[] =
-    getCollectionCreateInput(state, creatorId);
+    getCollectionCreateInput(persistenceState, creatorId);
 
   const mMSourceInput: Prisma.MMSourceCreateInput =
-    getMMSourceAndRelatedEntitiesDBInputFromState(state, creatorId);
+    getMMSourceAndRelatedEntitiesDBInputFromState(persistenceState, creatorId);
 
   // Send log email
   await fetchAPI(
@@ -86,7 +90,7 @@ export async function POST(request: NextRequest) {
       serverSide: true,
       body: {
         type: "FeedForm submit",
-        state,
+        state: persistenceState,
         personCreateManyInput,
         organizationCreateManyInput,
         collectionCreateManyInput,
@@ -131,11 +135,12 @@ export async function POST(request: NextRequest) {
         });
 
         // Compute sectionCount for this MM Source purely from the submitted state
-        const includedPieceVersionIds = state.mMSourceOnPieceVersions.map(
-          (pv) => pv.pieceVersionId,
-        );
-        const includedPieceVersions = state.pieceVersions.filter((pv) =>
-          includedPieceVersionIds.includes(pv.id),
+        const includedPieceVersionIds =
+          persistenceState.mMSourceOnPieceVersions.map(
+            (pv) => pv.pieceVersionId,
+          );
+        const includedPieceVersions = persistenceState.pieceVersions.filter(
+          (pv) => includedPieceVersionIds.includes(pv.id),
         );
         const sectionCount = includedPieceVersions.reduce(
           (acc, pv) =>
@@ -153,7 +158,7 @@ export async function POST(request: NextRequest) {
         txDebug.mMSourceId = mMSourceId;
 
         const metronomeMarksInput: Prisma.MetronomeMarkCreateManyInput[] =
-          state.metronomeMarks
+          persistenceState.metronomeMarks
             .filter((metronomeMark) => !metronomeMark.noMM)
             .map((metronomeMark) =>
               getMetronomeMarkDBInputFromState(metronomeMark, mMSourceId),
