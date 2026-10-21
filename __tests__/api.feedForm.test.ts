@@ -63,6 +63,18 @@ describe("POST /api/feedForm", () => {
           .fn()
           .mockResolvedValue([{ id: "tempo-existing", text: "Élégante" }]),
       },
+      person: {
+        findMany: jest.fn().mockResolvedValue([
+          {
+            id: "person-existing",
+            firstName: "composer",
+            lastName: "one",
+            birthYear: 1750,
+            deathYear: null,
+          },
+        ]),
+      },
+      organization: { findMany: jest.fn().mockResolvedValue([]) },
       mMSource: {
         findUnique: jest.fn().mockResolvedValue({
           id: SOURCE_ID,
@@ -76,7 +88,7 @@ describe("POST /api/feedForm", () => {
     };
   });
 
-  it("connects new sections to an existing tempo indication with equivalent text", async () => {
+  it("reuses equivalent existing tempo indications and people", async () => {
     mockIsReqAuthorized.mockReturnValue(true);
     mockGetDecodedTokenFromReq.mockResolvedValue({
       id: "user-1",
@@ -164,6 +176,14 @@ describe("POST /api/feedForm", () => {
 
     expect(response.status).toBe(200);
     const mMSourceInput = mockTx.mMSource.create.mock.calls[0][0].data;
+    expect(mockTx.person.createMany).toHaveBeenCalledWith({ data: [] });
+    expect(mMSourceInput.contributions.create[0].person).toEqual({
+      connect: { id: "person-existing" },
+    });
+    expect(
+      mMSourceInput.pieceVersions.create[0].pieceVersion.create.piece.create
+        .composer,
+    ).toEqual({ connect: { id: "person-existing" } });
     const sectionInput =
       mMSourceInput.pieceVersions.create[0].pieceVersion.create.movements
         .create[0].sections.create[0];

@@ -22,6 +22,7 @@ import { applyRankUpdatesInTwoPhases } from "@/utils/server/applyRankUpdatesInTw
 import { fetchAPI } from "@/utils/fetchAPI";
 import { debug, prodLog } from "@/utils/debugLogger";
 import { deduplicateNewTempoIndications } from "@/utils/server/deduplicateNewTempoIndications";
+import { deduplicateNewPersonsAndOrganizations } from "@/utils/server/deduplicateNewPersonsAndOrganizations";
 
 // POST /api/review/[reviewId]/submit
 // Body: { feedFormState: FeedFormState, overallComment?: string | null }
@@ -154,6 +155,22 @@ export async function POST(
     );
   }
 
+  // Resolve new people and organizations that already exist in the database.
+  try {
+    stateForPersistence =
+      await deduplicateNewPersonsAndOrganizations(stateForPersistence);
+  } catch (err: any) {
+    debug.error(
+      `[review submit] Person and organization resolution error: ${err.message}`,
+    );
+    return NextResponse.json(
+      {
+        error: `[review submit] Person and organization resolution error: ${err.message}`,
+      },
+      { status: 500 },
+    );
+  }
+
   // 7. Baseline loading & extension by existence
   let baseline: FeedFormState;
   let globallyReviewed: any;
@@ -165,9 +182,13 @@ export async function POST(
     globallyReviewed = reviewBaseline.globallyReviewed;
     baseline = await extendBaselineByExistence(baseline, stateForPersistence);
   } catch (err: any) {
-    debug.error(`[review submit] Failed to load review baseline: ${err.message}`);
+    debug.error(
+      `[review submit] Failed to load review baseline: ${err.message}`,
+    );
     return NextResponse.json(
-      { error: err.message || "[review submit] Failed to load review baseline" },
+      {
+        error: err.message || "[review submit] Failed to load review baseline",
+      },
       { status: 500 },
     );
   }
@@ -190,7 +211,8 @@ export async function POST(
 
   const preLogSummary = {
     reviewId,
-    state: normalizedState,
+    submittedState,
+    normalizedState,
     baseline,
     globallyReviewed,
     overallComment,
@@ -214,7 +236,7 @@ export async function POST(
     {
       serverSide: true,
       body: {
-        type: "Review SUBMIT data",
+        type: "Review submit",
         ...preLogSummary,
       },
     },
@@ -336,9 +358,7 @@ export async function POST(
 
         // 1. MetronomeMarks (noMM marks already removed by normalization)
         const stateMMIds = new Set(
-          (finalState.metronomeMarks ?? [])
-            .map((mm) => mm.id)
-            .filter(Boolean),
+          (finalState.metronomeMarks ?? []).map((mm) => mm.id).filter(Boolean),
         );
         const deletedMMIds = Array.from(baselineMMIds).filter(
           (id) => !stateMMIds.has(id),
@@ -515,7 +535,9 @@ export async function POST(
                 creatorId: userId,
               },
             });
-          } else if (changedEntitiesByType.get("TEMPO_INDICATION")?.has(ti.id)) {
+          } else if (
+            changedEntitiesByType.get("TEMPO_INDICATION")?.has(ti.id)
+          ) {
             await tx.tempoIndication.update({
               where: { id: ti.id },
               data: {
@@ -813,8 +835,7 @@ export async function POST(
         const joinRankUpdates = (finalState.mMSourceOnPieceVersions ?? [])
           .filter(
             (j) =>
-              joinIdByPvId.has(j.pieceVersionId) &&
-              typeof j.rank === "number",
+              joinIdByPvId.has(j.pieceVersionId) && typeof j.rank === "number",
           )
           .map((j) => ({
             id: joinIdByPvId.get(j.pieceVersionId)!,
@@ -995,7 +1016,7 @@ export async function POST(
       {
         serverSide: true,
         body: {
-          type: "Review submit transaction debug",
+          type: "Review SUCCESS",
           reviewId,
           txDebug,
           mMSourceFromDb,
@@ -1061,7 +1082,7 @@ export async function POST(
       {
         serverSide: true,
         body: {
-          type: "Review SUBMIT transaction ERROR",
+          type: "Review ERROR",
           reviewId,
           error: {
             status: err?.status,

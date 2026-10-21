@@ -754,7 +754,7 @@ Réécrire intégralement la route `POST /api/review/[reviewId]/submit` pour orc
 9. diff #2 = computeChangedFieldPaths(baseline, fork.state)   ← RECALCUL
 10. auditEntries = composeAuditEntries(reviewId, baseline, fork.state, fork.protectedEntityIds)
 11. derived = computeMMSourceDerivedData(fork.state)
-12. e-mail de journalisation pré-transaction (type "Review SUBMIT data" : baseline, diff, audit, summary)
+12. e-mail de journalisation pré-transaction (type "Review submit" : baseline, diff, audit, summary)
 ```
 
 **Ne pas rejouer les prédicats `isComplete` côté serveur** — décision actée : on fait confiance au
@@ -810,9 +810,9 @@ Ajouter les `PieceVersion` créées par le fork ; ne pas toucher aux marqueurs d
 ### 10B.5 Gestion d'erreur et e-mails de journalisation
 
 Conserver la journalisation par e-mail en deux temps (comportement existant enrichi) :
-1. **Avant transaction :** e-mail de données (`"Review SUBMIT data"`) contenant l'état soumis, la baseline, le diff calculé, les entrées `AuditLog` prévues et le résumé des entités touchées.
-2. **Après transaction réussie (SUCCESS) :** e-mail de debug transactionnel (`"Review submit transaction debug"`) contenant l'identifiant de la revue, l'objet `txDebug` et les données complètes rechargées depuis la base (`mMSourceFromDb` incluant les `auditLog` liés).
-3. **En cas d'échec (ERROR / catch) :** e-mail d'erreur (`"Review SUBMIT transaction ERROR"`) contenant le détail de l'erreur levée et l'état d'avancement de `txDebug`.
+1. **Avant transaction :** e-mail de données (`"Review submit"`) contenant l'état soumis, la baseline, le diff calculé, les entrées `AuditLog` prévues et le résumé des entités touchées.
+2. **Après transaction réussie (SUCCESS) :** e-mail de debug transactionnel (`"Review SUCCESS"`) contenant l'identifiant de la revue, l'objet `txDebug` et les données complètes rechargées depuis la base (`mMSourceFromDb` incluant les `auditLog` liés).
+3. **En cas d'échec (ERROR / catch) :** e-mail d'erreur (`"Review ERROR"`) contenant le détail de l'erreur levée et l'état d'avancement de `txDebug`.
 
 Traduire les violations de contrainte d'unicité (`Piece`, `Reference`, `Collection`, index partiels) en réponse `409` avec un message exploitable par le reviewer, plutôt qu'en `500` opaque.
 

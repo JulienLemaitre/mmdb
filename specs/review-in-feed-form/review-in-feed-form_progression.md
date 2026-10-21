@@ -246,7 +246,7 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
     2. Extraction et validation du payload `{ feedFormState, overallComment }`, vérification des champs obligatoires (sur le modèle de `app/api/feedForm/route.ts`) et garde de structure `assertsIsPersistableFeedFormState`.
     3. Chargement de la baseline serveur via `getReviewBaseline(reviewId, { requireOwner: true })` et extension par existence via `extendBaselineByExistence(baseline, state)`.
     4. Normalisation de l'état soumis via `normalizeFeedFormStateForPersistence(state)`.
-    5. Calcul du pré-diff et pré-audit, et envoi de l'e-mail de log de pré-transaction (`"Review SUBMIT data"`).
+    5. Calcul du pré-diff et pré-audit, et envoi de l'e-mail de log de pré-transaction (`"Review submit"`).
     6. Exécution de la transaction unique Prisma (`db.$transaction`) :
        - **Étape A / Fork :** appel de `forkModifiedSharedPieceVersions(tx, ...)` produisant l'état remappé et l'ensemble `protectedEntityIds`.
        - **Étape B / Recalcul :** recalcul du diff final (`computeChangedFieldPaths`), des entrées d'audit (`composeAuditEntries` avec exclusion des `DELETE` sur `protectedEntityIds`), et des données dérivées (`computeMMSourceDerivedData`).
@@ -254,7 +254,7 @@ Feuille de route : `specs/review-in-feed-form/20260808_feuille-de-route_review-i
        - **Phase 2 — Référentiels et arbre musical :** mutations ordonnées `Person` → `Organization` → `Collection` → `TempoIndication` → `Piece` → `PieceVersion` (copies du fork incluses) → `Movement` → `Section`, fondées sur la baseline étendue (nouveau → `create`, modifié → `update`, inchangé → aucune écriture), avec réordonnancements de rangs en 2 passes via `applyRankUpdatesInTwoPhases` pour `Piece` (`collectionRank`), `Movement` et `Section`.
        - **Phase 3 — Source et enfants directs :** mise à jour de `MMSource` (champs, `permalink` et `sectionCount`), upserts de `Reference`, `Contribution`, création et mise à jour de rangs en 2 passes de `MMSourcesOnPieceVersions`, et upserts de `MetronomeMark`.
        - **Phase 4 — Traçabilité et clôture :** `AuditLog.createMany`, upsert dédupliqué de `ReviewedEntity` (avec exclusion des entités déjà globalement revues), passage de `Review` en `APPROVED` (`endedAt`, `overallComment`), et passage de `MMSource.reviewState` en `APPROVED`.
-    7. Envoi de l'e-mail de succès transactionnel (`"Review submit transaction debug"`) avec données DB rechargées, ou e-mail d'erreur (`"Review SUBMIT transaction ERROR"`), avec traduction des conflits d'unicité en `409` et retour JSON synthétique.
+    7. Envoi de l'e-mail de succès transactionnel (`"Review SUCCESS"`) avec données DB rechargées, ou e-mail d'erreur (`"Review ERROR"`), avec traduction des conflits d'unicité en `409` et retour JSON synthétique.
   - `__tests__/api.reviewSubmit.test.ts` (nouveau, remplace `__tests__/api.submit.test.ts`) : suite de tests d'intégration avec mock transactionnel Prisma couvrant l'ensemble des 14 scénarios et exigences du lot 10B.
 - **Vérifications :**
   - `npx tsc --noEmit` : 0 erreur.

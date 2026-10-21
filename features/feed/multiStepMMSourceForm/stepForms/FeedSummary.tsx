@@ -93,38 +93,6 @@ export default function FeedSummary() {
           console.error("Error submitting form:", JSON.stringify(response));
           setErrorMessage(response.error);
           setSubmitStatus("error");
-          // Send log email
-          try {
-            fetchAPI(
-              "/api/sendEmail",
-              {
-                body: {
-                  type: "FeedForm ERROR",
-                  mMSourceToPersist,
-                  state,
-                  message: `Error submitting form`,
-                  errorStatus: response.status,
-                  error: response.error,
-                  response,
-                },
-              },
-              session?.user?.accessToken,
-            )
-              .then((result) =>
-                console.log(`[FeedSummary] result from sendEmail :`, result),
-              )
-              .catch((reason) =>
-                console.error(
-                  `[FeedSummary] error reason from sendEmail :`,
-                  reason,
-                ),
-              );
-          } catch (e) {
-            console.error(
-              `[FeedSummary] unexpected error sending error email:`,
-              e,
-            );
-          }
           return;
         } else {
           localStorageRemoveItems([
@@ -133,33 +101,6 @@ export default function FeedSummary() {
             FEED_FORM_LOCAL_STORAGE_KEY,
           ]);
           setSubmitStatus("success");
-          // Send log email
-          try {
-            fetchAPI(
-              "/api/sendEmail",
-              {
-                body: {
-                  type: "FeedForm SUCCESS",
-                  mMSourceFromDb: response.mMSourceFromDb,
-                },
-              },
-              session?.user?.accessToken,
-            )
-              .then((result) =>
-                console.log(`[FeedSummary] result from sendEmail :`, result),
-              )
-              .catch((reason) =>
-                console.error(
-                  `[FeedSummary] error reason from sendEmail :`,
-                  reason,
-                ),
-              );
-          } catch (e) {
-            console.error(
-              `[FeedSummary] unexpected error sending success email:`,
-              e,
-            );
-          }
         }
       })
       .catch((error) => {
