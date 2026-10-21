@@ -14,6 +14,7 @@ import { computeMMSourceDerivedData } from "@/utils/server/computeMMSourceDerive
 import { applyRankUpdatesInTwoPhases } from "@/utils/server/applyRankUpdatesInTwoPhases";
 import { fetchAPI } from "@/utils/fetchAPI";
 import { debug } from "@/utils/debugLogger";
+import { deduplicateNewTempoIndications } from "@/utils/server/deduplicateNewTempoIndications";
 
 export const dynamic = "force-dynamic";
 
@@ -142,7 +143,23 @@ export async function POST(
     );
   }
 
-  // 6. Baseline loading and state normalization
+  // 6. Resolve new tempo indications that already exist in the database
+  let stateForPersistence: FeedFormState;
+  try {
+    stateForPersistence = await deduplicateNewTempoIndications(submittedState);
+  } catch (err: any) {
+    debug.error(
+      `[selfEdit submit] Tempo indication resolution error: ${err.message}`,
+    );
+    return NextResponse.json(
+      {
+        error: `[selfEdit submit] Tempo indication resolution error: ${err.message}`,
+      },
+      { status: 500 },
+    );
+  }
+
+  // 7. Baseline loading and state normalization
   let baseline: FeedFormState;
   try {
     const baselineData = await getSourceFeedFormBaseline(sourceId);
@@ -154,7 +171,7 @@ export async function POST(
     }
     baseline = await extendBaselineByExistence(
       baselineData.baseline,
-      submittedState,
+      stateForPersistence,
     );
   } catch (err: any) {
     debug.error(`[selfEdit submit] Failed to load baseline: ${err.message}`);
@@ -166,7 +183,7 @@ export async function POST(
 
   let normalizedState: FeedFormState;
   try {
-    normalizedState = normalizeFeedFormStateForPersistence(submittedState);
+    normalizedState = normalizeFeedFormStateForPersistence(stateForPersistence);
   } catch (err: any) {
     debug.error(`[selfEdit submit] Normalization error: ${err.message}`);
     return NextResponse.json(
@@ -217,7 +234,7 @@ export async function POST(
       ),
     );
 
-  // 7. Execute atomic database transaction with concurrency guard
+  // 8. Execute atomic database transaction with concurrency guard
   const txDebug: Record<string, unknown> = {};
   let finalChangedFieldPaths: ReturnType<typeof computeChangedFieldPaths> = [];
   try {

@@ -21,10 +21,9 @@ jest.mock("next-auth", () => ({
   getServerSession: (...args: any[]) => mockGetServerSession(...args),
 }));
 
-const mockSendEmail = jest.fn().mockResolvedValue({ id: "email-1" });
-jest.mock("@/utils/server/sendEmail", () => ({
-  __esModule: true,
-  default: (...args: any[]) => mockSendEmail(...args),
+const mockFetchAPI = jest.fn().mockResolvedValue({ id: "email-1" });
+jest.mock("@/utils/fetchAPI", () => ({
+  fetchAPI: (...args: any[]) => mockFetchAPI(...args),
 }));
 
 const mockGetReviewBaseline = jest.fn();
@@ -501,6 +500,48 @@ describe("POST /api/review/[reviewId]/submit", () => {
   });
 
   describe("Persistence & Mutations", () => {
+    it("reuses an existing tempo indication when a new value differs by accents and case", async () => {
+      const state = buildValidState();
+      state.tempoIndications = [
+        { id: "tempo-new", text: "ÁLLEGRO CON BRIO", isNew: true },
+      ];
+      state.pieceVersions![0].movements[0].sections[0].tempoIndicationId =
+        "tempo-new";
+
+      const req: any = { json: async () => ({ feedFormState: state }) };
+      const res = await submitPost(req, {
+        params: Promise.resolve({ reviewId: REVIEW_ID }),
+      });
+
+      expect(res.status).toBe(200);
+      expect(mockExtendBaselineByExistence).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          tempoIndications: [{ id: "tempo-1", text: "Allegro con brio" }],
+          pieceVersions: expect.arrayContaining([
+            expect.objectContaining({
+              movements: expect.arrayContaining([
+                expect.objectContaining({
+                  sections: expect.arrayContaining([
+                    expect.objectContaining({
+                      tempoIndicationId: "tempo-1",
+                    }),
+                  ]),
+                }),
+              ]),
+            }),
+          ]),
+        }),
+      );
+      expect(
+        mockPrismaInstance.tx.tempoIndication.create,
+      ).not.toHaveBeenCalled();
+      expect(mockPrismaInstance.tx.section.update).not.toHaveBeenCalled();
+      expect(mockPrismaInstance.store.section[0].tempoIndicationId).toBe(
+        "tempo-1",
+      );
+    });
+
     it("performs no mutation and emits no AuditLog when state is unchanged", async () => {
       const state = buildValidState();
       const req: any = {
@@ -536,11 +577,21 @@ describe("POST /api/review/[reviewId]/submit", () => {
       );
 
       // Verify emails sent
-      expect(mockSendEmail).toHaveBeenCalledWith(
-        expect.objectContaining({ type: "Review SUBMIT data" }),
+      expect(mockFetchAPI).toHaveBeenCalledWith(
+        "/sendEmail",
+        expect.objectContaining({
+          body: expect.objectContaining({ type: "Review SUBMIT data" }),
+        }),
+        undefined,
       );
-      expect(mockSendEmail).toHaveBeenCalledWith(
-        expect.objectContaining({ type: "Review submit transaction debug" }),
+      expect(mockFetchAPI).toHaveBeenCalledWith(
+        "/sendEmail",
+        expect.objectContaining({
+          body: expect.objectContaining({
+            type: "Review submit transaction debug",
+          }),
+        }),
+        undefined,
       );
     });
 
@@ -823,16 +874,18 @@ describe("POST /api/review/[reviewId]/submit", () => {
       expect(data.error).toMatch(/Database connection lost/);
 
       // Verify ERROR email was sent
-      expect(mockSendEmail).toHaveBeenCalledWith(
+      expect(mockFetchAPI).toHaveBeenCalledWith(
+        "/sendEmail",
         expect.objectContaining({
-          type: "Review SUBMIT transaction ERROR",
-          content: expect.objectContaining({
+          body: expect.objectContaining({
+            type: "Review SUBMIT transaction ERROR",
             reviewId: REVIEW_ID,
             error: expect.objectContaining({
               message: "Database connection lost",
             }),
           }),
         }),
+        undefined,
       );
     });
 

@@ -522,4 +522,31 @@ describe("POST /api/source/[sourceId]/edit", () => {
     );
     expect(updatedMM.bpm).toBe(112);
   });
+
+  it("reuses an existing tempo indication when a new value differs by case", async () => {
+    mockGetServerSession.mockResolvedValue({
+      user: { id: AUTHOR_ID, role: "USER" },
+    });
+    mockPrisma._store.tempoIndication.push({ id: "ti-1", text: "Allegro" });
+
+    const state = structuredClone(validSubmittedState);
+    state.tempoIndications = [{ id: "ti-new", text: "ALLEGRO", isNew: true }];
+    state.pieceVersions![0].movements[0].sections[0].tempoIndicationId =
+      "ti-new";
+
+    const req: any = { json: async () => ({ feedFormState: state }) };
+    const res = await POST(req, {
+      params: Promise.resolve({ sourceId: SOURCE_ID }),
+    });
+
+    expect(res.status).toBe(200);
+    expect(mockPrisma.tempoIndication.create).not.toHaveBeenCalled();
+    expect(mockPrisma.section.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: "sec-1" },
+        data: expect.objectContaining({ tempoIndicationId: "ti-1" }),
+      }),
+    );
+    expect(mockPrisma._store.section[0].tempoIndicationId).toBe("ti-1");
+  });
 });

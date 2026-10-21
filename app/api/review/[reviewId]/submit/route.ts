@@ -21,6 +21,7 @@ import { computeMMSourceDerivedData } from "@/utils/server/computeMMSourceDerive
 import { applyRankUpdatesInTwoPhases } from "@/utils/server/applyRankUpdatesInTwoPhases";
 import { fetchAPI } from "@/utils/fetchAPI";
 import { debug, prodLog } from "@/utils/debugLogger";
+import { deduplicateNewTempoIndications } from "@/utils/server/deduplicateNewTempoIndications";
 
 // POST /api/review/[reviewId]/submit
 // Body: { feedFormState: FeedFormState, overallComment?: string | null }
@@ -137,7 +138,23 @@ export async function POST(
     );
   }
 
-  // 6. Baseline loading & extension by existence
+  // 6. Resolve new tempo indications that already exist in the database
+  let stateForPersistence: FeedFormState;
+  try {
+    stateForPersistence = await deduplicateNewTempoIndications(submittedState);
+  } catch (err: any) {
+    debug.error(
+      `[review submit] Tempo indication resolution error: ${err.message}`,
+    );
+    return NextResponse.json(
+      {
+        error: `[review submit] Tempo indication resolution error: ${err.message}`,
+      },
+      { status: 500 },
+    );
+  }
+
+  // 7. Baseline loading & extension by existence
   let baseline: FeedFormState;
   let globallyReviewed: any;
   try {
@@ -146,7 +163,7 @@ export async function POST(
     });
     baseline = reviewBaseline.baseline;
     globallyReviewed = reviewBaseline.globallyReviewed;
-    baseline = await extendBaselineByExistence(baseline, submittedState);
+    baseline = await extendBaselineByExistence(baseline, stateForPersistence);
   } catch (err: any) {
     debug.error(`[review submit] Failed to load review baseline: ${err.message}`);
     return NextResponse.json(
@@ -155,10 +172,10 @@ export async function POST(
     );
   }
 
-  // 7. Normalization of submitted state for persistence
+  // 8. Normalization of submitted state for persistence
   let normalizedState: FeedFormState;
   try {
-    normalizedState = normalizeFeedFormStateForPersistence(submittedState);
+    normalizedState = normalizeFeedFormStateForPersistence(stateForPersistence);
   } catch (err: any) {
     debug.error(`[review submit] Normalization error: ${err.message}`);
     return NextResponse.json(
@@ -167,7 +184,7 @@ export async function POST(
     );
   }
 
-  // 8. Pre-transaction diff, audit and log email
+  // 9. Pre-transaction diff, audit and log email
   const preDiff = computeChangedFieldPaths(baseline, normalizedState);
   const preAudit = composeAuditEntries(reviewId, baseline, normalizedState);
 
@@ -224,7 +241,7 @@ export async function POST(
       ),
     );
 
-  // 9. Execute transaction
+  // 10. Execute transaction
   const txDebug: any = {};
   try {
     let finalAuditEntries: any[] = [];

@@ -264,19 +264,17 @@ export default function FeedSummary() {
         router.push(URL_REVIEW_LIST);
         return;
       }
-      setSubmitStatus("idle");
     } else if (isSelfEditMode) {
       if (submitStatus === "success") {
         router.push(URL_DASHBOARD);
         return;
       }
-      setSubmitStatus("idle");
     } else {
       if (submitStatus === "success") {
         onReset();
       }
-      setSubmitStatus("idle");
     }
+    setSubmitStatus("idle");
   };
 
   const getModalDescription = () => {
