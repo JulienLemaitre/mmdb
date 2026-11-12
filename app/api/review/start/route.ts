@@ -50,6 +50,16 @@ export async function POST(req: Request) {
       );
     }
 
+    if (source.reviewState === REVIEW_STATE.IN_SELF_EDIT) {
+      return NextResponse.json(
+        {
+          error:
+            "[review start] MM Source is currently being edited by its author",
+        },
+        { status: 409 },
+      );
+    }
+
     // Check existing active review for this reviewer
     const reviewerActiveReview = await db.review.findFirst({
       where: { creatorId: session.user.id, state: REVIEW_STATE.IN_REVIEW },

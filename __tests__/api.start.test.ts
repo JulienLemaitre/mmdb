@@ -96,6 +96,23 @@ describe("POST /api/review/start", () => {
     expect(j.error).toMatch(/own MM Source/);
   });
 
+  it("returns 409 when the source is currently in self-edit", async () => {
+    session({ id: "u-1", role: "REVIEWER" });
+    mMSourceFindUnique.mockResolvedValue({
+      id: "src-1",
+      creatorId: "other",
+      reviewState: REVIEW_STATE.IN_SELF_EDIT,
+    });
+
+    const req: any = { json: async () => ({ mmSourceId: "src-1" }) };
+    const res = await startPost(req);
+    expect(res.status).toBe(409);
+    const j = await res.json();
+    expect(j.error).toBe(
+      "[review start] MM Source is currently being edited by its author",
+    );
+  });
+
   it("returns 409 when the reviewer already has an active review in progress", async () => {
     session({ id: "u-1", role: "REVIEWER" });
     mMSourceFindUnique.mockResolvedValue({

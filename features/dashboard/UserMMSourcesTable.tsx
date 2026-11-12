@@ -7,7 +7,13 @@ import { MMSourceFull } from "@/types/dbTypes";
 import { TempoIndication } from "@/types/prismaSelections";
 import MMSourceSummary from "@/features/explore/MMSourceSummary";
 import getPersonName from "@/utils/getPersonName";
-import { GET_URL_SOURCE_EDIT, URL_FEED } from "@/utils/routes";
+import {
+  GET_URL_SOURCE_EDIT,
+  GET_URL_API_SOURCE_EDIT_START,
+  GET_URL_API_SOURCE_EDIT_ABORT,
+  URL_FEED,
+} from "@/utils/routes";
+import { purgeSelfEditLocalDrafts } from "@/utils/localStorage";
 
 export type UserMMSourceItem = {
   source: MMSourceFull;
@@ -25,6 +31,10 @@ export default function UserMMSourcesTable({
   const [detailsSource, setDetailsSource] = useState<MMSourceFull | null>(null);
   const [confirmEditSource, setConfirmEditSource] =
     useState<MMSourceFull | null>(null);
+  const [abandonSource, setAbandonSource] = useState<MMSourceFull | null>(null);
+  const [editStartError, setEditStartError] = useState<string | null>(null);
+  const [isStartingEdit, setIsStartingEdit] = useState(false);
+  const [isAbandoning, setIsAbandoning] = useState(false);
 
   const formatDate = (date: Date | string) => {
     return new Date(date).toLocaleDateString("en-US", {
@@ -43,6 +53,12 @@ export default function UserMMSourcesTable({
       );
     }
     switch (reviewState) {
+      case "IN_SELF_EDIT":
+        return (
+          <span className="badge badge-info text-xs font-semibold">
+            In Self-Edit
+          </span>
+        );
       case "PENDING":
         return (
           <span className="badge badge-warning text-xs font-semibold">
@@ -63,6 +79,46 @@ export default function UserMMSourcesTable({
         );
       default:
         return <span className="badge badge-ghost text-xs">{reviewState}</span>;
+    }
+  };
+
+  const handleStartEdit = async (source: MMSourceFull) => {
+    setIsStartingEdit(true);
+    setEditStartError(null);
+    try {
+      const res = await fetch(GET_URL_API_SOURCE_EDIT_START(source.id), {
+        method: "POST",
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok) {
+        setEditStartError(data?.error || "Failed to start edit session");
+        return;
+      }
+      setConfirmEditSource(null);
+      router.push(GET_URL_SOURCE_EDIT(source.id));
+    } catch (err: any) {
+      setEditStartError(err?.message || "An unexpected error occurred");
+    } finally {
+      setIsStartingEdit(false);
+    }
+  };
+
+  const handleConfirmAbandon = async () => {
+    if (!abandonSource) return;
+    setIsAbandoning(true);
+    try {
+      const res = await fetch(GET_URL_API_SOURCE_EDIT_ABORT(abandonSource.id), {
+        method: "POST",
+      });
+      if (res.ok) {
+        purgeSelfEditLocalDrafts(abandonSource.id);
+        setAbandonSource(null);
+        router.refresh();
+      }
+    } catch (err) {
+      console.error("Failed to abandon self-edit:", err);
+    } finally {
+      setIsAbandoning(false);
     }
   };
 
@@ -131,6 +187,7 @@ export default function UserMMSourcesTable({
               }, 0);
 
               const isPending = source.reviewState === "PENDING";
+              const isInSelfEdit = source.reviewState === "IN_SELF_EDIT";
               const canEdit = isPending && !hasActiveReview;
 
               const disabledTooltip =
@@ -193,11 +250,33 @@ export default function UserMMSourcesTable({
                         View Details
                       </button>
 
-                      {canEdit ? (
+                      {isInSelfEdit ? (
+                        <>
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-primary"
+                            onClick={() =>
+                              router.push(GET_URL_SOURCE_EDIT(source.id))
+                            }
+                          >
+                            Resume Edit
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-outline btn-error"
+                            onClick={() => setAbandonSource(source)}
+                          >
+                            Abandon Edit
+                          </button>
+                        </>
+                      ) : canEdit ? (
                         <button
                           type="button"
                           className="btn btn-sm btn-primary"
-                          onClick={() => setConfirmEditSource(source)}
+                          onClick={() => {
+                            setEditStartError(null);
+                            setConfirmEditSource(source);
+                          }}
                         >
                           Edit Source
                         </button>
@@ -226,7 +305,7 @@ export default function UserMMSourcesTable({
 
       {/* Details Modal */}
       {detailsSource && (
-        <dialog className="modal modal-open">
+        <dialog open className="modal modal-open">
           <div className="modal-box w-11/12 max-w-5xl max-h-[90vh] flex flex-col p-6">
             <div className="flex items-center justify-between pb-3 border-b border-base-200 mb-4">
               <h3 className="font-bold text-lg text-primary">
@@ -266,7 +345,7 @@ export default function UserMMSourcesTable({
 
       {/* Edit Confirmation Modal */}
       {confirmEditSource && (
-        <dialog className="modal modal-open">
+        <dialog open className="modal modal-open">
           <div className="modal-box max-w-md">
             <h3 className="font-bold text-lg">Edit MM Source</h3>
             <p className="py-4 text-sm text-base-content/80">
@@ -274,29 +353,79 @@ export default function UserMMSourcesTable({
               <strong>{confirmEditSource.title || "this MM Source"}</strong>.
               Changes will be saved in your draft until submitted. Continue?
             </p>
+            {editStartError && (
+              <div className="alert alert-error text-xs py-2 my-2">
+                <span>{editStartError}</span>
+              </div>
+            )}
             <div className="modal-action">
               <button
                 type="button"
                 className="btn btn-ghost"
-                onClick={() => setConfirmEditSource(null)}
+                onClick={() => {
+                  setConfirmEditSource(null);
+                  setEditStartError(null);
+                }}
+                disabled={isStartingEdit}
               >
                 Cancel
               </button>
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => {
-                  const id = confirmEditSource.id;
-                  setConfirmEditSource(null);
-                  router.push(GET_URL_SOURCE_EDIT(id));
-                }}
+                onClick={() => handleStartEdit(confirmEditSource)}
+                disabled={isStartingEdit}
               >
-                Continue to Edit
+                {isStartingEdit ? "Starting..." : "Continue to Edit"}
               </button>
             </div>
           </div>
           <form method="dialog" className="modal-backdrop">
-            <button type="button" onClick={() => setConfirmEditSource(null)}>
+            <button
+              type="button"
+              onClick={() => {
+                setConfirmEditSource(null);
+                setEditStartError(null);
+              }}
+            >
+              close
+            </button>
+          </form>
+        </dialog>
+      )}
+
+      {/* Abandon Confirmation Modal */}
+      {abandonSource && (
+        <dialog open className="modal modal-open">
+          <div className="modal-box max-w-md">
+            <h3 className="font-bold text-lg text-error">Abandon Self-Edit?</h3>
+            <p className="py-4 text-sm text-base-content/80">
+              Are you sure you want to abandon editing{" "}
+              <strong>{abandonSource.title || "this MM Source"}</strong>? Your
+              local draft modifications will be discarded and the lock on the source
+              will be released so that reviewers can review it.
+            </p>
+            <div className="modal-action">
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={() => setAbandonSource(null)}
+                disabled={isAbandoning}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="btn btn-error text-white"
+                onClick={handleConfirmAbandon}
+                disabled={isAbandoning}
+              >
+                {isAbandoning ? "Abandoning..." : "Confirm Abandon"}
+              </button>
+            </div>
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button type="button" onClick={() => setAbandonSource(null)}>
               close
             </button>
           </form>

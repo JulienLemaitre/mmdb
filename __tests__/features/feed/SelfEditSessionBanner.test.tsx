@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import SelfEditSessionBanner from "@/features/feed/components/SelfEditSessionBanner";
 import { FormSessionProvider } from "@/context/formSessionContext";
@@ -13,6 +13,13 @@ jest.mock("next/navigation", () => ({
   useRouter: () => ({
     push: mockPush,
   }),
+}));
+
+const mockPurgeSelfEditLocalDrafts = jest.fn();
+jest.mock("@/utils/localStorage", () => ({
+  ...jest.requireActual("@/utils/localStorage"),
+  purgeSelfEditLocalDrafts: (...args: any[]) =>
+    mockPurgeSelfEditLocalDrafts(...args),
 }));
 
 describe("SelfEditSessionBanner", () => {
@@ -162,7 +169,7 @@ describe("SelfEditSessionBanner", () => {
     expect(screen.getByText(/MM Source/i)).toBeInTheDocument();
   });
 
-  it("opens confirmation modal on Cancel and navigates to dashboard when confirmed", () => {
+  it("opens confirmation modal on Cancel and navigates to dashboard on 'Keep Draft & Return'", () => {
     render(
       <FormSessionProvider session={selfEditSession}>
         <FeedFormProvider initialState={mockInitialState} storageKey="test-key">
@@ -180,14 +187,55 @@ describe("SelfEditSessionBanner", () => {
 
     const stayBtn = screen.getByRole("button", { name: /stay/i });
     fireEvent.click(stayBtn);
-    expect(screen.queryByText(/Leave Editing Session\?/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Leave Editing Session\?/i),
+    ).not.toBeInTheDocument();
     expect(mockPush).not.toHaveBeenCalled();
 
     fireEvent.click(cancelBtn);
-    const returnBtn = screen.getByRole("button", {
-      name: /^return to dashboard$/i,
+    const keepDraftBtn = screen.getByRole("button", {
+      name: /keep draft & return/i,
     });
-    fireEvent.click(returnBtn);
+    fireEvent.click(keepDraftBtn);
+    expect(mockPush).toHaveBeenCalledWith(URL_DASHBOARD);
+    expect(mockPurgeSelfEditLocalDrafts).not.toHaveBeenCalled();
+  });
+
+  it("calls abort endpoint, purges local draft and navigates on 'Abandon Edit & Release Lock'", async () => {
+    global.fetch = jest.fn().mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ ok: true, mMSourceId: "src-1" }),
+    });
+
+    render(
+      <FormSessionProvider session={selfEditSession}>
+        <FeedFormProvider initialState={mockInitialState} storageKey="test-key">
+          <SelfEditSessionBanner
+            baseline={mockBaseline}
+            mMSource={{ id: "src-1" }}
+          />
+        </FeedFormProvider>
+      </FormSessionProvider>,
+    );
+
+    const cancelBtn = screen.getByRole("button", {
+      name: /cancel & return to dashboard/i,
+    });
+    fireEvent.click(cancelBtn);
+
+    const abandonBtn = screen.getByRole("button", {
+      name: /abandon edit & release lock/i,
+    });
+    fireEvent.click(abandonBtn);
+
+    await waitFor(() => {
+      expect(global.fetch).toHaveBeenCalledWith(
+        "/api/source/src-1/edit/abort",
+        expect.objectContaining({ method: "POST" }),
+      );
+    });
+
+    expect(mockPurgeSelfEditLocalDrafts).toHaveBeenCalledWith("src-1");
     expect(mockPush).toHaveBeenCalledWith(URL_DASHBOARD);
   });
 });
