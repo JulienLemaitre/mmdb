@@ -79,9 +79,15 @@ export async function POST(
       });
     }
 
-    if (source.reviewState !== REVIEW_STATE.PENDING) {
+    if (
+      source.reviewState !== REVIEW_STATE.PENDING &&
+      source.reviewState !== REVIEW_STATE.ABORTED
+    ) {
       return NextResponse.json(
-        { error: "[selfEdit start] Only PENDING MM Sources can be edited" },
+        {
+          error:
+            "[selfEdit start] Only PENDING or ABORTED MM Sources can be edited",
+        },
         { status: 400 },
       );
     }

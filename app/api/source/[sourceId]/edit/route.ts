@@ -121,7 +121,8 @@ export async function POST(
 
   if (
     existingSource.reviewState !== REVIEW_STATE.PENDING &&
-    existingSource.reviewState !== REVIEW_STATE.IN_SELF_EDIT
+    existingSource.reviewState !== REVIEW_STATE.IN_SELF_EDIT &&
+    existingSource.reviewState !== REVIEW_STATE.ABORTED
   ) {
     return NextResponse.json(
       {
@@ -272,7 +273,8 @@ export async function POST(
 
       if (
         sourceInTx.reviewState !== REVIEW_STATE.PENDING &&
-        sourceInTx.reviewState !== REVIEW_STATE.IN_SELF_EDIT
+        sourceInTx.reviewState !== REVIEW_STATE.IN_SELF_EDIT &&
+        sourceInTx.reviewState !== REVIEW_STATE.ABORTED
       ) {
         throw new Error("CONFLICT_REVIEW_STARTED");
       }

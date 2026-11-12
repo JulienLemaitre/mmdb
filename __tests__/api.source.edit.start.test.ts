@@ -177,6 +177,39 @@ describe("POST /api/source/[sourceId]/edit/start", () => {
     });
   });
 
+  it("acquires lock and returns 200 with status 'locked' when source is ABORTED", async () => {
+    session({ id: AUTHOR_ID });
+    mockMMSourceFindUnique.mockResolvedValue({
+      id: SOURCE_ID,
+      creatorId: AUTHOR_ID,
+      reviewState: REVIEW_STATE.ABORTED,
+    });
+    mockReviewFindFirst.mockResolvedValue(null);
+    mockMMSourceUpdate.mockResolvedValue({
+      id: SOURCE_ID,
+      reviewState: REVIEW_STATE.IN_SELF_EDIT,
+    });
+
+    const req: any = {};
+    const res = await POST(req, {
+      params: Promise.resolve({ sourceId: SOURCE_ID }),
+    });
+
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json).toEqual({
+      success: true,
+      mMSourceId: SOURCE_ID,
+      status: "locked",
+    });
+
+    expect(mockDb.$transaction).toHaveBeenCalledTimes(1);
+    expect(mockMMSourceUpdate).toHaveBeenCalledWith({
+      where: { id: SOURCE_ID },
+      data: { reviewState: REVIEW_STATE.IN_SELF_EDIT },
+    });
+  });
+
   it("returns 200 with status 'resumed' when source is already in IN_SELF_EDIT by the same author", async () => {
     session({ id: AUTHOR_ID });
     mockMMSourceFindUnique.mockResolvedValue({

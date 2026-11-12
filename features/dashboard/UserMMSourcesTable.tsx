@@ -187,17 +187,16 @@ export default function UserMMSourcesTable({
               }, 0);
 
               const isPending = source.reviewState === "PENDING";
+              const isAborted = source.reviewState === "ABORTED";
               const isInSelfEdit = source.reviewState === "IN_SELF_EDIT";
-              const canEdit = isPending && !hasActiveReview;
+              const canEdit = (isPending || isAborted) && !hasActiveReview;
 
               const disabledTooltip =
                 hasActiveReview || source.reviewState === "IN_REVIEW"
                   ? "A review is currently in progress on this MM Source."
                   : source.reviewState === "APPROVED"
                     ? "This MM Source has already been approved and cannot be edited."
-                    : source.reviewState === "ABORTED"
-                      ? "This MM Source review was aborted."
-                      : "This MM Source cannot be edited.";
+                    : "This MM Source cannot be edited.";
 
               return (
                 <tr key={source.id} className="hover hover:bg-base-200">

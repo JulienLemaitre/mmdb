@@ -46,3 +46,6 @@ next-env.d.ts
 
 # httpRequest private env files
 *.private.env.json
+
+# AI shared files
+__share__

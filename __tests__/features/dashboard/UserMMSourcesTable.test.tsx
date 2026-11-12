@@ -46,6 +46,19 @@ describe("UserMMSourcesTable", () => {
     hasActiveReview: false,
   };
 
+  const abortedItem: UserMMSourceItem = {
+    source: {
+      id: "src-aborted",
+      title: "Brahms Op. 78",
+      year: 1879,
+      reviewState: "ABORTED",
+      createdAt: new Date("2024-03-01"),
+      pieceVersions: [],
+      metronomeMarks: [],
+    } as any,
+    hasActiveReview: false,
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
     global.fetch = jest.fn();
@@ -164,5 +177,36 @@ describe("UserMMSourcesTable", () => {
     });
 
     expect(mockPush).not.toHaveBeenCalled();
+  });
+
+  it("renders 'Edit Source' button enabled when reviewState is ABORTED and allows starting edit", async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        success: true,
+        mMSourceId: "src-aborted",
+        status: "locked",
+      }),
+    });
+
+    render(<UserMMSourcesTable items={[abortedItem]} tempoIndications={[]} />);
+
+    const editBtn = screen.getByRole("button", { name: /edit source/i });
+    expect(editBtn).not.toBeDisabled();
+    fireEvent.click(editBtn);
+
+    const continueBtn = screen.getByRole("button", {
+      name: /continue to edit/i,
+    });
+    fireEvent.click(continueBtn);
+
+    await waitFor(() => {
+      expect(global.fetch).toHaveBeenCalledWith(
+        "/api/source/src-aborted/edit/start",
+        expect.objectContaining({ method: "POST" }),
+      );
+    });
+
+    expect(mockPush).toHaveBeenCalledWith(GET_URL_SOURCE_EDIT("src-aborted"));
   });
 });

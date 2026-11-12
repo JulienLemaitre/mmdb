@@ -488,6 +488,30 @@ describe("POST /api/source/[sourceId]/edit", () => {
     );
   });
 
+  it("successfully updates source when starting from ABORTED and resets reviewState to PENDING", async () => {
+    mockGetServerSession.mockResolvedValue({
+      user: { id: AUTHOR_ID, role: "USER" },
+    });
+    mockPrisma._store.mMSource[0].reviewState = REVIEW_STATE.ABORTED;
+
+    const req: any = {
+      json: async () => ({ feedFormState: validSubmittedState }),
+    };
+
+    const res = await POST(req, {
+      params: Promise.resolve({ sourceId: SOURCE_ID }),
+    });
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json).toEqual({ success: true, mMSourceId: SOURCE_ID });
+
+    // Verify source state was set to PENDING
+    const updatedSource = mockPrisma._store.mMSource.find(
+      (s: any) => s.id === SOURCE_ID,
+    );
+    expect(updatedSource.reviewState).toBe(REVIEW_STATE.PENDING);
+  });
+
   it("returns 409 Conflict when an active review exists on the source", async () => {
     mockGetServerSession.mockResolvedValue({
       user: { id: AUTHOR_ID, role: "USER" },

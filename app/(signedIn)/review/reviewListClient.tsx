@@ -24,18 +24,21 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
   const router = useRouter();
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [modalError, setModalError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const empty = !items || items.length === 0;
 
   const onStart = (id: string) => {
     setError(null);
+    setModalError(null);
     setConfirmId(id);
   };
 
   const doConfirm = async () => {
     if (!confirmId) return;
     setBusyId(confirmId);
+    setModalError(null);
     try {
       const res = await fetch("/api/review/start", {
         method: "POST",
@@ -44,6 +47,7 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
       });
       if (res.ok) {
         const data = (await res.json()) as { reviewId: string };
+        setConfirmId(null);
         router.push(GET_URL_REVIEW(data.reviewId));
         return;
       }
@@ -59,13 +63,20 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
       if (res.status === 409) {
         if (
           apiError &&
+          apiError.toLowerCase().includes("currently being edited by its author")
+        ) {
+          setModalError(apiError);
+          router.refresh();
+        } else if (
+          apiError &&
           (apiError.toLowerCase().includes("active review in progress") ||
             apiError.toLowerCase().includes("already have an active review"))
         ) {
-          setError(apiError.replace(/^\[review start]\s*/, ""));
+          setModalError(apiError.replace(/^\[review start]\s*/, ""));
         } else {
-          setError(
-            "This source was just locked by another reviewer. Refreshing list…",
+          setModalError(
+            apiError ||
+              "This source was just locked by another reviewer. Refreshing list…",
           );
           router.refresh();
         }
@@ -73,24 +84,24 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
         res.status === 400 &&
         (apiError?.toLowerCase()?.includes("own mm source") ?? false)
       ) {
-        setError("You cannot review an MM Source you entered yourself.");
+        setModalError("You cannot review an MM Source you entered yourself.");
       } else if (res.status === 403) {
-        setError("You do not have permission to start reviews.");
+        setModalError("You do not have permission to start reviews.");
       } else if (apiError) {
-        setError(apiError);
+        setModalError(apiError);
       } else {
-        setError(msg);
+        setModalError(msg);
       }
     } catch (_e: any) {
-      setError("Network error while starting review.");
+      setModalError("Network error while starting review.");
     } finally {
       setBusyId(null);
-      setConfirmId(null);
     }
   };
 
   const cancelModal = () => {
     setConfirmId(null);
+    setModalError(null);
   };
 
   return (
@@ -168,23 +179,34 @@ export default function ReviewListClient({ items }: { items: ToReviewItem[] }) {
       )}
 
       {confirmId && (
-        <dialog className="modal" open>
+        <dialog className="modal modal-open" open>
           <div className="modal-box">
             <h3 className="font-bold text-lg">Start review</h3>
             <p className="py-2">
               You are about to start reviewing this MM Source. This will lock it
               for other reviewers until you finish or abort.
             </p>
+            {modalError && (
+              <div className="alert alert-error text-xs py-2 my-2">
+                <span>{modalError}</span>
+              </div>
+            )}
             <div className="modal-action">
-              <button className="btn" onClick={cancelModal}>
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={cancelModal}
+                disabled={busyId === confirmId}
+              >
                 Cancel
               </button>
               <button
+                type="button"
                 className="btn btn-primary"
                 onClick={doConfirm}
                 disabled={busyId === confirmId}
               >
-                Confirm
+                {busyId === confirmId ? "Starting..." : "Confirm"}
               </button>
             </div>
           </div>
