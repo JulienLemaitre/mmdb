@@ -491,9 +491,13 @@ export async function getSourceEditBaseline(
     );
   }
 
-  if (mMSource.reviewState !== REVIEW_STATE.PENDING) {
+  if (
+    mMSource.reviewState !== REVIEW_STATE.PENDING &&
+    mMSource.reviewState !== REVIEW_STATE.IN_SELF_EDIT &&
+    mMSource.reviewState !== REVIEW_STATE.ABORTED
+  ) {
     throw new Error(
-      "[getSourceEditBaseline] Only PENDING MM Sources can be edited",
+      "[getSourceEditBaseline] Only PENDING or ABORTED MM Sources can be edited",
     );
   }
 

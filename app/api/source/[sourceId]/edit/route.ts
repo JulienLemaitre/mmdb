@@ -119,7 +119,11 @@ export async function POST(
     );
   }
 
-  if (existingSource.reviewState !== REVIEW_STATE.PENDING) {
+  if (
+    existingSource.reviewState !== REVIEW_STATE.PENDING &&
+    existingSource.reviewState !== REVIEW_STATE.IN_SELF_EDIT &&
+    existingSource.reviewState !== REVIEW_STATE.ABORTED
+  ) {
     return NextResponse.json(
       {
         error:
@@ -267,7 +271,11 @@ export async function POST(
         throw new Error("FORBIDDEN");
       }
 
-      if (sourceInTx.reviewState !== REVIEW_STATE.PENDING) {
+      if (
+        sourceInTx.reviewState !== REVIEW_STATE.PENDING &&
+        sourceInTx.reviewState !== REVIEW_STATE.IN_SELF_EDIT &&
+        sourceInTx.reviewState !== REVIEW_STATE.ABORTED
+      ) {
         throw new Error("CONFLICT_REVIEW_STARTED");
       }
 
@@ -894,7 +902,7 @@ export async function POST(
               organization: true,
             },
           },
-          mMSourcesOnPieceVersions: true,
+          pieceVersions: { include: { pieceVersion: true } },
           metronomeMarks: true,
         },
       })

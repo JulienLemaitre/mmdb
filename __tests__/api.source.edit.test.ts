@@ -426,7 +426,7 @@ describe("POST /api/source/[sourceId]/edit", () => {
     expect(json.error).toContain("Forbidden");
   });
 
-  it("returns 409 Conflict when source is not PENDING (e.g. APPROVED)", async () => {
+  it("returns 409 Conflict when source is not PENDING or IN_SELF_EDIT (e.g. APPROVED)", async () => {
     mockGetServerSession.mockResolvedValue({
       user: { id: AUTHOR_ID, role: "USER" },
     });
@@ -442,6 +442,74 @@ describe("POST /api/source/[sourceId]/edit", () => {
     expect(res.status).toBe(409);
     const json = await res.json();
     expect(json.error).toContain("A review has started on this MM Source");
+  });
+
+  it("successfully updates source when starting from IN_SELF_EDIT and resets reviewState to PENDING", async () => {
+    mockGetServerSession.mockResolvedValue({
+      user: { id: AUTHOR_ID, role: "USER" },
+    });
+    mockPrisma._store.mMSource[0].reviewState = REVIEW_STATE.IN_SELF_EDIT;
+
+    const req: any = {
+      json: async () => ({ feedFormState: validSubmittedState }),
+    };
+
+    const res = await POST(req, {
+      params: Promise.resolve({ sourceId: SOURCE_ID }),
+    });
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json).toEqual({ success: true, mMSourceId: SOURCE_ID });
+
+    // Verify source state was set to PENDING
+    const updatedSource = mockPrisma._store.mMSource.find(
+      (s: any) => s.id === SOURCE_ID,
+    );
+    expect(updatedSource.reviewState).toBe(REVIEW_STATE.PENDING);
+
+    // Verify findUnique was called with valid include (pieceVersions, not mMSourcesOnPieceVersions)
+    expect(mockPrisma.mMSource.findUnique).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: SOURCE_ID },
+        include: expect.objectContaining({
+          pieceVersions: { include: { pieceVersion: true } },
+          references: true,
+          contributions: expect.any(Object),
+          metronomeMarks: true,
+        }),
+      }),
+    );
+    expect(mockPrisma.mMSource.findUnique).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        include: expect.objectContaining({
+          mMSourcesOnPieceVersions: expect.anything(),
+        }),
+      }),
+    );
+  });
+
+  it("successfully updates source when starting from ABORTED and resets reviewState to PENDING", async () => {
+    mockGetServerSession.mockResolvedValue({
+      user: { id: AUTHOR_ID, role: "USER" },
+    });
+    mockPrisma._store.mMSource[0].reviewState = REVIEW_STATE.ABORTED;
+
+    const req: any = {
+      json: async () => ({ feedFormState: validSubmittedState }),
+    };
+
+    const res = await POST(req, {
+      params: Promise.resolve({ sourceId: SOURCE_ID }),
+    });
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json).toEqual({ success: true, mMSourceId: SOURCE_ID });
+
+    // Verify source state was set to PENDING
+    const updatedSource = mockPrisma._store.mMSource.find(
+      (s: any) => s.id === SOURCE_ID,
+    );
+    expect(updatedSource.reviewState).toBe(REVIEW_STATE.PENDING);
   });
 
   it("returns 409 Conflict when an active review exists on the source", async () => {

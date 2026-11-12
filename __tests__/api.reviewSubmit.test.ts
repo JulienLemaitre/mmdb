@@ -81,6 +81,9 @@ function createMockPrisma() {
         if (where.id && where.id.in) {
           rows = rows.filter((r) => where.id.in.includes(r.id));
         }
+        if (where.reviewId) {
+          rows = rows.filter((r) => r.reviewId === where.reviewId);
+        }
       }
       return rows.map((r) => ({ ...r }));
     }),
@@ -589,10 +592,50 @@ describe("POST /api/review/[reviewId]/submit", () => {
         expect.objectContaining({
           body: expect.objectContaining({
             type: "Review SUCCESS",
+            auditLogs: expect.any(Array),
+            mMSourceFromDb: expect.objectContaining({
+              auditLogs: expect.any(Array),
+            }),
           }),
         }),
         undefined,
       );
+
+      // Verify db.mMSource.findUnique called with valid include (pieceVersions, not mMSourcesOnPieceVersions or auditLogs)
+      expect(mockPrismaInstance.db.mMSource.findUnique).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { id: MM_SOURCE_ID },
+          include: expect.objectContaining({
+            pieceVersions: { include: { pieceVersion: true } },
+            references: true,
+            contributions: expect.any(Object),
+            metronomeMarks: true,
+          }),
+        }),
+      );
+      expect(
+        mockPrismaInstance.db.mMSource.findUnique,
+      ).not.toHaveBeenCalledWith(
+        expect.objectContaining({
+          include: expect.objectContaining({
+            mMSourcesOnPieceVersions: expect.anything(),
+          }),
+        }),
+      );
+      expect(
+        mockPrismaInstance.db.mMSource.findUnique,
+      ).not.toHaveBeenCalledWith(
+        expect.objectContaining({
+          include: expect.objectContaining({
+            auditLogs: expect.anything(),
+          }),
+        }),
+      );
+
+      // Verify db.auditLog.findMany called for reviewId
+      expect(mockPrismaInstance.db.auditLog.findMany).toHaveBeenCalledWith({
+        where: { reviewId: REVIEW_ID },
+      });
     });
 
     it("updates existing entity (UPDATE) and creates new entity (CREATE)", async () => {

@@ -8,7 +8,8 @@ import { FeedFormState } from "@/types/feedFormTypes";
 import ReviewDiffModal from "@/features/review/components/ReviewDiffModal";
 import EyeIcon from "@/ui/svg/EyeIcon";
 import getIMSLPPermaLink from "@/utils/getIMSLPPermaLink";
-import { URL_DASHBOARD } from "@/utils/routes";
+import { GET_URL_API_SOURCE_EDIT_ABORT, URL_DASHBOARD } from "@/utils/routes";
+import { purgeSelfEditLocalDrafts } from "@/utils/localStorage";
 
 export type SelfEditSessionBannerProps = {
   baseline: FeedFormState;
@@ -29,10 +30,16 @@ export default function SelfEditSessionBanner({
   const { state } = useFeedForm();
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [isDiffModalOpen, setIsDiffModalOpen] = useState(false);
+  const [isAbandoning, setIsAbandoning] = useState(false);
 
   if (session.mode !== "self-source-edit") {
     return null;
   }
+
+  const sourceId =
+    mMSource?.id ||
+    session.selfEdit?.mMSourceId ||
+    state.mMSourceDescription?.id;
 
   // Source identification
   const title =
@@ -69,6 +76,24 @@ export default function SelfEditSessionBanner({
   const handleConfirmCancel = () => {
     setIsCancelModalOpen(false);
     router.push(URL_DASHBOARD);
+  };
+
+  const handleAbandonAndReleaseLock = async () => {
+    setIsAbandoning(true);
+    try {
+      if (sourceId) {
+        await fetch(GET_URL_API_SOURCE_EDIT_ABORT(sourceId), {
+          method: "POST",
+        });
+        purgeSelfEditLocalDrafts(sourceId);
+      }
+    } catch (err) {
+      console.error("Failed to abort edit session:", err);
+    } finally {
+      setIsAbandoning(false);
+      setIsCancelModalOpen(false);
+      router.push(URL_DASHBOARD);
+    }
   };
 
   return (
@@ -155,15 +180,16 @@ export default function SelfEditSessionBanner({
           <div className="modal-box max-w-md">
             <h3 className="font-bold text-lg">Leave Editing Session?</h3>
             <p className="py-4 text-sm text-base-content/80">
-              Are you sure you want to return to your dashboard? Any unsaved
-              modifications in your local draft will remain saved on this device
-              until you submit or clear them.
+              Are you sure you want to leave? You can keep your local draft and
+              maintain the lock on the source to resume later, or abandon your
+              edit to release the lock and discard local modifications.
             </p>
-            <div className="modal-action">
+            <div className="modal-action flex-col sm:flex-row gap-2">
               <button
                 type="button"
                 className="btn btn-ghost"
                 onClick={() => setIsCancelModalOpen(false)}
+                disabled={isAbandoning}
               >
                 Stay
               </button>
@@ -171,8 +197,19 @@ export default function SelfEditSessionBanner({
                 type="button"
                 className="btn btn-neutral"
                 onClick={handleConfirmCancel}
+                disabled={isAbandoning}
               >
-                Return to Dashboard
+                Keep Draft & Return
+              </button>
+              <button
+                type="button"
+                className="btn btn-error text-white"
+                onClick={handleAbandonAndReleaseLock}
+                disabled={isAbandoning}
+              >
+                {isAbandoning
+                  ? "Releasing lock..."
+                  : "Abandon Edit & Release Lock"}
               </button>
             </div>
           </div>

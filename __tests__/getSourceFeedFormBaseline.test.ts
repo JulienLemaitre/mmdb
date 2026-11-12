@@ -320,7 +320,7 @@ describe("getSourceFeedFormBaseline & getSourceEditBaseline", () => {
       );
     });
 
-    it("throws if reviewState is not PENDING", async () => {
+    it("throws if reviewState is not PENDING, IN_SELF_EDIT, or ABORTED", async () => {
       setSession({ id: "user-author", role: "EDITOR" });
       mockReviewFindFirst.mockResolvedValue(null);
       mockMMSourceFindUnique.mockResolvedValue({
@@ -332,8 +332,40 @@ describe("getSourceFeedFormBaseline & getSourceEditBaseline", () => {
       mockCollectionFindMany.mockResolvedValue([]);
 
       await expect(getSourceEditBaseline("src-1")).rejects.toThrow(
-        "[getSourceEditBaseline] Only PENDING MM Sources can be edited",
+        "[getSourceEditBaseline] Only PENDING or ABORTED MM Sources can be edited",
       );
+    });
+
+    it("successfully accepts reviewState IN_SELF_EDIT for the author", async () => {
+      setSession({ id: "user-author", role: "EDITOR" });
+      mockReviewFindFirst.mockResolvedValue(null);
+      mockMMSourceFindUnique.mockResolvedValue({
+        ...sampleDbMMSource,
+        reviewState: REVIEW_STATE.IN_SELF_EDIT,
+      });
+      mockOrganizationFindMany.mockResolvedValue([]);
+      mockPersonFindMany.mockResolvedValue([]);
+      mockCollectionFindMany.mockResolvedValue([]);
+
+      const result = await getSourceEditBaseline("src-1");
+      expect(result.mMSource.id).toBe("src-1");
+      expect(result.mMSource.reviewState).toBe(REVIEW_STATE.IN_SELF_EDIT);
+    });
+
+    it("successfully accepts reviewState ABORTED for the author", async () => {
+      setSession({ id: "user-author", role: "EDITOR" });
+      mockReviewFindFirst.mockResolvedValue(null);
+      mockMMSourceFindUnique.mockResolvedValue({
+        ...sampleDbMMSource,
+        reviewState: REVIEW_STATE.ABORTED,
+      });
+      mockOrganizationFindMany.mockResolvedValue([]);
+      mockPersonFindMany.mockResolvedValue([]);
+      mockCollectionFindMany.mockResolvedValue([]);
+
+      const result = await getSourceEditBaseline("src-1");
+      expect(result.mMSource.id).toBe("src-1");
+      expect(result.mMSource.reviewState).toBe(REVIEW_STATE.ABORTED);
     });
 
     it("successfully returns baseline and initialState with initialized formInfo for author", async () => {
