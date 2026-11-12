@@ -900,7 +900,7 @@ export async function POST(
               organization: true,
             },
           },
-          mMSourcesOnPieceVersions: true,
+          pieceVersions: { include: { pieceVersion: true } },
           metronomeMarks: true,
         },
       })

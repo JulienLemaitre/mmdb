@@ -466,6 +466,26 @@ describe("POST /api/source/[sourceId]/edit", () => {
       (s: any) => s.id === SOURCE_ID,
     );
     expect(updatedSource.reviewState).toBe(REVIEW_STATE.PENDING);
+
+    // Verify findUnique was called with valid include (pieceVersions, not mMSourcesOnPieceVersions)
+    expect(mockPrisma.mMSource.findUnique).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: SOURCE_ID },
+        include: expect.objectContaining({
+          pieceVersions: { include: { pieceVersion: true } },
+          references: true,
+          contributions: expect.any(Object),
+          metronomeMarks: true,
+        }),
+      }),
+    );
+    expect(mockPrisma.mMSource.findUnique).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        include: expect.objectContaining({
+          mMSourcesOnPieceVersions: expect.anything(),
+        }),
+      }),
+    );
   });
 
   it("returns 409 Conflict when an active review exists on the source", async () => {

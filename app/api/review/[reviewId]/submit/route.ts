@@ -997,19 +997,38 @@ export async function POST(
       { timeout: 30000 },
     );
 
-    // Fetch updated MM Source from DB for post-transaction log email
+    // Fetch updated MM Source and Audit Logs from DB for post-transaction log email
+    const auditLogsFromDb = await db.auditLog
+      .findMany({
+        where: { reviewId },
+      })
+      .catch((err) => {
+        debug.error(`[review submit] Failed to load audit logs:`, err);
+        return null;
+      });
+
     const mMSourceFromDb = await db.mMSource
       .findUnique({
         where: { id: review.mMSourceId },
         include: {
           references: true,
-          contributions: true,
-          mMSourcesOnPieceVersions: true,
+          contributions: {
+            include: {
+              person: true,
+              organization: true,
+            },
+          },
+          pieceVersions: { include: { pieceVersion: true } },
           metronomeMarks: true,
-          auditLogs: { where: { reviewId } },
         },
       })
-      .catch(() => null);
+      .then((source) =>
+        source ? { ...source, auditLogs: auditLogsFromDb } : null,
+      )
+      .catch((err) => {
+        debug.error(`[review submit] Failed to load persisted source:`, err);
+        return null;
+      });
 
     await fetchAPI(
       "/sendEmail",
@@ -1020,6 +1039,7 @@ export async function POST(
           reviewId,
           txDebug,
           mMSourceFromDb,
+          auditLogs: auditLogsFromDb,
         },
       },
       session.user.accessToken,
