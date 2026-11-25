@@ -102,14 +102,40 @@ model Section {
 }
 
 model TempoIndication {
-  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  text      String    @unique
-  sections  Section[] // A tempo indication can be used by many sections
-  creator   User?     @relation(fields: [creatorId], references: [id])
-  creatorId String?   @db.Uuid
+  id              String                              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  text            String                              @unique
+  sections        Section[] // A tempo indication can be used by many sections
+  tempoCategories TempoCategoriesOnTempoIndications[]
+  creator         User?                               @relation(fields: [creatorId], references: [id])
+  creatorId       String?                             @db.Uuid
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model TempoCategory {
+  id               String                              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name             String                              @unique
+  rank             Int                                 @unique
+  tempoIndications TempoCategoriesOnTempoIndications[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TempoCategoriesOnTempoIndications {
+  id                String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tempoIndication   TempoIndication @relation(fields: [tempoIndicationId], references: [id], onDelete: Cascade)
+  tempoIndicationId String          @db.Uuid
+  tempoCategory     TempoCategory   @relation(fields: [tempoCategoryId], references: [id], onDelete: Cascade)
+  tempoCategoryId   String          @db.Uuid
+  isPrimary         Boolean         @default(true)
+
+  createdAt DateTime @default(now())
+
+  @@unique([tempoIndicationId, tempoCategoryId])
+  @@index([tempoCategoryId])
+  @@index([tempoIndicationId])
 }
 
 model MetronomeMark {

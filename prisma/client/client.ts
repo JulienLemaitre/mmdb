@@ -72,6 +72,16 @@ export type Section = Prisma.SectionModel
  */
 export type TempoIndication = Prisma.TempoIndicationModel
 /**
+ * Model TempoCategory
+ * 
+ */
+export type TempoCategory = Prisma.TempoCategoryModel
+/**
+ * Model TempoCategoriesOnTempoIndications
+ * 
+ */
+export type TempoCategoriesOnTempoIndications = Prisma.TempoCategoriesOnTempoIndicationsModel
+/**
  * Model MetronomeMark
  * 
  */

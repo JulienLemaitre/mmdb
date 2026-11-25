@@ -403,6 +403,8 @@ export const ModelName = {
   Movement: 'Movement',
   Section: 'Section',
   TempoIndication: 'TempoIndication',
+  TempoCategory: 'TempoCategory',
+  TempoCategoriesOnTempoIndications: 'TempoCategoriesOnTempoIndications',
   MetronomeMark: 'MetronomeMark',
   MMSourcesOnPieceVersions: 'MMSourcesOnPieceVersions',
   MMSource: 'MMSource',
@@ -432,7 +434,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "collection" | "piece" | "pieceVersion" | "movement" | "section" | "tempoIndication" | "metronomeMark" | "mMSourcesOnPieceVersions" | "mMSource" | "reference" | "contribution" | "organization" | "person" | "account" | "session" | "user" | "verificationToken" | "review" | "reviewedEntity" | "auditLog"
+    modelProps: "collection" | "piece" | "pieceVersion" | "movement" | "section" | "tempoIndication" | "tempoCategory" | "tempoCategoriesOnTempoIndications" | "metronomeMark" | "mMSourcesOnPieceVersions" | "mMSource" | "reference" | "contribution" | "organization" | "person" | "account" | "session" | "user" | "verificationToken" | "review" | "reviewedEntity" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -877,6 +879,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TempoIndicationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TempoIndicationCountAggregateOutputType> | number
+        }
+      }
+    }
+    TempoCategory: {
+      payload: Prisma.$TempoCategoryPayload<ExtArgs>
+      fields: Prisma.TempoCategoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TempoCategoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TempoCategoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoryPayload>
+        }
+        findFirst: {
+          args: Prisma.TempoCategoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TempoCategoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoryPayload>
+        }
+        findMany: {
+          args: Prisma.TempoCategoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoryPayload>[]
+        }
+        create: {
+          args: Prisma.TempoCategoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoryPayload>
+        }
+        createMany: {
+          args: Prisma.TempoCategoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TempoCategoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoryPayload>[]
+        }
+        delete: {
+          args: Prisma.TempoCategoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoryPayload>
+        }
+        update: {
+          args: Prisma.TempoCategoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.TempoCategoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TempoCategoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TempoCategoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.TempoCategoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoryPayload>
+        }
+        aggregate: {
+          args: Prisma.TempoCategoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTempoCategory>
+        }
+        groupBy: {
+          args: Prisma.TempoCategoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TempoCategoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TempoCategoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TempoCategoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    TempoCategoriesOnTempoIndications: {
+      payload: Prisma.$TempoCategoriesOnTempoIndicationsPayload<ExtArgs>
+      fields: Prisma.TempoCategoriesOnTempoIndicationsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoriesOnTempoIndicationsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoriesOnTempoIndicationsPayload>
+        }
+        findFirst: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoriesOnTempoIndicationsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoriesOnTempoIndicationsPayload>
+        }
+        findMany: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoriesOnTempoIndicationsPayload>[]
+        }
+        create: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoriesOnTempoIndicationsPayload>
+        }
+        createMany: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoriesOnTempoIndicationsPayload>[]
+        }
+        delete: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoriesOnTempoIndicationsPayload>
+        }
+        update: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoriesOnTempoIndicationsPayload>
+        }
+        deleteMany: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoriesOnTempoIndicationsPayload>[]
+        }
+        upsert: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TempoCategoriesOnTempoIndicationsPayload>
+        }
+        aggregate: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTempoCategoriesOnTempoIndications>
+        }
+        groupBy: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TempoCategoriesOnTempoIndicationsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TempoCategoriesOnTempoIndicationsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TempoCategoriesOnTempoIndicationsCountAggregateOutputType> | number
         }
       }
     }
@@ -2040,6 +2190,28 @@ export const TempoIndicationScalarFieldEnum = {
 export type TempoIndicationScalarFieldEnum = (typeof TempoIndicationScalarFieldEnum)[keyof typeof TempoIndicationScalarFieldEnum]
 
 
+export const TempoCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  rank: 'rank',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TempoCategoryScalarFieldEnum = (typeof TempoCategoryScalarFieldEnum)[keyof typeof TempoCategoryScalarFieldEnum]
+
+
+export const TempoCategoriesOnTempoIndicationsScalarFieldEnum = {
+  id: 'id',
+  tempoIndicationId: 'tempoIndicationId',
+  tempoCategoryId: 'tempoCategoryId',
+  isPrimary: 'isPrimary',
+  createdAt: 'createdAt'
+} as const
+
+export type TempoCategoriesOnTempoIndicationsScalarFieldEnum = (typeof TempoCategoriesOnTempoIndicationsScalarFieldEnum)[keyof typeof TempoCategoriesOnTempoIndicationsScalarFieldEnum]
+
+
 export const MetronomeMarkScalarFieldEnum = {
   id: 'id',
   mMSourceId: 'mMSourceId',
@@ -2650,6 +2822,8 @@ export type GlobalOmitConfig = {
   movement?: Prisma.MovementOmit
   section?: Prisma.SectionOmit
   tempoIndication?: Prisma.TempoIndicationOmit
+  tempoCategory?: Prisma.TempoCategoryOmit
+  tempoCategoriesOnTempoIndications?: Prisma.TempoCategoriesOnTempoIndicationsOmit
   metronomeMark?: Prisma.MetronomeMarkOmit
   mMSourcesOnPieceVersions?: Prisma.MMSourcesOnPieceVersionsOmit
   mMSource?: Prisma.MMSourceOmit
