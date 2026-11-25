@@ -183,6 +183,7 @@ export type TempoIndicationWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"TempoIndication"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TempoIndication"> | Date | string
   sections?: Prisma.SectionListRelationFilter
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsListRelationFilter
   creator?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -193,6 +194,7 @@ export type TempoIndicationOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sections?: Prisma.SectionOrderByRelationAggregateInput
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsOrderByRelationAggregateInput
   creator?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -206,6 +208,7 @@ export type TempoIndicationWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"TempoIndication"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TempoIndication"> | Date | string
   sections?: Prisma.SectionListRelationFilter
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsListRelationFilter
   creator?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "text">
 
@@ -237,6 +240,7 @@ export type TempoIndicationCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sections?: Prisma.SectionCreateNestedManyWithoutTempoIndicationInput
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsCreateNestedManyWithoutTempoIndicationInput
   creator?: Prisma.UserCreateNestedOneWithoutTempoIndicationsInput
 }
 
@@ -247,6 +251,7 @@ export type TempoIndicationUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutTempoIndicationInput
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsUncheckedCreateNestedManyWithoutTempoIndicationInput
 }
 
 export type TempoIndicationUpdateInput = {
@@ -255,6 +260,7 @@ export type TempoIndicationUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUpdateManyWithoutTempoIndicationNestedInput
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsUpdateManyWithoutTempoIndicationNestedInput
   creator?: Prisma.UserUpdateOneWithoutTempoIndicationsNestedInput
 }
 
@@ -265,6 +271,7 @@ export type TempoIndicationUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUncheckedUpdateManyWithoutTempoIndicationNestedInput
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsUncheckedUpdateManyWithoutTempoIndicationNestedInput
 }
 
 export type TempoIndicationCreateManyInput = {
@@ -343,6 +350,20 @@ export type TempoIndicationUpdateOneRequiredWithoutSectionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TempoIndicationUpdateToOneWithWhereWithoutSectionsInput, Prisma.TempoIndicationUpdateWithoutSectionsInput>, Prisma.TempoIndicationUncheckedUpdateWithoutSectionsInput>
 }
 
+export type TempoIndicationCreateNestedOneWithoutTempoCategoriesInput = {
+  create?: Prisma.XOR<Prisma.TempoIndicationCreateWithoutTempoCategoriesInput, Prisma.TempoIndicationUncheckedCreateWithoutTempoCategoriesInput>
+  connectOrCreate?: Prisma.TempoIndicationCreateOrConnectWithoutTempoCategoriesInput
+  connect?: Prisma.TempoIndicationWhereUniqueInput
+}
+
+export type TempoIndicationUpdateOneRequiredWithoutTempoCategoriesNestedInput = {
+  create?: Prisma.XOR<Prisma.TempoIndicationCreateWithoutTempoCategoriesInput, Prisma.TempoIndicationUncheckedCreateWithoutTempoCategoriesInput>
+  connectOrCreate?: Prisma.TempoIndicationCreateOrConnectWithoutTempoCategoriesInput
+  upsert?: Prisma.TempoIndicationUpsertWithoutTempoCategoriesInput
+  connect?: Prisma.TempoIndicationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TempoIndicationUpdateToOneWithWhereWithoutTempoCategoriesInput, Prisma.TempoIndicationUpdateWithoutTempoCategoriesInput>, Prisma.TempoIndicationUncheckedUpdateWithoutTempoCategoriesInput>
+}
+
 export type TempoIndicationCreateNestedManyWithoutCreatorInput = {
   create?: Prisma.XOR<Prisma.TempoIndicationCreateWithoutCreatorInput, Prisma.TempoIndicationUncheckedCreateWithoutCreatorInput> | Prisma.TempoIndicationCreateWithoutCreatorInput[] | Prisma.TempoIndicationUncheckedCreateWithoutCreatorInput[]
   connectOrCreate?: Prisma.TempoIndicationCreateOrConnectWithoutCreatorInput | Prisma.TempoIndicationCreateOrConnectWithoutCreatorInput[]
@@ -390,6 +411,7 @@ export type TempoIndicationCreateWithoutSectionsInput = {
   text: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsCreateNestedManyWithoutTempoIndicationInput
   creator?: Prisma.UserCreateNestedOneWithoutTempoIndicationsInput
 }
 
@@ -399,6 +421,7 @@ export type TempoIndicationUncheckedCreateWithoutSectionsInput = {
   creatorId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsUncheckedCreateNestedManyWithoutTempoIndicationInput
 }
 
 export type TempoIndicationCreateOrConnectWithoutSectionsInput = {
@@ -422,6 +445,7 @@ export type TempoIndicationUpdateWithoutSectionsInput = {
   text?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsUpdateManyWithoutTempoIndicationNestedInput
   creator?: Prisma.UserUpdateOneWithoutTempoIndicationsNestedInput
 }
 
@@ -431,6 +455,59 @@ export type TempoIndicationUncheckedUpdateWithoutSectionsInput = {
   creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsUncheckedUpdateManyWithoutTempoIndicationNestedInput
+}
+
+export type TempoIndicationCreateWithoutTempoCategoriesInput = {
+  id?: string
+  text: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sections?: Prisma.SectionCreateNestedManyWithoutTempoIndicationInput
+  creator?: Prisma.UserCreateNestedOneWithoutTempoIndicationsInput
+}
+
+export type TempoIndicationUncheckedCreateWithoutTempoCategoriesInput = {
+  id?: string
+  text: string
+  creatorId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutTempoIndicationInput
+}
+
+export type TempoIndicationCreateOrConnectWithoutTempoCategoriesInput = {
+  where: Prisma.TempoIndicationWhereUniqueInput
+  create: Prisma.XOR<Prisma.TempoIndicationCreateWithoutTempoCategoriesInput, Prisma.TempoIndicationUncheckedCreateWithoutTempoCategoriesInput>
+}
+
+export type TempoIndicationUpsertWithoutTempoCategoriesInput = {
+  update: Prisma.XOR<Prisma.TempoIndicationUpdateWithoutTempoCategoriesInput, Prisma.TempoIndicationUncheckedUpdateWithoutTempoCategoriesInput>
+  create: Prisma.XOR<Prisma.TempoIndicationCreateWithoutTempoCategoriesInput, Prisma.TempoIndicationUncheckedCreateWithoutTempoCategoriesInput>
+  where?: Prisma.TempoIndicationWhereInput
+}
+
+export type TempoIndicationUpdateToOneWithWhereWithoutTempoCategoriesInput = {
+  where?: Prisma.TempoIndicationWhereInput
+  data: Prisma.XOR<Prisma.TempoIndicationUpdateWithoutTempoCategoriesInput, Prisma.TempoIndicationUncheckedUpdateWithoutTempoCategoriesInput>
+}
+
+export type TempoIndicationUpdateWithoutTempoCategoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sections?: Prisma.SectionUpdateManyWithoutTempoIndicationNestedInput
+  creator?: Prisma.UserUpdateOneWithoutTempoIndicationsNestedInput
+}
+
+export type TempoIndicationUncheckedUpdateWithoutTempoCategoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.StringFieldUpdateOperationsInput | string
+  creatorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sections?: Prisma.SectionUncheckedUpdateManyWithoutTempoIndicationNestedInput
 }
 
 export type TempoIndicationCreateWithoutCreatorInput = {
@@ -439,6 +516,7 @@ export type TempoIndicationCreateWithoutCreatorInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sections?: Prisma.SectionCreateNestedManyWithoutTempoIndicationInput
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsCreateNestedManyWithoutTempoIndicationInput
 }
 
 export type TempoIndicationUncheckedCreateWithoutCreatorInput = {
@@ -447,6 +525,7 @@ export type TempoIndicationUncheckedCreateWithoutCreatorInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutTempoIndicationInput
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsUncheckedCreateNestedManyWithoutTempoIndicationInput
 }
 
 export type TempoIndicationCreateOrConnectWithoutCreatorInput = {
@@ -499,6 +578,7 @@ export type TempoIndicationUpdateWithoutCreatorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUpdateManyWithoutTempoIndicationNestedInput
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsUpdateManyWithoutTempoIndicationNestedInput
 }
 
 export type TempoIndicationUncheckedUpdateWithoutCreatorInput = {
@@ -507,6 +587,7 @@ export type TempoIndicationUncheckedUpdateWithoutCreatorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUncheckedUpdateManyWithoutTempoIndicationNestedInput
+  tempoCategories?: Prisma.TempoCategoriesOnTempoIndicationsUncheckedUpdateManyWithoutTempoIndicationNestedInput
 }
 
 export type TempoIndicationUncheckedUpdateManyWithoutCreatorInput = {
@@ -523,10 +604,12 @@ export type TempoIndicationUncheckedUpdateManyWithoutCreatorInput = {
 
 export type TempoIndicationCountOutputType = {
   sections: number
+  tempoCategories: number
 }
 
 export type TempoIndicationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sections?: boolean | TempoIndicationCountOutputTypeCountSectionsArgs
+  tempoCategories?: boolean | TempoIndicationCountOutputTypeCountTempoCategoriesArgs
 }
 
 /**
@@ -546,6 +629,13 @@ export type TempoIndicationCountOutputTypeCountSectionsArgs<ExtArgs extends runt
   where?: Prisma.SectionWhereInput
 }
 
+/**
+ * TempoIndicationCountOutputType without action
+ */
+export type TempoIndicationCountOutputTypeCountTempoCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TempoCategoriesOnTempoIndicationsWhereInput
+}
+
 
 export type TempoIndicationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -554,6 +644,7 @@ export type TempoIndicationSelect<ExtArgs extends runtime.Types.Extensions.Inter
   createdAt?: boolean
   updatedAt?: boolean
   sections?: boolean | Prisma.TempoIndication$sectionsArgs<ExtArgs>
+  tempoCategories?: boolean | Prisma.TempoIndication$tempoCategoriesArgs<ExtArgs>
   creator?: boolean | Prisma.TempoIndication$creatorArgs<ExtArgs>
   _count?: boolean | Prisma.TempoIndicationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tempoIndication"]>
@@ -587,6 +678,7 @@ export type TempoIndicationSelectScalar = {
 export type TempoIndicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "text" | "creatorId" | "createdAt" | "updatedAt", ExtArgs["result"]["tempoIndication"]>
 export type TempoIndicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sections?: boolean | Prisma.TempoIndication$sectionsArgs<ExtArgs>
+  tempoCategories?: boolean | Prisma.TempoIndication$tempoCategoriesArgs<ExtArgs>
   creator?: boolean | Prisma.TempoIndication$creatorArgs<ExtArgs>
   _count?: boolean | Prisma.TempoIndicationCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -601,6 +693,7 @@ export type $TempoIndicationPayload<ExtArgs extends runtime.Types.Extensions.Int
   name: "TempoIndication"
   objects: {
     sections: Prisma.$SectionPayload<ExtArgs>[]
+    tempoCategories: Prisma.$TempoCategoriesOnTempoIndicationsPayload<ExtArgs>[]
     creator: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1004,6 +1097,7 @@ readonly fields: TempoIndicationFieldRefs;
 export interface Prisma__TempoIndicationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sections<T extends Prisma.TempoIndication$sectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TempoIndication$sectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tempoCategories<T extends Prisma.TempoIndication$tempoCategoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TempoIndication$tempoCategoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TempoCategoriesOnTempoIndicationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   creator<T extends Prisma.TempoIndication$creatorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TempoIndication$creatorArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1461,6 +1555,30 @@ export type TempoIndication$sectionsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.SectionScalarFieldEnum | Prisma.SectionScalarFieldEnum[]
+}
+
+/**
+ * TempoIndication.tempoCategories
+ */
+export type TempoIndication$tempoCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TempoCategoriesOnTempoIndications
+   */
+  select?: Prisma.TempoCategoriesOnTempoIndicationsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TempoCategoriesOnTempoIndications
+   */
+  omit?: Prisma.TempoCategoriesOnTempoIndicationsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TempoCategoriesOnTempoIndicationsInclude<ExtArgs> | null
+  where?: Prisma.TempoCategoriesOnTempoIndicationsWhereInput
+  orderBy?: Prisma.TempoCategoriesOnTempoIndicationsOrderByWithRelationInput | Prisma.TempoCategoriesOnTempoIndicationsOrderByWithRelationInput[]
+  cursor?: Prisma.TempoCategoriesOnTempoIndicationsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TempoCategoriesOnTempoIndicationsScalarFieldEnum | Prisma.TempoCategoriesOnTempoIndicationsScalarFieldEnum[]
 }
 
 /**

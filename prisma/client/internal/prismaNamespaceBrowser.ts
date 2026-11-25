@@ -57,6 +57,8 @@ export const ModelName = {
   Movement: 'Movement',
   Section: 'Section',
   TempoIndication: 'TempoIndication',
+  TempoCategory: 'TempoCategory',
+  TempoCategoriesOnTempoIndications: 'TempoCategoriesOnTempoIndications',
   MetronomeMark: 'MetronomeMark',
   MMSourcesOnPieceVersions: 'MMSourcesOnPieceVersions',
   MMSource: 'MMSource',
@@ -172,6 +174,28 @@ export const TempoIndicationScalarFieldEnum = {
 } as const
 
 export type TempoIndicationScalarFieldEnum = (typeof TempoIndicationScalarFieldEnum)[keyof typeof TempoIndicationScalarFieldEnum]
+
+
+export const TempoCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  rank: 'rank',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TempoCategoryScalarFieldEnum = (typeof TempoCategoryScalarFieldEnum)[keyof typeof TempoCategoryScalarFieldEnum]
+
+
+export const TempoCategoriesOnTempoIndicationsScalarFieldEnum = {
+  id: 'id',
+  tempoIndicationId: 'tempoIndicationId',
+  tempoCategoryId: 'tempoCategoryId',
+  isPrimary: 'isPrimary',
+  createdAt: 'createdAt'
+} as const
+
+export type TempoCategoriesOnTempoIndicationsScalarFieldEnum = (typeof TempoCategoriesOnTempoIndicationsScalarFieldEnum)[keyof typeof TempoCategoriesOnTempoIndicationsScalarFieldEnum]
 
 
 export const MetronomeMarkScalarFieldEnum = {

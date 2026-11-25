@@ -97,10 +97,34 @@ Table TempoIndication {
   id String [pk]
   text String [unique, not null]
   sections Section [not null]
+  tempoCategories TempoCategoriesOnTempoIndications [not null]
   creator User
   creatorId String
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
+}
+
+Table TempoCategory {
+  id String [pk]
+  name String [unique, not null]
+  rank Int [unique, not null]
+  tempoIndications TempoCategoriesOnTempoIndications [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table TempoCategoriesOnTempoIndications {
+  id String [pk]
+  tempoIndication TempoIndication [not null]
+  tempoIndicationId String [not null]
+  tempoCategory TempoCategory [not null]
+  tempoCategoryId String [not null]
+  isPrimary Boolean [not null, default: true]
+  createdAt DateTime [default: `now()`, not null]
+
+  indexes {
+    (tempoIndicationId, tempoCategoryId) [unique]
+  }
 }
 
 Table MetronomeMark {
@@ -465,6 +489,10 @@ Ref: Section.movementId > Movement.id [delete: Cascade]
 Ref: Section.tempoIndicationId > TempoIndication.id
 
 Ref: TempoIndication.creatorId > User.id
+
+Ref: TempoCategoriesOnTempoIndications.tempoIndicationId > TempoIndication.id [delete: Cascade]
+
+Ref: TempoCategoriesOnTempoIndications.tempoCategoryId > TempoCategory.id [delete: Cascade]
 
 Ref: MetronomeMark.mMSourceId > MMSource.id [delete: Cascade]
 
