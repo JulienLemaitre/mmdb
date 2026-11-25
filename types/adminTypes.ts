@@ -39,3 +39,20 @@ export type AdminReviewItem = {
     pieceTitles: string[];
   } | null;
 };
+
+export type AdminTempoCategoryItem = {
+  id: string;
+  name: string;
+  rank: number;
+  tempoIndicationCount: number;
+};
+
+export type AdminTempoIndicationItem = {
+  id: string;
+  text: string;
+  createdAt: string;
+  author: { id: string; name: string | null; email: string | null } | null;
+  categories: Array<{ id: string; name: string }>;
+};
+
+export type AdminTempoIndicationSortOrder = "asc" | "desc";
